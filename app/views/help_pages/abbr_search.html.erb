@@ -1,0 +1,26 @@
+<% help_title "Help on Global Search for Abbreviations"%>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">Find an abbreviation in any of the feature tables:</p>
+    <p>The Global Search feature will search for the given abbreviation or part of the long text in the
+      following tables:</p>
+    <ul>
+      <li><%= link_to_help 'abbreviations', Abbreviation.model_name.human -%></li>
+      <li><%= link_to_help 'glossary_items', GlossaryItem.model_name.human -%></li>
+      <li><%= link_to_help 'standards_bodies', StandardsBody.model_name.human -%></li>
+      <li><%= link_to_help 'phase_codes', PhaseCode.model_name.human -%></li>
+      <li><%= link_to_help 'groups', Group.model_name.human -%></li>
+      <li><%= link_to_help 'country_names', CountryName.model_name.human -%></li>
+      <li><%= link_to_help 'region_names', RegionName.model_name.human -%></li>
+      <li><%= link_to_help 'unit_names', UnitName.model_name.human -%></li>
+    </ul>
+    <p>Each of the above tables will be searched for the given abbreviation in
+      the respective fields: The result will contain all abbreviations
+      starting with the given string, and/or the text in any of the
+      description or label fields.</p>
+    <p>Please be aware that the search is case-insensitive and that the
+      search in the descriptions will search for <strong>any</strong>
+      occurance in the description.</p>
+    <%= help_footer FEATURE_ID_ABBR_SEARCH %>
+  </div> <!-- /container -->

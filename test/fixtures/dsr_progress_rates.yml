@@ -1,0 +1,6 @@
+<% for i in 0..10 %>
+<%= sprintf 'p%2.2d:', i %>
+  id:       <%= i %>
+  document_progress: <%= i*10 %>
+
+<% end %>

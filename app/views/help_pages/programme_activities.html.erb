@@ -1,0 +1,41 @@
+<% help_title "Help on #{ ProgrammeActivity.model_name.human }" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">Information from the planning and scheduling system provides planning dates
+      for planning and reporting.</p>
+    <p>If a direct access to the project's planning and scheduling system is not available,
+      this feature can be used to reflect the project's planning dates. The basic idea is that 
+      activities and milestones from the project's programme are made available here so these
+      dates can be linked to specific items in the various status registers for planning and
+      reporting purposes.</p>
+    <ul>
+      <li><%= help_param ProgrammeActivity.human_attribute_name( :id ) -%> is the unique
+        identifier of an activity or milestone. Only this attribute is used to link the activity
+        or milestone to other items in the status registers. All other attributes can be 
+        changed, specifically the project and activity identifiers, i.e. if you change the
+        project or activity identifier in your scheduling system, you must update these records
+        using this attribute.</li>
+      <li><%= help_param ProgrammeActivity.human_attribute_name( :project_id ) -%> can be used
+        to store a reference to the project identifier in a multi-project environment where the
+        same activitiy identifier can be defined in different projects. This information is
+        not used but can be added here for reference (specifically if the records should be
+        updated later automatically).</li>
+      <li><%= help_param ProgrammeActivity.human_attribute_name( :activity_id ) -%> can be used
+        to store the activity identifier of the project's planning software for reference. This
+        information is not used or validated here but may be required to link the record back
+        to the project's planning software.</li>
+      <li><%= help_param ProgrammeActivity.human_attribute_name( :activity_label ) -%> provides
+        the descriptive text for this activity or milestone. This is for informative purposes
+        only.</li>
+      <li><%= help_param ProgrammeActivity.human_attribute_name( :start_date ) -%> and 
+        <%= help_param ProgrammeActivity.human_attribute_name( :finish_date ) -%> should be
+        set to the start and finish date of the respective activity. If only one date is
+        given, the other date will be set to the same date automatically before the record is
+        stored to the database.</li>
+    </ul>
+    <p>The update of these records can be done via an export/import mechanism: The download
+      of the records is available as CSV-file, the upload is not yet implemented on the web
+      interface.</p>
+    <%= help_footer FEATURE_ID_ACTIVITIES %>
+  </div> <!-- /container -->

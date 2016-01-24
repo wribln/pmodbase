@@ -1,0 +1,14 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+person_one:
+  formal_name: "Person One"
+  informal_name: "One"
+  email: "person.one@company.com"
+  involved: true
+
+person_two:
+  formal_name: "Person Two"
+  informal_name: "Two"
+  email: "person.two@company.com"
+  involved: true
+

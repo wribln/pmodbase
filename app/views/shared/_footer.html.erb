@@ -1,0 +1,29 @@
+<%#
+=begin
+
+ this partial inserts the default footer line for all types of pages;
+ the feature_id is picked up from the controller's setting, UNLESS
+ you choose to replace this value by a local variable passed to this
+ partial (e.g. in help pages).
+
+ A specific help page may be requested via the help_page parameter.
+ The default is to use the help text for the controller.
+
+ Pass the feature_id as parameter, and optionally details information
+ for the change request:
+ 
+ Example (from User view)
+
+ < %= render partial: 'shared/footer',
+   locals: { feature_identifier: FEATURE_ID_XYZ, cr_details: 'here', help_page: 'stats' } % >
+
+=end
+-%>
+
+<hr/>
+<p class="hidden-print">&copy; Wilfried R&ouml;mer 2014-2016&nbsp;|
+  All Rights Reserved&nbsp;|
+  <% unless feature_identifier == FEATURE_ID_HOME_PAGE -%>
+    <%= link_to_cr( 'Request a Change', feature_identifier, ( defined?( cr_details )&& cr_details )) -%>&nbsp;| 
+  <% end -%>
+  <%= link_to_help( defined?( help_page ) && help_page ? help_page : controller_name, t( 'button_label.help' ))-%></p>

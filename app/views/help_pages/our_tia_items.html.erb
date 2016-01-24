@@ -1,0 +1,135 @@
+<% help_title "Help on #{ TiaItem.model_name.human }" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">Manage entries in all <%= TiaList.model_name.human.pluralize -%>
+      where you are the defined owner or deputy.</p>
+    <h3>How to use</h3>
+    <p>The idea here is that this list is to be followed up during a team
+      meeting. The owner of the list (or his deputy) goes through all
+      open/unresolved items and adds comments or changes the status. Items
+      can be filtered in order to select specific items to be shown.</p>
+    <h3>Attributes of Items</h3>
+    <p>Each Task, Issue, Action Item has the following attributes:</p>
+    <ul>
+      <li><%= help_param TiaItem.human_attribute_name( :code ) -%> is a unique
+        identifier for each an every item in a specific list. It consists of
+        the <%= help_param TiaList.human_attribute_name( :code ) -%> followed
+        by a running number.</li>
+      <li>The <%= help_param TiaItem.human_attribute_name( :description ) %>
+        should be as short as reasonably possible.<br/>
+        For <%= help_term 'Action Items' -%>, this text needs to be action
+        oriented and descriptive enough so that you don't forget what you were
+        talking about during past meetings. It is very important that you are
+        specific and outline the task at hand and expectations. For example,
+        use &ldquo;Update page 5 of the equipment specification to reflect the
+        new requirements from change order 17&rdquo; rather than &ldquo;Update
+        specification&rdquo;.<br/>
+        For <%= help_term 'Issues' -%>, ensure that the issue is clearly
+        described and that any resolution can be identified from this
+        description. For example: &ldquo;Room should be located near exit and
+        on ground floor to ensure easy access for wheelchairs&rdquo; should
+        be preferred over &ldquo;Location of room unclear&rdquo;.<br/>
+        For <%= help_term 'Tasks' -%>, make sure to explain any dependencies,
+        i.e. all preconditions and subsequent tasks waiting for this one to
+        be completed. Also make clear when the task will be considered
+        completed.<br/>
+        Include in the task the origin/originator/opposite party of the item:
+        This could be a reference to a meeting, or a person who could possibly
+        be contacted for additional clarifications on the issue.<br/>
+        Searching for text using the filter functionality will search not only
+        the <%= help_param TiaItem.human_attribute_name( :description ) %> field
+        but also the <%= help_param TiaItem.human_attribute_name( :comment ) %>
+        field.</li>
+      <li><%= help_param TiaItem.human_attribute_name( :comment ) %> is a
+        field available to enter any status information, or a summary of the
+        solution of the problem when reviewing the item in a subsequent
+        meeting. On the list page, this field is shown below the 
+        <%= help_term TiaItem.human_attribute_name( :description ) %> field
+        unless it is empty.<br/>
+        Searching for text using the filter functionality will search not only
+        the <%= help_param TiaItem.human_attribute_name( :description ) %> field
+        but also the <%= help_param TiaItem.human_attribute_name( :comment ) %>
+        field.</li>
+      <li><%= help_param TiaItem.human_attribute_name( :prio ) %> allows you
+        to specify some priority to the item: There are several methods in
+        use, for simplicity, the system provides 3 levels:
+        <ol>
+          <li>High</li>
+          <li>Medium</li>
+          <li>Low</li>
+        </ol>
+        Using the ABC analysis, this would map to 
+        <ol class='upper-alpha'>
+          <li>items that are perceived as being urgent and important,</li>
+          <li>items that are important but not urgent, and</li>
+          <li>all others, i.e. items that are not important (urgent or not).</li>
+        </ol>
+      </li>
+      <li>The <%= help_param TiaItem.human_attribute_name( :owner ) %> needs
+        to be designated to a specific individual, not a team. Someone you
+        can look in the eye and say &ldquo;Hans, you are responsible for
+        updating page 5 of the specification, do you have any questions?&rdquo;.
+        This doesn't mean that the person designated with the responsibility
+        is the one doing all or any of the work. However, they are responsible
+        for making sure it gets done within the time frame mentioned.<br/>
+        When adding or changing this attribute, you can only select a person
+        from the defined set of list members (see <%= link_to_help 'my_tia_lists',
+        t('my_tia_lists.title') -%> for more information on how this list is
+        managed).</li>
+      <li>The key point here is not to designate a
+        <%= help_param TiaItem.human_attribute_name( :due_date ) %>,
+        instead the action owner
+        should be asked when they can commit to getting the action done. This
+        is part of the buy-in process. If they give a specific date and then
+        can’t meet their own date, they have no excuses. Obviously, if
+        someone comes back with two months on something that should take two
+        weeks, don’t be afraid to trump the feedback.<br/>
+        When filtering the items, the date value given in the filter will be
+        used to select all items where the
+        <%= TiaItem.human_attribute_name( :due_date ) -%> is on or
+        before the given filter date.</li>
+      <li>The <%= help_param TiaItem.human_attribute_name( :status ) %> of the
+        item can be set to
+        <ul>
+          <li><%= TiaItem::TIA_ITEM_STATUS_LABELS[ 0 ] -%> - just created or
+            not yet resolved</li>
+          <li><%= TiaItem::TIA_ITEM_STATUS_LABELS[ 1 ] -%> - waiting for other
+            parties’ input or reaction</li>
+          <li><%= TiaItem::TIA_ITEM_STATUS_LABELS[ 2 ] -%> - when this task,
+            issue, or action item does not need to be traced anymore</li>
+          <li><%= TiaItem::TIA_ITEM_STATUS_LABELS[ 3 ] -%> - when this task,
+            issue, or action item is completed, resolved, or otherwise 
+            finished</li>
+        </ul>
+      </li>
+      <li>If an item's <%= help_param TiaItem.human_attribute_name( :archived ) %>
+        flag is checked, it will not be shown anymore on any listings. This flag
+        can only be set if the items has a 'closed' status: Use it when this item
+        is of no more interest to your group. Another option would be to delete
+        the item but then it will also disappear from any statistics.</li>
+    </ul>
+    <h3>History</h3>
+      <p>When viewing a specific item, the button labelled 
+      <%= help_term I18n.t('button_label.history')-%>
+      shows a table in reverse chronological order of all the changes done to this
+      item: The top table shows the current status, the entries below the previous
+      status at the given time.</p>
+    <h3>Status Report</h3>
+      <p>From the index view, the <%= help_term I18n.t('general.download_doc')-%> link
+      creates a document for download containing the current status on the listed
+      items. This report can be appended to formal minutes of meetings when needed.
+      Technically, this report is a html-document but it is created such that it
+      can be opened by current office word processing tools for additional
+      formatting.</p>
+      <p>The status report does not contain any owner information: The assumption
+      here is that formal reports are created in a rather formal environment where
+      not all participants have access to this system. Hence, responsibilities
+      may not be assignable from the list of members. In this case, please add
+      the responsibilities in the item's description or comment field for
+      reference.</p>
+    <h3>Access</h3>
+    <p>This feature can only be accessed by the owner or his deputy.
+      Other members of this list can access his or her tasks/issues/action items
+      using the <%= link_to_help 'my_tia_items', t( 'my_tia_items.title' ) %> feature.
+    <%= help_footer FEATURE_ID_OUR_TIA_ITEMS %> 

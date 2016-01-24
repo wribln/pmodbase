@@ -1,0 +1,28 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="form-horizontal" role="form">
+    <%= form_for @tia_item, url: my_tia_item_path( @tia_item ) do |f| %>
+      <%= render partial: 'shared/errors', object: @tia_item.errors %>
+      <div class="form-group">
+        <%= f.label :tia_list_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-6">
+          <%= display_value @tia_list.label %>
+        </div>
+      </div>
+      <%= render partial: 'our_tia_items/form', locals: { form: f, comment_only: true }%>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-2">
+          <%= f.submit class: "btn btn-lg btn-block btn-primary" %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to t( 'button_label.show' ), my_tia_item_path( @tia_item ), class: "btn btn-lg btn-block btn-default" %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to t( 'button_label.goto_to_list' ), my_tia_items_path( @tia_list ), class: "btn btn-lg btn-block btn-default" %>
+        </div>
+      <div>
+    <% end %>
+  </div>
+</div>

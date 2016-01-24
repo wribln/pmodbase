@@ -1,0 +1,28 @@
+<% help_title "Help on #{ SiemensPhase.model_name.human }" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">The standard PM@Siemens Phases are shown in this table.</p>
+    <p>The Siemens Phases are documented in the document 'Global Project
+      Management' - 'Global standards for project success' (current edition:
+      PM@Siemens Guide Version 5.2, released October 1, 2014):
+      <blockquote>This document is mandatory for all Units and Affiliated
+      Companies of Siemens AG, irrespective of their specific role in a
+      project - as main or subcontractor, or as a partner, member or head
+      of a consortium or a joint venture.</blockquote></p>
+    <p>The information made available here document the major project phases
+      for large plant and solution projects. The are listed here for reference
+      only and to support consistent communication across all project
+      participants.</p>
+    <ul>
+      <li>A Siemens <%= help_param SiemensPhase.human_attribute_name( :code ) -%>
+        has the format '%PMnnn' with 'nnn' being a number.</li>
+      <li>The description of the phase is documented under
+        <%= help_param SiemensPhase.human_attribute_name( :label_p ) -%>, and</li>
+      <li>the milestone concluding that phase as
+        <%= help_param SiemensPhase.human_attribute_name( :label_m ) -%>.</li>
+    </ul>
+    <p>The purpose of this compilation is for reference in the <%= link_to_help :phase_codes, 'Phase Codes' -%>
+      only.</p>
+    <%= help_footer FEATURE_ID_SIEMENS_PHASES %>
+  </div> <!-- /container -->

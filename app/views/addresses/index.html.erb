@@ -1,0 +1,43 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="table-responsive">
+    <%= form_tag({},{ method: :get, class: 'form-inline' }) do %>
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th><%= label_tag :ff_id, Address.human_attribute_name( :id ), class: "control-label" %></th>
+          <th><%= label_tag :ff_label, Address.human_attribute_name( :label ), class: "control-label"  %></th>
+          <th><%= label_tag :ff_address, Address.human_attribute_name( :street_address ), class: "control-label" %></th>
+          <th><%= Address.human_attribute_name( :postal_address ) %></th>
+          <th><%= filter_action_title_header %></th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr <%= filter_row( @filter_fields ) -%>>
+        <td><%= filter_field @filter_fields, :ff_id, :id -%></td>
+        <td><%= filter_field @filter_fields, :ff_label, :sw -%></td>
+        <td><%= filter_field @filter_fields, :ff_address, :sw -%></td>
+        <td>&nbsp;</td>
+        <td><%= filter_action_button -%></td>
+      </tr>
+      <% if @addresses.length.zero? %>
+          <%= render partial: 'shared/index_empty_row', locals: { columns: 4, with_link: true } %>
+      <% else %>
+        <% @addresses.each do |a| %>
+          <tr>
+            <td><%= a.to_id %></td>
+            <td><%= a.label %></td>
+            <td><%= display_lines_w_br a.street_address %></td>
+            <td><%= display_lines_w_br a.postal_address %></td>
+            <td><%= render partial: 'shared/actions', object: a %></td>
+          </tr>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+    <% end %>
+    <%= render partial: 'shared/footer' %>
+  </div>
+</div>

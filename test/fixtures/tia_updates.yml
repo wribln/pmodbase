@@ -1,0 +1,7 @@
+tia_update_one:
+  tia_item:     tia_item_one
+  comment:      'some comment here'
+  prio:         1
+  status:       1
+  due_date:     2015-06-08
+  account:      account_one

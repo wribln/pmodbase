@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+account_one:
+  name:             'Master'
+  password_digest:  'of the Un1verse!'
+  person:           person_one
+
+account_wop:
+  name:             'Account without permissions'
+  password_digest:  'P00r sou|'
+  person:           person_one
+
+account_two:        
+  name:             'Account for testing'
+  password_digest:  'Just-aTe$t'
+  person:           person_one
+
+account_three:
+  name:             'Another Test Account'
+  password_digest:  'An0thr-Test'
+  person:           person_one

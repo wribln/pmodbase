@@ -1,0 +1,30 @@
+<% help_title "Help on #{ StandardsBody.model_name.human }"%>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">'A standards body, standards organization, standards
+      developing organizatino (SDO), or standards setting organization (SSO)
+      is any organization whose primary activities are developing,
+      coordinating, promulgating, revising, amending, reissuing, interpreting,
+      or otherwise producing technical standards that are intended to address
+      the needs of some relatively wide base of affected adaptors.'
+      (Wikipedia)</p>
+    <p>This table contains general information about the Standards Bodies
+      providing standards for this project. The list here provides the
+      source of standards listed elsewhere: Any standard, norm, guideline,
+      or similar document to be included in the list of standards <!--TODO insert link here -->
+      should have the issuing organisation listed here.</p>
+    <ul>
+      <li>The <%= help_param StandardsBody.human_attribute_name( :code ) -%>
+        is the generally known and used abbreviation of that organization.</li>
+      <li>The <%= help_param StandardsBody.human_attribute_name( :description ) -%>
+        shows the unabbreviated name of the organization. If this name is not
+        English, then that name should be appended with '(&lt;language&gt;: 
+        &lt;translation&gt;)', where &lt;language&gt; is the language of the
+        original name, and &lt;translation&gt; is the name in English.</li>
+      </ul>
+      <p><%= help_param StandardsBody.human_attribute_name( :code ) -%>
+        and <%= help_param StandardsBody.human_attribute_name( :description ) -%>
+        will be searched when performing a global search for abbreviations.</p>
+    <%= help_footer FEATURE_ID_STANDARDS_BODIES %>
+  </div> <!-- /container -->

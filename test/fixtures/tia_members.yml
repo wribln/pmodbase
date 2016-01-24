@@ -1,0 +1,17 @@
+one:
+  account:   account_one
+  tia_list:  tia_list_two
+  to_access: true
+  to_update: false
+
+two:
+  account:   account_two
+  tia_list:  tia_list_two
+  to_access: true
+  to_update: true
+
+three:
+  account:   account_three
+  tia_list:  tia_list_one
+  to_access: false
+  to_update: true

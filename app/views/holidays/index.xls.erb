@@ -1,0 +1,16 @@
+<%= CSV.generate_line([
+  :date_from,
+  :date_until,
+  :country_name,
+  :region_name,
+  :description,
+  :work ], STD_CSV_OPTIONS ) -%>
+<%- @holidays.each do |h| -%>
+<%= CSV.generate_line([
+  h.date_from,
+  h.date_until,
+  ( h.country_name.code if h.country_name_id ),
+  ( h.region_name.code  if h.region_name_id  ),
+  h.description,
+  h.work ], STD_CSV_OPTIONS ).html_safe -%>
+<%- end -%>

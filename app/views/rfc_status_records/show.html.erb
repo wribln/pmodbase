@@ -1,0 +1,120 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="form-horizontal" role="form">
+    <%= form_for @rfc_status_record do |f| %>
+      <%= render partial: 'shared/notice' %>
+      <div class="form-group">
+        <%= f.label :id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= f.text_field :id, class: "form-control", readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :rfc_type, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= f.text_field :rfc_type, class: "form-control", value: @workflow.workflow_label( @rfc_status_record.rfc_type ), readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :title, class: "col-sm-3 control-label" %>
+        <div class="col-sm-9">
+          <%= f.text_field :title, class: "form-control", readonly: true %>
+        </div>
+      </div>
+      <%# - - - subform with RfC Document Data - - - %>
+      <% if @rfc_document.nil? then -%>
+        <div class="form-group">
+          <div class="col-sm-9 col-sm-offset-3">
+            <p class="form-control-static">No RfC Document exists for this RfC Status Record.
+            Please notify the administrator of the project site to correct this problem.</p>
+          </div>
+        </div>
+      <%- else -%> 
+      <%= f.fields_for @rfc_document do |d| -%>
+        <!--div class="form-group">
+          <%= d.label :rfc_status_record_id, class: "col-sm-3 control-label" %>
+          <div class="col-sm-2">
+            <%= d.text_field :rfc_status_record_id, class: "form-control", readonly: true %>
+          </div>
+        </div-->
+        <div class="form-group">
+          <%= d.label :version, class: "col-sm-3 control-label" %>
+          <div class="col-sm-1">
+            <%= d.text_field :version, class: "form-control", readonly: true %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= d.label :question, class: "col-sm-3 control-label" %>
+          <div class="col-sm-9">
+            <%= d.text_area :question, cols: DEFAULT_COLS_TEXTAREA, rows: DEFAULT_ROWS_TEXTAREA, class: "form-control", readonly: true %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= d.label :answer, class: "col-sm-3 control-label" %>
+          <div class="col-sm-9">
+            <%= d.text_area :answer, cols: DEFAULT_COLS_TEXTAREA, rows: ( DEFAULT_ROWS_TEXTAREA * 2 ), class: "form-control", readonly: true %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= d.label :note, class: "col-sm-3 control-label" %>
+          <div class="col-sm-9">
+            <%= d.text_area :note, cols: DEFAULT_COLS_TEXTAREA, rows: DEFAULT_ROWS_TEXTAREA, class: "form-control", readonly: true %>
+          </div>
+        </div>
+      <%- end -%>
+      <%- end -%>
+      <div class="form-group">
+        <%= f.label :asking_group_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= f.text_field :asking_group_id, class: "form-control", value: f.object.asking_group_code, readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :answering_group_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= f.text_field :answering_group_id, class: "form-control", value: f.object.answering_group_code, readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :project_doc_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-6">
+          <%= f.text_field :project_doc_id, class: "form-control", readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :project_rms_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-6">
+          <%= f.text_field :project_rms_id, class: "form-control", readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :asking_group_doc_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-6">
+          <%= f.text_field :asking_group_doc_id, class: "form-control", readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :answering_group_doc_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-6">
+          <%= f.text_field :answering_group_doc_id, class: "form-control", readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :current_status_task, class: "col-sm-3 control-label" %>
+        <div class="col-sm-4">
+          <%= display_value @workflow.status_task_label %>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-2">
+          <%= link_to t( 'button_label.edit' ), edit_rfc_status_record_path( @rfc_status_record ), class: "btn btn-lg btn-block btn-default" %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to t( 'button_label.goto_to_list' ), rfc_status_records_path, class: "btn btn-lg btn-block btn-default" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,47 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th><%= DbChangeRequest.human_attribute_name( :id         )%></th>
+          <th><%= DbChangeRequest.human_attribute_name( :feature_id )%></th>
+          <th><%= DbChangeRequest.human_attribute_name( :detail     )%></th>
+          <th><%= DbChangeRequest.human_attribute_name( :action     )%></th>
+          <th><%= DbChangeRequest.human_attribute_name( :uri        )%></th>
+          <th><%= DbChangeRequest.human_attribute_name( :req_acc_id )%></th>
+          <th><%= DbChangeRequest.human_attribute_name( :res_acc_id )%></th>
+          <th><%= DbChangeRequest.human_attribute_name( :status     )%></th>
+          <th><%= DbChangeRequest.human_attribute_name( :created    )%></th>
+          <th><%= t( 'action_title.header'           )%></th>
+        </tr>
+      </thead>
+      <tbody>
+      <% if @dbcrs.length.zero? %>
+          <%= render partial: 'shared/index_empty_row', locals:{ columns: 9, with_link: true }%>
+      <% else %>
+        <% @dbcrs.each do |c| %>
+          <tr>
+            <td rowspan="2"><%= c.to_id %></td>
+            <td><%= c.feature_label_with_id %></td>
+            <td><%= c.detail %></td>
+            <td><%= c.action %></td>
+            <td><%= c.uri %></td>
+            <td><%= c.requestor_with_id %></td>
+            <td><%= c.responsible_with_id %></td>
+            <td><%= c.status_label_with_id %></td>
+            <td><%= db_formatted_d c.created_at %></td>
+            <td rowspan="2"><%= render partial: 'shared/actions', object: c %></td>
+          </tr>
+          <tr>
+            <td colspan="6"><%= c.request_text %></td>
+          </tr>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+    <%= render partial: 'shared/footer' %>
+  </div>
+</div>

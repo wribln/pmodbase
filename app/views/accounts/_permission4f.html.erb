@@ -1,0 +1,22 @@
+<div class="form-group form-group-sm form-set" <% if( permission4f.object._destroy || permission4f.index == 'template' )%>style="display:none"<% end %>>
+  <div class="col-sm-1">
+    <%= permission4f.hidden_field :_destroy %>
+    <%= link_to '-', '#', class: 'btn btn-warning btn-default btn-sm btn-block del-subform-button' %>
+  </div>
+  <div class="col-sm-3">
+    <%= permission4f.label :feature_id, class: "hidden-md hidden-lg control-label" %>
+    <%= permission4f.text_field :feature_id, class: "form-control" %>
+  </div>
+  <div class="col-sm-1">
+    <%= permission4f.label :workflow_id, class: "hidden-md hidden-lg control-label" %>
+    <%= permission4f.text_field :workflow_id, class: "form-control" %>
+  </div>
+  <div class="col-sm-3">
+    <%= permission4f.label :label, class: "hidden-md hidden-lg control-label" %>
+    <%= permission4f.text_field :label, class: "form-control", maxlength:  MAX_LENGTH_OF_TASKS_STRING %>
+  </div>
+  <div class="col-sm-3">
+    <%= permission4f.label :tasklist, class: "hidden-md hidden-lg control-label" %>
+    <%= permission4f.text_field :tasklist, class: "form-control", maxlength: MAX_LENGTH_OF_LABEL %>
+  </div>
+</div>

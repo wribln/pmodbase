@@ -1,0 +1,14 @@
+<%= CSV.generate_line([
+  :code,
+  :label,
+  :notes,
+  :seqno,
+  :group_category_id ], STD_CSV_OPTIONS ) -%>
+<%- @groups.each do |g| -%>
+<%= CSV.generate_line([
+  g.code,
+  g.label,
+  g.notes,
+  g.seqno,
+  ( g.group_category.label unless g.group_category_id.nil? )], STD_CSV_OPTIONS ).html_safe -%>
+<%- end -%>

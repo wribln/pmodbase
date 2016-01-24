@@ -1,0 +1,72 @@
+<div class="form-set" <% if( contact_info.object._destroy || contact_info.index == 'template' )%>style="display:none"<% end %>>
+  <div class="form-group">
+    <% if action_type == :show || action_type == :edit_profile %>
+      <%= contact_info.label :info_type, class: "col-sm-3 control-label" %>
+      <div class="col-sm-2">
+        <%= contact_info.text_field :info_type, class: "form-control", readonly: true %>
+      </div>
+    <% else %>
+      <div class="col-sm-1">
+        <%= contact_info.hidden_field :_destroy %>
+        <%= link_to '-', '#', class: 'btn btn-warning btn-default btn-block del-subform-button' %>
+      </div>
+      <%= contact_info.label :info_type, class: "col-sm-2 control-label" %>
+      <div class="col-sm-2">
+        <%= contact_info.text_field :info_type, class: "form-control", maxlength: MAX_LENGTH_OF_INFORMATION_TYPE %>
+      </div>
+      <div class="col-sm-2">
+        <p class="help-block" style="margin:0px"><%= t( 'contact_infos.info_type_help' )%></p>
+      </div>
+    <% end %>
+  </div>
+  <div class="form-group">
+    <%= contact_info.label :phone_no_fixed, class: "col-sm-3 control-label" %>
+    <div class="col-sm-4">
+      <% if action_type == :show %>
+        <%= contact_info.phone_field :phone_no_fixed, class: "form-control", readonly: true %>
+      <% else %>
+        <%= contact_info.phone_field :phone_no_fixed, class: "form-control", maxlength: MAX_LENGTH_OF_PHONE_NUMBER %>
+      <% end %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= contact_info.label :phone_no_mobile, class: "col-sm-3 control-label" %>
+    <div class="col-sm-4">
+      <% if action_type == :show %>
+        <%= contact_info.phone_field :phone_no_mobile, class: "form-control", readonly: true %>
+      <% else %>
+        <%= contact_info.phone_field :phone_no_mobile, class: "form-control", maxlength: MAX_LENGTH_OF_PHONE_NUMBER %>
+      <% end %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= contact_info.label :department, class: "col-sm-3 control-label" %>
+    <div class="col-sm-4">
+      <% if action_type == :show %>
+        <%= contact_info.text_field :department, class: "form-control", readonly: true %>
+      <% else %>
+        <%= contact_info.text_field :department, class: "form-control", maxlength: MAX_LENGTH_OF_DEPARTMENT %>
+      <% end %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= contact_info.label :detail_location, class: "col-sm-3 control-label" %>
+    <div class="col-sm-4">
+      <% if action_type == :show %>
+        <%= contact_info.text_field :detail_location, class: "form-control", readonly: true %>
+      <% else %>
+        <%= contact_info.text_field :detail_location, class: "form-control", maxlength: MAX_LENGTH_OF_LOCATION_DETAIL %>
+      <% end %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= contact_info.label :address_id, class: "col-sm-3 control-label" %>
+    <div class="col-sm-4">
+      <% if action_type == :show %>
+        <%= contact_info.text_field :address_label, class: "form-control", readonly: true %>
+      <% else %>
+        <%= contact_info.select :address_id, @address_options, { include_blank: true }, { class: "form-control" }%>
+      <% end %>
+    </div>
+  </div>
+</div>

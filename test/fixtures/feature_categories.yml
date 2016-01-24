@@ -1,0 +1,7 @@
+feature_category_one:
+  label: "Feature Category 1"
+  seqno: 1
+
+feature_category_two:
+  label: "Feature Category 2"
+  seqno: 2

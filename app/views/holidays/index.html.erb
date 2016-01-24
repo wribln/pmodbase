@@ -1,0 +1,48 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="table-responsive">
+    <%= form_tag({},{ method: :get }) do %>
+    <%= will_paginate @holidays %>
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th class="col-sm-1"><%= label_tag :ff_id,      Holiday.human_attribute_name( :id           ), class: 'control-label' %></th>
+          <th class="col-sm-2"><%= label_tag :ff_year,    Holiday.human_attribute_name( :period       ), class: 'control-label' %></th>
+          <th class="col-sm-2"><%= label_tag :ff_country, Holiday.human_attribute_name( :region       ), class: 'control-label' %></th>
+          <th class="col-sm-4"><%= label_tag :ff_desc,    Holiday.human_attribute_name( :description  ), class: 'control-label' %></th>
+          <th class="col-sm-1"><%=                        Holiday.human_attribute_name( :work         )                         %></th>
+          <th class="col-sm-1 hidden-print"><%= filter_action_title_header -%></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr <%= filter_row( @filter_fields ) -%>>
+          <td><%= filter_field @filter_fields,        :ff_id, :id -%></td>
+          <td><%= filter_multi_select @filter_fields, :ff_year, @year_filter, :year_period, nil -%></td>
+          <td><%= filter_multi_select @filter_fields, :ff_country, @country_filter, :code -%></td>
+          <td><%= filter_field @filter_fields,        :ff_desc, :sw -%></td>
+          <td>&nbsp;</td>
+          <td><%= filter_action_button -%></td>
+        </tr>
+        <% if @holidays.length.zero? %>
+          <%= render partial: 'shared/index_empty_row', locals:{ columns: 5, with_link: true }%>
+        <% else %>
+          <% @holidays.each do |h| %>
+            <tr>
+              <td><%= h.to_id %></td>
+              <td><%= h.period_to_s %></td>
+              <td><%= h.region_to_s %></td>
+              <td><%= h.description %></td>
+              <td><%= number_to_percentage( h.work, precision: 0 )%></td>
+              <td><%= render partial: 'shared/actions', object: h %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+    <% end %>
+    <%= render partial: 'shared/download_xls' %>
+    <%= render partial: 'shared/footer' %>
+  </div>
+</div>

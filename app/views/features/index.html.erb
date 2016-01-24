@@ -1,0 +1,46 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th class="col-sm-1"><%= Feature.human_attribute_name( :id    )%></th>
+          <th class="col-sm-1"><%= Feature.human_attribute_name( :code  )%></th>
+          <th class="col-sm-5"><%= Feature.human_attribute_name( :label )%></th>
+          <th class="col-sm-1"><%= Feature.human_attribute_name( :seqno )%></th>
+          <th class="col-sm-1"><%= Feature.human_attribute_name( :access_level )%></th>
+          <th class="col-sm-1"><%= Feature.human_attribute_name( :control_level )%></th>
+          <th class="col-sm-1"><%= Feature.human_attribute_name( :no_workflows ) %></th>
+          <th class="col-sm-1 hidden-print"><%= t( 'action_title.header' )%></th>
+        </tr>
+      </thead>
+      <tbody>
+      <% if @features.length.zero? %>
+          <%= render partial: 'shared/index_empty_row', locals:{ columns: 5, with_link: true }%>
+      <% else %>
+        <% @features.each do |f| %>
+          <% if @group != f.feature_category_id %>
+            <tr>
+              <td colspan="8"><strong><%= link_to( f.feature_category_with_id, f.feature_category )%></strong></td>
+            </tr>
+            <% @group = f.feature_category_id %>
+          <% end %>
+          <tr>
+            <td><%= f.to_id %></td>
+            <td><%= f.code %></td>
+            <td><%= f.label %></td>
+            <td><%= f.seqno %></td>
+            <td><%= f.access_level_label %></td>
+            <td><%= f.control_level_label %></td>
+            <td><%= f.no_workflows > 0 ? f.no_workflows : '-' %></td>
+            <td><%= render partial: 'shared/actions', object: f %></td>
+          </tr>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+    <%= render partial: 'shared/footer' %>
+  </div>
+</div>

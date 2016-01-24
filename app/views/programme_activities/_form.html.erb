@@ -1,0 +1,37 @@
+      <div class="form-group">
+        <%= form.label :id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-1">
+          <%= display_value form.object.id %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :project_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= form.text_field :project_id, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :activity_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= form.text_field :activity_id, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :activity_label, class: "col-sm-3 control-label" %>
+        <div class="col-sm-6">
+          <%= form.text_field :activity_label, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :start_date, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= form.text_field :start_date, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :finish_date, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= form.text_field :finish_date, class: "form-control" %>
+        </div>
+      </div>
+

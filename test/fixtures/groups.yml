@@ -1,0 +1,13 @@
+# Read about fixtures at http://api".rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+group_one:
+  code: "ONE"
+  label: "Group 1"
+  notes: ""
+  group_category: group_category_one
+
+group_two:
+  code:  "TWO"
+  label: "Group 2"
+  notes: ""
+  group_category: group_category_one

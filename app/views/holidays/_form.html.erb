@@ -1,0 +1,43 @@
+      <div class="form-group">
+        <%= form.label :id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-1">
+          <%= display_value form.object.id %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :country_name_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= form.collection_select :country_name_id, @country_names, :id, :code, { prompt: ( action_name == 'new' ? t( 'general.select_prompt' ) : true )}, { class: "form-control", required: true } %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :region_name_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= form.collection_select :region_name_id, @region_names, :id, :code, { prompt: ( action_name == 'new' ? t( 'general.select_prompt' ) : true )}, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :date_from, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= form.date_field :date_from, class: "form-control", required: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :date_until, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= form.date_field :date_until, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :description, class: "col-sm-3 control-label" %>
+        <div class="col-sm-5">
+          <%= form.text_field :description, class: "form-control", max_length: MAX_LENGTH_OF_DESCRIPTION, required: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :work, class: "col-sm-3 control-label" %>
+        <div class="col-sm-1">
+          <%= form.text_field :work, class: "form-control", required: true %>
+        </div>
+        <div class="help-block"><strong>%</strong></div>
+      </div>

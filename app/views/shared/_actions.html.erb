@@ -1,0 +1,54 @@
+<%#
+=begin
+
+ this partial inserts the default buttons for show/edit/delete/new;
+ it is normally used in HTML tables created by the index view as a
+ separate table cell.
+
+ Pass the item's id as object.
+
+ By default, routing is done for the current controller. By specifying
+ :use_model_route as local, routing will be done based on the objects
+ model_name.route_key. This is necessary for search results, where 
+ details will be found on the respective model's controllers...
+
+ The local parameter 'enable_buttons' can be used to specify which 
+ buttons should be enabled. This variable represents a bitmap where
+ the least significant bit (2**0) represents the show button,
+ the next significant bit (2**1) the edit button,
+ the next significant bit (2**2) the destroy button,
+ and the most significant bit (2**3) the new button.
+ For example: 9.to_s(2) = '1001' enables the show and the new button.
+ 
+ Example (from User view)
+
+ <td>< %= render partial: 'shared/action_links', 
+          object: @user, locals: { :use_model_route } % ></td>
+
+=end
+%>
+
+<div class="btn-group btn-group-xs hidden-print">
+  <%- route_key = defined?( use_model_route ) ? actions.model_name.route_key : controller_name -%>
+  <%- selector = defined?( enabled_buttons ) ? enabled_buttons : 0b1111 -%>
+  <%- unless selector & 0b0001 == 0 then -%>
+  	<%= link_to 'Q', url_for( action: :show, id: actions.id, controller: route_key ), class: 'btn btn-default btn-xs', title: t('action_title.show') %>
+  <%- else %>
+  	<%= button_tag 'Q', { type: 'button', class: 'btn btn-default btn-xs', title: t('action_title.show'), disabled: true } %>
+  <%- end %>
+  <%- unless selector & 0b0010 == 0 then -%>
+  	<%= link_to '/', url_for( action: :edit, id: actions.id, controller: route_key ), class: 'btn btn-default btn-xs', title: t('action_title.edit') %>
+  <%- else %>
+  	<%= button_tag '/', { type: 'button', class: 'btn btn-default btn-xs', title: t('action_title.edit'), disabled: true } %>
+  <%- end %>
+  <%- unless selector & 0b0100 == 0 then -%>
+	 	<%= link_to '-', url_for( action: :destroy, id: actions.id, controller: route_key ), method: :delete, data: { confirm: t('action_title.del_confirm' )}, class: 'btn btn-default btn-xs', title: t( 'action_title.delete' )%>
+	<%- else %>
+  	<%= button_tag '-', { type: 'button', class: 'btn btn-default btn-xs', title: t('action_title.delete'), disabled: true } %>
+  <%- end %>
+  <%- unless selector & 0b1000 == 0 then -%>
+  	<%= link_to '+', url_for( action: :new, controller: route_key ), class: 'btn btn-default btn-xs', title: t('action_title.add') %>
+  <%- else %>
+  	<%= button_tag '+', { type: 'button', class: 'btn btn-default btn-xs', title: t('action_title.add'), disabled: true } %>
+  <%- end %>
+</div>

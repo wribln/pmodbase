@@ -1,0 +1,8 @@
+<%= CSV.generate_line([
+  :code,
+  :label ], STD_CSV_OPTIONS ) -%>
+<%- @unit_names.each do |un| -%>
+<%= CSV.generate_line([
+  un.code,
+  un.label ], STD_CSV_OPTIONS ).html_safe -%>
+<%- end -%>

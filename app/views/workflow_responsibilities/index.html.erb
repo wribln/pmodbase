@@ -1,0 +1,45 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="table-responsive">
+    <%= form_tag({}, { method: :get }) do %>
+      <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th class="col-sm-1"><%= label_tag :feature_id,  Permission4Flow.human_attribute_name( :feature_id  ), class: 'control-label' %></th>
+            <th class="col-sm-1"><%= label_tag :workflow_id, Permission4Flow.human_attribute_name( :workflow_id ), class: 'control-label' %></th>
+            <th class="col-sm-2"><%= label_tag :label,       Permission4Flow.human_attribute_name( :label       ), class: 'control-label' %></th>
+            <th class="col-sm-2"><%= label_tag :task_list,   Permission4Flow.human_attribute_name( :tasklist    ), class: 'control-label' %></th>
+            <th class="col-sm-2"><%= label_tag :account_id,  Permission4Flow.human_attribute_name( :account_id  ), class: 'control-label' %></th>
+            <th class="col-sm-2"><%= label_tag :person_id,   Permission4Flow.human_attribute_name( :person_id   ), class: 'control-label' %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= "[#{ @filter_fields[ :fr_feature ]}]" unless @filter_fields.length.zero? -%></td>
+          <td colspan="2"><%= filter_single_select @filter_fields, :fr_feature, @feature_list, :label_with_id -%></td>
+          <td colspan="3"><%= filter_action_button -%></td>
+        </tr>
+        <% if @permissions.length.zero? %>
+          <%= render partial: 'shared/index_empty_row', locals: { columns: 6 }%>
+        <% else %>
+          <%- pf = nil -%>
+          <% @permissions.each do |p| %>
+            <tr>
+              <td>&nbsp;</td>
+              <td><%= p.workflow_id %></td>
+              <td><%= p.label %></td>
+              <td><%= p.tasklist %></td>
+              <td><%= link_to p.account.name_with_id, account_path( p.account_id ) unless p.account.nil? %></td>
+              <td><%= link_to p.account.person.name_with_id, person_path( p.account.person_id ) unless p.account.nil? || p.account.person_id.nil? %></td>
+            </tr>
+            <%- pf = p.feature_id -%>
+          <% end %>
+        <% end %>
+        </tbody>
+      </table>
+      <% end %>
+    <%= render partial: 'shared/footer' %>
+  </div>
+</div>

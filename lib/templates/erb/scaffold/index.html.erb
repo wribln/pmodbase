@@ -1,0 +1,34 @@
+<%%- page_title %>
+<div class="container">
+  <%%= breadcrumbs %>
+  <%%= form_title %>
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th>ID</th>
+<% attributes.each do |attribute| -%>
+          <th><%= attribute.human_name %></th>
+<% end -%>
+          <th><%%= t( 'action_title.header' )%></th>
+        </tr>
+      </thead>
+      <tbody>
+      <%% if @<%= plural_table_name %>.length.zero? %>
+        <%%= render partial: 'shared/index_empty_row', locals:{ columns: <%= attributes.count+1 %>, with_link: true }%>
+      <%% else %>
+        <%% @<%= plural_table_name %>.each do |<%= singular_table_name %>| %>
+          <tr>
+            <td><%%= <%= singular_table_name %>.id %></td>
+<% attributes.each do |attribute| -%>
+            <td><%%= <%= singular_table_name %>.<%= attribute.name %> %></td>
+<% end -%>
+            <td><%%= render partial: 'shared/actions', object: <%= singular_table_name %> %></td>
+          </tr>
+        <%% end %>
+      <%% end %>
+      </tbody>
+    </table>
+    <%%= render partial: 'shared/footer' %>
+  </div>
+</div>

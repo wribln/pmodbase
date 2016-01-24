@@ -1,0 +1,14 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  description: "Doer"
+  seqno: 1
+  group: group_one
+  person: person_one
+
+two:
+  description: "Maker"
+  seqno: 1
+  group: group_one
+  person: person_one
+

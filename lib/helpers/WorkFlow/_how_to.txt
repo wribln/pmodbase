@@ -1,0 +1,5 @@
+# ruby -i <filename>
+#
+#   where <filename> = 'wp_...' or 'wf_...'
+#
+# will create the respective output to the screen 

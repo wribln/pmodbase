@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+ppa_one:
+  project_id: project_one
+  activity_id: activity_one
+  activity_label: 'Activity No 1 - Prepare Document'
+  start_date: 2015-05-26
+  finish_date: 2015-07-30
+
+ppa_two:
+  project_id: project_one
+  activity_id: activity_two
+  activity_label: 'Activity No 2 - Submit Document'
+  start_date: 2016-07-31
+  finish_date: 2017-08-15

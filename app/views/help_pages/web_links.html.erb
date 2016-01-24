@@ -1,0 +1,21 @@
+<% help_title "Help on #{ WebLink.model_name.human }" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">This list contains important, project-relevant links to information and tools.</p>
+    <ul>
+      <li><%= help_param WebLink.human_attribute_name( :label ) -%> is
+      	the description of the link, and</li>
+      <li><%= help_param WebLink.human_attribute_name( :hyperlink ) -%> is
+     		the link to the item.</li>
+     	<li><%= help_param WebLink.human_attribute_name( :seqno ) -%> can be
+     		used to specify a sort order in which the links should be listed.<br/>
+     		All links with the same 
+     		<%= help_term WebLink.human_attribute_name( :seqno ) -%> will be
+     		listed in alphabetical order of the 
+     		<%= help_term WebLink.human_attribute_name( :label ) -%>, i.e. if
+     		no <%= help_term WebLink.human_attribute_name( :seqno ) -%> are
+     		specified, all links are in alphabetical order.</li>
+    </ul>
+    <%= help_footer FEATURE_ID_WEB_LINKS %>
+  </div> <!-- /container -->

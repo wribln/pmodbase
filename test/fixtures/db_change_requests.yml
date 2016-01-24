@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+dbcr_one:
+  req_account: account_one
+  resp_account:
+  feature_id:
+  detail:
+  action: 'test1'
+  status: 0
+  uri:
+  request_text: 'Text for first change request'
+
+dbcr_two:
+  req_account: account_wop
+  resp_account:
+  feature_id:
+  detail:
+  action: 'test2'
+  status: 0
+  uri:
+  request_text: 'Text for second change request'

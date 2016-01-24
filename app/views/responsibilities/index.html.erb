@@ -1,0 +1,36 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th><%= Responsibility.human_attribute_name( :id          )%></th>
+          <th><%= Responsibility.human_attribute_name( :group_id    )%></th>
+          <th><%= Responsibility.human_attribute_name( :seqno       )%></th>
+          <th><%= Responsibility.human_attribute_name( :description )%></th>
+          <th><%= Responsibility.human_attribute_name( :person_id   )%></th>
+          <th><%= t( 'action_title.header' )%></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @responsibilities.length.zero? %>
+          <%= render partial: 'shared/index_empty_row', locals: { columns: 5, with_link: true } %>
+        <% else %>
+          <% @responsibilities.each do |r| %>
+            <tr>
+              <td><%= r.to_id %></td>
+              <td><%= link_to r.group.code_with_id, group_path( r.group_id ) unless r.group_id.nil? %></td>
+              <td><%= r.seqno %></td>
+              <td><%= r.description %></td>
+              <td><%= r.person_id.zero? ? t( 'people.no_name_given' ) : ( link_to r.person.try( :name_with_id ), person_path( r.person_id ))%></td>
+              <td><%= render partial: 'shared/actions', object: r %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+    <%= render partial: 'shared/footer' %>
+  </div>
+</div>

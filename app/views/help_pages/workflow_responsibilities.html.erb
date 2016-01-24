@@ -1,0 +1,23 @@
+<% help_title "Help on Workflow Responsibilities" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">Find out who is responsible in workflows.</p>
+    <p>If you need to find out which person is responsible for a specific workflow
+      task, you can search here for all accounts which have a permission to modify
+      that workflow.</p>
+    <p>To use this form, select the feature to search for, and click 'Filter'.
+      The ID of the selected feature will be displayed next to the selection field.</p>
+    <p>The displayed records are filtered by the feature ID displayed to the left of
+      the selection field, i.e. if the ID left of the selection field does not match
+      the ID in the label of the selection field, you need to click 'Filter' in
+      order to update the listing.</p>
+    <ul>
+      <li><%= help_param Permission4Flow.human_attribute_name( :feature_id  ) -%></li>
+      <li><%= help_param Permission4Flow.human_attribute_name( :workflow_id ) -%></li>
+      <li><%= help_param Permission4Flow.human_attribute_name( :label       ) -%></li>
+      <li><%= help_param Permission4Flow.human_attribute_name( :tasklist    ) -%></li>
+      <li><%= help_param Permission4Flow.human_attribute_name( :account_id  ) -%></li>
+    </ul>
+    <%= help_footer FEATURE_ID_WORKFLOW_PERMISSIONS %>
+  </div> <!-- /container -->

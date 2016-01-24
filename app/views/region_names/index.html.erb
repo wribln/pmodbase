@@ -1,0 +1,44 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="table-responsive">
+    <%= form_tag({},{ method: :get, class: 'form-inline' }) do %>
+    <%= will_paginate @region_names %>
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th><%= label_tag :ff_id,       RegionName.human_attribute_name( :id              ), class: 'control-label' %></th>
+          <th><%= label_tag :ff_country,  RegionName.human_attribute_name( :country_name_id ), class: 'control-label' %></th>
+          <th><%= label_tag :ff_code,     RegionName.human_attribute_name( :code            ), class: 'control-label' %></th>
+          <th><%= label_tag :ff_label,    RegionName.human_attribute_name( :label           ), class: 'control-label' %></th>
+          <th><%= filter_action_title_header -%></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr <%= filter_row( @filter_fields ) -%>>
+          <td><%= filter_field @filter_fields, :ff_id,      :id -%></td>
+          <td><%= filter_multi_select @filter_fields, :ff_country, @country_names, :code -%></td>
+          <td><%= filter_field @filter_fields, :ff_code,    :sl -%></td>
+          <td><%= filter_field @filter_fields, :ff_label,   :sw -%></td>
+          <td><%= filter_action_button -%></td>
+        </tr>
+        <% if @region_names.length.zero? %>
+          <%= render partial: 'shared/index_empty_row', locals:{ columns: 4, with_link: true }%>
+        <% else %>
+          <% @region_names.each do |rn| %>
+            <tr>
+              <td><%= rn.to_id %></td>
+              <td><%= rn.country_code_with_id %></td>
+              <td><%= rn.code  %></td>
+              <td><%= rn.label %></td>
+              <td><%= render partial: 'shared/actions', object: rn %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+    <% end %>
+    <%= render partial: 'shared/footer' %>
+  </div>
+</div>

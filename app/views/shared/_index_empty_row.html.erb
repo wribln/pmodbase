@@ -1,0 +1,32 @@
+<%#
+=begin
+
+ this partial inserts an empty row for empty lists with a new button;
+ 
+ The following locals are needed:
+
+ columns:   number of columns to span the text
+ with_link: add a new link to the last/action column,
+            (optional, value not used, pass true or false)
+
+ Note: columns must not include extra column with_link (if requested)
+
+ Example (from User view)
+
+ <td>< %= render partial: 'shared/index_empty_row',
+ locals:{
+   columns: 3,
+   with_link: true
+   } % ></td>
+
+=end
+%>
+
+<tr>
+  <%=raw "<td colspan=\"#{columns}\">#{t ('action_title.empty_row')}</td>" %>
+  <% if defined?( with_link )and with_link %>
+  <td class="hidden-print"><div class="btn-group btn-group-xs">
+    <%= link_to '+', url_for( action: :new ), class: 'btn btn-default btn-xs', title: t('action_title.add') %>
+  </div></td>
+  <% end %>
+</tr>

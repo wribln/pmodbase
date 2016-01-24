@@ -1,0 +1,84 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="form-horizontal" role="form">
+    <%= form_for( @person, url: profile_path ) do |p| %>
+      <%= render partial: 'shared/errors', object: @person.errors %>
+      <div class="form-group">
+        <%= p.label :id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value p.object.id %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= p.label :formal_name, class: "col-sm-3 control-label" %>
+        <div class="col-sm-4">
+          <%= p.text_field :formal_name, class: "form-control", maxlength: MAX_LENGTH_OF_PERSON_NAMES %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= p.label :informal_name, class: "col-sm-3 control-label" %>
+        <div class="col-sm-4">
+          <%= p.text_field :informal_name, class: "form-control", maxlength: MAX_LENGTH_OF_PERSON_NAMES %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= p.label :email, class: "col-sm-3 control-label" %>
+        <div class="col-sm-4">
+          <%= p.email_field :email, class: "form-control", maxlength: MAX_LENGTH_OF_EMAIL_STRING %>
+        </div>
+      </div>
+      <%= render partial: 'people/account_header' %>
+      <%= p.fields_for :accounts, p.object.accounts.find( @user_id ) do |a| %>
+        <div class="form-group">
+          <%= a.label :name, class: "col-sm-3 control-label" %>
+          <div class="col-sm-4">
+            <%= a.text_field :name, class: "form-control", maxlength: MAX_LENGTH_OF_ACCOUNT_NAME, required: true %>
+          </div>
+        </div>
+        <div class="form-group">
+        <%= a.label :password, class: "col-sm-3 control-label" %>
+          <div class="col-sm-4">
+            <%= a.password_field :password, class: "form-control", maxlength: MAX_LENGTH_OF_PASSWORD %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= a.label :password_confirmation, t( 'accounts.password_conf' ), class: "col-sm-3 control-label" %>
+          <div class="col-sm-4">
+            <%= a.password_field :password_confirmation, class: "form-control", maxlength: MAX_LENGTH_OF_PASSWORD %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= a.label :keep_base_open, class: "col-sm-3 control-label" %>
+          <div class="col-sm-1">
+            <%= a.check_box :keep_base_open %>
+          </div>
+        </div>
+      <% end %>
+      <%= render partial: 'people/contact_info_header' %>
+      <% if p.object.contact_infos.empty? %>
+        <div class="form-group">
+          <div class="col-sm-offset-3 col-sm-4"><%= t( 'action_title.empty_row_x' ) %></div>
+        </div>
+      <% else %>
+        <%= p.fields_for :contact_infos, p.object.contact_infos.order( :info_type ) do |ci| %>
+          <%= render partial: 'people/contact_info', locals: { contact_info: ci, action_type: :edit_profile } %>
+        <% end %>
+      <% end %>
+      <%= render partial: 'people/contact_info_footer' %>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-2">
+          <%= p.submit class: "btn btn-lg btn-block btn-primary" %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to t( 'button_label.cancel' ), profile_path, class: "btn btn-lg btn-block btn-default" %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to_help :profile, t( 'button_label.help' ), class: "btn btn-lg btn-block btn-default" %>
+        </div>
+      </div>
+      
+    <% end %>
+  </div>
+</div>

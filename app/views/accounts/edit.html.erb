@@ -1,0 +1,85 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="form-horizontal" role="form">
+    <%= form_for @account do |a| %>
+      <%= render partial: 'shared/errors', object: @account.errors %>
+      <%= render partial: 'form', object: a %>
+      <!-- Heading for Permission4Group Records -->
+      <div class="form-group hidden-xs hidden-sm" style="margin-bottom:0px">
+        <div class="col-sm-1"><label><%= t( 'permission4_groups.action' )%></label></div>
+        <div class="col-sm-3"><label><%= Permission4Group.human_attribute_name( :feature_id )%></label></div>
+        <div class="col-sm-2"><label><%= Permission4Group.human_attribute_name( :group_id   )%></label></div>
+        <div class="col-sm-1"><label><%= Permission4Group.human_attribute_name( :to_index   )%></label></div>
+        <div class="col-sm-1"><label><%= Permission4Group.human_attribute_name( :to_create  )%></label></div>
+        <div class="col-sm-1"><label><%= Permission4Group.human_attribute_name( :to_read    )%></label></div>
+        <div class="col-sm-1"><label><%= Permission4Group.human_attribute_name( :to_update  )%></label></div>
+        <div class="col-sm-1"><label><%= Permission4Group.human_attribute_name( :to_delete  )%></label></div>
+      </div>
+      <!-- Divider Line -->
+      <div class="form-group">
+        <hr style="margin:0px"/>
+      </div>
+      <!-- Permission4Group Records -->
+      <%= a.fields_for :permission4_groups, a.object.permission4_groups.order( :feature_id, :group_id ) do |p| %>
+        <%= render partial: 'permission4g', locals: { permission4g: p } %>
+      <% end %>
+      <!-- button to add another permissions record -->
+      <%= a.fields_for :permission4_groups, @account.permission4_groups.new, { child_index: 'template' } do |p| %>
+        <%= render partial: 'permission4g', locals: { permission4g: p } %>
+      <% end %>
+      <div class="form-group form-group-sm">
+        <div class="col-sm-1">
+          <%= link_to '+', '#', class: 'btn btn-info btn-default btn-sm btn-block add-subform-button' %>
+        </div>
+        <label class="col-sm-4"><%= t( 'permission4_groups.add_label' )%></label>
+      </div>
+      <!-- Divider Line -->
+      <div class="form-group">
+        <hr style="margin:0px"/>
+      </div>
+      <!-- Heading for Permission4Flow Records -->
+      <div class="form-group hidden-xs hidden-sm" style="margin-bottom:0px">
+        <div class="col-sm-1"><label><%= t( 'permission4_flows.action' )%></label></div>
+        <div class="col-sm-3"><label><%= Permission4Flow.human_attribute_name( :feature_id )%></label></div>
+        <div class="col-sm-1"><label><%= Permission4Flow.human_attribute_name( :workflow_id   )%></label></div>
+        <div class="col-sm-3"><label><%= Permission4Flow.human_attribute_name( :label   )%></label></div>
+        <div class="col-sm-3"><label><%= Permission4Flow.human_attribute_name( :tasklist  )%></label></div>
+      </div>
+      <!-- Divider Line -->
+      <div class="form-group">
+        <hr style="margin:0px"/>
+      </div>
+      <!-- Permission4Flow Records -->
+      <%= a.fields_for :permission4_flows, a.object.permission4_flows.order( :feature_id, :workflow_id ) do |p| %>
+        <%= render partial: 'permission4f', locals: { permission4f: p } %>
+      <% end %>
+      <!-- button to add another permissions record -->
+      <%= a.fields_for :permission4_flows, @account.permission4_flows.new, { child_index: 'template' } do |p| %>
+        <%= render partial: 'permission4f', locals: { permission4f: p } %>
+      <% end %>
+      <div class="form-group form-group-sm">
+        <div class="col-sm-1">
+          <%= link_to '+', '#', class: 'btn btn-info btn-default btn-sm btn-block add-subform-button' %>
+        </div>
+        <label class="col-sm-4"><%= t( 'permission4_flows.add_label' )%></label>
+      </div>
+      <!-- Divider Line -->
+      <div class="form-group">
+        <hr style="margin:0px"/>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-2">
+          <%= a.submit class: "btn btn-lg btn-block btn-primary" %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to t( 'button_label.show' ), @account, class: "btn btn-lg btn-block btn-default" %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to t( 'button_label.goto_to_list' ), accounts_path, class: "btn btn-lg btn-block btn-default" %>
+        </div>
+      <div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <ol>
+    <%- (1..16).each do |i| -%>
+    <li><%= link_to t( "dsr_status_records.stats_#{ i }.form_title" ), dsr_statistics_detail_path( i )%></li>
+    <%- end -%>
+  </ol>
+  <%= render partial: 'shared/footer', locals: { cr_details: 'dsr_statistics', help_page: 'dsr_statistics' }%>
+</div>

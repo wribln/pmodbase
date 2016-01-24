@@ -1,0 +1,35 @@
+<% help_title "Help on #{ Address.model_name.human } " %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">The list of addresses provides information about the location of project entities or work locations.</p>
+    <p>The address Information contains two separate addresses:</p>
+    <ul>
+      <li>The <%= help_param Address.human_attribute_name( :street_address ) -%>
+        gives the information where to find the given location. These data
+        should be as specific as necessary to find the location on a map, or
+        as instruction to a driver.</li>
+      <li>The <%= help_param Address.human_attribute_name( :street_address ) -%>
+        must be used when sending mails or parcels via a postal service. This
+        address may contain Post Office Box numbers instead of street names
+        and building numbers. Sometimes, the same postal address is used for
+        different buildings or areas.</li>
+      <li>The <%= help_param Address.human_attribute_name( :label ) -%>
+        is a short name for the Address Information record. This description
+        should reflect the project entity or location as this is used in
+        various other records as short reference to the Address Information.</li>
+    </ul>
+    <p>Information related to the location of a specific department (building
+      number) or even a specific person should be saved in the Contact
+      Information Details of the respective person: There is are fields for
+      the Department Code and other Location Details. Each user of the system
+      can edit this information by updating his profile data (accessible on
+      the <%= link_to_help :base, 'Base Page' %>).</p>
+    <p>The Address Information is centrally maintained as it is linked to
+      various Contact Information records: Any change needs to be verified in
+      respect to all affected Contact Information records.</p>
+    <p>When providing Address Information, be sure to include the country name
+      in English. The English version of the address should always be first,
+      possibly followed by the localized version if required.</p>
+    <%= help_footer FEATURE_ID_ADDRESSES %>
+  </div> <!-- /container -->

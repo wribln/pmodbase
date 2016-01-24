@@ -1,0 +1,67 @@
+<% help_title 'Help Index' %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">Help pages provide information on a specific feature, 
+      project topic, or work flow.</p>
+    <p>The following topics currently available:</p>
+    <ul>
+      <li><%= link_to_help :abbreviations, Abbreviation.model_name.human -%></li>
+      <li><%= link_to_help :abbr_search, 'Abbreviations, Global Search' -%></li>
+      <li><%= link_to_help :accounts, Account.model_name.human -%></li>
+      <li><%= link_to_help :addresses, Address.model_name.human -%></li>
+      <li><%= link_to_help :base, 'Base Page' -%></li>
+      <li><%= link_to_help :db_change_requests, 'Change Requests, General' -%></li>
+      <li><%= link_to_help :my_change_requests, 'Change Requests, Personal' -%></li>
+      <li><%= link_to_help :contact_infos, 'Contact Information Records' -%></li>
+      <li><%= link_to_help :contact_lists, 'Contact List (for the project)' -%></li>
+      <li><%= link_to_help :csr_status_records, CsrStatusRecord.model_name.human -%></li>
+      <li><%= link_to_help :country_names, CountryName.model_name.human -%></li>
+      <li><%= link_to_help :statistics, 'Database Statistics' -%></li>
+      <li><%= link_to_help :dsr_status_records, DsrStatusRecord.model_name.human -%></li>
+      <li><%= link_to_help :dsr_doc_groups, DsrDocGroup.model_name.human -%></li>
+      <li><%= link_to_help :dsr_progress_rates, DsrProgressRate.model_name.human -%></li>
+      <li><%= link_to_help :dsr_statistics, 'DSR Statistics' -%></li>
+      <li><%= link_to_help :dsr_submissions, DsrSubmission.model_name.human -%></li>
+      <li><%= link_to_help :features, 'Features, General' -%></li>
+      <li><%= link_to_help :feature_access_control, 'Features, Access Control' -%></li>
+      <li><%= link_to_help :feature_categories, 'Features, Categories' -%></li>
+      <li><%= link_to_help :feature_responsibilities, 'Features, Responsibilities' -%></li>
+      <li><%= link_to_help :filter, 'Filter Functionality' -%></li>
+      <li><%= link_to_help :group_categories, 'Groups, Categories' -%></li>
+      <li><%= link_to_help :groups, 'Groups, General' -%></li>
+      <li><%= link_to_help :glossary_items, GlossaryItem.model_name.human -%></li>
+      <li>Help Functionality (this page)</li>
+      <li><%= link_to_help :help_general, 'Help on General Functionality' -%></li>
+      <li><%= link_to_help :holidays, Holiday.model_name.human -%></li>
+      <li><%= link_to_help :home, 'Home Page, Application Overview' -%></li>
+      <li><%= link_to_help :people, 'Personal Information, General' -%></li>
+      <li><%= link_to_help :profile, 'Personal Information, Own Profile' -%></li>
+      <li><%= link_to_help :programme_activities, ProgrammeActivity.model_name.human -%></li>
+      <li><%= link_to_help :phase_codes, 'Project Phases' -%></li>
+      <li><%= link_to_help :references, Reference.model_name.human -%></li>
+      <li><%= link_to_help :region_names, RegionName.model_name.human -%></li>
+      <li><%= link_to_help :responsibilities, Responsibility.model_name.human -%></li>
+      <li><%= link_to_help :rfc_documents, 'RfC Documents' -%></li>
+      <li><%= link_to_help :rfc_status_records, 'RfC Status Register' -%></li>
+      <li><%= link_to_help :siemens_phases, SiemensPhase.model_name.human -%></li>
+      <li><%= link_to_help :standards_bodies, StandardsBody.model_name.human -%></li>
+      <li><%= link_to_help :submission_groups, SubmissionGroup.model_name.human -%></li>
+      <li><%= link_to_help :my_tia_items, TiaItem.model_name.human + ' (all assigned to individual)'-%></li>
+      <li><%= link_to_help :our_tia_items, TiaItem.model_name.human + ' (all within a list)' -%></li>
+      <li><%= link_to_help :my_tia_lists, TiaList.model_name.human + ' (all managed by individual)' -%></li>
+      <li><%= link_to_help :all_tia_lists, TiaList.model_name.human + ' (all in system)' -%></li>
+      <li><%= link_to_help :our_tia_members, TiaMember.model_name.human -%></li>
+      <li><%= link_to_help :unit_names, UnitName.model_name.human -%></li>
+      <li><%= link_to_help :web_links, WebLink.model_name.human -%></li> 
+      <li><%= link_to_help :workflow_responsibilities, 'Workflow Responsibilities, General Help' -%></li>
+      <li><%= link_to_help :home, 'Welcome Page' -%></li>
+     </ul>
+    <p><strong>Note:</strong> Some of the listed features may not be available to you because of
+      access restrictions, or because they are for project site administrators only.</p>
+    <p>If you find any error on a help page, or if you have any suggestion
+      on how to improve the help system, please use the 'Request a Change'
+      feature on the bottom of the help page: This will open a dialog
+      allowing you to describe your proposal.</p>
+    <%= help_footer FEATURE_ID_HELP_PAGES %>
+  </div> <!-- /container -->

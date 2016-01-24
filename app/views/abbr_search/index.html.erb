@@ -1,0 +1,133 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="table-responsive col-sm-9">
+    <%= form_tag({}, { method: :get }) do %>
+    <table class="table table-hover table-bordered">
+      <thead>
+        <tr>
+          <th class="col-sm-2"><%= label_tag :as_abbr, Abbreviation.human_attribute_name( :code ), class: 'control-label' %></th>
+          <th class="col-sm-6"><%= label_tag :as_desc, Abbreviation.human_attribute_name( :description ), class: 'control-label' %></th>
+          <th class="col-sm-1 hidden-print"><%= t( 'action_title.header' ) -%></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= filter_field @filter_fields, :as_abbr, :sl -%></td>
+          <td><%= filter_field @filter_fields, :as_desc, :sw -%></td>
+          <td><%= filter_action_button -%></td>
+        </tr>
+        <% if @total_rows == 0 -%>
+          <%= render partial: 'shared/index_empty_row', locals: { columns: 3 }%>
+        <% end %>
+        <% unless @abbreviations.length.zero? -%>
+        <!-- abbreviations - - - - - - - - - -->
+          <tr>
+            <td class="td-subtitle" colspan="3"><%= t( '.list_source', table: Abbreviation.model_name.human )-%></td>
+          </tr>
+          <% @abbreviations.each do |a| %>
+          <tr>
+            <td><%= a.code %></td>
+            <td><%= a.description %></td>
+            <td><%= render partial: 'shared/actions', object: a, locals: { use_model_route: nil }  %></td>
+          </tr>
+          <% end -%>
+        <% end -%>
+        <% unless @glossary_items.length.zero? -%>
+        <!-- glossary - - - - - - - - - - - - -->
+          <tr>
+            <td class="td-subtitle" colspan="3"><%= t( '.list_source', table: GlossaryItem.model_name.human )-%></td>
+          </tr>
+          <% @glossary_items.each do |gi| %>
+          <tr>
+            <td><%= gi.code %></td>
+            <td><%= gi.term %></td>
+            <td><%= render partial: 'shared/actions', object: gi, locals: { use_model_route: nil }  %></td>
+          </tr>
+          <% end -%>
+        <% end -%>
+        <% unless @standards_bodies.length.zero? -%>
+        <!-- standards bodies - - - - - - - - - -->
+          <tr>
+            <td class="td-subtitle" colspan="3"><%= t( '.list_source', table: StandardsBody.model_name.human )-%></td>
+          </tr>
+          <% @standards_bodies.each do |sb| %>
+          <tr>
+            <td><%= sb.code %></td>
+            <td><%= sb.description %></td>
+            <td><%= render partial: 'shared/actions', object: sb, locals: { use_model_route: nil }  %></td>
+          </tr>
+          <% end -%>
+        <% end -%>
+        <% unless @phase_codes.length.zero? -%>
+        <!-- phase codes - - - - - - - - - -->
+          <tr>
+            <td class="td-subtitle" colspan="3"><%= t( '.list_source', table: PhaseCode.model_name.human )-%></td>
+          </tr>
+          <% @phase_codes.each do |p| %>
+          <tr>
+            <td><%= p.acro %></td>
+            <td><%= p.label %></td>
+            <td><%= render partial: 'shared/actions', object: p, locals: { use_model_route: nil }  %></td>
+          </tr>
+          <% end -%>
+        <% end -%>
+        <% unless @groups.length.zero? -%>
+        <!-- groups - - - - - - - - - -->
+          <tr>
+            <td class="td-subtitle" colspan="3"><%= t( '.list_source', table: Group.model_name.human )-%></td>
+          </tr>
+          <% @groups.each do |g| %>
+          <tr>
+            <td><%= g.code %></td>
+            <td><%= g.label %></td>
+            <td><%= render partial: 'shared/actions', object: g, locals: { use_model_route: nil } %></td>
+          </tr>
+          <% end %>
+        <% end %>
+        <% unless @country_names.length.zero? -%>
+        <!-- country names - - - - - - - - - -->
+          <tr>
+            <td class="td-subtitle" colspan="3"><%= t( '.list_source', table: CountryName.model_name.human )-%></td>
+          </tr>
+          <% @country_names.each do |cn| %>
+          <tr>
+            <td><%= cn.code %></td>
+            <td><%= cn.label %></td>
+            <td><%= render partial: 'shared/actions', object: cn, locals: { use_model_route: nil }  %></td>
+          </tr>
+          <% end %>
+        <% end %>
+        <% unless @region_names.length.zero? -%>
+        <!-- region names - - - - - - - - - -->
+          <tr>
+            <td class="td-subtitle" colspan="3"><%= t( '.list_source', table: RegionName.model_name.human )-%></td>
+          </tr>
+          <% @region_names.each do |rn| %>
+          <tr>
+            <td><%= rn.code %></td>
+            <td><%= rn.label %></td>
+            <td><%= render partial: 'shared/actions', object: rn, locals: { use_model_route: nil }  %></td>
+          </tr>
+          <% end %>
+        <% end %>
+        <% unless @unit_names.length.zero? -%>
+        <!-- unit names - - - - - - - - - -->
+          <tr>
+            <td class="td-subtitle" colspan="3"><%= t( '.list_source', table: UnitName.model_name.human )-%></td>
+          </tr>
+          <% @unit_names.each do |un| %>
+          <tr>
+            <td><%= un.code %></td>
+            <td><%= un.label %></td>
+            <td><%= render partial: 'shared/actions', object: un, locals: { use_model_route: nil } %></td>
+          </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+    <% end %>
+  <%= render partial: 'shared/footer' %>    
+  </div>
+</div>

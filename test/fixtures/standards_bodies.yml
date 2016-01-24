@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+din:
+  code: DIN
+  description: 'Deutsches Institut für Normung (German: German Institute for Standardization)'
+
+iso:
+  code: ISO
+  description: 'name of the International Organization for Standardization'

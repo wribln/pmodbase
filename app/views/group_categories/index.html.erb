@@ -1,0 +1,32 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="table-responsive col-sm-7">
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th class="col-sm-1"><%= GroupCategory.human_attribute_name( :id    ) %></th>
+          <th class="col-sm-4"><%= GroupCategory.human_attribute_name( :label ) %></th>
+          <th class="col-sm-1"><%= GroupCategory.human_attribute_name( :seqno ) %></th>
+          <th class="col-sm-1 hidden-print"><%= t( 'action_title.header'    ) %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @group_categories.length.zero? %>
+          <%= render partial: 'shared/index_empty_row', locals:{ columns: 3, with_link: true }%>
+        <% else %>
+          <% @group_categories.each do |gc| %>
+            <tr>
+              <td><%= gc.to_id %></td>
+              <td><%= gc.label %></td>
+              <td><%= gc.seqno %></td>
+              <td><%= render partial: 'shared/actions', object: gc %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+    <%= render partial: 'shared/footer' %>
+  </div>
+</div>

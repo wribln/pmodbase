@@ -1,0 +1,12 @@
+<% help_title "Help on #{ Template.model_name.human }" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">... lead text ...</p>
+    <h3>... subtitle ...</h3>
+    <p>... help text ...</p>
+    <ul>
+      <li><%= help_param Template.human_attribute_name( :code ) -%></li>
+    </ul>
+    <%= help_footer FEATURE_ID_TEMPLATE %>
+  </div> <!-- /container -->

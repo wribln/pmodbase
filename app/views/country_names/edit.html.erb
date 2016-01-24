@@ -1,0 +1,19 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="form-horizontal" role="form">
+    <%= form_for @country_name do |cn| %>
+      <%= render partial: 'shared/errors', object: @country_name.errors %>
+      <%= render partial: 'form', object: cn %>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-2">
+          <%= cn.submit class: "btn btn-lg btn-block btn-primary" %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to t( 'button_label.cancel' ), country_name_path( @country_name ), class: "btn btn-lg btn-block btn-default" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

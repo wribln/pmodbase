@@ -1,0 +1,53 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="table-responsive col-sm-11">
+    <%= form_tag({},{ method: :get }) do %>
+    <%= will_paginate @dsr_submissions %>
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th class='col-sm-1'><%= label_tag :ff_dsr,  DsrSubmission.human_attribute_name( :dsr_status_record_id      ), class: 'control-label' %></th>
+          <th class='col-sm-1'><%=                     DsrSubmission.human_attribute_name( :submission_no             )                         %></th>
+          <th class='col-sm-2'><%= label_tag :ff_sdoc, DsrSubmission.human_attribute_name( :submission_project_doc_id ), class: 'control-label' %></th>
+          <th class='col-sm-1'><%= label_tag :ff_sdat, DsrSubmission.human_attribute_name( :actl_submission           ), class: 'control-label' %></th>
+          <th class='col-sm-2'><%= label_tag :ff_rdoc, DsrSubmission.human_attribute_name( :response_project_doc_id   ), class: 'control-label' %></th>
+          <th class='col-sm-1'><%= label_tag :ff_rdat, DsrSubmission.human_attribute_name( :actl_response             ), class: 'control-label' %></th>
+          <th class='col-sm-2'><%= label_tag :ff_stat, DsrSubmission.human_attribute_name( :response_status           ), class: 'control-label' %></th>
+          <th class='col-sm-1 hidden-print'><%= filter_action_title_header -%></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr <%= filter_row( @filter_fields ) -%>>
+          <td><%= filter_field @filter_fields, :ff_dsr,   :id -%></td>
+          <td>&nbsp;</td>
+          <td><%= filter_field @filter_fields, :ff_sdoc,  :sw -%></td>
+          <td><%= filter_field @filter_fields, :ff_sdat,  :dv -%></td>
+          <td><%= filter_field @filter_fields, :ff_rdoc,  :sw -%></td>
+          <td><%= filter_field @filter_fields, :ff_rdat,  :dv -%></td>
+          <td><%= filter_select_from_string_set @filter_fields, :ff_stat, DsrSubmission::DSR_RESPONSE_STATUS_LABELS -%></td>
+          <td><%= filter_action_button -%></td>
+        </tr>
+      <% if @dsr_submissions.length.zero? %>
+        <%= render partial: 'shared/index_empty_row', locals:{ columns: 7, with_link: true }%>
+      <% else %>
+        <% @dsr_submissions.each do |s| %>
+          <tr>
+            <td><%= s.dsr_status_record.to_id %></td>
+            <td><%= s.submission_no %></td>
+            <td><%= s.submission_project_doc_id %></td>
+            <td><%= s.actl_submission %></td>
+            <td><%= s.response_project_doc_id %></td>
+            <td><%= s.actl_response %></td>
+            <td><%= s.response_status_label %></td>
+            <td><%= render partial: 'shared/actions', object: s %></td>
+          </tr>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+    <%- end -%>
+    <%= render partial: 'shared/footer' %>
+  </div>
+</div>

@@ -1,0 +1,671 @@
+code;description;sort_code
+2D;Two-Dimensional;2d
+3D;Three-Dimensional;3d
+AAQC;Ambient Air Quality Criteria;aaqc
+ABWF;Architectural Builder's Works and Finishes;abwf
+AC;Alternating Current;ac
+AC;Acceptance Certificate;ac
+ACDB;AC Distribution Board;acdb
+ACM;Asbestos Containing Materials;acm
+ACM;Axle Counter Module;acm
+ACMV;Air Conditioning and Mechanical Ventilation;acmv
+ACS;Access Control System;acs
+ACP;Asset Classification and Protection;acp
+AD;Active Directory;ad
+AEK;Auftragseingangskalkulation (German: Order Intake Calculation, Costing for Orders Received);aek
+AFR;Accident Frequency Rate;afr
+ALARP;As low as reasonably practicable;alarp
+a.m.;ante meridian (Latin: before noon);am
+AM;Automatic Mode;am
+AM;ante meridian (Latin: before noon)(preferred: a.m.);am
+AMH;Acceptable Maximum Headway;amh
+AP;Access Point;ap
+ARS;Automatic Route Setting;ars
+ART;Actual Repair Time;art
+AS;Australian Standard;as
+ATC;Automatic Train Control;atc
+ATK;Actual Train Kilometres;atk
+ATM;Automated Teller Machine;atm
+ATO;Automatic Train Operation;ato
+ATP;Automatic Train Protection;atp
+ATR;Automatic Train Route;atr
+ATRG;Automatic Train Regulation;atrg
+ATS;Automatic Train Supervision;ats
+ATT;Automatic Train Tracking;att
+ATTR;Actual Time to Repair;attr
+ATW;Automatic Train Wash;atw
+AVM;Add Value Machine;avm
+AW;Assigned Weight;aw
+BACS;Building Automation and Control System;bacs
+BCS;Building Control System;bcs
+BIIP;Best International Industry Practice;biip
+BIM;Building Information Modeling;bim
+BLE;Bluetooth Low Energy (Bluetooth Smart);ble
+BMS;Building Management System;bms
+BP;Building Plan;bp
+BPS;Bulk Power Supply;bps
+BPS;Bulk Power Substation;bps
+BS;British Standard;bs
+BS;Business Segment;bs
+BUEES;Bogie and Underframe Exchange System;buees
+B&W;Black and White;bw
+CAD;Computer-Aided Design;cad
+CB;Circuit Breaker;cb
+CBD;Convention on Biological Diversity;cbd
+CBI;Computer-Based Interlocking;cbi
+CBN;Common Bonding Network;cbn
+CBR;California Bearing Ration;cbr
+CBS;Cost Breakdown Structure;cbs
+CBTC;Communication-Based Train Control;cbtc
+C&C;Cut and Cover;cc
+CCB;Change Control Board;ccb
+CCRB;Contractors Construction Rule Book;ccrb
+CCTV;Closed-Circuit Television;cctv
+CDE;Common Data Environment;cde
+CDI;Command and Display Interface;cdi
+CE;Conformité Européenne (European Conformity);ce
+CED;Contract Effective Date;ced
+CEO;Chief Executive Officer;ceo
+CFD;Computational Fluid Dynamic;cfd
+CFO;Chief Financial Officer;cfo
+CIA;Central Intelligence Agency;cia
+CIE;Civil Infrastructure Engineer;cie
+CLK;Clock;clk
+CM;Corrective Maintenance;cm
+CNC;Computer Numerical Control;cnc
+CO2;Carbon Dioxide;co2
+COO;Chief Operation Officer;coo
+COSHH;Control of Substances Hazardous to Health;coshh
+COTS;Commercial Off-the-Shelf;cots
+COM;Commissioning Manager;com
+CR;Construction Reinforcement;cr
+CRE;Chances, Risks, Events;cre
+CRM;Customer Relationship Management;crm
+CRN;Calculated Railway Noise;crn
+CSA;Customer Service Area;csa
+CSD;Combined Service Drawing;csd
+CSD;Contract Signature Date;csd
+CSI;Common Safety Indicators;csi
+CSM;Common Safety Method;csm
+CSM;Central Systems Management;csm
+CSR;Central System Router;csr
+CST;Common Safety Target;cst
+CTO;Chief Technical Officer;cto
+CV;Curriculum Vita;cv
+CWR;Continuously Welded Rail;cwr
+D&B;Design and Build;db
+Dba;Decibels;dba
+DBI;Deutsche Bahn International (German: German Railroad International);dbi
+DC;Direct Current;dc
+DC;Data Center;dc
+DCDB;DC Distribution Board;dcdb
+DEP;Depot;dep
+DI;Degree of Implementation;di
+DMZ;Demilitarized Zone;dmz
+DNS;Domain Name System;dns
+DoC;Declaration of Conformity;doc
+DOORS;Dynamic Object Oriented Requirements System;doors
+DPS;Data Preparation System;dps
+DRACAS;Data Reporting and Corrective Action System;dracas
+DRN;Delivery Release Notification;drn
+DRN;Drainage;drn
+Drwg;Drawing;drwg
+DT;System Down Time;dt
+DTN;Data Transmission Network;dtn
+DTR;Delayed Train Runs;dtr
+DVC;Design Verification Certificate;dvc
+DVD;Digital Versatile Disk;dvd
+DVE;Design Verification Engineer;dve
+DVMS;Digital Video Management System;dvms
+DWA;Designated Waiting Area;dwa
+EA;European co-operation for Accreditation;ea
+EA;Engineer's Assistant;ea
+EAC;Estimate at Completion;eac
+EAL;Exposure Action Level;eal
+E&B;Earthing and Bonding;eb
+EB;Emergency Braking;eb
+EBB;Earthing Bus Bar;ebb
+EBDC;Emergency Brake Deceleration Curve;ebdc
+EBIC;Emergency Brake Intervention Curve;ebic
+EC;Emergency Call;ec
+EC;Earthing Cable;ec
+EC;European Commission;ec
+ECA;Export Credit Agency;eca
+ECC;Export Credit Coverage;ecc
+ECS;Emergency Call System;ecs
+EDMS;Electronic Document Management System;edms
+EDP;Emergency Driving Position;edp
+EDP;Emergency Driver Position;edp
+EEBADS;Earthed Equipotential Bonding and Automatic Disconnection of Supply;eebads
+EED;Emergency Evacuation Doors;eed
+EED;Emergency Escape Door;eed
+EFA;Entwicklung, Förderung, Anerkennung (German: Development, Promotion, Recognition)
+EFT;Electronic Funds Transfer;eft
+EHS;Environment, Health and Safety;ehs
+EHS;Environmental Protection, Health Management and Safety;ehs
+EHSMiP;EHS Manager in Projects;ehsmip
+EHV;Extra-High-Voltage;ehv
+EIA;Environmental Impact Assessment;eia
+ELCB;Earth Leakage Circuit Breakers;elcb
+EM;Electromagnetic;em
+EMC;Electromagnetic Compatibility;emc
+EMEA;Europe, Middle East, Africa (market area);emea
+EMF;Electromagnetic Field;emf
+EMI;Electro-Magnetic Interference;emi
+EMP;Environmental Management Plan;emp
+EMS;Environmental Management System;ems
+EMS;Energy Management Systems;ems
+EMU;Electrical Multiple Unit (electrically powered train);emu
+EN;European Norm;en
+EP;Electro-Pneumatic;ep
+EPC;Engineering, Procurement, Construction;epc
+ERP;Enterprise Resource Planning;erp
+ERTMS;European Rail Traffic Management System;ertms
+ESP;Emergency Stop Plunger;esp
+ETA;Event Tree Analysis;eta
+ETA;European Technical Approval;eta
+ETCS;European Train Control System;etcs
+ETEL;Emergency Telephone;etel
+EVA;Emergency Vehicle Access;eva
+EVMS;Earned Value Management System;evms
+EXIF;Exchangeable Image File;exif
+FAC;Factory Acceptance Certificate;fac
+FAC;Final Acceptance Certificate;fac
+FAI;First Article Inspection;fai
+FALKO;Fahrplan-Validierung und -Konstruktion (German: a tool for time table validation and construction);falko
+FAT;Factory Acceptance Test;fat
+FDD;Frequency Division Duplexing;fdd
+FDS;Fire Detection System;fds
+FEA;Finite Element Analysis;fea
+FMEA;Failure Mode and Effects Analysis;fmea
+FMECA;Failure Mode, Effects and Criticality Analysis;fmeca
+FOPS;Falling Objects Protection Structure;fops
+FRACAS;Failure Recording Analysis and Corrective Action System;fracas
+FRG;Financial Reporting Guidelines;frg
+FTA;Fault Tree Analysis;fta
+GAESC;Generic Application Safety Case;gaesc
+GAR;Geotechnical Appraisal Report;gar
+GASC;Generic Application Safety Case;gasc
+GCS;Graphical Configuration System;gcs
+GFR;Geotechnical Factual Report;gfr
+GGBFS;Ground Granulated Blast Furnace Slag;ggbfs
+GIR;Geotechnical Interpretation Report;gir
+GIS;Geographic Information System;gis
+GIS;Gas-Insulated Switchgear;gis
+GLC;General Logistics Coordinator;glc
+GmbH;Gesellschaft mit beschränkter Haftung (German: Limited/Private Liability Company);gmbh
+GoA;Grade of Automation;goa
+GPO;General Purpose Outlet;gpo
+GPS;Global Positioning System;gps
+GRP;Glass-Fibre Reinforced Plastic;grp
+GSAS;Global Sustainability Assessment System;gsas
+GSM;Global System for Mobile Communication;gsm
+GSM-R;Global System for Mobile Communication - Railway;gsmr
+GTT;GCS Templates Tool;gtt
+GUI;Graphical User Interface;gui
+ha;Hectare;ha
+HDV;Heavy Duty Vehicle;hdv
+HGV;Heavy Goods Vehicle;hgv
+HM;Homologation Manager;hm
+HMI;Human-Machine Interface;hmi
+HMSS;Heavy Mass-Spring System;hmss
+HQ;Headquarters;hq
+HR;Human Resources;hr
+HRB;High Resilient Base Plate;hrb
+HRF;High Resilient Fastener;hrf
+HRR;Heat Release Rate;hrr
+H&S;Health and Safety;hs
+HSCB;High-Speed Circuit Breaker;hscb
+HSE;Health, Safety and Environment;hse
+HSL;High Speed Line;hsl
+HSSE;Health, Safety, Security and Environment;hsse
+HV;High Voltage;hv
+HVAC;Heating, Ventiliation and Air Conditioning;hvac
+HVD;High Voltage Distribution;hvd
+HWTC;Hazardous Waste Treatment Centre;hwtc
+Hz;Hertz;hz
+IAF;International Accreditation Forum;iaf
+IBDAS;In-Building Distributed Antenna System;ibdas
+ICD;Interface Control Document;icd
+ICT;Information & Communication Technology;ict
+ID;Identification;id
+ID;Identifier;id
+IDC;Interdisciplinary Design Check;idc
+IDD;International Direct Dialling;idd
+IDP;Integrative Design Process;idp
+IDS;Intrusion Detection System;ids
+IDT;Incident Detection Time;idt
+IFBT;Integrated Factory Bench Test;ifbt
+IFC;Issued for Construction;ifc
+IFC;International Finance Coorporation;ifc
+IFM;Interface Management;ifm
+IHA;Interface Hazard Analysis;iha
+ILPA;Interim Logistics and Production Area;ilpa
+IMAPP;Integrated Management and Project Planning;imapp
+INFRA;Infrasture Project Manager;infra
+IP;Internet Protocol;ip
+IP;Ingress Protection;ip
+IPP;Independent Power Producer;ipp
+IPR;Intellectual Property Rights;ipr
+IR;Inspection Request;ir
+IRCA;International Register of Certified Auditors;irca
+IRMS;Integrated Risk Management Information System;irms
+IRMS;Integrated Risk Management System;irms
+IRS;Interface Requirements Specification;irs
+IRT;Incident Response Time;irt
+IRT;Incident Reaction Time;irt
+ISA;Independent Safety Assessor;isa
+ISDN;Integrated Services Digital Network;isdn
+ISM;Industrial Scientific and Medical;ism
+ISO;Independent System Operator;iso
+ISP;Internet Service Provider;isp
+ISU;Independent Safety Unit;isu
+ISWA;Independent Software Assessor;iswa
+IT;Information Technology;it
+ITT;Instruction to Tenderers;itt
+ITT;Invitation to Tender;itt
+IXL;Interlocking System;ixl
+JV;Joint Venture;jv
+km;kilometre(s);km
+km/h;kilometres per hour;kmh
+KPI;Key Performance Indicator;kpi
+KPR;Key Performance Requirements;kpr
+kV;kilovolts;kv
+LAN;Local Area Network;lan
+LCC;Life Cycle Cost;lcc
+LCP;Life Cycle Phase;lcp
+LD;Liquidated Damages;ld
+LD;Long Distance;ld
+LDR;Long Distance Railway;ldr
+LED;Light Emitting Diode;led
+LEED;Leadership in Energy and Environmental Design;leed
+LMSS;Light Mass-Spring System;lmss
+LNG;Liquified Natural Gas;lng
+LoA;Limits of Authority (a Siemens-internal process);loa
+LoD;List of Deliverables;lod
+LOP;List of Open Points;lop
+LOPA;Layers of Protection Analysis;lopa
+LoR;List of Responsibilities;lor
+LORA;Level of Repair Analysis;lora
+LoS;Line of Sight;los
+LOTO;Lock Out Tag Out;loto
+LOW;Local Operator Workstation;low
+LPA;Logistic Providing Area;lpa
+LPG;Liquefied Petroleum Gas;lpg
+LPM;Logistics Project Manager;lpm
+LPS;Lightning Protection System;lps
+LRT;Light Rail Transit (favoured);lrt
+LRU;Line Replaceable Unit;lru
+LTE;Long Term Evolution (a telephone and mobile broadband communication standard);lte
+LV;Low Voltage;lv
+LVD;Low Voltage Distriution;lvd
+LWR;Long Welded Rail;lwr
+LX;Level Crossing;lx
+m;metre;m
+MA;Movement Authority;ma
+MAC;Media Access Control;mac
+MAL;Movement Authority Limit;mal
+MART;Mean Active Repair Time;mart
+MATP;Manual Mode with ATP Support;matp
+MC;Motor Car;mc
+MCB;Miniature Circuit Breaker;mcb
+MCBN;Mesh Common Bonding Network;mcbn
+MCC;Motor Control Centre;mcc
+MCC;Main Compressor Contactor;mcc
+MCCB;Moulded Case Circuit Breaker;mccb
+MCR;(TVS) Motor Control Room;mcr
+MD2;Model (Two-Dimensional);md2
+MD3;Model (Three-Dimensional);md3
+MDBF;Mean Distance Between Failures;mdbf
+MDR;Model Rendition;mdr
+M&E;Mechanical and Electrical;me
+MEP;Mechanical, Electrical, Plumbing;mep
+MEWP;Mobile Elevating Work Platform;mewp
+MF;Manufacturing Manager;mf
+Mgmt;Management;mgmt
+MiKa;Mitkalkulation (German: Current Calculation or Concurrent Costing);mika
+MKBF;Mean Kilometres Between Failures;mkbf
+MM;Manual Mode;mm
+MM;Maintenance Manager;mm
+mm;Millimeter (SI unit of distance);mm
+MME;Measuring and Monitoring Equipment;mme
+MMS;Maintenance Management System;mms
+MO;Mobility (Division in Siemens);mo
+MPM;Maturity in Project Management;mpm
+MRS;Monthly Recurring Charge;mrs
+MRS;Monthly Recurring Cost;mrs
+MS;Microsoft;ms
+MSD;Motorized Smoke Damper;msd
+MSD;Motorized Sliding Door;msd
+MSDS;Material Safety Data Sheet;msds
+MSI;Manufacture, Supply and Install;msi
+MSI;Main Systems Integrator;msi
+MSP;Manager Supply Process;msp
+MSQ;Measured Service Quality;msq
+µT;Micro Tesla;mt
+MTA;Milestone Trend Analysis;mta
+MTBF;Mean Time between Failures;mtbf
+MTBFF;Mean Time Between Functional Failure;mtbff
+MTBSAF;Mean Time between Safety Affecting Failure;mtbsaf
+MTTF;Mean Time to Failure;mttf
+MTTR;Mean Time to Repair;mttr
+MTVS;Motorized Tunnel Ventilation Shaft;mtvs
+MU;Master Unit;mu
+MV;Medium Voltage;mv
+MVA;Mega-volt-ampere;mva
+MW;Megawatt (SI unit of power);mw
+NCR;Non-Conformance Report;ncr
+NCC;Non-Conformance Costs;ncc
+NCM;New Collaboration Model;ncm
+NF;Norme Française;nf
+NFC;Near Field Communication;nfc
+NGO;Non-Governmental Organizations;ngo
+NML;Noise Monitoring Location;nml
+NMS;Network Management System;nms
+NMU;Non-Motorized User;nmu
+NRP;Negative Return Panel;nrp
+NSR;Noise Sensitive Receiver;nsr
+NTP;Network Time Protocol;ntp
+NW;Network (should not be abbreviated);nw
+OBCU;Onboard Control Unit;obcu
+OBS;Organisational Breakdown Structure;obs
+OBU;On-Board Unit;obu
+OCC;Operations Control Centre;occ
+OCS;Overhead Catenary System;ocs
+OEC;Order Entry Calculation;oec
+OEM;Original Equipment Manufacturer;oem
+OF;Optical Fibre;of
+OFC;Optical Fibre Cables;ofc
+OHS;Occupational Health and Safety;ohs
+OHSAS;Occupational Health & Safety Assessment Series;ohsas
+OI;Order Income;oi
+OJEU;Official Journal of the European Union;ojeu
+O&M;Operations and Maintenance;om
+O&M;Operations and Maintenance Services Manager;om
+OOR;Operator's Operating Rulebook;oor
+OPG;Odometer Pulse Generator;opg
+OS;Operating System;os
+OSHA;Operating and Support Hazard Analysis;osha
+OSP;Operational Stopping Point;osp
+OTC;One-Time Cost;otc
+OTC;One-Time Charge;otc
+OTC;Over The Counter;otc
+OTE;Over-Track Exhaust;ote
+OU;Operating Unit/Organizational Unit;ou
+OWE;Overhaul Workshop Equipment;owe
+PA;Public Address;pa
+PABX;Private Automated Branch Exchange;pabx
+PAC;Partical Acceptance Certificate;pac
+PACT;Project Acceleration through Coaching and Teamwork;pact
+PAH;Polycyclic Aromatic Hydrocarbon;pah
+PAS;Passenger Announcement System;pas
+PBB;Polybromated Biphenyls;pbb
+PBT;Polybromated Tri-phenyls;pbt
+PC;Personal Computer;pc
+PCA;Project Cooperation Agreement;pca
+PCB;Polychlorinated Biphenyls;pcb
+PCB;Printed Circuit Board;pcb
+PCG;Parent Company Guarantee;pcg
+PCT;Polychlorinated Tri-phenyls;pct
+PCMB;Policy and Control Master Book;pcmb
+PDF;Portable Document Format;pdf
+PDir;Project Director;pdir
+PDI;Process Data Interface;pdi
+PED;Platform End Door (same as TAD - Tunnel Access Door);ped
+PEP;Program Execution Plan;pep
+PERT;Program Evaluation and Review Technique;pert
+PES;Passenger Entertainment System;pes
+PESC;Product Safety Case;pesc
+PI;Passenger Information;pi
+PID;Passenger Information Display;pid
+PIDS;Passenger Information Display System;pids
+PIS;Passenger Information System;pis
+PLC;Programmable Logic Controller;plc
+PLCP;Platform (Screen Door) Local Control Panel;plcp
+p.m.;post meridian (Latin: after noon);pm
+PM;post meridian (Latin: after noon)(preferred: p.m.);pm
+PM;Preventive Maintenance;pm
+PM;Particulate Matter;pm
+PM;Processor Module;pm
+PM;Project Management;pm
+PM;Project Manager;pm
+PMA+;Project Management Assessment;pma
+PMC;Project Management Consultant;pmc
+PME;Project Management Excellence;pme
+PMO;Project Management Office;pmo
+PMP;Program Management Plan;pmp
+PMP;Performance Management Process;pmp
+PMS;Performance Management System;pms
+PMTA;Project Management Target Agreement;pmta
+PO;Post Office;po
+PoA;Power of Attorney;poa
+PoC;Percentage of Completion;poc
+POI;Point of Interest;poi
+POP;Point of Protection;pop
+POPS;Project Operations Officer;pops
+POR;Point of Restriction;por
+PPE;Personal Protective Equipment;ppe
+PPM;Project Procedures Manual;ppm
+PPM;Project Procurement Manager;ppm
+PPM;Public Performance Measure;ppm
+PPR;Project Portfolio Report;ppr
+PQ;Pre-Qualification;pq
+PRCS;Power Remote Control System;prcs
+PSC;Product Safety Case;psc
+PSD;Platform Screen Door(s);psd
+PSL;Project Security Level;psl
+PSP;Projektstrukturplan (German: Work Breakdown Structure);psp
+PSS;Product and Solution Security;pss
+PSS/E;Power System Simulator for Engineering Tool;psse
+PSTN;Public Switched Telephone Network;pstn
+PTO;Purchase to Order;pto
+PTW;Permit to Work;ptw
+PTZ;Pan - Tilt - Zoom;ptz
+PVC;Polyvinylchloride;pvc
+QA;Quality Assurance;qa
+QCRA;Quantitative Cost Risk Analysis;qcra
+QG;Quality Gate;qg
+QHSE;Quality, Health, Safety, Environment;qhse
+QHSSE;Quality, Health, Safety, Security and Environment;qhsse
+QM;Quality Management;qm
+QMiP;Quality Manager in Projects;qmip
+QMS;Quality Management System;qms
+QSRA;Quantitative Schedule Risk Analysis;qsra
+R/A;Roundabout;ra
+R/O;Risks and Opportunities;ro
+RACI;Responsible, Accountable, Consulted and Informed;raci
+RAD;Radio;rad
+RAM;Reliability, Availability, Maintainability;ram
+RAMS;Reliability, Availability, Maintainability, Safety;rams
+RAUZ;Run Authorization Zone;rauz
+RB;Radio Backbone;rb
+RBD;Reliability Block Diagram;rbd
+RBM;Responsible Business Manager;rbm
+RBS;Risk Breakdown Structure;rbs
+RCD;Residual Current Device;rcd
+RCI;Reliability Critical Item;rci
+RCIL;Reliability Critical Items List;rcil
+RCS;Radio Communication System;rcs
+RD;Reference Design;rd
+REM;Requirements Management;rem
+RF;Radio Frequency;rf
+RFID;Radio Frequency Identification;rfid
+RFM;Remote Failures Monitoring;rfm
+RIM;Risk Management;rim
+RM;Risk Management;rm
+RM;Restricted Manual Mode;rm
+RM;Restricted Mode;rm
+RMC;Rail Movements Control;rmc
+RMP;Risk Management Plan;rmp
+RMS;Risk Management System;rms
+RMS;Requirements Management System;rms
+ROM;Read-Only Memory;rom
+ROP;Road Opening Permit;rop
+ROPS;Roll Over Protection Structure;rops
+R&P;Record and Playback;rp
+RPE;Respiratory Protective Equipment;rpe
+RSL;Regional Screening Level;rsl
+RSPC;Recommended Speed Curve;rspc
+R&TTE;Radio and Telecommunications Terminal Equipment;rtte
+RTU;Remote Terminal Unit;rtu
+RU;Regional Unit;ru
+RW;Read-Write;rw
+S1FR;System Level 1 Failure Rate;s1fr
+SADG;Standby Automatic Diesel Generator;sadg
+SAESC;Specific Applications Safety Case;saesc
+SAF;Service Affecting Failure;saf
+SAP;System Assurance Plan;sap
+SASC;Specific Application Safety Case;sasc
+SAT;System Acceptance Test;sat
+SBS;System Breakdown Structure;sbs
+SCA;Electrical, Mechanical Management Information (Subsystem Code);sca
+SCADA;Supervisory Control and Data Acquisition;scada
+SCI;Safety Critical Item;sci
+SCIL;Safety Critical Items List;scil
+SCM;Supply Chain Management;scm
+SCR;Station Control Room;scr
+S&D;Service (Information) and Diagnostics (System);sd
+SE;Service Engineering Manager;se
+SEC;Security;sec
+SEM;Structural, Electrical and Mechanical;sem
+SPM;Senior Project Manager;spm
+SFR;System Failure Rate;sfr
+SIFIT;Static Integrated Factory Interface Test;sifit
+SIIT;Static Integrated Interface Test;siit
+SIL;Safety Integrity Level;sil
+SIM;Security Identity Module;sim
+SIM;System Integration Manager;sim
+SiNFA;Siemens Network for Frame Agreements;sinfa
+SIP;Session Initiation Protocol;sip
+SLA;Service Level Agreement;sla
+SM;Sleep Mode;sm
+SM;Supervised (Train Operating) Mode;sm
+SMB;Server Message Block (communication protocol);smb
+SMP;Standards, Methods and Procedures;smp
+SMR;Station Master Room;smr
+SMS;Short Message Service;sms
+SMTP;Simple Mail Transfer Protocol;smtp
+SNMP;Simple Network Management Protocol;snmp
+S/No.;Serial Number;sno
+SO;Site Office;so
+SONO;Statement of No Objection;sono
+SoW;Scope of Work;sow
+SPS;Station Power Supply;sps
+SPS;Station Power Substation;sps
+SQA;Service Quality Audit;sqa
+SQI;Service Quality Indicator;sqi
+SQIP;Service Quality Indicator Point;sqip
+SRS;Structural and Rail Systems;srs
+ST;Scheduled (Number of) Trains (Available);st
+STK;Scheduled Train Kilometres;stk
+STR;Scheduled Train Runs;str
+SWL;Safe Working Load;swl
+t;(metric) tonne;t
+TAD;Tunnel Access Door (same as PED - Platform End Door);tad
+TBM;Tunnel Boring Machine;tbm
+T&C;Terms and Conditions;tc
+T&C;Testing and Commissioning;tc
+TCC;Temporary Control Center;tcc
+TCD;Traffic Control Devices;tcd
+TCMS;Train Control and Monitoring System;tcms
+TCN;Train Communication Network;tcn
+TD;Track Distance;td
+TDB;Track Database;tdb
+TDP;Traffic Diversion Plan;tdp
+TDS;Total Dissolved Solids;tds
+TDSOO;Transmission and Distribution System Owner and Operator;tdsoo
+TEL;Telecommunications;tel
+TEL;Telephone;tel
+TEN;Trans-European Networks;ten
+TETRA;Terrestrial Trunked Radio;tetra
+TGMT;Trainguard Mass Transit;tgmt
+TI/CPI;Transparency International/Corruption Perceptions Index;ticpi
+TILOS;Time Location System (name of a software package);tilos
+TL;Typical Layout;tl
+TLT;Turbo Lufttechnik (German: Turbo Air Technology, part of the company name: TLT Turbo GmbH);tlt
+TM;Tracking Map;tm
+TM;Technical Manager;tm
+TMA;Truck Mounted Attenuator;tma
+TMD;Traffic Management Drawing;tmd
+TMS;Train Management System;tms
+TOC;Taking-Over Certificate;toc
+TOR;Top of Rail;tor
+TOR;Terms of Reference;tor
+TPH;Traction Parallel Hut;tph
+TPN;Triple Pole Neutral;tpn
+TPS;Traction Power Supply;tps
+TPS;Traction Power Supply Substation;tps
+TPS;Traction Power Substation;tps
+TPS/CS;Traction Power Supply / Contact System;tpscs
+TQC;Testing & Quality Certification;tqc
+TR;Technical Report;tr
+TRA;Technical Risk Assessment;tra
+TS;Technical Specification;ts
+Ts&Cs;Terms and Conditions;tscs
+TSI;Technical Specification for Interoperability;tsi
+TSM;Trusted Service Manager;tsm
+TSQ;Target Service Quality;tsq
+TSR;Temporary Speed Restriction;tsr
+TTM;Temporary Traffic Management;ttm
+TTS;Train and Track Database Server;tts
+TTS;Tunnel Transformer Substation;tts
+TU;Train Unit;tu
+TVD;Track Vacancy Detection;tvd
+TVM;Ticket Vending Machine;tvm
+UG;Underground;ug
+UGTMS;Urban Guided Transport Management and Command/Control Systems;ugtms
+UIP;Urban Interface Plan;uip
+UK;United Kingdom of Great Britain and Northern Ireland;uk
+UL;Underwriters Laboratories;ul
+UMTS;Universal Mobile Telecommunications System;umts
+UNEP;United Nations Environmental Programme;unep
+UNESCO;United Nations Educational, Scientific and Cultural Organization;unesco
+UPE;Under-Platform Exhaust;upe
+UPS;Uninterruptible Power Supply;ups
+US;United States (of America);us
+USA;United States of America;usa
+UT;System Up Time;ut
+UTO;Unattended Train Operation (driverless);uto
+UV;Ultraviolett;uv
+UWL;Underfloor Wheel Lathe;uwl
+VAC;Ventilation and Air Conditioning;vac
+VADS;Value Added Digitized Services;vads
+VAL;Véhicule Automatique Léger (French driverless metro system);val
+VAS;Value Added Services;vas
+VCM;Value Chain Member;vcm
+VDU;Video Display Unit;vdu
+VE;Value Engineering;ve
+VIP;Very Important Person;vip
+VM;Value Management;vm
+VM/VE;Value Management / Value Engineering;vmve
+VOC;Volatile Organic Compound;voc
+VoIP;Voice over Internet Protocol;voip
+VPF;Value of Preventing a Fatality;vpf
+VPN;Virtual Private Network;vpn
+WAN;Wide Area Network;wan
+WBCD;Wheel, Brake Pad and Current Collector Shoe Diagnostics;wbcd
+WBGT;Wet Bulb Globe Temperature;wbgt
+WBS;Work Breakdown Structure;wbs
+WCMC;World Conservation Monitoring Centre;wcmc
+WCN;Wayside Communication Network;wcn
+WCU;Wayside Control Unit;wcu
+WD;Wheel Diagnostic;wd
+WiFi;Wireless Fidelity;wifi
+WILD;Wheel Impact Load Detection;wild
+WINS;Windows Internet Name Service;wins
+WIP;Work in Progress;wip
+WLAN;Wireless Local Area Network;wlan
+WLL;With Limited Liability (a suffix to company names);wll
+WM;Washing Movement;wm
+WM;Washing Mode;wm
+WPC;World Project Controller;wpc
+WRS;Wheel Reprofiling System;wrs
+WSP;Wheel Slip / Slide / Spin Protection;wsp
+WSPC;Warning Speed Curve;wspc
+WZ;Work Zone;wz
+WZTMG;Work Zone Traffic Management Guide;wztmg
+WZTMS;Work Zone Traffic Management System;wztms
+XML;Extensible Markup Language;xml
+XSD;XML Schema Definition;xsd
+ZRG;Zentrale Regeln im Geschäftsverkehr (German: Coporate Business Procedures)
+ZVI;Zone of Visual Influence;zvi

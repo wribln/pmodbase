@@ -1,0 +1,14 @@
+<% help_title "Help on My Change Requests"%>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">This feature allows you to request a correction or other changes
+      for those items for which you have no respective change permission or access
+      to.</p>
+    <p>The system has collected already information from where you have called
+      this form and has some fields filled out for you. Please fill out the 
+      <%= help_param DbChangeRequest.human_attribute_name( :request_text ) -%>
+      field with as much detail as possible. This will ease the correction of
+      the problem and speed up the process to resolve any issues.</p>
+    <%= help_footer FEATURE_ID_MY_CHANGE_REQUESTS %>
+  </div> <!-- /container -->

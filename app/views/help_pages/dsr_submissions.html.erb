@@ -1,0 +1,72 @@
+<% help_title "Help on #{ DsrSubmission.model_name.human }" %>
+<%# NOTE: make sure that any changes here are reflected in the DSR Status Record help %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">For each individual submission of a document, a separate record of this type is created
+      and maintained until the response of that submission was received.</p>
+    <h3>Attributes</h3>
+    <p>The following attributes will be collected per submission:</p>
+    <ul>
+      <li><%= help_param DsrSubmission.human_attribute_name( :id ) -%> is the unique
+        identifier for this record.</li>
+      <li><%= help_param DsrSubmission.human_attribute_name( :dsr_status_record_id ) -%>
+        is the link to the document submitted.</li>
+      <li><%= help_param DsrSubmission.human_attribute_name( :submission_no ) -%> is the
+        sequence number of the submission for the given document; this first submission
+        would have the number '1', the next '2', and so on.</li>
+      <li><%= help_param DsrSubmission.human_attribute_name( :sender_doc_id_version ) -%>
+        contains the version identifier of the submitted document. This shall be the
+        version within the <em>sender's</em> document management system which - together with
+        the <%= help_term DsrStatusRecord.human_attribute_name( :sender_doc_id ) -%> -
+        unambigously identifies the document being or having been submitted.</li>
+      <li><%= help_param DsrSubmission.human_attribute_name( :receiver_doc_id_version ) -%>
+        contains the version identifier of the submitted document. This shall be the
+        version within the <em>receiver's</em> document management system which - together with
+        the <%= help_term DsrStatusRecord.human_attribute_name( :receiver_doc_id ) -%> -
+        unambigously identifies the document being or having been submitted.</li>
+      <li><%= help_param DsrSubmission.human_attribute_name( :project_doc_id_version ) -%>
+        contains the version identifier of the submitted document. This shall be the
+        version within the <em>project's</em> document management system which - together with
+        the <%= help_term DsrStatusRecord.human_attribute_name( :project_doc_id ) -%> -
+        unambigously identifies the document being or having been submitted.</li>
+      <li><%= help_param DsrSubmission.human_attribute_name( :submission_receiver_doc_id ) -%>
+        is the <em>receiver's</em> document identifier of the submission cover letter.</li>
+      <li><%= help_param DsrSubmission.human_attribute_name( :submission_project_doc_id ) -%>
+        is the <em>project's</em> document identifier of the submission cover letter.</li>
+      <li><%= help_param DsrSubmission.human_attribute_name( :response_sender_doc_id ) -%>
+        is the <em>sender's</em> document identifier of the response letter.</li>
+      <li><%= help_param DsrSubmission.human_attribute_name( :response_project_doc_id ) -%>
+        is the <em>project's</em> document identifier of the response letter.</li>
+      <li><%= help_param DsrSubmission.human_attribute_name( :plnd_submission ) -%>
+        is the originally planned date for this submission, normally carried over from the
+        <%= help_term DsrStatusRecord.human_attribute_name( :estm_submission ) -%>
+        (for the first submission) or from the
+        <%= help_term DsrStatusRecord.human_attribute_name( :next_submission ) -%>
+        (for subsequent submissions) from the 
+        <%= link_to_help :dsr_status_records, DsrStatusRecord.model_name.human -%>.</li>
+      <li><%= help_param DsrSubmission.human_attribute_name( :actl_submission ) -%>
+        is set to the actual date of the submission. Note: It should be agreed for the
+        project which date should be used here, the date when the document was sent
+        by the project team, or the date when the document was received at the 
+        receipient's site (possibly with a receipt).</li>
+      <li><%= help_param DsrSubmission.human_attribute_name( :xpcd_response ) -%>
+        is to hold the date when the response from the other party is expected. Normally,
+        there is an agreed time frame, during which we can expect a response to any
+        submission. This date should be entered here in order to be able to search for
+        any submissions where the response is overdue. While editing a DSR Submission
+        data record, an extra field <%= help_param DsrSubmission.human_attribute_name(
+        :xpcd_response_delta )-%> is available where you can specify a number of days
+        to be added to the given <%= help_term DsrSubmission.human_attribute_name(
+        :xpcd_response )-%> or to today's date (if 
+        <%= help_term DsrSubmission.human_attribute_name( :xpcd_response )-%> is empty).</li>
+      <li><%= help_param DsrSubmission.human_attribute_name( :actl_response ) -%>
+        is used after having received the answer of that submission.</li>
+      <li><%= help_param DsrSubmission.human_attribute_name( :response_status ) -%>
+        needs to be filled out with the official review/approval status as listed in
+        the response letter. This status will be carried over the overall 
+        <%= help_term DsrSubmission.human_attribute_name( :document_status ) -%>
+        within the <%= link_to_help :dsr_status_records, DsrStatusRecord.model_name.human -%>.</li>
+    </ul>
+    <%= help_footer FEATURE_ID_DSR_SUBMISSIONS %>
+  </div> <!-- /container -->

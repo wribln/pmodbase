@@ -1,0 +1,35 @@
+<% help_title "Help on #{ DbChangeRequest.model_name.human }"%>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">Change requests on the contents of the PMO-Database are managed here:</p>
+    <ul>
+      <li><%= help_param DbChangeRequest.human_attribute_name( :requesting_account_id ) -%>
+        is the account id of the originator</li>
+      <li><%= help_param DbChangeRequest.human_attribute_name( :responsible_account_id ) -%>
+        is the account id of the person assigned to clarify and resolve that change request.</li>
+      <li><%= help_param DbChangeRequest.human_attribute_name( :feature_id ) -%>
+        identifies the affected feature.</li>
+      <li><%= help_param DbChangeRequest.human_attribute_name( :detail ) -%>
+        contains further details on the automatically generated change request:
+        <ul>
+          <li>requests from an index page (via footer link) will show here the
+            name of the controller;</li>
+          <li>if the change request was generated because a user attempted to
+            access a feature with having the necessary permissions, this field
+            would contain the respective record id;</li>
+          <li>change requests for help pages contain the title of the help
+            page (as used in the path) as detail information.</li>
+        </ul>
+      <li><%= help_param DbChangeRequest.human_attribute_name( :action ) -%>
+        is the name of the (internal) action where this request was originated
+        from (index, show, ...)</li>
+      <li><%= help_param DbChangeRequest.human_attribute_name( :status ) -%>
+        documents the status of the change request: This can be new, open,
+        waiting, closed.</li>
+      <li><%= help_param DbChangeRequest.human_attribute_name( :uri ) -%>
+        contains the complete html request.</li>
+      <li><%= help_param DbChangeRequest.human_attribute_name( :request_text ) -%>
+        finally should show the details of the requests from the user.</li>
+    <%= help_footer FEATURE_ID_DB_CHANGE_REQUESTS %>
+  </div> <!-- /container -->

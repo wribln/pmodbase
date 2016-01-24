@@ -1,0 +1,84 @@
+<% help_title "Help on #{ Holiday.model_name.human }"%>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">Holidays are days set aside by custom or by law on which
+      normal activities, especially business or work, are suspended or
+      reduced.</p>
+    <p>This table shows holidays for the various countries (and regions) 
+      where project partners are involved. These dates are used for planning
+      and collaboration considerations.</p>
+    <p>Each holiday (a single day or a period) is described by various
+      parameters:
+    <ul>
+      <li><%= help_param Holiday.human_attribute_name( :date_from ) -%>
+        determines the first (or only) day of the holiday (period). This date
+        is required. If this date is an estimation, you could mark this using
+        the prefix 'est.' in the 
+        <%= help_param Holiday.human_attribute_name( :description ) -%>
+        field. For more information on the input of dates, see 
+        <%= link_to_help :help_general, 'Help on General Functionality' -%></li>
+      <li><%= help_param Holiday.human_attribute_name( :date_until ) -%>
+        determines the last day of the holiday period. If nothing is entered
+        in this field, the
+        <%= help_param Holiday.human_attribute_name( :date_from ) -%>
+        will be used as default. Thus, both fields will be set before the
+        record is stored in the database.<br/>
+        <strong>Important Note:</strong>The dates in the fields
+        <%= help_param Holiday.human_attribute_name( :date_from ) -%>
+        and 
+        <%= help_param Holiday.human_attribute_name( :date_until ) -%>
+        must be within the same year to ease filtering of records.</li>
+      <li>Set the <%= help_param Holiday.human_attribute_name( :country_name_id ) -%>
+        field to the country for which this holiday applies to. If there
+        is more than one country observing this holiday, each country must be
+        listed separately so a complete list of all holidays in a country can
+        be generated.</li>
+      <li>If the holiday is only observed in a specific region of the country,
+        set the
+        <%= help_param Holiday.human_attribute_name( :region_name_id ) -%>
+        to the region within the country for which this holiday applies to.
+        The values for this field are defined in the
+        <%= link_to_help :region_names, RegionName.model_name.human -%> table.</li>
+      <li>The
+        <%= help_param Holiday.human_attribute_name( :description ) -%>
+        shall contain the name of the holiday, both in the local language and
+        in English: Use a similar format as for abbreviations, i.e.<br/>
+        &lt;local name&gt; (&lt;Language&gt;: &lt;English name&gt;)<br/>
+        for example:<br/>
+        Ostersonntag (German: Easter Sunday)<br/>
+        This may look redundant at first as the language is apparent from the
+        country to which this holiday applies to but this scheme is consistent
+        with the use of other foreign language terms.<br/>
+        If the date of the holiday is an estimate (e.g. holidays which depend
+        on local conditions, such as certain islamic holidays), append 'est.'
+        to the <%= help_term Holiday.human_attribute_name( :description ) -%>.</li>
+      <li>Use the <%= help_param Holiday.human_attribute_name( :work ) -%>
+        field to indicate if this should be considered as a non-working day (0),
+        a normal working day (100), or as working-day with &lt;n&gt; percent
+        of the normal working hours (when planning activities in that region or
+        country).</li>
+    </ul>
+    <p>In the <%= t( 'holidays.index.form_title' )-%> some fields are combined to
+      ease the comprehension of the information:</p>
+    <ul>
+      <li><%= help_param Holiday.human_attribute_name( :period ) -%>
+        contains a single date if both
+        <%= help_param Holiday.human_attribute_name( :date_from ) -%>
+        and
+        <%= help_param Holiday.human_attribute_name( :date_until ) -%>
+        are the same, or the combination of both dates with the duration in
+        days as suffix in parentheses.</li>
+      <li>The <%= help_param Holiday.human_attribute_name( :region ) -%>
+        contains the combination of the
+        <%= help_param Holiday.human_attribute_name( :country_name_id ) -%>
+        and
+        <%= help_param Holiday.human_attribute_name( :region_name_id ) -%>
+        fields.</li>
+    </ul>
+    <p>On the <%= help_param t( 'holidays.show.form_title' ) -%> form,
+      you can use the <%= help_param t( 'helpers.submit.add' ) -%> button
+      to open a form preset with the current record's data: This can make it easy
+      to repeatedly adding holidays with similar information.</p>
+    <%= help_footer FEATURE_ID_HOLIDAYS %>
+  </div> <!-- /container -->

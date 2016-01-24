@@ -1,0 +1,38 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="table-responsive col-sm-12">
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th class="col-sm-1"><%= TiaList.human_attribute_name( :id                ) %></th>
+          <th class="col-sm-1"><%= TiaList.human_attribute_name( :code              ) %></th>
+          <th class="col-sm-3"><%= TiaList.human_attribute_name( :label             ) %></th>
+          <th class="col-sm-2"><%= TiaList.human_attribute_name( :owner_account_id  ) %></th>
+          <th class="col-sm-2"><%= TiaList.human_attribute_name( :deputy_account_id ) %></th>
+          <th class="col-sm-2"><%= TiaList.human_attribute_name( :members           ) %></th>
+          <th class="col-sm-1 hidden-print"><%= t( 'action_title.header' )%></th>
+        </tr>
+      </thead>
+      <tbody>
+      <% if @tia_lists.length.zero? %>
+        <%= render partial: 'shared/index_empty_row', locals:{ columns: 6, with_link: true }%>
+      <% else %>
+        <% @tia_lists.each do |tl| %>
+          <tr>
+            <td><%= tl.to_id %></td>
+            <td><%= tl.code %></td>
+            <td><%= tl.label %></td>
+            <td><%= link_to tl.owner_account.name_with_id,  account_path( tl.owner_account_id  ) unless tl.owner_account.nil?  %></td>
+            <td><%= link_to tl.deputy_account.name_with_id, account_path( tl.deputy_account_id ) unless tl.deputy_account.nil? %></td>
+            <td><%= tl.members %></td>
+            <td><%= render partial: 'shared/actions', object: tl %></td>
+          </tr>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+    <%= render partial: 'shared/footer' %>
+  </div>
+</div>

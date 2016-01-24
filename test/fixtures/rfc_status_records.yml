@@ -1,0 +1,10 @@
+rfc_one:
+  rfc_type:               0
+  asking_group:
+  answering_group:
+  title:                  ''
+  project_doc_id:         ''
+  asking_group_doc_id:    ''
+  answering_group_doc_id: '' 
+  current_status:         0
+  current_task:           1

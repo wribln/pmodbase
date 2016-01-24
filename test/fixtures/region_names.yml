@@ -1,0 +1,12 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+mvp:
+  country_name: ger
+  code:         MV
+  label:       'Mecklenburg-Vorpommern'
+
+byn:
+  country_name: ger
+  code:         BY 
+  label:        Bayern
+  

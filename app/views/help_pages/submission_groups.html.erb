@@ -1,0 +1,22 @@
+<% help_title "Help on #{ SubmissionGroup.model_name.human }" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">Group submissions for reporting and controlling purposes.</p>
+    <p>A submission group is defined arbitrarily to group certain submissions
+    	(documents) for reporting and controlling. Statistics in the 
+    	Document Status Register (DSR) will be reported using these groups.
+    	The status of each group is aggregated from the status of the
+    	individual documents assigned to the respective group.</p>
+    <p>Be aware that this grouping is available in addition to the other
+      attributes of DSR records, i.e. you can categorize here submissions
+      by design phases (e.g. 'PD - Preliminary Design', 'FD - Final Design',
+      'TD - Training Documents', and so on).</p>
+    <ul>
+      <li>A short <%= help_param SubmissionGroup.human_attribute_name( :code ) -%>
+        which uniquely identifies the group.</li>
+      <li>A longer <%= help_param SubmissionGroup.human_attribute_name( :label ) -%>
+        which could explain the reason and purpose of that group.</li>
+    </ul>       
+    <%= help_footer FEATURE_ID_SUBMISSION_GROUPS %>
+  </div> <!-- /container -->

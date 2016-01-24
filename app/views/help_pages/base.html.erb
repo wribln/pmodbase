@@ -1,0 +1,24 @@
+<% help_title 'Help on Base Page' %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">The Base Page is the central access point to the
+      information and tools of the project.</p>
+    <p>It contains links to all tools accessible to current user. The top bar
+      provides access to some general items, such as some personal data 
+      of the current user, general tool information (About), and a Contact page.</p>
+    <p>This page shows only links to tools and project pages to which the
+      current user has been granted access to. Hence, this page looks probably
+      different for each user.</p>
+    <p>Selecting a feature will open the main (normally the index page) page
+      for that feature. When selected in your profile settings (see 
+      <%= link_to_help :profile, "Help on #{ I18n.t( 'profiles.heading' )}" -%>),
+      this page will remain open and accessible and the main feature page will open
+      in a new window.</p>
+    <p>However, each user can access and update her or his personal
+      information, such as office location, phone numbers, etc. The
+      <%= t( 'base.menu.my_data' )-%>
+      link on the Base Page opens a new window showing the personal
+      information stored in the system about the current user.</p>
+    <%= help_footer FEATURE_ID_BASE_PAGE %>
+  </div> <!-- /container -->

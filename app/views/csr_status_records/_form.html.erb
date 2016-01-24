@@ -1,0 +1,96 @@
+      <div class="form-group">
+        <%= form.label :id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-1">
+          <%= display_value form.object.id %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :correspondence_type, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= form.select :correspondence_type, select_options( CsrStatusRecord::CSR_CORRESP_TYPE_LABELS ), { prompt: true }, { class: 'form-control', required: true } %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :transmission_type, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= form.select :transmission_type, select_options( CsrStatusRecord::CSR_TRANSM_TYPE_LABELS ), { prompt: true }, { class: 'form-control' } %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :receiver_group_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= form.collection_select :receiver_group_id, @all_groups, :id, :code, { prompt: true }, { class: "form-control" }%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :sender_group_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= form.collection_select :sender_group_id, @all_groups, :id, :code, { prompt: true }, { class: "form-control" }%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :sender_reference, class: "col-sm-3 control-label" %>
+        <div class="col-sm-4">
+          <%= form.text_field :sender_reference, class: "form-control", max_length: MAX_LENGTH_OF_DOC_ID %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :correspondence_date, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= form.date_field :correspondence_date, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :subject, class: "col-sm-3 control-label" %>
+        <div class="col-sm-6">
+          <%= form.text_field :subject, class: "form-control", max_length: MAX_LENGTH_OF_TITLE %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :classification, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= form.select :classification, select_options( CsrStatusRecord::CSR_CLASS_LABELS ), { prompt: true }, { class: 'form-control' } %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :status, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= form.select :status, select_options( CsrStatusRecord::CSR_STATUS_LABELS ), { prompt: true }, { class: 'form-control' } %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :notes, class: "col-sm-3 control-label" %>
+        <div class="col-sm-6">
+          <%= form.text_field :notes, class: "form-control", max_length: MAX_LENGTH_OF_NOTES %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :plan_reply_date, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= form.date_field :plan_reply_date, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :actual_reply_date, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= form.date_field :actual_reply_date, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :reply_status_record_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-1">
+          <%= form.text_field :reply_status_record_id, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :project_doc_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-4">
+          <%= form.text_field :project_doc_id, class: "form-control", max_length: MAX_LENGTH_OF_DOC_ID %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :sender_doc_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-4">
+          <%= form.text_field :sender_doc_id, class: "form-control", max_length: MAX_LENGTH_OF_DOC_ID %>
+        </div>
+      </div>

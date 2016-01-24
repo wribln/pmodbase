@@ -1,0 +1,12 @@
+<%#
+=begin
+
+ this partial inserts a request for a CSV download file
+ 
+ Example (normally in user's view/index.html.erb):
+ 
+  < %= render partial: 'shared/download_csv' % >
+
+=end
+%>
+  <%= link_to t( 'general.download_doc' ), params.merge( format: :doc ) -%>

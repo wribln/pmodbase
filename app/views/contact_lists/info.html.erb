@@ -1,0 +1,32 @@
+<%- page_title %>
+<div class="container-fluid">
+  <%= form_title %>
+  <div class="table-responsive col-sm-7">
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th class="col-sm-1"><%= t( '.a_id'   )%></th>
+          <th class="col-sm-3"><%= Person.human_attribute_name( :informal_name )%></th>
+          <th class="col-sm-3"><%= Person.human_attribute_name( :formal_name   )%></th>
+        </tr>
+      </thead>
+      <tbody>
+      <% if @accounts.length.zero? %>
+        <%= render partial: 'shared/index_empty_row', locals:{ columns: 3 }%>
+      <% else %>
+        <% @accounts.each do |a| %>
+        <tr>
+          <td><%= a.to_id %></td>
+          <%- if a.person_id.zero? then %>
+            <td><%= t( 'people.no_name_given' ) %></td><td>&nbsp;</td>
+          <%- else %>
+            <td><%= a.person.informal_name %></td>
+            <td><%= a.person.formal_name %></td>
+          <%- end %>
+        </tr>
+        <%- end %>
+      <%- end %>
+      </tbody>
+    </table>
+  </div>
+</div>

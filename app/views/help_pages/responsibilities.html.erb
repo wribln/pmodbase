@@ -1,0 +1,53 @@
+<% help_title "Help on #{ Responsibility.model_name.human }"%>
+<div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">Each person in the project has certain responsibilities
+    within a specific group.</h3>
+  	<p>The responsibility records are used to show in the project rosters
+  	which person within a group bears which responsibility. Other project
+  	members can thus easier determine whom to contact on a specific topic.</p>
+  	<p>Responsibilities are defined per group and are used to link a person
+    to a group. Normally, a person in the project belongs to a specific group
+    and is responsible for specific tasks for that group.</p>
+  	<p>Thus, the responsibilities are assigned by the Group Manager (i.e. the
+  	person who has the right to add responsibility records for a specific
+  	group. This is normally the Group Manager or his representative.</p>
+  	<p>In small projects, a person may be responsible for various tasks in the
+  	project team, for example, time scheduling plus document management. In
+  	those cases, there should be two responsibility records between the person
+  	and the group, one for "time scheduling", and one for "document
+  	management". Since the responsiblity is just a text field, the
+  	<em>description</em> in such a case would contain both "time scheduling
+  	and document management".</p>
+  	<p>In other circumstances, a person may be performing specific tasks for
+  	more than a single group, for example 'quality management'. In such a case,
+  	there would be one responsibility record for each group, each having a
+  	responsibility description "quality management".</p>
+  	<p>When creating a new responsibility record, the following fields need to
+  	be filled out:</p>
+   	<ul>
+   	  <li>The <%= help_param Responsibility.human_attribute_name( :description ) -%>
+        of the responsibility should clearly describe the task so others can
+        easier find the person responsible for specific topics. A job title
+        must clearly convey this information if it is used in the description
+        of the responsibility, otherwise specific task descriptions are more
+        helpful.</li>
+  	  <li>The <%= help_param Responsibility.human_attribute_name( :seqno )-%>
+        is used to sort the responsibility records within the given group.
+        If, for example, the Group Manager is to appear as first entry of the
+        list, he or she should have the lowest sequence number, for example
+        "1". The "Second in Command" could have the sequence number "2". If
+        all other members in the group would have the same sequence number
+        (for example, the default: 99), they would be sorted in alphabetical
+        sequence of the responsibility description.</li>
+      <li>The <strong>Responsible Person</strong> to be assigned to this task
+      can be selected from the list of people in the project - if the person
+      is not yet known in the PMO database, a new person must be added to the
+      PMO database.</li>
+      <li>Each responsibility is defined for a specific
+        <%= help_param Responsibility.human_attribute_name( :group_id )-%>.</li>
+    </ul>
+  <%= help_footer FEATURE_ID_RESPONSIBILITIES %>
+</div> <!-- /container -->
+

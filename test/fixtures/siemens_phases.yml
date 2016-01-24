@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+pm200:
+  code: '%PM200'
+  label_p: 'Phase Description'
+  label_m: 'Milestone Description'
+
+pm300:
+  code: '%PM300'
+  label_p: 'P&M'
+  label_m: 'At site'

@@ -1,0 +1,45 @@
+<% help_title "Help on #{ Account.model_name.human }"%>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">A user of this system must have at least one account, i.e.
+      an <%= help_param Account.human_attribute_name( :name ) -%> and a 
+      <%= help_param Account.human_attribute_name( :password ) -%>.</p>
+    <p>The account identifies the user towards the system and access
+      permissions are granted per account. An account is associated with
+      a specific person of the project. However, one person in the project
+      may use more than one account, for example when working for different
+      project entities and performing different tasks for each of the
+      entities.</p>
+    <p>The account information can be modified by the respective user via
+      his own <%= link_to_help 'Profile' -%> (accessible on the base page).</p>
+    <p>The account information consists of:</p>
+    <ul>
+      <li>The <%= help_param Account.human_attribute_name( :name ) -%>,
+        which must be at least 3 characters long;</li>
+      <li>and the <%= help_param Account.human_attribute_name( :password ) -%>,
+        which must be at least 8 characters long, must contain a digit, a
+        lower- and an uppercase alphabetic character, and a special, printable
+        character.</li>
+      <li>the <%= help_param Account.human_attribute_name( :person_id ) -%>
+        links the account to a specific person.</li>
+      <li><%= help_param Account.human_attribute_name( :active ) -%>
+        determines whether an account is 'active' (permitted to access the
+        system's features) or 'inactive' (not permitted to access the
+        system's features). An unused account should not be deleted but 
+        set to 'inactive' in order to keep all the existing items linked
+        to this account valid but prohibit the user to use this account.</li>
+      <li>The <%= help_param Account.human_attribute_name( :keep_base_open )-%>
+        flag is for advanced users: it determines whether the base page
+        (with the links to the available features) remains open at all 
+        times and the selection of a feature will cause a new browser
+        window to open (if that option is selected). The default
+        setting is an aid for the inexperienced user who may be irritated when
+        too many windows are opened.<br/>The default setting (option deselected)
+        will also generate a breadcrumb navigation bar at the top of the
+        features' windows.<br/>You can change this flag in your
+        <%= link_to( t( 'profiles.title'), profile_path )-%> but note that
+        a change <strong>will only take effect after the next signon</strong>.</li>
+    </ul>
+    <%= help_footer FEATURE_ID_ACCOUNTS_AND_PERMISSIONS %>
+  </div> <!-- /container -->

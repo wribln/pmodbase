@@ -1,0 +1,48 @@
+<% help_title "Help on #{ Abbreviation.model_name.human }"%>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">Abbreviations ease the use of long, complicated words and 
+      technical terms.</p>
+    <p>Keep in mind that abbreviations should help to read a text! Too many
+    	abbreviations or unusual abbreviations make it difficult for the reader
+    	to quickly comprehend the meaning of the text. Hence, try to avoid 
+    	abbreviations unless it really helps to make your text easier to read.</p>
+    <p>The abbreviations (including acronyms) used in the project are stored
+      in the Abbreviations table of this database. In order to have a common
+      appearance of specific situations, the following guidelines should
+      assist you to phrase the description of the abbreviation:</p>
+    <ul>
+      <li>If an abbreviation refers to a term in a foreign language, list
+        first the text of the meaning in that language, then put the name of
+        that language into parentheses and include a translation of the term
+        in English.<br/>
+        For example:<br/>
+        a.m. = ante meridien (Latin: before noon)<br/>
+        GmbH = Gesellschaft mit beschränkter Haftung (German: limited/private
+        liability company)</li>
+      <li>Sometimes, two abbreviations are used with the same
+        meaning: In order to ensure consistency for the documents created in
+        the project, the preferred abbreviation should be noted by adding
+        (favoured) to the preferred one, e.g.<br/>
+        RAMS = Reliability, Availability, Maintainability, Safety<br/>
+        RAMS = Reliability, Availability, Maintainability and Safety
+        (favoured)</li>
+      <li>In some cases, two abbreviations are used for the same term; the
+        abbreviation to be used in the project (either because it is correct
+        or for other consistency reasons) should be marked with the suffix
+        '(preferred: XYZ)', for example:<br/>
+        MB = Megabyte<br/>
+        MByte = Megabyte (preferred: MB)</li>
+    </ul>
+    <p>The extra field <%= help_param Abbreviation.human_attribute_name( :sort_code ) -%>
+      is only used for sorting the abbreviations in lists: This field is
+      automatically set to the lowercase
+      <%= help_param Abbreviation.human_attribute_name( :code ) -%> without
+      any punctionation characters when nothing else is entered. You should
+      manually fill this field if the 
+      <%= help_param Abbreviation.human_attribute_name( :code ) -%>
+      contains any non-standard alphabetic characters, for example Greek
+      characters.</p>
+    <%= help_footer FEATURE_ID_ABBREVIATIONS %>
+  </div> <!-- /container -->

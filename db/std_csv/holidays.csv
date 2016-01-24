@@ -1,0 +1,329 @@
+date_from;date_until;country_name;region_name;description;work
+2015-09-05;;QAT;;Krishna Janmastami;0
+2015-09-22;2015-09-24;QAT;;Eid al-Adha (Grand Bairam/Feast of Sacrifice, est.);0
+2015-09-22;2015-09-28;KSA;;Eid Al Adha (Hajj Holiday);0
+2015-10-03;;GER;;Tag der Deutschen Einheit (German: Day of German Unity);0
+2015-10-26;;AUT;;Nationalfeiertag (German: National Holiday);0
+2015-10-31;;GER;BB;Reformationstag (German: Reformation Day);0
+2015-10-31;;GER;MV;Reformationstag (German: Reformation Day);0
+2015-10-31;;GER;SN;Reformationstag (German: Reformation Day);0
+2015-10-31;;GER;ST;Reformationstag (German: Reformation Day);0
+2015-10-31;;GER;TH;Reformationstag (German: Reformation Day);0
+2015-11-01;;AUT;;Allerheiligen (German: All Saints' Day);0
+2015-11-01;;GER;BW;Allerheiligen (German: All Saints' Day);0
+2015-11-01;;GER;BY;Allerheiligen (German: All Saints' Day);0
+2015-11-01;;GER;NW;Allerheiligen (German: All Saints' Day);0
+2015-11-01;;GER;RP;Allerheiligen (German: All Saints' Day);0
+2015-11-01;;GER;SL;Allerheiligen (German: All Saints' Day);0
+2015-11-19;;GER;SN;Buß- und Bettag (German: Day of Repentance and Prayer);0
+2015-12-08;;AUT;;Mariä Empfängnis (German: Immaculate Conception);0
+2015-12-18;;QAT;;National Day;0
+2015-12-25;2015-12-26;AUT;;Christtag/Stephanitag (German: Christmas);0
+2015-12-25;2015-12-26;GER;;Weihnachten (German: Christmas);0
+2015-12-25;;QAT;;Christmas Day;0
+2016-01-01;;QAT;;New Year's Day;0
+2016-01-01;;ARE;;New Year's Day;0
+2016-02-09;;QAT;;National Sports Day;0
+2016-03-06;;QAT;;Bank Holiday;0
+2016-03-27;;QAT;;Easter Sunday;0
+2016-06-06;;KSA;;First of Ramadan (est.);100
+2016-06-06;;QAT;;First of Ramadan (est.);100
+2016-07-03;2016-07-09;KSA;;Eid Al Fitr (End of Ramadan, est.);0
+2016-07-05;2016-07-07;QAT;;Eid al-Fitr (End of Ramadan, est.);0
+2016-08-25;;QAT;;Krishna Janmastami;0
+2016-09-10;2016-09-12;QAT;;Eid al-Adha (Grand Bairam/Feast of Sacrifice, est.);0
+2016-09-10;2016-09-16;KSA;;Eid Al Adha (Hajj Holiday, est.);0
+2016-12-18;;QAT;;National Day;0
+2016-12-25;;QAT;;Christmas Day;0
+2017-01-01;;QAT;;New Year's Day;0
+2017-02-14;;QAT;;National Sports Day;0
+2017-03-05;;QAT;;Bank Holiday;0
+2017-04-16;;QAT;;Easter Sunday;0
+2017-05-27;;KSA;;First of Ramadan (est.);100
+2017-05-27;;QAT;;First of Ramadan (est.);100
+2017-06-23;2017-06-29;KSA;;Eid Al Fitr (End of Ramadan, est.);0
+2017-06-25;2017-06-27;QAT;;Eid al-Fitr (End of Ramadan, est.);0
+2017-08-15;;QAT;;Krishna Janmastami;0
+2017-08-30;2017-09-01;QAT;;Eid al-Adha (Grand Bairam/Feast of Sacrifice, est.);0
+2017-08-30;2017-09-05;KSA;;Eid Al Adha (Hajj Holiday, est.);0
+2017-12-18;;QAT;;National Day;0
+2017-12-25;;QAT;;Christmas Day;0
+2018-01-01;;QAT;;New Year's Day;0
+2018-02-13;;QAT;;National Sports Day;0
+2018-03-04;;QAT;;Bank Holiday;0
+2018-04-01;;QAT;;Easter Sunday;0
+2018-05-16;;KSA;;First of Ramadan (est.);100
+2018-05-16;;QAT;;First of Ramadan (est.);100
+2018-06-13;2018-06-19;KSA;;Eid Al Fitr (End of Ramadan, est.);0
+2018-06-15;2018-06-17;QAT;;Eid al-Fitr (End of Ramadan, est.);0
+2018-08-21;2018-08-23;QAT;;Eid al-Adha (Grand Bairam/Feast of Sacrifice, est.);0
+2018-08-21;2018-08-27;KSA;;Eid Al Adha (Hajj Holiday, est.);0
+2018-09-03;;QAT;;Krishna Janmastami;0
+2018-12-18;;QAT;;National Day;0
+2018-12-25;;QAT;;Christmas Day;0
+2019-01-01;;QAT;;New Year's Day;0
+2019-02-12;;QAT;;National Sports Day;0
+2019-03-03;;QAT;;Bank Holiday;0
+2019-04-21;;QAT;;Easter Sunday;0
+2019-05-06;;KSA;;First of Ramadan (est.);100
+2019-05-06;;QAT;;First of Ramadan (est.);100
+2019-06-03;2019-06-09;KSA;;Eid Al Fitr (End of Ramadan, est.);0
+2019-06-05;2019-06-07;QAT;;Eid al-Fitr (End of Ramadan, est.);0
+2019-08-11;2019-08-13;QAT;;Eid al-Adha (Grand Bairam/Feast of Sacrifice, est.);0
+2019-08-11;2019-08-17;KSA;;Eid Al Adha (Hajj Holiday, est.);0
+2019-08-23;;QAT;;Krishna Janmastami;0
+2019-12-18;;QAT;;National Day;0
+2019-12-25;;QAT;;Christmas Day;0
+2017-01-01;;ARE;;New Year's Day;0
+2018-01-01;;ARE;;New Year's Day;0
+2019-01-01;;ARE;;New Year's Day;0
+2020-01-01;;ARE;;New Year's Day;0
+2015-09-23;2015-09-25;ARE;;Eid al-Adha (Feast of the Sacrifice);0
+2016-09-11;2016-09-13;ARE;;Eid al-Adha (Feast of the Sacrifice, est.);0
+2017-09-01;2017-09-03;ARE;;Eid al-Adha (Feast of the Sacrifice, est.);0
+2018-08-21;2018-08-23;ARE;;Eid al-Adha (Feast of the Sacrifice, est.);0
+2019-08-11;2019-08-13;ARE;;Eid al-Adha (Feast of the Sacrifice, est.);0
+2020-07-31;2020-08-02;ARE;;Eid al-Adha (Feast of the Sacrifice, est.);0
+2015-10-15;;ARE;;Al Hijra (Islamic New Year);0
+2016-10-02;;ARE;;Al Hijra (Islamic New Year, est.);0
+2017-09-21;;ARE;;Al Hijra (Islamic New Year, est.);0
+2018-09-11;;ARE;;Al Hijra (Islamic New Year, est.);0
+2019-08-31;;ARE;;Al Hijra (Islamic New Year, est.);0
+2020-08-20;;ARE;;Al Hijra (Islamic New Year, est.);0
+2015-01-03;;ARE;;Mouloud (Prophet's Birthday);0
+2015-12-24;;ARE;;Mouloud (Prophet's Birthday, est.);0
+2016-12-12;;ARE;;Mouloud (Prophet's Birthday, est.);0
+2017-12-01;;ARE;;Mouloud (Prophet's Birthday, est.);0
+2018-11-21;;ARE;;Mouloud (Prophet's Birthday, est.);0
+2019-11-10;;ARE;;Mouloud (Prophet's Birthday, est.);0
+2020-10-29;;ARE;;Mouloud (Prophet's Birthday, est.);0
+2015-05-16;;ARE;;Leilat al Mi'raj (Ascension of the Prophet);0
+2016-05-04;;ARE;;Leilat al Mi'raj (Ascension of the Prophet, est.);0
+2017-04-24;;ARE;;Leilat al Mi'raj (Ascension of the Prophet, est.);0
+2018-04-13;;ARE;;Leilat al Mi'raj (Ascension of the Prophet, est.);0
+2019-04-03;;ARE;;Leilat al Mi'raj (Ascension of the Prophet, est.);0
+2020-03-22;;ARE;;Leilat al Mi'raj (Ascension of the Prophet, est.);0
+2015-06-18;;ARE;;First of Ramadan (est.);100
+2016-06-06;;ARE;;First of Ramadan (est.);100
+2017-05-27;;ARE;;First of Ramadan (est.);100
+2018-05-16;;ARE;;First of Ramadan (est.);100
+2019-05-06;;ARE;;First of Ramadan (est.);100
+2020-04-24;;ARE;;First of Ramadan (est.);100
+2015-07-16;2015-07-21;ARE;;Eid al Fitr (End of Ramadan);0
+2016-07-05;2016-07-10;ARE;;Eid al Fitr (End of Ramadan, est.);0
+2017-06-24;2017-06-29;ARE;;Eid al Fitr (End of Ramadan, est.);0
+2018-06-14;2018-06-19;ARE;;Eid al Fitr (End of Ramadan, est.);0
+2019-06-03;2019-06-08;ARE;;Eid al Fitr (End of Ramadan, est.);0
+2020-05-24;2020-05-29;ARE;;Eid al Fitr (End of Ramadan, est.);0
+2015-12-02;2015-12-03;ARE;;National Day;0
+2016-12-02;;ARE;;National Day;0
+2017-12-02;;ARE;;National Day;0
+2018-12-02;;ARE;;National Day;0
+2019-12-02;;ARE;;National Day;0
+2020-12-02;;ARE;;National Day;0
+2016-01-01;;AUT;;Neujahr (German: New Year's Day);0
+2017-01-01;;AUT;;Neujahr (German: New Year's Day);0
+2018-01-01;;AUT;;Neujahr (German: New Year's Day);0
+2019-01-01;;AUT;;Neujahr (German: New Year's Day);0
+2020-01-01;;AUT;;Neujahr (German: New Year's Day);0
+2016-01-01;;GER;;Neujahrstag (German: New Year's Day);0
+2017-01-01;;GER;;Neujahrstag (German: New Year's Day);0
+2018-01-01;;GER;;Neujahrstag (German: New Year's Day);0
+2019-01-01;;GER;;Neujahrstag (German: New Year's Day);0
+2020-01-01;;GER;;Neujahrstag (German: New Year's Day);0
+2016-01-06;;GER;BW;Heilige Drei Könige (German: Epiphany);0
+2016-01-06;;GER;BY;Heilige Drei Könige (German: Epiphany);0
+2016-01-06;;GER;ST;Heilige Drei Könige (German: Epiphany);0
+2017-01-06;;GER;BW;Heilige Drei Könige (German: Epiphany);0
+2017-01-06;;GER;BY;Heilige Drei Könige (German: Epiphany);0
+2017-01-06;;GER;ST;Heilige Drei Könige (German: Epiphany);0
+2018-01-06;;GER;BW;Heilige Drei Könige (German: Epiphany);0
+2018-01-06;;GER;BY;Heilige Drei Könige (German: Epiphany);0
+2018-01-06;;GER;ST;Heilige Drei Könige (German: Epiphany);0
+2019-01-06;;GER;BW;Heilige Drei Könige (German: Epiphany);0
+2019-01-06;;GER;BY;Heilige Drei Könige (German: Epiphany);0
+2019-01-06;;GER;ST;Heilige Drei Könige (German: Epiphany);0
+2020-01-06;;GER;BW;Heilige Drei Könige (German: Epiphany);0
+2020-01-06;;GER;BY;Heilige Drei Könige (German: Epiphany);0
+2020-01-06;;GER;ST;Heilige Drei Könige (German: Epiphany);0
+2016-01-06;;AUT;;Heilige Drei Könige (German: Epiphany);0
+2017-01-06;;AUT;;Heilige Drei Könige (German: Epiphany);0
+2018-01-06;;AUT;;Heilige Drei Könige (German: Epiphany);0
+2019-01-06;;AUT;;Heilige Drei Könige (German: Epiphany);0
+2020-01-06;;AUT;;Heilige Drei Könige (German: Epiphany);0
+2016-03-25;;GER;;Karfreitag (German: Good Friday);0
+2016-03-27;2016-03-28;AUT;;Ostern (German: Easter);0
+2016-03-27;2016-03-28;GER;;Ostern (German: Easter);0
+2017-04-14;;GER;;Karfreitag (German: Good Friday);0
+2017-04-16;2017-04-17;AUT;;Ostern (German: Easter);0
+2017-04-16;2017-04-17;GER;;Ostern (German: Easter);0
+2018-03-30;;GER;;Karfreitag (German: Good Friday);0
+2018-04-01;2018-04-02;AUT;;Ostern (German: Easter);0
+2018-04-01;2018-04-02;GER;;Ostern (German: Easter);0
+2019-04-19;;GER;;Karfreitag (German: Good Friday);0
+2019-04-21;2019-04-22;AUT;;Ostern (German: Easter);0
+2019-04-21;2019-04-22;GER;;Ostern (German: Easter);0
+2020-04-10;;GER;;Karfreitag (German: Good Friday);0
+2020-04-12;2020-04-13;AUT;;Ostern (German: Easter);0
+2020-04-12;2020-04-13;GER;;Ostern (German: Easter);0
+2016-05-01;;AUT;;Staatsfeiertag (German: International Workers' Day);0
+2016-05-01;;GER;;Tag der Arbeit (German: International Workers' Day);0
+2017-05-01;;AUT;;Staatsfeiertag (German: International Workers' Day);0
+2017-05-01;;GER;;Tag der Arbeit (German: International Workers' Day);0
+2018-05-01;;AUT;;Staatsfeiertag (German: International Workers' Day);0
+2018-05-01;;GER;;Tag der Arbeit (German: International Workers' Day);0
+2019-05-01;;AUT;;Staatsfeiertag (German: International Workers' Day);0
+2019-05-01;;GER;;Tag der Arbeit (German: International Workers' Day);0
+2020-05-01;;AUT;;Staatsfeiertag (German: International Workers' Day);0
+2020-05-01;;GER;;Tag der Arbeit (German: International Workers' Day);0
+2016-05-05;;AUT;;Christi Himmelfahrt (German: Feast of the Ascension);0
+2016-05-05;;GER;;Christi Himmelfahrt (German: Feast of the Ascension);0
+2017-05-25;;AUT;;Christi Himmelfahrt (German: Feast of the Ascension);0
+2017-05-25;;GER;;Christi Himmelfahrt (German: Feast of the Ascension);0
+2018-05-10;;AUT;;Christi Himmelfahrt (German: Feast of the Ascension);0
+2018-05-10;;GER;;Christi Himmelfahrt (German: Feast of the Ascension);0
+2019-05-30;;AUT;;Christi Himmelfahrt (German: Feast of the Ascension);0
+2019-05-30;;GER;;Christi Himmelfahrt (German: Feast of the Ascension);0
+2020-05-21;;AUT;;Christi Himmelfahrt (German: Feast of the Ascension);0
+2020-05-21;;GER;;Christi Himmelfahrt (German: Feast of the Ascension);0
+2016-05-15;2016-05-16;AUT;;Pfingsten (German: Pentecost);0
+2016-05-15;2016-05-16;GER;;Pfingsten (German: Pentecost);0
+2017-06-04;2017-06-05;AUT;;Pfingsten (German: Pentecost);0
+2017-06-04;2017-06-05;GER;;Pfingsten (German: Pentecost);0
+2018-05-20;2018-05-21;AUT;;Pfingsten (German: Pentecost);0
+2018-05-20;2018-05-21;GER;;Pfingsten (German: Pentecost);0
+2019-06-09;2019-06-10;AUT;;Pfingsten (German: Pentecost);0
+2019-06-09;2019-06-10;GER;;Pfingsten (German: Pentecost);0
+2020-05-31;2020-06-01;AUT;;Pfingsten (German: Pentecost);0
+2020-05-31;2020-06-01;GER;;Pfingsten (German: Pentecost);0
+2016-05-26;;AUT;;Fronleichnam (German: Feast of Corpus Christi);0
+2016-05-26;;GER;BW;Fronleichnam (German: Feast of Corpus Christi);0
+2015-05-26;;GER;BY;Fronleichnam (German: Feast of Corpus Christi);0
+2016-05-26;;GER;HE;Fronleichnam (German: Feast of Corpus Christi);0
+2016-05-26;;GER;NW;Fronleichnam (German: Feast of Corpus Christi);0
+2016-05-26;;GER;RP;Fronleichnam (German: Feast of Corpus Christi);0
+2016-05-26;;GER;SL;Fronleichnam (German: Feast of Corpus Christi);0
+2017-06-15;;AUT;;Fronleichnam (German: Feast of Corpus Christi);0
+2017-06-15;;GER;BW;Fronleichnam (German: Feast of Corpus Christi);0
+2017-06-15;;GER;BY;Fronleichnam (German: Feast of Corpus Christi);0
+2017-06-15;;GER;HE;Fronleichnam (German: Feast of Corpus Christi);0
+2017-06-15;;GER;NW;Fronleichnam (German: Feast of Corpus Christi);0
+2017-06-15;;GER;RP;Fronleichnam (German: Feast of Corpus Christi);0
+2017-06-15;;GER;SL;Fronleichnam (German: Feast of Corpus Christi);0
+2018-05-31;;AUT;;Fronleichnam (German: Feast of Corpus Christi);0
+2018-05-31;;GER;BW;Fronleichnam (German: Feast of Corpus Christi);0
+2018-05-31;;GER;BY;Fronleichnam (German: Feast of Corpus Christi);0
+2018-05-31;;GER;HE;Fronleichnam (German: Feast of Corpus Christi);0
+2018-05-31;;GER;NW;Fronleichnam (German: Feast of Corpus Christi);0
+2018-05-31;;GER;RP;Fronleichnam (German: Feast of Corpus Christi);0
+2018-05-31;;GER;SL;Fronleichnam (German: Feast of Corpus Christi);0
+2019-06-20;;AUT;;Fronleichnam (German: Feast of Corpus Christi);0
+2019-06-20;;GER;BW;Fronleichnam (German: Feast of Corpus Christi);0
+2019-06-20;;GER;BY;Fronleichnam (German: Feast of Corpus Christi);0
+2019-06-20;;GER;HE;Fronleichnam (German: Feast of Corpus Christi);0
+2019-06-20;;GER;NW;Fronleichnam (German: Feast of Corpus Christi);0
+2019-06-20;;GER;RP;Fronleichnam (German: Feast of Corpus Christi);0
+2019-06-20;;GER;SL;Fronleichnam (German: Feast of Corpus Christi);0
+2020-06-11;;AUT;;Fronleichnam (German: Feast of Corpus Christi);0
+2020-06-11;;GER;BW;Fronleichnam (German: Feast of Corpus Christi);0
+2020-06-11;;GER;BY;Fronleichnam (German: Feast of Corpus Christi);0
+2020-06-11;;GER;HE;Fronleichnam (German: Feast of Corpus Christi);0
+2020-06-11;;GER;NW;Fronleichnam (German: Feast of Corpus Christi);0
+2020-06-11;;GER;RP;Fronleichnam (German: Feast of Corpus Christi);0
+2020-06-11;;GER;SL;Fronleichnam (German: Feast of Corpus Christi);0
+2020-06-11;;AUT;;Fronleichnam (German: Feast of Corpus Christi);0
+2016-08-15;;AUT;;Mariä Himmelfahrt (German: Assumption of Mary);0
+2016-08-15;;GER;SL;Mariä Himmelfahrt (German: Assumption of Mary);0
+2017-08-15;;AUT;;Mariä Himmelfahrt (German: Assumption of Mary);0
+2017-08-15;;GER;SL;Mariä Himmelfahrt (German: Assumption of Mary);0
+2018-08-15;;AUT;;Mariä Himmelfahrt (German: Assumption of Mary);0
+2018-08-15;;GER;SL;Mariä Himmelfahrt (German: Assumption of Mary);0
+2019-08-15;;AUT;;Mariä Himmelfahrt (German: Assumption of Mary);0
+2019-08-15;;GER;SL;Mariä Himmelfahrt (German: Assumption of Mary);0
+2020-08-15;;AUT;;Mariä Himmelfahrt (German: Assumption of Mary);0
+2020-08-15;;GER;SL;Mariä Himmelfahrt (German: Assumption of Mary);0
+2016-10-03;;GER;;Tag der Deutschen Einheit (German: Day of German Unity);0
+2016-10-26;;AUT;;Nationalfeiertag (German: National Holiday);0
+2016-10-31;;GER;BB;Reformationstag (German: Reformation Day);0
+2016-10-31;;GER;MV;Reformationstag (German: Reformation Day);0
+2016-10-31;;GER;SN;Reformationstag (German: Reformation Day);0
+2016-10-31;;GER;ST;Reformationstag (German: Reformation Day);0
+2016-10-31;;GER;TH;Reformationstag (German: Reformation Day);0
+2016-11-01;;AUT;;Allerheiligen (German: All Saints' Day);0
+2016-11-01;;GER;BW;Allerheiligen (German: All Saints' Day);0
+2016-11-01;;GER;BY;Allerheiligen (German: All Saints' Day);0
+2016-11-01;;GER;NW;Allerheiligen (German: All Saints' Day);0
+2016-11-01;;GER;RP;Allerheiligen (German: All Saints' Day);0
+2016-11-01;;GER;SL;Allerheiligen (German: All Saints' Day);0
+2016-11-16;;GER;SN;Buß- und Bettag (German: Day of Repentance and Prayer);0
+2016-12-08;;AUT;;Mariä Empfängnis (German: Immaculate Conception);0
+2017-10-03;;GER;;Tag der Deutschen Einheit (German: Day of German Unity);0
+2017-10-26;;AUT;;Nationalfeiertag (German: National Holiday);0
+2017-10-31;;GER;BB;Reformationstag (German: Reformation Day);0
+2017-10-31;;GER;MV;Reformationstag (German: Reformation Day);0
+2017-10-31;;GER;SN;Reformationstag (German: Reformation Day);0
+2017-10-31;;GER;ST;Reformationstag (German: Reformation Day);0
+2017-10-31;;GER;TH;Reformationstag (German: Reformation Day);0
+2017-11-01;;AUT;;Allerheiligen (German: All Saints' Day);0
+2017-11-01;;GER;BW;Allerheiligen (German: All Saints' Day);0
+2017-11-01;;GER;BY;Allerheiligen (German: All Saints' Day);0
+2017-11-01;;GER;NW;Allerheiligen (German: All Saints' Day);0
+2017-11-01;;GER;RP;Allerheiligen (German: All Saints' Day);0
+2017-11-01;;GER;SL;Allerheiligen (German: All Saints' Day);0
+2017-11-22;;GER;SN;Buß- und Bettag (German: Day of Repentance and Prayer);0
+2017-12-08;;AUT;;Mariä Empfängnis (German: Immaculate Conception);0
+2018-10-03;;GER;;Tag der Deutschen Einheit (German: Day of German Unity);0
+2018-10-26;;AUT;;Nationalfeiertag (German: National Holiday);0
+2018-10-31;;GER;BB;Reformationstag (German: Reformation Day);0
+2018-10-31;;GER;MV;Reformationstag (German: Reformation Day);0
+2018-10-31;;GER;SN;Reformationstag (German: Reformation Day);0
+2018-10-31;;GER;ST;Reformationstag (German: Reformation Day);0
+2018-10-31;;GER;TH;Reformationstag (German: Reformation Day);0
+2018-11-01;;AUT;;Allerheiligen (German: All Saints' Day);0
+2018-11-01;;GER;BW;Allerheiligen (German: All Saints' Day);0
+2018-11-01;;GER;BY;Allerheiligen (German: All Saints' Day);0
+2018-11-01;;GER;NW;Allerheiligen (German: All Saints' Day);0
+2018-11-01;;GER;RP;Allerheiligen (German: All Saints' Day);0
+2018-11-01;;GER;SL;Allerheiligen (German: All Saints' Day);0
+2018-11-21;;GER;SN;Buß- und Bettag (German: Day of Repentance and Prayer);0
+2018-12-08;;AUT;;Mariä Empfängnis (German: Immaculate Conception);0
+2019-10-03;;GER;;Tag der Deutschen Einheit (German: Day of German Unity);0
+2019-10-26;;AUT;;Nationalfeiertag (German: National Holiday);0
+2019-10-31;;GER;BB;Reformationstag (German: Reformation Day);0
+2019-10-31;;GER;MV;Reformationstag (German: Reformation Day);0
+2019-10-31;;GER;SN;Reformationstag (German: Reformation Day);0
+2019-10-31;;GER;ST;Reformationstag (German: Reformation Day);0
+2019-10-31;;GER;TH;Reformationstag (German: Reformation Day);0
+2019-11-01;;AUT;;Allerheiligen (German: All Saints' Day);0
+2019-11-01;;GER;BW;Allerheiligen (German: All Saints' Day);0
+2019-11-01;;GER;BY;Allerheiligen (German: All Saints' Day);0
+2019-11-01;;GER;NW;Allerheiligen (German: All Saints' Day);0
+2019-11-01;;GER;RP;Allerheiligen (German: All Saints' Day);0
+2019-11-01;;GER;SL;Allerheiligen (German: All Saints' Day);0
+2019-11-20;;GER;SN;Buß- und Bettag (German: Day of Repentance and Prayer);0
+2019-12-08;;AUT;;Mariä Empfängnis (German: Immaculate Conception);0
+2020-10-03;;GER;;Tag der Deutschen Einheit (German: Day of German Unity);0
+2020-10-26;;AUT;;Nationalfeiertag (German: National Holiday);0
+2020-10-31;;GER;BB;Reformationstag (German: Reformation Day);0
+2020-10-31;;GER;MV;Reformationstag (German: Reformation Day);0
+2020-10-31;;GER;SN;Reformationstag (German: Reformation Day);0
+2020-10-31;;GER;ST;Reformationstag (German: Reformation Day);0
+2020-10-31;;GER;TH;Reformationstag (German: Reformation Day);0
+2020-11-01;;AUT;;Allerheiligen (German: All Saints' Day);0
+2020-11-01;;GER;BW;Allerheiligen (German: All Saints' Day);0
+2020-11-01;;GER;BY;Allerheiligen (German: All Saints' Day);0
+2020-11-01;;GER;NW;Allerheiligen (German: All Saints' Day);0
+2020-11-01;;GER;RP;Allerheiligen (German: All Saints' Day);0
+2020-11-01;;GER;SL;Allerheiligen (German: All Saints' Day);0
+2020-11-18;;GER;SN;Buß- und Bettag (German: Day of Repentance and Prayer);0
+2020-12-08;;AUT;;Mariä Empfängnis (German: Immaculate Conception);0
+2016-12-25;2016-12-26;AUT;;Christtag/Stephanitag (German: Christmas);0
+2016-12-25;2016-12-26;GER;;Weihnachten (German: Christmas);0
+2017-12-25;2017-12-26;AUT;;Christtag/Stephanitag (German: Christmas);0
+2017-12-25;2017-12-26;GER;;Weihnachten (German: Christmas);0
+2018-12-25;2018-12-26;AUT;;Christtag/Stephanitag (German: Christmas);0
+2018-12-25;2018-12-26;GER;;Weihnachten (German: Christmas);0
+2019-12-25;2019-12-26;AUT;;Christtag/Stephanitag (German: Christmas);0
+2019-12-25;2019-12-26;GER;;Weihnachten (German: Christmas);0
+2020-12-25;2020-12-26;AUT;;Christtag/Stephanitag (German: Christmas);0
+2020-12-25;2020-12-26;GER;;Weihnachten (German: Christmas);0

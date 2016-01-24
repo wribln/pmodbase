@@ -1,0 +1,42 @@
+<%- page_title %>
+<div class="container-fluid">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th><%= ContactInfo.human_attribute_name( :id              )%></th>
+          <th><%= ContactInfo.human_attribute_name( :person_id       )%></th>
+          <th><%= ContactInfo.human_attribute_name( :info_type       )%></th>
+          <th><%= ContactInfo.human_attribute_name( :phone_no_fixed  )%></th>
+          <th><%= ContactInfo.human_attribute_name( :phone_no_mobile )%></th>
+          <th><%= ContactInfo.human_attribute_name( :department      )%></th>
+          <th><%= ContactInfo.human_attribute_name( :detail_location )%></th>
+          <th><%= ContactInfo.human_attribute_name( :address_id      )%></th>
+          <th><%= t( 'action_title.header' )%></th>
+        </tr>
+      </thead>
+      <tbody>
+      <% if @contact_infos.length.zero? %>
+        <%= render partial: 'shared/index_empty_row', locals: { columns: 8, with_link: true } %>
+      <% else %>
+        <% @contact_infos.each do |ci| %>
+          <tr>
+            <td><%= ci.to_id %></td>
+            <td><%= link_to ci.person.name_with_id, person_path( ci.person_id )%></td>
+            <td><%= ci.info_type %></td>
+            <td><%= ci.phone_no_fixed %></td>
+            <td><%= ci.phone_no_mobile %></td>
+            <td><%= ci.department %></td>
+            <td><%= ci.detail_location %></td>
+            <td><%= link_to_unless ci.address_id.nil?, ci.address.label_with_id, address_path( ci.address_id ) %></td>
+            <td><%= render partial: 'shared/actions', object: ci %></td>
+          </tr>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+    <%= render partial: 'shared/footer' %>
+  </div>
+</div>

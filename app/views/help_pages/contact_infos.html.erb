@@ -1,0 +1,39 @@
+<% help_title "Help on #{ ContactInfo.model_name.human }" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">These records contain personal data provided
+      to contact a person.</p>
+    <p>There can be more than one record of contact information per person: 
+      for example, one record for the home (or back) office, and another
+      for the project office.</p>
+    <p>The contact information is displayed in the
+      <%= link_to_help :contact_lists, 'Contact List' -%> and is meant to be maintained by each
+      person via the <%= link_to_help :profile, 'Profile' -%> feature (provided that
+      person has an account to the system).</p>
+    <p>The information collected consists of the following items:</p>
+    <ul>
+      <li><%= help_param ContactInfo.human_attribute_name( :person_id ) -%>
+        links to the person to which this record belongs to.</li>
+      <li><%= help_param ContactInfo.human_attribute_name( :info_type ) -%>
+        describes the location to which these informations apply to, e.g.
+        'Company' (for home office), or 'Project' (for the office at the
+        project's location).</li>
+      <li><%= help_param ContactInfo.human_attribute_name( :phone_no_fixed ) -%>
+        is reserved for a fixed-line phone number, and</li>
+      <li><%= help_param ContactInfo.human_attribute_name( :phone_no_mobile ) -%>
+        for a telephone number of a mobile phone.<br/>
+        Each phone number should be complete with the respective country code
+        prefixed by a '+', for example '+49' would be the prefix for a telephone
+        number in Germany.</li>
+      <li>The <%= help_param ContactInfo.human_attribute_name( :department ) -%>
+        can be used to specify the department to which the person belongs to
+        at the given location.</li>
+      <li><%= help_param ContactInfo.human_attribute_name( :detail_location ) -%>
+        should specify any other information to enable a visitor to find the
+        person (building, room number, cubicle id, mail stop id, etc.).</li>
+      <li><%= help_param ContactInfo.human_attribute_name( :address_id ) -%>
+        can be used to link an address to this record.</li>
+    </ul>
+    <%= help_footer FEATURE_ID_CONTACT_INFOS %>
+  </div> <!-- /container -->

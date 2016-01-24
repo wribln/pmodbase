@@ -1,0 +1,30 @@
+<% help_title 'Help on the Filter Function' %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">The Filter function is available on the index pages with
+    the tabular overview of the data. This feature allows you to filter the
+    data and thus show only a subset of the information.</p>
+    <h3>The Filter Toggle Button</h3>
+    <p>If the Filter function is available on a page, a button with the Filter symbol 'Y' is appended to the last column's title: Often the title of the last column is named <%= t('action_title.header') -%>.</p>
+    <p>A click on the 'Y' button opens a new row in the table showing input fields on those columns you can filter on. In the last column (under the
+    'Y' button), you will find a '<%= t('button_label.filter') -%>' button.
+    Use this button to start the filter function on the data records after you have inserted the filter texts or numbers in the respective fields.</p>
+    <p>Depending on the nature of the available search, the input fields may be of the following type:</p>
+    <ul>
+      <li>If the prompt of the input field shows '<%= t('action_title.filter_ph.id') -%>', then enter the specific ID of the data you are looking for.</li>
+      <li>Text fields expecting any kind of text input are indicated by '<%= t('action_title.filter_ph.sw') -%>'. This will cause a simple search in the given field and all data records will be selected where this string is found in the given field.</li>
+      <li>If the text field shows '<%= t('action_title.filter_ph.sl') -%>', the given string is searched at the beginning of the field only.</li>
+      <li>Search fields for record fields with checkbox values, e.g. 'Active' and 'Inactive', will show as select boxes with three values. Selecting the empty line will not make any selection, this field is not filtered.</li>
+    </ul>
+    <h3>Notes:</h3>
+    <p>The filter fields will show the selected filter criteria: If you want to see the selected filter criteria again, close the filter row and open it again (using the Filter Toggle Button): Before the Filter Toggle Button shows the filter fields, it resets the value of the filter fields to the
+    value used for the current filtering process.</p>
+    <p>There is no error checking on the filter values: It is thus possible to
+    enter an invalid value into the filter field, e.g. a non-integer value where only integer values would be allowed. Most likely, there is no such record with that value and no records can be shown after applying that filter.</p>
+    <p>As the '<%= t('button_label.filter') -%>' button is the first button on the index pages, this button is the default button for that page; this means, just hit return when you have entered the filter criteria.</p>
+    <p>When the index page contains a <%= help_term t( 'general.download_xls' ) %> or a
+    <%= help_term t( 'general.download_doc' ) -%> link, the filter criteria
+    used on that index page will be used for the CSV (or DOC) file as well, i.e. the CSV (or DOC) file will show the same records as the index (unless those records have been modified in the meantime...)</p>
+    <%= help_footer FEATURE_ID_HELP_PAGES %>
+  </div> <!-- /container -->

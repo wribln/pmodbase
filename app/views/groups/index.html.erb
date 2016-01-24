@@ -1,0 +1,40 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="table-responsive col-sm-11">
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th class="col-sm-2"><%= Group.human_attribute_name( :code  )%></th>
+          <th class="col-sm-4"><%= Group.human_attribute_name( :label )%></th>
+          <th class="col-sm-4"><%= Group.human_attribute_name( :notes )%></th>
+          <th class="col-sm-1 hidden-print"><%= t( 'action_title.header' )%></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @groups.length.zero? %>
+          <%= render partial: 'shared/index_empty_row', locals:{ columns: 3, with_link: true }%>
+        <% else %>
+          <% @groups.each do |g| %>
+            <% if @category != g.group_category_id %>
+              <tr>
+                <td colspan="3"><strong><%= g.group_category.label %></strong></td>
+                <td class="hidden-print"></td>
+              </tr>
+              <% @category = g.group_category_id %>
+            <% end %>
+            <tr>
+              <td>&nbsp;&nbsp;&nbsp;<%= g.code %></td>
+              <td><%= g.label %></td>
+              <td><%= g.notes %></td>
+              <td class="hidden-print"><%= render partial: 'shared/actions', object: g %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+    <%= render partial: 'shared/download_xls' %>
+    <%= render partial: 'shared/footer' %>
+  </div>
+</div>

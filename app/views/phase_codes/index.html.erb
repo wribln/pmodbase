@@ -1,0 +1,36 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th><%= PhaseCode.human_attribute_name( :id  )%></th>
+          <th><%= PhaseCode.human_attribute_name( :code  )%></th>
+          <th><%= PhaseCode.human_attribute_name( :label )%></th>
+          <th><%= PhaseCode.human_attribute_name( :acro  )%></th>
+          <th><%= PhaseCode.human_attribute_name( :siemens_phase_id )%></th>
+          <th><%= t( 'action_title.header' )%></th>
+        </tr>
+      </thead>
+      <tbody>
+      <% if @phase_codes.length.zero? %>
+        <%= render partial: 'shared/index_empty_row', locals:{ columns: 7, with_link: true }%>
+      <% else %>
+        <% @phase_codes.each do |pc| %>
+          <tr <%= 'class="tr-bold"'.html_safe if pc.level > 0 -%>>
+            <td><%= pc.to_id %></td>
+            <td><%= pc.code  %></td>
+            <td><%= pc.label %></td>
+            <td><%= pc.acro  %></td>
+            <td><%= pc.siemens_phase.code %></td>
+            <td><%= render partial: 'shared/actions', object: pc %></td>
+          </tr>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+    <%= render partial: 'shared/footer' %>
+  </div>
+</div>

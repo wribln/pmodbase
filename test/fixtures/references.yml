@@ -1,0 +1,6 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code:           REFONE
+  description:    'Ref 1 Description'
+  project_doc_id: 'Some doc ID'

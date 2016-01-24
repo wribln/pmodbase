@@ -1,0 +1,9 @@
+tia_item_one:
+  tia_list: tia_list_one
+  account:  account_one
+  seq_no:   1
+  description: 'first action item'
+  comment:  'some comment'
+  prio:     1
+  status:   1
+  due_date: 2015-06-08

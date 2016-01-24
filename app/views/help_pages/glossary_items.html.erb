@@ -1,0 +1,43 @@
+<% help_title "Help on #{ GlossaryItem.model_name.human }" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">The <%= GlossaryItem.model_name.human -%> contains terms
+      and their definition, possibly an associated abbreviation.</p>
+    <p>The terms in the <%= GlossaryItem.model_name.human -%> are often 
+      defined within the contractual documents. Further definitions are added
+      to clarify specific words which might have different meanings.</p>
+    <ul>
+      <li>The <%= help_param GlossaryItem.human_attribute_name( :term ) -%>
+        is the item to be defined in the 
+        <%= help_param GlossaryItem.human_attribute_name( :description ) -%>
+        field. If there is more than one definition of the same item, you
+        might want to add a sequence number to a
+        <%= help_param GlossaryItem.human_attribute_name( :term ) -%>,
+        e.g.<br/>
+        Days (1)<br/> 
+        Days (2)<br/>
+        Please be aware that all entries are sorted in alphabetical,
+        case-sensitive order of
+        the <%= help_param GlossaryItem.human_attribute_name( :term ) -%>:
+        this means that you will find all capitalized 
+        <%= help_param GlossaryItem.human_attribute_name( :term, count: 2 ) -%> first, 
+        followed then by all lowercase
+        <%= help_param GlossaryItem.human_attribute_name( :term, count: 2 ) -%>.</li>
+      <li>The <%= help_param GlossaryItem.human_attribute_name( :code ) -%>
+        field is to be used to specify the abbreviation - if any - for the
+        term. This field will be searched when using the
+        <%= link_to_help 'abbr_search', t( 'abbr_search.index.form_title' )-%>
+        feature.</li>
+      <li>The <%= help_param GlossaryItem.human_attribute_name( :description ) -%>
+        contains the complete definition of the 
+        <%= help_param GlossaryItem.human_attribute_name( :term ) -%>.<br/>
+        When referring to another term, you should can use a right arrow as prefix
+        to the capitalized term, for example like this: &rarr;Term.</li>
+      <li><%= help_param GlossaryItem.human_attribute_name( :reference ) -%> provides
+        a field to place a reference to the source of the information: This is filled
+        by selecting from the defined set of references defined in the system. The
+        field may be left empty if no source is known.</li>
+    </ul>
+    <%= help_footer FEATURE_ID_GLOSSARY %>
+  </div> <!-- /container -->

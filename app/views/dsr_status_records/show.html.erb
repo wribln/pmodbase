@@ -1,0 +1,420 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title_w_sub_title dsr_sub_title %>
+  <div class="form-horizontal" role="form">
+    <%= form_for @dsr_status_record do |f| %>
+      <%= render partial: 'shared/notice' %>
+      <div class="form-group">
+        <%= f.label :id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-1">
+          <%= display_value f.object.id %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :title, class: "col-sm-3 control-label" %>
+        <div class="col-sm-6">
+          <%= display_value f.object.title %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :document_status, class: "col-sm-3 control-label" %>
+        <div class="col-sm-4">
+          <%= display_value f.object.document_status_label %>
+        </div>
+      </div>
+      <%- if @workflow.permitted_to_display?( :document_status_b ) then %>
+      <div class="form-group">
+        <%= f.label :document_status_b, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value f.object.document_status_b_label %>
+        </div>
+      </div>
+      <%- end -%>
+      <div class="form-group">
+        <%= f.label :project_doc_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-4">
+          <%= display_value f.object.project_doc_id %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :sender_group_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value f.object.sender_group_code %>
+        </div>
+      </div>
+      <%- if @workflow.permitted_to_display?( :sender_group_b_id ) then -%>
+      <div class="form-group">
+        <%= f.label :sender_group_b_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value f.object.sender_group_b_code %>
+        </div>
+      </div>
+      <%- end -%>
+      <div class="form-group">
+        <%= f.label :sender_doc_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-4">
+          <%= display_value f.object.sender_doc_id %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :receiver_group_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value f.object.receiver_group_code %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :receiver_doc_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-4">
+          <%= display_value f.object.receiver_doc_id %>
+        </div>
+      </div>
+      <%- if @workflow.permitted_to_display?( :sub_purpose ) then -%>
+      <div class="form-group">
+        <%= f.label :sub_purpose, class: "col-sm-3 control-label" %>
+        <div class="col-sm-3">
+          <%= display_value f.object.sub_purpose_label %>
+        </div>
+      </div>
+      <%- end %>
+      <%- if @workflow.permitted_to_display?( :sub_frequency ) then -%>
+      <div class="form-group">
+        <%= f.label :sub_frequency, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value f.object.sub_frequency_label %>
+        </div>
+      </div>
+      <%- end %>
+      <%- if @workflow.permitted_to_display?( :quantity ) then -%>
+      <div class="form-group">
+        <%= f.label :quantity, class: "col-sm-3 control-label" %>
+        <div class="col-sm-1">
+          <%= display_value f.object.quantity %>
+        </div>
+      </div>
+      <%- end %>
+      <%- if @workflow.permitted_to_display?( :quantity_b ) then -%>
+      <div class="form-group">
+          <%= f.label :quantity_b, class: "col-sm-3 control-label" %>
+        <div class="col-sm-1">
+          <%= display_value f.object.quantity_b %>
+        </div>
+      </div>
+      <%- end -%>
+      <%- if @workflow.permitted_to_display?( :weight ) then -%>
+      <div class="form-group">
+        <%= f.label :weight, class: "col-sm-3 control-label" %>
+        <div class="col-sm-1">
+          <%= display_value db_formatted_weight( f.object.weight )%>
+        </div>
+      </div>
+      <%- end %>
+      <%- if @workflow.permitted_to_display?( :weight_b ) then -%>
+      <div class="form-group">
+        <%= f.label :weight_b, class: "col-sm-3 control-label" %>
+        <div class="col-sm-1">
+          <%= display_value db_formatted_weight( f.object.weight_b )%>
+        </div>
+      </div>
+      <%- end -%>
+      <%- if @workflow.permitted_to_display?( :dsr_doc_group_id ) then -%>
+      <div class="form-group">
+        <%= f.label :dsr_doc_group_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value f.object.doc_group_code %>
+        </div>
+      </div>
+      <%- end %>
+      <%- if @workflow.permitted_to_display?( :submission_group_id ) then -%>
+      <div class="form-group">
+        <%= f.label :submission_group_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value f.object.submission_group_code %>
+        </div>
+      </div>
+      <%- end %>
+      <%- if @workflow.permitted_to_display?( :prep_activity_id ) then -%>
+      <div class="form-group">
+        <%= f.label :prep_activity_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-6">
+          <%= display_value f.object.activity_label( :prep_activity ) %>
+        </div>
+      </div>
+      <%- end %>
+      <%- if @workflow.permitted_to_display?( :subm_activity_id ) then -%>
+      <div class="form-group">
+        <%= f.label :subm_activity_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-6">
+          <%= display_value f.object.activity_label( :subm_activity ) %>
+        </div>
+      </div>
+      <%- end %>
+      <%- if @workflow.permitted_to_display?( :estm_prep_start ) then -%>
+      <div class="form-group">
+        <%= f.label :estm_prep_start, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value db_formatted_d( f.object.estm_prep_start ) %>
+        </div>
+      </div>
+      <%- end %>
+      <%- if @workflow.permitted_to_display?( :plnd_prep_start ) then -%>
+      <div class="form-group">
+        <%= f.label :plnd_prep_start, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value db_formatted_d( f.object.plnd_prep_start ) %>
+        </div>
+      </div>
+      <%- end %>
+      <%- if @workflow.permitted_to_display?( :plnd_prep_start_b ) then -%>
+      <div class="form-group">
+        <%= f.label :plnd_prep_start_b, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value db_formatted_d( f.object.plnd_prep_start_b )%>
+        </div>
+      </div>
+      <%- end -%>
+      <%- if @workflow.permitted_to_display?( :actl_prep_start ) then -%>
+      <div class="form-group">
+        <%= f.label :actl_prep_start, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value db_formatted_d( f.object.actl_prep_start ) %>
+        </div>
+      </div>
+      <%- end %>
+      <%- if @workflow.permitted_to_display?( :estm_submission ) then -%>
+      <div class="form-group">
+        <%= f.label :estm_submission, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value db_formatted_d( f.object.estm_submission ) %>
+        </div>
+      </div>
+      <%- end %>
+      <%- if @workflow.permitted_to_display?( :plnd_submission_1 ) then -%>
+      <div class="form-group">
+        <%= f.label :plnd_submission_1, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value db_formatted_d( f.object.plnd_submission_1 ) %>
+        </div>
+      </div>
+      <%- end %>
+      <%- if @workflow.permitted_to_display?( :plnd_submission_b ) then -%>
+      <div class="form-group">
+        <%= f.label :plnd_submission_b, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value db_formatted_d( f.object.plnd_submission_b )%>
+        </div>
+      </div>
+      <%- end -%>
+      <%- if @workflow.permitted_to_display?( :actl_submission_1 ) then -%>
+      <div class="form-group">
+        <%= f.label :actl_submission_1, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value db_formatted_d( f.object.actl_submission_1 ) %>
+        </div>
+      </div>
+      <%- end %>
+      <%- if @workflow.permitted_to_display?( :next_submission ) then -%>
+      <div class="form-group">
+        <%= f.label :next_submission, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value db_formatted_d( f.object.next_submission ) %>
+        </div>
+      </div>
+      <%- end %>
+      <%# # # # # # FIELDS FOR CURRENT SUBMISSION - IF ANY # # # # # # %>
+      <%= unless f.object.dsr_current_submission_id.nil? then fields_for @dsr_current_submission do |cs| %>
+        <hr/>
+        <div class="form-group">
+          <%= cs.label :submission_no, class: "col-sm-3 control-label" %>
+          <div class="col-sm-1">
+            <%= display_value cs.object.submission_no %>
+          </div>
+        </div>
+        <%- if @workflow.permitted_to_display?( :sender_doc_id_version ) then -%>
+        <div class="form-group">
+          <%= cs.label :sender_doc_id_version, class: "col-sm-3 control-label" %>
+          <div class="col-sm-4">
+            <%= display_value f.object.sender_doc_id %>
+          </div>
+          <div class="col-sm-1">
+            <%= display_value cs.object.sender_doc_id_version %>
+          </div>
+        </div>
+        <%- end %>
+        <%- if @workflow.permitted_to_display?( :project_doc_id_version ) then -%>
+        <div class="form-group">
+          <%= cs.label :project_doc_id_version, class: "col-sm-3 control-label" %>
+          <div class="col-sm-4">
+            <%= display_value f.object.project_doc_id %>
+          </div>
+          <div class="col-sm-1">
+            <%= display_value cs.object.project_doc_id_version %>
+          </div>
+        </div>
+        <%- end %>
+        <%- if @workflow.permitted_to_display?( :receiver_doc_id_version ) then -%>
+        <div class="form-group">
+          <%= cs.label :receiver_doc_id_version, class: "col-sm-3 control-label" %>
+          <div class="col-sm-4">
+            <%= display_value f.object.receiver_doc_id %>
+          </div>
+          <div class="col-sm-1">
+            <%= display_value cs.object.receiver_doc_id_version %>
+          </div>
+        </div>
+        <%- end %>
+        <%- if @workflow.permitted_to_display?( :submission_receiver_doc_id ) then -%>
+        <div class="form-group">
+          <%= cs.label :submission_receiver_doc_id, class: "col-sm-3 control-label" %>
+          <div class="col-sm-4">
+            <%= display_value cs.object.submission_receiver_doc_id %>
+          </div>
+        </div>
+        <%- end %>
+        <%- if @workflow.permitted_to_display?( :submission_project_doc_id ) then -%>
+        <div class="form-group">
+          <%= cs.label :submission_project_doc_id, class: "col-sm-3 control-label" %>
+          <div class="col-sm-4">
+            <%= display_value cs.object.submission_project_doc_id %>
+          </div>
+        </div>
+        <%- end %>
+        <%- if @workflow.permitted_to_display?( :response_sender_doc_id ) then -%>
+        <div class="form-group">
+          <%= cs.label :response_sender_doc_id, class: "col-sm-3 control-label" %>
+          <div class="col-sm-4">
+            <%= display_value cs.object.response_sender_doc_id %>
+          </div>
+        </div>
+        <%- end %>
+        <%- if @workflow.permitted_to_display?( :response_project_doc_id ) then -%>
+        <div class="form-group">
+          <%= cs.label :response_project_doc_id, class: "col-sm-3 control-label" %>
+          <div class="col-sm-4">
+            <%= display_value cs.object.response_project_doc_id %>
+          </div>
+        </div>
+        <%- end %>
+        <%- if @workflow.permitted_to_display?( :plnd_submission ) then -%>
+        <div class="form-group">
+          <%= cs.label :plnd_submission, class: "col-sm-3 control-label" %>
+          <div class="col-sm-2">
+            <%= display_value cs.object.plnd_submission %>
+          </div>
+        </div>
+        <%- end %>
+        <%- if @workflow.permitted_to_display?( :actl_submission ) then -%>
+        <div class="form-group">
+          <%= cs.label :actl_submission, class: "col-sm-3 control-label" %>
+          <div class="col-sm-2">
+            <%= display_value cs.object.actl_submission %>
+          </div>
+        </div>
+        <%- end %>
+        <%- if @workflow.permitted_to_display?( :xpcd_response ) then -%>
+        <div class="form-group">
+          <%= cs.label :xpcd_response, class: "col-sm-3 control-label" %>
+          <div class="col-sm-2">
+            <%= display_value cs.object.xpcd_response %>
+          </div>
+        </div>
+        <%- end %>
+        <%- if @workflow.permitted_to_display?( :actl_response ) then -%>
+        <div class="form-group">
+          <%= cs.label :actl_response, class: "col-sm-3 control-label" %>
+          <div class="col-sm-2">
+            <%= display_value cs.object.actl_response %>
+          </div>
+        </div>
+        <%- end %>
+        <%- if @workflow.permitted_to_display?( :response_status ) then -%>
+        <div class="form-group">
+          <%= cs.label :response_status, class: "col-sm-3 control-label" %>
+          <div class="col-sm-4">
+            <%= display_value cs.object.response_status_label %>
+          </div>
+        </div>
+        <%- end %>
+        <hr/>
+      <%- end -%>
+      <%- end -%>
+
+      <%- if @workflow.permitted_to_display?( :estm_completion ) then -%>
+      <div class="form-group">
+        <%= f.label :estm_completion, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value db_formatted_d( f.object.estm_completion ) %>
+        </div>
+      </div>
+      <%- end %>
+      <%- if @workflow.permitted_to_display?( :plnd_completion ) then -%>
+      <div class="form-group">
+        <%= f.label :plnd_completion, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value db_formatted_d( f.object.plnd_completion ) %>
+        </div>
+      </div>
+      <%- end %>
+      <%- if @workflow.permitted_to_display?( :plnd_completion_b ) then -%>
+      <div class="form-group">
+        <%= f.label :plnd_completion_b, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value db_formatted_d( f.object.plnd_completion_b )%>
+        </div>
+      </div>
+      <%- end -%>
+      <%- if @workflow.permitted_to_display?( :actl_completion ) then -%>
+      <div class="form-group">
+        <%= f.label :actl_completion, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value db_formatted_d( f.object.actl_completion ) %>
+        </div>
+      </div>
+      <%- end %>
+      <div class="form-group">
+        <%= f.label :notes, class: "col-sm-3 control-label" %>
+        <div class="col-sm-6">
+          <%= display_value f.object.notes %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :current_status_task, class: "col-sm-3 control-label" %>
+        <div class="col-sm-6">
+          <%= display_value @workflow.status_task_label %>
+        </div>
+      </div>
+      <%- if @workflow.permitted_to_display?( :current_status_b ) then -%>
+      <div class="form-group">
+        <%= f.label :current_status_b, class: "col-sm-3 control-label" %>
+        <div class="col-sm-3">
+          <%= display_value @workflow.status_label_with_id( f.object.current_status_b, 0 ) %>
+        </div>
+      </div>
+      <%- end -%>
+      <%- if @workflow.permitted_to_display?( :current_task_b ) then -%>
+      <div class="form-group">
+        <%= f.label :current_task_b, class: "col-sm-3 control-label" %>
+        <div class="col-sm-3">
+          <%= display_value @workflow.task_label_with_id( f.object.current_task_b, 0 ) %>
+        </div>
+      </div>
+      <%- end -%>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-2">
+          <%= link_to t( 'button_label.edit' ), edit_dsr_status_record_path( @dsr_status_record ), class: "btn btn-lg btn-block btn-default" %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to t( 'button_label.add' ), add_dsr_status_record_path( @dsr_status_record ), class: "btn btn-lg btn-block btn-default" %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to t( 'button_label.goto_to_list' ), dsr_status_records_path, class: "btn btn-lg btn-block btn-default" %>
+        </div>
+        <%- if @workflow.current_access_level == 4 then %>
+          <div class="col-sm-2">
+            <%= link_to t( 'button_label.upd_baseline' ), update_dsr_status_record_path, class: 'btn btn-lg btn-block btn-default' %>
+          </div>
+        <%- end %>
+      </div>
+    <% end %>
+  </div>
+</div>

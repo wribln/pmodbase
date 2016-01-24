@@ -1,0 +1,64 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+      padding: 8px;
+      vertical-align: left;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Status of: <%= @tia_list.label %></h1>
+    <h2>as per: <%= Time.now.to_formatted_s( :long_ordinal ) %></h2>
+    <hr/>
+    <% unless @tia_items.length.zero? %>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Description / Comment / Status</th>
+          <th>Due Date</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @tia_items.each do |ti| -%>
+        <% rows = ( ti.comment.empty? ? 2 : 3 ) %>
+        <tr>
+          <td rowspan="<%= rows -%>" valign="top"><%= ti.tia_list.item_code( ti.seq_no ) %></td>
+          <td><%= ti.description %></td>
+          <td rowspan="<%= rows -%>" valign="top"><%= ti.due_date.nil? ? 'open' : db_formatted_d( ti.due_date ) %></td> 
+        </tr>
+        <%= content_tag( :tr, content_tag( :td, ti.comment )) unless ti.comment.empty? -%>
+        <%= content_tag( :tr, content_tag( :td, ti.status_label )) %>
+      <% end -%>
+      </tbody>
+    </table>
+    <hr/>
+    <table>
+      <thead>
+        <tr>
+          <th>Status</th>
+          <th>Count</th> 
+        </tr>
+      </thead>
+      <tbody>
+        <% total = 0; @tia_stats.each do |ts| -%>
+        <tr>
+          <td><%= TiaItem::TIA_ITEM_STATUS_LABELS[ ts[ 0 ]] %></td>
+          <td><%= total += ts[ 1 ]; ts[ 1 ] %></td>
+        </tr>
+        <% end -%>
+        <tr>
+          <td>Total</td>
+          <td><%= total %></td>
+        </tr>
+      </tbody>
+    </table>
+  <% end %>
+  </body>
+</html>

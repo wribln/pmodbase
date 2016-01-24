@@ -1,0 +1,38 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th class="col-sm-1"><%= ProgrammeActivity.human_attribute_name( :id          ) %></th>
+          <th class="col-sm-2"><%= ProgrammeActivity.human_attribute_name( :project_id  ) %></th>
+          <th class="col-sm-2"><%= ProgrammeActivity.human_attribute_name( :activity_id ) %></th>
+          <th class="col-sm-4"><%= ProgrammeActivity.human_attribute_name( :activity_label ) %></th>
+          <th class="col-sm-1"><%= ProgrammeActivity.human_attribute_name( :start_date  ) %></th>
+          <th class="col-sm-1"><%= ProgrammeActivity.human_attribute_name( :finish_date ) %></th>
+          <th class="col-sm-1 hidden-print"><%= t( 'action_title.header' )%></th>
+        </tr>
+      </thead>
+      <tbody>
+      <% if @programme_activities.length.zero? %>
+        <%= render partial: 'shared/index_empty_row', locals:{ columns: 6, with_link: true }%>
+      <% else %>
+        <% @programme_activities.each do |pa| %>
+          <tr>
+            <td><%= pa.to_id %></td>
+            <td><%= pa.project_id %></td>
+            <td><%= pa.activity_id %></td>
+            <td><%= pa.activity_label %></td>
+            <td><%= db_formatted_d pa.start_date %></td>
+            <td><%= db_formatted_d pa.finish_date %></td>
+            <td><%= render partial: 'shared/actions', object: pa %></td>
+          </tr>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+    <%= render partial: 'shared/footer' %>
+  </div>
+</div>

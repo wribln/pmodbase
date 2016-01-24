@@ -1,0 +1,54 @@
+<%= CSV.generate_line([
+    t('.group'),
+    t('.g_name'),
+    t('.p_name'),
+    t('.resp'),
+    t('.e_mail'),
+    t('.ctype'),
+    t('.dept'),
+    t('.a_details'),
+    t('.phone_off'),
+    t('.phone_mob')], STD_CSV_OPTIONS ) -%>
+<%- @contact_list.each do |c| -%>
+<%- if c.person_id.zero? -%>
+<%= CSV.generate_line([
+    c.group.code,
+    c.group.label,
+    t( 'people.no_name_given' ),
+    c.description, 
+    nil,
+    nil,
+    nil,
+    nil,
+    nil,
+    nil ], STD_CSV_OPTIONS ).html_safe -%>
+<%- elsif c.person.involved -%>
+<%- unless c.person.contact_infos.present? -%>
+<%= CSV.generate_line([
+    c.group.code,
+    c.group.label,
+    c.person.name,
+    c.description,
+    c.person.email,
+    nil,
+    nil,
+    nil,
+    nil,
+    nil ], STD_CSV_OPTIONS ).html_safe -%>
+<%- else -%>
+<%- c.person.contact_infos.each do |ci| -%>
+<%= CSV.generate_line([
+    c.group.code,
+    c.group.label,
+    c.person.name,
+    c.description,
+    c.person.email,
+    ci.info_type,
+    ci.department,
+    ci.detail_location,
+    ci.phone_no_fixed,
+    ci.phone_no_mobile ], STD_CSV_OPTIONS ).html_safe -%>
+<%- end -%>
+<%- end -%>
+<%- end -%>
+<%- end -%>

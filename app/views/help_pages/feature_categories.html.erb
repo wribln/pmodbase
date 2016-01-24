@@ -1,0 +1,15 @@
+<% help_title "Help on #{ FeatureCategory.model_name.human }" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">Each <%= link_to_help :features, 'Feature' -%> in the system is assigned to a category.</p>
+    <p>Each category is identified by the following:</p>
+    <ul>
+      <li><%= help_param FeatureCategory.human_attribute_name( :label ) -%>
+        describes the category.</li>
+      <li><%= help_param FeatureCategory.human_attribute_name( :seqno ) -%>
+        allows to sort the categories in lists. These numbers do not need to
+        be consecutive, i.e. they can have gaps to ease insertion of new
+        groups.</li>
+    <%= help_footer FEATURE_ID_FEATURE_CATEGORIES %>
+  </div> <!-- /container -->

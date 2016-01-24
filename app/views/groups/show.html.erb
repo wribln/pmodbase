@@ -1,0 +1,54 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="form-horizontal" role="form">
+    <%= form_for @group do |g| %>
+      <%= render partial: 'shared/notice' %>
+      <div class="form-group">
+        <%= g.label :id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= g.text_field :id, class: "form-control", readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= g.label :code, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= g.text_field :code, class: "form-control", readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= g.label :label, class: "col-sm-3 control-label" %>
+        <div class="col-sm-4">
+          <%= g.text_field :label, class: "form-control", readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= g.label :notes, class: "col-sm-3 control-label" %>
+        <div class="col-sm-4">
+          <%= g.text_field :notes, class: "form-control", readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= g.label :seqno, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= g.text_field :seqno, class: "form-control", readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= g.label :group_category_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-4">
+          <%= display_value g.object.group_category_with_id %>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-2">
+          <%= link_to t( 'button_label.edit' ), edit_group_path( @group ), class: "btn btn-lg btn-block btn-default" %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to t( 'button_label.goto_to_list' ), groups_path, class: "btn btn-lg btn-block btn-default" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

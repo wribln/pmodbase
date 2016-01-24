@@ -1,0 +1,23 @@
+<% help_title "Help on #{ UnitName.model_name.human }" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">This table provides symbols and abbreviations for units.</p>
+    <p>When adding symbols or abbreviations for units, you should follow the
+      recommendations of the International System of Units (SI) whenever possible
+      in order to avoid any ambiguities.</p>
+    <p>The <%= UnitName.model_name.human %> will be included in the 
+      <%= link_to_help :unit_names, 'Global Search for Abbreviations' -%>.
+    <ul>
+      <li><%= help_param UnitName.human_attribute_name( :code ) -%> is the
+        short code or abbreviation of the unit.</li>
+      <li><%= help_param UnitName.human_attribute_name( :label ) -%> contains
+        the name of the unit, or the explanation of the abbreviation.<br/>
+        Since most units will be used on items different from 1, the plural
+        form of the unit name should be used here.<br/>
+        English SI unit names are normally all in lowercase, even if the
+        prefix and/or the unit name is in uppercase; for example, MW -
+        megawatts.</li>
+    </ul>
+    <%= help_footer FEATURE_ID_UNIT_NAMES %>
+  </div> <!-- /container -->

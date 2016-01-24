@@ -1,0 +1,36 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="table-responsive col-sm-9">
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th class="col-sm-1"><%= DsrProgressRate.human_attribute_name( :id       ) %></th>
+          <th class="col-sm-3"><%= DsrProgressRate.human_attribute_name( :label    ) %></th>
+          <th class="col-sm-1"><%= DsrProgressRate.human_attribute_name( :document_progress ) %></th>
+          <th class="col-sm-1"><%= DsrProgressRate.human_attribute_name( :prepare_progress  ) %></th>
+          <th class="col-sm-1"><%= DsrProgressRate.human_attribute_name( :approve_progress ) %></th>
+          <th class="col-sm-1 hidden-print"><%= t( 'action_title.header' )%></th>
+        </tr>
+      </thead>
+      <tbody>
+      <% if @dsr_progress_rates.length.zero? %>
+        <%= render partial: 'shared/index_empty_row', locals:{ columns: 6, with_link: false }%>
+      <% else %>
+        <% @dsr_progress_rates.each do |p| %>
+          <tr>
+            <td><%= p.to_id %></td>
+            <td><%= DsrStatusRecord::DSR_STATUS_RECORD_STATUS_LABELS[ p.id ] %></td>
+            <td class="td-right"><%= db_formatted_pct p.document_progress %></td>
+            <td class="td-right"><%= db_formatted_pct p.prepare_progress %></td>
+            <td class="td-right"><%= db_formatted_pct p.approve_progress %></td>
+            <td><%= render partial: 'shared/actions', object: p, locals: { enabled_buttons: 3 } %></td>
+          </tr>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+    <%= render partial: 'shared/footer' %>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+ger:
+  code:   GER
+  label:  Germany
+
+usa:
+  code:   USA
+  label:  United States of America

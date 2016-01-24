@@ -1,0 +1,9 @@
+dsr_group_one:
+  group:    group_one
+  code:     DSR_GRP_1
+  title:    Document Status Register Group 1
+
+dsr_group_two:
+  group:    group_two 
+  code:     DSR_GRP_2
+  title:    Document Status Register Group 2

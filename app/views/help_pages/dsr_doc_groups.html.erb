@@ -1,0 +1,22 @@
+<% help_title "Help on #{ DsrDocGroup.model_name.human }" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">Define groups of documents for the Document Status Register (DSR)</p>
+    <p>Within this table, you define groups of documents to be used in the DSR (see help
+      on <%= link_to_help :dsr_status_records, DsrStatusRecord.model_name.human %> for
+      details on document groups:</p>
+    <ul>
+      <li><%= help_param DsrDocGroup.human_attribute_name( :id ) -%> is a unique
+        identifier which is unique for each and every document group.
+        You must use this number to link a document to a specific document group.</li>
+      <li><%= help_param DsrDocGroup.human_attribute_name( :code ) -%> is a short name
+        for a document group to be used for filtering.</li>
+      <li><%= help_param DsrDocGroup.human_attribute_name( :title ) -%> is the long
+        description of the document group.</li>
+      <li><%= help_param DsrDocGroup.human_attribute_name( :group_id ) -%> defines 
+        which project group this document group belongs to. Only accounts belonging
+        to this project group can access this document group.</li>
+    </ul>
+    <%= help_footer FEATURE_ID_DSR_DOC_GROUPS %>
+  </div> <!-- /container -->

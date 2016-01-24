@@ -1,0 +1,64 @@
+<% help_title "Help on Feature Access Control (FAC)" %>
+  <div class="container">
+   <%= helpcrumbs %>
+   <%= help_header %>
+   <p class="lead">Access to a feature is controlled by each feature
+    individually.</p>
+    <h3>Feature Access Levels (FALs)</h3>
+    <p>Depending on the type of data being managed by the feature, access to the
+      feature is defined by one of the Feature Access Levels (FALs).
+      There are five FALs defined:</p>
+    <ul>
+      <li><%= help_term Feature.human_attribute_name( :access_levels )[ 8 ] -%> 
+        allows any user in the network - even if the user has no or an
+        inactive account - to access this feature; no access control will be
+        performed on features having this access level.</li>
+      <li><%= help_term Feature.human_attribute_name( :access_levels )[ 6 ] -%>
+        all users signed-on are granted access to this feature without
+        restrictions.</li>
+      <li><%= help_term Feature.human_attribute_name( :access_levels )[ 2 ] -%> will
+        allow access to the index or summary page of a feature by any signed-on
+        user.</li>
+      <li><%= help_term Feature.human_attribute_name( :access_levels )[ 1 ] -%>
+        only allows users with an explicit permission to access the requested
+        feature.</li>
+      <li><%= help_term Feature.human_attribute_name( :access_levels )[ 0 ] -%>
+        does not allow access by any user. This is used by internal
+        features.</li>
+    </ul>
+    <h3>Feature Access Control (FAC)</h3>
+    <p>Further FAC is implemented for specific features:</p>
+    <ul>
+      <li><%= help_term Feature.human_attribute_name( :control_levels )[ 1 ] -%>
+        denotes that access is for specified project groups only.</li>
+      <li><%= help_term Feature.human_attribute_name( :control_levels )[ 2 ] -%>
+        means that an access control on a workflow task level is implemented
+        such that only eligible users are permitted to request updates for
+        certain tasks during the execution of the workflow.</li>
+      <li><%= help_term Feature.human_attribute_name( :control_levels )[ 3 ] -%>
+        is the combination of group and workflow access control: only workflows
+        for the given group will be accessible and within these workflows, the
+        update requests will be controlled based on the workflow permissions.</li>
+      <li><%= help_term Feature.human_attribute_name( :control_levels )[ 4 ] -%>
+        stands for 'closed user group' and is implemented to allow access by
+        invitation: Only accounts specifically permitted for an element of
+        this feature will be allowed to access respecive records.</li>
+    </ul>
+    <p>FAL and FAC are implemented into the system and cannot be modified. To
+      administer further permissions, use the
+      <%= help_term Permission4Group.model_name.human -%> and 
+      <%= help_term Permission4Flow.model_name.human -%> records in the
+      <%= I18n.t('accounts.title') -%> feature, or the member admission 
+      feature for closed user groups.</p>
+    <h3>Notes</h3>
+    <p>FAL and FAC can be viewed using the <%= I18n.t('features.title') -%>
+      feature.</p>
+    <p>Access is granted initially on a 'white list principle': Depending on
+      the FAL, a user gains access either (a) by the general permission of the
+      FAL, or (b) by FAC permissions granted specifically to him (as configured
+      for his account) per group and/or workflow.</p>
+      <p>Other feature may restrict access to only the owner of the record,
+      for example the personal user data kept in the profile, or Task/Issue/Action
+      Item Lists.</p>
+    <%= help_footer FEATURE_ID_HELP_PAGES %>
+  </div> <!-- /container -->

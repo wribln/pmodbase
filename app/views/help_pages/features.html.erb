@@ -1,0 +1,89 @@
+<% help_title "Help on #{ Feature.model_name.human }" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">Basically, a 'Feature' in this system corresponds to a
+      specific table of information, or a certain grouping of information.</p>
+    <h3>Access to Features</h3>
+    <p>All Features in the system are subject to access control: A user may
+      not have any access to a specific feature, i.e. this feature will be
+      'hidden' to him.</p>
+    <p>If a user has access to a certain feature, he may still be restricted
+      to certain actions: Normally, a user has at least the ability to view
+      the list of items in a feature, possibly even to view details of a
+      specific item. Some users may be given the right to modify items, to
+      create items, or to delete items from that feature.</p>
+    <p>On group-related features, the access rights may be restricted to
+      items belonging to specific groups, i.e. the user my be restricted to
+      view (change, modify, add, delete) only items belonging to a specific
+      (his or her) group.</p>
+    <p>Workflows have an additional level of access control based on roles
+      where the information can only be modified by a user with specific
+      rights for the current status of the information item.</p>
+    <h3>Feature Items</h3>
+    <p>The following information about a feature is stored in the database:</p>
+    <ul>
+      <li><%= help_param Feature.human_attribute_name( :id ) -%> is the internal
+        number of the feature. As this number has a fixed value in the system,
+        it cannot be changed.</li>
+      <li><%= help_param Feature.human_attribute_name( :code ) -%> is a short,
+        normally three character long code for this feature. This code is also
+        used in the url of the feature: Existing values must not be changed
+        as they would invalidate the current routing table!</li>
+      <li><%= help_param Feature.human_attribute_name( :label ) -%> contains a
+        descriptive text for the feature. You can change this field here but
+        this will only affect the description shown on the base page, all
+        other references to this feature will remain as they are stored in
+        the internal language support system.</li>
+      <li><%= help_param Feature.human_attribute_name( :feature_category_id ) -%>
+        assigns this feature to a category.</li>
+      <li><%= help_param Feature.human_attribute_name( :seqno ) -%> is used
+        to sort the features within a category. This number does not have to
+        be consecutive.</li>
+      <li><%= help_param Feature.human_attribute_name( :access_level ) -%> contains a
+        flag showing how access to the feature is controlled:
+        <ul>
+          <li><%= help_term Feature.human_attribute_name( :access_levels )[ 0 ] -%>
+            is an internal feature, not visible to the general user</li>
+          <li><%= help_term Feature.human_attribute_name( :access_levels )[ 1 ] -%>
+            are features requiring specific permissions for each kind of
+            access</li>
+          <li><%= help_term Feature.human_attribute_name( :access_levels )[ 2 ] -%>
+            means that any user is allowed access to the index level of that
+            feature, i.e. the user can view a listing of all information
+            items.</li>
+          <li><%= help_term Feature.human_attribute_name( :access_levels )[ 6 ] -%>
+            are those features generally available to all users having access
+            to the system</li>
+          <li><%= help_term Feature.human_attribute_name( :access_levels )[ 8 ] -%>
+            means that this feature is accessible for everybody without 
+            restriction.</li>
+        </ul>
+        </li>
+      <li><%= help_param Feature.human_attribute_name( :control_level ) -%>
+        contains a flag denoting which additional access control is implemented
+        by the feature:
+        <ul>
+          <li><%= help_term Feature.human_attribute_name( :control_levels )[ 1 ] -%>
+            means that an additional access control based on the group owning the
+            information is implemented: Only user's with permissions for the given
+            group will be eligable to access these records.</li>         
+          <li><%= help_term Feature.human_attribute_name( :control_levels )[ 2 ] -%> 
+            denotes that workflow access control is in place: For specific tasks,
+            a user needs specific permissions to update the respective record.</li>        
+          <li><%= help_term Feature.human_attribute_name( :control_levels )[ 3 ] -%>
+            is a combination of group and workflow access control.</li>         
+        </ul>
+        The above fields are for information only as they indicate the method of
+        access control implemented; thus they are not to be modified.</li>
+      <li><%= help_param Feature.human_attribute_name( :no_workflows ) -%>
+        gives the number of different workflows implemented in that feature.</li>
+    </ul>
+    <p>This table generally should not be modified, except for the
+      <%= help_param Feature.human_attribute_name( :label ) -%>, the
+      <%= help_param Feature.human_attribute_name( :seqno ) -%>, and the
+      <%= help_param Feature.human_attribute_name( :feature_category_id ) -%>:
+      All other fields are 'hard-wired' to the code of this system and will
+      cause problems if they are modified.</p>
+    <%= help_footer FEATURE_ID_FEATURE_ITEMS %>
+  </div> <!-- /container -->

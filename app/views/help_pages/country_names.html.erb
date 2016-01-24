@@ -1,0 +1,25 @@
+<% help_title "Help on #{ CountryName.model_name.human }"%>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">This table contains country names and their abbreviations 
+      or code.</p>
+    <p>In most cases, the country names and codes are derived from the
+       ISO-3166-1 standard:</p>
+    <ul>
+      <li><%= help_param CountryName.human_attribute_name( :code ) -%> is -
+        normally - the ALPHA-3 character from ISO-3166-1. Other codes or
+        abbreviations are commonly used but may not be part of the above
+        standard. Only one code should be used in the project to avoid
+        ambiguity: Mark the code to be used with the suffix '(favoured)' in
+        the <%= CountryName.human_attribute_name( :label )-%> field. The
+        names of the other code(s) should be marked with the suffix
+        '(preferred: XYZ)' where XYZ is the preferred code.</li>
+      <li><%= help_param CountryName.human_attribute_name( :label ) -%> is to
+        contain the country's name according to the ISO-3166-1 standard.
+        The generally used name should appear first, optionally followed with
+        the official name extensions, e.g.<br/>
+        Korea (Democratic People's Republic of)<br/>
+        Korea (Republic of)</li>
+    <%= help_footer FEATURE_ID_COUNTRY_NAMES %>
+  </div> <!-- /container -->

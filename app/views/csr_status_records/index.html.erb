@@ -1,0 +1,60 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="table-responsive">
+    <%= form_tag({},{ method: :get }) do %>
+    <%= will_paginate @csr_status_records %>
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th class="col-sm-1"><%= label_tag :ff_id,     CsrStatusRecord.human_attribute_name( :id                  ), class: 'control-label' %></th>
+          <th class="col-sm-1"><%= label_tag :ff_type,   CsrStatusRecord.human_attribute_name( :correspondence_type ), class: 'control-label' %></th>
+          <th class="col-sm-2"><%= label_tag :ff_subj,   CsrStatusRecord.human_attribute_name( :subject             ), class: 'control-label' %></th>
+          <th class="col-sm-1"><%= label_tag :ff_group,  t( '.other_group_id' ), class: 'control-label' %></th>
+          <th class="col-sm-1"><%= label_tag :ff_class,  t( '.classification' ), class: 'control-label' %></th>
+          <th class="col-sm-1"><%= t( '.other_date' )%></th>
+          <th class="col-sm-1"><%= t( '.reply_date' )%></th>
+          <th class="col-sm-1"><%= label_tag :ff_status, CsrStatusRecord.human_attribute_name( :status              ), class: 'control-label' %></th>
+          <th class="col-sm-2"><%= label_tag :ff_note,   CsrStatusRecord.human_attribute_name( :note                ), class: 'control-label' %></th>
+          <th class="col-sm-1 hidden-print"><%= filter_action_title_header %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr <%= filter_row( @filter_fields ) -%>>
+          <td><%= filter_field @filter_fields, :ff_id, :id %></td>
+          <td><%= filter_select_from_string_set @filter_fields, :ff_type, CsrStatusRecord::CSR_CORRESP_TYPE_LABELS %></td>
+          <td><%= filter_field @filter_fields, :ff_subj, :sw %></td>
+          <td><%= filter_single_select @filter_fields, :ff_group, @all_groups, :code -%></td>
+          <td><%= filter_select_from_string_set @filter_fields, :ff_class, CsrStatusRecord::CSR_CLASS_LABELS %></td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td><%= filter_select_from_string_set @filter_fields, :ff_status, CsrStatusRecord::CSR_STATUS_LABELS %></td>
+          <td><%= filter_field @filter_fields, :ff_note, :sw %></td>
+          <td><%= filter_action_button -%></td>
+        </tr>
+      <% if @csr_status_records.length.zero? %>
+        <%= render partial: 'shared/index_empty_row', locals:{ columns: 9, with_link: true }%>
+      <% else %>
+        <% @csr_status_records.each do |csr| %>
+          <tr>
+            <td><%= csr.to_id %></td>
+            <td><%= csr.correspondence_type_label %></td>
+            <td><%= csr.subject %></td>
+            <td><%= csr.sender_receiver_group_code %></td>
+            <td><%= csr.classification_label %></td>
+            <td><%= csr.correspondence_date %></td>
+            <td><%= db_formatted_d( csr.plan_reply_date ) -%>/
+                <%= link_to_unless( csr.reply_status_record_id.nil?, db_formatted_d( csr.actual_reply_date ), csr.sent_item )-%></td>
+            <td><%= csr.status_label %></td>
+            <td><%= csr.notes %></td>
+            <td><%= render partial: 'shared/actions', object: csr %></td>
+          </tr>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+    <%- end -%>
+    <%= render partial: 'shared/footer' %>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+<% help_title "Help on #{ RegionName.model_name.human }"%>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">This table contains the names of geographical regions
+      within a country.</p>
+    <p>The regions are used to determine the area in which certain holidays
+      are observed:</p>
+    <ul>
+      <li><%= help_param RegionName.human_attribute_name( :country_name_id ) -%>
+        specifies the country in which this region is located.</li>
+      <li><%= help_param RegionName.human_attribute_name( :code ) -%>
+        is the abbreviation used for that region (use of ISO-3166-2 is 
+        recommended).</li>
+      <li><%= help_param RegionName.human_attribute_name( :label ) -%>
+        is the descriptive name of the region.</li>
+    </ul> 
+    <%= help_footer FEATURE_ID_REGION_NAMES %>
+  </div> <!-- /container -->

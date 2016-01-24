@@ -1,0 +1,33 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th><%= UnitName.human_attribute_name( :id    ) %></th>
+          <th><%= UnitName.human_attribute_name( :code  ) %></th>
+          <th><%= UnitName.human_attribute_name( :label ) %></th>
+          <th><%= t( 'action_title.header' )%></th>
+        </tr>
+      </thead>
+      <tbody>
+      <% if @unit_names.length.zero? %>
+        <%= render partial: 'shared/index_empty_row', locals:{ columns: 3, with_link: true }%>
+      <% else %>
+        <% @unit_names.each do |unit_name| %>
+          <tr>
+            <td><%= unit_name.to_id %></td>
+            <td><%= unit_name.code  %></td>
+            <td><%= unit_name.label %></td>
+            <td><%= render partial: 'shared/actions', object: unit_name %></td>
+          </tr>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+    <%= render partial: 'shared/download_xls' %>
+    <%= render partial: 'shared/footer' %>
+  </div>
+</div>

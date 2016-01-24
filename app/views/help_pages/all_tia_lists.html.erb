@@ -1,0 +1,9 @@
+<% help_title "Help on #{ I18n.t( 'all_tia_lists.title' )}" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p>This feature allows project-wide administration of <%= TiaList.model_name.human -%>.</p>
+    <p>See Help on <%= link_to_help :my_tia_lists, I18n.t( 'my_tia_lists.title' ) -%>
+      for all details.</p>
+    <%= help_footer FEATURE_ID_ALL_TIA_LISTS %>
+  </div> <!-- /container -->

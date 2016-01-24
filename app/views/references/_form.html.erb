@@ -1,0 +1,25 @@
+      <div class="form-group">
+        <%= form.label :id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value form.object.id %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :code, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= form.text_field :code, class: "form-control", maxlength: MAX_LENGTH_OF_CODE %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :description, class: "col-sm-3 control-label" %>
+        <div class="col-sm-9">
+          <%= form.text_field :description, class: "form-control", maxlength: MAX_LENGTH_OF_DESCRIPTION %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :project_doc_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-6">
+          <%= form.text_field :project_doc_id, class: "form-control", maxlength: MAX_LENGTH_OF_DOC_ID %>
+        </div>
+      </div>
+

@@ -1,0 +1,117 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="form-horizontal" role="form">
+    <%= form_for @dsr_submission do |f| %>
+      <%= render partial: 'shared/notice' %>
+      <div class="form-group">
+        <%= f.label :id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-1">
+          <%= f.text_field :id, class: "form-control", readonly: true %>
+        </div>
+      </div>
+       <div class="form-group">
+        <%= f.label :dsr_status_record_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-1">
+          <%= f.text_field :dsr_status_record_id, class: "form-control", readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :submission_no, class: "col-sm-3 control-label" %>
+        <div class="col-sm-1">
+          <%= f.text_field :submission_no, class: "form-control", readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :sender_doc_id_version, class: "col-sm-3 control-label" %>
+        <div class="col-sm-3">
+          <%= display_value f.object.dsr_status_record.sender_doc_id %>
+        </div>
+        <div class="col-sm-1">
+          <%= f.text_field :sender_doc_id_version, class: "form-control", readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :project_doc_id_version, class: "col-sm-3 control-label" %>
+        <div class="col-sm-3">
+          <%= display_value f.object.dsr_status_record.project_doc_id %>
+        </div>
+        <div class="col-sm-1">
+          <%= f.text_field :project_doc_id_version, class: "form-control", readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :receiver_doc_id_version, class: "col-sm-3 control-label" %>
+        <div class="col-sm-3">
+          <%= display_value f.object.dsr_status_record.receiver_doc_id %>
+        </div>
+        <div class="col-sm-1">
+          <%= f.text_field :receiver_doc_id_version, class: "form-control", readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :submission_receiver_doc_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-4">
+          <%= f.text_field :submission_receiver_doc_id, class: "form-control", readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :submission_project_doc_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-4">
+          <%= f.text_field :submission_project_doc_id, class: "form-control", readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :response_sender_doc_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-4">
+          <%= f.text_field :response_sender_doc_id, class: "form-control", readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :response_project_doc_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-4">
+          <%= f.text_field :response_project_doc_id, class: "form-control", readonly: true %>
+        </div>
+      </div>
+     <div class="form-group">
+        <%= f.label :plnd_submission, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= f.text_field :plnd_submission, class: "form-control", readonly: true %>
+        </div>
+      </div>
+     <div class="form-group">
+        <%= f.label :actl_submission, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= f.text_field :actl_submission, class: "form-control", readonly: true %>
+        </div>
+      </div>
+     <div class="form-group">
+        <%= f.label :xpcd_response, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= f.text_field :xpcd_response, class: "form-control", readonly: true %>
+        </div>
+      </div>
+     <div class="form-group">
+        <%= f.label :actl_response, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= f.text_field :actl_response, class: "form-control", readonly: true %>
+        </div>
+      </div>
+     <div class="form-group">
+        <%= f.label :response_status, class: "col-sm-3 control-label" %>
+        <div class="col-sm-4">
+          <%= display_value f.object.response_status_label %>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-2">
+          <%= link_to t( 'button_label.edit' ), edit_dsr_submission_path( @dsr_submission ), class: "btn btn-lg btn-block btn-default" %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to t( 'button_label.goto_to_list' ), dsr_submissions_path, class: "btn btn-lg btn-block btn-default" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

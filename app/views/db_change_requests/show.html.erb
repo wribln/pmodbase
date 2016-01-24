@@ -1,0 +1,85 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="form-horizontal" role="form">
+    <%= form_for @dbcr, url: my_change_requests_path do |d| %>
+      <%= render partial: 'shared/notice' %>
+      <div class="form-group">
+        <%= d.label :id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= d.text_field :id, class: "form-control", readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= d.label :requesting_account_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-3">
+          <%= display_value d.object.requestor_with_id %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= d.label :feature_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-4">
+          <%= d.hidden_field :feature_id %>
+          <%= display_value d.object.feature_label_with_id %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= d.label :detail, class: "col-sm-3 control-label" %>
+        <div class="col-sm-4">
+          <%= d.text_field :detail, class: "form-control", readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= d.label :action, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= d.text_field :action, class: "form-control", readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= d.label :uri, class: "col-sm-3 control-label" %>
+        <div class="col-sm-4">
+          <%= d.text_field :uri, class: "form-control", readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= d.label :status, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value d.object.status_label_with_id %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= d.label :responsible_account_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-3">
+          <%= display_value d.object.responsible_with_id %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= d.label :created_at, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value db_formatted_dt( d.object.created_at ) %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= d.label :updated_at, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value db_formatted_dt( d.object.updated_at ) %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= d.label :request_text, class: "col-sm-3 control-label" %>
+        <div class="col-sm-4">
+          <%= d.text_area :request_text, cols: DEFAULT_COLS_TEXTAREA, rows: DEFAULT_ROWS_TEXTAREA, class: "form-control", placeholder: t( 'db_change_requests.req_text_prompt'), readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-2">
+          <%= link_to t( 'button_label.edit' ), edit_db_change_request_path( @dbcr ), class: "btn btn-lg btn-block btn-default" %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to t( 'button_label.goto_to_list' ), db_change_requests_path, class: "btn btn-lg btn-block btn-default" %>
+        </div>
+      <div>
+    <% end %>
+  </div>
+</div>

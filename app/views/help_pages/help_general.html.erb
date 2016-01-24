@@ -1,0 +1,33 @@
+<% help_title "General Help" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">Some helpful information for users of this software</p>
+    <h3>Bookmarks</h3>
+    <p>The way pmodbase is implemented, you can bookmark any page which you
+      see on the screen specifically with filters set: So you can define 
+      specific filters which you need for your evaluations and then bookmark
+      this page for immeadiate access to up-to-date information.</p>
+    <h3>CSV Files</h3>
+    <p>Even though CSV stands for 'comma separated files', the system will
+      <em>always</em> create 'semicolon separated files': The reason for
+      this is simply that semicolons are more general - specifically in some
+      countries, CSV files are always expected to use a ';' as field
+      separator. These files can normally be processed by any spreadsheet
+      office programme, such as Microsoft Excel, or OpenOffice Spreadsheet.
+      The mime-type for the download is set such that the respective tool
+      should open automatically for such files.</p>
+    <h3>DOC Files</h3>
+    <p>Reports and other files to be further processed by a word-processor
+    such as Word, or OpenOffice Word-Processor are generated as HTML-files.
+    As these files can normally be imported easily by such a word-processor,
+    further formatting or editing can be done on the generated files. The
+    mime-type for the download is set such that the respective tool should
+    open automatically for such files.</p>
+    <%= help_footer FEATURE_ID_HELP_PAGES %>
+    <h3>Input of Dates</h3>
+    <p>When the input of dates is requested, various date formats will be
+      recognized. The safest way to input a date is to use the unambiguous
+      ISO 8601 format 'YYYY-MM-DD' with leading zeros, or to use the
+      datepicker.</p>
+  </div> <!-- /container -->

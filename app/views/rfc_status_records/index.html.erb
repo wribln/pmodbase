@@ -1,0 +1,53 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="table-responsive">
+    <%= form_tag({},{ method: :get }) do %>
+    <%= will_paginate @rfc_status_records %>
+    <table class="table table-striped table-bordered table-condensed">
+      <thead>
+        <tr>
+          <th class="col-sm-1"><%= label_tag :ff_id,   RfcStatusRecord.human_attribute_name( :id                 ), class: 'control-label' %></th>
+          <th class="col-sm-1"><%= label_tag :ff_type, RfcStatusRecord.human_attribute_name( :rfc_type           ), class: 'control-label' %></th>
+          <th class="col-sm-3"><%= label_tag :ff_titl, RfcStatusRecord.human_attribute_name( :title              ), class: 'control-label' %></th>
+          <th class="col-sm-1"><%= label_tag :ff_agrp, RfcStatusRecord.human_attribute_name( :asking_group_id    ), class: 'control-label' %></th>
+          <th class="col-sm-1"><%= label_tag :ff_rgrp, RfcStatusRecord.human_attribute_name( :answering_group_id ), class: 'control-label' %></th>
+          <th class="col-sm-2"><%= label_tag :ff_stts, RfcStatusRecord.human_attribute_name( :current_status     ), class: 'control-label' %></th>
+          <th class="col-sm-2"><%=                     RfcStatusRecord.human_attribute_name( :current_task       )                         %></th>
+          <th class="col-sm-1 hidden-print"><%= filter_action_title_header %></th>
+        </tr>
+      </thead> 
+      <tbody>
+        <tr <%= filter_row( @filter_fields ) -%>>
+          <td><%= filter_field @filter_fields, :ff_id,   :id %></td>
+          <td><%= filter_select_from_array @filter_fields, :ff_type, @workflow.workflow_labels_for_select %></td>
+          <td><%= filter_field @filter_fields, :ff_titl, :sw %></td>
+          <td><%= filter_select_from_array @filter_fields, :ff_agrp, @filter_groups %></td>
+          <td><%= filter_select_from_array @filter_fields, :ff_rgrp, @filter_groups %></td>
+          <td colspan="2"><%= filter_select_from_array @filter_fields, :ff_stts, @filter_states %></td>
+          <td><%= filter_action_button -%></td>
+        </tr> 
+        <% if @rfc_status_records.length.zero? %>
+          <%= render partial: 'shared/index_empty_row', locals:{ columns: 7, with_link: true }%>
+        <% else %>
+          <% @rfc_status_records.each do |rds| %>
+            <tr>
+              <td><%= rds.to_id %></td>
+              <td><%= @workflow.workflow_label( rds.rfc_type )%></td>
+              <td><%= rds.title %></td>
+              <td><%= rds.asking_group_code %></td>
+              <td><%= rds.answering_group_code %></td>
+              <td><%= @workflow.status_label( rds.current_status, rds.rfc_type ) %></td>
+              <td><%= @workflow.task_label( rds.current_task, rds.rfc_type )%></td>
+              <td><%= render partial: 'shared/actions', object: rds %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+    <%- end -%>
+    <%= link_to t( 'general.statistics' ), rfc_status_info_path %>
+    <%= render partial: 'shared/footer' %>
+  </div>
+</div>

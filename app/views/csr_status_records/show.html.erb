@@ -1,0 +1,118 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="form-horizontal" role="form">
+    <%= form_for @csr_status_record do |f| %>
+      <%= render partial: 'shared/notice' %>
+      <div class="form-group">
+        <%= f.label :id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-1">
+          <%= display_value f.object.id %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :correspondence_type, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value f.object.correspondence_type_label %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :transmission_type, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value f.object.transmission_type_label %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :receiver_group_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value( f.object.receiver_group_code )%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :sender_group_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value( f.object.sender_group_code )%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :sender_reference, class: "col-sm-3 control-label" %>
+        <div class="col-sm-4">
+          <%= f.text_field :sender_reference, class: "form-control", readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :correspondence_date, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value( db_formatted_d( f.object.correspondence_date ))%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :subject, class: "col-sm-3 control-label" %>
+        <div class="col-sm-6">
+          <%= f.text_field :subject, class: "form-control", readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :classification, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value( f.object.classification_label )%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :status, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value( f.object.status_label )%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :notes, class: "col-sm-3 control-label" %>
+        <div class="col-sm-6">
+          <%= f.text_field :notes, class: "form-control", readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :plan_reply_date, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value( db_formatted_d( f.object.plan_reply_date ))%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :actual_reply_date, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value( db_formatted_d( f.object.actual_reply_date ))%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :reply_status_record_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-1">
+          <%- if f.object.sent_item.nil? -%>
+            <%= display_value '' %>
+          <%- else -%>
+            <%= link_to( f.object.sent_item.to_id, f.object.sent_item, { class: "form-control", readonly: true })%>
+          <%- end -%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :project_doc_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-4">
+          <%= display_value f.object.project_doc_id %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :sender_doc_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-4">
+          <%= display_value f.object.sender_doc_id %>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-2">
+          <%= link_to t( 'button_label.edit' ), edit_csr_status_record_path( @csr_status_record ), class: "btn btn-lg btn-block btn-default" %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to t( 'button_label.goto_to_list' ), csr_status_records_path, class: "btn btn-lg btn-block btn-default" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

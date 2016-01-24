@@ -1,0 +1,27 @@
+# create one persmission record per feature for account_one
+
+<% FEATURE_ID_MAX_PLUS_ONE.times do |p| %>
+
+permission4_group_<%= p %>:
+  account: account_one
+  feature_id: <%= p %>
+  group_id: 0
+  to_index:  1
+  to_create: 1
+  to_read:   1
+  to_update: 1
+  to_delete: 1
+
+<% end %>
+
+# all rights for group_two
+
+permission4_group_f01:
+  account:     account_two
+  feature_id:  FEATURE_ID_DSR_DOCUMENTS
+  group:       group_two
+  to_index: 1
+  to_create: 1
+  to_read: 1
+  to_update: 1
+  to_delete: 1

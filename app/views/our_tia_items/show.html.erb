@@ -1,0 +1,69 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title_w_link( @tia_list.label, my_tia_lists_path ) %>
+  <div class="form-horizontal" role="form">
+    <%= form_for @tia_item, url: our_tia_item_path( @tia_item ) do |f| %>
+      <%= render partial: 'shared/notice' %>
+      <div class="form-group">
+        <%= f.label :item_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-1">
+          <%= display_value f.object.tia_list.item_code( f.object.seq_no )%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :description, class: "col-sm-3 control-label" %>
+        <div class="col-sm-6">
+        	<%= display_lines f.object.description %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :comment, class: "col-sm-3 control-label" %>
+        <div class="col-sm-6">
+          <%= f.text_area :comment, cols: DEFAULT_COLS_TEXTAREA, rows: DEFAULT_ROWS_TEXTAREA, class: "form-control", readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :prio, class: "col-sm-3 control-label" %>
+        <div class="col-sm-1">
+          <%= display_value f.object.prio_label %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label TiaItem.human_attribute_name( :owner ), class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value f.object.account.try( :user_name )%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :due_date, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value db_formatted_d( f.object.due_date )%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :status, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value f.object.status_label %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :archived, class: "col-sm-3 control-label" %>
+        <div class="col-sm-1">
+          <%= display_check_box f.object.archived %>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-2">
+          <%= link_to t( 'button_label.edit' ), edit_our_tia_item_path( @tia_item ), class: "btn btn-lg btn-block btn-default" %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to t( '.button_info' ), our_tia_item_info_path( @tia_item ), class: "btn btn-lg btn-block btn-default", target: '_blank' %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to t( 'button_label.goto_to_list' ), my_tia_list_our_tia_items_path( @tia_list ), class: "btn btn-lg btn-block btn-default" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

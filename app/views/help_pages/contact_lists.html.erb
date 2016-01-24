@@ -1,0 +1,46 @@
+<% help_title "Help on #{ I18n.t( 'contact_lists.title' )}"%>
+<div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">Here you find the contact information for all parties and
+      persons involved in the project.</p>
+    <p>This feature is an "information only" feature as the data in the
+      table are for presentation purposes only, and not for modification.
+      In fact, the data fields come from various different sources which
+      are maintained separately by different people:</p>
+    <ul>
+      <li><%= help_param t( 'contact_lists.index.group' ) -%> is the short
+        code of the project group.</li>
+      <li>The column 
+        <%= help_param t( 'contact_lists.index.name' ) -%> contains in
+        headings the full group name, in rows with person data the name of the
+        responsible person. If no personal information is available, that
+        field contains '<%= t( 'people.no_name_given' ) -%>'.</li>
+      <li><%= help_param t( 'contact_lists.index.resp' ) -%> describes the
+        role of the person in the project within this group.</li>
+      <li><%= help_param t( 'contact_lists.index.e_mail' ) -%> contains a link
+        to e-mail address of the person</li>
+      <li><%= help_param t( 'contact_lists.index.ctype' ) -%> describes the
+        type of contact information in the following fields. Normally, this
+        would be 'Office', or 'Project'.</li>
+      <li><%= help_param t( 'contact_lists.index.dept' ) -%> shows the
+        department code of the person at the given location.</li>
+      <li><%= help_param t( 'contact_lists.index.a_details' ) -%> contains
+        further details to the address, for example, room number, or mail
+        stop code.</li>
+      <li><%= help_param t( 'contact_lists.index.a_link' ) -%> links to the
+        street and postal address information for the given address.</li>
+      <li><%= help_param t( 'contact_lists.index.phone_nos' ) -%> show the
+        phone numbers of the given person.</li>
+    </ul>
+    <p>The contents of the table can be downloaded as CSV formated file for
+      further processing in other tools, for example, in spreadsheet tools.
+      However, the format is slightly different due to the complexity of the
+      data.</p>
+    <p>If any information about yourself appears to be incorrect, you can
+      update it easily using the link under your name on the 
+      <%= link_to "Base Page", base_path %>.</p>
+    <p>If any other information needs to be updated or corrected, please use
+      the link at the buttom of the page to request the change.</p>
+  <%= help_footer FEATURE_ID_CONTACT_LISTS %>
+</div>

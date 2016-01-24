@@ -1,0 +1,30 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th>Workflow</th>
+          <th>Task</th>
+          <th>Possible Next Status / Task</th>
+        </tr>
+      </thead>
+      <tbody>
+      <%- @workflow.no_of_workflows.times do |l1| -%>
+        <%- @workflow.no_of_tasks( l1 ).times do |l2| -%>
+          <%- @workflow.no_of_outgoing_flows( l2, l1 ).times do |l3| -%>
+        <tr>
+          <td><%= @workflow.workflow_label_with_id( l1 ) unless l2 > 0 %></td>
+          <td><%= @workflow.task_label_with_id( l2, l1 ) unless l3 > 0 -%></td>
+          <td><%= @workflow.next_status_task_label_with_id( l3, l2, l1 ) %></td>
+        </tr>
+          <%- end -%>
+        <%- end -%>
+      <%- end -%>
+      </tbody>
+    </table>
+    <%= render partial: 'shared/footer', locals: { feature_identifier: FEATURE_ID_RFC_STATUS_RECORDS, cr_details: 'workflow info page' } %>
+  </div>
+</div>

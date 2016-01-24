@@ -1,0 +1,42 @@
+dsr_rec_one:
+  title:	'document title only'
+  sender_group:    group_one
+  sender_group_b:  group_one
+
+dsr_rec_two:
+  title:	'document all fields set'
+  document_status:  1
+  document_status_b: 0
+  project_doc_id:   'PROJ-DOC-ID'
+  sender_group:      group_one
+  sender_group_b:    group_one
+  sender_doc_id:    'SNDR-DOC-ID'
+  receiver_group:    group_two
+  receiver_doc_id:  'RCVR-DOC-ID'
+  sub_purpose:      1
+  sub_frequency:    1
+  quantity:         1
+  quantity_b:       0
+  weight:           0.01
+  weight_b:         0.00
+  dsr_doc_group:          dsr_group_one
+  submission_group:       sub_group_one
+  submission_group_b:     sub_group_one
+  dsr_current_submission: dsr_sub_two
+  prep_activity:     ppa_one
+  subm_activity:     ppa_two
+  plnd_prep_start:  2015-05-26
+  plnd_prep_start_b:
+  estm_prep_start:
+  actl_prep_start:
+  plnd_submission_1:  2015-07-30
+  plnd_submission_b:
+  estm_submission:
+  actl_submission_1:
+  plnd_completion:  2015-08-15
+  plnd_completion_b:
+  estm_completion:
+  actl_completion:
+  notes:            'bla bla bla'
+  current_status:   1
+  current_task:     1

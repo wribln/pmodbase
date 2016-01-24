@@ -1,0 +1,28 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+<% FEATURE_ID_MAX_PLUS_ONE.times do |f| %>
+
+feature_<%= f %>:
+  id: <%= f %>
+  code: F<%= f %>
+  label: Feature <%= f %>
+  seqno: <%= f %>
+  feature_category: feature_category_one 
+
+<% end %>
+
+feature_one:
+  code:  "ONE"
+  label: "Feature ONE"
+  seqno: 1
+  feature_category: feature_category_one
+  access_level: 0
+  control_level: 0
+
+feature_two:
+  code:  "TWO"
+  label: "Feature TWO"
+  seqno: 2
+  feature_category: feature_category_two
+  access_level: 1
+  control_level: 0

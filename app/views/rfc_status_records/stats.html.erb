@@ -1,0 +1,41 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="table-responsive col-sm-5">
+    <table class="table table-striped table-bordered table-condensed">
+      <thead>
+        <tr>
+          <th class="col-sm-1"><%= RfcStatusRecord.human_attribute_name( :rfc_type       )%></th>
+          <th class="col-sm-3"><%= RfcStatusRecord.human_attribute_name( :current_status )%></th>
+          <th class="col-sm-1 td-right"><%= t( 'statistics.count' ) %></th>
+        </tr>
+      </thead>
+      <tbody>
+      <%- wf_total = 0 -%>
+      <%- @workflow.no_of_workflows.times do |l1| -%>
+        <%- wf_subtotal = 0 %>
+        <%- @workflow.no_of_states( l1 ).times do |l2| -%>
+        <tr>
+          <%= content_tag :td, ( @workflow.workflow_label( l1 ) unless l2 > 0 )%>
+          <%= content_tag :td, @workflow.status_label( l2, l1 ) %>
+          <%= content_tag :td, @stats[[l1,l2]], { class: 'td-right' } %>
+          <%- wf_subtotal += @stats[[l1,l2]].to_i -%>
+        </tr>
+        <%- end -%>
+        <tr class="tr-bold">
+          <%= content_tag :td, t( 'general.subtotal' ), { colspan: 2, class: 'td-right' } %>
+          <%= content_tag :td, wf_subtotal, { class: 'td-right' } %>
+          <%- wf_total += wf_subtotal; wf_subtotal = 0 -%>
+        </tr>  
+      <%- end -%>
+        <tr class="tr-bold">
+          <%= content_tag :td, t( 'general.total' ), { colspan: 2 } %>
+          <%= content_tag :td, wf_total, { class: 'td-right' } %>
+        </tr>
+      </tbody>
+    </table>
+    <%= link_to t( 'button_label.goto_to_list' ), rfc_status_records_path %>
+    <%= render partial: 'shared/footer', locals: { feature_identifier: FEATURE_ID_RFC_STATUS_RECORDS, cr_details: 'workflow statistics page' } %>
+  </div>
+</div>

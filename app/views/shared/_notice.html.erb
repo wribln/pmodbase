@@ -1,0 +1,20 @@
+<%#
+=begin
+
+ this partial is to be used for show views: it inserts a notice block
+
+ Example:
+
+ < %= render partial: 'shared/notice' % >
+ 
+=end
+%>
+
+    <% if flash[:notice] %>
+    <div class="form-group">
+      <label class="<%= %Q(control-label col-sm-#{ BT_COL_WIDTH_LABELS }) %>"><%= t( 'general.notice' ) %></label>
+      <div class="col-sm-4">
+        <p class="btn-lg bg-info"><%= flash[ :notice ] -%></p>
+      </div>
+    </div>
+    <% end %>

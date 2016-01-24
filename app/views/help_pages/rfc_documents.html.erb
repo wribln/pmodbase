@@ -1,0 +1,58 @@
+<% help_title "Help on #{ RfcDocument.model_name.human }" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">RfC Documents are managed in as special data structure
+      containing the essential RfC information, such as a unique identifier,
+      the question/request, the answer/response and any additional notes.</p>
+    <h3>Introduction</h3>
+    <p>A Request for Clarification (RfC) is considered a (often legally
+     binding) document which is created during a process. As the amount of
+     documentation often does not require a full document to be created
+     initially, a short, online version is stored in the PMO Database. At a
+     later point in time, an offline version can be created to be stored in
+     the project's document management system.</p>
+     <p>The processes in which RfCs are created and developed, are maintained
+     by workflows. Status information and other attributes regarding these
+     workflows are kept in RfC Status Records. All RfC Status Records in their
+     entirety constitute the RfC Status Register.</p>
+     <h3>Data and Attributes</h3>
+     <p>The following set of information is collected and managed for RfC Documents:</p>
+    <ul>
+      <li><%= help_param RfcDocument.human_attribute_name( :rfc_status_record_id ) -%> is the
+        unique number of the RfC (actually this is the ID of the related RfC
+        Status Record).</li>
+      <li><%= help_param RfcDocument.human_attribute_name( :version ) -%> is
+        the version of a given RfC Document: Each time the content of any of
+        the RfC's information or attributes is modified, the version number
+        will be increased automatically.</li>
+      <li><%= help_param RfcDocument.human_attribute_name( :question ) -%>
+        contains the question or request. The text shall only be modified by
+        the author of the
+        <%= help_param RfcDocument.human_attribute_name( :question ) -%> or
+        by a person with the respective role permissions in the given workflow.</li>
+      <li><%= help_param RfcDocument.human_attribute_name( :answer ) -%> holds
+        the answer or response to the above question. This text shall only be
+        modified by the author of the
+        <%= help_param RfcDocument.human_attribute_name( :answer ) -%> or
+        by a person with the respective role permissions in the given workflow.</li>
+      <li>The <%= help_param RfcDocument.human_attribute_name( :note ) -%> 
+        field can be used to leave a comment on a specific version of the
+        RfC Document.</li>
+      <li>The <%= help_param RfcDocument.human_attribute_name( :id ) -%> is the
+        internal, unique identifier of the RfC Document version. This attribute
+        is maintained automatically by the system and is only used to refer to
+        a specific version of an RfC Document.</li>
+      <li>The <%= help_param RfcDocument.human_attribute_name( :account_id ) -%>  
+        refers to the person which created this version of the RfC Document.
+        This field is set automatically by the system and cannot be modified.</li>
+      <li>The <%= help_param RfcDocument.human_attribute_name( :created_at ) -%>
+        and <%= help_param RfcDocument.human_attribute_name( :updated_at ) -%>
+        fields are also set automatically by the system and are shown for
+        information only.</li>
+    </ul>
+    <p>All other information - specifically status information - related to
+      the RfC will be managed in the associated RfC Status Record - similar
+      to the meta data of documents.</p>
+    <%= help_footer FEATURE_ID_RFC_DOCUMENTS %>
+  </div> <!-- /container -->

@@ -1,0 +1,29 @@
+<% help_title "Help on #{ PhaseCode.model_name.human }"%>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">This compilation shows the various codes used for the
+      phases in the project:</p>
+    <ul>
+      <li><%= help_param PhaseCode.human_attribute_name( :code ) -%>
+        is the project's code for the specified phase. This code normally has
+        a prefix of '%' to indicate that this code is a code for a project
+        phase.</li>
+      <li>The <%= help_param PhaseCode.human_attribute_name( :label ) -%>
+        contains a short label for this phase.</li>
+      <li>The <%= help_param PhaseCode.human_attribute_name( :acro ) -%>
+        is another code which may be used as abbreviation of this phase. This
+        code must not be the same as the
+        <%= help_param PhaseCode.human_attribute_name( :code ) -%>
+        and must be unique for all project phases.</li>
+      <li>All project phases must be mapped to the
+        <%= help_param PhaseCode.human_attribute_name( :siemens_phase_id ) -%>
+        as defined in the <%= link_to_help :siemens_phases, 'Siemens Phases' -%>.</li>
+      <li>The <%= help_param PhaseCode.human_attribute_name( :level ) -%>
+        field is used to structure the phases into major phases
+        (<%= help_param PhaseCode.human_attribute_name( :level ) -%> > 0)
+        and the minor phases
+        (<%= help_param PhaseCode.human_attribute_name( :level ) -%> = 0).</li> 
+    </ul>
+    <%= help_footer FEATURE_ID_PHASE_CODES %>
+  </div> <!-- /container -->

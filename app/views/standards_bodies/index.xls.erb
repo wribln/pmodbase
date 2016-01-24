@@ -1,0 +1,8 @@
+<%= CSV.generate_line([
+  :code,
+  :description ]) -%>
+<%- @standards_bodies.each do |sb| -%>
+<%= CSV.generate_line([
+  sb.code,
+  sb.description ]).html_safe -%>
+<%- end -%>

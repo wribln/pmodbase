@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+sag:
+  code: SAG
+  description: Siemens AG
+  sort_code: sag
+
+pmo:
+  code: PMO
+  description: Project Management Office
+  sort_code: pmo

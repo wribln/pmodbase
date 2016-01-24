@@ -1,0 +1,36 @@
+    <%- page_title %>
+    <%= render 'shared/navbar', user_name: @user_name, target_window: @target %>
+    <div class="jumbotron hidden-xs hidden-sm">
+      <div class="container">
+        <h1>Welcome to THE Project!</h1>
+        <p>Select from the topics below which information you are interested in:
+           A click on the topic opens a
+          <%= @target == '_blank' ? 'new' : '' -%>
+            window where you can search and display specific items.</p>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <% if @all.nil? %>
+          <div class="col-sm-offset-4 col-sm-4">
+            <%= t( 'base.msg.nothing_to_show' ) %>
+          </div>
+        <% else %>
+          <% @all.each do |col| %>
+            <div class="col-sm-4">
+            <% col.each do |row| %>
+              <% case row[0] when 0 %>
+                <h2><%= row[1]%></h2>
+                <div class="list-group">
+                <% when 1 %>
+                  <%= link_to row[1], create_target(row[2]), class: 'list-group-item', target: @target %>
+                <% when 2 %>
+                </div>
+              <% end %>
+            <% end %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+      <%= render partial: 'shared/footer' %>
+    </div>

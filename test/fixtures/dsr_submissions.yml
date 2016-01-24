@@ -1,0 +1,7 @@
+dsr_sub_one:
+  submission_no: 1
+  dsr_status_record: dsr_rec_two
+
+dsr_sub_two:
+  submission_no: 2
+  dsr_status_record: dsr_rec_two

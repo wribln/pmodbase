@@ -1,0 +1,52 @@
+<% help_title "Help on #{ Group.model_name.human }"%>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">These are the various entities involved in a project.</p>
+    <p>For example, <%= Group.model_name.human -%> are:</p>
+    <ul>
+      <li>The Client's organisation</li>
+      <li>The Consortium's Project Management Team</li>
+      <li>Public Utilities</li>
+      <li>Government Bodies</li>
+      <li>The various lots and subsystems, such as</li>
+        <ul>
+          <li>Civil Works - possibly different groups for different locations</li>
+          <li>Track Works</li>
+          <li>Power Supply</li>
+          <li>Signalling</li>
+          <li>Communication</li>
+          <li>Fare Collection</li>
+          <li>Building Services</li>
+          <li>...</li>
+        </ul>
+      </ul>
+    <p>The acronyms for these entities are used in various tools and tables,
+      to specify responsibilities, for document and correspondence coding,
+      in the List of open points (LOP), for Interface Management, and the
+      like.</p>
+    <p>For each <%= Group.model_name.human -%>, the following information is
+      managed:</p>
+    <ul>
+      <li>The group's <%= help_param Group.human_attribute_name( :code  ) -%>,
+        an acronym of the Group's name: Normally, that acronym should reflect
+        the function of the group within the project rather than the actual
+        name of the party: This mitigates problems if for some reason that
+        name is changed during the execution of the project. Hence, it should
+        be 'TRK' for the group responsible for the Track Works rather than
+        'XYZ' if XYZ is the abbreviation of the company doing the Track
+        Works.</li>
+      <li>The <%= help_param Group.human_attribute_name( :label ) -%> is the
+        text explaining the Project Group's Code. This label can be modified
+        at any time so it would be OK to have 'Track Works (XYZ)' as label
+        for the company XYZ doing the Track Works portion of the project.</li>
+      <li><%= help_param Group.human_attribute_name( :notes ) -%> is a field
+        which can be used for various purposes, for example to provide other
+        codes used for that Project Group.</li>
+      <li>The <%= help_param Group.human_attribute_name( :seqno ) -%> is used
+        for reporting: All Project Groups (within a given Project Group
+        Category) are listed in ascending order of the Sequence Number given
+        here.</li>
+    </ul>
+    <%= help_footer FEATURE_ID_GROUPS %>
+  </div> <!-- /container -->

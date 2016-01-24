@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  info_type: "Home"
+  phone_no_fixed: ""
+  phone_no_mobile: ""
+  department: ""
+  detail_location: ""
+  address: address_one
+  person: person_one
+
+two:
+  info_type: "Project"
+  phone_no_fixed: ""
+  phone_no_mobile: ""
+  department: ""
+  detail_location: ""
+  address: address_two
+  person: person_one

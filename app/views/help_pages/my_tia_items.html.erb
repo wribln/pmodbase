@@ -1,0 +1,69 @@
+<% help_title "Help on #{ TiaItem.model_name.human }" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">Manage those in all <%= TiaList.model_name.human.pluralize -%>
+      where you are assigned as owner of the item.</p>
+    <h3>How to use</h3>
+    <p>Use this feature to keep track of all
+       <%= TiaList.model_name.human.pluralize -%> where the owner of the
+       list (or his deputy) has assigned you as owner of this item. In order
+       to view your items, you need also the permissioen to access this
+       item. You may also have permission to update your items by
+       adding a comment to the comment field.</p>
+    <h3>Attributes of Items</h3>
+    <p>Each Task, Issue, Action Item has the following attributes:</p>
+    <ul>
+      <li><%= help_param TiaItem.human_attribute_name( :code ) -%> is a unique
+        identifier for each an every item in a specific list. Always use this code when
+        referencing to specific item in the list.</li>
+      <li>The <%= help_param TiaItem.human_attribute_name( :description ) %>
+        explains the objective of this item.</li>
+      <li><%= help_param TiaItem.human_attribute_name( :comment ) %> is a
+        field available to hold any status information, or a summary of the
+        solution of the problem. On the index page, this field is shown below the 
+        <%= help_term TiaItem.human_attribute_name( :description ) %> field
+        unless it is empty.
+        If permitted, you can update this field to enter any new or additional
+        information on this item, or the resolution of the issue.</li>
+      <li><%= help_param TiaItem.human_attribute_name( :prio ) %> tells you 
+        about the priority assigned to that item:
+        <ol>
+          <li>high</li>
+          <li>medium</li>
+          <li>low</li>
+        </ol>
+        Using the ABC analysis, this would map to 
+        <ol class='upper-alpha'>
+          <li>items that are perceived as being urgent and important,</li>
+          <li>items that are important but not urgent, and</li>
+          <li>all others, i.e. items that are not important (urgent or not).</li>
+        </ol>
+      </li>
+      <li>The <%= help_param TiaItem.human_attribute_name( :owner ) %> is 
+        always you.</li>
+      <li>The <%= help_param TiaItem.human_attribute_name( :due_date ) %>
+        gives the date when this task/issue/action item should be resolved.</li>
+      <li>The <%= help_param TiaItem.human_attribute_name( :status ) %> of the
+        item can be:
+        <ul>
+          <li><%= TiaItem::TIA_ITEM_STATUS_LABELS[ 0 ] -%> - just created or
+            not yet resolved</li>
+          <li><%= TiaItem::TIA_ITEM_STATUS_LABELS[ 1 ] -%> - waiting for other
+            parties’ input or reaction</li>
+          <li><%= TiaItem::TIA_ITEM_STATUS_LABELS[ 2 ] -%> - when this task,
+            issue, or action item does not need to be traced anymore</li>
+          <li><%= TiaItem::TIA_ITEM_STATUS_LABELS[ 3 ] -%> - when this task,
+            issue, or action item is completed, resolved, or otherwise 
+            finished</li>
+        </ul>
+      </li>
+      <li>If an item is marked <%= help_param TiaItem.human_attribute_name( :archived )%>,
+        it will not show up on any listings anymore.</li>
+      <li>When viewing a specific item, the button labelled 
+        <%= help_term I18n.t('button_label.history')-%>
+        shows a table in reverse chronological order of all the changes done to this
+        item: The top table shows the current status, the entries below the previous
+        status at the given time.</li>
+    </ul>
+    <%= help_footer FEATURE_ID_OUR_TIA_ITEMS %> 

@@ -1,0 +1,97 @@
+<%- page_title %>
+<div class="container-fluid">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="table-responsive">
+    <%= form_tag({},{ method: :get, class: 'form-inline' }) do %>
+    <%= will_paginate @contact_list %>
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th><%= label_tag :ff_group, t( '.group' ), class: 'control-label' %></th>
+          <th><%= label_tag :ff_name, t( '.name' ), class: 'control-label' %></th>
+          <th><%= label_tag :ff_resp, t( '.resp' ), class: 'control-label' %></th>
+          <th><%= label_tag :ff_email, t( '.e_mail' ), class: 'control-label' %></th>
+          <th><%= t( '.ctype'     ) %></th>
+          <th><%= label_tag :dept, t( '.dept' ), class: 'control-label' %></th>
+          <th><%= t( '.a_details' ) %></th>
+          <th><%= t( '.a_link'    ) %></th>
+          <th><%= filter_action_title_header '.phone_nos' %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr <%= filter_row( @filter_fields ) -%>>
+          <td><%= filter_multi_select @filter_fields, :ff_group, Group.all, :code -%></td>
+          <td><%= filter_field @filter_fields, :ff_name, :sw -%></td>
+          <td><%= filter_field @filter_fields, :ff_resp, :sw -%></td>          
+          <td><%= filter_field @filter_fields, :ff_email, :sw -%></td>
+          <td>&nbsp;</td>
+          <td><%= filter_field @filter_fields, :ff_dept, :sl -%></td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td><%= filter_action_button -%></td>
+        </tr>
+        <% if @contact_list.length.zero? %>
+          <%= render partial: 'shared/index_empty_row', locals:{ columns: 8 }%>
+        <% else %>
+          <% @contact_list.each do |c| %>
+            <% if @contact_list_group_id != c.group_id %>
+              <tr>
+                <td><strong><%= c.group.code %></strong></td>
+                <td colspan="8"><strong><%= c.group.label %></strong></td>
+              </tr>
+              <% @contact_list_group_id = c.group_id %>
+            <% end %>
+            <% if c.person_id.zero? %>
+              <tr>
+                <td>&nbsp;</td>
+                <td><%= t( 'people.no_name_given' ) %></td>
+                <td><%= c.description %></td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+              </tr>
+            <% elsif c.person.involved %>
+              <% unless c.person.contact_infos.present? %>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td><%= c.person.name %></td>
+                  <td><%= c.description %></td>
+                  <td><%= mail_to c.person.email %></td>
+                  <td colspan="5"><%= t( 'people.no_contact_info' ) %></td>
+                </tr>
+              <% else %>
+                <% c.person.contact_infos.each_with_index do | ci, index | %>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <% if index.zero? %>
+                      <td><%= c.person.name %></td>           
+                      <td><%= c.description %></td>
+                      <td><%= mail_to c.person.email %></td>
+                    <% else %>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                    <% end %>
+                    <td><%= ci.info_type %></td>
+                    <td><%= ci.department %></td>
+                    <td><%= ci.detail_location %></td>
+                    <td><%= link_to ci.address.label, address_path( ci.address_id ) unless ci.address_id.nil? %></td>
+                    <td><%= ci.phone_no_fixed %><br>
+                        <%= ci.phone_no_mobile %></td>
+                  </tr>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>              
+        <% end %>
+      </tbody>
+    </table>
+    <%- end %>
+    <%= render partial: 'shared/download_xls' %>
+    <%= render partial: 'shared/footer' %>    
+  </div>
+</div>

@@ -1,0 +1,19 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="form-horizontal" role="form">
+    <%= form_for @abbreviation do |sp| %>
+      <%= render partial: 'shared/errors', object: @abbreviation.errors %>
+      <%= render partial: 'form', object: sp %>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-2">
+          <%= sp.submit class: "btn btn-lg btn-block btn-primary" %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to t( 'button_label.cancel' ), abbreviation_path( @abbreviation ), class: "btn btn-lg btn-block btn-default" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

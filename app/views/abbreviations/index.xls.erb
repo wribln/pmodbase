@@ -1,0 +1,10 @@
+<%= CSV.generate_line([
+  :code,
+  :description,
+  :sort_code ], STD_CSV_OPTIONS ) -%>
+<%- @abbreviations.each do |a| -%>
+<%= CSV.generate_line([
+  a.code,
+  a.description,
+  a.sort_code ], STD_CSV_OPTIONS ).html_safe -%>
+<%- end -%>

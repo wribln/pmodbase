@@ -1,0 +1,35 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+csr_one:
+  correspondence_type: 1
+  transmission_type: 1
+  subject: 'Test Subject'
+  project_doc_id: 'Project Document ID'
+  sender_group:   group_one
+  sender_doc_id:  'Sender Document ID'
+  receiver_group: group_two
+  sender_reference:  'My Reference'
+  classification: 1
+  correspondence_date:  2015-07-14
+  plan_reply_date:      2015-07-14
+  actual_reply_date:    2015-07-14
+  sent_item:
+  status: 1
+  notes: 'A note' 
+
+csr_two:
+  correspondence_type: 0
+  transmission_type: 1
+  subject:          'Test Subject'
+  project_doc_id:   'Project Document ID'
+  sender_group:     group_one
+  sender_doc_id:    'Sender Document ID'
+  receiver_group:   group_two
+  sender_reference:  'My Reference'
+  classification:   1
+  correspondence_date:  2015-07-14
+  plan_reply_date:      2015-07-14
+  actual_reply_date:    2015-07-14
+  sent_item:  csr_one
+  status: 1
+  notes: 'A note' 

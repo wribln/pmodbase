@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+prl:
+  code:   '%PM000'
+  label:  Preliminaries
+  acro:   PRL
+  level:  1
+  siemens_phase: pm200
+
+fat:
+  code:   '%PM380'
+  label:  Factore Acceptance Tests
+  acro:   FAT 
+  level:  0
+  siemens_phase: pm300

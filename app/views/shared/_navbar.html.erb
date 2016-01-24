@@ -1,0 +1,25 @@
+    <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <!--span class="icon-bar"></span-->
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">THE Project</a>
+        </div>
+        <p class="navbar-text navbar-right"><%= t( 'base.menu.welcome', user: user_name )-%></p>
+        <div class="navbar-collapse collapse">
+         <ul class="nav navbar-nav">
+            <!--li class="active"><a href="#">Base</a></li-->
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><%= link_to t( 'base.menu.my_data' ), profile_url, { class: "navbar-link", target: target_window } %></li>
+            <li><%= link_to t( 'base.menu.sign_off' ), home_path %></li>
+          </ul>
+        </div>
+      </div>
+    </div>
