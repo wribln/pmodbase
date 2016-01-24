@@ -57,6 +57,6 @@ server 'test.pmodbase.com',
 #      user: 'pmdbmaster', # overrides user setting above
     port: 60606,
     keys: %w(/home/wilfried/.ssh/id_rsa),
-#     forward_agent: false,
+#    forward_agent: false,
     auth_methods: %w(publickey password)
     }
