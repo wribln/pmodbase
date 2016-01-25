@@ -7,5 +7,12 @@ class CreateDsrProgressRates < ActiveRecord::Migration
 
       t.timestamps null: false
     end
+    
+    # I will start adding records with id = 0 ...
+    # this is no problem with sqlite but mysql needs extra handling
+
+    if Rails.env.production? then
+      execute 'ALTER TABLE dsr_progress_rates AUTO_INCREMENT = 0;'
+    end
   end
 end

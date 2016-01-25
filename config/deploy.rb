@@ -1,6 +1,3 @@
-# config valid only for current version of Capistrano
-lock '3.4.0'
-
 set :application, 'pmodbase'
 set :repo_url, 'git@github.com:timoroemer/pmodbase.git'
 set :branch, 'master'
@@ -36,13 +33,16 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', '
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
+# restart passenger via 'passenger-config restart-app'
+set :passenger_restart_with_touch, false
+
 namespace :deploy do
 
   after :restart, :clear_cache do
     on roles(:web), in: :groups, limit: 3, wait: 10 do
       # Here we can do anything such as:
       # within release_path do
-      #   execute :rake, 'cache:clear'
+         execute :rake, 'cache:clear'
       # end
     end
   end
