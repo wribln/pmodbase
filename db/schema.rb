@@ -110,13 +110,16 @@ ActiveRecord::Schema.define(version: 20151001165432) do
 
   add_index "dsr_doc_groups", ["group_id"], name: "index_dsr_doc_groups_on_group_id"
 
-  create_table "dsr_progress_rates", force: :cascade do |t|
+  create_table "dsr_progress_rates", id: false, force: :cascade do |t|
+    t.integer  "id",                            null: false
     t.integer  "document_progress", default: 0
     t.integer  "prepare_progress",  default: 0
     t.integer  "approve_progress",  default: 0
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
   end
+
+  add_index "dsr_progress_rates", ["id"], name: "index_dsr_progress_rates_on_id", unique: true
 
   create_table "dsr_status_records", force: :cascade do |t|
     t.string   "title",                     limit: 128
