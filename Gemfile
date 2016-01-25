@@ -57,7 +57,7 @@ group :development do
 # gem 'capistrano-bundler', '~> 1.1.2'
 end
 
-gem 'mysql', group: :production
+gem 'mysql2', group: :production
 
 # for long listings, we could use some pagination
 gem 'will_paginate'
