@@ -25,7 +25,7 @@ class SiemensPhasesControllerTest < ActionController::TestCase
   test "should create siemens_phase" do
     assert_difference('SiemensPhase.count') do
       post :create, siemens_phase: {
-        code: @siemens_phase.code + 'a',
+        code: @siemens_phase.code + '.',
         label_p: @siemens_phase.label_p,
         label_m: @siemens_phase.label_m }
     end

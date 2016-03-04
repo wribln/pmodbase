@@ -1,5 +1,11 @@
 module ApplicationHelper
 
+  # format an integer as mileage xxx+xxx
+
+  def db_formatted_km( i )
+    i.to_s
+  end
+
   # This method is the standard format for dates and times
 
   def db_formatted_d( d )
@@ -67,17 +73,6 @@ module ApplicationHelper
   	html = ""
   	html += h( text ).gsub( /(?:\n\r?|\r\n?)/, "<br>" )
   	html.html_safe
-  end
-
-  # display a boolean value as checkbox: this method is for use in show
-  # views where is should display the form in the same format as in the
-  # new/update views. For displaying boolean values in index or other
-  # listing views, you may want to use display_boolean.
-  
-  def display_check_box( value )
-    html = ""
-    html += "<input class=\"form-control\" type=\"checkbox\" " + ( value ? "checked" : "" ) + " value=\"0\" disabled />"
-    html.html_safe
   end
 
   # display a boolean value with two strings; the second parameter must

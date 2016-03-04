@@ -5,8 +5,8 @@ class DsrStatusRecord < ActiveRecord::Base
   include GroupCheck
   include ProgrammeActivityCheck
 
-  belongs_to :dsr_progress_rate,  -> { readonly }, foreign_key: :document_status,   class_name: :DsrProgressRate
-  belongs_to :dsr_progress_rate_b,-> { readonly }, foreign_key: :document_status_b, class_name: :DsrProgressRate  
+  belongs_to :dsr_progress_rate,  -> { readonly }, foreign_key: :document_status,   primary_key: :document_status, class_name: :DsrProgressRate
+  belongs_to :dsr_progress_rate_b,-> { readonly }, foreign_key: :document_status_b, primary_key: :document_status, class_name: :DsrProgressRate  
   belongs_to :sender_group,       -> { readonly }, foreign_key: :sender_group_id,   class_name: :Group
   belongs_to :sender_group_b,     -> { readonly }, foreign_key: :sender_group_b_id, class_name: :Group
   belongs_to :receiver_group,     -> { readonly }, foreign_key: :receiver_group_id, class_name: :Group

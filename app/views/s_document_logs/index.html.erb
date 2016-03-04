@@ -1,0 +1,42 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="table-responsive">
+    <%= form_tag({},{ method: :get, class: 'form-inline' }) do %>
+    <%= will_paginate @s_document_logs %>
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th class="col-sm-1"><%= SDocumentLog.human_attribute_name( :id )%></th>
+          <th class="col-sm-6"><%= SDocumentLog.human_attribute_name( :siemens_doc_id )%></th>
+          <th class="col-sm-4"><%= SDocumentLog.human_attribute_name( :title )%></th>
+          <th class="col-sm-1 hidden-print"><%= filter_action_title_header %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr <%= filter_row( @filter_fields ) -%>>
+          <td><%= filter_field @filter_fields, :ff_srec, :id -%></td>
+          <td><%= filter_field @filter_fields, :ff_sdic, :sw -%></td>
+          <td><%= filter_field @filter_fields, :ff_titl, :sw -%></td>
+          <td><%= filter_action_button -%></td>
+        </tr>
+      <% if @s_document_logs.length.zero? %>
+        <%= render partial: 'shared/index_empty_row', locals:{ columns: 3, with_link: true }%>
+      <% else %>
+        <% @s_document_logs.each do |sdl| %>
+          <tr>
+            <td><%= sdl.to_id %></td>
+            <td><%= sdl.siemens_doc_id %></td>
+            <td><%= sdl.title %></td>
+            <td><%= render partial: 'shared/actions', object: sdl %></td>
+          </tr>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+    <% end %>
+    <%= render partial: 'shared/download_xls' %>
+    <%= render partial: 'shared/footer' %>
+  </div>
+</div>

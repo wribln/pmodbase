@@ -27,7 +27,7 @@ class DsrStatusRecordsControllerS1Test < ActionController::TestCase
 
   for i in 1..16
     test "should get stats type #{i}" do
-      get :stats, id: i
+      get :stats, document_status: i
       assert_response :success
     end
   end

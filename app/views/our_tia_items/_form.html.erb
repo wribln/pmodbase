@@ -60,9 +60,9 @@
         <%= form.label :archived, class: "col-sm-3 control-label" %>
         <div class="col-sm-1">
         <%- if comment_only -%>
-          <%= display_check_box form.object.archived %>
+          <%= form.check_box :archived, disabled: true, readonly: true %>
         <%- else -%>
-          <%= form.check_box :archived, class: 'form-control' %>
+          <%= form.check_box :archived %>
         <%- end -%>
         </div>
       </div>

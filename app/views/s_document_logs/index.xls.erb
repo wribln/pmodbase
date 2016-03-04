@@ -1,0 +1,34 @@
+<%= CSV.generate_line([
+  :id,
+  :project,
+  :sender_group,
+  :receiver_group,
+  :function_code,
+  :service_code,
+  :product_code,
+  :location_code,
+  :phase_code,
+  :dcc_code,
+  :revision_code,
+  :author_date,
+  :siemens_doc_id,
+  :title,
+  :user ], STD_CSV_OPTIONS ) -%>
+<%- @s_document_logs.each do |sdl| -%>
+<%= CSV.generate_line([
+  sdl.id,
+  SITE_NAME,
+  sdl.group.code,
+  sdl.receiver_group,
+  sdl.function_code, 
+  sdl.service_code,
+  sdl.product_code,
+  sdl.location_code,
+  sdl.phase_code,
+  sdl.dcc_code,
+  sdl.revision_code,
+  sdl.author_date,
+  sdl.siemens_doc_id,
+  sdl.title,
+  sdl.account.user_name ], STD_CSV_OPTIONS ).html_safe -%>
+<%- end -%>

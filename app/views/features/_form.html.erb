@@ -2,7 +2,7 @@
         <%= form.label :id, class: "col-sm-3 control-label" %>
         <div class="col-sm-2">
           <%- if action_name == 'edit' then -%>
-            <%= form.text_field :id, class: "form-control", readonly: true %>
+            <%= display_value form.object.id %>
           <%- else -%>        
             <%= form.text_field :id, class: "form-control", required: true %>
           <%- end -%>
@@ -12,7 +12,7 @@
         <%= form.label :code, class: "col-sm-3 control-label" %>
         <div class="col-sm-2">
           <%- if action_name == 'edit' -%>
-            <%= form.text_field :code, class: "form-control", readonly: true %>
+            <%= display_value form.object.code %>
           <%- else -%>        
             <%= form.text_field :code, class: "form-control", required: true %>
           <%- end -%>
@@ -42,7 +42,7 @@
         <%= form.label :access_level, class: "col-sm-3 control-label" %>
         <div class="col-sm-2">
           <%- if action_name == 'edit' -%>
-            <%= form.text_field :access_level_label, class: 'form-control', readonly: true %>
+            <%= display_value form.object.access_level_label %>
           <%- else -%>        
             <%= form.text_field :access_level, class: 'form-control', required: true %>
           <%- end -%>
@@ -52,7 +52,7 @@
         <%= form.label :control_level, class: "col-sm-3 control-label" %>
         <div class="col-sm-2">
           <%- if action_name == 'edit' -%>
-            <%= form.text_field :control_level_label, class: 'form-control', readonly: true %>
+            <%= display_value form.object.control_level_label %>
           <%- else -%>        
             <%= form.text_field :control_level, class: 'form-control', required: true %>
           <%- end -%>
@@ -62,7 +62,7 @@
         <%= form.label :no_workflows, class: "col-sm-3 control-label" %>
         <div class="col-sm-2">
           <%- if action_name == 'edit' -%>
-            <%= form.text_field :no_workflows, class: 'form-control', readonly: true %>
+            <%= display_value form.object.no_workflows %>
           <%- else -%>        
             <%= form.text_field :no_workflows, class: 'form-control', required: true %>
           <%- end -%>

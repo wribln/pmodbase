@@ -33,6 +33,7 @@ class Group < ActiveRecord::Base
   default_scope { order( code: :asc )}
   scope :as_abbr, -> ( abbr ){ where( 'code LIKE ?', "#{ abbr }%" )}
   scope :as_desc, -> ( desc ){ where( 'label LIKE ?', "%#{ desc }%" )}
+  class << self; alias :as_code :as_abbr end
 
   # permitted_groups: scope helper in conjunction with Account.permitted_groups
   # to provide the scope for groups to which user has access to: This will
@@ -63,7 +64,7 @@ class Group < ActiveRecord::Base
   end
 
   def notes=( text )
-    write_attribute( :notes, AppHelper.clean_up( text, MAX_LENGTH_OF_NOTES ))
+    write_attribute( :notes, AppHelper.clean_up( text, MAX_LENGTH_OF_NOTE ))
   end
 
   # overwrite write accessor to ensure that [label] does not contain

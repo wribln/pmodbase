@@ -90,12 +90,52 @@ class PhaseCodeTest < ActiveSupport::TestCase
   test "uniqueness of acro" do
     pc = phase_codes( :prl )
     pc.id = nil
-    pc.code += 'a'
+    pc.code += 'X'
     assert_not pc.acro.blank?
     assert_not pc.valid?
-    pc.acro += 'a'
+    pc.acro += 'X'
     assert pc.valid?
     pc.acro = nil
     assert pc.valid?
   end
+
+  test 'code syntax' do
+    xc = phase_codes( :prl )
+    
+    xc.code = ''
+    refute xc.valid?
+    assert_includes xc.errors, :code
+
+    xc.code = ' '
+    refute xc.valid?
+    assert_includes xc.errors, :code
+
+    xc.code = '%'
+    refute xc.valid?
+    assert_includes xc.errors, :code
+
+    xc.code = '%a'
+    refute xc.valid?
+    assert_includes xc.errors, :code
+
+    xc.code = '%?'
+    refute xc.valid?
+    assert_includes xc.errors, :code
+
+    xc.code = '%A-Za'
+    refute xc.valid?
+    assert_includes xc.errors, :code
+
+    xc.code = '%A-Z0-9.'
+    assert xc.valid?
+  end
+
+  test 'code and label' do
+    xc = phase_codes( :prl )
+    xc.code = '%NEW'
+    xc.label = 'Test'
+    assert xc.valid?
+    assert_equal '%NEW - Test', xc.code_and_label
+  end
+
 end

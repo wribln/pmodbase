@@ -8,6 +8,7 @@ class SiemensPhase < ActiveRecord::Base
   validates :code,
     presence: true,
     uniqueness: true,
+    format: { with: /\A.[A-Z0-9.\-]+\z/, message: I18n.t( 'code_modules.msg.bad_code_syntax' )},
     length: { maximum: MAX_LENGTH_OF_CODE }
 
   validates :label_p,
@@ -29,6 +30,10 @@ class SiemensPhase < ActiveRecord::Base
 
   def label_m=( text )
     write_attribute( :label_m, AppHelper.clean_up( text, MAX_LENGTH_OF_LABEL ))
+  end
+
+  def code_and_label
+    '' << try( :code ) << ' - ' << try( :label_p )
   end
 
 end

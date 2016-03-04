@@ -14,7 +14,7 @@
   </head>
   <body>
     <h1>Status of: <%= @tia_list.label %></h1>
-    <h2>as per: <%= Time.now.to_formatted_s( :long_ordinal ) %></h2>
+    <h2>as per: <%= db_formatted_dt( Time.now )%></h2>
     <hr/>
     <% unless @tia_items.length.zero? %>
     <table>

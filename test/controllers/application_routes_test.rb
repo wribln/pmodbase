@@ -34,7 +34,10 @@ class ApplicationRoutesTest < ActionController::TestCase
     %w( MTI MyTiaItems ),
     %w( MCR MyChangeRequests ),
     %w( UNC UnitNames ),
-    %w( WLK WebLinks )
+    %w( WLK WebLinks ),
+    %w( SCF FunctionCodes ),
+    %w( SCV ServiceCodes ),
+    %w( SCP ProductCodes )
     ]
 
   @my_resources.each do |r|

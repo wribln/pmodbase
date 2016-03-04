@@ -23,9 +23,9 @@
       </ul>
     <p>The acronyms for these entities are used in various tools and tables,
       to specify responsibilities, for document and correspondence coding,
-      in the List of open points (LOP), for Interface Management, and the
+      in any Task/Issue/Action Item List, for Interface Management, and the
       like.</p>
-    <p>For each <%= Group.model_name.human -%>, the following information is
+    <p>For each <%= Group.model_name.human.singularize -%>, the following information is
       managed:</p>
     <ul>
       <li>The group's <%= help_param Group.human_attribute_name( :code  ) -%>,

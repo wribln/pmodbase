@@ -1,0 +1,54 @@
+supercode;code;label;description;active
+ALL;GEN;General/Projectwide;;TRUE
+ALL;SYW;Systemwide;;TRUE
+INF;ALI;Alignment;;TRUE
+INF;ARC;Architecture;;TRUE
+INF;BRG;Bridges;;TRUE
+INF;DEP;Depot;;TRUE
+INF;MEP;Electromechanical Systems (excl. Rail Systems);;TRUE
+INF;GEO;Geotechnical;;TRUE
+INF;HYD;Hydrological;;TRUE
+INF;LSC;Landscaping;;TRUE
+INF;PWA;Permanent Way (excl. 3rd Rail);;TRUE
+INF;ROH;Roads and Highways;;TRUE
+INF;STR;Structural;;TRUE
+INF;TOP;Topographical;;TRUE
+INF;TRK;Trackwork;;TRUE
+INF;TUN;Tunnel;;TRUE
+INF;UTL;Utilities;;TRUE
+INF;VIA;Viaducts and Other Elevated Structures;;TRUE
+O&M;SPA;Spares;;TRUE
+O&M;TRA;Training;;TRUE
+PMG;ADM;Administrative;;TRUE
+PMG;CON;Contract, including Claims;;TRUE
+PMG;CST;Cost;;TRUE
+PMG;HSE;Health, Safety and Environmental;;TRUE
+PMG;INF;Interface Management;;TRUE
+PMG;LEG;Legal;;TRUE
+PMG;PCN;Project Controls;;TRUE
+PMG;QAC;Quality Assurance and Quality Control;;TRUE
+PMG;SCH;Scheduling;;TRUE
+SYS;AFC;Automatic Fare Collection;;TRUE
+SYS;APC;Automatic Passenger Counting System;;TRUE
+SYS;COM;Communications;;TRUE
+SYS;DQE;Depot Equipment;;TRUE
+SYS;MMS;Maintenance Management System;;TRUE
+SYS;PSD;Platform Screen Doors;;TRUE
+SYS;PDS;Power Supply and Distribution;;TRUE
+SYS;RSK;Rolling Stock;;TRUE
+SYS;OCS;OCS/SCADA/OCC/Local Controls;;TRUE
+SYS;ATC;Signaling;;TRUE
+SYS;THR;Third Rail;;TRUE
+SAS;E&B;Earthing & Bonding;;TRUE
+SAS;EMC;Electromagnetic Compatibility;;TRUE
+SAS;ENV;Environmental;;TRUE
+SAS;FLS;Fire & Life Safety;;TRUE
+SAS;LTP;Lightning Protection;;TRUE
+SAS;RAM;Reliability, Availability, Maintainability;;TRUE
+SAS;RCM;Requirement and Configuration Management;;TRUE
+SAS;SEC;Security;;TRUE
+SAS;SSA;System Safety;;TRUE
+SAS;CER;System Validation/Certification;;TRUE
+TRA;CXT;Context Planning;;TRUE
+TRA;RID;Ridership;;TRUE
+TRA;TPL;Transportation Planning;;TRUE

@@ -1,13 +1,13 @@
 # - - - - - - - - - - Siemens phase standard
 
 SiemensPhase.new do |sp|
-  sp.code = 'PM010'
+  sp.code = '%PM010'
   sp.label_p = 'Lead Management'
   sp.label_m = 'Go / No-Go decision'
 end.save
 
 SiemensPhase.new do |sp|
-  sp.code = 'PM020'
+  sp.code = '%PM020'
   sp.label_p = 'Opportunity Development'
   sp.label_m = 'Bid decision'
 end.save
@@ -19,7 +19,7 @@ SiemensPhase.new do |sp|
 end.save
 
 SiemensPhase.new do |sp|
-  sp.code = 'PM070'
+  sp.code = '%PM070'
   sp.label_p = 'Contract Negotiation'
   sp.label_m = 'Project won / lost'
 end.save

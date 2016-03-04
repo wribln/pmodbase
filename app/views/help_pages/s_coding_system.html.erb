@@ -1,0 +1,76 @@
+<% help_title "Help on Siemens Coding System" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">The Siemens Coding System follows the EN&nbsp;81346/IEC&nbsp;81346 Standard.</p>
+    <p>The coding system described and implemented here aids the coding of various objects being used in a Siemens project:</p>
+    <ul>
+      <li>Documents</li>
+      <li>Forms</li>
+      <li>Interface Management</li>
+      <li>Time scheduling</li>
+      <li>Filing system</li>
+      <li>Definition of Work Packages</li>
+      <li>List of Responsibilities</li>
+      <li>Resource Planning</li>
+      <li>Project Organisation and Task Descriptions</li>
+    </ul>
+    <p>Objects such as projects, systems, products, performance and phases are referred to as "objects" in accordance with the international standard IEC 61346.</p>
+    <p>The following aspects of the coding structure are provided by specific codes, each distinguishable by a specific character prefix:</p>
+    <table class="table table-condensed">
+      <thead>
+        <th>Prefix</th>
+        <th>Codes</th>
+        <th>Usage</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>=</td>
+          <td><%= link_to_help :function_codes, 'Function' -%></td>
+          <td>allow the structuring of objects according to their function within the (turnkey/rail) system ("what should the object do")</td>
+        </tr>
+        <tr>
+          <td>$</td>
+          <td><%= link_to_help :service_codes, 'Service' -%></td>
+          <td>structure the activities which accompany the process, e.g. planning, controlling, management</td>
+        </tr>
+        <tr>
+          <td>+</td>
+          <td><%= link_to_help :location_codes, 'Location' -%></td>
+          <td>provide a top-down structure of the project according to their location within the system ("where is the object")</td>
+        </tr>
+        <tr>
+          <td>%</td>
+          <td><%= link_to_help :phase_codes, 'Phase' -%></td>
+          <td>specify the various project phases (plan, construct, commission, etc.) ("when")</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td><%= link_to_help :groups, 'Responsibility' -%></td>
+          <td>assigns the project entity responsible for a certain object or activity, hence the project group's code provides the responsibility code within the project coding structure</td>
+        </tr>
+        <tr>
+          <td>&amp;</td>
+          <td><%= link_to_help :dcc_codes, 'Document Class' -%></td>
+          <td>see below</td>
+      </tbody>
+    </table>
+    <p>For documents, a Document Kind Class Code (DCC) is utilized which is based on the standard IEC 61355. The DCC uses the character '&amp;’ as prefix and in principle consists of three parts:</p>
+    <ul>
+      <li>The first character depicts a 'technical area’ (according to the standard). This part of
+        the code is not used as variable part of the DCC: It is always 'A'.</li>
+      <li>The two other characters implement a two-level hierarchy, with the first character specifying a general document group.</li>
+      <li>The DCC according to the standard could be extended by a three-digit numerical suffix. This
+        is not used in the Siemens Coding System.</li>
+    </ul>
+    <p>Hence, for the purpose of having a document classification code, the DCC - as used in
+      the Siemens Coding System - consists of the prefix '&amp;A' followed by two characters.</p> 
+    <p>For all project codes, the following applies:</p>
+    <ol>
+      <li>Most codes are defined by some standard. These standard codes must not be modified. They are marked with the flag 'Standard’. Records with this flag should not be deleted.</li>
+      <li>Some codes may be defined in the company standard but may not be in use. These codes can be marked as being inactive (i.e. clearing the 'Active' flag).</li>
+      <li>Some codes should not be used as codes: They rather define an upper level heading for information only. Such codes should be marked by setting the 'Heading’ flag.</li>
+    </ol>
+    <p>DCCs, Function, Service and Product codes can have multiple entries for a specific code: This allows to store synonyms or alternate texts. This is specifically useful for the DCC where one could add various document types to use the same code.</p>
+    <%= help_footer FEATURE_ID_HELP_PAGES %>
+  </div> <!-- /container -->

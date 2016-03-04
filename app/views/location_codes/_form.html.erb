@@ -1,0 +1,55 @@
+      <div class="form-group">
+        <%= form.label :id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-1">
+          <%= display_value form.object.id %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :code, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= form.text_field :code, class: "form-control", required: true, maxlength: MAX_LENGTH_OF_CODE %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :label, class: "col-sm-3 control-label" %>
+        <div class="col-sm-4">
+          <%= form.text_field :label, class: "form-control", required: true, maxlength: MAX_LENGTH_OF_LABEL %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :loc_type, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= form.select :loc_type, select_options( LocationCode::LOCATION_CODE_TYPES ), { prompt: t( '.t_prompt' ) }, { class: "form-control", required: true }%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :center_point, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= form.text_field :center_point, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :start_point, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= form.text_field :start_point, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :end_point, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= form.text_field :end_point, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :length, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= form.text_field :length, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :note, class: "col-sm-3 control-label" %>
+        <div class="col-sm-4">
+          <%= form.text_field :note, class: "form-control", maxlength: MAX_LENGTH_OF_NOTE %>
+        </div>
+      </div>
+

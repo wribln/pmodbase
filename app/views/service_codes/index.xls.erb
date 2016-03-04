@@ -1,0 +1,18 @@
+<%= CSV.generate_line([
+  :code,
+  :label,
+  :active,
+  :master,
+  :standard,
+  :heading,
+  :note ], STD_CSV_OPTIONS ) -%>
+<%- @service_codes.each do |sc| -%>
+<%= CSV.generate_line([
+  sc.code,
+  sc.label,
+  sc.active,
+  sc.master,
+  sc.standard,
+  sc.heading,
+  sc.note], STD_CSV_OPTIONS ).html_safe -%>
+<%- end -%>

@@ -1,0 +1,47 @@
+<% help_title "Help on #{ DccCode.model_name.human }" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">Document Classification Codes categorize documents according to the type
+      of content.</p>
+    <p>The main purpose of the DCC is to define certain standard codes such that all
+      documents with the same kind of content will use the same code: Hence, it is not
+      important to choose a 'correct' (according to the standard) code but a single
+      code for a specific type of document.</p>
+    <p>For this reason, most sample document types are marked as not active. When a DCC
+      is used for the first time, the respective record should be activated and the 
+      label should be updated if necessary. Alternatively, a new record with the same
+      DCC and a new label could be created to indicate which type of document uses the
+      same code.</p> 
+    <p>DCCs are managed using the following fields:</p>
+    <ul>
+      <li>The <%= help_param DccCode.human_attribute_name( :code ) -%> must be a short
+        alphanumeric code with the prefix '&amp;A'. This code may also contain
+        periods and dashes.</li>
+      <li>The <%= help_param DccCode.human_attribute_name( :label ) -%>
+        describes the service represented by the 
+        <%= help_term DccCode.human_attribute_name( :code ) -%>.</li>
+      <li>The flag <%= help_param DccCode.human_attribute_name( :active ) -%>
+        marks a code as being currently usable in the system (true = active) or not
+        (false = inactive). Inactive codes must not be used.</li>
+      <li>The flag <%= help_param DccCode.human_attribute_name( :heading ) -%>
+        specifies that this code should not be used as code per se but serves as an
+        explanatory heading within the coding structure. Setting this flags requires
+        the that the <%= help_term DccCode.human_attribute_name( :active ) -%>
+        and <%= help_term DccCode.human_attribute_name( :master ) -%>
+        flags are both clear (false).</li>
+      <li>The flag <%= help_param DccCode.human_attribute_name( :master ) -%>
+        indicates that this entry is used as main entry for the associated code, i.e.
+        when listing the code structure and a single entry per code is required, then
+        the code marked with 
+        <%= help_term DccCode.human_attribute_name( :master ) -%> should be listed.</li>
+      <li>Codes having the <%= help_param DccCode.human_attribute_name( :standard ) -%> 
+        flag set, are taken from an (internal) standard. Such codes must not be removed, they
+        should only be set to 'inactive'.
+      <li>The <%= help_param DccCode.human_attribute_name( :note ) -%> field can be
+        used by the administrator to make any explanatory or organisational remarks
+        on this code.</li>
+    </ul>
+    <p>For the general discussion of coding system used at Siemens, please see <%= link_to_help :s_coding_system, 'Siemens Coding System' -%>.</p>
+    <%= help_footer FEATURE_ID_SERVICE_CODES %>
+  </div> <!-- /container -->

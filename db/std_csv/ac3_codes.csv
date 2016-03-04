@@ -1,0 +1,8 @@
+code;label;description;active
+INF;Infrastructure;for all infrastructure and architecture related documentation;TRUE
+INT;Interfaces/Integration;for all interfaces or integration related documentation, including with stakeholders between contractors, ...;TRUE
+Q&M;Operation and Maintenance;for all operation and maintenance related documentation, including training;TRUE
+PMG;Project Management;for all project management documentation, including but not limited toreports, plans, forms, procedures, instructions, contracts, costs, schedules, ...;TRUE
+SAS;System Assurance;for all system assurance related documentation, including environment, safety, RAM, security, configuration management, ...;TRUE
+SYS;Rail System;for all rail systme design documentation including but not limited to sketches, reports, drawings, specifications, plans, schedules, manuals, data sheets, and calculations.;TRUE
+TRA;Transportation;for all transportation planning related documentation, including traffic forecast, context planning, ...;TRUE

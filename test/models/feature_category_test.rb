@@ -1,5 +1,4 @@
 require 'test_helper'
-
 class FeatureCategoryTest < ActiveSupport::TestCase
 
   test "default settings" do

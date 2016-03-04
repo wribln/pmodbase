@@ -1,0 +1,112 @@
+<% help_title "Help on #{ LocationCode.model_name.human }" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">Location Codes provide a coding system for specific locations within the project's scope.</p>
+    <p>Location Codes are recognized by the prefix '+'. Goal of the Location Code table is to communicate
+      generally used codes. Is is not meant to provide precise chainage values for any situation in a
+      rail system. Hence, the location coordinates are expressed in meters without fractional parts. Any
+      coordinate will be shown in the well-known 'nnn+nnn' format.</p>
+    <p>In rail project, locations can be stations,
+      line sections (e.g. between two stations), other buildings along the line (traction power substations),
+      locations of turn-outs, etc. Also, locations not along the alignment are coded, e.g. buildings in
+      depots, functional locations (such as control centers), and individual trains.</p>
+    <p>Three different types of location are recognized in this table:</p>
+    <ul>
+      <li>Type <%= help_term LocationCode::LOCATION_CODE_TYPES[ 0 ] -%> locations are not related to a line, i.e.
+        not having chainage coordinates: For example, trains, buildings in depots, functional locations such
+        as operation control centers. As no chainage coordinates are used, any values entered for this type
+        of location will be removed.</li>
+      <li>Type <%= help_term LocationCode::LOCATION_CODE_TYPES[ 1 ] -%> locations are designated by a single point along
+        the alignment, for example the beginning and the end of a line section, or the position of a 
+        turn-out. Only the <%= help_term LocationCode.human_attribute_name( :center_point ) -%> coordinate
+        will be saved, all other coordinates
+        (<%= help_term LocationCode.human_attribute_name( :start_point ) -%>,
+        <%= help_term LocationCode.human_attribute_name( :end_point ) -%>, and
+        <%= help_term LocationCode.human_attribute_name( :length ) -%>) will be removed.</li>
+      <li>Type <%= help_term LocationCode::LOCATION_CODE_TYPES[ 2 ] -%> are those locations having full set
+        of chainage coordinates, i.e. 
+        <%= help_term LocationCode.human_attribute_name( :center_point ) -%>,
+        <%= help_term LocationCode.human_attribute_name( :start_point ) -%>,
+        <%= help_term LocationCode.human_attribute_name( :end_point ) -%>, and
+        <%= help_term LocationCode.human_attribute_name( :length ) -%>). If some coordinate is not
+        input, the system will attempt to compute it. For example, if the 
+        <%= help_term LocationCode.human_attribute_name( :length ) -%>) is not given, it will be
+        computed from the
+        <%= help_term LocationCode.human_attribute_name( :start_point ) -%> and the
+        <%= help_term LocationCode.human_attribute_name( :end_point ) -%> - if possible.</li>
+        </li>
+    </ul>
+    <p>The following fields can be administered:</p>
+    <ul>
+      <li><%= help_param LocationCode.human_attribute_name( :code ) -%> is the location code.
+        This is a required attribute.
+        The code must have a prefix of '+' and may also contain periods and dashes. 
+        </li>
+      <li><%= help_param LocationCode.human_attribute_name( :label ) -%> is the description of
+        the location, e.g. the station name. This is a required attribute.</li>
+      <li><%= help_param LocationCode.human_attribute_name( :loc_type ) -%> defines the type
+        of the location (see above for details). The main purpose of the attribute is to allow
+        better input control. This attribute must also be set.</li>
+      <li>A <%= help_param LocationCode.human_attribute_name( :center_point )-%> is often
+        given as location of station rather than the start and the end location of the station
+        building. For line sections, this value will not be useful.</li>
+      <li>The <%= help_param LocationCode.human_attribute_name( :start_point )-%> and
+        <%= help_param LocationCode.human_attribute_name( :end_point )-%> are used for line
+        sections. An important rule is, that the
+        <%= help_term LocationCode.human_attribute_name( :start_point )-%> must always be less than the
+        <%= help_term LocationCode.human_attribute_name( :end_point )-%>. This condition will be
+        verified by the system.</li>
+      <li>The <%= help_param LocationCode.human_attribute_name( :length )-%> gives the computed or
+        entered length of a structure or line section.</li>
+      <li>A <%= help_param LocationCode.human_attribute_name( :note )-%> field can be used to
+        enter additional information or tags for the location.</li>
+    </ul>
+    <h3>Computation of Coordinates</h3>
+    <p>Depending on the type of location and the entered coordinates, any missing values will be
+    computed as follows:</p>
+    <ul>
+      <li>Center = Start + Length / 2</li>
+      <li>Center = End - Length</li>
+      <li>Length = End - Start</li>
+      <li>Start = Center + Length / 2</li>
+      <li>Start = End - Length</li>
+      <li>End = Center - Length / 2</li>
+      <li>End = Start + Length</li>
+    </ul>
+    <h3>Suggested Coding Standard</h3>
+    <p>The following standard coding for rail system projects has been proven useful:</p>
+    <ul>
+      <li><strong>+&lt;n&gt;.LS</strong> is used to define a line section with a continous chainage, for
+        example when planning  several metro or tram lines. <strong>+1.LS</strong> would be one line,
+        <strong>+2.LS</strong> would be the second line, and so on. A branch line with a new,
+        different chainage would be considered a separate line section as well to ensure that
+        a chainage within a line section is unambiguous.</li>
+      <li><strong>+&lt;n&gt;.ST</strong> would be the prefix for all stops/stations along the lines:
+        <strong>+1.ST.01</strong> should be the code for the first station on the line
+        <strong>+1.LS</strong>, <strong>+1.ST.02</strong> the second stop.</li>
+      <li><strong>+&lt;n&gt;.LS.00</strong> is the logical code for the first section of the line
+        <strong>+&lt;n&gt;.LS</strong>, i.e. the section between the start of the line and the
+        center of the first station; accordingly, <strong>+1.LS.01</strong> would be the section
+        of the line <strong>+1.LS</strong> between the stations <strong>+1.ST.01</strong> and
+        <strong>+1.ST.02</strong>.</li>
+      <li><strong>+&lt;n&gt;.TP.&lt;nn&gt;</strong> could be the code for the traction power
+        substations; with &lt;nn&gt; being a consecutive number.</li>
+      <li>Likewise, <strong>+&lt;n&gt;.BP.&lt;nn&gt;</strong> could be the code for the bulk power
+        substations, <strong>+&lt;n&gt;.SW.&lt;nn&gt;</strong> for switches, <strong>+&lt;n&gt;.EE.&lt;nn&gt;</strong>
+        for emergency egress points, <strong>+&lt;n&gt;.LA.&lt;nn&gt;</strong> for logistics areas,
+        <strong>+&lt;n&gt;.AS.&lt;nn&gt;</strong> for annex structures, etc.</li>
+      <li><strong>+&lt;n&gt;.SP.&lt;nn&gt;</strong> could be used to code special points along the
+        lines, e.g. beginning and end of the line (if needed).</li>
+      <li>Codes withhout a relationship to a line would not need the line indicator:
+        <strong>+RS.&lt;nn&gt;</strong> for rolling stock: <strong>+RS.01</strong> would thus be
+        the code for the first train.</li>
+      <li>Other codes may be needed for functional areas, such as <strong>+OCC</strong> for the
+        operations control center, with subcodes <strong>+OCC.M</strong> for the main OCC, and
+        <strong>+OCC.B</strong> for the backup OCC.</li>
+      <li>Also, the depot area <strong>+DEP</strong> could have sub-elements: <strong>+DEP.SY</strong>
+        for stabling yard, <strong>+DEP.HM</strong> for the heavy maintenance building, 
+        <strong>+DEP.WP</strong> for the washing plant, etc.</li>
+    </ul>
+    <%= help_footer FEATURE_ID_LOCATION_CODES %>
+  </div> <!-- /container -->

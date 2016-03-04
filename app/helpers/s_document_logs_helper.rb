@@ -1,0 +1,2 @@
+module SDocumentLogsHelper
+end

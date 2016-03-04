@@ -1,0 +1,23 @@
+<% help_title "Help on #{ SDocumentLog.model_name.human }" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">The Siemens Document Log records and maintains metadata on documents.</p>
+    <h3>Purpose</h3>
+    <p>For certain, confidential files, storage and management in a project-public system is
+      not advisable. The Siemens Document Log (SDL) provide means to create and maintain the
+      metadata whereas the files itself are stored in a separate location, most likely an
+      access-controlled server.</p>
+    <ul>
+      <li>The automatically generated <%= help_param SDocumentLog.human_attribute_name( :id ) -%>
+        is used as unambiguous document number. The database management system maintainse this
+        number and ensures that no number is used twice.</li>
+      <li>The <%= help_param SDocumentLog.human_attribute_name( :group )%> determines the 
+        project group responsible for the creation of the document.</li>
+      <li>The <%= help_param SDocumentLog.human_attribute_name( :receiver_group )%> is the
+        party for which this document was prepared. This parameter is used only for 
+        correspondence documents such as letters addressed to a specific party. For technical
+        documents, this parameter can be left blank.</li>
+    </ul>
+    <%= help_footer FEATURE_ID_S_DOCUMENT_LOG %>
+  </div> <!-- /container -->

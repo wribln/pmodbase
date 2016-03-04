@@ -7,6 +7,7 @@
 # server 'example.com', user: 'deploy', roles: %w{app web}, other_property: :other_value
 # server 'db.example.com', user: 'deploy', roles: %w{db}
 
+server 'test.pmodbase.com', user: 'test', roles: %w{app db web}
 
 
 # role-based syntax
@@ -49,13 +50,13 @@
 #
 # The server-based syntax can be used to override options:
 # ------------------------------------
-# server 'example.com',
-#   user: 'user_name',
-#   roles: %w{web app},
-#   ssh_options: {
-#     user: 'user_name', # overrides user setting above
-#     keys: %w(/home/user_name/.ssh/id_rsa),
+server 'test.pmodbase.com',
+   user: 'test',
+   roles: %w{web app},
+   ssh_options: {
+#      user: 'test', # overrides user setting above
+    port: 2009,
+    keys: %w(/home/wilfried/.ssh/id_rsa),
 #     forward_agent: false,
-#     auth_methods: %w(publickey password)
-#     # password: 'please use keys'
-#   }
+    auth_methods: %w(publickey password)
+    }

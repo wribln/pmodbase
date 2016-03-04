@@ -39,6 +39,12 @@ module ApplicationModel
     id.blank? ? '' : "[#{ id }]"
   end
 
+  # combine code and label for list boxes
+
+  def code_and_label
+    '' << try( :code ) << ' - ' << try( :label )
+  end
+
   # this is the way to include class methods here:
 
   module ClassMethods

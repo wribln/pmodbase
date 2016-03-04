@@ -1,0 +1,39 @@
+<% help_title "Help on #{ ProductCode.model_name.human }" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">Product Codes categorize are used categorize materials, equipments, or components.</p>
+    <p>A product structure could be the basis of a configuration management system as it provides
+      a hierarchical breakdown of a system or product into smaller components down to the smallest part
+      of practical interest.</p>
+    <p>Product Codes are managed using the following fields:</p>
+    <ul>
+      <li>The <%= help_param ProductCode.human_attribute_name( :code ) -%> must be a short
+        alphanumeric code with the prefix '-' which may also contain periods and dashes.</li>
+      <li>The <%= help_param ProductCode.human_attribute_name( :label ) -%>
+        describes the service represented by the 
+        <%= help_term ProductCode.human_attribute_name( :code ) -%>.</li>
+      <li>The flag <%= help_param ProductCode.human_attribute_name( :active ) -%>
+        marks a code as being currently usable in the system (true = active) or not
+        (false = inactive). Inactive codes must not be used.</li>
+      <li>The flag <%= help_param ProductCode.human_attribute_name( :heading ) -%>
+        specifies that this code should not be used as code per se but serves as an
+        explanatory heading within the coding structure. Setting this flags requires
+        the that the <%= help_term ProductCode.human_attribute_name( :active ) -%>
+        and <%= help_term ProductCode.human_attribute_name( :master ) -%>
+        flags are both clear (false).</li>
+      <li>The flag <%= help_param ProductCode.human_attribute_name( :master ) -%>
+        indicates that this entry is used as main entry for the associated code, i.e.
+        when listing the code structure and a single entry per code is required, then
+        the code marked with 
+        <%= help_term ProductCode.human_attribute_name( :master ) -%> should be listed.</li>
+      <li>Codes having the <%= help_param ProductCode.human_attribute_name( :standard ) -%> 
+        flag set, are taken from an (internal) standard. Such codes must not be removed, they
+        should only be set to 'inactive'.
+      <li>The <%= help_param ProductCode.human_attribute_name( :note ) -%> field can be
+        used by the administrator to make any explanatory or organisational remarks
+        on this code.</li>
+    </ul>
+    <p>For the general discussion of coding system used at Siemens, please see <%= link_to_help :s_coding_system, 'Siemens Coding System' -%>.</p>
+    <%= help_footer FEATURE_ID_PRODUCT_CODES %>
+  </div> <!-- /container -->

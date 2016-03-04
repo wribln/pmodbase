@@ -6,17 +6,19 @@
       <thead>
         <tr>
           <th class="col-sm-1"><%= t( '.a_id'   )%></th>
+          <th class="col-sm-2"><%= Account.human_attribute_name( :name )%></th>
           <th class="col-sm-3"><%= Person.human_attribute_name( :informal_name )%></th>
           <th class="col-sm-3"><%= Person.human_attribute_name( :formal_name   )%></th>
         </tr>
       </thead>
       <tbody>
       <% if @accounts.length.zero? %>
-        <%= render partial: 'shared/index_empty_row', locals:{ columns: 3 }%>
+        <%= render partial: 'shared/index_empty_row', locals:{ columns: 4 }%>
       <% else %>
         <% @accounts.each do |a| %>
         <tr>
           <td><%= a.to_id %></td>
+          <td><%= a.name %></td>
           <%- if a.person_id.zero? then %>
             <td><%= t( 'people.no_name_given' ) %></td><td>&nbsp;</td>
           <%- else %>

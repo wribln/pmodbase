@@ -1,0 +1,11 @@
+one:
+  code: '-ABC'
+  label: The Alphabet
+  active: true
+  master: true
+  standard: true
+  heading: false
+
+two:
+  code: '-XYZ'
+  label: with defaults

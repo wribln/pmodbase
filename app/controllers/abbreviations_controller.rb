@@ -12,10 +12,10 @@ class AbbreviationsController < ApplicationController
     @filter_fields = filter_params
     respond_to do |format|
       format.html do
-        @abbreviations = Abbreviation.filter( filter_params ).paginate( page: params[ :page ])
+        @abbreviations = Abbreviation.filter( @filter_fields ).paginate( page: params[ :page ])
       end
       format.xls do # no pagination for CSV format
-        @abbreviations = Abbreviation.filter( filter_params )
+        @abbreviations = Abbreviation.filter( @filter_fields )
         set_header( :xls, 'abbreviations.csv' )
       end
     end

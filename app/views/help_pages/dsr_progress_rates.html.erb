@@ -6,13 +6,16 @@
     <p>This table contains per <%= help_term DsrStatusRecord.human_attribute_name( :document_status ) -%>
       the progress rate. For a detailed description of the
       <%= help_term DsrStatusRecord.human_attribute_name( :document_status ) -%>
-      see the help on <%= link_to_help DsrStatusRecord.model_name.human -%>.</p>
+      see the help on <%= link_to_help :dsr_status_records, DsrStatusRecord.model_name.human -%>.</p>
     <ul>
-      <li><%= help_param DsrProgressRate.human_attribute_name( :id ) -%>
-        refers to the internal index of the 
+      <li><%= help_param DsrProgressRate.human_attribute_name( :document_status ) -%>
+        is the internal, numerical index of the 
         <%= help_term DsrStatusRecord.human_attribute_name( :document_status ) -%>.</li>
-      <li><%= help_param DsrProgressRate.human_attribute_name( :label ) -%>
-        is derived from the internal translation tables and cannot be modified here.</li>
+      <li><%= help_param DsrProgressRate.human_attribute_name( :label ) -%> describes
+        one of the possible states used as 
+        <%= help_term DsrStatusRecord.human_attribute_name( :document_status ) -%>.
+        This text is derived from internal translation tables and cannot be modified 
+        here.</li>
       <li><%= help_param DsrProgressRate.human_attribute_name( :document_progress ) -%>
         must be a value between 0 and 100, representing the accumulated progress at
         the specified <%= help_term DsrStatusRecord.human_attribute_name( :document_status ) -%>.</li>
@@ -39,6 +42,7 @@
         would be 50 = (80-60)*100/(100-60).</li>
     </ul>
     <p>Note: A user can only modify any progress rates but adding or removing
-      records is not possible.</p>
+      records is not possible: Such changes would require modifications to the logic
+      of the workflow which can only be done within the application.</p>
     <%= help_footer FEATURE_ID_DSR_PROGRESS_RATES %>
   </div> <!-- /container -->

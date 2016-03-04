@@ -40,7 +40,7 @@ class CreateDsrStatusRecords < ActiveRecord::Migration
       t.date        :actl_completion
       #
       t.datetime    :baseline_date
-      t.string      :notes,           limit: MAX_LENGTH_OF_NOTES
+      t.string      :notes,           limit: MAX_LENGTH_OF_NOTE
       t.integer     :current_status,    default: 0, null: false
       t.integer     :current_status_b,  default: 0, null: false
       t.integer     :current_task,      default: 0, null: false

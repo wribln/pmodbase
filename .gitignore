@@ -16,7 +16,6 @@
 /tmp
 
 # other, individual files
-/bin
 /pmodbase.sublime-*
 this.sublime-*
 sublime-settings.txt

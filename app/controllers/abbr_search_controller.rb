@@ -17,14 +17,14 @@ class AbbrSearchController < ApplicationController
       @unit_names = UnitName.none
       @total_rows = -1
     else
-      @abbreviations = Abbreviation.filter( filter_params )
-      @glossary_items = GlossaryItem.filter( filter_params )
-      @standards_bodies = StandardsBody.filter( filter_params )
-      @phase_codes = PhaseCode.filter( filter_params )
-      @groups = Group.filter( filter_params )
-      @country_names = CountryName.filter( filter_params )
-      @region_names = RegionName.filter( filter_params )
-      @unit_names = UnitName.filter( filter_params )
+      @abbreviations = Abbreviation.filter( @filter_fields )
+      @glossary_items = GlossaryItem.filter( @filter_fields )
+      @standards_bodies = StandardsBody.filter( @filter_fields )
+      @phase_codes = PhaseCode.filter( @filter_fields )
+      @groups = Group.filter( @filter_fields )
+      @country_names = CountryName.filter( @filter_fields )
+      @region_names = RegionName.filter( @filter_fields )
+      @unit_names = UnitName.filter( @filter_fields )
       @total_rows = 
         @abbreviations.length +
         @glossary_items.length +

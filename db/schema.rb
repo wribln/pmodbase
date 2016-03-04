@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151001165432) do
+ActiveRecord::Schema.define(version: 20160303104649) do
 
   create_table "abbreviations", force: :cascade do |t|
     t.string   "code",        limit: 10,  null: false
@@ -100,6 +100,20 @@ ActiveRecord::Schema.define(version: 20151001165432) do
     t.datetime "updated_at",                                    null: false
   end
 
+  create_table "dcc_codes", force: :cascade do |t|
+    t.string   "code",       limit: 10,                 null: false
+    t.string   "label",      limit: 50,                 null: false
+    t.boolean  "active",                default: true,  null: false
+    t.boolean  "master",                default: true,  null: false
+    t.boolean  "standard",              default: true,  null: false
+    t.boolean  "heading",               default: false, null: false
+    t.string   "note",       limit: 50
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+  end
+
+  add_index "dcc_codes", ["code"], name: "index_dcc_codes_on_code"
+
   create_table "dsr_doc_groups", force: :cascade do |t|
     t.string   "code",       limit: 10
     t.string   "title",      limit: 128
@@ -111,7 +125,7 @@ ActiveRecord::Schema.define(version: 20151001165432) do
   add_index "dsr_doc_groups", ["group_id"], name: "index_dsr_doc_groups_on_group_id"
 
   create_table "dsr_progress_rates", id: false, force: :cascade do |t|
-    t.integer  "id",                            null: false
+    t.integer  "document_status",               null: false
     t.integer  "document_progress", default: 0
     t.integer  "prepare_progress",  default: 0
     t.integer  "approve_progress",  default: 0
@@ -119,7 +133,7 @@ ActiveRecord::Schema.define(version: 20151001165432) do
     t.datetime "updated_at",                    null: false
   end
 
-  add_index "dsr_progress_rates", ["id"], name: "index_dsr_progress_rates_on_id", unique: true
+  add_index "dsr_progress_rates", ["document_status"], name: "index_dsr_progress_rates_on_document_status", unique: true
 
   create_table "dsr_status_records", force: :cascade do |t|
     t.string   "title",                     limit: 128
@@ -213,6 +227,20 @@ ActiveRecord::Schema.define(version: 20151001165432) do
     t.datetime "updated_at",                                 null: false
   end
 
+  create_table "function_codes", force: :cascade do |t|
+    t.string   "code",       limit: 10,                 null: false
+    t.string   "label",      limit: 50,                 null: false
+    t.boolean  "active",                default: true,  null: false
+    t.boolean  "master",                default: true,  null: false
+    t.boolean  "standard",              default: true,  null: false
+    t.boolean  "heading",               default: false, null: false
+    t.string   "note",       limit: 50
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+  end
+
+  add_index "function_codes", ["code"], name: "index_function_codes_on_code"
+
   create_table "glossary_items", force: :cascade do |t|
     t.string   "term",         limit: 60, null: false
     t.string   "code",         limit: 10
@@ -262,6 +290,21 @@ ActiveRecord::Schema.define(version: 20151001165432) do
   add_index "holidays", ["date_from"], name: "index_holidays_on_date_from"
   add_index "holidays", ["year_period"], name: "index_holidays_on_year_period"
 
+  create_table "location_codes", force: :cascade do |t|
+    t.string   "code",         limit: 10,             null: false
+    t.string   "label",        limit: 50,             null: false
+    t.integer  "loc_type",                default: 2, null: false
+    t.integer  "center_point"
+    t.integer  "start_point"
+    t.integer  "end_point"
+    t.integer  "length"
+    t.string   "note",         limit: 50
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+  end
+
+  add_index "location_codes", ["code"], name: "index_location_codes_on_code"
+
   create_table "people", force: :cascade do |t|
     t.string   "formal_name",   limit: 70,  default: "",   null: false
     t.string   "informal_name", limit: 70,  default: "",   null: false
@@ -307,6 +350,20 @@ ActiveRecord::Schema.define(version: 20151001165432) do
     t.datetime "created_at",                              null: false
     t.datetime "updated_at",                              null: false
   end
+
+  create_table "product_codes", force: :cascade do |t|
+    t.string   "code",       limit: 10,                 null: false
+    t.string   "label",      limit: 50,                 null: false
+    t.boolean  "active",                default: true,  null: false
+    t.boolean  "master",                default: true,  null: false
+    t.boolean  "standard",              default: true,  null: false
+    t.boolean  "heading",               default: false, null: false
+    t.string   "note",       limit: 50
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+  end
+
+  add_index "product_codes", ["code"], name: "index_product_codes_on_code"
 
   create_table "programme_activities", force: :cascade do |t|
     t.string   "project_id"
@@ -374,6 +431,40 @@ ActiveRecord::Schema.define(version: 20151001165432) do
     t.datetime "created_at",                                     null: false
     t.datetime "updated_at",                                     null: false
   end
+
+  create_table "s_document_logs", force: :cascade do |t|
+    t.integer  "group_id",                   null: false
+    t.string   "receiver_group", limit: 10
+    t.string   "function_code",  limit: 10
+    t.string   "service_code",   limit: 10
+    t.string   "product_code",   limit: 10
+    t.string   "location_code",  limit: 10
+    t.string   "phase_code",     limit: 10
+    t.string   "dcc_code",       limit: 10
+    t.string   "revision_code",  limit: 10
+    t.date     "author_date",    limit: 10
+    t.integer  "account_id",                 null: false
+    t.string   "title",          limit: 10
+    t.string   "siemens_doc_id", limit: 100
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "s_document_logs", ["id"], name: "index_s_document_logs_on_id"
+
+  create_table "service_codes", force: :cascade do |t|
+    t.string   "code",       limit: 10,                 null: false
+    t.string   "label",      limit: 50,                 null: false
+    t.boolean  "active",                default: true,  null: false
+    t.boolean  "master",                default: true,  null: false
+    t.boolean  "standard",              default: true,  null: false
+    t.boolean  "heading",               default: false, null: false
+    t.string   "note",       limit: 50
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+  end
+
+  add_index "service_codes", ["code"], name: "index_service_codes_on_code"
 
   create_table "siemens_phases", force: :cascade do |t|
     t.string   "code",       limit: 10, null: false

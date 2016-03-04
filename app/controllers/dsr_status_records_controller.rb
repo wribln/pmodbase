@@ -75,7 +75,7 @@ class DsrStatusRecordsController < ApplicationController
       when '3','4','9','10'
         # add progress * count/weight
         @dsr_groups.concat group_model.pluck( :id, :code )
-        p = DsrProgressRate.pluck( :id, :document_progress )
+        p = DsrProgressRate.pluck( :document_status, :document_progress )
         @dsr_stats_c.map!{ |r| r << r[ 2 ] * p.assoc( r[ 1 ])[ 1 ]}
         @dsr_stats_b.map!{ |r| r << r[ 2 ] * p.assoc( r[ 1 ])[ 1 ]} unless @dsr_stats_b.nil?
         @dsr_stats_d = merge_stats( @dsr_stats_c, @dsr_stats_b, 2, 2 )
@@ -89,7 +89,7 @@ class DsrStatusRecordsController < ApplicationController
         @dsr_stats_gt = grand_total( @dsr_stats_st, 2 )
       when '13','14','15','16'
         # map progress to document status
-        p = DsrProgressRate.pluck( :id, group_var_b )
+        p = DsrProgressRate.pluck( :document_status, group_var_b )
         @dsr_stats_c.map!{ |r| r << r[ 2 ] * p.assoc( r[ 1 ])[ 1 ]}
         # compute totals per activity
         @dsr_stats_st = sub_totals( @dsr_stats_c, 1, 2 )

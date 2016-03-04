@@ -41,7 +41,7 @@ class FeatureCategoriesControllerTest < ActionController::TestCase
 
   test "should update feature_category" do
     patch :update, id: @feature_category, feature_category: {  label: @feature_category.label, seqno: 1 }
-    assert_redirected_to feature_category_path(assigns( :feature_category ))
+    assert_redirected_to feature_category_path( assigns( :feature_category ))
   end
 
   test "should destroy feature_category" do

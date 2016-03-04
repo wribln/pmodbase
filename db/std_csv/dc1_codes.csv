@@ -1,0 +1,7 @@
+code;description;active;master;standard;heading
+A;Overall Management;TRUE;TRUE;TRUE;FALSE
+B;Overall Technology;FALSE;TRUE;TRUE;FALSE
+C;Construction Engineering;FALSE;TRUE;TRUE;FALSE
+E;Electrical Engineering, Instrumentation and Control Engineering (incl. Information and Communication Techniques);FALSE;TRUE;TRUE;FALSE
+M;Mechanical Engineering (normally including Process Engineering);FALSE;TRUE;TRUE;FALSE
+P;Process Engineering (only if separation from M is required);FALSE;TRUE;TRUE;FALSE

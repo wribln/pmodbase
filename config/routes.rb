@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get  'home/signoff', as: 'signoff', format: false
 
   get  'sfas', to: 'abbr_search#index', format: false
+  get  'csas', to: 'code_search#index', format: false
   get  'frqs', to: 'feature_responsibilities#index', format: false
   get  'wrqs', to: 'workflow_responsibilities#index', format: false
 
@@ -28,19 +29,23 @@ Rails.application.routes.draw do
   get 'dsrs/update', to: 'dsr_status_records#update_b_all', as: 'update_dsr_status_records', format: false
   get 'dsrs/:id/new', to: 'dsr_status_records#add', as: 'add_dsr_status_record', format: false
   get 'dsrs/:id/update', to: 'dsr_status_records#update_b_one', as: 'update_dsr_status_record', format: false
+  resources :dcc_codes, path: 'sc2s', format: false
   resources :dsr_status_records, path: 'dsrs', format: false
   resources :dsr_doc_groups, path: 'ddgs', format: false
   resources :dsr_progress_rates, path: 'dprs', format: false, only: [ :index, :show, :edit, :update ]
   resources :dsr_submissions, path: 'dsbs', format: false
   resources :features, path: 'fits', format: false
   resources :feature_categories, path: 'fcts', format: false
+  resources :function_codes, path: 'scfs', format: false
   resources :glossary_items, path: 'glos', format: false
   resources :groups, path: 'grps', format: false
   resources :group_categories, path: 'gcts', format: false
   get 'hlds/:id/new', to: 'holidays#add', as: 'add_holiday', format: false
   resources :holidays, path: 'hlds', format: false 
+  resources :location_codes, path: 'scls', format: false
   resources :people, path: 'apts', format: false
   resources :phase_codes, path: 'ppcs', format: false
+  resources :product_codes, path: 'scps', format: false
   resource  :profile, format: false, only: [ :show, :edit, :update ]
   resources :programme_activities, path: 'ppas', format: false
   resources :references, path: 'refs', format: false
@@ -50,6 +55,8 @@ Rails.application.routes.draw do
   get 'rsrs/info', to: 'rfc_status_records#info', as: 'rfc_workflow_info', format: false
   get 'rsrs/stats', to: 'rfc_status_records#stats', as: 'rfc_status_info', format: false
   resources :rfc_status_records, path: 'rsrs', format: false
+  resources :s_document_logs, path: 'sdls', format: false
+  resources :service_codes, path: 'scvs', format: false
   resources :siemens_phases, path: 'spcs', format: false
   resources :standards_bodies, path: 'ssos', format: false
   resources :statistics, path: 'sdhs', format: false, only: :index

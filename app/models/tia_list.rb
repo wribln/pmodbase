@@ -5,7 +5,7 @@ class TiaList < ActiveRecord::Base
   belongs_to :account,        -> { readonly }, inverse_of: :tia_lists
   belongs_to :owner_account,  -> { readonly }, foreign_key: 'owner_account_id',  class_name: 'Account'
   belongs_to :deputy_account, -> { readonly }, foreign_key: 'deputy_account_id', class_name: 'Account'
-  has_many   :tia_items,      -> { readonly }, inverse_of: :tia_list
+  has_many   :tia_items,                       inverse_of: :tia_list, dependent: :destroy
   has_many   :tia_members,    -> { readonly }, inverse_of: :tia_list
 
   validates :code,

@@ -8,6 +8,7 @@ class PhaseCode < ActiveRecord::Base
   validates :code,
     presence: true,
     uniqueness: true,
+    format: { with: /\A.[A-Z0-9.\-]+\z/, message: I18n.t( 'code_modules.msg.bad_code_syntax' )},
     length: { maximum: MAX_LENGTH_OF_CODE }
 
   validates :label,
@@ -20,6 +21,7 @@ class PhaseCode < ActiveRecord::Base
     length: { maximum: MAX_LENGTH_OF_CODE }
 
   validate :acro_not_same_as_code
+  validate :code_has_prefix
 
   validates :siemens_phase_id,
     presence: true
@@ -31,8 +33,35 @@ class PhaseCode < ActiveRecord::Base
     numericality: { only_integer: true }
 
   default_scope { order( acro: :asc )}
-  scope :as_abbr, -> ( abbr ){ where( 'acro LIKE ?', "#{ abbr }%" )}
+  scope :as_code, -> ( abbr ){ 
+      where( 'code LIKE ? ESCAPE \'\\\'',
+        if has_code_prefix( abbr ) then
+          "#{ sanitize_sql_like( abbr,'\\' )}%"
+        else
+          "#{ sanitize_sql_like( code_prefix, '\\')}#{ abbr }%"
+        end )
+    }
+  scope :as_abbr, -> ( abbr ){ where( 'acro LIKE ?',   "#{ abbr }%"  )}
   scope :as_desc, -> ( desc ){ where( 'label LIKE ?', "%#{ desc }%" )}
+
+  # add code_model features
+
+  class << self
+    attr_accessor :code_prefix
+  end
+ 
+  @code_prefix = '%'
+
+  def self.has_code_prefix( c )
+    c && c[ 0 ] == @code_prefix
+  end
+
+  # make sure the given code includes the class prefix
+  
+  def code_has_prefix
+    errors.add( :code, I18n.t( "code_modules.msg.bad_code_format", prefix: @code_prefix )) \
+    unless self.class.has_code_prefix( code )
+  end
 
   # phase code and acronym must not be the same
 
@@ -67,5 +96,10 @@ class PhaseCode < ActiveRecord::Base
     write_attribute( :label, AppHelper.clean_up( text, MAX_LENGTH_OF_LABEL ))
   end
 
+  # return a combination of code and label for dropdown list boxes (select in HTML)
+
+  def code_and_label
+    code << ' - ' << label
+  end
 
 end

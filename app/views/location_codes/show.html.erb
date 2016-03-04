@@ -1,0 +1,72 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="form-horizontal" role="form">
+    <%= form_for @location_code do |f| %>
+      <%= render partial: 'shared/notice' %>
+      <div class="form-group">
+        <%= f.label :id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-1">
+          <%= display_value f.object.id %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :code, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value f.object.code %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :label, class: "col-sm-3 control-label" %>
+        <div class="col-sm-4">
+          <%= display_value f.object.label %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :loc_type, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value f.object.loc_type_label %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :center_point, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value db_formatted_km( f.object.center_point )%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :start_point, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value db_formatted_km( f.object.start_point )%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :end_point, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value db_formatted_km( f.object.end_point )%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :length, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value f.object.length %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :note, class: "col-sm-3 control-label" %>
+        <div class="col-sm-4">
+          <%= display_value f.object.note %>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-2">
+          <%= link_to t( 'button_label.edit' ), edit_location_code_path( @location_code ), class: "btn btn-lg btn-block btn-default" %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to t( 'button_label.goto_to_list' ), location_codes_path, class: "btn btn-lg btn-block btn-default" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

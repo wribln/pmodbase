@@ -1,0 +1,54 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="table-responsive">
+    <%= form_tag({},{ method: :get, class: 'form-inline' }) do %>
+    <%= will_paginate @location_codes %>
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th class="col-sm-1"><%= LocationCode.human_attribute_name( :id           ) %></th>
+          <th class="col-sm-1"><%= label_tag :as_code, LocationCode.human_attribute_name( :code  ), class: 'control-label' %></th>
+          <th class="col-sm-4"><%= label_tag :as_desc, LocationCode.human_attribute_name( :label ), class: 'control-label' %></th>
+          <th class="col-sm-1"><%= label_tag :ff_type, LocationCode.human_attribute_name( :loc_type ), class: 'control-label' %></th>
+          <th class="col-sm-1"><%= LocationCode.human_attribute_name( :center_point ) %></th>
+          <th class="col-sm-1"><%= LocationCode.human_attribute_name( :start_point  ) %></th>
+          <th class="col-sm-1"><%= LocationCode.human_attribute_name( :end_point    ) %></th>
+          <th class="col-sm-1"><%= LocationCode.human_attribute_name( :length       ) %></th>
+          <th class="col-sm-1 hidden-print"><%= filter_action_title_header %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr <%= filter_row( @filter_fields ) -%>>
+          <td></td>
+          <td><%= filter_field @filter_fields, :as_code, :sw -%></td>
+          <td><%= filter_field @filter_fields, :as_desc, :sw -%></td>
+          <td><%= filter_select_from_string_set @filter_fields, :ff_type, LocationCode::LOCATION_CODE_TYPES -%></td>
+          <td colspan="4"></td>
+          <td><%= filter_action_button -%></td>
+        </tr>
+      <% if @location_codes.length.zero? %>
+        <%= render partial: 'shared/index_empty_row', locals:{ columns: 8, with_link: true }%>
+      <% else %>
+        <% @location_codes.each do |lc| %>
+          <tr>
+            <td><%= lc.to_id %></td>
+            <td><%= lc.code %></td>
+            <td><%= lc.label %></td>
+            <td><%= lc.loc_type_label %></td>
+            <td class="td-right"><%= db_formatted_km( lc.center_point )%></td>
+            <td class="td-right"><%= db_formatted_km( lc.start_point  )%></td>
+            <td class="td-right"><%= db_formatted_km( lc.end_point    )%></td>
+            <td class="td-right"><%= db_formatted_km( lc.length       )%></td>
+            <td><%= render partial: 'shared/actions', object: lc %></td>
+          </tr>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+    <% end %>
+    <%= render partial: 'shared/download_xls' %>
+    <%= render partial: 'shared/footer' %>
+  </div>
+</div>

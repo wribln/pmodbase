@@ -1,0 +1,19 @@
+<%= CSV.generate_line([
+  :code,
+  :label,
+  :loc_type,
+  :center_point,
+  :start_point,
+  :end_point,
+  :length,
+  :note ], STD_CSV_OPTIONS ) -%>
+<%- @location_codes.each do |lc| -%>
+<%= CSV.generate_line([
+  lc.code,
+  lc.label,
+  lc.center_point,
+  lc.start_point,
+  lc.end_point,
+  lc.length,
+  lc.note], STD_CSV_OPTIONS ).html_safe -%>
+<%- end -%>

@@ -1,0 +1,36 @@
+<% help_title "Help on #{ FunctionCode.model_name.human }" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">Function Codes categorize components of a system according to their behaviour. A function is independent from its internal, physical implementation.</p>
+    <p>Function Codes are managed using the following fields:</p>
+    <ul>
+      <li>The <%= help_param FunctionCode.human_attribute_name( :code ) -%> must be a short
+        alphanumeric code with the prefix '=' (may also contain periods and dashes).</li>
+      <li>The <%= help_param FunctionCode.human_attribute_name( :label ) -%>
+        describes the function represented by the 
+        <%= help_term FunctionCode.human_attribute_name( :code ) -%>.</li>
+      <li>The flag <%= help_param FunctionCode.human_attribute_name( :active ) -%>
+        marks a code as being currently usable in the system (true = active) or not
+        (false = inactive). Inactive codes must not be used.</li>
+      <li>The flag <%= help_param FunctionCode.human_attribute_name( :heading ) -%>
+        specifies that this code should not be used as code per se but serves as an
+        explanatory heading within the coding structure. Setting this flags requires
+        the that the <%= help_term FunctionCode.human_attribute_name( :active ) -%>
+        and <%= help_term FunctionCode.human_attribute_name( :master ) -%>
+        flags are both clear (false).</li>
+      <li>The flag <%= help_param FunctionCode.human_attribute_name( :master ) -%>
+        indicates that this entry is used as main entry for the associated code, i.e.
+        when listing the code structure and a single entry per code is required, then
+        the code marked with 
+        <%= help_term FunctionCode.human_attribute_name( :master ) -%> should be listed.</li>
+      <li>Codes having the <%= help_param FunctionCode.human_attribute_name( :standard ) -%> 
+        flag set, are taken from an (internal) standard. Such codes must not be removed, they
+        should only be set to 'inactive'.
+      <li>The <%= help_param FunctionCode.human_attribute_name( :note ) -%> field can be
+        used by the administrator to make any explanatory or organisational remarks
+        on this code.</li>
+    </ul>
+    <p>For the general discussion of the coding system used at Siemens, please see <%= link_to_help :s_coding_system, 'Siemens Coding System' -%>.</p>
+    <%= help_footer FEATURE_ID_FUNCTION_CODES %>
+  </div> <!-- /container -->

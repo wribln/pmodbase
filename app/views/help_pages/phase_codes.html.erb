@@ -8,7 +8,7 @@
       <li><%= help_param PhaseCode.human_attribute_name( :code ) -%>
         is the project's code for the specified phase. This code normally has
         a prefix of '%' to indicate that this code is a code for a project
-        phase.</li>
+        phase. The code may also contain periods or dashes.</li>
       <li>The <%= help_param PhaseCode.human_attribute_name( :label ) -%>
         contains a short label for this phase.</li>
       <li>The <%= help_param PhaseCode.human_attribute_name( :acro ) -%>
@@ -25,5 +25,6 @@
         and the minor phases
         (<%= help_param PhaseCode.human_attribute_name( :level ) -%> = 0).</li> 
     </ul>
+    <p>For the general discussion of project codes according to EN&nbsp;81346/IEC&nbsp;81346, please see <%= link_to_help :s_coding_system, 'Project Coding System' -%>.</p>
     <%= help_footer FEATURE_ID_PHASE_CODES %>
   </div> <!-- /container -->

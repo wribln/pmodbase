@@ -76,7 +76,7 @@ class AccountsController < ApplicationController
 
     def set_accounts
       @filter_fields = filter_params
-      @accounts = Account.includes( :person ).filter( filter_params ).paginate( page: params[ :page ])
+      @accounts = Account.includes( :person ).filter( @filter_fields ).paginate( page: params[ :page ])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

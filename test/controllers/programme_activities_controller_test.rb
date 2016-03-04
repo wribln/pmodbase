@@ -25,7 +25,7 @@ class ProgrammeActivitiesControllerTest < ActionController::TestCase
     assert_difference('ProgrammeActivity.count') do
       post :create, programme_activity: {
         project_id: @programme_activity.project_id,
-        activity_id: @programme_activity.activity_id,
+        activity_id: @programme_activity.activity_id + 'a', # must be unique!
         activity_label: @programme_activity.activity_label,
         finish_date: @programme_activity.finish_date,
         start_date: @programme_activity.start_date }

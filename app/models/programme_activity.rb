@@ -5,6 +5,8 @@ class ProgrammeActivity < ActiveRecord::Base
   has_many :dsr_prepare_records, foreign_key: :prep_activity_id, class_name: :DsrStatusRecord
   has_many :dsr_approve_records, foreign_key: :subm_activity_id, class_name: :DsrStatusRecord
 
+  validates_uniqueness_of :activity_id, :scope => :project_id
+
   validate :start_and_finish_dates
 
   validates :start_date,

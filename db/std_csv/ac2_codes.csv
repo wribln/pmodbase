@@ -1,0 +1,15 @@
+code;label;description;active
+000;Stage-1~3: General;;TRUE
+010;Stage-1: Feasibility and Concept Formulation;;TRUE
+020;Stage-2: Preliminary Design (pre contract award);;TRUE
+030;Stage-3: Tender Preparation, Award & Contract;;TRUE
+040;Stage-4: Post Contract - General;;TRUE
+041;Stage-4: Post Contract - Design Phase 1 (DCP1);;TRUE
+042;Stage-4: Post Contract - Design Phase 2 (DCP2);;TRUE
+043;Stage-4: Post Contract - Design Phase 3 (DCP3);;TRUE
+044;Stage-4: Post Contract - Design Phase 4 (DCP4);;TRUE
+045;Stage-4: Post Contract - Manufacturing;;TRUE
+046;Stage-4: Post Contract - Construction/Installation;;TRUE
+047;Stage-4: Post Contract - Test & Commissioning;;TRUE
+048;Stage-4: Post Contract - As-Built;;TRUE
+050;Stage-5: Defects Liability Period;;TRUE

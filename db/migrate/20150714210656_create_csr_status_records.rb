@@ -15,7 +15,7 @@ class CreateCsrStatusRecords < ActiveRecord::Migration
       t.string    :project_doc_id,      limit: MAX_LENGTH_OF_DOC_ID
       t.string    :sender_doc_id,       limit: MAX_LENGTH_OF_DOC_ID
       t.string    :sender_reference,    limit: MAX_LENGTH_OF_DOC_ID
-      t.string    :notes,               limit: MAX_LENGTH_OF_NOTES
+      t.string    :notes,               limit: MAX_LENGTH_OF_NOTE
 
       t.timestamps null: false
     end

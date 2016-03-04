@@ -5,29 +5,39 @@ fc1.label = 'Administration'
 fc1.seqno = 1
 fc1.save
 
+fc7 = FeatureCategory.new
+fc7.label = 'Siemens Codes'
+fc7.seqno = 2
+fc7.save
+
+fc8 = FeatureCategory.new
+fc8.label = 'EDMS Codes'
+fc8.seqno = 3
+fc8.save
+
 fc2 = FeatureCategory.new
 fc2.label = 'Rosters'
-fc2.seqno = 2
+fc2.seqno = 4
 fc2.save
 
 fc3 = FeatureCategory.new
 fc3.label = 'General Information'
-fc3.seqno = 3
+fc3.seqno = 5
 fc3.save
 
 fc4 = FeatureCategory.new
 fc4.label = 'Status Registers'
-fc4.seqno = 4
+fc4.seqno = 6
 fc4.save
 
 fc5 = FeatureCategory.new
 fc5.label = 'Collaboration'
-fc5.seqno = 5
+fc5.seqno = 7
 fc5.save
 
 fc6 = FeatureCategory.new
 fc6.label = 'Utilities'
-fc6.seqno = 6
+fc6.seqno = 8
 fc6.save
 
 # - - - - - - - - - - all features
@@ -128,17 +138,6 @@ Feature.new do |f|
   f.access_level = StatisticsController.feature_access_level
   f.control_level = StatisticsController.feature_control_level
   f.no_workflows = StatisticsController.no_workflows
-  f.feature_category_id = fc1.id
-end.save
-
-Feature.new do |f|
-  f.id = FEATURE_ID_SUBMISSION_GROUPS
-  f.label = I18n.t('submission_groups.title')
-  f.code = 'SGP'
-  f.seqno = 4
-  f.access_level = SubmissionGroupsController.feature_access_level
-  f.control_level = SubmissionGroupsController.feature_control_level
-  f.no_workflows = SubmissionGroupsController.no_workflows
   f.feature_category_id = fc1.id
 end.save
 
@@ -401,17 +400,6 @@ Feature.new do |f|
 end.save
 
 Feature.new do |f|
-  f.id = FEATURE_ID_PHASE_CODES
-  f.label = I18n.t('phase_codes.title')
-  f.code = 'PPC'
-  f.seqno = 9
-  f.access_level = PhaseCodesController.feature_access_level
-  f.control_level = PhaseCodesController.feature_control_level
-  f.no_workflows = PhaseCodesController.no_workflows
-  f.feature_category_id = fc3.id
-end.save
-
-Feature.new do |f|
   f.id = FEATURE_ID_WEB_LINKS
   f.label = I18n.t( 'web_links.title' )
   f.code = 'WLK'
@@ -465,6 +453,17 @@ Feature.new do |f|
   f.access_level = DsrProgressRatesController.feature_access_level
   f.control_level = DsrProgressRatesController.feature_control_level
   f.no_workflows = DsrProgressRatesController.no_workflows
+  f.feature_category_id = fc4.id
+end.save
+
+Feature.new do |f|
+  f.id = FEATURE_ID_SUBMISSION_GROUPS
+  f.label = I18n.t('submission_groups.title')
+  f.code = 'SGP'
+  f.seqno = 4
+  f.access_level = SubmissionGroupsController.feature_access_level
+  f.control_level = SubmissionGroupsController.feature_control_level
+  f.no_workflows = SubmissionGroupsController.no_workflows
   f.feature_category_id = fc4.id
 end.save
 
@@ -536,6 +535,107 @@ Feature.new do |f|
   f.control_level = MyChangeRequestsController.feature_control_level
   f.no_workflows = MyChangeRequestsController.no_workflows
   f.feature_category_id = fc6.id
+end.save
+
+# - - - - - - - - - - codes
+
+Feature.new do |f|
+  f.id = FEATURE_ID_CODE_SEARCH
+  f.label = I18n.t('code_search.title')
+  f.code = 'CSA'
+  f.seqno = 1
+  f.access_level = CodeSearchController.feature_access_level
+  f.control_level = CodeSearchController.feature_control_level
+  f.no_workflows = CodeSearchController.no_workflows
+  f.feature_category_id = fc7.id
+end.save
+
+#Feature.new do |f|
+#  f.id = FEATURE_ID_DC1_CODES
+#  f.label = I18n.t( 'dc1_codes.title' )
+#  f.code = 'SC1'
+#  f.seqno = 1
+#  f.access_level = Dc1CodesController.feature_access_level
+#  f.control_level = Dc1CodesController.feature_control_level
+#  f.no_workflows = Dc1CodesController.no_workflows
+#  f.feature_category_id = fc7.id
+#end.save
+
+Feature.new do |f|
+  f.id = FEATURE_ID_FUNCTION_CODES
+  f.label = I18n.t( 'function_codes.title' )
+  f.code = 'SCF'
+  f.seqno = 3
+  f.access_level = FunctionCodesController.feature_access_level
+  f.control_level = FunctionCodesController.feature_control_level
+  f.no_workflows = FunctionCodesController.no_workflows
+  f.feature_category_id = fc7.id
+end.save
+
+Feature.new do |f|
+  f.id = FEATURE_ID_SERVICE_CODES
+  f.label = I18n.t( 'service_codes.title' )
+  f.code = 'SCV'
+  f.seqno = 4
+  f.access_level = ServiceCodesController.feature_access_level
+  f.control_level = ServiceCodesController.feature_control_level
+  f.no_workflows = ServiceCodesController.no_workflows
+  f.feature_category_id = fc7.id
+end.save
+
+Feature.new do |f|
+  f.id = FEATURE_ID_PRODUCT_CODES
+  f.label = I18n.t( 'product_codes.title' )
+  f.code = 'SCP'
+  f.seqno = 5
+  f.access_level = ProductCodesController.feature_access_level
+  f.control_level = ProductCodesController.feature_control_level
+  f.no_workflows = ProductCodesController.no_workflows
+  f.feature_category_id = fc7.id
+end.save
+
+Feature.new do |f|
+  f.id = FEATURE_ID_LOCATION_CODES
+  f.label = I18n.t( 'location_codes.title' )
+  f.code = 'SCL'
+  f.seqno = 6
+  f.access_level = LocationCodesController.feature_access_level
+  f.control_level = LocationCodesController.feature_control_level
+  f.no_workflows = LocationCodesController.no_workflows
+  f.feature_category_id = fc7.id
+end.save  
+
+Feature.new do |f|
+  f.id = FEATURE_ID_PHASE_CODES
+  f.label = I18n.t( 'phase_codes.title' )
+  f.code = 'PPC'
+  f.seqno = 7
+  f.access_level = PhaseCodesController.feature_access_level
+  f.control_level = PhaseCodesController.feature_control_level
+  f.no_workflows = PhaseCodesController.no_workflows
+  f.feature_category_id = fc7.id
+end.save
+
+Feature.new do |f|
+  f.id = FEATURE_ID_DCC_CODES
+  f.label = I18n.t( 'dcc_codes.title' )
+  f.code = 'SC2'
+  f.seqno = 8
+  f.access_level = DccCodesController.feature_access_level
+  f.control_level = DccCodesController.feature_control_level
+  f.no_workflows = DccCodesController.no_workflows
+  f.feature_category_id = fc7.id
+end.save
+
+Feature.new do |f|
+  f.id = FEATURE_ID_S_DOCUMENT_LOG
+  f.label = I18n.t( 's_document_logs.title' )
+  f.code = 'SDL'
+  f.seqno = 9
+  f.access_level = SDocumentLogsController.feature_access_level
+  f.control_level = SDocumentLogsController.feature_control_level
+  f.no_workflows = SDocumentLogsController.no_workflows
+  f.feature_category_id = fc7.id
 end.save
 
 # - - - - - - - - - - initial / root user
@@ -698,14 +798,14 @@ end.save
 #   if post-submission status then 
 #     (document_progress-PROGRESS_AT_SUBMISSION)*100/(100-PROGRESS_AT_SUBMISSION)
 
-DsrProgressRate.create( id:  0, document_progress:   0, prepare_progress:         0, approve_progress:         0 )
-DsrProgressRate.create( id:  1, document_progress:  10, prepare_progress: 10*100/60, approve_progress:         0 )
-DsrProgressRate.create( id:  2, document_progress:  50, prepare_progress: 50*100/60, approve_progress:         0 )
-DsrProgressRate.create( id:  3, document_progress:  55, prepare_progress: 55*100/60, approve_progress:         0 )
-DsrProgressRate.create( id:  4, document_progress:  60, prepare_progress: 60*100/60, approve_progress:         0 )
-DsrProgressRate.create( id:  5, document_progress: 100, prepare_progress:       100, approve_progress:       100 )
-DsrProgressRate.create( id:  6, document_progress:  80, prepare_progress:       100, approve_progress: 20*100/40 )
-DsrProgressRate.create( id:  7, document_progress:  60, prepare_progress:       100, approve_progress:         0 )
-DsrProgressRate.create( id:  8, document_progress: 100, prepare_progress:       100, approve_progress:       100 )
-DsrProgressRate.create( id:  9, document_progress:  85, prepare_progress:       100, approve_progress: 25*100/40 )
-DsrProgressRate.create( id: 10, document_progress:   0, prepare_progress:         0, approve_progress:         0 )
+DsrProgressRate.create( document_status:  0, document_progress:   0, prepare_progress:         0, approve_progress:         0 )
+DsrProgressRate.create( document_status:  1, document_progress:  10, prepare_progress: 10*100/60, approve_progress:         0 )
+DsrProgressRate.create( document_status:  2, document_progress:  50, prepare_progress: 50*100/60, approve_progress:         0 )
+DsrProgressRate.create( document_status:  3, document_progress:  55, prepare_progress: 55*100/60, approve_progress:         0 )
+DsrProgressRate.create( document_status:  4, document_progress:  60, prepare_progress: 60*100/60, approve_progress:         0 )
+DsrProgressRate.create( document_status:  5, document_progress: 100, prepare_progress:       100, approve_progress:       100 )
+DsrProgressRate.create( document_status:  6, document_progress:  80, prepare_progress:       100, approve_progress: 20*100/40 )
+DsrProgressRate.create( document_status:  7, document_progress:  60, prepare_progress:       100, approve_progress:         0 )
+DsrProgressRate.create( document_status:  8, document_progress: 100, prepare_progress:       100, approve_progress:       100 )
+DsrProgressRate.create( document_status:  9, document_progress:  85, prepare_progress:       100, approve_progress: 25*100/40 )
+DsrProgressRate.create( document_status: 10, document_progress:   0, prepare_progress:         0, approve_progress:         0 )

@@ -32,8 +32,8 @@ class PhaseCodesControllerTest < ActionController::TestCase
   test "should create phase_code" do
     assert_difference( 'PhaseCode.count' ) do
       post :create, phase_code: { 
-        acro: @phase_code_test.acro + 'a',
-        code: @phase_code_test.code + 'a',
+        acro: @phase_code_test.acro + 'X',
+        code: @phase_code_test.code + 'X',
         siemens_phase_id: @phase_code_test.siemens_phase_id,
         label: @phase_code_test.label }
     end

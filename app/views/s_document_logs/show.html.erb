@@ -1,0 +1,133 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="form-horizontal" role="form">
+    <%= form_for @s_document_log do |f| %>
+      <%= render partial: 'shared/notice' %>
+      <div class="form-group">
+        <%= f.label :id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value f.object.id %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :group, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value f.object.group.code %>
+        </div>
+        <div class="col-sm-4">
+          <p class="form-control-static"><%= f.object.group.label %></p>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :receiver_group, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value f.object.receiver_group %>
+        </div>
+        <div class="col-sm-4">
+          <p class="form-control-static">
+            <%= Group.find_by( code: f.object.receiver_group ).label unless f.object.receiver_group.blank? %></p>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :function_code, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value f.object.function_code %>
+        </div>
+        <div class="col-sm-4">
+          <p class="form-control-static">
+            <%= FunctionCode.find_by( code: f.object.function_code, active: true, master: true ).label unless f.object.function_code.blank? %></p>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :service_code, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value f.object.service_code %>
+        </div>
+        <div class="col-sm-4">
+          <p class="form-control-static">
+            <%= ServiceCode.find_by( code: f.object.service_code, active: true, master: true ).label unless f.object.service_code.blank? %></p>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :product_code, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value f.object.product_code %>
+        </div>
+        <div class="col-sm-4">
+          <p class="form-control-static">
+            <%= ProductCode.find_by( code: f.object.product_code, active: true, master: true ).label unless f.object.product_code.blank? %></p>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :location_code, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value f.object.location_code %>
+        </div>
+        <div class="col-sm-4">
+          <p class="form-control-static">
+            <%= LocationCode.find_by( code: f.object.location_code ).label unless f.object.location_code.blank? %></p>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :phase_code, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value f.object.phase_code %>
+        </div>
+        <div class="col-sm-4">
+          <p class="form-control-static">
+            <%= SiemensPhase.find_by( code: f.object.phase_code ).label_p unless f.object.phase_code.blank? %></p>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :dcc_code, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value f.object.dcc_code %>
+        </div>
+        <div class="col-sm-4">
+          <p class="form-control-static">
+            <%= DccCode.find_by( code: f.object.dcc_code, active: true, master: true ).label unless f.object.dcc_code.blank? %></p>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :revision_code, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value f.object.revision_code %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :author_date, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value db_formatted_d( f.object.author_date )%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :title, class: "col-sm-3 control-label" %>
+        <div class="col-sm-6">
+          <%= display_value f.object.title %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :siemens_doc_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-6">
+          <%= display_value f.object.siemens_doc_id %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :user, class: "col-sm-3 control-label" %>
+        <div class="col-sm-6">
+          <%= display_value ApplicationModel::some_text_and_id( f.object.account.user_name, f.object.account.id )%>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-2">
+          <%= link_to t( 'button_label.edit' ), edit_s_document_log_path( @s_document_log ), class: "btn btn-lg btn-block btn-default" %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to t( 'button_label.goto_to_list' ), s_document_logs_path, class: "btn btn-lg btn-block btn-default" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

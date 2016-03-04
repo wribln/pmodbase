@@ -86,7 +86,7 @@ class DsrStatusRecordTest1 < ActiveSupport::TestCase
     assert_nil dd.actl_completion
     assert_nil dd.baseline_date
     refute_nil dd.notes
-    assert dd.notes.length <= MAX_LENGTH_OF_NOTES
+    assert dd.notes.length <= MAX_LENGTH_OF_NOTE
     assert_equal 1, dd.current_status
     assert_equal 1, dd.current_task
     assert dd.valid?

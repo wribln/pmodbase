@@ -1,24 +1,3 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t 'hello'
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t('hello') %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more, please read the Rails Internationalization guide
-# available at http://guides.rubyonrails.org/i18n.html.
-
 en:
 
   general:
@@ -47,7 +26,7 @@ en:
 
   time:
     formats:
-      db_time:      '%Y-%m-%d %H:%M'
+      db_time:      '%Y-%m-%d %H:%M UTC'
       db_date:      '%Y-%m-%d'
   date:
     formats:
@@ -63,29 +42,35 @@ en:
       country_name:       'Country Names and Codes'
       csr_status_record:  'Correspondence Status Register (CSR)'
       db_change_request:  'Database Change Requests'
+      dcc_code:           'Document Classification Codes'
       dsr_status_record:  'Document Status Register (DSR)'
       dsr_doc_group:      'DSR Document Groups'
       dsr_progress_rate:  'DSR Progress Rates'
       dsr_submission:     'DSR Submission Records'
       feature:            'Features'
       feature_category:   'Feature Categories'
+      function_code:      'Function Codes'
       holiday:            'Local Holidays'
       glossary_item:      'Glossary'
       group:              'Project Groups'
       group_category:     'Group Categories'
+      location_code:      'Location Codes'
       permission4_group:  'Permission Records for Groups'
       permission4_flow:   'Permission Records for Workflows'
       person:             'Personal Data Records'
       phase_code:         'Phase Codes'
       programme_activity: 'Programme Activities'
+      product_code:       'Product Codes'
       responsibility:     'Responsibilities'
       region_name:        'Region Names and Codes'
       rfc_document:       'RfC Documents / Requests for Clarifications'
       rfc_status_record:  'RfC Status Register (RSR)'
       reference:          'References'
+      service_code:       'Service Codes'
+      s_document_log:     'Siemens Document Log (SDL)'
       siemens_phase:      'Siemens Phase Codes'
       standards_body:     'Standards Body Records'
-      submission_group:   'Submission Groups'
+      submission_group:   'DSR Submission Groups'
       tia_list:           'Task/Issue/Action Item Lists'
       tia_item:           'Task/Issue/Action Items'
       tia_member:         'Task/Issue/Action Item List Member'
@@ -108,11 +93,72 @@ en:
         active:         'Active'
         keep_base_open: 'Keep Base Page Open'
 
+      account/permission4_groups:
+        base:           'Group Permissions'
+        id:             :general.attributes.id
+        feature_id:     'Feature'
+        group_id:       :general.attributes.group_id
+        account_id:     'Account'
+        to_index:       'Index'
+        to_create:      'Add'
+        to_read:        'Show'
+        to_update:      'Edit'
+        to_delete:      'Delete'
+
       address:
         id:             :general.attributes.id
         label:          'Description'
         street_address: 'Street Address'
         postal_address: 'Postal Address'
+
+      coding_system:
+        code:           'Code'
+        label:          'Label'
+        active:         'Active'
+        master:         'Master'
+        standard:       'Standard'
+        heading:        'Heading'
+        note:           'Note'
+
+      dcc_code:
+        id:             :general.attributes.id 
+        code:           :attributes.coding_system.code
+        label:          :attributes.coding_system.label
+        active:         :attributes.coding_system.active
+        master:         :attributes.coding_system.master
+        standard:       :attributes.coding_system.standard
+        heading:        :attributes.coding_system.heading
+        note:           :attributes.coding_system.note
+
+      function_code:
+        id:             :general.attributes.id 
+        code:           :attributes.coding_system.code
+        label:          :attributes.coding_system.label
+        active:         :attributes.coding_system.active
+        master:         :attributes.coding_system.master
+        standard:       :attributes.coding_system.standard
+        heading:        :attributes.coding_system.heading
+        note:           :attributes.coding_system.note
+
+      product_code:
+        id:             :general.attributes.id 
+        code:           :attributes.coding_system.code
+        label:          :attributes.coding_system.label
+        active:         :attributes.coding_system.active
+        master:         :attributes.coding_system.master
+        standard:       :attributes.coding_system.standard
+        heading:        :attributes.coding_system.heading
+        note:           :attributes.coding_system.note
+
+      service_code:
+        id:             :general.attributes.id 
+        code:           :attributes.coding_system.code
+        label:          :attributes.coding_system.label
+        active:         :attributes.coding_system.active
+        master:         :attributes.coding_system.master
+        standard:       :attributes.coding_system.standard
+        heading:        :attributes.coding_system.heading
+        note:           :attributes.coding_system.note
 
       contact_info:
         id:             :general.attributes.id
@@ -226,11 +272,11 @@ en:
         group_id:               :general.attributes.group_id
 
       dsr_progress_rate:
-        id:                 :dsr_status_record.document_status
+        document_status:    :activerecord.attributes.dsr_status_record.document_status
         label:              'Label'
         document_progress:  'Document Progress'
         prepare_progress:   "Prepare/\u00adSubmit Progress"
-        approval_progress:  "Review/\u00adApprove Progress"
+        approve_progress:  "Review/\u00adApprove Progress"
 
       dsr_submission:
         id:                   :general.attributes.id
@@ -299,6 +345,18 @@ en:
         region:           'Country/Region'
         description:      'Description'
         work:             'Work'
+
+      location_code:
+        id:             :general.attributes.id
+        code:           'Code'
+        label:          'Label'
+        loc_type:       'Type'
+        loc_types:      ['Label','Point','Line']
+        center_point:   'Center Point'
+        start_point:    'Start Point'
+        end_point:      'End Point'
+        length:         'Length'
+        note:           'Note'
 
       permission4_flow:
         id:             :general.attributes.id
@@ -388,6 +446,23 @@ en:
         current_task:           'Current Task'
         current_status_task:    'Current Status / Task'
         next_status_task:       'Next Status / Task'
+
+      s_document_log:
+        id:             :general.attributes.id
+        group_id:       'Sender Group'
+        receiver_group: 'Receiver Group'
+        function_code:  'Function Code'
+        service_code:   'Service Code'
+        product_code:   'Product Code'
+        location_code:  'Location Code'
+        phase_code:     'Phase Code'
+        dcc_code:       'DCC Code'
+        revision_code:  'Revision'
+        author_date:    'Author Date'
+        siemens_doc_id: 'Document Code'
+        title:          'Title'
+        account_id:     'Account'
+        user:           'Created by'
 
       siemens_phase:
         id:             :general.attributes.id
@@ -502,6 +577,8 @@ en:
     add:          'Add'
     show:         'Show'
     edit:         'Edit'
+    update:       'Update'
+    create:       'Create'
     filter:       'Filter'
     index:        'Index'
     goto_to_list: 'Go to Index'
@@ -573,7 +650,21 @@ en:
     msg:
       new_ok:         'Address was successfully created.'
       edit_ok:        'Address was successfully updated.'
-      delete_ok:      'Address was successfully destroyed.'
+      delete_ok:      'Address was successfully removed.'
+
+  code_modules:
+    msg:
+      bad_code_format:  "prefix ''%{prefix}'' must be given"
+      bad_h_m_combo:    'codes cannot be Master.'
+      bad_h_a_combo:    'codes must not be Active.'
+      too_many_masters: 'There is already one record with this code marked Master.'
+      bad_code_syntax:  'may only contain A-Z, 0-9, period, or dash.'
+
+  code_search:
+    title:         'Search for Codes'
+    index:
+      form_title:  :code_search.title
+      list_source: "Results from %{table}"
 
   contact_infos:
     title:            'Contact Information Records'
@@ -594,7 +685,7 @@ en:
       no_dup_types:   'must be different.'
       new_ok:         'Contact Information was successfully created.'
       edit_ok:        'Contact Information was successfully updated.'
-      delete_ok:      'Contact Information was successfully destroyed.'
+      delete_ok:      'Contact Information was successfully removed.'
 
   contact_lists:
     title:            'Contact List'
@@ -679,6 +770,21 @@ en:
       delete_ok:      'Change request was successfully deleted.'
       bad_feature_id: :general.non_existing
       bad_account_id: :general.non_existing
+
+  dcc_codes:
+    title:            'Document Classification Codes (DCCs)'
+    index: 
+      form_title:     'List of Document Classification Codes'
+    show:
+      form_title:     'Show Document Classification Codes'
+    edit:
+      form_title:     'Edit Document Classification Codes'  
+    new:
+      form_title:     'Add Document Classification Codes'
+    msg:
+      new_ok:         'DCC successfully created.'
+      edit_ok:        'DCC successfully updated.'
+      delete_ok:      'DCC successfully removed.'
 
   dsr_doc_groups:
     title:            'DSR Document Groups'
@@ -920,6 +1026,21 @@ en:
     index:
       form_title:     'Feature Responsibilities'
 
+  function_codes:
+    title:            'Function Codes'
+    index: 
+      form_title:     'List of Function Codes'
+    show:
+      form_title:     'Show Function Code'
+    edit:
+      form_title:     'Edit Function Code'  
+    new:
+      form_title:     'Add Function Code'
+    msg:
+      new_ok:         'Function Code successfully created.'
+      edit_ok:        'Function Code successfully updated.'
+      delete_ok:      'Function Code successfully removed.'
+
   glossary_items:
     title:            'Glossary'
     edit:
@@ -997,6 +1118,25 @@ en:
       bad_period:     'must be after start of period'
       bad_years:      'must be in the same year as start of period'
 
+  location_codes:
+    title:            'Location Codes'
+    form:
+      t_prompt:       :general.select_prompt
+    edit:
+      form_title:     'Edit Location Code'
+    index:
+      form_title:     'List of Location Codes'
+    new:
+      form_title:     'Add new Location Code'
+    show:
+      form_title:     'Show Location Code Details'
+    msg:
+      new_ok:         'Location Code was successfully created.'
+      edit_ok:        'Location Code was successfully updated.'
+      delete_ok:      'Location Code was successfully removed.'
+      bad_start:      'must be before/less than End Point.'
+      bad_center:     'must be between Start and End Point.'
+
   people:
     title:            'Persons'
     action:           'Action'
@@ -1060,6 +1200,21 @@ en:
       new_ok:       'Phase code was successfully added.'
       edit_ok:      'Phase code was successfully modified.'
       delete_ok:    'Phase code was successfully deleted.'
+
+  product_codes:
+    title:            'Product Codes'
+    index: 
+      form_title:     'List of Product Codes'
+    show:
+      form_title:     'Show Product Code'
+    edit:
+      form_title:     'Edit Product Code'  
+    new:
+      form_title:     'Add Product Code'
+    msg:
+      new_ok:         'Product Code successfully created.'
+      edit_ok:        'Product Code successfully updated.'
+      delete_ok:      'Product Code successfully removed.'
 
   profiles:
     title:          'User Profile'
@@ -1250,6 +1405,39 @@ en:
           s01:  'new'
           s02:  'closed'
 
+  s_document_logs:
+    title:            'Siemens Document Log'
+    form:
+      g_prompt:       :general.select_prompt
+    index:
+      form_title:     'List of Siemens Documents'
+    show:
+      form_title:     'Show Document Attributes'
+    edit:
+      form_title:     'Edit Document Attributes'
+    new:
+      form_title:     'Add new Document and Attributes'
+    msg:
+      new_ok:         'Document and Attributes successfully added.'
+      edit_ok:        'Document Attributes successfully updated.'
+      delete_ok:      'Document and Attributes successfully removed.'
+      at_least_one:   'At least of the following attributes must be given: Function Code, Service Code, Product Code, or Phase Code'
+
+  service_codes:
+    title:            'Service Codes'
+    index: 
+      form_title:     'List of Service Codes'
+    show:
+      form_title:     'Show Service Code'
+    edit:
+      form_title:     'Edit Service Code'  
+    new:
+      form_title:     'Add Service Code'
+    msg:
+      new_ok:         'Service Code successfully created.'
+      edit_ok:        'Service Code successfully updated.'
+      delete_ok:      'Service Code successfully removed.'
+
   siemens_phases:
     title:          'Siemens Phase Codes'
     edit:
@@ -1291,7 +1479,7 @@ en:
       form_title:   'Global Database Statistics'
 
   submission_groups:
-    title:          'Submission Groups'
+    title:          'DSR Submission Groups'
     index:
       form_title:   'Index of Submission Groups'
     new:

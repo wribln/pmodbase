@@ -1,0 +1,12 @@
+code;label;description;active
+MAN;Manage;for general activities that cannot be specifically related to any of the other activities, including project controls, overall contract management;TRUE
+CON;Control;for all controlling related works, including HSE, QA/QC, cost;TRUE
+DES;Design;for all design related activities at all the stages, including interfaces, as-built;TRUE
+PRO;Procurement;for procurement related activities and works, including related contract management;TRUE
+FAC;Manufacture;for manufacturing related activities;TRUE
+INS;Install;for all construction and installation carried out at the project sites;TRUE
+TES;Site Test;for all testing works and activities carried out at the project sites;TRUE
+FAT;Factory Test;for all testing works and activities not carried out at the project sites, including at manufacturers or contractors owned facilities;TRUE
+CER;Commission and Certify;for all commissioning and certification related activities;TRUE
+MAI;Maintain;for all meintenance activities, either during or after the project;TRUE
+OPE;Operate;for all operation activities, either during or after the project, including management of rail traffic during the project implementation;TRUE

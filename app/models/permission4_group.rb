@@ -25,8 +25,7 @@ class Permission4Group < ActiveRecord::Base
   validate :given_account_exists
 
   validates :group_id,
-    presence: true,
-    numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+    numericality: { only_integer: true, greater_than_or_equal_to: 0, message: I18n.t( 'permission4_groups.msg.bad_group_id' )}
 
   validate :given_group_exists_or_is_zero
 

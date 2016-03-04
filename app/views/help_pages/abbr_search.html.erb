@@ -22,5 +22,15 @@
     <p>Please be aware that the search is case-insensitive and that the
       search in the descriptions will search for <strong>any</strong>
       occurance in the description.</p>
+    <p>The following two 'wild-card' characters have a special meaning:</p>
+    <ul>
+      <li>% (percent) represents a string of zero or more characters</li>
+      <li>_ (underline) stands for any single character</li>
+    </ul>
+    <p>The abbreviation search already appends a percent character to 
+      the search strings when searching for a code - hence, all abbreviations
+      starting with the given string are found. When searching for strings 
+      in the description, the given search string is enclosed in two percent
+      characters so the string is found anywhere in the description.</p>
     <%= help_footer FEATURE_ID_ABBR_SEARCH %>
   </div> <!-- /container -->

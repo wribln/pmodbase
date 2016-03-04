@@ -34,7 +34,7 @@ class CsrStatusRecord < ActiveRecord::Base
     inclusion: { in: 0..( CSR_CORRESP_TYPE_LABELS.size - 1 )}
 
   validates :notes,
-    length: { maximum: MAX_LENGTH_OF_NOTES }
+    length: { maximum: MAX_LENGTH_OF_NOTE }
 
   validates :plan_reply_date,
     date_field: { presence: false }
