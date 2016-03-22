@@ -125,6 +125,19 @@
           </tr>
           <% end %>
         <% end %>
+        <% unless @network_stations.length.zero? -%>
+        <!-- station codes - - - - - - - - - -->
+          <tr>
+            <td class="td-subtitle" colspan="3"><%= t( '.list_source', table: NetworkStation.model_name.human )-%></td>
+          </tr>
+          <% @network_stations.each do |ns| %>
+          <tr>
+            <td><%= ns.code || ns.alt_code %></td>
+            <td><%= ns.curr_name || ns.prev_name %></td>
+            <td><%= render partial: 'shared/actions', object: ns, locals: { use_model_route: nil } %></td>
+          </tr>
+          <% end %>
+        <% end %>
       </tbody>
     </table>
     <% end %>

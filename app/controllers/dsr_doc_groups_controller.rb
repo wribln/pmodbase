@@ -80,7 +80,7 @@ class DsrDocGroupsController < ApplicationController
 
     def permitted_groups( action )
       pg = current_user.permitted_groups( feature_identifier, action )
-      Group.permitted_groups( pg ).all.collect{ |g| [ g.code_with_id, g.id ]}
+      Group.permitted_groups( pg ).all.collect{ |g| [ g.code, g.id ]}
     end
 
 end

@@ -23,7 +23,7 @@
                 <h2><%= row[1]%></h2>
                 <div class="list-group">
                 <% when 1 %>
-                  <%= link_to row[1], create_target(row[2]), class: 'list-group-item', target: @target %>
+                  <%= link_to row[1], Feature.create_target(row[2]), class: 'list-group-item', target: @target %>
                 <% when 2 %>
                 </div>
               <% end %>

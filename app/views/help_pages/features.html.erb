@@ -52,12 +52,18 @@
             means that any user is allowed access to the index level of that
             feature, i.e. the user can view a listing of all information
             items.</li>
-          <li><%= help_term Feature.human_attribute_name( :access_levels )[ 6 ] -%>
+          <li><%= help_term Feature.human_attribute_name( :access_levels )[ 3 ] -%>
+            makes not only the index and summary pages but also the detailed
+            information of a feature available for read-only access.</li>
+          <li><%= help_term Feature.human_attribute_name( :access_levels )[ 4 ] -%>
             are those features generally available to all users having access
             to the system</li>
-          <li><%= help_term Feature.human_attribute_name( :access_levels )[ 8 ] -%>
+          <li><%= help_term Feature.human_attribute_name( :access_levels )[ 5 ] -%>
             means that this feature is accessible for everybody without 
             restriction.</li>
+          <li>In rare cases, <%= help_term Feature.human_attribute_name( :access_level )-%>
+            is showns as hexadecimal number: Here the access is a special combination
+            of internal levels.</li>
         </ul>
         </li>
       <li><%= help_param Feature.human_attribute_name( :control_level ) -%>
@@ -67,7 +73,7 @@
           <li><%= help_term Feature.human_attribute_name( :control_levels )[ 1 ] -%>
             means that an additional access control based on the group owning the
             information is implemented: Only user's with permissions for the given
-            group will be eligable to access these records.</li>         
+            group will be eligible to access these records.</li>         
           <li><%= help_term Feature.human_attribute_name( :control_levels )[ 2 ] -%> 
             denotes that workflow access control is in place: For specific tasks,
             a user needs specific permissions to update the respective record.</li>        

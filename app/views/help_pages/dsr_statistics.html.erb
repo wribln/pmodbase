@@ -4,7 +4,7 @@
     <%= help_header %>
     <p class="lead">Progress status and other statistics on the Document
       Status Register (DSR) provide an overview of the current situation.</p>
-    <h3>1. <%= t( 'dsr_status_records.stats_1.form_title' )%></h3>
+    <h3 id="1">1. <%= t( 'dsr_status_records.stats_1.form_title' )%></h3>
     <p>This table shows the number of documents per Project Group,
       and within each group, per Document Status.</p>
     <p>The various columns contain the following information:</p>
@@ -46,7 +46,7 @@
       of the change, i.e. 0% means 'no change', 100% is output to indicate
       'twice as many' as in the baseline, or when the baseline is empty;
       50% means a 50% increase compared to the baseline.</p>
-    <h3>2. <%= t( 'dsr_status_records.stats_2.form_title' )%></h3>
+    <h3 id="2">2. <%= t( 'dsr_status_records.stats_2.form_title' )%></h3>
     <p>This table shows the combined weight (i.e. the sum of all weights) of all
       documents per Project Group, and within each
       <%= Group.human_attribute_name( :code_short ) %>, per Document Status.</p>
@@ -90,7 +90,7 @@
       'twice as much' as in the baseline, or when the baseline is empty;
       50% means a 50% increase compared to the baseline.</p>
     <h3>3. <%= t( 'dsr_status_records.stats_3.form_title' )%></h3>
-    <p>This table shows the summerized progress of documents per Project Group
+    <p>This table shows the summarized progress of documents per Project Group
     according to the document progress rates defined by the <%= link_to_help( :dsr_progress_rates,
       DsrProgressRate.model_name.human )%> feature table: For each document status, a specific
       progress is defined. The total progress of all documents in a group is then the sum of

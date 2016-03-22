@@ -37,6 +37,7 @@ class ProfilesController < ApplicationController
         @user_id = current_user.id
         set_final_breadcrumb( action_name )
       end
+      self.feature_help_file = :profile
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

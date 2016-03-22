@@ -1,0 +1,22 @@
+one:
+  network_station: one
+  network_line:    one
+  stop_no:         1
+  note:            'at main station'
+  code:            'L1S1'
+  location_code:   two
+
+two:
+  network_station: one
+  network_line:    two
+  stop_no:         2
+  code:            'L2S1'
+  note:            'at main station'
+  location_code:   one
+
+three:
+  network_station: two
+  network_line:    two
+  stop_no:         1
+  code:            'L2S2'
+  note:            'at another station'

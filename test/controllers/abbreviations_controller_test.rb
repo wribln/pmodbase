@@ -2,13 +2,12 @@ require 'test_helper'
 class AbbreviationsControllerTest < ActionController::TestCase
 
   setup do
-    @account = accounts( :account_one )
     session[ :current_user_id ] = accounts( :account_one ).id
     @abbreviation = abbreviations( :sag )
   end
 
   test "check class_attributes"  do
-    validate_feature_class_attributes FEATURE_ID_ABBREVIATIONS, ApplicationController::FEATURE_ACCESS_INDEX
+    validate_feature_class_attributes FEATURE_ID_ABBREVIATIONS, ApplicationController::FEATURE_ACCESS_VIEW
   end
 
   test "should get index" do

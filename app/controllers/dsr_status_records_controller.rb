@@ -13,8 +13,8 @@ class DsrStatusRecordsController < ApplicationController
     @filter_states = @workflow.all_states_for_select
     @filter_groups = permitted_groups( :to_index )
     @filter_states = @workflow.all_states_for_select( 0 )
-    @filter_doc_groups = DsrDocGroup.all.collect    { |g| [ g.code_with_id, g.id ]}
-    @submission_groups = SubmissionGroup.all.collect{ |g| [ g.code_with_id, g.id ]}
+    @filter_doc_groups = DsrDocGroup.all.collect    { |g| [ g.code, g.id ]}
+    @submission_groups = SubmissionGroup.all.collect{ |g| [ g.code, g.id ]}
   end
 
   # GET /dsrs/stats
@@ -26,7 +26,8 @@ class DsrStatusRecordsController < ApplicationController
 
   def stats
     # determine basic parameters
-    case params[ :id ]
+    stats_id = params[ :id ]
+    case stats_id
     when '1','2','3','4','5','6'
       group_var_c = :sender_group_id
       group_var_b = :sender_group_b_id
@@ -71,7 +72,7 @@ class DsrStatusRecordsController < ApplicationController
     end 
 
     unless @dsr_stats_c.nil? then
-      case params[ :id ]
+      case stats_id
       when '3','4','9','10'
         # add progress * count/weight
         @dsr_groups.concat group_model.pluck( :id, :code )
@@ -97,7 +98,8 @@ class DsrStatusRecordsController < ApplicationController
         a = ProgrammeActivity.order( :project_id, :activity_id ).pluck( :id, :project_id, :activity_id, :activity_label, :start_date, :finish_date )
         @dsr_stats_st.map!{ |r| r + Array( a.assoc( r[ 0 ]))} unless a.empty?
       end
-      render "stats_#{ params[ :id ]}"
+      self.feature_help_file = "dsr_statistics\##{ stats_id }"
+      render "stats_#{ stats_id }"
     end
   end
 
@@ -132,7 +134,7 @@ class DsrStatusRecordsController < ApplicationController
         d.save_baseline
         d.save
       end
-      redirect_to dsr_status_records_url
+      redirect_to dsr_status_records_url, notice: t( 'dsr_status_records.msg.baseline_done')
     else
       render_no_permission
     end
@@ -267,7 +269,7 @@ class DsrStatusRecordsController < ApplicationController
     def set_dsr_status_record
       @dsr_status_record = DsrStatusRecord.find( params[ :id ] )
       @dsr_receiver_groups = all_groups
-      @submission_groups = SubmissionGroup.all.collect{ |g| [ g.code_with_id, g.id ]}
+      @submission_groups = SubmissionGroup.all.collect{ |g| [ g.code, g.id ]}
       @dsr_current_submission = @dsr_status_record.dsr_current_submission
       # for add consider the new record and not the current one
       if action_name == 'add' then
@@ -289,7 +291,7 @@ class DsrStatusRecordsController < ApplicationController
     def prepare_collections( to_action )
       @dsr_sender_groups = permitted_groups( to_action )
       @dsr_receiver_groups = all_groups
-      @submission_groups = SubmissionGroup.all.collect{ |g| [ g.code_with_id, g.id ]}
+      @submission_groups = SubmissionGroup.all.collect{ |g| [ g.code, g.id ]}
     end      
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -307,11 +309,11 @@ class DsrStatusRecordsController < ApplicationController
 
     def permitted_groups( action )
       pg = current_user.permitted_groups( feature_identifier, action, :id )
-      Group.permitted_groups( pg ).all.collect{ |g| [ g.code_with_id, g.id ]}
+      Group.permitted_groups( pg ).all.collect{ |g| [ g.code, g.id ]}
     end
 
     def all_groups
-      Group.all.collect{ |g| [ g.code_with_id, g.id ]}
+      Group.all.collect{ |g| [ g.code, g.id ]}
     end
 
     # collect common method calls

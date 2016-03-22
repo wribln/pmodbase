@@ -1,5 +1,5 @@
 class CountryNamesController < ApplicationController
-  initialize_feature FEATURE_ID_COUNTRY_NAMES, FEATURE_ACCESS_INDEX
+  initialize_feature FEATURE_ID_COUNTRY_NAMES, FEATURE_ACCESS_VIEW
   before_action :set_country_name,  only: [ :show, :edit, :update, :destroy ]
   before_action :set_country_names, only: [ :index ]
 

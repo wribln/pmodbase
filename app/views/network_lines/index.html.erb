@@ -1,0 +1,147 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="table-responsive">
+    <%= form_tag({},{ method: :get, class: 'form-inline' }) do %>
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th class="col-sm-1"><%= label_tag :ff_id,    NetworkLine.human_attribute_name( :id ), class: 'control-label' -%></th>
+          <th class="col-sm-1"><%= label_tag :ff_code,  NetworkLine.human_attribute_name( :code ), class: 'control-label'  -%></th>
+          <th class="col-sm-4"><%= label_tag :ff_label, NetworkLine.human_attribute_name( :label ), class: 'control-label'  -%></th>
+          <th class="col-sm-2"><%= NetworkLine.human_attribute_name( :location_code_id ) -%></th>
+          <th class="col-sm-1 td-right"><%= LocationCode.human_attribute_name( :start_point ) -%></th>
+          <th class="col-sm-1 td-right"><%= LocationCode.human_attribute_name( :end_point ) -%></th>
+          <th class="col-sm-1 td-right"><%= LocationCode.human_attribute_name( :length ) -%></th>
+          <th class="col-sm-1 hidden-print"><%= filter_action_title_header -%></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr <%= filter_row( @filter_fields ) -%>>
+          <td><%= filter_field @filter_fields, :ff_id,    :id -%></td>
+          <td><%= filter_field @filter_fields, :ff_code,  :sl -%></td>
+          <td><%= filter_field @filter_fields, :ff_label, :sw -%></td>
+          <td colspan="4"></td>
+          <td><%= filter_action_button -%></td>
+        </tr>
+      <% if @network_lines.length.zero? %>
+        <%= render partial: 'shared/index_empty_row', locals:{ columns: 7, with_link: true }%>
+      <% else %>
+        <% @network_lines.each do |nl| %>
+          <tr>
+            <td><%= nl.to_id %></td>
+            <td><%= nl.code %></td>
+            <td><%= nl.label %></td>
+            <%- if nl.location_code.nil? then -%>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            <%- else -%>
+              <td><%= nl.location_code.code %></td>
+              <td class="td-right"><%= db_formatted_km( nl.location_code.start_point ) %></td>
+              <td class="td-right"><%= db_formatted_km( nl.location_code.end_point ) %></td>
+              <td class="td-right"><%= nl.location_code.length %></td>
+            <%- end -%>
+            <td><%= render partial: 'shared/actions', object: nl %></td>
+          </tr>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+    <% end %>
+  </div>
+  <!-- - - - - - display statistics for selected lines - - - - - -->
+  <div class="table-responsive col-sm-6">
+    <table class="table table-bordered table-condensed">
+      <caption><%= t( '.stats_title' ) %></caption>
+      <thead>
+        <tr>
+          <th class="col-sm-1"><%= t( '.code' ) %></th>
+          <th class="col-sm-4"><%= t( '.item' ) %></th>
+          <th class="th-right col-sm-1"><%= t( '.count' ) %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- statistics on lines -->
+        <tr>
+          <td colspan="2"><strong><%= t( '.line_title' ) %></strong></td>
+          <td class="td-right"><strong><%= @total_lines %></strong></td>
+        <tr>
+        <% @hashline_labels.each do | hl | %>
+        <tr>
+          <td><%= split_hash( hl.first ) %></td>
+          <td><%= hl.second %></td>
+          <td class="td-right"><%= Hashtag.take_count!( hl.first, @hashline_stats )%></td>
+        </tr>
+        <% end %>
+        <% Hashtag.to_sorted_a( @hashline_stats ).each do |hl| %>
+        <tr>
+          <td><%= hl[ 0 ] %></td>
+          <td>&nbsp;</td>
+          <td class="td-right"><%= hl[ 1 ] %></td>
+        </tr>
+        <% end %>
+        <!-- statistics on stations -->
+        <tr>
+          <td colspan="2"><strong><%= t( '.station_title' ) %></strong></td>
+          <td class="td-right"><strong><%= @total_stations %></strong></td>
+        <tr>
+        <% @hashstation_labels.each do | hl | %>
+        <tr>
+          <td><%= split_hash( hl.first ) %></td>
+          <td><%= hl.second %></td>
+          <td class="td-right"><%= Hashtag.take_count!( hl.first, @hashstation_stats )%></td>
+        </tr>
+        <% end %>
+        <% Hashtag.to_sorted_a( @hashstation_stats ).each do |hl| %>
+        <tr>
+          <td><%= hl.first %></td>
+          <td>&nbsp;</td>
+          <td class="td-right"><%= hl.second %></td>
+        </tr>
+        <% end %>
+        <!-- statistics on stops -->
+        <tr>
+          <td colspan="2"><strong><%= t( '.stop_title' ) %></strong></td>
+          <td class="td-right"><strong><%= @total_stops %></strong></td>
+        <tr>
+        <% @hashstop_labels.each do | hl | %>
+        <tr>
+          <td><%= split_hash( hl.first ) %></td>
+          <td><%= hl.second %></td>
+          <td class="td-right"><%= Hashtag.take_count!( hl.first, @hashstop_stats )%></td>
+        </tr>
+        <% end %>
+        <% Hashtag.to_sorted_a( @hashstop_stats ).each do |hl| %>
+        <tr>
+          <td><%= hl.first %></td>
+          <td>&nbsp;</td>
+          <td class="td-right"><%= hl.second %></td>
+        </tr>
+        <% end %>
+        <!-- statistics on stations w/o associated lines -->
+        <tr>
+          <td colspan="2"><strong><%= t( '.orphans_title' ) %></strong></td>
+          <td class="td-right"><strong><%= @total_orphans %></strong></td>
+        <tr>
+        <% @hashstation_labels.each do | hl | %>
+        <tr>
+          <td><%= split_hash( hl.first ) %></td>
+          <td><%= hl.second %></td>
+          <td class="td-right"><%= Hashtag.take_count!( hl.first, @hashorphan_stats )%></td>
+        </tr>
+        <% end %>
+        <% Hashtag.to_sorted_a( @hashorphan_stats ).each do |hl| %>
+        <tr>
+          <td><%= hl.first %></td>
+          <td>&nbsp;</td>
+          <td class="td-right"><%= hl.second %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <%= render partial: 'shared/footer' %>
+  </div>
+</div>

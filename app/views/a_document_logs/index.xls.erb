@@ -1,0 +1,28 @@
+<%= CSV.generate_line([
+  :id,
+  :a1_code,
+  :a2_code,
+  :a3_code,
+  :a4_code,
+  :a5_code,
+  :a6_code,
+  :a7_code,
+  :a8_code,
+  :alt_doc_id,
+  :title,
+  :user ], STD_CSV_OPTIONS ) -%>
+<%- @a_document_logs.each do |adl| -%>
+<%= CSV.generate_line([
+  adl.id,
+  adl.a1_code,
+  adl.a2_code,
+  adl.a3_code,
+  adl.a4_code,
+  adl.a5_code,
+  adl.a6_code,
+  adl.a7_code,
+  adl.a8_code,
+  adl.alt_doc_id,
+  adl.title,
+  adl.account.user_name ], STD_CSV_OPTIONS ).html_safe -%>
+<%- end -%>

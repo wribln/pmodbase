@@ -20,7 +20,7 @@ $ ->
     no_form_sets = $('.form-set').length
     $template_object = $(this).closest('div.form-group').prev()
     $template_clone = $template_object.clone(true)
-    $template_clone.find('input').each ->
+    $template_clone.find(':input').each ->
       old_id = $(@).attr('id')
       new_id = old_id.replace /template/,no_form_sets
       $(@).attr('id',new_id)

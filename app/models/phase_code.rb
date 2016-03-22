@@ -8,7 +8,7 @@ class PhaseCode < ActiveRecord::Base
   validates :code,
     presence: true,
     uniqueness: true,
-    format: { with: /\A.[A-Z0-9.\-]+\z/, message: I18n.t( 'code_modules.msg.bad_code_syntax' )},
+    format: { with: Regexp.union( /\A%!\z/,/\A%[A-Z0-9.\-]+\z/), message: I18n.t( 'code_modules.msg.bad_code_syntax' )},
     length: { maximum: MAX_LENGTH_OF_CODE }
 
   validates :label,

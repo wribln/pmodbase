@@ -16,6 +16,10 @@ module ApplicationHelper
     t.try( :to_formatted_s, :db_time )
   end
 
+  def db_formatted_number( d )
+    number_with_delimiter( d, separator: '.', delimiter: ' ' )
+  end
+
   # insert a page title from the I18n library
   
   def page_title

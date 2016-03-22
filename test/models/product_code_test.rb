@@ -72,6 +72,10 @@ class ProductCodeTest < ActiveSupport::TestCase
 
     xc.code = '-A-Z0-9.'
     assert xc.valid?
+
+    xc.code = '-!'
+    assert xc.valid?
+
   end
 
   test 'code and label' do

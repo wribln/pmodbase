@@ -1,7 +1,7 @@
 class DccCodesController < ApplicationController
   require 'csv'
   include ControllerMethods
-  initialize_feature FEATURE_ID_DCC_CODES, FEATURE_ACCESS_INDEX
+  initialize_feature FEATURE_ID_DCC_CODES, FEATURE_ACCESS_VIEW
   before_action :set_dcc_code, only: [ :show, :edit, :update, :destroy ]
 
   # GET /fncs

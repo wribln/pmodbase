@@ -2,7 +2,7 @@ class AbbreviationsController < ApplicationController
   require 'csv'
   include ControllerMethods
 
-  initialize_feature FEATURE_ID_ABBREVIATIONS, FEATURE_ACCESS_INDEX
+  initialize_feature FEATURE_ID_ABBREVIATIONS, FEATURE_ACCESS_VIEW
   
   before_action :set_abbreviation, only:  [ :show, :edit, :update, :destroy ]
 

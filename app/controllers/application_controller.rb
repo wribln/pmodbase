@@ -19,14 +19,23 @@ class ApplicationController < ActionController::Base
   class_attribute :feature_access_level, instance_writer: false
 
   # make sure respective labels exists for .feature.access_levels
+  # binary/octal: 000000/00 - no access
+  #               xxxxx1/01 - require specific permission
+  #               xxxx1x/02 - access index permitted
+  #               xxx1xx/04 - access read permitted
+  #               xx1xxx/08 - access created/update/delete
+  #               x1xxxx/10 - no restrictions
+  #               1xxxxx/20 - hidden feature
 
   FEATURE_ACCESS_NONE =   0x00   # no access at all / feature disabled
   FEATURE_ACCESS_SOME =   0x01   # user must have specific permission
   FEATURE_ACCESS_INDEX =  0x02   # user must exist to access index
-  FEATURE_ACCESS_USER =   0x06   # user must exist to access feature
-  FEATURE_ACCESS_ALL =    0x08   # no access restrictions
-  FEATURE_ACCESS_NDA =    0x10   # hidden feature, not directly accessible
-  FEATURE_ACCESS_MAX =    0x18   # maximum value for validations
+  FEATURE_ACCESS_READ =   0x04   # user must exist to access details
+  FEATURE_ACCESS_VIEW =   0x06   # user must exist to access index and details
+  FEATURE_ACCESS_USER =   0x0E   # user must exist to access feature
+  FEATURE_ACCESS_ALL =    0x10   # no access restrictions
+  FEATURE_ACCESS_NDA =    0x20   # hidden feature, not directly accessible
+  FEATURE_ACCESS_MAX =    0x2E   # maximum value for validations
 
   # Define a feature control level that documents which controls
   # are implemented in addition to the feature access levels:
@@ -63,6 +72,11 @@ class ApplicationController < ActionController::Base
   }
   private_constant :ACTION_PERMISSION_MAP
 
+  # this makes it easier to determine the default helpfile
+
+  class_attribute :feature_help_file
+  helper_method :feature_help_file
+
   protected
 
   # use a protected method to initialize feature
@@ -72,6 +86,7 @@ class ApplicationController < ActionController::Base
     self.feature_access_level = fal
     self.feature_control_level = fcl
     self.no_workflows = nwf
+    self.feature_help_file = controller_name
   end
 
   # wrap ACTION_PERMISSION_MAP to a method in order to be more 
@@ -106,10 +121,19 @@ class ApplicationController < ActionController::Base
       return
     end
 
+    # map_action_to_permission only once:
+
+    permission_needed = map_action_to_permission
+
     # check if user needs access to index only
 
     return if( self.feature_access_level & FEATURE_ACCESS_INDEX != 0 )and
-      map_action_to_permission == :to_index
+      permission_needed == :to_index
+
+    # read access for all?
+
+    return if( self.feature_access_level & FEATURE_ACCESS_READ != 0 )and
+      permission_needed == :to_read
 
     # check for general access permission
 
@@ -117,7 +141,7 @@ class ApplicationController < ActionController::Base
 
     # finally, check if user has specific permissions
 
-    return if current_user.permission_to_access( self.feature_identifier, map_action_to_permission )
+    return if current_user.permission_to_access( self.feature_identifier, permission_needed )
 
     # otherwise, allow user to request access
 
@@ -146,7 +170,11 @@ class ApplicationController < ActionController::Base
   # by checking for nil (which should not be necessary)
 
   def self.access_to_index?( level )
-    !level.nil? && ( level & ( FEATURE_ACCESS_INDEX | FEATURE_ACCESS_ALL ) != 0 )
+    !level.nil? && ( level & ( FEATURE_ACCESS_INDEX | FEATURE_ACCESS_READ | FEATURE_ACCESS_ALL ) != 0 )
+  end
+
+  def self.access_to_view?( level )
+    !level.nil? && ( level & ( FEATURE_ACCESS_READ | FEATURE_ACCESS_ALL ) != 0 )
   end
 
   # Does the given level allows no access at all?

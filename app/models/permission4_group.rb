@@ -54,6 +54,7 @@ class Permission4Group < ActiveRecord::Base
 
   scope :fr_feature,  -> ( fid ){ where feature_id: fid }
   scope :permission_to_modify, -> { where( '(to_create + to_update + to_delete) > 0' )}
+  scope :permission_to_access, -> { where( 'to_index > 0' )}
 
   # cross-record checks
 

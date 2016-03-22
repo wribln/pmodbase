@@ -1,0 +1,29 @@
+<% help_title "Help on #{ NetworkStop.model_name.human }" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">Information on Network Stops</p>
+    <p>The table containing information on the stations along a specific line of the
+      network is normally managed within the <%= link_to_help NetworkStation.model_name.human %> feature.</p>
+    <p>The fields in the Network Stops record are:</p>
+    <ul>
+      <li>The <%= help_param NetworkStop.human_attribute_name( :network_station_id )-%> links
+        the stop to the associated station in the network.</li>
+      <li>The <%= help_param NetworkStop.human_attribute_name( :network_line_id )-%> links
+        this stop to the associated line in the network.</li>
+      <li><%= help_param NetworkStop.human_attribute_name( :stop_no )-%> should be set to the
+        sequence number of the stop within the given network line. This number will be used to
+        create an ordered list of stations along the given line.</li>
+      <li><%= help_param NetworkStop.human_attribute_name( :code )-%> is a short code of the stop,
+      often a line-specific code containing the number of the stop along the line.</li>
+      <li>The <%= help_param NetworkStop.human_attribute_name( :location_code_id )-%> links
+        the stop to the respective record containing the chainage information.</li>
+      <li><%= help_param NetworkStop.human_attribute_name( :note )-%> can be used to add stop-
+        (or platform-) specific information such as the number of platform screen doors, or the
+        level of the platform within the station. This field can contain 
+        <%= link_to_help Hashtag.model_name.human, 'hashtags' -%> to be used to
+        create statistics. Those statistics are created by the
+        <%= link_to_help NetworkLine.model_name.human -%> feature.</li>
+    </ul>
+    <%= help_footer FEATURE_ID_NW_STOPS %>
+  </div> <!-- /container -->

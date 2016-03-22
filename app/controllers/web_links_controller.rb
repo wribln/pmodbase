@@ -1,5 +1,5 @@
 class WebLinksController < ApplicationController
-  initialize_feature FEATURE_ID_WEB_LINKS, FEATURE_ACCESS_INDEX
+  initialize_feature FEATURE_ID_WEB_LINKS, FEATURE_ACCESS_VIEW
   before_action :set_web_link, only: [:show, :edit, :update, :destroy]
 
   # GET /wlks

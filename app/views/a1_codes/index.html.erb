@@ -1,0 +1,48 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+    <%= form_tag({},{ method: :get, class: 'form-inline' }) do %>
+    <%= will_paginate @a1_codes %>
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th class="col-sm-1"><%= A1Code.human_attribute_name( :id     )%></th>
+            <th class="col-sm-1"><%= label_tag :as_code, A1Code.human_attribute_name( :code   ), class: 'control-label' %></th>
+            <th class="col-sm-5"><%= label_tag :as_desc, A1Code.human_attribute_name( :label  ), class: 'control-label' %></th>
+            <th class="col-sm-1"><%= A1Code.human_attribute_name( :active   )%></th>
+            <th class="col-sm-1"><%= A1Code.human_attribute_name( :master   )%></th>
+            <th class="col-sm-1"><%= A1Code.human_attribute_name( :mapping )%></th>
+            <th class="col-sm-1 hidden-print"><%= filter_action_title_header -%></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr <%= filter_row( @filter_fields ) -%>>
+            <td></td>
+            <td><%= filter_field @filter_fields, :as_code, :sw -%></td>
+            <td><%= filter_field @filter_fields, :as_desc, :sw -%></td>
+            <td colspan="3"></td>
+            <td><%= filter_action_button -%></td>
+          </tr>
+        <% if @a1_codes.length.zero? %>
+          <%= render partial: 'shared/index_empty_row', locals:{ columns: 6, with_link: true }%>
+        <% else %>
+          <% @a1_codes.each do |a1| %>
+            <tr>
+              <td><%= a1.to_id %></td>
+              <td><%= a1.code %></td>
+              <td><%= a1.label %></td>
+              <td><%= A1Code.human_attribute_name( :active ) if a1.active %></td>
+              <td><%= A1Code.human_attribute_name( :master ) if a1.master %></td>
+              <td><%= a1.mapping %></td>
+              <td><%= render partial: 'shared/actions', object: a1 %></td>
+            </tr>
+          <% end %>
+        <% end %>
+        </tbody>
+      </table>
+    <% end %>
+    <%= render partial: 'shared/footer' %>
+  </div>
+</div>

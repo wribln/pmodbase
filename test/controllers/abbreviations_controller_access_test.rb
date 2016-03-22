@@ -5,7 +5,7 @@ class AbbreviationsControllerAccessTest < ActionController::TestCase
   tests AbbreviationsController
 
   test "check class_attributes"  do
-    validate_feature_class_attributes FEATURE_ID_ABBREVIATIONS, ApplicationController::FEATURE_ACCESS_INDEX
+    validate_feature_class_attributes FEATURE_ID_ABBREVIATIONS, ApplicationController::FEATURE_ACCESS_VIEW
   end
 
   # index
@@ -27,17 +27,17 @@ class AbbreviationsControllerAccessTest < ActionController::TestCase
 
   # show
 
-  test "show is not permitted but results in cr form" do
+  test "show is permitted" do
     @account = accounts( :account_wop )
     session[ :current_user_id ] = accounts( :account_wop ).id
     get :show, id: abbreviations( :sag )
-    check_for_cr
+    assert_response :success
   end
 
   test "should not get show" do
     @account = nil
     session[ :current_user_id ] = nil
-    get :edit, id: abbreviations( :sag )
+    get :show, id: abbreviations( :sag )
     assert_response :unauthorized
   end
 

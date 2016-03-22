@@ -1,10 +1,10 @@
 class SDocumentLogsController < ApplicationController
   require 'csv'
   include ControllerMethods
-  initialize_feature FEATURE_ID_S_DOCUMENT_LOG, FEATURE_ACCESS_INDEX
+  initialize_feature FEATURE_ID_S_DOCUMENT_LOG, FEATURE_ACCESS_VIEW
   before_action :set_s_document_log, only: [ :show, :edit, :update, :destroy ]
 
-  # GET /sdsl
+  # GET /sdl
 
   def index
     @filter_fields = filter_params
@@ -19,50 +19,56 @@ class SDocumentLogsController < ApplicationController
     end
   end
 
-  # GET /sdls/1
+  # GET /sdl/1
 
   def show
   end
 
-  # GET /s_document_logs/new
+  # GET /sdl/new
+
   def new
     @s_document_log = SDocumentLog.new
     @s_document_log.account = current_user
+    set_selections( :to_create )
   end
 
   # GET /sdls/1/edit
 
   def edit
+    set_selections( :to_update )
   end
 
-  # POST /sdls
+  # POST /sdl
 
   def create
     @s_document_log = SDocumentLog.new( s_document_log_params )
+    return unless has_group_access?( @s_document_log )
     @s_document_log.account_id = current_user.id
     respond_to do |format|
       if @s_document_log.save
         @s_document_log.update_attribute( :siemens_doc_id, '' )
         format.html { redirect_to @s_document_log, notice: t( 's_document_logs.msg.new_ok' )}
       else
+        set_selections( :to_create )
         format.html { render :new }
       end
     end
   end
 
-  # PATCH/PUT /sdls/1
+  # PATCH/PUT /sdl/1
 
   def update
     respond_to do |format|
       if @s_document_log.update(s_document_log_params)
         format.html { redirect_to @s_document_log, notice: t( 's_document_logs.msg.edit_ok' )}
       else
+        set_selections( :to_update )
         format.html { render :edit }
       end
     end
   end
 
-  # DELETE /sdls/1
+  # DELETE /sdl/1
 
   def destroy
     @s_document_log.destroy
@@ -90,4 +96,10 @@ class SDocumentLogsController < ApplicationController
     def filter_params
       params.slice( :ff_srec, :ff_sdic, :ff_titl ).clean_up
     end
+
+    def set_selections( action )
+      pg = current_user.permitted_groups( FEATURE_ID_S_DOCUMENT_LOG, action, :id )
+      @group_selection = Group.permitted_groups( pg ).all.collect{ |g| [ g.code_and_label, g.id ]}
+    end
+
 end

@@ -1,0 +1,13 @@
+one:
+  code:         'L1'
+  label:        'Line 1'
+  location_code: three
+  seqno:         1
+  note:         'A Note'
+
+two:
+  code:         'L2'
+  label:        'Line 2'
+  location_code: three
+  seqno:         1
+  note:         'A Note'

@@ -30,7 +30,7 @@
               <% @tia_list = ti.tia_list_id %>
             <% end %>
           <tr>
-            <td>&nbsp;&nbsp;&nbsp;<%= ti.tia_list.item_code( ti.seq_no ) %></td>
+            <td>&nbsp;&nbsp;&nbsp;<%= ti.tia_list.item_code( ti.seqno ) %></td>
             <td><%= ti.description %><%= raw('<hr style="margin: 0.5em 0"/>') unless ti.comment.blank? %><%= ti.comment %></td>
             <td><%= ti.prio_label %></td>
             <td><%= ti.status_label %></td>

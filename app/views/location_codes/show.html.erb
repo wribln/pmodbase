@@ -50,7 +50,7 @@
       <div class="form-group">
         <%= f.label :length, class: "col-sm-3 control-label" %>
         <div class="col-sm-2">
-          <%= display_value f.object.length %>
+          <%= display_value db_formatted_number( f.object.length )%>
         </div>
       </div>
       <div class="form-group">

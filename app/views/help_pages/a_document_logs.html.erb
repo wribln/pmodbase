@@ -1,0 +1,50 @@
+<% help_title "Help on #{ ADocumentLog.model_name.human }" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">The Document Log for the Alternate EDMS records and
+    maintains meta-data on documents.</p>
+    <h3>Purpose</h3>
+    <p>The Alternate Document Log (ADL) can be used until the setup of the
+      project's EDMS is completed and this functionality is available from
+      there.</p>
+    <p>Even later, <em>pmodbase</em> can be used to administer the available
+      codes for documentation purposes, especially the possibility to maintain
+      more than the one record per code for standardization of specific
+      subject allocations.</p>
+    <p>The following codes are used here to generate the 
+      <%= help_param ADocumentLog.human_attribute_name( :alt_doc_id )-%>:</p>
+    <ul>
+      <li><%= help_param ADocumentLog.human_attribute_name( :a1_code )-%></li>
+      <li><%= help_param ADocumentLog.human_attribute_name( :a2_code )-%></li>
+      <li><%= help_param ADocumentLog.human_attribute_name( :a3_code )-%></li>
+      <li><%= help_param ADocumentLog.human_attribute_name( :a4_code )-%></li>
+      <li><%= help_param ADocumentLog.human_attribute_name( :a5_code )-%></li>
+      <li><%= help_param ADocumentLog.human_attribute_name( :a6_code )-%></li>
+      <li><%= help_param ADocumentLog.human_attribute_name( :a7_code )-%></li>
+      <li><%= help_param ADocumentLog.human_attribute_name( :a8_code )-%></li>
+    </ul>
+    <p>More information about these codes can be found
+      <%= link_to_help :a_coding_system, 'here' -%>.</p>
+    <h3>Other Fields</h3>
+    <p>The other fields maintained in the log are:</p>
+    <ul>
+      <li><%= help_param ADocumentLog.human_attribute_name( :id )-%> is the
+        an automatically generated number which can be used as unambiguous
+        document (sequence) number. The database management system maintains
+        this number and ensures that no number is used twice.</li>
+     <li><%= help_param ADocumentLog.human_attribute_name( :title )-%> provides
+        a field for the title of the document. Although this is not used as part
+        of the code, it can be used to search for a specific document with this
+        title or part of it.</li>
+      <li><%= help_param ADocumentLog.human_attribute_name( :alt_doc_id )-%>
+        is the generated document code, or - when modifying a record - the
+        previously generated code.</li>
+      <li><%= help_param ADocumentLog.human_attribute_name( :user )-%>
+       is for information only and shows the name of the user who created this
+       entry.</li>
+    <h3>Export</h3>
+      <p>The resulting export file contains all attributes as listed above.
+        Any active filters are applied to the exported file as well.</p>
+    <%= help_footer FEATURE_ID_A_DOCUMENT_LOG %>
+  </div> <!-- /container -->

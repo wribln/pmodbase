@@ -314,19 +314,20 @@ class DsrStatusRecord < ActiveRecord::Base
   # basic check if it is possible to derive from this record
 
   def possible_to_derive?
-    sub_frequency > 1 and 
-    not doc_group_id.nil? and
-    quantity > 0 and
-    weight > 0
+    ( sub_frequency && sub_frequency > 1 )and 
+    dsr_doc_group_id and # not dsr_doc_group_id.nil?
+    ( quantity && quantity > 0 )and
+    ( weight && weight > 0 )
   end
 
   # check if new record dsr_new can be derived from this record
+  # (note: no need to check for nil as nil class has == method)
 
   def possible_to_derive_this( dsr_new )
     possible_to_derive? and
     dsr_new.sub_frequency == 1 and
     dsr_new.quantity == 1 and
-    dsr_new.doc_group_id == self.doc_group_id
+    dsr_new.dsr_doc_group_id == self.dsr_doc_group_id
   end
 
   # actually derive dsr_new record from this by updating this

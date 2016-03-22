@@ -1,0 +1,8 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: '#ABC'
+  label: 'The Alphabet'
+  feature_id: 55
+  seqno: 1
+

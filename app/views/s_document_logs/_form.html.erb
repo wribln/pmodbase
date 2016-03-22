@@ -7,7 +7,8 @@
       <div class="form-group">
         <%= form.label :group_id, class: "col-sm-3 control-label" %>
         <div class="col-sm-6">
-          <%= form.collection_select( :group_id, Group.all, :id, :code_and_label, {}, { class: 'form-control' })%>
+          <%# form.collection_select( :group_id, Group.all, :id, :code_and_label, {}, { class: 'form-control' })%>
+          <%= form.select :group_id, @group_selection, { prompt: t( '.g_prompt' )},{ class: 'form-control', required: true }%>
         </div>
       </div>
       <div class="form-group">

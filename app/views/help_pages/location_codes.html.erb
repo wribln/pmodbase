@@ -41,8 +41,8 @@
     <ul>
       <li><%= help_param LocationCode.human_attribute_name( :code ) -%> is the location code.
         This is a required attribute.
-        The code must have a prefix of '+' and may also contain periods and dashes. 
-        </li>
+        The code must have a prefix of '+' and may also contain periods and dashes. The
+        special code '+!' can be used, it has normally the meaning 'not applicable'.</li>
       <li><%= help_param LocationCode.human_attribute_name( :label ) -%> is the description of
         the location, e.g. the station name. This is a required attribute.</li>
       <li><%= help_param LocationCode.human_attribute_name( :loc_type ) -%> defines the type
@@ -77,7 +77,7 @@
     <h3>Suggested Coding Standard</h3>
     <p>The following standard coding for rail system projects has been proven useful:</p>
     <ul>
-      <li><strong>+&lt;n&gt;.LS</strong> is used to define a line section with a continous chainage, for
+      <li><strong>+&lt;n&gt;.LS</strong> is used to define a line section with a continuous chainage, for
         example when planning  several metro or tram lines. <strong>+1.LS</strong> would be one line,
         <strong>+2.LS</strong> would be the second line, and so on. A branch line with a new,
         different chainage would be considered a separate line section as well to ensure that
@@ -98,11 +98,11 @@
         <strong>+&lt;n&gt;.AS.&lt;nn&gt;</strong> for annex structures, etc.</li>
       <li><strong>+&lt;n&gt;.SP.&lt;nn&gt;</strong> could be used to code special points along the
         lines, e.g. beginning and end of the line (if needed).</li>
-      <li>Codes withhout a relationship to a line would not need the line indicator:
+      <li>Codes without a relationship to a line would not need the line indicator:
         <strong>+RS.&lt;nn&gt;</strong> for rolling stock: <strong>+RS.01</strong> would thus be
         the code for the first train.</li>
       <li>Other codes may be needed for functional areas, such as <strong>+OCC</strong> for the
-        operations control center, with subcodes <strong>+OCC.M</strong> for the main OCC, and
+        operations control center, with sub-codes <strong>+OCC.M</strong> for the main OCC, and
         <strong>+OCC.B</strong> for the backup OCC.</li>
       <li>Also, the depot area <strong>+DEP</strong> could have sub-elements: <strong>+DEP.SY</strong>
         for stabling yard, <strong>+DEP.HM</strong> for the heavy maintenance building, 

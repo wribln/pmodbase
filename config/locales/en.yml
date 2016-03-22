@@ -32,9 +32,29 @@ en:
     formats:
       db_date:      '%Y-%m-%d'
 
+  coding_systems:
+    code:           'Code'
+    label:          'Label'
+    active:         'Active'
+    master:         'Master'
+    standard:       'Standard'
+    heading:        'Heading'
+    note:           'Note'
+    desc:           'Description'
+    mapping:        'Mapping'
+
   activerecord:
 
     models:
+      a1_code:            'Alternate EDMS Code - Project (A1)'
+      a2_code:            'Alternate EDMS Code - Stage (A2)'
+      a3_code:            'Alternate EDMS Code - Discipline/System (A3)'
+      a4_code:            'Alternate EDMS Code - Sub-Discipline/-System (A4)'
+      a5_code:            'Alternate EDMS Code - Activity (A5)'
+      a6_code:            'Alternate EDMS Code - Location (A6)'
+      a7_code:            'Alternate EDMS Code - Document Type (A7)'
+      a8_code:            'Alternate EDMS Code - Originator (A8)'
+      a_document_log:     'Alternate Document Log (ADL)'
       abbreviation:       'Abbreviations'
       account:            'User Accounts'
       address:            'Address Information Records'
@@ -54,7 +74,11 @@ en:
       glossary_item:      'Glossary'
       group:              'Project Groups'
       group_category:     'Group Categories'
+      hashtag:            'Hashtags'
       location_code:      'Location Codes'
+      network_line:       'Network Lines'
+      network_station:    'Network Stations'
+      network_stop:       'Network Stops'
       permission4_group:  'Permission Records for Groups'
       permission4_flow:   'Permission Records for Workflows'
       person:             'Personal Data Records'
@@ -79,9 +103,93 @@ en:
 
     attributes:
 
+      a1_code:
+        id:             :general.attributes.id 
+        code:           :coding_systems.code
+        label:          :coding_systems.label
+        active:         :coding_systems.active
+        master:         :coding_systems.master
+        mapping:        :coding_systems.mapping
+
+      a2_code:
+        id:             :general.attributes.id 
+        code:           :coding_systems.code
+        label:          :coding_systems.label
+        active:         :coding_systems.active
+        master:         :coding_systems.master
+        mapping:        :coding_systems.mapping
+
+      a3_code:
+        id:             :general.attributes.id 
+        code:           :coding_systems.code
+        label:          :coding_systems.label
+        active:         :coding_systems.active
+        master:         :coding_systems.master
+        mapping:        :coding_systems.mapping
+        desc:           :coding_systems.desc
+
+      a4_code:
+        id:             :general.attributes.id 
+        code:           :coding_systems.code
+        label:          :coding_systems.label
+        active:         :coding_systems.active
+        master:         :coding_systems.master
+        mapping:        :coding_systems.mapping
+
+      a5_code:
+        id:             :general.attributes.id 
+        code:           :coding_systems.code
+        label:          :coding_systems.label
+        active:         :coding_systems.active
+        master:         :coding_systems.master
+        mapping:        :coding_systems.mapping
+        desc:           :coding_systems.desc
+
+      a6_code:
+        id:             :general.attributes.id 
+        code:           :coding_systems.code
+        label:          :coding_systems.label
+        active:         :coding_systems.active
+        master:         :coding_systems.master
+        mapping:        :coding_systems.mapping
+        desc:           :coding_systems.desc
+
+      a7_code:
+        id:             :general.attributes.id 
+        code:           :coding_systems.code
+        label:          :coding_systems.label
+        active:         :coding_systems.active
+        master:         :coding_systems.master
+        mapping:        :coding_systems.mapping
+        desc:           :coding_systems.desc
+
+      a8_code:
+        id:             :general.attributes.id 
+        code:           :coding_systems.code
+        label:          :coding_systems.label
+        active:         :coding_systems.active
+        master:         :coding_systems.master
+        mapping:        :coding_systems.mapping
+
+      a_document_log:
+        id:             :general.attributes.id
+        a1_code:        'Project (A1)'
+        a2_code:        'Stage (A2)'
+        a3_code:        'Discipline/System (A3)'
+        a34_code:       "Discipline/System (A3)\nSub-Discipline/-System (A4)"
+        a4_code:        'Sub-Discipline/-System (A4)'
+        a5_code:        'Activity (A5)'
+        a6_code:        'Location (A6)'
+        a7_code:        'Document Type (A7)'
+        a8_code:        'Originator (A8)'
+        alt_doc_id:     'Document Code'
+        title:          'Title'
+        account_id:     'Account'
+        user:           'Created by'
+
       abbreviation:
         id:             :general.attributes.id
-        code:           'Abbr.'
+        code:           'Acronym'
         description:    'Meaning'
         sort_code:      'Sort Code'
 
@@ -111,54 +219,45 @@ en:
         street_address: 'Street Address'
         postal_address: 'Postal Address'
 
-      coding_system:
-        code:           'Code'
-        label:          'Label'
-        active:         'Active'
-        master:         'Master'
-        standard:       'Standard'
-        heading:        'Heading'
-        note:           'Note'
-
       dcc_code:
         id:             :general.attributes.id 
-        code:           :attributes.coding_system.code
-        label:          :attributes.coding_system.label
-        active:         :attributes.coding_system.active
-        master:         :attributes.coding_system.master
-        standard:       :attributes.coding_system.standard
-        heading:        :attributes.coding_system.heading
-        note:           :attributes.coding_system.note
+        code:           :coding_systems.code
+        label:          :coding_systems.label
+        active:         :coding_systems.active
+        master:         :coding_systems.master
+        standard:       :coding_systems.standard
+        heading:        :coding_systems.heading
+        note:           :coding_systems.note
 
       function_code:
         id:             :general.attributes.id 
-        code:           :attributes.coding_system.code
-        label:          :attributes.coding_system.label
-        active:         :attributes.coding_system.active
-        master:         :attributes.coding_system.master
-        standard:       :attributes.coding_system.standard
-        heading:        :attributes.coding_system.heading
-        note:           :attributes.coding_system.note
+        code:           :coding_systems.code
+        label:          :coding_systems.label
+        active:         :coding_systems.active
+        master:         :coding_systems.master
+        standard:       :coding_systems.standard
+        heading:        :coding_systems.heading
+        note:           :coding_systems.note
 
       product_code:
         id:             :general.attributes.id 
-        code:           :attributes.coding_system.code
-        label:          :attributes.coding_system.label
-        active:         :attributes.coding_system.active
-        master:         :attributes.coding_system.master
-        standard:       :attributes.coding_system.standard
-        heading:        :attributes.coding_system.heading
-        note:           :attributes.coding_system.note
+        code:           :coding_systems.code
+        label:          :coding_systems.label
+        active:         :coding_systems.active
+        master:         :coding_systems.master
+        standard:       :coding_systems.standard
+        heading:        :coding_systems.heading
+        note:           :coding_systems.note
 
       service_code:
         id:             :general.attributes.id 
-        code:           :attributes.coding_system.code
-        label:          :attributes.coding_system.label
-        active:         :attributes.coding_system.active
-        master:         :attributes.coding_system.master
-        standard:       :attributes.coding_system.standard
-        heading:        :attributes.coding_system.heading
-        note:           :attributes.coding_system.note
+        code:           :coding_systems.code
+        label:          :coding_systems.label
+        active:         :coding_systems.active
+        master:         :coding_systems.master
+        standard:       :coding_systems.standard
+        heading:        :coding_systems.heading
+        note:           :coding_systems.note
 
       contact_info:
         id:             :general.attributes.id
@@ -234,7 +333,7 @@ en:
         document_status:     'Document Status'
         document_status_b:   'Document Status (Baseline)'
         document_states:    ['planned','in progress','in review','in submission','submitted','approved','approved with comments','rejected','completed w/o approval','updated','withdrawn/doc group complete']
-        dsr_doc_group_id:     'Document Group [Id]'
+        dsr_doc_group_id:     'Document Group'
         submission_group_id:  'Submission Group'
         prep_activity_id:     'Prepare/Submit Activity [Id]'
         subm_activity_id:     'Review/Approve Activity [Id]'
@@ -304,7 +403,8 @@ en:
         seqno:          'Sequence Number'
         access_level:   'Access Level'
         control_level:  'Control Level'
-        access_levels:  ['none','user-defined','general-index','','','','general','','all']
+#                        0      1              2               3              4         5       
+        access_levels:  ['none','user-defined','general-index','general-view','general','all']
         control_levels: ['-','+g','+wf','+g+wf','+cug']
         no_workflows:   'No of Workflows'
         feature_category_id: 'Feature Category ID'
@@ -336,6 +436,12 @@ en:
         label:          'Category Heading'
         seqno:          'Sequence Number'
 
+      hashtag:
+        id:             :general.attributes.id
+        label:          'Label'
+        feature_id:     'Feature'
+        seqno:          'Sequence Number'
+
       holiday:
         id:               :general.attributes.id
         date_from:        'From Date'
@@ -357,6 +463,33 @@ en:
         end_point:      'End Point'
         length:         'Length'
         note:           'Note'
+
+      network_line:
+        id:             :general.attributes.id
+        code:           'Code'
+        label:          'Label'
+        location_code_id: 'Location Code'
+        seqno:          'Sort Order'
+        note:           'Notes'
+
+      network_station:
+        id:             :general.attributes.id
+        code:           'Code'
+        transfer:       'Transfer Station'
+        alt_code_short: 'Other Code'
+        alt_code:       'Alternate/Previous Code'
+        curr_name:      'Name'
+        prev_name:      'Other/Previous Name'
+        note:           'Notes'
+        network_stops:  'Network Stop'
+
+      network_stop:
+        id:                 :general.attributes.id
+        location_code_id:   'Location Code'
+        stop_no:            'No of Stop on Line'
+        network_line_id:    'Line'
+        network_station_id: 'Station'
+        note:               'Notes'
 
       permission4_flow:
         id:             :general.attributes.id
@@ -566,6 +699,7 @@ en:
       st:        '....|'
       aw:        '|...|'
       dv:        'yyyy-mm-dd'
+      ns:        'Search in Notes Text'
 
   helpers:
     submit:
@@ -589,6 +723,136 @@ en:
     stats:        'Statistics'
     wf_info:      'Workflow Information'
     upd_baseline: 'Update Baseline'
+
+  a_code_modules:
+    search_title:  
+    edit_title:    'Edit Code'
+    new_title:     'Add new Code'
+    show_title:    'Show Code Details'
+    labels_head:   'Label / Description'
+    msg:
+      new_ok:      'Code successfully added.'
+      edit_ok:     'Code successfully modified.'
+      delete_ok:   'Code successfully removed.'
+
+  a_code_search:
+    title:         'Search for Codes'
+    index:
+      form_title:  :s_code_search.title
+      list_source: "Results from %{table}"
+
+  a1_codes:
+    title:         'Project Code (A1)'
+    edit:
+      form_title:  :a_code_modules.edit_title  
+    index:
+      form_title:  'List of Project Codes (A1)'
+    new:
+      form_title:  :a_code_modules.new_title
+    show:
+      form_title:  :a_code_modules.show_title
+
+  a2_codes:
+    title:         'Stage Code (A2)'
+    edit:
+      form_title:  :a_code_modules.edit_title  
+    index:
+      form_title:  'List of Stage Codes (A2)'
+    new:
+      form_title:  :a_code_modules.new_title
+    show:
+      form_title:  :a_code_modules.show_title
+
+  a3_codes:
+    title:         'Discipline/System Code (A3)'
+    edit:
+      form_title:  :a_code_modules.edit_title  
+    index:
+      form_title:  'List of Discipline/System Codes (A3)'
+      labels_head: :a_code_modules.labels_head
+    new:
+      form_title:  :a_code_modules.new_title
+    show:
+      form_title:  :a_code_modules.show_title
+
+  a4_codes:
+    title:         'Sub-Discipline/-System Code (A4)'
+    edit:
+      form_title:  :a_code_modules.edit_title  
+    index:
+      form_title:  'List of Sub-Discipline/-System Codes (A4)'
+      labels_head: :a_code_modules.labels_head
+    new:
+      form_title:  :a_code_modules.new_title
+    show:
+      form_title:  :a_code_modules.show_title
+    msg:
+      bad_a3_part:  'first part must be an existing A3 Code'
+
+  a5_codes:
+    title:         'Activity Code (A5)'
+    edit:
+      form_title:  :a_code_modules.edit_title  
+    index:
+      form_title:  'List of Activity Codes (A5)'
+      labels_head: :a_code_modules.labels_head
+    new:
+      form_title:  :a_code_modules.new_title
+    show:
+      form_title:  :a_code_modules.show_title
+
+  a6_codes:
+    title:         'Location Code (A6)'
+    edit:
+      form_title:  :a_code_modules.edit_title  
+    index:
+      form_title:  'List of Location Codes (A6)'
+      labels_head: :a_code_modules.labels_head
+    new:
+      form_title:  :a_code_modules.new_title
+    show:
+      form_title:  :a_code_modules.show_title
+
+  a7_codes:
+    title:         'Document Type Code (A7)'
+    edit:
+      form_title:  :a_code_modules.edit_title  
+    index:
+      form_title:  'List of Document Type Codes (A7)'
+      labels_head: :a_code_modules.labels_head
+    new:
+      form_title:  :a_code_modules.new_title
+    show:
+      form_title:  :a_code_modules.show_title
+
+  a8_codes:
+    title:         'Originator Code (A8)'
+    edit:
+      form_title:  :a_code_modules.edit_title  
+    index:
+      form_title:  'List of Originator Codes (A8)'
+    new:
+      form_title:  :a_code_modules.new_title
+    show:
+      form_title:  :a_code_modules.show_title
+
+  a_document_logs:
+    title:            'Alternate EDMS Document Log (ADL)'
+    form:
+      g_prompt:       :general.select_prompt
+    index:
+      form_title:     'List of Alternate EDMS Documents'
+    show:
+      form_title:     'Show Document Attributes'
+    edit:
+      form_title:     'Edit Document Attributes'
+    new:
+      form_title:     'Add new Document and Attributes'
+    msg:
+      new_ok:         'Document and Attributes successfully added.'
+      edit_ok:        'Document Attributes successfully updated.'
+      delete_ok:      'Document and Attributes successfully removed.'
+      invalid_code:   'does not exist.'
 
   abbr_search:
     title:         'Search for Abbreviations'
@@ -618,7 +882,6 @@ en:
     ff_active:
       true_val:     'active'
       false_val:    'inactive'
-
     edit:
       form_title:   'Edit Details of Account'
     index:
@@ -651,20 +914,6 @@ en:
       new_ok:         'Address was successfully created.'
       edit_ok:        'Address was successfully updated.'
       delete_ok:      'Address was successfully removed.'
-
-  code_modules:
-    msg:
-      bad_code_format:  "prefix ''%{prefix}'' must be given"
-      bad_h_m_combo:    'codes cannot be Master.'
-      bad_h_a_combo:    'codes must not be Active.'
-      too_many_masters: 'There is already one record with this code marked Master.'
-      bad_code_syntax:  'may only contain A-Z, 0-9, period, or dash.'
-
-  code_search:
-    title:         'Search for Codes'
-    index:
-      form_title:  :code_search.title
-      list_source: "Results from %{table}"
 
   contact_infos:
     title:            'Contact Information Records'
@@ -813,7 +1062,7 @@ en:
     show:
       form_title:     'Show DSR Progress Rate'
     msg:
-      edit_ok:        'DSR Progress Rate successcully updated.'
+      edit_ok:        'DSR Progress Rate successfully updated.'
 
   dsr_status_records:
     title:            'Document Status Register (DSR)'
@@ -912,6 +1161,7 @@ en:
       bad_pa_combo:   'Prepare/Submit and Review/Approve Activity must not be the same.'
       add_created:    'Add from Group Document: Submission Frequency, Quantity and Weight were adjusted!'
       bad_resp_sts:   'Next Status / Task must correspond to Submission Response Status.'
+      baseline_done:  'Baseline data successfully saved.'
 
     workflows:
       w00:
@@ -1074,6 +1324,7 @@ en:
       new_ok:         'Group Information was successfully created.'
       edit_ok:        'Group Information was successfully updated.'
       delete_ok:      'Group Information was successfully destroyed.'
+      bad_group_cat:  'Selected Group Category does not exist.'
 
   group_categories:
     title:            'Project Groups Categories'
@@ -1096,6 +1347,26 @@ en:
     main_help:        'Main Help'
     message:
       not_found:      "Requested help information not found: %{topic}"
+
+  hashtags:
+    title:            'Hashtag Labels'
+    form:
+      f_prompt:       :general.select_prompt
+    edit:
+      form_title:     'Edit Hashtag Label'
+    index:
+      form_title:     'List of all Hashtag Labels'
+    new:
+      form_title:     'Add new Hashtag Label'
+    show:
+      form_title:     'Show Hashtag Label'
+    msg:
+      new_ok:           'Hashtag was successfully created.'
+      edit_ok:          'Hashtag was successfully updated.'
+      delete_ok:        'Hashtag was successfully destroyed.'
+      uniq_per_feature: 'must be unique for this feature.'
+      bad_feature_id:   'is not a valid feature'
+      bad_code_syntax:  'syntax is invalid'
 
   holidays:
     title:            'Holiday Periods'
@@ -1136,6 +1407,84 @@ en:
       delete_ok:      'Location Code was successfully removed.'
       bad_start:      'must be before/less than End Point.'
       bad_center:     'must be between Start and End Point.'
+
+  network_lines:
+    title:            'Network Lines'
+    edit:
+      form_title:     'Edit Line'      
+    index:
+      form_title:     'Lines in the Network'
+      stats_title:    'Statistics Based on Selected Lines'
+      code:           'Tag'
+      item:           'Item'
+      count:          'Count'
+      line_title:     'Total Count of Selected Lines'
+      station_title:  'Total Count of Selected Stations'
+      stop_title:     'Total Count of Selected Stops'
+      orphans_title:  'Total Count of Unassigned Stations'
+    new:
+      form_title:     'Add Line'
+    show:
+      form_title:     'Show Line Details'
+    stats:
+      form_title:     'Statistics on the Lines in the Network'
+      code:           'Tag'
+      item:           'Item'
+      count:          'Count'
+      total:          'Total count of selected Lines in the Network'
+
+    msg:
+      new_ok:         'Line was successfully created.'
+      edit_ok:        'Line was successfully updated.'
+      delete_ok:      'Line was successfully removed.'
+      bad_loc_code:   :general.non_existing
+
+  network_stations:
+    title:            'Network Stations'
+    edit:
+      form_title:     'Edit Station Data'
+    new:
+      form_title:     'Add new Station'
+    show:
+      form_title:     'Show Station Data'
+    index:
+      form_title:     'List of Stations'
+      transfer:       'Transfer / Line'
+      transfer_short: 'Transfer'
+      notes:          'Notes'
+    msg:
+      new_ok:         'Station successfully created.'
+      edit_ok:        'Station successfully updated.'
+      delete_ok:      'Station successfully deleted.'
+      xfer_check:     'cannot be cleared with more than one stop assigned.'
+    ff_xfer:
+      true_val:       'yes'
+      false_val:      'no'
+    account_heading:  'Account Information'
+    no_stop_info:     'No stops assigned to this station.'
+    stop_heading:     'Stops at this Station'
+    add_label:        'Add additional Stops'
+    action:           'Action'
+
+  network_stops:
+    title:              'Network Stops'
+    network_station_id: 'Station'
+    network_line_id:    'Stop'
+    edit:
+      form_title:     'Edit Network Stop'
+    new:
+      form_title:     'Add Network Stop'
+    show:
+      form_title:     'Show Network Stop'
+    index:
+      form_title:     'List of all Network Stops'
+    msg:
+      new_ok:         'Network Stop successfully added.'
+      edit_ok:        'Network Stop successfully updated.'
+      delete_ok:      'Network Stop successfully deleted.'
+      bad_nw_line:    'bad reference to line.'
+      bad_nw_stn:     'bad reference to station.'
+      bad_no_stops:   'Cannot have more than one stop on non-transfer stations.'
 
   people:
     title:            'Persons'
@@ -1405,8 +1754,22 @@ en:
           s01:  'new'
           s02:  'closed'
 
+  s_code_modules:
+    msg:
+      bad_code_format:  "prefix ''%{prefix}'' must be given"
+      bad_h_m_combo:    'codes cannot be Master.'
+      bad_h_a_combo:    'codes must not be Active.'
+      too_many_masters: 'There is already one record with this code marked Master.'
+      bad_code_syntax:  'may only contain A-Z, 0-9, period, or dash.'
+
+  s_code_search:
+    title:            'Search for Codes'
+    index:
+      form_title:     :s_code_search.title
+      list_source:    "Results from %{table}"
+
   s_document_logs:
-    title:            'Siemens Document Log'
+    title:            'Siemens Document Log (SDL)'
     form:
       g_prompt:       :general.select_prompt
     index:
@@ -1422,6 +1785,7 @@ en:
       edit_ok:        'Document Attributes successfully updated.'
       delete_ok:      'Document and Attributes successfully removed.'
       at_least_one:   'At least of the following attributes must be given: Function Code, Service Code, Product Code, or Phase Code'
+      invalid_code:   'does not exist.'
 
   service_codes:
     title:            'Service Codes'

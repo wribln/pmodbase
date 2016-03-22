@@ -2,7 +2,7 @@ class ReferencesController < ApplicationController
   require 'csv'
   include ControllerMethods
 
-  initialize_feature FEATURE_ID_REFERENCES, FEATURE_ACCESS_INDEX
+  initialize_feature FEATURE_ID_REFERENCES, FEATURE_ACCESS_VIEW
 
   before_action :set_reference, only: [:show, :edit, :update, :destroy]
 

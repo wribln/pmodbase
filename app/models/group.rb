@@ -79,7 +79,7 @@ class Group < ActiveRecord::Base
   end
 
   def code_with_id
-    text_and_id( :code )    
+   text_and_id( :code )    
   end
 
   def group_category_with_id

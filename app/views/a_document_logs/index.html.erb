@@ -1,0 +1,42 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="table-responsive">
+    <%= form_tag({},{ method: :get, class: 'form-inline' }) do %>
+    <%= will_paginate @a_document_logs %>
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th class="col-sm-1"><%= ADocumentLog.human_attribute_name( :id )%></th>
+          <th class="col-sm-4"><%= ADocumentLog.human_attribute_name( :alt_doc_id )%></th>
+          <th class="col-sm-6"><%= ADocumentLog.human_attribute_name( :title )%></th>
+          <th class="col-sm-1 hidden-print"><%= filter_action_title_header %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr <%= filter_row( @filter_fields ) -%>>
+          <td><%= filter_field @filter_fields, :ff_srec, :id -%></td>
+          <td><%= filter_field @filter_fields, :ff_adic, :sw -%></td>
+          <td><%= filter_field @filter_fields, :ff_titl, :sw -%></td>
+          <td><%= filter_action_button -%></td>
+        </tr>
+      <% if @a_document_logs.length.zero? %>
+        <%= render partial: 'shared/index_empty_row', locals:{ columns: 3, with_link: true }%>
+      <% else %>
+        <% @a_document_logs.each do |adl| %>
+          <tr>
+            <td><%= adl.to_id %></td>
+            <td><%= adl.alt_doc_id %></td>
+            <td><%= adl.title %></td>
+            <td><%= render partial: 'shared/actions', object: adl %></td>
+          </tr>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+    <% end %>
+    <%= render partial: 'shared/download_xls' %>
+    <%= render partial: 'shared/footer' %>
+  </div>
+</div>

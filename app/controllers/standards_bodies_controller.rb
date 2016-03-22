@@ -2,7 +2,7 @@ class StandardsBodiesController < ApplicationController
   require 'csv'
   include ControllerMethods
 
-  initialize_feature FEATURE_ID_STANDARDS_BODIES, FEATURE_ACCESS_INDEX
+  initialize_feature FEATURE_ID_STANDARDS_BODIES, FEATURE_ACCESS_VIEW
 
   before_action :set_standards_body, only: [:show, :edit, :update, :destroy]
 

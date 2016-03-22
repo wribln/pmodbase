@@ -1,0 +1,69 @@
+<div class="form-set" <% if( network_stop.object._destroy || network_stop.index == 'template' )%>style="display:none"<% end %>>
+  <div class="form-group">
+    <% if action_type == :show %>
+      <%= network_stop.label :network_line_id, class: "col-sm-3 control-label" %>
+      <div class="col-sm-2">
+        <%= display_value network_stop.object.network_line.try( :code )%>
+      </div>
+      <div class="col-sm-4">
+        <%= display_value network_stop.object.network_line.try( :label )%>
+      </div>
+    <% else %>
+      <div class="col-sm-1">
+        <%= network_stop.hidden_field :_destroy %>
+        <%= link_to '-', '#', class: 'btn btn-warning btn-default btn-block del-subform-button' %>
+      </div>
+      <%= network_stop.label :network_line_id, class: "col-sm-2 control-label" %>
+      <div class="col-sm-6">
+        <%= network_stop.collection_select( :network_line_id, NetworkLine.all, :id, :code_and_label,
+          { prompt: true, include_blank: false }, { class: 'form-control' })%>
+      </div>
+    <% end %>
+  </div>
+  <div class="form-group">
+    <%= network_stop.label :stop_no, class: "col-sm-3 control-label" %>
+    <div class="col-sm-1">
+      <% if action_type == :show %>
+        <%= display_value network_stop.object.stop_no %>
+      <% else %>
+        <%= network_stop.text_field :stop_no, class: "form-control" %>
+      <% end %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= network_stop.label :code, class: "col-sm-3 control-label" %>
+    <div class="col-sm-2">
+      <% if action_type == :show %>
+        <%= display_value network_stop.object.code %>
+      <% else %>
+        <%= network_stop.text_field :code, class: "form-control" %>
+      <% end %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= network_stop.label :location_code_id, class: "col-sm-3 control-label" %>
+      <% if action_type == :show %>
+      <div class="col-sm-2">
+        <%= display_value network_stop.object.location_code.try( :code )%>
+      </div>
+      <div class="col-sm-4">
+        <%= display_value network_stop.object.location_code.try( :label )%>
+      </div>
+      <% else %>
+      <div class="col-sm-6">
+        <%= network_stop.collection_select( :location_code_id, LocationCode.all, :id, :code_and_label,
+        { prompt: true, include_blank: true }, { class: 'form-control' })%>
+      </div>
+      <% end %>
+  </div>
+  <div class="form-group">
+    <%= network_stop.label :note, class: "col-sm-3 control-label" %>
+    <div class="col-sm-6">
+      <% if action_type == :show %>
+        <%= display_value network_stop.object.note %>
+      <% else %>
+        <%= network_stop.text_field :note, class: "form-control", maxlength: MAX_LENGTH_OF_NOTE %>
+      <% end %>
+    </div>
+  </div>
+</div>

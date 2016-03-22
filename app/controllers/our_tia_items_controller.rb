@@ -43,7 +43,7 @@ class OurTiaItemsController < ApplicationController
   def new
     set_breadcrumb_path( my_tia_list_our_tia_items_path( params[ :my_tia_list_id ]))
     @tia_item = @tia_list.tia_items.new
-    @tia_item.seq_no = nil
+    @tia_item.seqno = nil
   end
 
   # GET /tia_items/1/edit
@@ -58,7 +58,7 @@ class OurTiaItemsController < ApplicationController
     @tia_item = @tia_list.tia_items.new( tia_item_params )
     respond_to do |format|
       @tia_item.transaction do
-        @tia_item.seq_no = @tia_list.next_seq_no_for_item
+        @tia_item.seqno = @tia_list.next_seqno_for_item
         if @tia_item.save
           format.html { redirect_to our_tia_item_path( @tia_item ), notice: t( 'our_tia_items.msg.new_ok' )}
         else

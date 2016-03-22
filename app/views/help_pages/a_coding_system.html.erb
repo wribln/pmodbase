@@ -1,0 +1,62 @@
+<% help_title "Help on EDMS Coding System" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">Alternate EDMS Coding System</p>
+    <p>This help file describes the alternate EDMS Coding System as used for this project.</p>
+    <h3>Structure of Alternate EDMS Document Code</h3>
+    <p>A document code for the alternate EDMS consists of 10 fields separated by a dash:</p>
+    <table class="table table-condensed text-center">
+    <tr>
+      <td>A1</td><td></td><td>A2</td><td></td><td>A3</td><td></td><td>A4</td><td></td><td>A5</td><td></td>
+      <td>A6</td><td></td><td>A7</td><td></td><td>A8</td><td></td><td>9</td><td></td><td>10</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: bottom">Project</td><td></td>
+      <td style="vertical-align: bottom">Stage</td><td></td>
+      <td>Discipline<br/>/ System</td><td></td>
+      <td>Sub-Disc.<br/>/ Sub-Syst.</td><td></td>
+      <td style="vertical-align: bottom">Activity</td><td></td>
+      <td style="vertical-align: bottom">Location</td><td></td>
+      <td style="vertical-align: bottom">Doc. Type</td><td></td>
+      <td style="vertical-align: bottom">Originator</td><td></td>
+      <td>Serial<br/>Number</td><td></td>
+      <td style="vertical-align: bottom">Revision</td>
+    </tr>
+    <tr>
+      <td>XXX</td><td>-</td><td>XXX</td><td>-</td><td>XXX</td><td>-</td><td>XXX</td><td>-</td><td>XXX</td>
+      <td>-</td><td>XXX</td><td>-</td><td>XXX</td><td>-</td><td>XXX</td><td>-</td><td>NNNNN</td><td>-</td><td>XX</td>
+    </tr>
+    </table>
+    <p>The possible values for the fields 1 through 8 are admininstered in separate tables, named 'A1' through 'A8'.
+      field 9 contains the sequence number 00001 through 99999, field 10 the revision code.</p>
+    <h3>Code Table Attributes</h3>
+    <p>The codes in the tables 'A1' through 'A8' have the following (mostly common) attributes:</p>
+    <ul>
+      <li>Each individual code has a unique record identifier, the <%= help_param I18n.t( 'general.attributes.id' )-%>.
+        This allows to administer more than one record with the same
+        <%= help_term I18n.t( 'activerecord.attributes.coding_system.code' )-%>. However, if more than one record with the same
+        <%= help_term I18n.t( 'activerecord.attributes.coding_system.code' )-%> is provided, one of them must be defined as 
+        <%= help_term I18n.t( 'activerecord.attributes.coding_system.master' )-%>
+        in order to provide a unique label for this
+        <%= help_term I18n.t( 'activerecord.attributes.coding_system.code' )-%>.</li>
+      <li><%= help_param I18n.t( 'activerecord.attributes.coding_system.code' )-%> is a short
+      	code. The number of characters in this code depends on the position of this code within the document code.</li>
+      <li><%= help_param I18n.t( 'activerecord.attributes.coding_system.label' )-%> is a short
+      	description of the code.</li>
+      <li>The flag <%= help_param I18n.t( 'activerecord.attributes.coding_system.active' )-%>
+        marks a code as being currently usable in the system (true = active) or not
+        (false = inactive). Inactive codes must not be used.</li>
+      <li>The flag <%= help_param I18n.t( 'activerecord.attributes.coding_system.master' )-%>
+        indicates that this entry is used as main entry for the associated code, i.e.
+        when listing the code structure and a single entry per code is required, then
+        the code marked with <%= help_term I18n.t( 'activerecord.attributes.coding_system.master' )-%>
+        will be listed. This requires that only a single code must have the
+        <%= help_term I18n.t( 'activerecord.attributes.coding_system.master' )-%> attribute.</li>
+      <li><%= help_param I18n.t( 'activerecord.attributes.coding_system.mapping' )-%> is a field available
+      	to document any mapping codes to other document management systems.</li>
+      <li>In some cases, a <%= help_param I18n.t( 'activerecord.attributes.coding_system.description' )-%>
+        field is provided which contains specific details on the use of the respective code.</li>
+    </ul>
+    <%= help_footer FEATURE_ID_HELP_PAGES %>
+  </div> <!-- /container -->

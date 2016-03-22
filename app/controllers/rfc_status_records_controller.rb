@@ -190,11 +190,11 @@ class RfcStatusRecordsController < ApplicationController
 
     def permitted_groups( action )
       pg = current_user.permitted_groups( FEATURE_ID_RFC_STATUS_RECORDS, action, :id )
-      Group.permitted_groups( pg ).all.collect{ |g| [ g.code_with_id, g.id ]}
+      Group.permitted_groups( pg ).all.collect{ |g| [ g.code, g.id ]}
     end
 
     def all_groups
-      Group.all.collect{ |g| [ g.code_with_id, g.id ]}
+      Group.all.collect{ |g| [ g.code, g.id ]}
     end
 
     # set general workflow options

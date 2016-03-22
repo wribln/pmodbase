@@ -60,7 +60,6 @@
           <div class="col-sm-2">
             <% if p.object.feature.access_by_group? -%>
               <%= p.label :group_id, class: "hidden-md hidden-lg control-label" %>
-              <%# p.text_field :group_id, class: "form-control", readonly: true %>
               <%= display_value p.object.group_code %>
             <% end -%>
           </div>

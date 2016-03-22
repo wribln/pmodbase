@@ -1,0 +1,114 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="form-horizontal" role="form">
+    <%= form_for @a_document_log do |f| %>
+      <%= render partial: 'shared/notice' %>
+      <div class="form-group">
+        <%= f.label :id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value f.object.id %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :a1_code, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value f.object.a1_code %>
+        </div>
+        <div class="col-sm-4">
+          <p class="form-control-static"><%= A1Code.find_by( code: f.object.a1_code ).try( :label ) %></p>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :a2_code, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value f.object.a2_code %>
+        </div>
+        <div class="col-sm-4">
+          <p class="form-control-static"><%= A2Code.find_by( code: f.object.a2_code ).try( :label ) %></p>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :a3_code, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value f.object.a3_code %>
+        </div>
+        <div class="col-sm-4">
+          <p class="form-control-static"><%= A3Code.find_by( code: f.object.a3_code ).try( :label ) %></p>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :a4_code, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value f.object.a4_code %>
+        </div>
+        <div class="col-sm-4">
+          <p class="form-control-static"><%= A4Code.find_by( code: A4Code.join_codes( f.object.a3_code, f.object.a4_code )).try( :label ) %></p>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :a5_code, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value f.object.a5_code %>
+        </div>
+        <div class="col-sm-4">
+          <p class="form-control-static"><%= A5Code.find_by( code: f.object.a5_code ).try( :label ) %></p>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :a6_code, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value f.object.a6_code %>
+        </div>
+        <div class="col-sm-4">
+          <p class="form-control-static"><%= A6Code.find_by( code: f.object.a6_code ).try( :label ) %></p>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :a7_code, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value f.object.a7_code %>
+        </div>
+        <div class="col-sm-4">
+          <p class="form-control-static"><%= A7Code.find_by( code: f.object.a7_code ).try( :label ) %></p>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :a8_code, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value f.object.a8_code %>
+        </div>
+        <div class="col-sm-4">
+          <p class="form-control-static"><%= A8Code.find_by( code: f.object.a8_code ).try( :label ) %></p>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :title, class: "col-sm-3 control-label" %>
+        <div class="col-sm-6">
+          <%= display_value f.object.title %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :alt_doc_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-6">
+          <%= display_value f.object.alt_doc_id %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :user, class: "col-sm-3 control-label" %>
+        <div class="col-sm-6">
+          <%= display_value ApplicationModel::some_text_and_id( f.object.account.user_name, f.object.account.id )%>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-2">
+          <%= link_to t( 'button_label.edit' ), edit_a_document_log_path( @a_document_log ), class: "btn btn-lg btn-block btn-default" %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to t( 'button_label.goto_to_list' ), a_document_logs_path, class: "btn btn-lg btn-block btn-default" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

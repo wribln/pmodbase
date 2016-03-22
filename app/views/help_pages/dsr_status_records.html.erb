@@ -21,10 +21,10 @@
       that each document has a unique title by adding the phase or period
       to the document's title.</li>
       <li><%= help_param DsrStatusRecord.human_attribute_name( :document_status ) -%>
-      shows the overall status of the document during its life-cycle: during the
+      shows the overall status of the document during its life cycle: during the
       creation of the document, this status would be somewhat the same as the 
       <%= help_term DsrStatusRecord.human_attribute_name( :current_status ) -%>.
-      However, when the life-cycle of the document is completed and the workflow
+      However, when the life cycle of the document is completed and the workflow
       of the document's creation has ended, the
       <%= help_term DsrStatusRecord.human_attribute_name( :document_status ) -%> 
       reflects the final status of the document, e.g. 'approved', or 'withdrawn'
@@ -50,7 +50,7 @@
         <li><%= help_value( DsrStatusRecord.human_attribute_name( :sub_purposes )[ 0 ])-%>,
           i.e. the submission includes a request for approval of the document, or</li>
         <li><%= help_value( DsrStatusRecord.human_attribute_name( :sub_purposes )[ 1 ])-%>,
-          i.e. no response from the receipient is expected or requested, or</li>
+          i.e. no response from the recipient is expected or requested, or</li>
         <li><%= help_value( DsrStatusRecord.human_attribute_name( :sub_purposes )[ 2 ])-%>,
           to be used for internal documents which need to be created but not submitted 
           for review and/or approval. Documents with this code will not be permitted for
@@ -90,7 +90,7 @@
         could be set to 2.0 such that the completion of document X would count twice
         as much as the completion of document Y.<br/>
         Details on the use of this parameter are project-specific and need to be
-        explained elsewhere.<br/>
+        explained in a project-specific document.<br/>
         For documents to be withdrawn, this attribute will be set to '0' in order
         to remove it from any statistical computations.<br/>
         For groups of documents, this value applies to the set of all documents
@@ -160,7 +160,7 @@
       <li><%= help_param DsrStatusRecord.human_attribute_name( :next_submission ) -%>
         is a date field showing the planned submission date for any subsequent (i.e.
         not the first) submission. This could be set by the document manager when the
-        a document is returned from a review with a specific date specified for the next
+        document is returned from a review with a specific date specified for the next
         submission.</li>
     </ul>
     <p>The following fields are for the Submission records, one for each submission:
@@ -172,17 +172,17 @@
         contains the version identifier of the submitted document. This shall be the
         version within the <em>sender's</em> document management system which - together with
         the <%= help_term DsrStatusRecord.human_attribute_name( :sender_doc_id ) -%> -
-        unambigously identifies the document being or having been submitted.</li>
+        unambiguously identifies the document being or having been submitted.</li>
       <li><%= help_param DsrSubmission.human_attribute_name( :receiver_doc_id_version ) -%>
         contains the version identifier of the submitted document. This shall be the
         version within the <em>receiver's</em> document management system which - together with
         the <%= help_term DsrStatusRecord.human_attribute_name( :receiver_doc_id ) -%> -
-        unambigously identifies the document being or having been submitted.</li>
+        unambiguously identifies the document being or having been submitted.</li>
       <li><%= help_param DsrSubmission.human_attribute_name( :project_doc_id_version ) -%>
         contains the version identifier of the submitted document. This shall be the
         version within the <em>project's</em> document management system which - together with
         the <%= help_term DsrStatusRecord.human_attribute_name( :project_doc_id ) -%> -
-        unambigously identifies the document being or having been submitted.</li>
+        unambiguously identifies the document being or having been submitted.</li>
       <li><%= help_param DsrSubmission.human_attribute_name( :submission_receiver_doc_id ) -%>
         is the <em>receiver's</em> document identifier of the submission cover letter.</li>
       <li><%= help_param DsrSubmission.human_attribute_name( :submission_project_doc_id ) -%>
@@ -227,11 +227,11 @@
       <li><%= help_param DsrStatusRecord.human_attribute_name( :notes ) -%> is a field
         to keep any document specific notes.</li>
       <li><%= help_param DsrStatusRecord.human_attribute_name( :current_status ) -%>
-        shows the current status of this document in its life-cycle. This field is changed when a new
+        shows the current status of this document in its life cycle. This field is changed when a new
         <%= help_term DsrStatusRecord.human_attribute_name( :next_status_task ) -%>
         is set.</li>
       <li><%= help_param DsrStatusRecord.human_attribute_name( :current_task ) -%>
-        is the task currently being performed on this document during its life-cycle;
+        is the task currently being performed on this document during its life cycle;
         dummy tasks (as needed for internal processing) are noted in angle brackets,
         e.g. &lt;workflow completed&gt;. This field is changed when a new
         <%= help_term DsrStatusRecord.human_attribute_name( :next_status_task ) -%>
@@ -243,7 +243,7 @@
     <p>On the <%= help_param t( 'dsr_status_records.show.form_title' ) -%> form,
       you can use the <%= help_param t( 'helpers.submit.add' ) -%> button
       to open a form preset with the current record's data: This can make it easy
-      to repeatedly adding documents with similar information.</p>
+      to repeatedly add documents with similar information.</p>
     <h3 id="DocGrp">Planning a Group of Documents</h3>
     <p>When planning a group of documents, such as the set of drawings for a specific
       location, or the Monthly Progress Reports, it should not be necessary to plan
@@ -311,7 +311,7 @@
     </ul>
     <h4>Submission</h4>
     <p>For each submission, a 
-      <%= link_to_help :dsr_submissions, DsrSubmission.model_name.human -%> will be created containing submission specific information and data regarding the specific submission.</p>
+      <%= link_to_help :dsr_submissions, DsrSubmission.model_name.human -%> will be created containing submission specific information and data.</p>
     <h3 id="add">Function of the <%= button_label_add -%></h3>
       <p>The <%= button_label_add -%> is available when a DSR record is shown.
       It duplicates that DSR record by setting all attributes equal to the one in the
@@ -321,7 +321,7 @@
       <%= help_term DsrStatusRecord.human_attribute_name( :quantity ) -%> will be
       set to '1', the
       <%= help_term DsrStatusRecord.human_attribute_name( :sub_frequency ) -%> will be
-      set to 'single (in Group), and an option will be available which allows you
+      set to 'single (in Group)', and an option will be available which allows you
       to automatically request the decrement of the 
       <%= help_term DsrStatusRecord.human_attribute_name( :quantity ) -%> attribute in 
       the original document's group record (the one shown when the <%= button_label_add -%>
@@ -334,7 +334,7 @@
       of documents is usually an agreement between the project and the customer and must
       not be modified.</p>
     <h3>Detailed Workflow Information</h3>
-      <p>Information on each workflow, its tasks and possible status transistions
+      <p>Information on each workflow, its tasks and possible status transitions
       can be found <%= link_to 'here', dsr_workflow_info_path %>.</p>
     <h3>Statistics</h3>
       <p>Various statistics on the DSR are shown on the <%= help_term t( 'general.statistics' )-%>

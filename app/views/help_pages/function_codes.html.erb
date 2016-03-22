@@ -6,7 +6,8 @@
     <p>Function Codes are managed using the following fields:</p>
     <ul>
       <li>The <%= help_param FunctionCode.human_attribute_name( :code ) -%> must be a short
-        alphanumeric code with the prefix '=' (may also contain periods and dashes).</li>
+        alphanumeric code with the prefix '=' (may also contain periods and dashes). The
+        special code '=!' can be used, it has normally the meaning 'not applicable'.</li>
       <li>The <%= help_param FunctionCode.human_attribute_name( :label ) -%>
         describes the function represented by the 
         <%= help_term FunctionCode.human_attribute_name( :code ) -%>.</li>

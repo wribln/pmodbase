@@ -1,0 +1,38 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="form-horizontal" role="form">
+    <%= form_for @network_station do |f| %>
+      <%= render partial: 'shared/errors', object: @network_station.errors %>
+      <%= render partial: 'form', object: f %>
+      <%= render partial: 'network_stop_header' %>
+      <!-- Network Stop -->
+      <%= f.fields_for :network_stops, f.object.network_stops.order_by_line_seqno do |ns| %>
+        <%= render partial: 'network_stop', locals: { network_stop: ns, action_type: :edit }%>
+      <% end %>
+      <%= f.fields_for :network_stops, @network_station.network_stops.new, { child_index: "template" } do |ns| %>
+        <%= render partial: 'network_stop', locals: { network_stop: ns, action_type: :edit }%>
+      <% end %>
+      <!-- button to add another stop record -->
+      <div class="form-group">
+        <div class="col-sm-1">
+          <%= link_to '+', '#', class: 'btn btn-info btn-default btn-block add-subform-button' %>
+        </div>
+        <label class="col-sm-4"><%= t( 'network_stations.add_label' )%></label>
+      </div>
+      <%= render partial: 'network_stop_footer' %>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-2">
+          <%= f.submit class: "btn btn-lg btn-block btn-primary" %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to t( 'button_label.show' ), @network_station, class: "btn btn-lg btn-block btn-default" %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to t( 'button_label.goto_to_list' ), network_stations_path, class: "btn btn-lg btn-block btn-default" %>
+        </div>
+      <div>
+    <% end %>
+  </div>
+</div>

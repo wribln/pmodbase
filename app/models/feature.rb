@@ -54,15 +54,43 @@ class Feature < ActiveRecord::Base
   # scope for features with workflows
 
   scope :with_wf, -> { where( 'no_workflows > 0' )}
+  scope :all_by_label, -> { order( label: :asc )}
+
+  # permitted_features: scope helper in conjunction with Account.permitted_features
+  # to provide the scope for features to which a user has access to: This will
+  # return then all Feature records to which the given account is permitted
+  # access to according to the conditions specified in the Account.permitted_features
+  # method
+
+  def self.permitted_features( pf )
+    case pf
+    when nil
+      none
+    when ''
+      all
+    else
+      where pf
+    end
+  end
+
+  # provide helper methods which create a route
+
+  def self.create_target( a_code )
+    "/#{ a_code.downcase }"
+  end    
+
+  def create_target
+    self.class.create_target( code )
+  end
 
   # make sure a route exists for this code - unless this feature is hidden;
 
   def code_has_route
-    route = "/#{ code.downcase.pluralize }"
+    route = create_target
     Rails.application.routes.recognize_path( route ) \
       unless no_user_access? || no_direct_access?
     rescue
-      errors.add( :base, "missing route: /#{ route }")
+      errors.add( :base, "missing route: #{ route }")
   end
 
   # overwrite write accessors to ensure that text fields do not contain
@@ -92,6 +120,10 @@ class Feature < ActiveRecord::Base
     ApplicationController::access_to_index?( access_level )
   end
 
+  def access_to_view?
+    ApplicationController::access_to_view?( access_level )
+  end
+
   def no_user_access?
     ApplicationController::no_user_access?( access_level )
   end
@@ -107,7 +139,22 @@ class Feature < ActiveRecord::Base
   # make labels for user access available
 
   def access_level_label
-    FEATURE_ACCESS_LEVELS[ access_level & 0x0F ]
+    case access_level
+    when ApplicationController::FEATURE_ACCESS_NONE, ApplicationController::FEATURE_ACCESS_NDA
+       FEATURE_ACCESS_LEVELS[ 0 ]
+    when ApplicationController::FEATURE_ACCESS_SOME
+       FEATURE_ACCESS_LEVELS[ 1 ]
+    when ApplicationController::FEATURE_ACCESS_INDEX
+       FEATURE_ACCESS_LEVELS[ 2 ]
+    when ApplicationController::FEATURE_ACCESS_VIEW 
+       FEATURE_ACCESS_LEVELS[ 3 ]
+    when ApplicationController::FEATURE_ACCESS_USER 
+       FEATURE_ACCESS_LEVELS[ 4 ]
+    when ApplicationController::FEATURE_ACCESS_ALL
+       FEATURE_ACCESS_LEVELS[ 5 ]
+    else
+      access_level.to_s( 16 )
+    end
   end
 
   def control_level_label

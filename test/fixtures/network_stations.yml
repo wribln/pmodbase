@@ -1,0 +1,15 @@
+one:
+  code:     'MCD'
+  alt_code: 'ACD'
+  curr_name: 'Main Station'
+  prev_name: 'Central Station'
+  transfer:  true
+
+two:
+  code:      'XCD'
+  alt_code:  'BCD'
+  curr_name: 'Radio Station'
+  prev_name: 'Test Station'
+  transfer:   false
+  note:      'just joking'
+  

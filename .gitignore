@@ -14,6 +14,8 @@
 # Ignore all logfiles and tempfiles.
 /log
 /tmp
+# playground
+/zeleftovers
 
 # other, individual files
 /pmodbase.sublime-*

@@ -1,0 +1,133 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="table-responsive col-sm-9">
+    <%= form_tag({}, { method: :get }) do %>
+    <table class="table table-hover table-bordered">
+      <thead>
+        <tr>
+          <th class="col-sm-2"><%= label_tag :as_code, t( 'coding_systems.code' ),  class: 'control-label' %></th>
+          <th class="col-sm-6"><%= label_tag :as_desc, t( 'coding_systems.label' ), class: 'control-label' %></th>
+          <th class="col-sm-1 hidden-print"><%= t( 'action_title.header' ) -%></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= filter_field @filter_fields, :as_code, :sw -%></td>
+          <td><%= filter_field @filter_fields, :as_desc, :sw -%></td>
+          <td><%= filter_action_button -%></td>
+        </tr>
+        <% if @total_rows == 0 -%>
+          <%= render partial: 'shared/index_empty_row', locals: { columns: 3 }%>
+        <% end %>
+        <% unless @a1_codes.length.zero? -%>
+        <!-- a1 codes - - - - - - - - - -->
+          <tr>
+            <td class="td-subtitle" colspan="3"><%= t( '.list_source', table: A1Code.model_name.human )-%></td>
+          </tr>
+          <% @a1_codes.each do |a| %>
+          <tr>
+            <td><%= a.code %></td>
+            <td><%= a.label %></td>
+            <td><%= render partial: 'shared/actions', object: a, locals: { use_model_route: nil }  %></td>
+          </tr>
+          <% end -%>
+        <% end -%>
+        <% unless @a2_codes.length.zero? -%>
+        <!-- a2 codes - - - - - - - - - -->
+          <tr>
+            <td class="td-subtitle" colspan="3"><%= t( '.list_source', table: A2Code.model_name.human )-%></td>
+          </tr>
+          <% @a2_codes.each do |a| %>
+          <tr>
+            <td><%= a.code %></td>
+            <td><%= a.label %></td>
+            <td><%= render partial: 'shared/actions', object: a, locals: { use_model_route: nil }  %></td>
+          </tr>
+          <% end -%>
+        <% end -%>
+        <% unless @a3_codes.length.zero? -%>
+        <!-- a3 codes - - - - - - - - - -->
+          <tr>
+            <td class="td-subtitle" colspan="3"><%= t( '.list_source', table: A3Code.model_name.human )-%></td>
+          </tr>
+          <% @a3_codes.each do |a| %>
+          <tr>
+            <td><%= a.code %></td>
+            <td><%= a.label %></td>
+            <td><%= render partial: 'shared/actions', object: a, locals: { use_model_route: nil }  %></td>
+          </tr>
+          <% end -%>
+        <% end -%>
+        <% unless @a4_codes.length.zero? -%>
+        <!-- a4 codes - - - - - - - - - -->
+          <tr>
+            <td class="td-subtitle" colspan="3"><%= t( '.list_source', table: A4Code.model_name.human )-%></td>
+          </tr>
+          <% @a4_codes.each do |a| %>
+          <tr>
+            <td><%= a.a4_code_part %></td>
+            <td><%= a.label %></td>
+            <td><%= render partial: 'shared/actions', object: a, locals: { use_model_route: nil }  %></td>
+          </tr>
+          <% end -%>
+        <% end -%>
+        <% unless @a5_codes.length.zero? -%>
+        <!-- a5 codes - - - - - - - - - -->
+          <tr>
+            <td class="td-subtitle" colspan="3"><%= t( '.list_source', table: A5Code.model_name.human )-%></td>
+          </tr>
+          <% @a5_codes.each do |a| %>
+          <tr>
+            <td><%= a.code %></td>
+            <td><%= a.label %></td>
+            <td><%= render partial: 'shared/actions', object: a, locals: { use_model_route: nil }  %></td>
+          </tr>
+          <% end -%>
+        <% end -%>
+        <% unless @a6_codes.length.zero? -%>
+        <!-- a6 codes - - - - - - - - - -->
+          <tr>
+            <td class="td-subtitle" colspan="3"><%= t( '.list_source', table: A6Code.model_name.human )-%></td>
+          </tr>
+          <% @a6_codes.each do |a| %>
+          <tr>
+            <td><%= a.code %></td>
+            <td><%= a.label %></td>
+            <td><%= render partial: 'shared/actions', object: a, locals: { use_model_route: nil }  %></td>
+          </tr>
+          <% end -%>
+        <% end -%>
+        <% unless @a7_codes.length.zero? -%>
+        <!-- a7 codes - - - - - - - - - -->
+          <tr>
+            <td class="td-subtitle" colspan="3"><%= t( '.list_source', table: A7Code.model_name.human )-%></td>
+          </tr>
+          <% @a7_codes.each do |a| %>
+          <tr>
+            <td><%= a.code %></td>
+            <td><%= a.label %></td>
+            <td><%= render partial: 'shared/actions', object: a, locals: { use_model_route: nil }  %></td>
+          </tr>
+          <% end -%>
+        <% end -%>
+        <% unless @a8_codes.length.zero? -%>
+        <!-- a8 codes - - - - - - - - - -->
+          <tr>
+            <td class="td-subtitle" colspan="3"><%= t( '.list_source', table: A8Code.model_name.human )-%></td>
+          </tr>
+          <% @a8_codes.each do |a| %>
+          <tr>
+            <td><%= a.code %></td>
+            <td><%= a.label %></td>
+            <td><%= render partial: 'shared/actions', object: a, locals: { use_model_route: nil }  %></td>
+          </tr>
+          <% end -%>
+        <% end -%>
+      </tbody>
+    </table>
+    <% end %>
+  <%= render partial: 'shared/footer' %>    
+  </div>
+</div>

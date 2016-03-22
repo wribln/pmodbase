@@ -1,0 +1,39 @@
+code;label;desc
+CAL;Calculations;for calculations, primarily for infrastructure
+CER;Certificate;for all certificates including completion certificates and certificates of compliance
+CSD;Combined/Coordination Service Drawings;
+CON;Contract;for contracts between any parties relevant to the project
+DCR;Design Change Request;including engineering and field change requeists
+DRW;Drawing;drawings including floor, site and roof plans, elevations, sections, details, layouts, etc.
+DSH;Data Sheet;product data sheets, technical literature and manufacturer's information for specific assets
+GDL;Guidelines;
+ICD;Interface Coordination Document;for interface coordination documents between two or more parties, including D/CIM (Design and Construction Interface Manual) but excluding CSD.
+IMG;Image;for all photographic records and images
+INS;Instruction;
+INV;Invoice;for documents detailing the cost of project activities during a month
+IRE;Interface Record;for project interface document between two or more arties (not already covered by ICD).
+MAN;Manual;manuals including O&M manuals for system, plant and equipment
+MFL;Model File;for all 3D and BIM related files
+MST;Method Statement;all work method statements including safety work method statements
+NOC;No Objection Certificate;for all type of certificates and permits issued during the course of the project.
+PGM;Programme;all project programmes/planning documents
+PPL;Proposal;for any proposal relevant to the project, in response to a specific RFP (Request for Proposal)
+PHO;Photographs;for all photographs including aerial images
+PLN;Plan;all plan documentation including project plans, design plans and execution plans
+PLY;Policy;for all project-related and relevant external or third party policies and guidelines
+PRD;Procedure;for all relevant process and procedure documentation
+REG;Register;for registers and lists including but all asset and equipment registers
+RFI;Request for Information;for all requests for information
+RFP;Request for Proposal;request for proposal documents describing general, particular and technical requirements of the works to enable third parties to tender
+RPT;Report;Reports including weekly, inspection, monthly, PCG, cost reports, etc.
+SCH;Schedule;schedules including window, door, finishes and hardware schedules
+SFN;Safety Notice;for safety notices issued on the project
+SKE;Sketch;Sketch/Exhibit drawing
+SMP;Sample;for all documents related to samples and the sample approval process
+SOW;Scope of Works;for all scopes of work documentation
+SPC;Specification;all specifications including hardware, equipment and design specifications
+SPD;Shop Drawing;all shop drawings produced by the subcontractors and head contractor
+SRV;Survey;data and drawings produced by the subcontractors and head contractor
+TCN;Technical Note;for technical description of a technique or procedure, including modificaiton of a technique, procedure or equipment
+TEN;Tender;documents describing general, particular and technical requirements of the works to enable third parties to tender
+WAR;Warranty;for all plant and equipment warranties and guarantees

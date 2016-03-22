@@ -29,7 +29,7 @@
       <% @tia_items.each do |ti| -%>
         <% rows = ( ti.comment.empty? ? 2 : 3 ) %>
         <tr>
-          <td rowspan="<%= rows -%>" valign="top"><%= ti.tia_list.item_code( ti.seq_no ) %></td>
+          <td rowspan="<%= rows -%>" valign="top"><%= ti.tia_list.item_code( ti.seqno ) %></td>
           <td><%= ti.description %></td>
           <td rowspan="<%= rows -%>" valign="top"><%= ti.due_date.nil? ? 'open' : db_formatted_d( ti.due_date ) %></td> 
         </tr>

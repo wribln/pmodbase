@@ -1,0 +1,18 @@
+#! /bin/sh
+echo "+----------------------------+"
+echo "| load project specific data |"
+echo "+----------------------------+"
+rake import['db/projects/dmr/a1_codes.csv','A1Code']
+rake import['db/projects/dmr/a2_codes.csv','A2Code']
+rake import['db/projects/dmr/a3_codes.csv','A3Code']
+rake import['db/projects/dmr/a4_codes.csv','A4Code']
+rake import['db/projects/dmr/a5_codes.csv','A5Code']
+rake import['db/projects/dmr/a6_codes.csv','A6Code']
+rake import['db/projects/dmr/a7_codes.csv','A7Code']
+rake import['db/projects/dmr/a8_codes.csv','A8Code']
+#
+rake import['db/projects/dmr/location_codes.csv','LocationCode']
+rake import['db/projects/dmr/network_lines.csv','NetworkLine']
+rake import['db/projects/dmr/network_stations.csv','NetworkStation']
+rake db:seed:network_stops
+#

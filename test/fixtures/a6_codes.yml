@@ -1,0 +1,7 @@
+one:
+  code:   'ABC'
+  label:  'The Alphabet'
+  active: true
+  master: true
+  mapping: 'XYZ'
+  desc:    'A rather long description of what could be in the label'

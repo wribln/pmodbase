@@ -1,0 +1,54 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="table-responsive">
+    <%= form_tag({},{ method: :get, class: 'form-inline' }) do %>
+    <%= will_paginate @network_stations %>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th class="col-sm-1"><%= label_tag :ff_code, NetworkStation.human_attribute_name( :code      ), class: 'control-label' %></th>
+          <th class="col-sm-4"><%= label_tag :ff_label, NetworkStation.human_attribute_name( :curr_name ), class: 'control-label' %></th>
+          <th class="col-sm-1"><%= label_tag :ff_line, t( '.transfer' ), class: 'control-label' %></th>
+          <th class="col-sm-4"><%= label_tag :ff_note, t( '.notes' ), class: 'control-label' -%></th>
+          <th class="col-sm-1"><%= LocationCode.human_attribute_name( :center_point )-%></th>
+          <th class="col-sm-1 hidden-print"><%= filter_action_title_header %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr <%= filter_row( @filter_fields ) -%>>
+          <td><%= filter_field @filter_fields, :ff_code,  :sl -%></td>
+          <td><%= filter_field @filter_fields, :ff_label, :sl -%></td>
+          <td><%= filter_select_from_array @filter_fields, :ff_line, @network_lines %></td>
+          <td colspan="2"><%= filter_field @filter_fields, :ff_note, :ns -%></td>
+          <td><%= filter_action_button -%></td>
+        <tr>
+      <% if @network_stations.length.zero? %>
+        <%= render partial: 'shared/index_empty_row', locals:{ columns: 6, with_link: true }%>
+      <% else %>
+        <% @network_stations.each do |ns| %>
+          <% rowspan = ns.network_stops.size + 1 %>
+          <tr>
+            <td rowspan="<%= rowspan.to_s -%>"><%= ns.code || ns.alt_code %></td>
+            <td rowspan="<%= rowspan.to_s -%>"><%= ns.curr_name || ns.prev_name %></td>
+            <td><%= t ( '.transfer_short' ) if ns.transfer %></td>
+            <td colspan="2"><small><%= ns.note %></small></td>
+            <td rowspan="<%= rowspan.to_s -%>"><%= render partial: 'shared/actions', object: ns %></td>
+          </tr>
+          <% ns.network_stops.each do |st| %>
+          <tr>
+            <td><%= st.network_line.code %></td>
+            <td><small><%= st.note %></small></td>
+            <td><%= db_formatted_km( st.location_code.try( :center_point )) %></td>
+          </tr>
+          <% end %>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+    <% end %>
+    <%= render partial: 'shared/download_xls' %>
+    <%= render partial: 'shared/footer' %>
+  </div>
+</div>

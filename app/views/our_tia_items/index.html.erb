@@ -33,7 +33,7 @@
       <% else %>
         <% @tia_items.each do |ti| %>
           <tr>
-            <td><%= ti.tia_list.item_code( ti.seq_no ) %></td>
+            <td><%= ti.tia_list.item_code( ti.seqno ) %></td>
             <td><%= ti.description %><%= raw('<hr style="margin: 0.5em 0"/>') unless ti.comment.blank? %><%= ti.comment %></td>
             <td><%= ti.prio_label %></td>
             <td><%= ti.account.user_name unless ti.account.nil? %></td>

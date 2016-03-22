@@ -11,7 +11,125 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160303104649) do
+ActiveRecord::Schema.define(version: 20160320183500) do
+
+  create_table "a1_codes", force: :cascade do |t|
+    t.string   "code",                      null: false
+    t.string   "label",                     null: false
+    t.boolean  "active",     default: true, null: false
+    t.boolean  "master",     default: true, null: false
+    t.string   "mapping"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "a1_codes", ["code"], name: "index_a1_codes_on_code"
+
+  create_table "a2_codes", force: :cascade do |t|
+    t.string   "code",                      null: false
+    t.string   "label",                     null: false
+    t.boolean  "active",     default: true, null: false
+    t.boolean  "master",     default: true, null: false
+    t.string   "mapping"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "a2_codes", ["code"], name: "index_a2_codes_on_code"
+
+  create_table "a3_codes", force: :cascade do |t|
+    t.string   "code",                      null: false
+    t.string   "label",                     null: false
+    t.boolean  "active",     default: true, null: false
+    t.boolean  "master",     default: true, null: false
+    t.string   "mapping"
+    t.string   "desc"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "a3_codes", ["code"], name: "index_a3_codes_on_code"
+
+  create_table "a4_codes", force: :cascade do |t|
+    t.string   "code",                      null: false
+    t.string   "label",                     null: false
+    t.boolean  "active",     default: true, null: false
+    t.boolean  "master",     default: true, null: false
+    t.string   "mapping"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "a4_codes", ["code"], name: "index_a4_codes_on_code"
+
+  create_table "a5_codes", force: :cascade do |t|
+    t.string   "code",                      null: false
+    t.string   "label",                     null: false
+    t.boolean  "active",     default: true, null: false
+    t.boolean  "master",     default: true, null: false
+    t.string   "mapping"
+    t.string   "desc"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "a5_codes", ["code"], name: "index_a5_codes_on_code"
+
+  create_table "a6_codes", force: :cascade do |t|
+    t.string   "code",                      null: false
+    t.string   "label",                     null: false
+    t.boolean  "active",     default: true, null: false
+    t.boolean  "master",     default: true, null: false
+    t.string   "mapping"
+    t.string   "desc"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "a6_codes", ["code"], name: "index_a6_codes_on_code"
+
+  create_table "a7_codes", force: :cascade do |t|
+    t.string   "code",                      null: false
+    t.string   "label",                     null: false
+    t.boolean  "active",     default: true, null: false
+    t.boolean  "master",     default: true, null: false
+    t.string   "mapping"
+    t.string   "desc"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "a7_codes", ["code"], name: "index_a7_codes_on_code"
+
+  create_table "a8_codes", force: :cascade do |t|
+    t.string   "code",                      null: false
+    t.string   "label",                     null: false
+    t.boolean  "active",     default: true, null: false
+    t.boolean  "master",     default: true, null: false
+    t.string   "mapping"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "a8_codes", ["code"], name: "index_a8_codes_on_code"
+
+  create_table "a_document_logs", force: :cascade do |t|
+    t.string   "a1_code",    limit: 10,  null: false
+    t.string   "a2_code",    limit: 10,  null: false
+    t.string   "a3_code",    limit: 10,  null: false
+    t.string   "a4_code",    limit: 10,  null: false
+    t.string   "a5_code",    limit: 10,  null: false
+    t.string   "a6_code",    limit: 10,  null: false
+    t.string   "a7_code",    limit: 10,  null: false
+    t.string   "a8_code",    limit: 10,  null: false
+    t.integer  "account_id",             null: false
+    t.string   "title",      limit: 128
+    t.string   "alt_doc_id", limit: 50
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "a_document_logs", ["id"], name: "index_a_document_logs_on_id"
 
   create_table "abbreviations", force: :cascade do |t|
     t.string   "code",        limit: 10,  null: false
@@ -274,6 +392,18 @@ ActiveRecord::Schema.define(version: 20160303104649) do
 
   add_index "groups", ["code"], name: "index_groups_on_code"
 
+  create_table "hashtags", force: :cascade do |t|
+    t.string   "code"
+    t.string   "label"
+    t.integer  "feature_id"
+    t.string   "sort_code"
+    t.integer  "seqno",      default: 0
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "hashtags", ["feature_id", "code"], name: "index_hashtags_on_feature_id_and_code", unique: true
+
   create_table "holidays", force: :cascade do |t|
     t.date     "date_from",                               null: false
     t.date     "date_until",                              null: false
@@ -304,6 +434,42 @@ ActiveRecord::Schema.define(version: 20160303104649) do
   end
 
   add_index "location_codes", ["code"], name: "index_location_codes_on_code"
+
+  create_table "network_lines", force: :cascade do |t|
+    t.string   "code",                         null: false
+    t.string   "label",                        null: false
+    t.integer  "seqno",            default: 0, null: false
+    t.string   "note"
+    t.integer  "location_code_id"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
+  create_table "network_stations", force: :cascade do |t|
+    t.string   "code",                       null: false
+    t.string   "alt_code"
+    t.string   "curr_name"
+    t.string   "prev_name"
+    t.boolean  "transfer",   default: false, null: false
+    t.string   "note"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  create_table "network_stops", force: :cascade do |t|
+    t.integer  "network_station_id", null: false
+    t.integer  "network_line_id",    null: false
+    t.integer  "location_code_id"
+    t.integer  "stop_no"
+    t.string   "code"
+    t.string   "note"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "network_stops", ["network_line_id", "stop_no"], name: "index_network_stops_on_network_line_id_and_stop_no"
+  add_index "network_stops", ["network_line_id"], name: "index_network_stops_on_network_line_id"
+  add_index "network_stops", ["network_station_id"], name: "index_network_stops_on_network_station_id"
 
   create_table "people", force: :cascade do |t|
     t.string   "formal_name",   limit: 70,  default: "",   null: false
@@ -495,7 +661,7 @@ ActiveRecord::Schema.define(version: 20160303104649) do
   create_table "tia_items", force: :cascade do |t|
     t.integer  "tia_list_id",                 null: false
     t.integer  "account_id"
-    t.integer  "seq_no",      default: 1
+    t.integer  "seqno",       default: 1
     t.string   "description",                 null: false
     t.string   "comment"
     t.integer  "prio",        default: 0
@@ -507,8 +673,7 @@ ActiveRecord::Schema.define(version: 20160303104649) do
   end
 
   add_index "tia_items", ["account_id"], name: "index_tia_items_on_account_id"
-  add_index "tia_items", ["tia_list_id", "seq_no"], name: "tia_list_items_index", unique: true
-  add_index "tia_items", ["tia_list_id"], name: "index_tia_items_on_tia_list_id"
+  add_index "tia_items", ["tia_list_id", "seqno"], name: "tia_list_items_index", unique: true
 
   create_table "tia_lists", force: :cascade do |t|
     t.integer  "owner_account_id",  null: false

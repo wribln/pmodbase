@@ -40,6 +40,13 @@ fc6.label = 'Utilities'
 fc6.seqno = 8
 fc6.save
 
+fc9 = FeatureCategory.new
+fc9.label = 'Network Information'
+fc9.seqno = 9
+fc9.save
+
+puts ">>> no of feature groups: #{ FeatureCategory.count }"
+
 # - - - - - - - - - - all features
 
 Feature.new do |f|
@@ -57,7 +64,7 @@ Feature.new do |f|
   f.id = FEATURE_ID_FEATURE_CATEGORIES
   f.label = I18n.t('feature_categories.title')
   f.code = 'FCT'
-  f.seqno = 2
+  f.seqno = 81
   f.access_level = FeatureCategoriesController.feature_access_level
   f.control_level = FeatureCategoriesController.feature_control_level
   f.no_workflows = FeatureCategoriesController.no_workflows
@@ -68,7 +75,7 @@ Feature.new do |f|
   f.id = FEATURE_ID_FEATURE_ITEMS
   f.label = I18n.t('features.title')
   f.code = 'FIT'
-  f.seqno = 3
+  f.seqno = 82
   f.access_level = FeaturesController.feature_access_level
   f.control_level = FeaturesController.feature_control_level
   f.no_workflows = FeaturesController.no_workflows
@@ -79,7 +86,7 @@ Feature.new do |f|
   f.id = FEATURE_ID_RESPONSIBILITIES
   f.label = I18n.t('responsibilities.title')
   f.code = 'RPP'
-  f.seqno = 4
+  f.seqno = 0
   f.access_level = ResponsibilitiesController.feature_access_level
   f.control_level = ResponsibilitiesController.feature_control_level
   f.no_workflows = ResponsibilitiesController.no_workflows
@@ -90,7 +97,7 @@ Feature.new do |f|
   f.id = FEATURE_ID_GROUP_CATEGORIES
   f.label = I18n.t('group_categories.title')
   f.code = 'GCT'
-  f.seqno = 5
+  f.seqno = 61
   f.access_level = GroupCategoriesController.feature_access_level
   f.control_level = GroupCategoriesController.feature_control_level
   f.no_workflows = GroupCategoriesController.no_workflows
@@ -101,7 +108,7 @@ Feature.new do |f|
   f.id = FEATURE_ID_CONTACT_INFOS
   f.label = I18n.t('contact_infos.title')
   f.code = 'CCI'
-  f.seqno = 6
+  f.seqno = 91
   f.access_level = ContactInfosController.feature_access_level
   f.control_level = ContactInfosController.feature_control_level
   f.no_workflows = ContactInfosController.no_workflows
@@ -112,7 +119,7 @@ Feature.new do |f|
   f.id = FEATURE_ID_ACCOUNTS_AND_PERMISSIONS
   f.label = I18n.t('accounts.title')
   f.code = 'ANP'
-  f.seqno = 7
+  f.seqno = 1
   f.access_level = AccountsController.feature_access_level
   f.control_level = AccountsController.feature_control_level
   f.no_workflows = AccountsController.no_workflows
@@ -123,7 +130,7 @@ Feature.new do |f|
   f.id = FEATURE_ID_WORKFLOW_PERMISSIONS
   f.label = I18n.t( 'permission4_flows.title' )
   f.code = 'WRQ'
-  f.seqno = 8
+  f.seqno = 3
   f.access_level = WorkflowResponsibilitiesController.feature_access_level
   f.control_level = WorkflowResponsibilitiesController.feature_control_level
   f.no_workflows = WorkflowResponsibilitiesController.no_workflows
@@ -134,7 +141,7 @@ Feature.new do |f|
   f.id = FEATURE_ID_DBSTATS
   f.label = I18n.t('statistics.title')
   f.code = 'SDH'
-  f.seqno = 8
+  f.seqno = 71
   f.access_level = StatisticsController.feature_access_level
   f.control_level = StatisticsController.feature_control_level
   f.no_workflows = StatisticsController.no_workflows
@@ -145,7 +152,7 @@ Feature.new do |f|
   f.id = FEATURE_ID_DSR_SUBMISSIONS
   f.label = I18n.t( 'dsr_submissions.title' )
   f.code = 'DSB'
-  f.seqno = 4
+  f.seqno = 61
   f.access_level = DsrSubmissionsController.feature_access_level
   f.control_level = DsrSubmissionsController.feature_control_level
   f.no_workflows = DsrSubmissionsController.no_workflows
@@ -156,7 +163,7 @@ Feature.new do |f|
   f.id = FEATURE_ID_DB_CHANGE_REQUESTS
   f.label = I18n.t('db_change_requests.title')
   f.code = 'ACR'
-  f.seqno = 11
+  f.seqno = 41
   f.access_level = DbChangeRequestsController.feature_access_level
   f.control_level = DbChangeRequestsController.feature_control_level
   f.no_workflows = DbChangeRequestsController.no_workflows
@@ -167,7 +174,7 @@ Feature.new do |f|
   f.id = FEATURE_ID_HOME_PAGE
   f.label = I18n.t('home.title')
   f.code = 'PHP'
-  f.seqno = 12
+  f.seqno = 11
   f.access_level = HomeController.feature_access_level
   f.control_level = HomeController.feature_control_level
   f.no_workflows = HomeController.no_workflows
@@ -178,7 +185,7 @@ Feature.new do |f|
   f.id = FEATURE_ID_BASE_PAGE
   f.label = I18n.t('base_page.title')
   f.code = 'IBP'
-  f.seqno = 13
+  f.seqno = 12
   f.access_level = BaseController.feature_access_level
   f.control_level = BaseController.feature_control_level
   f.no_workflows = BaseController.no_workflows
@@ -190,7 +197,7 @@ Feature.new do |f|
   f.label = I18n.t('help_pages.title')
   f.code = 'IHP'
   f.label = 'Help Information'
-  f.seqno = 14
+  f.seqno = 13
   f.access_level = HelpPagesController.feature_access_level
   f.control_level = HelpPagesController.feature_control_level
   f.no_workflows = HelpPagesController.no_workflows
@@ -201,7 +208,7 @@ Feature.new do |f|
   f.id = FEATURE_ID_PROFILE
   f.label = I18n.t('profiles.title')
   f.code = 'IMP'
-  f.seqno = 15
+  f.seqno = 14
   f.access_level = ProfilesController.feature_access_level
   f.control_level = ProfilesController.feature_control_level
   f.no_workflows = ProfilesController.no_workflows
@@ -212,7 +219,7 @@ Feature.new do |f|
   f.id = FEATURE_ID_RFC_DOCUMENTS
   f.label = I18n.t('rfc_documents.title')
   f.code = 'RCD'
-  f.seqno = 16
+  f.seqno = 31
   f.access_level = RfcDocumentsController.feature_access_level
   f.control_level = RfcDocumentsController.feature_control_level
   f.no_workflows = RfcDocumentsController.no_workflows
@@ -223,7 +230,7 @@ Feature.new do |f|
   f.id = FEATURE_ID_REGION_NAMES
   f.label = I18n.t('region_names.title')
   f.code = 'RNC'
-  f.seqno = 17
+  f.seqno = 21
   f.access_level = RegionNamesController.feature_access_level
   f.control_level = RegionNamesController.feature_control_level
   f.no_workflows = RegionNamesController.no_workflows
@@ -234,7 +241,7 @@ Feature.new do |f|
   f.id = FEATURE_ID_SIEMENS_PHASES
   f.label = I18n.t('siemens_phases.title')
   f.code = 'SPC'
-  f.seqno = 18
+  f.seqno = 22
   f.access_level = SiemensPhasesController.feature_access_level
   f.control_level = SiemensPhasesController.feature_control_level
   f.no_workflows = SiemensPhasesController.no_workflows
@@ -245,7 +252,7 @@ Feature.new do |f|
   f.id = FEATURE_ID_ALL_TIA_LISTS
   f.label = I18n.t( 'all_tia_lists.title' )
   f.code = 'ATL'
-  f.seqno = 19
+  f.seqno = 35
   f.access_level = AllTiaListsController.feature_access_level
   f.control_level = AllTiaListsController.feature_control_level
   f.no_workflows = AllTiaListsController.no_workflows
@@ -256,7 +263,7 @@ Feature.new do |f|
   f.id = FEATURE_ID_OUR_TIA_ITEMS
   f.label = I18n.t( 'our_tia_items.title' )
   f.code = 'OTI'
-  f.seqno = 20
+  f.seqno = 36
   f.access_level = OurTiaItemsController.feature_access_level
   f.control_level = OurTiaItemsController.feature_control_level
   f.no_workflows = OurTiaItemsController.no_workflows
@@ -267,12 +274,23 @@ Feature.new do |f|
   f.id = FEATURE_ID_OUR_TIA_MEMBERS
   f.label = I18n.t( 'our_tia_members.title' )
   f.code = 'OTM'
-  f.seqno = 21
+  f.seqno = 37
   f.access_level = OurTiaMembersController.feature_access_level
   f.control_level = OurTiaMembersController.feature_control_level
   f.no_workflows = OurTiaMembersController.no_workflows
   f.feature_category_id = fc1.id
 end.save
+
+Feature.new do |f|
+  f.id = FEATURE_ID_HASHTAGS
+  f.label = I18n.t( 'hashtags.title' )
+  f.code = 'HTG'
+  f.seqno = 22
+  f.access_level = HashtagsController.feature_access_level
+  f.control_level = HashtagsController.feature_control_level
+  f.no_workflows = HashtagsController.no_workflows
+  f.feature_category_id = fc1.id
+end.save 
 
 # -  -  -  -  -  -  - Rosters
 
@@ -540,13 +558,13 @@ end.save
 # - - - - - - - - - - codes
 
 Feature.new do |f|
-  f.id = FEATURE_ID_CODE_SEARCH
-  f.label = I18n.t('code_search.title')
-  f.code = 'CSA'
+  f.id = FEATURE_ID_S_CODE_SEARCH
+  f.label = I18n.t('s_code_search.title')
+  f.code = 'SCS'
   f.seqno = 1
-  f.access_level = CodeSearchController.feature_access_level
-  f.control_level = CodeSearchController.feature_control_level
-  f.no_workflows = CodeSearchController.no_workflows
+  f.access_level = SCodeSearchController.feature_access_level
+  f.control_level = SCodeSearchController.feature_control_level
+  f.no_workflows = SCodeSearchController.no_workflows
   f.feature_category_id = fc7.id
 end.save
 
@@ -637,6 +655,156 @@ Feature.new do |f|
   f.no_workflows = SDocumentLogsController.no_workflows
   f.feature_category_id = fc7.id
 end.save
+
+# - - - - - - - - - - network information
+
+Feature.new do |f|
+  f.id = FEATURE_ID_NW_LINES
+  f.label = I18n.t( 'network_lines.title' )
+  f.code = 'NLN'
+  f.seqno = 1
+  f.access_level = NetworkLinesController.feature_access_level
+  f.control_level = NetworkLinesController.feature_control_level
+  f.no_workflows = NetworkLinesController.no_workflows
+  f.feature_category_id = fc9.id
+end.save
+
+Feature.new do |f|
+  f.id = FEATURE_ID_NW_STATIONS
+  f.label = I18n.t( 'network_stations.title' )
+  f.code = 'NST'
+  f.seqno = 2
+  f.access_level = NetworkStationsController.feature_access_level
+  f.control_level = NetworkStationsController.feature_control_level
+  f.no_workflows = NetworkStationsController.no_workflows
+  f.feature_category_id = fc9.id
+end.save
+
+Feature.new do |f|
+  f.id = FEATURE_ID_NW_STOPS
+  f.label = I18n.t( 'network_stops.title' )
+  f.code = 'NSO'
+  f.seqno = 3
+  f.access_level = NetworkStopsController.feature_access_level
+  f.control_level = NetworkStopsController.feature_control_level
+  f.no_workflows = NetworkStopsController.no_workflows
+  f.feature_category_id = fc9.id
+end.save
+
+# - - - - - - - - - - alternative/ACONEX codes
+
+Feature.new do |f|
+  f.id = FEATURE_ID_A_CODE_SEARCH
+  f.label = I18n.t('a_code_search.title')
+  f.code = 'ACS'
+  f.seqno = 1
+  f.access_level = ACodeSearchController.feature_access_level
+  f.control_level = ACodeSearchController.feature_control_level
+  f.no_workflows = ACodeSearchController.no_workflows
+  f.feature_category_id = fc8.id
+end.save
+
+Feature.new do |f|
+  f.id = FEATURE_ID_A1_CODE
+  f.label = I18n.t( 'a1_codes.title' )
+  f.code = 'A1C'
+  f.seqno = 11
+  f.access_level = A1CodesController.feature_access_level
+  f.control_level = A1CodesController.feature_control_level
+  f.no_workflows = A1CodesController.no_workflows
+  f.feature_category_id = fc8.id
+end.save
+
+Feature.new do |f|
+  f.id = FEATURE_ID_A2_CODE
+  f.label = I18n.t( 'a2_codes.title' )
+  f.code = 'A2C'
+  f.seqno = 12
+  f.access_level = A2CodesController.feature_access_level
+  f.control_level = A2CodesController.feature_control_level
+  f.no_workflows = A2CodesController.no_workflows
+  f.feature_category_id = fc8.id
+end.save
+
+Feature.new do |f|
+  f.id = FEATURE_ID_A3_CODE
+  f.label = I18n.t( 'a3_codes.title' )
+  f.code = 'A3C'
+  f.seqno = 13
+  f.access_level = A3CodesController.feature_access_level
+  f.control_level = A3CodesController.feature_control_level
+  f.no_workflows = A3CodesController.no_workflows
+  f.feature_category_id = fc8.id
+end.save
+
+Feature.new do |f|
+  f.id = FEATURE_ID_A4_CODE
+  f.label = I18n.t( 'a4_codes.title' )
+  f.code = 'A4C'
+  f.seqno = 14
+  f.access_level = A4CodesController.feature_access_level
+  f.control_level = A4CodesController.feature_control_level
+  f.no_workflows = A4CodesController.no_workflows
+  f.feature_category_id = fc8.id
+end.save
+
+Feature.new do |f|
+  f.id = FEATURE_ID_A5_CODE
+  f.label = I18n.t( 'a5_codes.title' )
+  f.code = 'A5C'
+  f.seqno = 15
+  f.access_level = A5CodesController.feature_access_level
+  f.control_level = A5CodesController.feature_control_level
+  f.no_workflows = A5CodesController.no_workflows
+  f.feature_category_id = fc8.id
+end.save
+
+Feature.new do |f|
+  f.id = FEATURE_ID_A6_CODE
+  f.label = I18n.t( 'a6_codes.title' )
+  f.code = 'A6C'
+  f.seqno = 16
+  f.access_level = A6CodesController.feature_access_level
+  f.control_level = A6CodesController.feature_control_level
+  f.no_workflows = A6CodesController.no_workflows
+  f.feature_category_id = fc8.id
+end.save
+
+Feature.new do |f|
+  f.id = FEATURE_ID_A7_CODE
+  f.label = I18n.t( 'a7_codes.title' )
+  f.code = 'A7C'
+  f.seqno = 17
+  f.access_level = A7CodesController.feature_access_level
+  f.control_level = A7CodesController.feature_control_level
+  f.no_workflows = A7CodesController.no_workflows
+  f.feature_category_id = fc8.id
+end.save
+
+Feature.new do |f|
+  f.id = FEATURE_ID_A8_CODE
+  f.label = I18n.t( 'a8_codes.title' )
+  f.code = 'A8C'
+  f.seqno = 18
+  f.access_level = A8CodesController.feature_access_level
+  f.control_level = A8CodesController.feature_control_level
+  f.no_workflows = A8CodesController.no_workflows
+  f.feature_category_id = fc8.id
+end.save
+
+Feature.new do |f|
+  f.id = FEATURE_ID_A_DOCUMENT_LOG
+  f.label = I18n.t( 'a_document_logs.title' )
+  f.code = 'ADL'
+  f.seqno = 21
+  f.access_level = ADocumentLogsController.feature_access_level
+  f.control_level = ADocumentLogsController.feature_control_level
+  f.no_workflows = ADocumentLogsController.no_workflows
+  f.feature_category_id = fc8.id
+end.save
+
+puts ">>> last feature added"
+puts ">>> no of features: #{ Feature.count }"
 
 # - - - - - - - - - - initial / root user
 

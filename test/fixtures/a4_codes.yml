@@ -1,0 +1,6 @@
+one:
+  code:   'ABC-DEF'
+  label:  'The Alphabet'
+  active: true
+  master: true
+  mapping: 'XYZ'

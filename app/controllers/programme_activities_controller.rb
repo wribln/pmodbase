@@ -1,5 +1,5 @@
 class ProgrammeActivitiesController < ApplicationController
-  initialize_feature FEATURE_ID_ACTIVITIES, FEATURE_ACCESS_INDEX, FEATURE_CONTROL_NONE
+  initialize_feature FEATURE_ID_ACTIVITIES, FEATURE_ACCESS_VIEW
 
   before_action :set_programme_activity, only: [:show, :edit, :update, :destroy]
 

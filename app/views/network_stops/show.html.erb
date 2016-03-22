@@ -1,0 +1,60 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="form-horizontal" role="form">
+    <%= form_for @network_stop do |f| %>
+      <%= render partial: 'shared/notice' %>
+      <div class="form-group">
+        <%= f.label :id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value f.object.id %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :network_station_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= f.text_field :network_station_id, class: "form-control", readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :network_line_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= f.text_field :network_line_id, class: "form-control", readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :stop_no, class: "col-sm-3 control-label" %>
+        <div class="col-sm-1">
+          <%= f.text_field :stop_no, class: "form-control", readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :code, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= f.text_field :code, class: "form-control", readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :location_code_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= f.text_field :location_code_id, class: "form-control", readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :note, class: "col-sm-3 control-label" %>
+        <div class="col-sm-6">
+          <%= f.text_field :note, class: "form-control", readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-2">
+          <%= link_to t( 'button_label.edit' ), edit_network_stop_path( @network_stop ), class: "btn btn-lg btn-block btn-default" %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to t( 'button_label.goto_to_list' ), network_stops_path, class: "btn btn-lg btn-block btn-default" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -17,7 +17,7 @@
       <li>If the text field shows '<%= t('action_title.filter_ph.sl') -%>', the given string is searched at the beginning of the field only.</li>
       <li>Search fields for record fields with checkbox values, e.g. 'Active' and 'Inactive', will show as select boxes with three values. Selecting the empty line will not make any selection, this field is not filtered.</li>
     </ul>
-    <h3>Notes:</h3>
+    <h3>Notes</h3>
     <p>The filter fields will show the selected filter criteria: If you want to see the selected filter criteria again, close the filter row and open it again (using the Filter Toggle Button): Before the Filter Toggle Button shows the filter fields, it resets the value of the filter fields to the
     value used for the current filtering process.</p>
     <p>There is no error checking on the filter values: It is thus possible to
@@ -26,5 +26,8 @@
     <p>When the index page contains a <%= help_term t( 'general.download_xls' ) %> or a
     <%= help_term t( 'general.download_doc' ) -%> link, the filter criteria
     used on that index page will be used for the CSV (or DOC) file as well, i.e. the CSV (or DOC) file will show the same records as the index (unless those records have been modified in the meantime...)</p>
+    <h3>Hashtags</h3>
+    <p>For certain features, hashtags in searchable fields are used to manage attributes. For more information, see the help text
+      on <%= link_to_help :hashtags, Hashtag.model_name.human -%>.</p> 
     <%= help_footer FEATURE_ID_HELP_PAGES %>
   </div> <!-- /container -->

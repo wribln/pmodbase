@@ -2,7 +2,7 @@ class UnitNamesController < ApplicationController
   require 'csv'
   include ControllerMethods
 
-  initialize_feature FEATURE_ID_UNIT_NAMES, FEATURE_ACCESS_INDEX
+  initialize_feature FEATURE_ID_UNIT_NAMES, FEATURE_ACCESS_VIEW
 
   before_action :set_unit_name,  only: [:show, :edit, :update, :destroy]
 

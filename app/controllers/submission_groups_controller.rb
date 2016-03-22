@@ -1,5 +1,5 @@
 class SubmissionGroupsController < ApplicationController
-  initialize_feature FEATURE_ID_SUBMISSION_GROUPS, FEATURE_ACCESS_INDEX
+  initialize_feature FEATURE_ID_SUBMISSION_GROUPS, FEATURE_ACCESS_VIEW
   before_action :set_submission_group, only: [:show, :edit, :update, :destroy]
 
   # GET /sgps

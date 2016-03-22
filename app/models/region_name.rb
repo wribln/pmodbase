@@ -46,10 +46,6 @@ class RegionName < ActiveRecord::Base
     text_and_id( :label )
   end
 
-  def country_code_with_id
-    assoc_text_and_id( :country_name, :code )
-  end
-
   def country_code
     "#{ country_name.code }"
   end

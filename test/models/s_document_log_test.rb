@@ -28,28 +28,28 @@ class SDocumentLogTest < ActiveSupport::TestCase
     refute sdl.valid?
 
     sdl.function_code = '=ABC'
-    assert sdl.valid?
+    assert sdl.valid?, sdl.errors.messages
 
     sdl.function_code = nil
     sdl.service_code = ''
     refute sdl.valid?
 
     sdl.service_code = '$ABC'
-    assert sdl.valid?
+    assert sdl.valid?, sdl.errors.messages
 
     sdl.service_code = nil
     sdl.product_code = ''
     refute sdl.valid?
 
     sdl.product_code = '-ABC'
-    assert sdl.valid?
+    assert sdl.valid?, sdl.errors.messages
 
     sdl.product_code = nil
     sdl.phase_code = ''
     refute sdl.valid?
     
     sdl.phase_code = '%PM200'
-    assert sdl.valid?
+    assert sdl.valid?, sdl.errors.messages
   end
 
   test 'create document code' do
@@ -62,11 +62,6 @@ class SDocumentLogTest < ActiveSupport::TestCase
     assert sdl.valid?
 
     sdl.receiver_group = ''
-    assert_equal sdl.siemens_doc_id, sdl.create_siemens_doc_id
-    assert sdl.valid?
-
-    sdl.author_date = nil
-    sdl.siemens_doc_id = sdl.siemens_doc_id.sub( '_20160303', '' )
     assert_equal sdl.siemens_doc_id, sdl.create_siemens_doc_id
     assert sdl.valid?
 
@@ -110,6 +105,14 @@ class SDocumentLogTest < ActiveSupport::TestCase
     assert_equal sdl.siemens_doc_id, sdl.create_siemens_doc_id
     refute sdl.valid?
     sdl.function_code = '=ABC'
+    assert sdl.valid?
+
+    # need to test author date last as a missing author date
+    # will cause today's date to be used as default
+
+    sdl.author_date = nil
+    sdl.siemens_doc_id = sdl.siemens_doc_id.sub( '&ABC_20160303', '=ABC&ABC' )
+    assert_equal sdl.siemens_doc_id, sdl.create_siemens_doc_id
     assert sdl.valid?
 
   end

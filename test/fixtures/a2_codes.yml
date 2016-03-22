@@ -1,0 +1,6 @@
+one:
+  code:   '123'
+  label:  'The Numbers'
+  active: true
+  master: true
+  mapping: 'XYZ'

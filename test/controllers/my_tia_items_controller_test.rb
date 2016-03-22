@@ -24,7 +24,7 @@ class MyTiaItemsControllerTest < ActionController::TestCase
       account_id: @tia_item.account_id,
       description: @tia_item.description,
       prio:       @tia_item.prio,
-      seq_no:   ( @tia_item.seq_no + 1 ),
+      seqno:    ( @tia_item.seqno + 1 ),
       status:     @tia_item.status,
       tia_list_id: @tia_item.tia_list_id }
     assert_response :forbidden

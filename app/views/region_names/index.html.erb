@@ -29,7 +29,7 @@
           <% @region_names.each do |rn| %>
             <tr>
               <td><%= rn.to_id %></td>
-              <td><%= rn.country_code_with_id %></td>
+              <td><%= rn.country_code %></td>
               <td><%= rn.code  %></td>
               <td><%= rn.label %></td>
               <td><%= render partial: 'shared/actions', object: rn %></td>

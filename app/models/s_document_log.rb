@@ -10,6 +10,7 @@ class SDocumentLog < ActiveRecord::Base
 
   before_save do
     self.siemens_doc_id = create_siemens_doc_id
+    self.set_default!( :author_date, Date.today )
   end
 
   validates :group_id,
@@ -37,6 +38,7 @@ class SDocumentLog < ActiveRecord::Base
   validate :given_account_exists
   validate :given_group_exists
   validate :at_least_one_given
+  validate :all_codes_valid
 
   scope :reverse, -> { order( id: :desc )}
   scope :inorder, -> { order( id: :asc  )}
@@ -49,6 +51,23 @@ class SDocumentLog < ActiveRecord::Base
   def at_least_one_given
     errors.add( :base, I18n.t( 's_document_logs.msg.at_least_one' )) \
       if function_code.blank? && service_code.blank? && product_code.blank? && phase_code.blank?
+  end
+
+  # make sure all specified codes exist (note: they might be passed
+  # other than through the standard view!)
+
+  def all_codes_valid
+    msg = I18n.t( 's_document_logs.msg.invalid_code' )
+    errors.add( :function_code, msg ) \
+      unless function_code.blank? || errors.exclude?( :function_code ) && FunctionCode.where( code: function_code ).exists?
+    errors.add( :service_code, msg ) \
+      unless service_code.blank? || errors.exclude?( :service_code ) && ServiceCode.where( code: service_code ).exists?
+    errors.add( :product_code, msg ) \
+      unless product_code.blank? || errors.exclude?( :product_code ) && ProductCode.where( code: product_code ).exists?
+    errors.add( :phase_code, msg ) \
+      unless phase_code.blank? || errors.exclude?( :phase_code ) && SiemensPhase.where( code: phase_code ).exists?
+    errors.add( :location_code, msg ) \
+      unless location_code.blank? || errors.exclude?( :location_code ) && LocationCode.where( code: location_code ).exists?
   end
 
   # create siemens document code

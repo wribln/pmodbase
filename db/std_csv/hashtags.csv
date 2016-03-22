@@ -1,0 +1,24 @@
+code;label;feature_id;seqno
+#SCOPE;Type of Scope;55;0
+#SCOPE_NEW;New;55;1
+#SCOPE_MOD;Modify;55;2
+#SCOPE_NOC;No Change;55;3
+#PTYPE;Type of Platform;57;10
+#PTYPE_C;Center/Island (Track on each side);57;11
+#PTYPE_S;Sides (Track between platforms);57;12
+#PTYPE_M;Mixed (Details: See note);57;13
+#NOPSD;Number of Platform Sides (with PSD);57;20
+#LTYPE;Level of Line;55;0
+#LTYPE_EL;Elevated/Viaduct;55;1
+#LTYPE_AG;At Grade;55;2
+#LTYPE_UG;Underground/Tunnel;55;3
+#LTYPE_TR;Transition/Ramp;55;4
+#LTYPE;Level of Station;56;0
+#LTYPE_EL;Elevated;56;1
+#LTYPE_AG;At Grade;56;2
+#LTYPE_UG;Underground;56;3
+#LEVELS;Number of Levels;56;0
+#SCOPE;Type of Scope;56;0
+#SCOPE_NEW;New;56;1
+#SCOPE_MOD;Modify;56;2
+#SCOPE_NOC;No Change;56;3

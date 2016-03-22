@@ -1,0 +1,78 @@
+      <div class="form-group">
+        <%= form.label :id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value form.object.id %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :a1_code, class: "col-sm-3 control-label" %>
+        <div class="col-sm-6">
+        <%- a1_all = A1Code.active_only -%>
+        <%- if a1_all.count == 1 then -%>
+          <%= display_value a1_all.first.code_and_label -%>
+          <%= form.hidden_field :a1_code, value: a1_all.first.code -%>
+        <%- else -%>
+          <%= form.collection_select( :a1_code, A1Code.active_only, :code, :code_and_label, { prompt: t( '.g_prompt' )}, { class: 'form-control', required: true })%>
+        <%- end -%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :a2_code, class: "col-sm-3 control-label" %>
+        <div class="col-sm-6">
+          <%= form.collection_select( :a2_code, A2Code.active_only, :code, :code_and_label, { prompt: t( '.g_prompt' )}, { class: 'form-control', required: true })%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :a3_code, class: "col-sm-3 control-label" %>
+        <div class="col-sm-6">
+          <p class="form-control-static">&nbsp;</p>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :a4_code, class: "col-sm-3 control-label" %>
+        <div class="col-sm-6">
+          <%= select_tag( :a34_code, options_from_collection_for_select( A4Code.active_only, :code, :code_and_label, @a34_code ), { prompt: t( '.g_prompt' ), class: 'form-control', required: true })%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :a5_code, class: "col-sm-3 control-label" %>
+        <div class="col-sm-6">
+          <%= form.collection_select( :a5_code, A5Code.active_only, :code, :code_and_label, { prompt: t( '.g_prompt' )}, { class: 'form-control', required: true })%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :a6_code, class: "col-sm-3 control-label" %>
+        <div class="col-sm-6">
+          <%= form.collection_select( :a6_code, A6Code.active_only, :code, :code_and_label, { prompt: t( '.g_prompt' )}, { class: 'form-control', required: true })%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :a7_code, class: "col-sm-3 control-label" %>
+        <div class="col-sm-6">
+          <%= form.collection_select( :a7_code, A7Code.active_only, :code, :code_and_label, { prompt: t( '.g_prompt' )}, { class: 'form-control', required: true })%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :a8_code, class: "col-sm-3 control-label" %>
+        <div class="col-sm-6">
+          <%= form.collection_select( :a8_code, A8Code.active_only, :code, :code_and_label, { prompt: t( '.g_prompt' )}, { class: 'form-control', required: true })%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :title, class: "col-sm-3 control-label" %>
+        <div class="col-sm-6">
+          <%= form.text_field :title, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :alt_doc_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-6">
+          <%= display_value form.object.alt_doc_id %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :user, class: "col-sm-3 control-label" %>
+        <div class="col-sm-6">
+          <%= display_value ApplicationModel::some_text_and_id( form.object.account.user_name, form.object.account.id )%>
+        </div>
+      </div>

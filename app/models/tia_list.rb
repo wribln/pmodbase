@@ -58,8 +58,8 @@ class TiaList < ActiveRecord::Base
     write_attribute( :members, t.blank? ? TiaList.human_attribute_name( :members ) : t )
   end
 
-  def next_seq_no_for_item
-    n = ( self.tia_items.maximum( :seq_no ) || 0 ) + 1
+  def next_seqno_for_item
+    n = ( self.tia_items.maximum( :seqno ) || 0 ) + 1
   end
 
   # provide access checks

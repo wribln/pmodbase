@@ -2,22 +2,67 @@
   <div class="container">
     <%= helpcrumbs %>
     <%= help_header %>
-    <p class="lead">The Siemens Document Log records and maintains metadata on documents.</p>
+    <p class="lead">The Siemens Document Log records and maintains meta-data on documents.</p>
     <h3>Purpose</h3>
     <p>For certain, confidential files, storage and management in a project-public system is
       not advisable. The Siemens Document Log (SDL) provide means to create and maintain the
-      metadata whereas the files itself are stored in a separate location, most likely an
+      meta-data whereas the files themself are stored in a separate location, most likely an
       access-controlled server.</p>
     <ul>
       <li>The automatically generated <%= help_param SDocumentLog.human_attribute_name( :id ) -%>
-        is used as unambiguous document number. The database management system maintainse this
+        is used as unambiguous document number. The database management system maintains this
         number and ensures that no number is used twice.</li>
       <li>The <%= help_param SDocumentLog.human_attribute_name( :group )%> determines the 
-        project group responsible for the creation of the document.</li>
+        project group responsible for the creation of the document. Only those groups for
+        which the user has permissions are shown here and can be selected.</li>
       <li>The <%= help_param SDocumentLog.human_attribute_name( :receiver_group )%> is the
         party for which this document was prepared. This parameter is used only for 
         correspondence documents such as letters addressed to a specific party. For technical
         documents, this parameter can be left blank.</li>
     </ul>
+    <p>At least one of the following attributes must be given:</p>
+    <ul>
+      <li><%= help_param SDocumentLog.human_attribute_name( :function_code )%> can be selected
+        from the list of codes having the <%= help_term FunctionCode.human_attribute_name( :active )-%>
+        flag set. When this value is displayed, the label for the code having the 
+        <%= help_term FunctionCode.human_attribute_name( :master )-%> is shown.</li>
+      <li><%= help_param SDocumentLog.human_attribute_name( :service_code )%> can be selected
+        from the list of codes having the <%= help_term ServiceCode.human_attribute_name( :active )-%>
+        flag set. When this value is displayed, the label for the code having the 
+        <%= help_term ServiceCode.human_attribute_name( :master )-%> is shown.</li>
+      <li><%= help_param SDocumentLog.human_attribute_name( :product_code )%> can be selected
+        from the list of codes having the <%= help_term ProductCode.human_attribute_name( :active )-%>
+        flag set. When this value is displayed, the label for the code having the 
+        <%= help_term ProductCode.human_attribute_name( :master )-%> is shown.</li>
+      <li><%= help_param SDocumentLog.human_attribute_name( :location_code )%> can be selected
+        from the list of available codes. As there are no duplicate codes allowed, the label
+        for the selected code will always be the same.</li>
+      <li><%= help_param SDocumentLog.human_attribute_name( :phase_code )-%> can be selected
+        from the list of available codes. As there are no duplicate codes allowed, the label
+        for the selected code will always be the same.</li>
+    </ul>
+    <ul>
+      <li><%= help_param SDocumentLog.human_attribute_name( :dcc_code )%> can be selected
+        from the list of codes having the <%= help_term DccCode.human_attribute_name( :active )-%>
+        flag set. When this value is displayed, the label for the code having the 
+        <%= help_term DccCode.human_attribute_name( :master )-%> is shown. This is a
+        required attribute and must always be set.</li>
+      <li><%= help_param SDocumentLog.human_attribute_name( :revision_code )-%> provides a
+        field to enter the applicable revision number or code. There will be no further tests on this
+        code.</li>
+      <li><%= help_param SDocumentLog.human_attribute_name( :author_date )-%> should be used to
+        enter the date when the document was officially released (as it appears on the cover
+        page). If no date is input, the current date will be used as default.</li>
+      <li><%= help_param SDocumentLog.human_attribute_name( :title )-%> provides a field for the
+        title of the document. Although this is not used as part of the code, it can be used to
+        search for a specific document with this title or parts of it.</li>
+      <li><%= help_param SDocumentLog.human_attribute_name( :siemens_doc_id )-%> shows the generated
+        document code, or - when modifying a record - the previously generated code.</li>
+      <li><%= help_param SDocumentLog.human_attribute_name( :user )-%> is for information only
+        and shows the name of the user who created this entry.</li>
+    </ul>
+    <h3>Export (CSV)</h3>
+      <p>The resulting export file contains all attributes as listed above. Any active filters
+      are applied to the exported file as well.</p>
     <%= help_footer FEATURE_ID_S_DOCUMENT_LOG %>
   </div> <!-- /container -->

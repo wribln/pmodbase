@@ -6,7 +6,8 @@
     <p>Service Codes are managed using the following fields:</p>
     <ul>
       <li>The <%= help_param ServiceCode.human_attribute_name( :code ) -%> must be a short
-        alphanumeric code with the prefix '$' which may also contain periods and dashes.</li>
+        alphanumeric code with the prefix '$' which may also contain periods and dashes. The
+        special code '$!' can be used, it has normally the meaning 'not applicable'.</li>
       <li>The <%= help_param ServiceCode.human_attribute_name( :label ) -%>
         describes the service represented by the 
         <%= help_term ServiceCode.human_attribute_name( :code ) -%>.</li>

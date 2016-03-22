@@ -1,5 +1,3 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 two:
   code: +1.ST.01
   label: 'Station 01'
@@ -20,5 +18,15 @@ zero:
   code: +RS
   label: Rolling Stock
   loc_type: 0
+
+three:
+  code:   +1.LS
+  label:  'the whole line'
+  loc_type:  2
+  center_point: 7500
+  start_point: 0
+  end_point: 15000
+  length: 15000
+
   
 

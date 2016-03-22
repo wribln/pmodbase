@@ -14,14 +14,17 @@
       <li><%= link_to_help 'country_names', CountryName.model_name.human -%></li>
       <li><%= link_to_help 'region_names', RegionName.model_name.human -%></li>
       <li><%= link_to_help 'unit_names', UnitName.model_name.human -%></li>
+      <li><%= link_to_help 'network_stations', NetworkStation.model_name.human -%> *)</li>
     </ul>
+    <p>*) will search also in the the <%= help_term NetworkStation.human_attribute_name( :alt_code )-%>
+      and <%= help_term NetworkStation.human_attribute_name( :prev_name )-%> respectively.</p>
     <p>Each of the above tables will be searched for the given abbreviation in
       the respective fields: The result will contain all abbreviations
       starting with the given string, and/or the text in any of the
       description or label fields.</p>
     <p>Please be aware that the search is case-insensitive and that the
       search in the descriptions will search for <strong>any</strong>
-      occurance in the description.</p>
+      occurrence in the description.</p>
     <p>The following two 'wild-card' characters have a special meaning:</p>
     <ul>
       <li>% (percent) represents a string of zero or more characters</li>

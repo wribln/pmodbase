@@ -1,5 +1,5 @@
 class CsrStatusRecordsController < ApplicationController
-  initialize_feature FEATURE_ID_CSR_STATUS_RECORDS, FEATURE_ACCESS_INDEX
+  initialize_feature FEATURE_ID_CSR_STATUS_RECORDS, FEATURE_ACCESS_VIEW
   before_action :set_csr_status_record, only: [ :show, :edit, :update, :destroy ]
   before_action :set_selections, only: [ :new, :edit, :create, :udpate, :index ]
 

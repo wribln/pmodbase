@@ -20,7 +20,7 @@
         <td><%= filter_field @filter_fields, :ff_id, :id -%></td>
         <td><%= filter_field @filter_fields, :ff_name, :sw -%></td>
         <td><%= filter_field @filter_fields, :ff_person_id, :id -%></td>
-        <td><%= filter_check_box @filter_fields, :ff_active, 'accounts' %></td>
+        <td><%= filter_check_box @filter_fields, :ff_active %></td>
         <td><%= filter_action_button -%></td>
       </tr>
       <% if @accounts.length.zero? %>

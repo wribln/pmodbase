@@ -42,7 +42,7 @@
       <li><%= help_param RfcStatusRecord.human_attribute_name( :asking_group_doc_id )-%>
         can be used to store a document id as used by the asking group;</li>
       <li><%= help_param RfcStatusRecord.human_attribute_name( :answering_group_doc_id  )-%>
-        can be used to store a document id as used by the responding gorup.</li>
+        can be used to store a document id as used by the responding group.</li>
       <li><%= help_param RfcStatusRecord.human_attribute_name( :current_status )-%>
         gives the current status of this RfC, and</li>
       <li><%= help_param RfcStatusRecord.human_attribute_name( :current_task )-%>
@@ -82,7 +82,7 @@
       user may only update records when he has permission for the requesting
       group.</p>
     <h3>Detailed Workflow Information</h3>
-      <p>Information on each workflow, its tasks and possible status transistions
+      <p>Information on each workflow, its tasks and possible status transitions
       can be found <%= link_to 'here',  rfc_workflow_info_path %>.</p>
     <h3>Statistics</h3>
       <p>The number of RfCs per Type and Status is shown on the <%= help_term t( 'general.statistics' )-%>

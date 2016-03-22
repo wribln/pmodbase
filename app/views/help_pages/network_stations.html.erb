@@ -1,0 +1,81 @@
+<% help_title "Help on #{ NetworkStation.model_name.human }" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">Administration of Network Stations and Stops</p>
+    <p>Information on Stations and Stops along a Line is managed here: The main item is a station
+      (i.e. a building or a structure), with stop-specific information management on a line-by-line
+      basis). Practically, you will add a station to the network, and then assign this station to
+      a line in the network.
+      For a general introduction to the network concept, see <%= link_to_help :network_general, 'Network (General)' -%>.</p>
+    <h3>Information on Stations</h3>
+    <ul>
+      <li><%= help_param NetworkStation.human_attribute_name( :code ) -%> is the (alphanumeric) code used currently to identify a specific station in the network.</li>
+      <li><%= help_param NetworkStation.human_attribute_name( :alt_code )-%> is a field which can be used to store any previously
+        used codes for this station.</li>
+      <li>Likewise, <%= help_param NetworkStation.human_attribute_name( :curr_name )-%> is the currently used name for that station; and</li>
+      <li><%= help_param NetworkStation.human_attribute_name( :prev_name )-%> any previously used name.</li>
+      <li><%= help_param NetworkStation.human_attribute_name( :transfer )-%> is a flag which determines whether this
+        station is a transfer station and can have more than one stop, or if this is a single station representing
+        a stop on a single line.</li>
+      <li><%= help_param NetworkStation.human_attribute_name( :note )-%>  provides a text field for
+        remarks and free text information regarding this station. This field can be used to add
+        <%= link_to_help :hashtags, 'hashtags' -%> which will be evaluated in the line statistics and which are
+        exported to the CSV file.</li>
+    </ul>
+    <h3>Filter Function</h3>
+    <p>When filtering for station codes, both <%= help_term NetworkStation.human_attribute_name( :code )-%> and
+      <%= help_term NetworkStation.human_attribute_name( :alt_code )-%> will be searched.</p>
+    <p> Likewise, when filtering for the name of the station, both
+      <%= help_term NetworkStation.human_attribute_name( :curr_name )-%> and 
+      <%= help_term NetworkStation.human_attribute_name( :prev_name )-%> will be considered.</p>
+    <h3>Information on Stops</h3>
+    <p>Each station in the network needs to be associated with a line in the network. This is done by adding one record
+      per stop to the respective station. Stop-specific information consists of:</p>
+    <ul>
+      <li><%= help_param NetworkStop.human_attribute_name( :code )-%> - is a stop-specific code: Often, a station is
+        referenced by line-specific code, especially in transfer stations.</li>
+      <li><%= help_param NetworkStop.human_attribute_name( :network_line_id )-%> links the station to a specific line.</li>
+      <li><%= help_param NetworkStop.human_attribute_name( :stop_no )-%> provides the sequential number of that station
+      within the given line. The preferred sequence is in ascending chainage.</li>
+      <li><%= help_param NetworkStop.human_attribute_name( :location_code_id )-%> allows to link this stop to the 
+        information provided in the <%= link_to_help :location_codes, LocationCode.model_name.human -%>.</li>
+      <li><%= help_param NetworkStop.human_attribute_name( :note )-%> provides a text field for
+        remarks and free text information regarding this stop. This field can be used to add
+        <%= link_to_help :hashtags, 'hashtags' -%> which will be evaluated in the line statistics and which are
+        exported to the CSV file.</li>
+    </ul>
+    <h3>CSV/XLS Export</h3>
+    <p>The export utility produces a flat file containing the following information for each and every stop on 
+      the selected line(s).</p>
+    <ul>
+      <li><%= help_term NetworkLine.human_attribute_name( :code )-%> (of the line)</li>
+      <li><%= help_term NetworkLine.human_attribute_name( :label )-%> (of the line)</li>
+      <li><%= help_term NetworkStop.human_attribute_name( :stop_no )-%></li>
+      <li><%= help_term NetworkStation.human_attribute_name( :code )-%> (of the station)</li>
+      <li><%= help_term NetworkStation.human_attribute_name( :curr_name )-%> (of the station)</li>
+      <li><%= help_term NetworkStation.human_attribute_name( :transfer )-%> is '1' for stations marked as transfer 
+        station, nothing for non-transfer stations.</li>
+      <li><%= help_term NetworkStop.human_attribute_name( :code )-%> (of the stop)</li>
+      <li><%= help_term LocationCode.human_attribute_name( :center_point )-%> (of the stop along that line)</li>
+      <li>A list of all hashtags defined for network stations; each record contains a count for the defined 
+        hashtags as found in the <%= help_term NetworkStation.human_attribute_name( :note )-%>. Assuming that hashtags
+        #ABC and #ABC_XYZ are defined in the <%= link_to_help :hashtags, Hashtag.model_name.human -%> table, any
+        station containing (a single hashtag) #ABC in the <%= help_term NetworkStation.human_attribute_name( :note )-%> field,
+        would have a count of '1' in the column '#ABC'. If the hashtag #ABC=3 is found for a station, the column '#ABC' would
+        contain a '3' for that station. If a hashtag '#ABC_XYZ=9' is found, column '#ABC' would contain '3' and also
+        column '#ABC_XYZ'.</li>
+      <li>Likewise, the next columns contain the hashtags defined for network stops with the counts from the stop's
+        <%= help_term NetworkStop.human_attribute_name( :note )-%> field.</li>
+      <li><%= help_term NetworkStation.human_attribute_name( :note )-%> (on the station).</li>
+      <li><%= help_term NetworkStop.human_attribute_name( :note )-%> (on the stop).</li>
+    </ul>
+    <p>Note 1: The table contains information on network stops, i.e. transfer stations with stops for more than
+      a single line will be shown as often as that station is used by any line on the network. For example, if
+      a transfer station is served by two lines, the resulting table would show two entries for that station: One
+      entry with the data from the first line, the other entry with the data from the other line.</p>
+    <p>Note 2: The stations are sorted by the station's <%= help_term NetworkStation.human_attribute_name( :code )-%>
+      unless only a single line is selected: Then the order is by <%= help_term NetworkStop.human_attribute_name( :stop_no )-%>.
+    <p>Note 3: If a station is not linked to a line via a stop record, only the station-related information can be output.</p>
+    <%= help_footer FEATURE_ID_NW_STATIONS %>
+  </div> <!-- /container -->

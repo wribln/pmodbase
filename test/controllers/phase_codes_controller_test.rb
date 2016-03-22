@@ -9,7 +9,7 @@ class PhaseCodesControllerTest < ActionController::TestCase
   end
 
   test "check class_attributes"  do
-    validate_feature_class_attributes FEATURE_ID_PHASE_CODES, ApplicationController::FEATURE_ACCESS_INDEX
+    validate_feature_class_attributes FEATURE_ID_PHASE_CODES, ApplicationController::FEATURE_ACCESS_VIEW
   end
 
   test "ensure consistency of test data" do

@@ -1,0 +1,35 @@
+<% help_title "Help on #{ NetworkLine.model_name.human }" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">Administration of Network Lines</p>
+    <p>This table contains information about the lines in the network: A line must be understood
+    	as physical section of the network with associated stations/stops and a distinct chainage.
+      Operational lines are not considered here.</p>
+    <ul>
+      <li><%= help_param NetworkLine.human_attribute_name( :code ) -%> is a unique code of
+        the line.</li>
+      <li><%= help_param NetworkLine.human_attribute_name( :label ) -%> is the descriptive label of
+        the line.</li>
+      <li><%= help_param NetworkLine.human_attribute_name( :seqno ) -%> is an integer which determines
+        the order of the records when listed.</li>
+      <li><%= help_param NetworkLine.human_attribute_name( :location_code_id ) -%> links the line to
+        an entry in the <%= link_to_help :location_codes, 'Location Code Table' -%> which provides
+        the start and end chainage as well as the length of the line.</li>
+      <li><%= help_param NetworkLine.human_attribute_name( :note ) -%> provides a text field for
+        remarks. This field can be used to add <%= link_to_help :hashtags, 'hashtags' -%> which
+        will be evaluated in the line statistics (see below).</li>
+    </ul>
+    <p>For a general introduction to the network concept, see <%= link_to_help :network_general, 'Network (General)' -%>.</p>
+    <h3>Statistics</h3>
+    <p>Below the list of lines, a table of statistics on the network is generated. This list consists of four parts:
+    <ul>
+      <li>Statistics on the set of currently selected lines</li>
+      <li>Statistics on the set of stations assigned to the currently selected lines</li>
+      <li>Statistics on the set of stops assigned to the currently selected lines</li>
+      <li>Statistics on those stations not yet assigned to any line</li>
+    </ul>
+    <p>For each type of statistics, the hashtags in the respective note fields (line, station, stop) are evaluated
+    and listed with their counts. If a hashtag has a label assigned to it, this label will be used.</p>
+    <%= help_footer FEATURE_ID_NW_LINES %>
+  </div> <!-- /container -->

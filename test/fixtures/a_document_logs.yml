@@ -1,0 +1,12 @@
+one:
+  a1_code:      'ABC'
+  a2_code:      '123'
+  a3_code:      'ABC'
+  a4_code:      'DEF'
+  a5_code:      'ABC'
+  a6_code:      'ABC'
+  a7_code:      'ABC'
+  a8_code:      'ABC'
+  title:        'Test Document'
+  account:      account_one
+  alt_doc_id:   ABC-123-ABC-DEF-ABC-ABC-ABC-ABC-<%= ActiveRecord::FixtureSet.identify(:one)%>

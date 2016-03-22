@@ -21,7 +21,7 @@ module FilterHelper
   # true, e.g. by saying:
   #   scope :x_filter, -> ( x_val ){ where x_var: ( x_val == '1' )}
 
-  def filter_check_box( hash_var, key, t_scope )
+  def filter_check_box( hash_var, key, t_scope = controller_name )
     select_tag( key,
       options_for_select([
         [' ', nil ],

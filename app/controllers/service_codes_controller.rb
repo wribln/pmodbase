@@ -1,7 +1,7 @@
 class ServiceCodesController < ApplicationController
   require 'csv'
   include ControllerMethods
-  initialize_feature FEATURE_ID_SERVICE_CODES, FEATURE_ACCESS_INDEX
+  initialize_feature FEATURE_ID_SERVICE_CODES, FEATURE_ACCESS_VIEW
   before_action :set_service_code, only: [ :show, :edit, :update, :destroy ]
 
   # GET /fncs

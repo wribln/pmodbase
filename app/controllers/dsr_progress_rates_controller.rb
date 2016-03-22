@@ -1,6 +1,6 @@
 class DsrProgressRatesController < ApplicationController
 
-  initialize_feature FEATURE_ID_DSR_PROGRESS_RATES, FEATURE_ACCESS_INDEX
+  initialize_feature FEATURE_ID_DSR_PROGRESS_RATES, FEATURE_ACCESS_VIEW
 
   before_action :set_dsr_progress_rate, only: [ :show, :edit, :update ]
 

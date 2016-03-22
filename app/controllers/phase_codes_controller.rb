@@ -1,5 +1,5 @@
 class PhaseCodesController < ApplicationController
-  initialize_feature FEATURE_ID_PHASE_CODES, FEATURE_ACCESS_INDEX
+  initialize_feature FEATURE_ID_PHASE_CODES, FEATURE_ACCESS_VIEW
   before_action :set_phase_code, only: [ :show, :edit, :update, :destroy ]
   before_action :set_selections, only: [ :new, :edit, :create, :update ]
 

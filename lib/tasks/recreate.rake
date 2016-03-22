@@ -57,4 +57,8 @@ task :recreate => :environment do
   Rake::Task['import'].invoke('db/std_csv/service_codes.csv','ServiceCode')
   puts '>>> import service_codes completed.'
 
+  Rake::Task['import'].reenable
+  Rake::Task['import'].invoke('db/std_csv/hashtags.csv','Hashtag')
+  puts '>>> import hash_tags completed.'
+
 end

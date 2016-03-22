@@ -1,0 +1,66 @@
+code;label
+INF-GEN;General/Projectwide
+INF-SYW;Systemwide
+INF-ALI;Alignment
+INF-ARC;Architecture
+INF-BRG;Bridges
+INF-DEP;Depot
+INF-MEP;Electromechanical Systems (excl. Rail Systems)
+INF-GEO;Geotechnical
+INF-HYD;Hydrological
+INF-LSC;Landscaping
+INF-PWA;Permanent Way (excl. 3rd Rail)
+INF-ROH;Roads and Highways
+INF-STR;Structural
+INF-TOP;Topographical
+INF-TRK;Trackwork
+INF-TUN;Tunnel
+INF-UTL;Utilities
+INF-VIA;Viaducts and Other Elevated Structures
+INT-GEN;General/Projectwide
+INT-SYW;Systemwide
+O&M-GEN;General/Projectwide
+O&M-SYW;Systemwide
+O&M-SPA;Spares
+O&M-TRA;Training
+PMG-GEN;General/Projectwide
+PMG-SYW;Systemwide
+PMG-ADM;Administrative
+PMG-CON;Contract, including Claims
+PMG-CST;Cost
+PMG-HSE;Health, Safety and Environmental
+PMG-INF;Interface Management
+PMG-LEG;Legal
+PMG-PCN;Project Controls
+PMG-QAC;Quality Assurance and Quality Control
+PMG-SCH;Scheduling
+SYS-GEN;General/Projectwide
+SYS-SYW;Systemwide
+SYS-AFC;Automatic Fare Collection
+SYS-APC;Automatic Passenger Counting System
+SYS-COM;Communications
+SYS-DQE;Depot Equipment
+SYS-MMS;Maintenance Management System
+SYS-PSD;Platform Screen Doors
+SYS-PDS;Power Supply and Distribution
+SYS-RSK;Rolling Stock
+SYS-OCS;OCS/SCADA/OCC/Local Controls
+SYS-ATC;Signaling
+SYS-THR;Third Rail
+SAS-GEN;General/Projectwide
+SAS-SYW;Systemwide
+SAS-E&B;Earthing & Bonding
+SAS-EMC;Electromagnetic Compatibility
+SAS-ENV;Environmental
+SAS-FLS;Fire & Life Safety
+SAS-LTP;Lightning Protection
+SAS-RAM;Reliability, Availability, Maintainability
+SAS-RCM;Requirement and Configuration Management
+SAS-SEC;Security
+SAS-SSA;System Safety
+SAS-CER;System Validation/Certification
+TRA-GEN;General/Projectwide
+TRA-SYW;Systemwide
+TRA-CXT;Context Planning
+TRA-RID;Ridership
+TRA-TPL;Transportation Planning

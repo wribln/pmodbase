@@ -106,6 +106,17 @@ class Account < ActiveRecord::Base
     end
   end
 
+  # returns a clause suitable to select a subset of the feature list
+
+  def permitted_features( to_modify = true, check_var = :id )
+    p = to_modify ? permission4_groups.permission_to_modify : permission4_groups.permission_to_access?
+    if p.empty? then
+      return nil # none
+    else
+      return "#{ check_var } IN (#{ p.collect{ |pp| pp[ :feature_id ] }.join(',')})"
+    end
+  end
+
   # check if account has access to a specific record:
   # - use this before accessing a specific record for CRUD actions
   # - use group = nil if groups are not used for this feature

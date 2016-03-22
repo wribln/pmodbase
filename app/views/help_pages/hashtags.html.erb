@@ -1,0 +1,86 @@
+<% help_title "Help on #{ Hashtag.model_name.human }" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">Hashtags can be used to assign attributes to feature records.</p>
+    <h3>Introduction</h3>
+    <p>Hashtags like "#ABC" can be used in pmodbase to add attributes to certain fields
+      in feature tables (often <em>Notes</em>).</p>
+    <p>They can be used easily to filter records: Enter the hashtag into the search field
+      and request the filter function: Only records containing that hashtag will be listed.</p>
+    <p>Hashtags can also be used to allocate specific attributes to records which can
+      be evaluated by statistical functions; for example:</p>
+    <ul>
+    <li><strong>#ABC</strong> is a simple hashtag; hashtag statistics will count the number of records
+      containing this hashtag.</li>
+    <li><strong>#ABC=n</strong> with n being a positive integer will be used to produce weighted
+      counts: #ABC=2 in a field will cause that record to be counted twice, #ABC=4 will cause count of 4.</li>
+    <li><strong>#ABC_XYZ</strong> allows a grouped evalutation of the hashtag #ABC with XYZ being 
+      a subgroup of #ABC. #ABC_XYZ will add one count to the group #ABC.</li>
+    <li><strong>#ABC_XYZ=n</strong> is used accordingly: #ABC_XYZ=4 will add 4 to (a) all #ABC_XYZ
+      counts, and in addition increase the group count #ABC by 4.</li>
+    </ul>
+    <h3>Hashtag Labels</h3>
+    <p>A special table allows to define labels for hashtags (without any numerical suffix '=n').
+      The following attributes in that table can be administered:</p>
+    <ul>
+      <li><%= help_param Hashtag.human_attribute_name( :id ) -%> is the pmodbase internal number
+        of the hashtag label.</li>
+      <li><%= help_param Hashtag.human_attribute_name( :code ) -%> is the hashtag for which a
+        label is to be defined. This hashtag must only consist of alphanumeric characters or
+        underline characters, the first character must be an alphabetic character.</li>
+      <li><%= help_param Hashtag.human_attribute_name( :label ) -%> is the text associated
+        with the specific hashtag. This text will be output in any statistics referring to
+        that hashtag.</li>
+      <li><%= help_param Hashtag.human_attribute_name( :seqno ) -%> provides a method to
+        specify a certain sequence in which the statistics should be listed. This may be
+        interesting in groups to keep individual group-items in a certain sequence.</li>
+      <li><%= help_param Hashtag.human_attribute_name( :feature_id ) -%> restricts the
+        specification of hashtags to a certain pmodbase feature. This allows to use the
+        same hashtag with a different meaning in different features.</li>
+    </ul>
+    <h3>Example 1a</h3>
+    <p>Four hashtags with labels are defined as follows:</p>
+    <ul>
+      <li><strong>#STNTYPE</strong> - Station Type</li>
+      <li><strong>#STNTYPE_EL</strong> - Elevated/On Viaduct</li>
+      <li><strong>#STNTYPE_AG</strong> - At Grade</li>
+      <li><strong>#STNTYPE_UG</strong> - Underground/In Tunnel</li>
+    </ul>
+    <p>Four station-related records contain the following hashtags:</p>
+    <ul>
+      <li>#STNTYPE_EL</li>
+      <li>#STNTYPE_EL</li>
+      <li>#STNTYPE_EL</li>
+      <li>#STNTYPE_UG</li>
+    </ul>
+    <p>A statistics on these station records could provide the following table:</p>
+    <table class="table table-bordered table-condensed">
+    <tr><td>#STNTYPE</td><td>Station Type</td><td>4</td><td>no of records having a hashtag #STNTYPE...</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;_EL</td><td>Elevated/On Viaduct</td><td>3</td><td>... having a hashtag #STNTYPE_EL</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;_AG</td><td>At Grade</td><td>0</td><td>... having a hashtag #STNTYPE_AG</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;_UL</td><td>Underground/In Tunnel</td><td>1</td><td>... having a hashtag #STNTYPE_UG</td></tr>
+    </table>
+    <h3>Example 1b</h3>
+    <p>The above example is now extended by another hashtag for counting the number of platform screen doors (sides) for
+      that station. For this example, three station will have two sides, one station will have 4 sides to be considered.</p>
+    <p>For this, we extend the hashtag label list by:</p>
+    <ul><li><strong>#NOPSD</strong> - Number of PSD Sides</li></ul>
+    <p>and add hashtags to the station records:</p>
+    <ul>
+      <li>#STNTYPE_EL #NOPSD=2</li>
+      <li>#STNTYPE_EL #NOPSD=2</li>
+      <li>#STNTYPE_EL #NOPSD=4</li>
+      <li>#STNTYPE_UG #NOPSD=2</li>
+    </ul>
+    <p>The statistics on these station records would now look like this:</p>
+    <table class="table table-bordered table-condensed">
+    <tr><td>#STNTYPE</td><td>Station Type</td><td>4</td><td>no of records having a hashtag #STNTYPE...</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;_EL</td><td>Elevated/On Viaduct</td><td>3</td><td>... having a hashtag #STNTYPE_EL</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;_AG</td><td>At Grade</td><td>0</td><td>... having a hashtag #STNTYPE_AG</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;_UL</td><td>Underground/In Tunnel</td><td>1</td><td>... having a hashtag #STNTYPE_UG</td></tr>
+    <tr><td>#NOPSD</td><td>Number of PSD Sides</td><td>10</td><td>sum of values of the #NOPSD hashtag</td></tr>
+    </table>
+    <p>Any hashtag without a defined label will only be shown with the hashtag but without a label.</p>
+    <%= help_footer FEATURE_ID_HASHTAGS %>
+  </div> <!-- /container -->

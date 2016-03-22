@@ -1,0 +1,25 @@
+code;label;desc
+JAD;Jebel Ali Depot;for documents relevant to works located at the Jebel Ali depot, excluding BOCC
+AQD;Qusais Depot;for documents relevant to works located at the Al Qusais depot
+RAD;Rashidiya Depot;for documents relevant to works located at the Rashidiya depot, excluding OCC
+BOC;BOCC;for documents relevant to works located at the Jebel Ali BOCC
+OCC;OCC;for documents relevant to works located at the Rashidiya OCC
+DMS;Existing Dubai Metro - Stations;for documents relevant to works located at the existing Dubai Metro stations
+DMW;Existing Dubai Metro - Wayside;for documents relevant to works on or around the existing guideway - excluding the junction area
+JUN;Junction Area;between Nakheel Harbour and Tower (NHT) and Jumeirah Lakes Towers (JLT) stations (both for the existing and the new line)
+R38;Nakheel Harbour and Tower Station;for documents relevant to the Nakheel Harbour and Tower interchange station
+E01;Discovery Gardens;elevated station
+E02;Mushrif Mall;elevated station
+E03;Al Furjan;elevated station
+E04;Jumeirah Golf Estates;underground station
+E05;Dubai Investment Park;underground station
+E07;EXPO 2020;elevated station
+E67;Section 67;between future station E06 and E07
+E56;Section 56;between station E05 and future station E06
+E45;Section 45;between station E04 and E05
+E34;Section 34;between station E03 and E04
+E23;Section 23;between station E02 and E03
+E12;Section 12;between station E01 and E02
+ER1;Section R1;between R38 and E01
+OFF;Off-shore;for documents relevant to works carried out off-shore, e.g. inspections and visits, test
+ALL;Non-Location Specific;includes system-wide activities or systems, e.g. rolling stock

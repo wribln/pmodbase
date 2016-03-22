@@ -1,9 +1,9 @@
 class CreateTiaItems < ActiveRecord::Migration
   def change
     create_table :tia_items do |t|
-      t.belongs_to  :tia_list,  null: false, index: true
+      t.belongs_to  :tia_list,  null: false, foreign_key: true
       t.belongs_to  :account,                index: true
-      t.integer     :seq_no,  default: 1
+      t.integer     :seqno,   default: 1
       t.string      :description, null: false, length: MAX_LENGTH_OF_DESCRIPTION
       t.string      :comment, length: MAX_LENGTH_OF_DESCRIPTION
       t.integer     :prio,    default: 0
@@ -13,6 +13,6 @@ class CreateTiaItems < ActiveRecord::Migration
 
       t.timestamps null: false
     end
-    add_index :tia_items, [ :tia_list_id, :seq_no ], unique: true, name: 'tia_list_items_index'
+    add_index :tia_items, [ :tia_list_id, :seqno ], unique: true, name: 'tia_list_items_index'
   end
 end

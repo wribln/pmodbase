@@ -6,13 +6,16 @@ class LocationCode < ActiveRecord::Base
 
   before_validation :compute_missing_points
 
+  has_many :network_lines
+  has_many :network_stops
+
   validates :code,
     presence: true,
     uniqueness: true,
-    format: { with: /\A.[A-Z0-9.\-]+\z/, message: I18n.t( 'code_modules.msg.bad_code_syntax' )},
+    format: { with: Regexp.union( /\A\+!\z/,/\A\+[A-Z0-9.\-]+\z/ ), message: I18n.t( 'code_modules.msg.bad_code_syntax' )},
     length: { maximum: MAX_LENGTH_OF_CODE }
 
-  validate :code_has_prefix
+  #validate :code_has_prefix # not needed: prefix is part of code validation
 
   validates :label,
     presence: true,
@@ -140,7 +143,7 @@ class LocationCode < ActiveRecord::Base
     return if start_point.nil? || end_point.nil?
     # start must be less than end - if specified
     if ( start_point > end_point ) then
-      errors.add( :start_point, I18n.t( 'location_codes.msg.bad_start '))
+      errors.add( :start_point, I18n.t( 'location_codes.msg.bad_start' ))
     # center point must be within start and end point
     # note: I can safely assume that the center was entered or computed
     elsif ( center_point < start_point || center_point > end_point )

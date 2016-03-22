@@ -8,10 +8,10 @@ class TiaItem < ActiveRecord::Base
   belongs_to :account,      -> { readonly }, inverse_of: :tia_items
   has_many   :tia_updates,                   inverse_of: :tia_item, dependent: :destroy
 
-  validates :seq_no,
+  validates :seqno,
     presence: true,
     numericality: { only_integer: true, greater_than: 0 },
-    uniqueness: { scope: :tia_list_id, message: I18n.t( 'our_tia_items.msg.bad_seq_no' )}
+    uniqueness: { scope: :tia_list_id, message: I18n.t( 'our_tia_items.msg.bad_seqno' )}
 
   validates :description,
     length: { maximum: MAX_LENGTH_OF_DESCRIPTION }
@@ -47,7 +47,7 @@ class TiaItem < ActiveRecord::Base
 
   # define scopes for filters
 
-  scope :ff_seqno,  -> ( seqno ){ where seq_no: seqno }
+  scope :ff_seqno,  -> ( seqn  ){ where seqno: seqn }
   scope :ff_desc,   -> ( desc  ){ where( 'description LIKE ? OR comment LIKE ?', "%#{ desc }%", "%#{ desc }%" )}
   scope :ff_prio,   -> ( prio  ){ where prio: prio }
   scope :ff_owner,  -> ( owner ){ where account_id: owner }

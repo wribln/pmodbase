@@ -40,7 +40,7 @@
             <td class="td-right"><%= db_formatted_km( lc.center_point )%></td>
             <td class="td-right"><%= db_formatted_km( lc.start_point  )%></td>
             <td class="td-right"><%= db_formatted_km( lc.end_point    )%></td>
-            <td class="td-right"><%= db_formatted_km( lc.length       )%></td>
+            <td class="td-right"><%= db_formatted_number( lc.length )%></td>
             <td><%= render partial: 'shared/actions', object: lc %></td>
           </tr>
         <% end %>

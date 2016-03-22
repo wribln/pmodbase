@@ -15,6 +15,7 @@ class AbbrSearchController < ApplicationController
       @country_names = CountryName.none
       @region_names = RegionName.none
       @unit_names = UnitName.none
+      @network_stations = NetworkStation.none
       @total_rows = -1
     else
       @abbreviations = Abbreviation.filter( @filter_fields )
@@ -25,6 +26,7 @@ class AbbrSearchController < ApplicationController
       @country_names = CountryName.filter( @filter_fields )
       @region_names = RegionName.filter( @filter_fields )
       @unit_names = UnitName.filter( @filter_fields )
+      @network_stations = NetworkStation.filter( @filter_fields )
       @total_rows = 
         @abbreviations.length +
         @glossary_items.length +
@@ -33,7 +35,8 @@ class AbbrSearchController < ApplicationController
         @groups.length +
         @country_names.length +
         @region_names.length +
-        @unit_names.length
+        @unit_names.length +
+        @network_stations.length
     end
   end
 

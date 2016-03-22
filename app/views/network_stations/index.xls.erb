@@ -1,0 +1,46 @@
+<%= CSV.generate_line([
+  :line_code,
+  :line_name,
+  :stop_no,
+  :station_code,
+  :station_name,
+  :transfer,
+  :stop_code,
+  :center_point ] +
+  @hashtag_station_codes +
+  @hashtag_stop_codes +
+  [ :station_note,
+  :stop_note ], STD_CSV_OPTIONS ) -%>
+<%- @network_stations.each do |stn| -%>
+  <%- if stn.network_stops.empty? then -%>
+<%= CSV.generate_line([
+      nil,
+      nil,
+      nil,
+      stn.code,
+      stn.curr_name,
+      stn.transfer ? 1 : nil,
+      nil,
+      nil ] + 
+      Hashtag.collect_hashcounts( stn.note, @hashtag_station_codes ) +
+      [ nil, 
+      stn.note,
+      nil ], STD_CSV_OPTIONS ).html_safe -%>
+  <%- else -%>
+    <%- stn.network_stops.each do |stp| -%>
+<%= CSV.generate_line([
+        stp.try( :network_line ).try( :code ),
+        stp.try( :network_line ).try( :label ),
+        stp.stop_no,
+        stn.code,
+        stn.curr_name,
+        stn.transfer ? 1 : nil,
+        stp.code,
+        stp.try( :location_code ).try( :center_point )] +
+        Hashtag.collect_hashcounts( stn.note, @hashtag_station_codes ) +
+        Hashtag.collect_hashcounts( stp.note, @hashtag_stop_codes ) +
+        [ stn.note,
+        stp.note ], STD_CSV_OPTIONS ).html_safe -%>
+    <%- end -%>    
+  <%- end -%>
+<%- end -%>

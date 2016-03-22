@@ -84,7 +84,7 @@ class ResponsibilitiesController < ApplicationController
 
     def set_selections( action )
       pg = current_user.permitted_groups( FEATURE_ID_RESPONSIBILITIES, action, :id )
-      @group_selection = Group.permitted_groups( pg ).all.collect{ |g| [ g.code_with_id, g.id ]}
+      @group_selection = Group.permitted_groups( pg ).all.collect{ |g| [ g.code, g.id ]}
     end
 
 end

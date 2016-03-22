@@ -12,7 +12,7 @@ class CreateSDocumentLogs < ActiveRecord::Migration
       t.string :revision_code,    limit: MAX_LENGTH_OF_CODE
       t.date :author_date,        limit: MAX_LENGTH_OF_CODE
       t.belongs_to :account,      null: false 
-      t.string :title,            limit: MAX_LENGTH_OF_CODE
+      t.string :title,            limit: MAX_LENGTH_OF_TITLE
       t.string :siemens_doc_id,   limit: MAX_LENGTH_OF_DOC_ID_S
 
       t.timestamps null: false

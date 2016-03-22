@@ -5,7 +5,7 @@ class TiaItemTest < ActiveSupport::TestCase
     tia = tia_items( :tia_item_one )
     assert_not_nil tia.tia_list_id
     assert_not_nil tia.account_id
-    assert_equal tia.seq_no, 1
+    assert_equal tia.seqno, 1
     assert tia.description.length <= MAX_LENGTH_OF_DESCRIPTION
     assert tia.comment.length <= MAX_LENGTH_OF_DESCRIPTION unless tia.comment.nil?
     assert tia.prio >= 1 && tia.prio <= 3
@@ -51,18 +51,18 @@ class TiaItemTest < ActiveSupport::TestCase
     assert_not tn.valid?
     assert_not_includes tn.errors, :tia_list_id
 
-    assert_includes tn.errors, :seq_no
-    tn.seq_no = tx.seq_no + 1
+    assert_includes tn.errors, :seqno
+    tn.seqno = tx.seqno + 1
     assert tn.valid?
 
   end
 
-  test "seq_no must be unique within list" do
+  test "seqno must be unique within list" do
     tx = tia_items( :tia_item_one )
     tn = tx
     tn.id = nil
     assert_not tn.valid?
-    tn.seq_no += 1
+    tn.seqno += 1
     assert tn.valid?
   end
 

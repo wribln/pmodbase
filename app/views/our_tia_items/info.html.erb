@@ -7,7 +7,7 @@
       <caption>Status as of <%= db_formatted_dt( @tia_item.updated_at )%>:</caption>
       <thead style="display: none"><tr><th class="col-sm-2"></th><th class="col-sm-4"></th></tr></thead>
       <tbody>
-        <tr><td class="col-sm-2"><%= TiaItem.human_attribute_name( :item_id     )%></td><td><%= @tia_list.item_code( @tia_item.seq_no  )%></td></tr>
+        <tr><td class="col-sm-2"><%= TiaItem.human_attribute_name( :item_id     )%></td><td><%= @tia_list.item_code( @tia_item.seqno )%></td></tr>
         <tr><td class="col-sm-2"><%= TiaItem.human_attribute_name( :description )%></td><td><%= @tia_item.description %></td></tr>
         <tr><td class="col-sm-2"><%= TiaItem.human_attribute_name( :comment     )%></td><td><%= @tia_item.comment %></td></tr>
         <tr><td class="col-sm-2"><%= TiaItem.human_attribute_name( :prio        )%></td><td><%= @tia_item.prio_label %></td></tr>
