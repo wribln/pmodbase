@@ -12,10 +12,12 @@ class OurTiaItemsControllerTest < ActionController::TestCase
     get :index, my_tia_list_id: @tia_list
     assert_response :success
     assert_not_nil assigns( :tia_items )
+    assert_not_nil assigns( :member_list )
   end
 
   test "should get new" do
     get :new, my_tia_list_id: @tia_list
+    assert_not_nil assigns( :member_list )
     assert_response :success
   end
 
@@ -30,6 +32,7 @@ class OurTiaItemsControllerTest < ActionController::TestCase
         tia_list_id: @tia_item.tia_list_id },
         my_tia_list_id: @tia_list
     end
+    assert_not_nil assigns( :member_list )
     assert_redirected_to our_tia_item_path( assigns( :tia_item ))
   end
 
@@ -46,12 +49,14 @@ class OurTiaItemsControllerTest < ActionController::TestCase
   test "should get edit" do
     get :edit, id: @tia_item
     assert_response :success
+    assert_not_nil assigns( :member_list )
   end
 
   test "should update tia_item" do
     patch :update, id: @tia_item, tia_item: { 
       comment:     @tia_item.comment + '+',
       tia_list_id: @tia_item.tia_list_id }
+    assert_not_nil assigns( :member_list )
     assert_redirected_to our_tia_item_path( assigns( :tia_item ))
   end
 
@@ -60,6 +65,7 @@ class OurTiaItemsControllerTest < ActionController::TestCase
       comment:     @tia_item.comment,
       tia_list_id: @tia_item.tia_list_id }
     assert_redirected_to our_tia_item_path( assigns( :tia_item ))
+    assert_not_nil assigns( :member_list )
   end
 
   test "should destroy tia_item" do

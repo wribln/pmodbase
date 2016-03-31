@@ -5,7 +5,7 @@ class OurTiaItemsController < ApplicationController
 
   before_action :set_tia_list, only: [ :index, :create, :new ]
   before_action :set_tia_item, only: [ :show, :info, :edit, :update, :destroy ]
-  before_action :set_member_list, only: [ :index, :new, :edit, :update ]
+  before_action :set_member_list, only: [ :index, :new, :edit, :create, :update ]
   before_action :set_breadcrumb
 
   # GET /tia_items
