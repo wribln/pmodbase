@@ -8,18 +8,18 @@ class MyTiaItemsControllerTest < ActionController::TestCase
     session[ :current_user_id ] = accounts( :account_one ).id
   end
 
-  test "should get index" do
+  test 'should get index' do
     get :index
     assert_response :success
     assert_not_nil assigns( :tia_items )
   end
 
-  test "new is not permitted here" do
+  test 'new is not permitted here' do
     get :new
     assert_response :forbidden
   end
 
-  test "should not create tia_item" do
+  test 'should not create tia_item' do
     post :create, tia_item: {
       account_id: @tia_item.account_id,
       description: @tia_item.description,
@@ -30,27 +30,27 @@ class MyTiaItemsControllerTest < ActionController::TestCase
     assert_response :forbidden
   end
 
-  test "should show tia_item" do
+  test 'should show tia_item' do
     get :show, id: @tia_item
     assert_response :success
   end
 
-  test "should show tia_item history" do
+  test 'should show tia_item history' do
     get :info, id: @tia_item
     assert_response :success
   end
 
-  test "should get edit" do
+  test 'should get edit' do
     get :edit, id: @tia_item
     assert_response :success
   end
 
-  test "should update tia_item" do
+  test 'should update tia_item' do
     patch :update, id: @tia_item, tia_item: { comment: 'this was changed' }
     assert_redirected_to my_tia_item_path( assigns( :tia_item ))
   end
 
-  test "should not destroy tia_item" do
+  test 'should not destroy tia_item' do
     delete :destroy, id: @tia_item
     assert_response :forbidden 
   end

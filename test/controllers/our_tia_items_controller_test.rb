@@ -8,20 +8,20 @@ class OurTiaItemsControllerTest < ActionController::TestCase
     session[ :current_user_id ] = accounts( :account_one ).id
   end
 
-  test "should get index" do
+  test 'should get index' do
     get :index, my_tia_list_id: @tia_list
     assert_response :success
     assert_not_nil assigns( :tia_items )
     assert_not_nil assigns( :member_list )
   end
 
-  test "should get new" do
+  test 'should get new' do
     get :new, my_tia_list_id: @tia_list
     assert_not_nil assigns( :member_list )
     assert_response :success
   end
 
-  test "should create tia_item" do
+  test 'should create tia_item' do
     assert_difference('TiaItem.count') do
       post :create, tia_item: {
         account_id: @tia_item.account_id,
@@ -32,43 +32,69 @@ class OurTiaItemsControllerTest < ActionController::TestCase
         tia_list_id: @tia_item.tia_list_id },
         my_tia_list_id: @tia_list
     end
-    assert_not_nil assigns( :member_list )
+    assert_nil assigns( :member_list )
     assert_redirected_to our_tia_item_path( assigns( :tia_item ))
   end
 
-  test "should show tia_item" do
+  test 'could not create tia_item due to error' do
+    assert_difference( 'TiaItem.count', 0 ) do
+      post :create, tia_item: {
+        account_id: @tia_item.account_id,
+        description: @tia_item.description,
+        prio:        -1,
+        seqno:     ( @tia_item.seqno + 1 ),
+        status:     @tia_item.status,
+        tia_list_id: @tia_item.tia_list_id },
+        my_tia_list_id: @tia_list
+    end
+    assert_not_nil assigns( :member_list )
+    assert_template :new
+    assert_response :success
+  end
+
+  test 'should show tia_item' do
     get :show, id: @tia_item
     assert_response :success
   end
 
-  test "should show tia_item history" do
+  test 'should show tia_item history' do
     get :info, id: @tia_item
     assert_response :success
   end
 
-  test "should get edit" do
+  test 'should get edit' do
     get :edit, id: @tia_item
     assert_response :success
     assert_not_nil assigns( :member_list )
   end
 
-  test "should update tia_item" do
+  test 'should update tia_item' do
     patch :update, id: @tia_item, tia_item: { 
       comment:     @tia_item.comment + '+',
       tia_list_id: @tia_item.tia_list_id }
-    assert_not_nil assigns( :member_list )
+    assert_nil assigns( :member_list )
     assert_redirected_to our_tia_item_path( assigns( :tia_item ))
   end
 
-  test "no changes requested by update tia_item" do
+  test 'no changes requested by update tia_item' do
     patch :update, id: @tia_item, tia_item: { 
       comment:     @tia_item.comment,
       tia_list_id: @tia_item.tia_list_id }
+    assert_nil assigns( :member_list )
     assert_redirected_to our_tia_item_path( assigns( :tia_item ))
-    assert_not_nil assigns( :member_list )
   end
 
-  test "should destroy tia_item" do
+  test 'could not update tia_item' do
+    patch :update, id: @tia_item, tia_item: { 
+      comment:     @tia_item.comment,
+      prio:        -1, 
+      tia_list_id: @tia_item.tia_list_id }
+    assert_not_nil assigns( :member_list )
+    assert_template :edit
+    assert_response :success
+  end
+
+  test 'should destroy tia_item' do
     assert_difference('TiaItem.count', -1) do
       delete :destroy, id: @tia_item
     end

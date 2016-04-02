@@ -5,7 +5,7 @@ class OurTiaItemsController < ApplicationController
 
   before_action :set_tia_list, only: [ :index, :create, :new ]
   before_action :set_tia_item, only: [ :show, :info, :edit, :update, :destroy ]
-  before_action :set_member_list, only: [ :index, :new, :edit, :create, :update ]
+  before_action :set_member_list, only: [ :index, :new, :edit ]
   before_action :set_breadcrumb
 
   # GET /tia_items
@@ -62,6 +62,7 @@ class OurTiaItemsController < ApplicationController
         if @tia_item.save
           format.html { redirect_to our_tia_item_path( @tia_item ), notice: t( 'our_tia_items.msg.new_ok' )}
         else
+          set_member_list
           format.html { render :new }
         end
       end
@@ -87,9 +88,11 @@ class OurTiaItemsController < ApplicationController
             format.html { redirect_to our_tia_item_path( @tia_item ), notice: t( 'our_tia_items.msg.no_change' )}
           else
             @tia_item.errors.add( :base, 'Internal Error: TiaUpdate record failed validation' )
+            set_member_list
             format.html{ render :edit }
           end
         else
+          set_member_list
           format.html { render :edit }
         end
       end

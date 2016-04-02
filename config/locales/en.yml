@@ -725,7 +725,6 @@ en:
     upd_baseline: 'Update Baseline'
 
   a_code_modules:
-    search_title:  
     edit_title:    'Edit Code'
     new_title:     'Add new Code'
     show_title:    'Show Code Details'
