@@ -63,7 +63,7 @@ class Permission4Group < ActiveRecord::Base
 
   def minimum_permissions
     if( to_index + to_create + to_read + to_update + to_delete )== 0
-      errors[ :base ] << I18n.t( 'permission4_groups.msg.none_given')
+      errors.add( :base, I18n.t( 'permission4_groups.msg.none_given' ))
     end
   end
 
@@ -71,7 +71,7 @@ class Permission4Group < ActiveRecord::Base
 
   def permission_dependencies
     if( to_read < to_update )
-      errors[ :base ] << I18n.t( 'permission4_groups.msg.upd_req_read')
+      errors.add( :base, I18n.t( 'permission4_groups.msg.upd_req_read' ))
     end
   end
 

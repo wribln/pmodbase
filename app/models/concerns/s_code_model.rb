@@ -1,5 +1,5 @@
 require 'active_support/concern'
-module CodeModel
+module SCodeModel
   extend ActiveSupport::Concern
 
   included do
@@ -11,7 +11,7 @@ module CodeModel
 
     validates :code,
       presence: true,
-      format: { with: Regexp.union( /\A.!\z/, /\A.[A-Z0-9.\-]+\z/), message: I18n.t( 'code_modules.msg.bad_code_syntax' )},
+      format: { with: Regexp.union( /\A.!\z/, /\A.[A-Z0-9.\-]+\z/), message: I18n.t( 's_code_modules.msg.bad_code_syntax' )},
       length: { maximum: MAX_LENGTH_OF_CODE }
 
     validate :code_has_prefix
@@ -49,22 +49,22 @@ module CodeModel
     write_attribute( :label, AppHelper.clean_up( text, MAX_LENGTH_OF_LABEL ))
   end
 
-  # note: use '#{ self.class.table_name }' instead of 'code_modules' if you want
+  # note: use '#{ self.class.table_name }' instead of 's_code_modules' if you want
   #       to use table-specific error messages
 
   # make sure the given code includes the class prefix
   
   def code_has_prefix
-    errors.add( :code, I18n.t( "code_modules.msg.bad_code_format", prefix: self.class.code_prefix )) \
+    errors.add( :code, I18n.t( "s_code_modules.msg.bad_code_format", prefix: self.class.code_prefix )) \
     unless self.class.has_code_prefix( code )
   end
 
   # check if flag combinations are valid
 
   def flag_combinations
-    errors.add( :heading, I18n.t( 'code_modules.msg.bad_h_m_combo' )) \
+    errors.add( :heading, I18n.t( 's_code_modules.msg.bad_h_m_combo' )) \
       if heading && master
-    errors.add( :heading, I18n.t( 'code_modules.msg.bad_h_a_combo' )) \
+    errors.add( :heading, I18n.t( 's_code_modules.msg.bad_h_a_combo' )) \
       if heading && active 
   end
 
@@ -73,7 +73,7 @@ module CodeModel
   def only_one_master
     if master then
       if self.class.where( code: code, master: TRUE ).where.not( id: id ).count > 0 then
-        errors.add( :base, I18n.t( 'code_modules.msg.too_many_masters' ))
+        errors.add( :base, I18n.t( 's_code_modules.msg.too_many_masters' ))
       end
     end
   end

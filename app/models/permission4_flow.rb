@@ -21,7 +21,7 @@ class Permission4Flow < ActiveRecord::Base
     presence: true,
     numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
-  validate :workflow_id
+  validate :workflow_id_in_range
 
   validates :label,
     length: { maximum: MAX_LENGTH_OF_LABEL }
@@ -43,7 +43,22 @@ class Permission4Flow < ActiveRecord::Base
     elsif tasklist =~ /^\s*\d+\s*(,\s*\d+\s*)*$/ && tasklist == $& then 
       self.tasklist = self.tasklist.split(',').map{ |v| Integer(v) }.uniq.join(',')
     else
-      errors[ :base ] << I18n.t( 'permission4_flows.msg.bad_tasklist')
+      errors.add( :base, I18n.t( 'permission4_flows.msg.bad_tasklist' ))
+    end
+  end
+
+  # make sure workflow id is valid
+
+  def workflow_id_in_range
+    if workflow_id.nil? || feature_id.nil? then
+      return
+    else
+      no_workflows = self.try( :feature ).try( :no_workflows )
+      logger.debug "no_workflows: #{ no_workflows }, workflow_id: #{ self.workflow_id }"
+      if no_workflows && workflow_id > ( no_workflows - 1 ) then
+        errors.add :workflow_id, I18n.t( 'permission4_flows.msg.bad_workflow' )
+        logger.debug "ERROR with workflow_id!"
+      end
     end
   end
 

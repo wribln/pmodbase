@@ -9,6 +9,14 @@ feature_<%= f %>:
   seqno: <%= f %>
   feature_category: feature_category_one 
 
+  <% if f == 31 %>
+  no_workflows: 3
+  <% elsif f == 40 %>
+  no_workflows: 1
+  <% else %>
+  no_workflows: 0
+  <% end %>
+
 <% end %>
 
 feature_one:

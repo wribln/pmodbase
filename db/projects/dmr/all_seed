@@ -2,17 +2,27 @@
 echo "+----------------------------+"
 echo "| load project specific data |"
 echo "+----------------------------+"
-rake import['db/projects/dmr/a1_codes.csv','A1Code']
-rake import['db/projects/dmr/a2_codes.csv','A2Code']
-rake import['db/projects/dmr/a3_codes.csv','A3Code']
-rake import['db/projects/dmr/a4_codes.csv','A4Code']
-rake import['db/projects/dmr/a5_codes.csv','A5Code']
-rake import['db/projects/dmr/a6_codes.csv','A6Code']
-rake import['db/projects/dmr/a7_codes.csv','A7Code']
-rake import['db/projects/dmr/a8_codes.csv','A8Code']
+read -n 1 -p "for environment [d(evelopment)|p(roduction)] " e4r
+echo 
+case "$e4r" in
+  d ) e4r="development";;
+  p ) e4r="production";;
+esac
+if [ ${#e4r} -eq 1 ]; then
+  echo "Bad input found: '$e4r' - aborting request."
+  exit 1
+fi
+rake $e4n import['db/projects/dmr/a1_codes.csv','A1Code']
+rake $e4n import['db/projects/dmr/a2_codes.csv','A2Code']
+rake $e4n import['db/projects/dmr/a3_codes.csv','A3Code']
+rake $e4n import['db/projects/dmr/a4_codes.csv','A4Code']
+rake $e4n import['db/projects/dmr/a5_codes.csv','A5Code']
+rake $e4n import['db/projects/dmr/a6_codes.csv','A6Code']
+rake $e4n import['db/projects/dmr/a7_codes.csv','A7Code']
+rake $e4n import['db/projects/dmr/a8_codes.csv','A8Code']
 #
-rake import['db/projects/dmr/location_codes.csv','LocationCode']
-rake import['db/projects/dmr/network_lines.csv','NetworkLine']
-rake import['db/projects/dmr/network_stations.csv','NetworkStation']
-rake db:seed:network_stops
+rake $e4n import['db/projects/dmr/location_codes.csv','LocationCode']
+rake $e4n import['db/projects/dmr/network_lines.csv','NetworkLine']
+rake $e4n import['db/projects/dmr/network_stations.csv','NetworkStation']
+rake $e4n db:seed:network_stops
 #

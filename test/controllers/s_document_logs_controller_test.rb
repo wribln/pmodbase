@@ -6,40 +6,88 @@ class SDocumentLogsControllerTest < ActionController::TestCase
     session[ :current_user_id ] = accounts( :account_one ).id
   end
 
-  test "should get index" do
+  test 'should get index' do
     get :index
     assert_response :success
     assert_not_nil assigns( :s_document_logs )
   end
 
-  test "should get new" do
+  test 'should get new' do
     get :new
     assert_response :success
   end
 
-  test "should create s_document_log" do
+  test 'should create s_document_log' do
     assert_difference( 'SDocumentLog.count' ) do
       post :create, s_document_log: { group_id: @s_document_log.group_id, author_date: @s_document_log.author_date, dcc_code: @s_document_log.dcc_code, function_code: @s_document_log.function_code, title: @s_document_log.title }
     end
     assert_redirected_to s_document_log_path( assigns( :s_document_log ))
   end
 
-  test "should show s_document_log" do
+  test 'test partial input 0' do
+    assert_difference( 'SDocumentLog.count', 0 ) do
+      post :create, s_document_log: { group_id: nil }
+    end
+    sdl = assigns( :s_document_log )
+    assert_includes sdl.errors, :group_id
+    assert_includes sdl.errors, :dcc_code
+    assert_includes sdl.errors, :base
+    assert_response :success
+  end
+
+  test 'test partial input 1' do
+    assert_difference( 'SDocumentLog.count', 0 ) do
+      post :create, s_document_log: { group_id: @s_document_log.group_id, dcc_code: @s_document_log.dcc_code }
+    end
+    sdl = assigns( :s_document_log )
+    assert_includes sdl.errors, :base
+    assert_response :success
+  end
+
+  test 'test partial input ok w/ function code' do
+    assert_difference( 'SDocumentLog.count' ) do
+      post :create, s_document_log: { group_id: @s_document_log.group_id, dcc_code: @s_document_log.dcc_code, function_code: @s_document_log.function_code }
+    end
+    assert_redirected_to s_document_log_path( assigns( :s_document_log ))
+  end
+
+  test 'test partial input ok w/ product code' do
+    assert_difference( 'SDocumentLog.count' ) do
+      post :create, s_document_log: { group_id: @s_document_log.group_id, dcc_code: @s_document_log.dcc_code, product_code: @s_document_log.product_code }
+    end
+    assert_redirected_to s_document_log_path( assigns( :s_document_log ))
+  end
+
+  test 'test partial input ok w/ service code' do
+    assert_difference( 'SDocumentLog.count' ) do
+      post :create, s_document_log: { group_id: @s_document_log.group_id, dcc_code: @s_document_log.dcc_code, service_code: @s_document_log.service_code }
+    end
+    assert_redirected_to s_document_log_path( assigns( :s_document_log ))
+  end
+
+  test 'test partial input ok w/ phase code' do
+    assert_difference( 'SDocumentLog.count' ) do
+      post :create, s_document_log: { group_id: @s_document_log.group_id, dcc_code: @s_document_log.dcc_code, phase_code: @s_document_log.phase_code }
+    end
+    assert_redirected_to s_document_log_path( assigns( :s_document_log ))
+  end
+
+  test 'should show s_document_log' do
     get :show, id: @s_document_log
     assert_response :success
   end
 
-  test "should get edit" do
+  test 'should get edit' do
     get :edit, id: @s_document_log
     assert_response :success
   end
 
-  test "should update s_document_log" do
+  test 'should update s_document_log' do
     patch :update, id: @s_document_log, s_document_log: { author_date: @s_document_log.author_date, dcc_code: @s_document_log.dcc_code, function_code: @s_document_log.function_code, location_code: @s_document_log.location_code, phase_code: @s_document_log.phase_code, product_code: @s_document_log.product_code, receiver_group: @s_document_log.receiver_group, revision_code: @s_document_log.revision_code, service_code: @s_document_log.service_code, title: @s_document_log.title }
     assert_redirected_to s_document_log_path( assigns( :s_document_log ))
   end
 
-  test "should destroy s_document_log" do
+  test 'should destroy s_document_log' do
     assert_difference('SDocumentLog.count', -1) do
       delete :destroy, id: @s_document_log
     end

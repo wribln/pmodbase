@@ -35,6 +35,7 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', '
 
 # restart passenger via 'passenger-config restart-app'
 set :passenger_restart_with_touch, false
+set :passenger_restart_with_sudo, true
 
 namespace :deploy do
 

@@ -1531,7 +1531,9 @@ en:
     add_label:      'Add another workflow permissions record'
     msg:
       bad_feature_id:   :general.non_existing
-      bad_tasklist: 'List of permitted tasks is ill-formatted.'  
+      bad_account_id:   :general.non_existing
+      bad_tasklist:     'List of permitted tasks is ill-formatted.'
+      bad_workflow:     'out of range or not applicable for this feature.'  
 
   phase_codes:
     title:          'Phase Codes'

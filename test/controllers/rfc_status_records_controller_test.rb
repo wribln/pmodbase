@@ -15,7 +15,7 @@ class RfcStatusRecordsControllerTest < ActionController::TestCase
   end
 
   test 'permission fixture' do
-    p = permission4_flows( :one )
+    p = permission4_flows( :rsr )
     assert_equal FEATURE_ID_RFC_STATUS_RECORDS, p.feature_id
     assert_equal 0, p.workflow_id
     assert p.permission_for_creation?
