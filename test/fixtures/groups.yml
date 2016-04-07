@@ -11,3 +11,4 @@ group_two:
   label: "Group 2"
   notes: ""
   group_category: group_category_one
+  sub_group_of: group_one

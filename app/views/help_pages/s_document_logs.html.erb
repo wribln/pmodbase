@@ -13,12 +13,14 @@
         is used as unambiguous document number. The database management system maintains this
         number and ensures that no number is used twice.</li>
       <li>The <%= help_param SDocumentLog.human_attribute_name( :group_id )%> determines the 
-        project group responsible for the creation of the document. Only those groups for
+        project group responsible for the creation of the document. Only active groups for
         which the user has permissions are shown here and can be selected.</li>
       <li>The <%= help_param SDocumentLog.human_attribute_name( :receiver_group )%> is the
         party for which this document was prepared. This parameter is used only for 
         correspondence documents such as letters addressed to a specific party. For technical
-        documents, this parameter can be left blank.</li>
+        documents, this parameter can be left blank. The list of possible codes is restricted
+        to those which have the <%= help_term Group.human_attribute_name( :s_code_receiver )%> and
+        <%= help_term Group.human_attribute_name( :active )%> flags set.</li>
     </ul>
     <p>At least one of the following attributes must be given:</p>
     <ul>

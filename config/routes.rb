@@ -71,7 +71,6 @@ Rails.application.routes.draw do
   resources :all_tia_lists, path: 'atl', format: false
   resources :my_tia_lists, path: 'mtl', format: false do
     resources :our_tia_items, path: 'oti', format: false, shallow: true
-    resources :our_tia_members, path: 'otm', format: false, shallow: true
   end
   get 'mti/:id/info', to: 'my_tia_items#info', as: 'my_tia_item_info', format: false
   get 'oti/:id/info', to: 'our_tia_items#info', as: 'our_tia_item_info', format: false

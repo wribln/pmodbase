@@ -1,6 +1,19 @@
 require 'test_helper'
 class AccountTest < ActiveSupport::TestCase
 
+  test 'class method user user' do
+    [ :account_one, :account_wop, :account_two, :account_three ].each do |aa|
+      a = accounts( aa )
+      refute_nil a.person_id
+      assert_equal a.user_name, Account.user_name( a.id )
+    end
+    a = accounts( :account_one )
+    a.person_id = people( :person_two ).id
+    assert a.save
+    assert_equal a.user_name, Account.user_name( a.id )
+    assert_equal a.user_name, people( :person_two ).user_name
+  end
+
   test 'add new account, check defaults' do
     a = Account.new
     assert_nil a.name,'name'

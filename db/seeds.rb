@@ -270,16 +270,16 @@ Feature.new do |f|
   f.feature_category_id = fc1.id
 end.save
 
-Feature.new do |f|
-  f.id = FEATURE_ID_OUR_TIA_MEMBERS
-  f.label = I18n.t( 'our_tia_members.title' )
-  f.code = 'OTM'
-  f.seqno = 37
-  f.access_level = OurTiaMembersController.feature_access_level
-  f.control_level = OurTiaMembersController.feature_control_level
-  f.no_workflows = OurTiaMembersController.no_workflows
-  f.feature_category_id = fc1.id
-end.save
+# Feature.new do |f|
+#   f.id = FEATURE_ID_OUR_TIA_MEMBERS
+#   f.label = I18n.t( 'our_tia_members.title' )
+#   f.code = 'OTM'
+#   f.seqno = 37
+#   f.access_level = OurTiaMembersController.feature_access_level
+#   f.control_level = OurTiaMembersController.feature_control_level
+#   f.no_workflows = OurTiaMembersController.no_workflows
+#   f.feature_category_id = fc1.id
+# end.save
 
 Feature.new do |f|
   f.id = FEATURE_ID_HASHTAGS

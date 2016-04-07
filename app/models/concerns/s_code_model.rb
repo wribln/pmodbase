@@ -25,6 +25,7 @@ module SCodeModel
 
     default_scope { order( code: :asc, master: :desc )}
     scope :active_only, -> { where active: true }
+    scope :master_only, -> { where master: true }
     scope :as_code, -> ( c ){ where( 'code  LIKE ?',  has_code_prefix( c ) ? "#{ c }%" : "#{ code_prefix }#{ c }%" )}
     scope :as_desc, -> ( l ){ where( 'label LIKE ?', "%#{ l }%" )}
 
@@ -55,7 +56,7 @@ module SCodeModel
   # make sure the given code includes the class prefix
   
   def code_has_prefix
-    errors.add( :code, I18n.t( "s_code_modules.msg.bad_code_format", prefix: self.class.code_prefix )) \
+    errors.add( :code, I18n.t( 's_code_modules.msg.bad_code_format', prefix: self.class.code_prefix )) \
     unless self.class.has_code_prefix( code )
   end
 
@@ -68,7 +69,11 @@ module SCodeModel
       if heading && active 
   end
 
-  # check if there is only a single master record defined for this code
+  # make sure that there is at most a single master record defined for this code
+  # Note: there should be one and only one master record but it is not possible
+  # to require one record flagged as master record because it would then not be
+  # possible to move the master flag from one record to another. This means we
+  # cannot guarantee that there is a master record!
 
   def only_one_master
     if master then

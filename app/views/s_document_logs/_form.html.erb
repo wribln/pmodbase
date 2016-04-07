@@ -7,14 +7,13 @@
       <div class="form-group">
         <%= form.label :group_id, class: "col-sm-3 control-label" %>
         <div class="col-sm-6">
-          <%# form.collection_select( :group_id, Group.all, :id, :code_and_label, {}, { class: 'form-control' })%>
           <%= form.select :group_id, @group_selection, { prompt: t( '.g_prompt' )},{ class: 'form-control', required: true }%>
         </div>
       </div>
       <div class="form-group">
         <%= form.label :receiver_group, class: "col-sm-3 control-label" %>
         <div class="col-sm-6">
-          <%= form.collection_select( :receiver_group, Group.all, :code, :code_and_label, { include_blank: true }, { class: 'form-control' })%>
+          <%= form.collection_select( :receiver_group, Group.active_only.receiver_codes, :code, :code_and_label, { include_blank: true }, { class: 'form-control' })%>
         </div>
       </div>
       <div class="form-group">
@@ -62,7 +61,10 @@
       <div class="form-group">
         <%= form.label :author_date, class: "col-sm-3 control-label" %>
         <div class="col-sm-2">
-          <%= form.text_field :author_date, class: "form-control" %>
+          <div class="input-group date" data-provide="datepicker">
+            <%= form.text_field :author_date, class: "form-control" %>
+            <span class="input-group-addon">:::</span>
+          </div>
         </div>
       </div>
       <div class="form-group">

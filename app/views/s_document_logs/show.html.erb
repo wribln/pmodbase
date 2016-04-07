@@ -37,7 +37,7 @@
         </div>
         <div class="col-sm-4">
           <p class="form-control-static">
-            <%= FunctionCode.find_by( code: f.object.function_code, active: true, master: true ).label unless f.object.function_code.blank? %></p>
+            <%= FunctionCode.master_only.find_by( code: f.object.function_code ).try( :label )unless f.object.function_code.blank? %></p>
         </div>
       </div>
       <div class="form-group">
@@ -47,9 +47,9 @@
         </div>
         <div class="col-sm-4">
           <p class="form-control-static">
-            <%= ServiceCode.find_by( code: f.object.service_code, active: true, master: true ).label unless f.object.service_code.blank? %></p>
+            <%= ServiceCode.master_only.find_by( code: f.object.service_code ).try( :label ) unless f.object.service_code.blank? %></p>
         </div>
-      </div>
+      </div>try( :label )
       <div class="form-group">
         <%= f.label :product_code, class: "col-sm-3 control-label" %>
         <div class="col-sm-2">
@@ -57,7 +57,7 @@
         </div>
         <div class="col-sm-4">
           <p class="form-control-static">
-            <%= ProductCode.find_by( code: f.object.product_code, active: true, master: true ).label unless f.object.product_code.blank? %></p>
+            <%= ProductCode.master_only.find_by( code: f.object.product_code ).try( :label ) unless f.object.product_code.blank? %></p>
         </div>
       </div>
       <div class="form-group">
@@ -87,7 +87,7 @@
         </div>
         <div class="col-sm-4">
           <p class="form-control-static">
-            <%= DccCode.find_by( code: f.object.dcc_code, active: true, master: true ).label unless f.object.dcc_code.blank? %></p>
+            <%= DccCode.master_only.find_by( code: f.object.dcc_code ).try( :label ) unless f.object.dcc_code.blank? %></p>
         </div>
       </div>
       <div class="form-group">

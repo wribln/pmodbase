@@ -6,4 +6,5 @@ tia_item_one:
   comment:  'some comment'
   prio:     1
   status:   1
+  archived: false
   due_date: 2015-06-08

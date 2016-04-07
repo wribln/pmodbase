@@ -6,7 +6,9 @@ class TiaItem < ActiveRecord::Base
    
   belongs_to :tia_list,     -> { readonly }, inverse_of: :tia_items
   belongs_to :account,      -> { readonly }, inverse_of: :tia_items
-  has_many   :tia_updates,                   inverse_of: :tia_item, dependent: :destroy
+  has_many   :tia_item_deltas,               inverse_of: :tia_item, dependent: :destroy
+
+  before_save :set_defaults
 
   validates :seqno,
     presence: true,
@@ -14,6 +16,7 @@ class TiaItem < ActiveRecord::Base
     uniqueness: { scope: :tia_list_id, message: I18n.t( 'our_tia_items.msg.bad_seqno' )}
 
   validates :description,
+    presence: true,
     length: { maximum: MAX_LENGTH_OF_DESCRIPTION }
 
   validates :comment,
@@ -60,6 +63,10 @@ class TiaItem < ActiveRecord::Base
     TIA_ITEM_STATUS_LABELS[ status ] unless status.nil?
   end
 
+  def self.status_label( status )
+    TIA_ITEM_STATUS_LABELS[ status ] unless status.nil?
+  end
+
   # ... with it's index value
 
   def status_label_with_id
@@ -67,6 +74,10 @@ class TiaItem < ActiveRecord::Base
   end
 
   def prio_label
+    TIA_ITEM_PRIO_LABELS[ prio ] unless prio.nil?
+  end
+
+  def self.prio_label( prio )
     TIA_ITEM_PRIO_LABELS[ prio ] unless prio.nil?
   end
 
@@ -83,5 +94,13 @@ class TiaItem < ActiveRecord::Base
       errors.add( :archived, I18n.t( 'our_tia_items.msg.bad_archive' )) 
     end
   end
+
+  private
+
+    # ensure that archived is either true or false
+
+    def set_defaults
+      set_default!( :archived, false )
+    end
 
 end

@@ -55,9 +55,9 @@ class GroupsControllerTest < ActionController::TestCase
   test "CSV download" do
     get :index, format: :xls
     assert_equal <<END_OF_CSV, response.body
-code;label;notes;seqno;group_category_id
-TWO;Group 2;"";0;Group Category 1
-ONE;Group 1;"";0;Group Category 1
+code;label;notes;seqno;group_category;sub_group_of;participating;s_sender_code;s_receiver_code;active;standard
+TWO;Group 2;"";0;Group Category 1;Group 1;true;true;true;true;true
+ONE;Group 1;"";0;Group Category 1;;true;true;true;true;true
 END_OF_CSV
   end
 

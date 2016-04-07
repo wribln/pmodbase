@@ -1,45 +1,45 @@
-code;label;notes;seqno;group_category_id
-"CLN";"Customer / Client";"";1;1
-"OPM";"Overall / Consortium Project Management";"";2;1
-"SPM";"Siemens Project Management";"";3;1
-"SYS";"System Engineering / System Integrator";"";4;1
-"ISA";"Independent Safety Assessor";"";5;1
-"DVE";"Design Verification Engineer";"";6;1
-"UTL";"Public Utilities";"";7;1
-"GOV";"Government Bodies";"";8;1
-"OTH";"Other Contractors / Third Parties";"";9;1
-"OPS";"Operator";"";10;1
-"AFC";"Automatic Fare Collection";"";1;2
-"BAS";"Building Automation System (Facility SCADA)";"";2;2
-"BHS";"Baggage Handling System";"";3;2
-"BUS";"Building Services (incl. Lighting)";"";4;2
-"CCR";"Control Centres";"";5;2
-"CIV";"Civil Works";"";6;2
-"COM";"Telecommunication Systems";"";7;2
-"DWE";"Depot and Workshop Equipment";"";8;2
-"ELE";"Elevators";"";9;2
-"ESC";"Escalators";"";10;2
-"FAS";"Fire Alarm System";"";11;2
-"FFS";"Fire Fighting System";"";12;2
-"LVD";"Low Voltage Distribution";"";13;3
-"MAI";"Maintenance Infrastructure";"";15;2
-"MAN";"Maintenance (MAI and MAR)";"";14;2
-"MAR";"Maintenance Rolling Stock";"";15;2
-"NVS";"Non-Visible Contact Line";"";16;3
-"OCS";"Overhead Contact System";"";17;3
-"PSD";"Platform Screen Doors";"";18;2
-"REL";"Railway Electrification / Power Supply";"";19;2
-"RST";"Rolling Stock";"";20;2
-"SCA";"Power SCADA";"";21;2
-"SIG";"Signalling Systems";"";22;2
-"SPS";"Service Power Supply";"";23;3
-"TLC";"Traffic Light Control";"";24;2
-"TPS";"Traction Power Supply";"";25;3
-"TRS";"Third Rail System";"";26;3
-"TRW";"Track Works (Superstructure)";"";27;2
-"TVS";"Tunnel Ventilation System";"";28;2
-"UPS";"Uninterruptible Power Supply";"";29;3
-"EAC";"Each (for one's own scope)";"";0;4
-"SAG";"Siemens AG Germany";"";1;4
-"SAA";"Siemens AG Austria";"";2;4
-"SWL";"Siemens WLL Qatar";"";3;4
+code;label;notes;seqno;group_category_id;sub_group_of;participating;s_sender_code;s_receiver_code;active;standard
+"CLN";"Customer / Client";"";1;1;;true;true;true;true;true
+"OPM";"Overall / Consortium Project Management";"";2;1;;true;true;true;true;true
+"SPM";"Siemens Project Management";"";3;1;;true;true;true;true;true
+"SYS";"System Engineering / System Integrator";"";4;1;;true;true;true;true;true
+"ISA";"Independent Safety Assessor";"";5;1;;true;true;true;true;true
+"DVE";"Design Verification Engineer";"";6;1;;true;true;true;true;true
+"UTL";"Public Utilities";"";7;1;;false;true;true;true;true
+"GOV";"Government Bodies";"";8;1;;false;true;true;true;true
+"OTH";"Other Contractors / Third Parties";"";9;1;;false;true;true;true;true
+"OPS";"Operator";"";10;1;;true;true;true;true;true
+"AFC";"Automatic Fare Collection";"";1;2;;true;true;true;true;true
+"BAS";"Building Automation System (Facility SCADA)";"";2;2;;true;true;true;true;true
+"BHS";"Baggage Handling System";"";3;2;;true;true;true;true;true
+"BUS";"Building Services (incl. Lighting)";"";4;2;;true;true;true;true;true
+"CCR";"Control Centres";"";5;2;;true;true;true;true;true
+"CIV";"Civil Works";"";6;2;;true;true;true;true;true
+"COM";"Telecommunication Systems";"";7;2;;true;true;true;true;true
+"DWE";"Depot and Workshop Equipment";"";8;2;;true;true;true;true;true
+"ELE";"Elevators";"";9;2;;true;true;true;true;true
+"ESC";"Escalators";"";10;2;;true;true;true;true;true
+"FAS";"Fire Alarm System";"";11;2;;true;true;true;true;true
+"FFS";"Fire Fighting System";"";12;2;;true;true;true;true;true
+"MAI";"Maintenance Infrastructure";"";15;2;;true;true;true;true;true
+"MAN";"Maintenance (MAI and MAR)";"";14;2;;true;true;true;true;true
+"MAR";"Maintenance Rolling Stock";"";15;2;;true;true;true;true;true
+"PSD";"Platform Screen Doors";"";18;2;;true;true;true;true;true
+"REL";"Railway Electrification / Power Supply";"";19;2;;true;true;true;true;true
+"RST";"Rolling Stock";"";20;2;;true;true;true;true;true
+"SCA";"Power SCADA";"";21;2;;true;true;true;true;true
+"SIG";"Signalling Systems";"";22;2;;true;true;true;true;true
+"SPS";"Service Power Supply";"";23;3;;true;true;true;true;true
+"TLC";"Traffic Light Control";"";24;2;;true;true;true;true;true
+"TRW";"Track Works (Superstructure)";"";27;2;;true;true;true;true;true
+"TVS";"Tunnel Ventilation System";"";28;2;;true;true;true;true;true
+"UPS";"Uninterruptible Power Supply";"";29;3;;true;true;true;true;true
+"EAC";"Each (for one's own scope)";"";0;4;;false;false;true;true;true
+"SAG";"Siemens AG Germany";"";1;4;;false;true;true;true;true
+"SAA";"Siemens AG Austria";"";2;4;;false;true;true;true;true
+"SWL";"Siemens WLL Qatar";"";3;4;;false;true;true;true;true
+"LVD";"Low Voltage Distribution";"";13;3;"REL";true;true;true;true;true
+"NVS";"Non-Visible Contact Line";"";16;3;"REL";true;true;true;true;true
+"OCS";"Overhead Contact System";"";17;3;"REL";true;true;true;true;true
+"TPS";"Traction Power Supply";"";25;3;"REL";true;true;true;true;true
+"TRS";"Third Rail System";"";26;3;"REL";true;true;true;true;true

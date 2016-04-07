@@ -9,6 +9,10 @@
 # respective _destroy value) is set to TRUE; addition of a new record is done
 # by creating a copy of the hidden subform and making it visible
 
+# Update 2016-04-04: need to check if 'id'/'name' exist as for checkboxes,
+# a hidden input field is inserted by Rails w/o 'id' but with a 'name'
+
+
 $ ->
   $('.del-subform-button').click ->
     if confirm("Are you sure that you want to remove this item?")
@@ -21,9 +25,10 @@ $ ->
     $template_object = $(this).closest('div.form-group').prev()
     $template_clone = $template_object.clone(true)
     $template_clone.find(':input').each ->
-      old_id = $(@).attr('id')
-      new_id = old_id.replace /template/,no_form_sets
-      $(@).attr('id',new_id)
+      if $(@).attr('id')
+        old_id = $(@).attr('id')
+        new_id = old_id.replace /template/,no_form_sets
+        $(@).attr('id',new_id)
       old_name = $(@).attr('name')
       new_name = old_name.replace /template/,no_form_sets
       $(@).attr('name',new_name)

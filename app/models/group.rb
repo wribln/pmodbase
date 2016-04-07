@@ -8,6 +8,8 @@ class Group < ActiveRecord::Base
   has_many    :accounts
   has_many    :responsibilities
   has_many    :permission4_groups
+  has_many    :sub_groups,   class_name: 'Group', foreign_key: 'sub_group_of_id'
+  belongs_to  :sub_group_of, class_name: 'Group'
 
   validates :code,
     uniqueness: true,
@@ -30,7 +32,12 @@ class Group < ActiveRecord::Base
     presence: true,
     numericality: { only_integer: true }
 
+  validate :sub_group_reference
+
   default_scope { order( code: :asc )}
+  scope :active_only, ->    { where( active: true )}
+  scope :sender_codes, ->   { where( s_sender_code: true )}
+  scope :receiver_codes, -> { where( s_receiver_code: true )}
   scope :as_abbr, -> ( abbr ){ where( 'code LIKE ?', "#{ abbr }%" )}
   scope :as_desc, -> ( desc ){ where( 'label LIKE ?', "%#{ desc }%" )}
   class << self; alias :as_code :as_abbr end
@@ -67,13 +74,6 @@ class Group < ActiveRecord::Base
     write_attribute( :notes, AppHelper.clean_up( text, MAX_LENGTH_OF_NOTE ))
   end
 
-  # overwrite write accessor to ensure that [label] does not contain
-  # any redundant blanks
-
-  def label=( text )
-    write_attribute( :label, AppHelper.clean_up( text, MAX_LENGTH_OF_LABEL ))
-  end
-
   def label_with_id
     text_and_id( :label )
   end
@@ -82,8 +82,13 @@ class Group < ActiveRecord::Base
    text_and_id( :code )    
   end
 
-  def group_category_with_id
-    assoc_text_and_id( :group_category, :label )
+  # ensure that the referenced subgroup is valid
+
+  def sub_group_reference
+    unless sub_group_of_id.nil? then
+      errors.add( sub_group_of, I18n.t( 'groups.msg.bad_sub_group' )) \
+        unless Group.exists?( sub_group_of_id )
+    end
   end
 
 end

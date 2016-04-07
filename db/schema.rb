@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160320183500) do
+ActiveRecord::Schema.define(version: 20160406090216) do
 
   create_table "a1_codes", force: :cascade do |t|
     t.string   "code",                      null: false
@@ -381,16 +381,23 @@ ActiveRecord::Schema.define(version: 20160320183500) do
   add_index "group_categories", ["seqno", "label"], name: "group_categories_key2"
 
   create_table "groups", force: :cascade do |t|
-    t.string   "code",              limit: 10, default: "", null: false
-    t.string   "label",             limit: 50, default: "", null: false
+    t.string   "code",              limit: 10, default: "",   null: false
+    t.string   "label",             limit: 50, default: "",   null: false
     t.string   "notes",             limit: 50
     t.integer  "seqno",                        default: 0
-    t.integer  "group_category_id",                         null: false
-    t.datetime "created_at",                                null: false
-    t.datetime "updated_at",                                null: false
+    t.integer  "group_category_id",                           null: false
+    t.integer  "sub_group_of_id"
+    t.boolean  "participating",                default: true
+    t.boolean  "s_sender_code",                default: true
+    t.boolean  "s_receiver_code",              default: true
+    t.boolean  "active",                       default: true
+    t.boolean  "standard",                     default: true
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
   end
 
   add_index "groups", ["code"], name: "index_groups_on_code"
+  add_index "groups", ["sub_group_of_id"], name: "index_groups_on_sub_group_of_id"
 
   create_table "hashtags", force: :cascade do |t|
     t.string   "code"
@@ -600,6 +607,7 @@ ActiveRecord::Schema.define(version: 20160320183500) do
 
   create_table "s_document_logs", force: :cascade do |t|
     t.integer  "group_id",                   null: false
+    t.integer  "account_id",                 null: false
     t.string   "receiver_group", limit: 10
     t.string   "function_code",  limit: 10
     t.string   "service_code",   limit: 10
@@ -608,9 +616,8 @@ ActiveRecord::Schema.define(version: 20160320183500) do
     t.string   "phase_code",     limit: 10
     t.string   "dcc_code",       limit: 10
     t.string   "revision_code",  limit: 10
-    t.date     "author_date",    limit: 10
-    t.integer  "account_id",                 null: false
-    t.string   "title",          limit: 10
+    t.date     "author_date"
+    t.string   "title",          limit: 128
     t.string   "siemens_doc_id", limit: 100
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
@@ -658,6 +665,16 @@ ActiveRecord::Schema.define(version: 20160320183500) do
 
   add_index "submission_groups", ["code"], name: "index_submission_groups_on_code"
 
+  create_table "tia_item_deltas", force: :cascade do |t|
+    t.integer  "tia_item_id", null: false
+    t.text     "delta_hash"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "tia_item_deltas", ["tia_item_id", "created_at"], name: "index_tia_item_deltas_on_tia_item_id_and_created_at"
+  add_index "tia_item_deltas", ["tia_item_id"], name: "index_tia_item_deltas_on_tia_item_id"
+
   create_table "tia_items", force: :cascade do |t|
     t.integer  "tia_list_id",                 null: false
     t.integer  "account_id"
@@ -680,7 +697,6 @@ ActiveRecord::Schema.define(version: 20160320183500) do
     t.integer  "deputy_account_id"
     t.string   "code"
     t.string   "label"
-    t.string   "members"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
   end
@@ -699,22 +715,6 @@ ActiveRecord::Schema.define(version: 20160320183500) do
 
   add_index "tia_members", ["account_id"], name: "index_tia_members_on_account_id"
   add_index "tia_members", ["tia_list_id"], name: "index_tia_members_on_tia_list_id"
-
-  create_table "tia_updates", force: :cascade do |t|
-    t.integer  "tia_item_id", null: false
-    t.integer  "account_id"
-    t.string   "description"
-    t.string   "comment"
-    t.integer  "prio"
-    t.integer  "status"
-    t.date     "due_date"
-    t.boolean  "archived"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
-  add_index "tia_updates", ["tia_item_id", "created_at"], name: "index_tia_updates_on_tia_item_id_and_created_at"
-  add_index "tia_updates", ["tia_item_id"], name: "index_tia_updates_on_tia_item_id"
 
   create_table "unit_names", force: :cascade do |t|
     t.string   "code",       limit: 10, null: false

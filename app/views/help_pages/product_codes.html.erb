@@ -27,7 +27,8 @@
         indicates that this entry is used as main entry for the associated code, i.e.
         when listing the code structure and a single entry per code is required, then
         the code marked with 
-        <%= help_term ProductCode.human_attribute_name( :master ) -%> should be listed.</li>
+        <%= help_term ProductCode.human_attribute_name( :master ) -%> should be listed.
+        Only a single code is allowed to have this flag set.</li>
       <li>Codes having the <%= help_param ProductCode.human_attribute_name( :standard ) -%> 
         flag set, are taken from an (internal) standard. Such codes must not be removed, they
         should only be set to 'inactive'.

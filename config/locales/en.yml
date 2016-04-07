@@ -20,7 +20,7 @@ en:
       active:     [ 'active', 'inactive']
 
     attributes:
-      id:             '[Id]'
+      id:             '[ID]'
       project_doc_id: 'Project DMS ID'
       group_id:       'Project Group'
 
@@ -97,7 +97,6 @@ en:
       submission_group:   'DSR Submission Groups'
       tia_list:           'Task/Issue/Action Item Lists'
       tia_item:           'Task/Issue/Action Items'
-      tia_member:         'Task/Issue/Action Item List Member'
       unit_name:          'Units'
       web_link:           'Web Links'
 
@@ -335,8 +334,8 @@ en:
         document_states:    ['planned','in progress','in review','in submission','submitted','approved','approved with comments','rejected','completed w/o approval','updated','withdrawn/doc group complete']
         dsr_doc_group_id:     'Document Group'
         submission_group_id:  'Submission Group'
-        prep_activity_id:     'Prepare/Submit Activity [Id]'
-        subm_activity_id:     'Review/Approve Activity [Id]'
+        prep_activity_id:     'Prepare/Submit Activity [ID]'
+        subm_activity_id:     'Review/Approve Activity [ID]'
         plnd_xxx:             'Planned ...'
         plnd_xxx_b:           'Planned ... (Baseline)'
         estm_xxx:             'Estimated ...'
@@ -365,7 +364,7 @@ en:
 
       dsr_doc_group:
         id:                     :general.attributes.id
-        dsr_status_record_id:   'DSR Status Record [Id]'
+        dsr_status_record_id:   'DSR Status Record [ID]'
         code:                   'Code'
         title:                  'Title'
         group_id:               :general.attributes.group_id
@@ -379,7 +378,7 @@ en:
 
       dsr_submission:
         id:                   :general.attributes.id
-        dsr_status_record_id: 'DSR Status Record [Id]'
+        dsr_status_record_id: 'DSR Status Record [ID]'
         submission_no:        'Submission No'
         sender_doc_id_version:        'Sender DMS Version (Document)'
         receiver_doc_id_version:      'Receiver DMS Version (Document)'
@@ -426,10 +425,18 @@ en:
         id:             :general.attributes.id
         code:           'Project Group Code'
         code_short:     'Group'
+        just_code:      'Code'
         label:          'Description'
         notes:          'Notes'
         grp_cat:        'Group Category'
         seqno:          'Sequence Number'
+        participating:  'Participating'
+        s_sender_code:    'Sender Code'
+        s_receiver_code:  'Receiver Code'
+        sub_group_of_id:  'Sub-Group of'
+        belongs_to:     'belongs to'
+        active:         'Active'
+        standard:       'Standard'
 
       group_category:
         id:             :general.attributes.id
@@ -622,6 +629,8 @@ en:
         deputy_account_id:  'Deputy Account ID'
         deputy:             'Deputy'
         members:            'List Members'
+# for error messages in subform
+        tia_members:        'At least one member record'
 
       tia_item:
         item_id:        'Item ID'
@@ -641,6 +650,7 @@ en:
         account_id:     'Account ID'
         to_access:      'Can Access'
         to_update:      'Can Update'
+        member_account: 'Participants (Account ID and Name)'
 
       unit_name:
         id:             :general.attributes.id
@@ -725,6 +735,7 @@ en:
     upd_baseline: 'Update Baseline'
 
   a_code_modules:
+    search_title:  
     edit_title:    'Edit Code'
     new_title:     'Add new Code'
     show_title:    'Show Code Details'
@@ -1092,7 +1103,7 @@ en:
       sub_total:      'Sub Total'
       progress:       'Progress'
       progress_wgt:   'Weighted Progress'
-      pa_id:          'Programme Activity [Id]'
+      pa_id:          'Programme Activity [ID]'
     stats_1:
       form_title:     'Quantity by Project Group, Document Status'
     stats_2:
@@ -1156,7 +1167,7 @@ en:
       bad_weight0:    'must be zero for the next task.'
       bad_quantity0:  'must be zero for the next task.'
       bad_fq_combo:   'If Quantity is ''1'' then Submission Frequency must be ''single''.'
-      bad_sd_combo:   'If no submission is planned, Review/Approve Activity [Id] and Estimated Date of Submission must not be set.'
+      bad_sd_combo:   'If no submission is planned, Review/Approve Activity [ID] and Estimated Date of Submission must not be set.'
       bad_pa_combo:   'Prepare/Submit and Review/Approve Activity must not be the same.'
       add_created:    'Add from Group Document: Submission Frequency, Quantity and Weight were adjusted!'
       bad_resp_sts:   'Next Status / Task must correspond to Submission Response Status.'
@@ -1324,6 +1335,7 @@ en:
       edit_ok:        'Group Information was successfully updated.'
       delete_ok:      'Group Information was successfully destroyed.'
       bad_group_cat:  'Selected Group Category does not exist.'
+      bad_sub_group:  'Specified (master) group does not exist.'
 
   group_categories:
     title:            'Project Groups Categories'
@@ -1531,9 +1543,7 @@ en:
     add_label:      'Add another workflow permissions record'
     msg:
       bad_feature_id:   :general.non_existing
-      bad_account_id:   :general.non_existing
-      bad_tasklist:     'List of permitted tasks is ill-formatted.'
-      bad_workflow:     'out of range or not applicable for this feature.'  
+      bad_tasklist: 'List of permitted tasks is ill-formatted.'  
 
   phase_codes:
     title:          'Phase Codes'
@@ -1865,24 +1875,6 @@ en:
       dup_account_id: 'is already a member in this list.'
       own_account_id: 'is already Owner or Deputy for this list.'
 
-  our_tia_members:
-    title:              'Task/Issue/Action Item List Members'
-    form:
-      account_link:     'Show Index of Accounts'
-    index:
-      form_title:       'All Members for: '
-    new:
-      form_title:       'Add Member for: '
-    show:
-      form_title:       'Show Member for: '
-    edit:
-      form_title:       'Edit Member for: '
-    msg:
-      new_ok:           'Member successfully added.'
-      edit_ok:          'Member successfully modified.'
-      delete_ok:        'Member successfully removed.'
-      dup_account_id:   'is already in this list.'
-
   our_tia_items:
     title:          'Our Tasks/Issues/Action Items'
     form:
@@ -1896,6 +1888,11 @@ en:
       button_info:  'History'  
     edit:
       form_title:   'Edit Item for: '
+    info:
+      form_title:   'Details on Task/Issue/Action Item'
+      status:       'Status as of %{at}:'
+      changes:      'Changes as per %{at}:'
+      created:      'Created on %{at}:'
     msg:
       new_ok:           'Item successfully added.'
       edit_ok:          'Item successfully modified.'
@@ -1920,8 +1917,16 @@ en:
       edit_ok:       'Item successfully modified.'
 
   tia_lists:
+    no_members_info:    'No participants assigned yet.'
+    members_heading:    'Participants in this list'
+    add_label:          'Add additional participants'
+    action:             'Action'
     msg:
       bad_tia_list_id:  'given Task/Issue/Action Item List does not exist.'
+      new_ok:       'Task/Issue/Action Item List successfully added.'
+      edit_ok:      'Task/Issue/Action Item List successfully modified.'
+      delete_ok:    'Task/Issue/Action Item List successfully removed.'
+      account_nonexist: :general.non_existing
 
   all_tia_lists:
     title:          'All Task/Issue/Action Item Lists'
@@ -1935,11 +1940,6 @@ en:
       form_title:   'Edit Task/Issue/Action Item List Details'
     new:
       form_title:   'Add a New Task/Issue/Action Item List'
-    msg:
-      new_ok:       'Task/Issue/Action Item List successfully added.'
-      edit_ok:      'Task/Issue/Action Item List successfully modified.'
-      delete_ok:    'Task/Issue/Action Item List successfully removed.'
-      account_nonexist: :general.non_existing
 
   my_tia_lists:
     title:          'My Task/Issue/Action Item Lists'
@@ -1954,10 +1954,6 @@ en:
     new:
       form_title:   'Add a New Task/Issue/Action Item List'
     msg:
-      new_ok:       'Task/Issue/Action Item List successfully added.'
-      edit_ok:      'Task/Issue/Action Item List successfully modified.'
-      delete_ok:    'Task/Issue/Action Item List successfully removed.'
-      account_nonexist: :general.non_existing
       invalid_account:  "Either Owner or Deputy must be set to your account id: %{id}"
 
   unit_names:

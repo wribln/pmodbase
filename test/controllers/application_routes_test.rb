@@ -66,7 +66,7 @@ class ApplicationRoutesTest < ActionController::TestCase
   end
 
   test "mtls nested routing" do
-    [ %w( oti our_tia_items ), %w( otm our_tia_members )].each do |r|
+    [ %w( oti our_tia_items ) ].each do |r|
       assert_routing({ method: 'get',    path: "mtl/1/#{ r[ 0 ] }"     }, { controller: r[ 1 ], action: 'index',  my_tia_list_id: '1' })
       assert_routing({ method: 'post',   path: "mtl/1/#{ r[ 0 ] }"     }, { controller: r[ 1 ], action: 'create', my_tia_list_id: '1' })
       assert_routing({ method: 'get',    path: "mtl/1/#{ r[ 0 ] }/new" }, { controller: r[ 1 ], action: 'new',    my_tia_list_id: '1' })

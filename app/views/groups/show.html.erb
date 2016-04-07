@@ -38,9 +38,45 @@
       <div class="form-group">
         <%= g.label :group_category_id, class: "col-sm-3 control-label" %>
         <div class="col-sm-4">
-          <%= display_value g.object.group_category_with_id %>
+          <%= display_value g.object.group_category.label %>
         </div>
       </div>
+      <div class="form-group">
+        <%= g.label :sub_group_of_id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-4">
+          <%= display_value g.object.sub_group_of.try( :code_and_label )%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= g.label :participating, class: "col-sm-3 control-label" %>
+        <div class="col-sm-1">
+          <%= g.check_box :participating, disabled: true, readonly: true %>
+        </div>
+      </div>   
+      <div class="form-group">
+        <%= g.label :s_sender_code, class: "col-sm-3 control-label" %>
+        <div class="col-sm-1">
+          <%= g.check_box :s_sender_code, disabled: true, readonly: true %>
+        </div>
+      </div>   
+      <div class="form-group">
+        <%= g.label :s_receiver_code, class: "col-sm-3 control-label" %>
+        <div class="col-sm-1">
+          <%= g.check_box :s_receiver_code, disabled: true, readonly: true %>
+        </div>
+      </div>   
+      <div class="form-group">
+        <%= g.label :active, class: "col-sm-3 control-label" %>
+        <div class="col-sm-1">
+          <%= g.check_box :active, disabled: true, readonly: true %>
+        </div>
+      </div>   
+      <div class="form-group">
+        <%= g.label :standard, class: "col-sm-3 control-label" %>
+        <div class="col-sm-1">
+          <%= g.check_box :standard, disabled: true, readonly: true %>
+        </div>
+      </div>   
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-2">
           <%= link_to t( 'button_label.edit' ), edit_group_path( @group ), class: "btn btn-lg btn-block btn-default" %>

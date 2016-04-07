@@ -12,7 +12,6 @@ class Account < ActiveRecord::Base
   has_many :tia_lists, inverse_of: :account
   has_many :tia_items, inverse_of: :account
   has_many :tia_members, inverse_of: :account
-  has_many :tia_updates, inverse_of: :account
   has_many :dsr_doc_groups, inverse_of: :account
   accepts_nested_attributes_for :permission4_groups, allow_destroy: true, reject_if: :ignore_permission
   accepts_nested_attributes_for :permission4_flows, allow_destroy: true
@@ -169,6 +168,10 @@ class Account < ActiveRecord::Base
 
   def user_name
     person.try( :user_name )
+  end
+
+  def self.user_name( id )
+    Account.find( id ).user_name unless id.nil?
   end
 
   # provide statistics (must use self. here to override super.method)

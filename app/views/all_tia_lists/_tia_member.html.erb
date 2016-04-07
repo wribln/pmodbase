@@ -1,0 +1,36 @@
+<div class="form-group form-set" <% if( tia_member.object._destroy || tia_member.index == 'template' )%>style="display:none"<% end %>>
+  <%- if action_type == :show -%>
+    <div class="col-sm-offset-1 col-sm-1">
+      <%= tia_member.label :account_id, class: "hidden-md hidden-lg control-label" %>
+      <%= display_value tia_member.object.account_id %>
+    </div>
+    <div class="col-sm-2">
+      <p class="form-control-static"><%= link_to_account tia_member.object.account %></p>
+    </div>
+    <div class="col-sm-2">
+      <%= tia_member.label :to_access, class: "hidden-md hidden-lg control-label" %>
+      <%= tia_member.check_box :to_access, disabled: true, readonly: true %>
+    </div>
+    <div class="col-sm-2">
+      <%= tia_member.label :to_access, class: "hidden-md hidden-lg control-label" %>
+      <%= tia_member.check_box :to_update, disabled: true, readonly: true %>
+    </div>
+  <%- else -%>
+    <div class="col-sm-1">
+      <%= tia_member.hidden_field :_destroy %>
+      <%= link_to '-', '#', class: 'btn btn-warning btn-default btn-block del-subform-button' %>
+    </div>
+    <div class="col-sm-1">
+      <%= tia_member.label :account_id, class: "hidden-md hidden-lg control-label" %>
+      <%= tia_member.text_field :account_id, class: "form-control" %>
+    </div>
+    <div class="col-sm-offset-2 col-sm-2">
+      <%= tia_member.label :to_access, class: "hidden-md hidden-lg control-label" %>
+      <%= tia_member.check_box :to_access %>
+    </div>
+    <div class="col-sm-2">
+      <%= tia_member.label :to_update, class: "hidden-md hidden-lg control-label" %>
+      <%= tia_member.check_box :to_update %>
+    </div>
+  <%- end -%>
+</div>

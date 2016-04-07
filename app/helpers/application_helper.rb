@@ -22,12 +22,8 @@ module ApplicationHelper
 
   # insert a page title from the I18n library
   
-  def page_title
-    create_page_title I18n.t( controller.controller_name + '.title' )
-  end
-
-  def create_page_title( t )
-    content_for( :title ) { "#{ SITE_NAME }: #{ t }" }
+  def page_title( this_title = nil )
+    content_for( :title ) { "#{SITE_NAME}: #{ this_title.nil? ? I18n.t( controller.controller_name + '.title' ) : this_title }" }
   end
 
   # insert a page heading from the I18n library using the current view path

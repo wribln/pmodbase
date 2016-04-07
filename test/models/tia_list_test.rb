@@ -34,24 +34,6 @@ class TiaListTest < ActiveSupport::TestCase
     end
   end
 
-  test "members label shall not have leading/trailing blanks" do
-    tia = TiaList.new
-    [ 'a label', '  a label', 'a label  ', '  a label  ', '  a  label  ' ].each do |c|
-      tia.members = c
-      assert_equal 'a label', tia.members
-    end
-  end
-
-  test "members have default string" do
-    tia = TiaList.new
-    tia.members = nil
-    assert_equal TiaList.human_attribute_name( :members ), tia.members
-    tia.members = 'ABC'
-    assert_equal 'ABC', tia.members
-    tia.members = ''
-    assert_equal TiaList.human_attribute_name( :members ), tia.members
-  end
-
   test "one owner should not use same code twice" do
     t1 = tia_lists( :tia_list_one )
     t2 = TiaList.new

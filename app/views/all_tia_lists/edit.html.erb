@@ -6,6 +6,22 @@
     <%= form_for @tia_list, url: all_tia_list_path( @tia_list.id ) do |f| %>
       <%= render partial: 'shared/errors', object: @tia_list.errors %>
       <%= render partial: 'form', object: f %>
+      <%= render partial: 'tia_member_header' %>
+      <!-- TIA Member Header -->
+      <%= f.fields_for :tia_members, f.object.tia_members do |m| %>
+        <%= render partial: 'tia_member', locals: { tia_member: m, action_type: :edit }%>
+      <% end %>
+      <%= f.fields_for :tia_members, @tia_list.tia_members.new, { child_index: 'template' } do |m| %>
+        <%= render partial: 'tia_member', locals: { tia_member: m, action_type: :edit }%>
+      <% end %>
+      <!-- button to add another member record -->
+      <div class="form-group">
+        <div class="col-sm-1">
+          <%= link_to '+', '#', class: 'btn btn-info btn-default btn-block add-subform-button' %>
+        </div>
+        <label class="col-sm-4"><%= t( 'tia_lists.add_label' )%></label>
+      </div>
+      <%= render partial: 'tia_member_footer' %>
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-2">
           <%= f.submit class: "btn btn-lg btn-block btn-primary" %>

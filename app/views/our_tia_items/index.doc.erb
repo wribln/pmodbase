@@ -27,13 +27,13 @@
       </thead>
       <tbody>
       <% @tia_items.each do |ti| -%>
-        <% rows = ( ti.comment.empty? ? 2 : 3 ) %>
+        <% rows = ( ti.comment.blank? ? 2 : 3 ) %>
         <tr>
           <td rowspan="<%= rows -%>" valign="top"><%= ti.tia_list.item_code( ti.seqno ) %></td>
           <td><%= ti.description %></td>
           <td rowspan="<%= rows -%>" valign="top"><%= ti.due_date.nil? ? 'open' : db_formatted_d( ti.due_date ) %></td> 
         </tr>
-        <%= content_tag( :tr, content_tag( :td, ti.comment )) unless ti.comment.empty? -%>
+        <%= content_tag( :tr, content_tag( :td, ti.comment )) unless ti.comment.blank? -%>
         <%= content_tag( :tr, content_tag( :td, ti.status_label )) %>
       <% end -%>
       </tbody>

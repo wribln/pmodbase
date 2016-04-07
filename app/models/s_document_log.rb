@@ -68,6 +68,8 @@ class SDocumentLog < ActiveRecord::Base
       unless phase_code.blank? || errors.exclude?( :phase_code ) && SiemensPhase.where( code: phase_code ).exists?
     errors.add( :location_code, msg ) \
       unless location_code.blank? || errors.exclude?( :location_code ) && LocationCode.where( code: location_code ).exists?
+    errors.add( :dcc_code, msg ) \
+      unless dcc_code.blank? || errors.exclude?( :dcc_code ) && DccCode.where( code: dcc_code ).exists?
   end
 
   # create siemens document code

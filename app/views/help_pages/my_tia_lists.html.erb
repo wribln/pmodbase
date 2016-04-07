@@ -2,7 +2,7 @@
   <div class="container">
     <%= helpcrumbs %>
     <%= help_header %>
-    <p class="lead">Access all lists where you are the owner or the deputy</p>
+    <p class="lead">Access all lists where you are the owner or the deputy.</p>
     <h3>Principles</h3>
     <p>Issue Logs, Action Items, To-Do and Task Lists are similar management 
       tools to drive the project: They collect various items for subsequent
@@ -48,8 +48,8 @@
       to add new items, update current items, or even to remove items (when
       permitted).</p>
     <p>For each list, a number of users need to be defined who can view their
-      respective items. You can administer these users via the link from the
-      <%= help_term TiaList.human_attribute_name( :list_members ) -%>.</p>
+      respective items. You can administer these users together with the 
+      attributes of the <%= help_term TiaList.model_name.human -%>.</p>
     <h3>Attributes of Lists</h3>
     <p>The following attributes are managed here:</p>
     <ul>
@@ -67,26 +67,46 @@
         long heading of the list which is used as descriptive title for any collection
         of items in this list.</li>
       <li><%= help_param TiaList.human_attribute_name( :owner_account_id  ) -%> is
-        the account of the user who created this list. On the index page, this
-        information is translated and shown as the user's names in the column
+        the account of the user who created this list.<br/>On the index page, this
+        information is translated and shown as the user's name in the column
         <%= help_term TiaList.human_attribute_name( :owner ) -%>. The link under
-        this information leads to contact details of that person.</li>
+        this information leads to contact details of that person.<br/>On the details
+        page, this link is shown next to the field with the 
+        <%= help_term TiaList.human_attribute_name( :owner_account_id  ) -%>.</li>
       <li><%= help_param TiaList.human_attribute_name( :deputy_account_id ) -%> is
-        the account of the user who can manage this list as deputy of the owner.
+        the account of the user who can manage this list as deputy of the owner.<br/>
         On the index page, this information is translated and shown as the user's 
-        names in the column
-        <%= help_term TiaList.human_attribute_name( :deputy ) -%>.  The link under
-        this information leads to contact details of that person.<br/>
+        name in the column
+        <%= help_term TiaList.human_attribute_name( :deputy ) -%>. The link under
+        this information leads to contact details of that person.<br/>On the details
+        page, this link is shown next to the field with the 
+        <%= help_term TiaList.human_attribute_name( :deputy_account_id  ) -%>.<br/>
         One of the above must correspond to the current user's account id, i.e. the
         user creating or modifying these attributes of a list must either be the
         owner or the deputy.</li>
-      <li><%= help_param TiaList.human_attribute_name( :list_members ) -%> allows
-        you to specify a text which should describe those project members which should
-        have access to the action items in the list. On the index page, this text
-        provides the link to an index page of all members of this list where you
-        can add, modify, or remove members. For example, if the action item list
-        is for the department Jour Fixe meetings, you could name the group 
-        'Department'.</li>
+      <li>The list of users permitted to access detailed information on their
+        individual items is managed follows the general list attributes. New
+        members can be added using the [+] button, and members can be removed
+        using the [-] button. Attributes for each user can be set as explained below.</li>
+    </ul>
+    <h3>Attributes of Users</h3>
+    <p>The following attributes are managed per used:</p>
+    <ul>
+      <li><%= help_param TiaMember.human_attribute_name( :account_id ) -%> needs to be the account number
+        of the project member to be added to the list of members. You can find this information under the
+        link <%= help_param I18n.t( 'base.menu.my_data' )-%> for your own account, or on the list of project
+        member accounts accessible on the link <%= help_term t( 'our_tia_items.form.account_link' )%>
+        next to this field above. When viewing details of the members, the link next to the
+        <%= help_term TiaMember.human_attribute_name( :account_id ) -%> leads to the contact
+        information of the account's owner.</li>
+      <li><%= help_param TiaMember.human_attribute_name( :to_access ) -%> is a flag which - when set - 
+        permits this project member to view details of his or her tasks, issues, action items.
+        When this flag is not set, that person can still be assigned as owner to an item on this list
+        but he or she cannot view details of his items.</li>
+      <li><%= help_param TiaMember.human_attribute_name( :to_update ) -%> permits - when set - the
+        project member to comment on item in the list for which he is assigned as owner. However,
+        this flag is ignored when this person is not permitted to access this item (refer to 
+        <%= help_term TiaMember.human_attribute_name( :to_access ) -%>)</li>
     </ul>
     <%= help_footer FEATURE_ID_MY_TIA_LISTS %>
   </div> <!-- /container -->

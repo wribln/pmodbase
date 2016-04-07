@@ -1,3 +1,5 @@
+# TIA items for given TIA list
+
 class OurTiaItemsController < ApplicationController
   include ControllerMethods
 
@@ -78,16 +80,16 @@ class OurTiaItemsController < ApplicationController
         tia_original = @tia_item.dup
         @tia_item.assign_attributes( tia_item_params ) unless tia_item_params.empty?
         if @tia_item.valid? then
-          tia_update = TiaUpdate.new
-          tia_update.copy_changes( tia_original, @tia_item )
-          if tia_update.valid? then
-            tia_update.save!
+          tia_item_delta = TiaItemDelta.new
+          tia_item_delta.collect_delta_information( tia_original, @tia_item )
+          if tia_item_delta.valid? then
+            tia_item_delta.save!
             @tia_item.save!
             format.html { redirect_to our_tia_item_path( @tia_item ), notice: t( 'our_tia_items.msg.edit_ok'   )}
-          elsif tia_update.fields_updated == 0 then
+          elsif tia_item_delta.delta_count == 0 then
             format.html { redirect_to our_tia_item_path( @tia_item ), notice: t( 'our_tia_items.msg.no_change' )}
           else
-            @tia_item.errors.add( :base, 'Internal Error: TiaUpdate record failed validation' )
+            @tia_item.errors.add( :base, 'Internal Error: TiaItemDelta record failed validation' )
             set_member_list
             format.html{ render :edit }
           end

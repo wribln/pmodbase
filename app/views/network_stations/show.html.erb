@@ -58,6 +58,7 @@
           <%= render partial: 'network_stop', locals: { network_stop: ns, action_type: :show } %>
         <% end %>
       <% end %>
+      <%= render partial: 'network_stop_footer' %>
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-2">
           <%= link_to t( 'button_label.edit' ), edit_network_station_path( @network_station ), class: "btn btn-lg btn-block btn-default" %>

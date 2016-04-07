@@ -29,13 +29,18 @@ task :recreate => :environment do
   Rake::Task['db:seed:glossary'].invoke
   puts '>>> db:seed:glossary completed.'
 
+  Rake::Task['db:seed:groups'].invoke
+  puts '>>> db:seed:groups completed'
+
+  exit!
+
   Rake::Task['import'].reenable
   Rake::Task['import'].invoke('db/std_csv/abbreviations.csv','Abbreviation')
   puts '>>> import abbreviations completed.'
 
-  Rake::Task['import'].reenable
-  Rake::Task['import'].invoke('db/std_csv/groups.csv','Group')
-  puts '>>> import groups completed.'
+#  Rake::Task['import'].reenable
+#  Rake::Task['import'].invoke('db/std_csv/groups.csv','Group')
+#  puts '>>> import groups completed.'
 
   Rake::Task['import'].reenable
   Rake::Task['import'].invoke('db/std_csv/standards_bodies.csv','StandardsBody')

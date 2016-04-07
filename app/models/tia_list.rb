@@ -6,16 +6,15 @@ class TiaList < ActiveRecord::Base
   belongs_to :owner_account,  -> { readonly }, foreign_key: 'owner_account_id',  class_name: 'Account'
   belongs_to :deputy_account, -> { readonly }, foreign_key: 'deputy_account_id', class_name: 'Account'
   has_many   :tia_items,                       inverse_of: :tia_list, dependent: :destroy
-  has_many   :tia_members,    -> { readonly }, inverse_of: :tia_list
+  has_many   :tia_members,                     inverse_of: :tia_list, dependent: :destroy
+  accepts_nested_attributes_for :tia_members, allow_destroy: true
+  validates_associated :tia_members
 
   validates :code,
     length: { maximum: MAX_LENGTH_OF_CODE },
     uniqueness: { scope: :owner_account_id }
 
   validates :label,
-    length: { maximum: MAX_LENGTH_OF_LABEL }
-
-  validates :members,
     length: { maximum: MAX_LENGTH_OF_LABEL }
 
   validates :owner_account_id,
@@ -32,7 +31,7 @@ class TiaList < ActiveRecord::Base
 
   def given_account_exists( name )
     if send( name ).present?
-      errors.add( name, I18n.t( 'all_tia_lists.msg.account_nonexist' )) \
+      errors.add( name, I18n.t( 'tia_lists.msg.account_nonexist' )) \
         unless Account.exists?( send( name ))
     end
   end
@@ -51,11 +50,6 @@ class TiaList < ActiveRecord::Base
 
   def label=( text )
     write_attribute( :label, AppHelper.clean_up( text, MAX_LENGTH_OF_LABEL ))
-  end
-
-  def members=( text )
-    t = AppHelper.clean_up( text, MAX_LENGTH_OF_LABEL )
-    write_attribute( :members, t.blank? ? TiaList.human_attribute_name( :members ) : t )
   end
 
   def next_seqno_for_item

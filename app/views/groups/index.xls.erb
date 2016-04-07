@@ -3,12 +3,24 @@
   :label,
   :notes,
   :seqno,
-  :group_category_id ], STD_CSV_OPTIONS ) -%>
+  :group_category,
+  :sub_group_of,
+  :participating,
+  :s_sender_code,
+  :s_receiver_code,
+  :active,
+  :standard ], STD_CSV_OPTIONS ) -%>
 <%- @groups.each do |g| -%>
 <%= CSV.generate_line([
   g.code,
   g.label,
   g.notes,
   g.seqno,
-  ( g.group_category.label unless g.group_category_id.nil? )], STD_CSV_OPTIONS ).html_safe -%>
+  ( g.group_category.try( :label )),
+  ( g.sub_group_of.try( :label )),
+  g.participating,
+  g.s_sender_code,
+  g.s_receiver_code,
+  g.active,
+  g.standard ], STD_CSV_OPTIONS ).html_safe -%>
 <%- end -%>

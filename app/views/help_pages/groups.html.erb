@@ -25,8 +25,8 @@
       to specify responsibilities, for document and correspondence coding,
       in any Task/Issue/Action Item List, for Interface Management, and the
       like.</p>
-    <p>For each <%= Group.model_name.human.singularize -%>, the following information is
-      managed:</p>
+    <p>For each <%= Group.model_name.human.singularize -%>, the following 
+      attributes are managed:</p>
     <ul>
       <li>The group's <%= help_param Group.human_attribute_name( :code  ) -%>,
         an acronym of the Group's name: Normally, that acronym should reflect
@@ -47,6 +47,34 @@
         for reporting: All Project Groups (within a given Project Group
         Category) are listed in ascending order of the Sequence Number given
         here.</li>
+      <li><%= help_param Group.human_attribute_name( :participating )-%> is
+        a flag which is set for all actively participating groups in the
+        project. This flag is used to select all groups which could be
+        mentioned in any feature. Groups (codes) which are only used as sender or
+        receiver of correspondende should have this flag clear (not set).</li>
+      <li><%= help_param Group.human_attribute_name( :s_sender_code )-%> is
+        a flag which determines whether this group can be used as 
+        <%= help_term SDocumentLog.human_attribute_name( :group_id )-%>
+        code for any entry in the <%= link_to_help :s_document_log, 
+        SDocumentLog.model_name.human -%>.</li> 
+      <li><%= help_param Group.human_attribute_name( :s_receiver_code )-%> is
+        a flag which determines whether this group can be used as
+        <%= help_term SDocumentLog.human_attribute_name( :receiver_group )-%>
+        code for any entry in the <%= link_to_help :s_document_log, 
+        SDocumentLog.model_name.human -%>.</li> 
+      <li><%= help_param Group.human_attribute_name( :sub_group_of_id )-%> allows
+        an indication of whether a group is a major group in the project (i.e.
+        this parameter would be left blank), or if this group is a sub-group
+        of another group.</li>
+      <li><%= help_param Group.human_attribute_name( :active )-%> is
+        a flag which allows to mark groups as not active: Inactive groups
+        cannot be used anymore for other features but they are kept in the
+        system as they may have been referenced in earlier stages of the
+        project.</li> 
+      <li><%= help_param Group.human_attribute_name( :standard )-%> is
+        a flag which signals that the group code is a standard code within
+        the Siemens organization. This flag is for information only as it
+        shows which codes are preferred.</li>
     </ul>
     <%= help_footer FEATURE_ID_GROUPS %>
   </div> <!-- /container -->

@@ -67,13 +67,6 @@ class GroupTest < ActiveSupport::TestCase
     assert_equal text_with_id( g.label, g.id ), g.label_with_id
   end
 
-  test "method group category with id" do
-    g = groups( :group_one )
-    c = group_categories( :group_category_one )
-    g.group_category_id = c.id
-    assert_equal text_with_id( c.label, c.id ), g.group_category_with_id
-  end
-
   test "method code_with_id" do
     g = groups( :group_one )
     assert_equal text_with_id( g.code, g.id ), g.code_with_id

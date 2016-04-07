@@ -2,7 +2,7 @@
 <div class="container">
   <%= breadcrumbs %>
   <%= form_title_w_link( @tia_list.label, my_tia_lists_path ) %>
-  <div class="table-responsive">
+  <div class="table-responsive col-sm-12">
     <%= form_tag({}, { method: :get }) do %>
     <%= will_paginate @tia_items %>
     <table class="table table-striped table-bordered">
@@ -36,7 +36,7 @@
             <td><%= ti.tia_list.item_code( ti.seqno ) %></td>
             <td><%= ti.description %><%= raw('<hr style="margin: 0.5em 0"/>') unless ti.comment.blank? %><%= ti.comment %></td>
             <td><%= ti.prio_label %></td>
-            <td><%= ti.account.user_name unless ti.account.nil? %></td>
+            <td><%= link_to_contact_list( ti.account )%></td>
             <td><%= ti.status_label %></td>
             <td><%= db_formatted_d( ti.due_date )%></td>
             <td><%= render partial: 'shared/actions', object: ti %></td>

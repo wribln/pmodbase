@@ -5,7 +5,6 @@ class CreateTiaLists < ActiveRecord::Migration
       t.integer :deputy_account_id, index: true
       t.string  :code, length: MAX_LENGTH_OF_CODE
       t.string  :label, length: MAX_LENGTH_OF_LABEL
-      t.string  :members, length: MAX_LENGTH_OF_LABEL
 
       t.timestamps null: false
     end

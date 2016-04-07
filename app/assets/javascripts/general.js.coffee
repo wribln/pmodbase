@@ -16,9 +16,11 @@ $ ->
     if r.is(':hidden')
       r.closest('form').get(0).reset()
 
-# include a the jQuery datepicker function for each date input field
+# provide here the defaults for all datepickers
 
-#$ ->
-#  $('input[type=date]').each ->
-#    $(@).datepicker()
-
+$ ->
+  $.fn.datepicker.defaults.format = "yyyy-mm-dd"
+  $.fn.datepicker.defaults.todayHighlight=true
+  $.fn.datepicker.defaults.clearBtn=true
+  $.fn.datepicker.defaults.autoclose=true
+  $.fn.datepicker.defaults.showOnFocus=false

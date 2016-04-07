@@ -76,7 +76,8 @@
         When adding or changing this attribute, you can only select a person
         from the defined set of list members (see <%= link_to_help 'my_tia_lists',
         t('my_tia_lists.title') -%> for more information on how this list is
-        managed).</li>
+        managed).<br/>This field is presented as link to the contact information 
+        of this person on the index and details pages.</li>
       <li>The key point here is not to designate a
         <%= help_param TiaItem.human_attribute_name( :due_date ) %>,
         instead the action owner
@@ -113,8 +114,8 @@
       <p>When viewing a specific item, the button labelled 
       <%= help_term I18n.t('button_label.history')-%>
       shows a table in reverse chronological order of all the changes done to this
-      item: The top table shows the current status, the entries below the previous
-      status at the given time.</p>
+      item: The top table shows the current status, the entries below the changes 
+      made at the given time displaying the value before the change.</p>
     <h3>Status Report</h3>
       <p>From the index view, the <%= help_term I18n.t('general.download_doc')-%> link
       creates a document for download containing the current status on the listed

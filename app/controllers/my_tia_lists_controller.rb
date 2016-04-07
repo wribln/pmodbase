@@ -34,7 +34,7 @@ class MyTiaListsController < ApplicationController
     @tia_list = TiaList.new( tia_list_params )
     respond_to do |format|
       if user_is_owner_or_deputy? && @tia_list.save then
-        format.html { redirect_to my_tia_list_url( @tia_list ), notice: t( 'my_tia_lists.msg.new_ok' )}
+        format.html { redirect_to my_tia_list_url( @tia_list ), notice: t( 'tia_lists.msg.new_ok' )}
       else
         format.html { render :new }
       end
@@ -45,9 +45,10 @@ class MyTiaListsController < ApplicationController
 
   def update
     respond_to do |format|
+      params[ :tia_list ][ :tia_members_attributes ].try( :delete, 'template' )
       @tia_list.assign_attributes( tia_list_params ) unless tia_list_params.empty?
       if user_is_owner_or_deputy? && @tia_list.save then
-        format.html { redirect_to my_tia_list_url( @tia_list ), notice: t( 'my_tia_lists.msg.edit_ok' )}
+        format.html { redirect_to my_tia_list_url( @tia_list ), notice: t( 'tia_lists.msg.edit_ok' )}
       else
         format.html { render :edit }
       end
@@ -59,7 +60,7 @@ class MyTiaListsController < ApplicationController
   def destroy
     @tia_list.destroy
     respond_to do |format|
-      format.html { redirect_to my_tia_lists_url, notice: t( 'my_tia_lists.msg.delete_ok' )}
+      format.html { redirect_to my_tia_lists_url, notice: t( 'tia_lists.msg.delete_ok' )}
     end
   end
 
@@ -72,13 +73,16 @@ class MyTiaListsController < ApplicationController
     end
 
     def set_tia_list
-      @tia_list = TiaList.for_user( current_user.id ).find( params[ :id ])
+      @tia_list = TiaList.includes( :tia_members ).for_user( current_user.id ).find( params[ :id ])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
 
     def tia_list_params
-      params.require( :tia_list ).permit( :code, :label, :owner_account_id, :deputy_account_id, :members )
+      params.require( :tia_list ).permit(
+        :code, :label, :owner_account_id, :deputy_account_id,
+        tia_members_attributes: 
+          [ :id, :_destroy, :account_id, :to_access, :to_update ])
     end
 
     # make sure current user is either owner or deputy
@@ -87,7 +91,7 @@ class MyTiaListsController < ApplicationController
       if @tia_list.user_is_owner_or_deputy?( current_user.id ) then
         true
       else
-        @tia_list.errors.add( :base, I18n.t( 'my_tia_lists.msg.invalid_account', id: current_user.id ))
+        @tia_list.errors.add( :base, I18n.t( 'tia_lists.msg.invalid_account', id: current_user.id ))
         false
       end
     end
