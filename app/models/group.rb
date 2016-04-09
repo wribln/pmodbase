@@ -5,11 +5,12 @@ class Group < ActiveRecord::Base
   include GroupCategoryCheck
   
   belongs_to  :group_category, -> { readonly }, inverse_of: :groups
-  has_many    :accounts
   has_many    :responsibilities
   has_many    :permission4_groups
   has_many    :sub_groups,   class_name: 'Group', foreign_key: 'sub_group_of_id'
   belongs_to  :sub_group_of, class_name: 'Group'
+
+  before_destroy :check_destroyable
 
   validates :code,
     uniqueness: true,
@@ -33,8 +34,10 @@ class Group < ActiveRecord::Base
     numericality: { only_integer: true }
 
   validate :sub_group_reference
+  validate :inactive_group_not_used
 
   default_scope { order( code: :asc )}
+  scope :participants_only, -> { where( participating: true)}
   scope :active_only, ->    { where( active: true )}
   scope :sender_codes, ->   { where( s_sender_code: true )}
   scope :receiver_codes, -> { where( s_receiver_code: true )}
@@ -86,8 +89,37 @@ class Group < ActiveRecord::Base
 
   def sub_group_reference
     unless sub_group_of_id.nil? then
-      errors.add( sub_group_of, I18n.t( 'groups.msg.bad_sub_group' )) \
-        unless Group.exists?( sub_group_of_id )
+      if sub_group_of_id == id then
+        errors.add( :sub_group_of_id, I18n.t( 'groups.msg.bad_sub_ref' ))
+      else
+        errors.add( :sub_group_of_id, I18n.t( 'groups.msg.bad_sub_group' )) \
+         unless Group.exists?( sub_group_of_id )
+      end
+    end
+  end
+
+  # make sure that no user has specific permissions for this group when
+  # this group is deactivated / not active
+
+  def inactive_group_not_used
+    if !self.active then
+      errors.add( :base, I18n.t( 'groups.msg.no_deactivate')) \
+        unless self.permission4_groups.empty?
+    end
+  end
+
+  # return here true only if this group is not used anymore by anyone.
+  # Since you should not remove any groups at any time, this is just 
+  # for my own sanity...
+
+  def check_destroyable
+    if self.responsibilities.empty? &&
+       self.permission4_groups.empty? &&
+       self.sub_groups.empty? then
+      true
+    else
+      errors.add( :base, I18n.t( 'groups.msg.in_use' ))
+      false
     end
   end
 

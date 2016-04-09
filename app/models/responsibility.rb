@@ -26,6 +26,11 @@ class Responsibility < ActiveRecord::Base
   validates :group_id,
     presence: true
 
+  # The module only checks here if the given group exists but it should
+  # also be an active participant: This is somewhat controlled by the
+  # list of possible groups in the controller, but may have to be enforced
+  # later if needed on the module level. 
+
   validate :given_group_exists
 
   scope :ff_group,  -> ( group  ){ where group_id: group }

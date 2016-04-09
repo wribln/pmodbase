@@ -7,15 +7,14 @@
       <%= render partial: 'shared/notice' %>
       <div class="form-group">
         <%= r.label :id, class: "col-sm-3 control-label" %>
-        <div class="col-sm-2">
+        <div class="col-sm-1">
           <%= r.text_field :id, class: "form-control", readonly: true %>
         </div>
       </div>
       <div class="form-group">
         <%= r.label :group_id, class: "col-sm-3 control-label" %>
-        <div class="col-sm-2">
-          <%# r.text_field :group_id, class: "form-control", readonly: true %>
-          <%= display_value r.object.group.code_with_id %>
+        <div class="col-sm-4">
+          <%= display_value r.object.group.code_and_label %>
         </div>
       </div>
       <div class="form-group">

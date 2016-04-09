@@ -28,6 +28,7 @@ class Permission4Group < ActiveRecord::Base
     numericality: { only_integer: true, greater_than_or_equal_to: 0, message: I18n.t( 'permission4_groups.msg.bad_group_id' )}
 
   validate :given_group_exists_or_is_zero
+  validate :given_group_is_active
 
   validates :to_index,
     presence: true,
@@ -86,6 +87,13 @@ class Permission4Group < ActiveRecord::Base
   def group_code
     if group_id.present?
       group_id == 0 ? I18n.t( 'permission4_groups.all_groups' ) : group.code_with_id
+    end
+  end
+
+  def given_group_is_active
+    if group_id.present? and group_id != 0 then
+      errors.add( :group_id, I18n.t( 'permission4_groups.msg.group_inactive' )) \
+        if Group.active_only.find_by_id( group_id ).nil?
     end
   end
 

@@ -1336,6 +1336,8 @@ en:
       delete_ok:      'Group Information was successfully destroyed.'
       bad_group_cat:  'Selected Group Category does not exist.'
       bad_sub_group:  'Specified (master) group does not exist.'
+      bad_sub_ref:    'Cannot be sub-group of itself.'  
+      no_deactivate:  'Can clear active flag only when no user has permissions for this group.'
 
   group_categories:
     title:            'Project Groups Categories'
@@ -1534,6 +1536,7 @@ en:
       bad_account_id:   :general.non_existing
       none_given:       'at least one permission level must be > 0.'
       upd_req_read:     'update permission level must be less or equal to read permission level.'
+      group_inactive:   'must be active.'
 
   permission4_flows:
     title:          'Permissions for Workflows'

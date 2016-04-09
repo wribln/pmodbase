@@ -37,7 +37,10 @@
       <div class="form-group">
         <%= form.label :correspondence_date, class: "col-sm-3 control-label" %>
         <div class="col-sm-2">
-          <%= form.date_field :correspondence_date, class: "form-control" %>
+          <div class="input-group date" data-provide="datepicker">
+            <%= form.date_field :correspondence_date, class: "form-control" %>
+            <span class="input-group-addon">:::</span>
+          </div>
         </div>
       </div>
       <div class="form-group">
@@ -67,13 +70,19 @@
       <div class="form-group">
         <%= form.label :plan_reply_date, class: "col-sm-3 control-label" %>
         <div class="col-sm-2">
-          <%= form.date_field :plan_reply_date, class: "form-control" %>
+          <div class="input-group date" data-provide="datepicker">
+            <%= form.date_field :plan_reply_date, class: "form-control" %>
+            <span class="input-group-addon">:::</span>
+          </div>
         </div>
       </div>
       <div class="form-group">
         <%= form.label :actual_reply_date, class: "col-sm-3 control-label" %>
         <div class="col-sm-2">
-          <%= form.date_field :actual_reply_date, class: "form-control" %>
+          <div class="input-group date" data-provide="datepicker">
+            <%= form.date_field :actual_reply_date, class: "form-control" %>
+            <span class="input-group-addon">:::</span>
+          </div>
         </div>
       </div>
       <div class="form-group">

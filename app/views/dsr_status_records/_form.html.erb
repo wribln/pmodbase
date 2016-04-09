@@ -331,7 +331,10 @@
       <div class="form-group">
         <%= form.label :estm_prep_start, class: "col-sm-3 control-label" %>
         <div class="col-sm-2">
-          <%= form.text_field :estm_prep_start, class: "form-control" %>
+          <div class="input-group date" data-provide="datepicker"> 
+            <%= form.text_field :estm_prep_start, class: "form-control" %>
+            <span class="input-group-addon">:::</span>
+          </div>
         </div>
       </div>
       <%- end -%>
@@ -348,7 +351,10 @@
       <div class="form-group">
         <%= form.label :plnd_prep_start, class: "col-sm-3 control-label" %>
         <div class="col-sm-2">
-          <%= form.text_field :plnd_prep_start, class: "form-control" %>
+          <div class="input-group date" data-provide="datepicker"> 
+            <%= form.text_field :plnd_prep_start, class: "form-control" %>
+            <span class="input-group-addon">:::</span>
+          </div>
         </div>
       </div>
       <%- end -%>
@@ -365,7 +371,10 @@
       <div class="form-group">
         <%= form.label :plnd_prep_start_b, class: "col-sm-3 control-label" %>
         <div class="col-sm-2">
-          <%= form.text_field :plnd_prep_start_b, class: "form-control" %>
+          <div class="input-group date" data-provide="datepicker"> 
+            <%= form.text_field :plnd_prep_start_b, class: "form-control" %>
+            <span class="input-group-addon">:::</span>
+          </div>
         </div>
       </div>
       <%- end -%>
@@ -382,7 +391,10 @@
       <div class="form-group">
         <%= form.label :actl_prep_start, class: "col-sm-3 control-label" %>
         <div class="col-sm-2">
-          <%= form.text_field :actl_prep_start, class: "form-control" %>
+          <div class="input-group date" data-provide="datepicker"> 
+            <%= form.text_field :actl_prep_start, class: "form-control" %>
+            <span class="input-group-addon">:::</span>
+          </div>
         </div>
       </div>
       <%- end -%>
@@ -399,7 +411,10 @@
       <div class="form-group">
         <%= form.label :estm_submission, class: "col-sm-3 control-label" %>
         <div class="col-sm-2">
-          <%= form.text_field :estm_submission, class: "form-control" %>
+          <div class="input-group date" data-provide="datepicker"> 
+            <%= form.text_field :estm_submission, class: "form-control" %>
+            <span class="input-group-addon">:::</span>
+          </div>
         </div>
       </div>
       <%- end -%>
@@ -416,7 +431,10 @@
       <div class="form-group">
         <%= form.label :plnd_submission_1, class: "col-sm-3 control-label" %>
         <div class="col-sm-2">
-          <%= form.text_field :plnd_submission_1, class: "form-control" %>
+          <div class="input-group date" data-provide="datepicker"> 
+            <%= form.text_field :plnd_submission_1, class: "form-control" %>
+            <span class="input-group-addon">:::</span>
+          </div>
         </div>
       </div>
       <%- end -%>
@@ -433,7 +451,10 @@
       <div class="form-group">
         <%= form.label :plnd_submission_b, class: "col-sm-3 control-label" %>
         <div class="col-sm-2">
-          <%= form.text_field :plnd_submission_b, class: "form-control" %>
+          <div class="input-group date" data-provide="datepicker"> 
+            <%= form.text_field :plnd_submission_b, class: "form-control" %>
+            <span class="input-group-addon">:::</span>
+          </div>
         </div>
       </div>
       <%- end -%>
@@ -450,7 +471,10 @@
       <div class="form-group">
         <%= form.label :actl_submission_1, class: "col-sm-3 control-label" %>
         <div class="col-sm-2">
-          <%= form.text_field :actl_submission_1, class: "form-control" %>
+          <div class="input-group date" data-provide="datepicker"> 
+            <%= form.text_field :actl_submission_1, class: "form-control" %>
+            <span class="input-group-addon">:::</span>
+          </div>
         </div>
       </div>
       <%- end -%>
@@ -467,7 +491,10 @@
       <div class="form-group">
         <%= form.label :next_submission, class: "col-sm-3 control-label" %>
         <div class="col-sm-2">
-          <%= form.text_field :next_submission, class: "form-control" %>
+          <div class="input-group date" data-provide="datepicker"> 
+            <%= form.text_field :next_submission, class: "form-control" %>
+            <span class="input-group-addon">:::</span>
+          </div>
         </div>
       </div>
       <%- end -%>
@@ -630,7 +657,10 @@
         <div class="form-group">
           <%= cs.label :plnd_submission, class: "col-sm-3 control-label" %>
           <div class="col-sm-2">
-            <%= cs.text_field :plnd_submission, class: "form-control" %>
+            <div class="input-group date" data-provide="datepicker"> 
+              <%= cs.text_field :plnd_submission, class: "form-control" %>
+              <span class="input-group-addon">:::</span>
+            </div>
           </div>
         </div>
         <%- end -%>
@@ -647,7 +677,10 @@
         <div class="form-group">
           <%= cs.label :actl_submission, class: "col-sm-3 control-label" %>
           <div class="col-sm-2">
-            <%= cs.text_field :actl_submission, class: "form-control" %>
+            <div class="input-group date" data-provide="datepicker"> 
+              <%= cs.text_field :actl_submission, class: "form-control" %>
+              <span class="input-group-addon">:::</span>
+            </div>
           </div>
         </div>
         <%- end -%>
@@ -664,7 +697,10 @@
         <div class="form-group">
           <%= cs.label :xpcd_response, class: "col-sm-3 control-label" %>
           <div class="col-sm-2">
-            <%= cs.text_field :xpcd_response, class: "form-control" %>
+            <div class="input-group date" data-provide="datepicker">
+              <%= cs.text_field :xpcd_response, class: "form-control" %>
+              <span class="input-group-addon">:::</span>
+            </div>
           </div>
           <div class="col-sm-1 text-center">&nbsp;+&nbsp;</div>
           <%= cs.label :xpcd_response_delta, class: 'control-label visible-xs-block col-sm-3' %>
@@ -687,7 +723,10 @@
         <div class="form-group">
           <%= cs.label :actl_response, class: "col-sm-3 control-label" %>
           <div class="col-sm-2">
-            <%= cs.text_field :actl_response, class: "form-control" %>
+            <div class="input-group date" data-provide="datepicker">
+              <%= cs.text_field :actl_response, class: "form-control" %>
+              <span class="input-group-addon">:::</span>
+            </div>
           </div>
         </div>
         <%- end -%>
@@ -725,7 +764,10 @@
       <div class="form-group">
         <%= form.label :estm_completion, class: "col-sm-3 control-label" %>
         <div class="col-sm-2">
-          <%= form.text_field :estm_completion, class: "form-control" %>
+          <div class="input-group date" data-provide="datepicker">
+            <%= form.text_field :estm_completion, class: "form-control" %>
+            <span class="input-group-addon">:::</span>
+          </div>
         </div>
       </div>
       <%- end -%>
@@ -742,7 +784,10 @@
       <div class="form-group">
         <%= form.label :plnd_completion, class: "col-sm-3 control-label" %>
         <div class="col-sm-2">
-          <%= form.text_field :plnd_completion, class: "form-control" %>
+          <div class="input-group date" data-provide="datepicker">
+            <%= form.text_field :plnd_completion, class: "form-control" %>
+            <span class="input-group-addon">:::</span>
+          </div>
         </div>
       </div>
       <%- end -%>
@@ -759,7 +804,10 @@
       <div class="form-group">
         <%= form.label :plnd_completion_b, class: "col-sm-3 control-label" %>
         <div class="col-sm-2">
-          <%= form.text_field :plnd_completion_b, class: "form-control" %>
+          <div class="input-group date" data-provide="datepicker">
+            <%= form.text_field :plnd_completion_b, class: "form-control" %>
+            <span class="input-group-addon">:::</span>
+          </div>
         </div>
       </div>
       <%- end -%>
@@ -774,9 +822,12 @@
       <%- end -%>
       <%- if @workflow.permitted_to_edit?( :actl_completion ) then %>
       <div class="form-group">
-        <%= form.label :actl_prep_start, class: "col-sm-3 control-label" %>
+        <%= form.label :actl_completion, class: "col-sm-3 control-label" %>
         <div class="col-sm-2">
-          <%= form.text_field :actl_prep_start, class: "form-control" %>
+          <div class="input-group date" data-provide="datepicker">
+            <%= form.text_field :actl_completion, class: "form-control" %>
+            <span class="input-group-addon">:::</span>
+          </div>
         </div>
       </div>
       <%- end -%>

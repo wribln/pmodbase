@@ -15,6 +15,8 @@ class Account < ActiveRecord::Base
   has_many :dsr_doc_groups, inverse_of: :account
   accepts_nested_attributes_for :permission4_groups, allow_destroy: true, reject_if: :ignore_permission
   accepts_nested_attributes_for :permission4_flows, allow_destroy: true
+  validates_associated :permission4_groups
+  validates_associated :permission4_flows
   has_secure_password
 
   validates :name,

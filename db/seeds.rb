@@ -867,9 +867,14 @@ gc.save
 g = Group.new
 g.code = 'ADMIN'
 g.label = 'pmodbase Administration Group'
-g.notes = ''
+g.notes = 'for internal, tool administration use only'
 g.seqno = 0
 g.group_category_id = gc.id
+g.active = true
+g.participating = false
+g.s_sender_code = false
+g.s_receiver_code = false
+g.standard = false
 g.save
 
 # - - - - - - - - - - initial / root user

@@ -5,6 +5,11 @@ group_one:
   label: "Group 1"
   notes: ""
   group_category: group_category_one
+  active: true
+  participating: true
+  s_sender_code: true
+  s_receiver_code: true
+  standard: true
 
 group_two:
   code:  "TWO"
@@ -12,3 +17,8 @@ group_two:
   notes: ""
   group_category: group_category_one
   sub_group_of: group_one
+  active: true
+  participating: true
+  s_sender_code: true
+  s_receiver_code: true
+  standard: true

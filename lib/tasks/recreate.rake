@@ -32,7 +32,7 @@ task :recreate => :environment do
   Rake::Task['db:seed:groups'].invoke
   puts '>>> db:seed:groups completed'
 
-  exit!
+  # exit!
 
   Rake::Task['import'].reenable
   Rake::Task['import'].invoke('db/std_csv/abbreviations.csv','Abbreviation')

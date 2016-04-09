@@ -45,8 +45,11 @@ class GroupsControllerTest < ActionController::TestCase
   end
 
   test "should destroy group" do
+    # this is only possible with a group not used by any one
+    g = Group.new( code: 'ABC', label: 'abc', group_category_id: @group.group_category_id )
+    assert g.save, g.errors.messages
     assert_difference('Group.count', -1) do
-      delete :destroy, id: @group
+      delete :destroy, id: g
     end
 
     assert_redirected_to groups_path

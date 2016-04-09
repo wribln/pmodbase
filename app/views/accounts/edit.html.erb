@@ -22,12 +22,30 @@
         <hr style="margin:0px"/>
       </div>
       <!-- Permission4Group Records -->
-      <%= a.fields_for :permission4_groups, a.object.permission4_groups.order( :feature_id, :group_id ) do |p| %>
+      <%= a.fields_for :permission4_groups, a.object.permission4_groups do |p| %>
         <%= render partial: 'permission4g', locals: { permission4g: p } %>
-      <% end %>
+        <%- if p.object.errors.any? -%>
+          <div class="form-group form-group-sm">
+            <div class="col-sm-offset-1 col-sm-5">
+              <%- p.object.errors.full_messages.each do |m| %>
+                <p class="btn-sm bg-danger"><%= m %></p>
+              <%- end -%>
+            </div>
+          </div>
+        <%- end -%>
+      <%- end -%>
       <!-- button to add another permissions record -->
       <%= a.fields_for :permission4_groups, @account.permission4_groups.new, { child_index: 'template' } do |p| %>
         <%= render partial: 'permission4g', locals: { permission4g: p } %>
+        <%- if p.object.errors.any? -%>
+          <div class="form-group form-group-sm">
+            <div class="col-sm-offset-1 col-sm-5">
+              <%- p.object.errors.full_messages.each do |m| %>
+                <p class="btn-sm bg-danger"><%= m %></p>
+              <%- end -%>
+            </div>
+          </div>
+        <%- end -%>
       <% end %>
       <div class="form-group form-group-sm">
         <div class="col-sm-1">
