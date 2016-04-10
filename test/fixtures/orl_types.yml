@@ -1,0 +1,4 @@
+one:
+  o_group: group_one
+  r_group: group_two
+  label: 'group_one / group_two'

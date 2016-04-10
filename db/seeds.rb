@@ -520,6 +520,17 @@ Feature.new do |f|
   f.feature_category_id = fc5.id
 end.save
 
+Feature.new do |f|
+  f.id = FEATURE_ID_ORL_TYPES
+  f.label = I18n.t( 'orl_types.title' )
+  f.code = 'OTP'
+  f.seqno = 3
+  f.access_level = MyTiaItemsController.feature_access_level
+  f.control_level = MyTiaItemsController.feature_control_level
+  f.no_workflows = MyTiaItemsController.no_workflows
+  f.feature_category_id = fc5.id
+end.save
+
 # - - - - - - - - - - utilities
 
 Feature.new do |f|

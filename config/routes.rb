@@ -48,6 +48,7 @@ Rails.application.routes.draw do
   resources :network_lines, path: 'nln', format: false
   resources :network_stations, path: 'nst', format: false
   resources :network_stops, path: 'nso', format: false
+  resources :orl_types, path: 'otp', format: false
   resources :people, path: 'apt', format: false
   resources :phase_codes, path: 'ppc', format: false
   resources :product_codes, path: 'scp', format: false

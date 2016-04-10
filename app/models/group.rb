@@ -7,6 +7,7 @@ class Group < ActiveRecord::Base
   belongs_to  :group_category, -> { readonly }, inverse_of: :groups
   has_many    :responsibilities
   has_many    :permission4_groups
+  has_many    :orl_types
   has_many    :sub_groups,   class_name: 'Group', foreign_key: 'sub_group_of_id'
   belongs_to  :sub_group_of, class_name: 'Group'
 

@@ -79,6 +79,7 @@ en:
       network_line:       'Network Lines'
       network_station:    'Network Stations'
       network_stop:       'Network Stops'
+      orl_type:           'ORL Types'
       permission4_group:  'Permission Records for Groups'
       permission4_flow:   'Permission Records for Workflows'
       person:             'Personal Data Records'
@@ -497,6 +498,12 @@ en:
         network_line_id:    'Line'
         network_station_id: 'Station'
         note:               'Notes'
+
+      orl_type:
+        id:             :general.attributes.id
+        o_group_id:     'Observing Group'
+        r_group_id:     'Responding Group'
+        label:          'Label'
 
       permission4_flow:
         id:             :general.attributes.id
@@ -1498,6 +1505,24 @@ en:
       bad_nw_line:    'bad reference to line.'
       bad_nw_stn:     'bad reference to station.'
       bad_no_stops:   'Cannot have more than one stop on non-transfer stations.'
+
+  orl_types:
+    title:            'ORL Types'
+    form:
+      g_prompt:       :general.select_prompt
+    edit:
+      form_title:     'Edit ORL Type Information'
+    new:
+      form_title:     'Create new ORL Type'
+    index:
+      form_title:     'List of All ORL Types'
+    show:
+      form_title:     'Show ORL Type Information'
+    msg:
+      bad_group_id:   :general.non_existing
+      new_ok:         'ORL Type successfully created.'
+      edit_ok:        'ORL Type successfully updated.'
+      delete_ok:      'ORL Type successfully deleted'
 
   people:
     title:            'Persons'
