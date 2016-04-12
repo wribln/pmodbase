@@ -521,13 +521,13 @@ Feature.new do |f|
 end.save
 
 Feature.new do |f|
-  f.id = FEATURE_ID_ORL_TYPES
-  f.label = I18n.t( 'orl_types.title' )
-  f.code = 'OTP'
+  f.id = FEATURE_ID_ORL_CATEGORIES
+  f.label = I18n.t( 'orl_categories.title' )
+  f.code = 'ORA'
   f.seqno = 3
-  f.access_level = OrlTypesController.feature_access_level
-  f.control_level = OrlTypesController.feature_control_level
-  f.no_workflows = OrlTypesController.no_workflows
+  f.access_level = OrlCategoriesController.feature_access_level
+  f.control_level = OrlCategoriesController.feature_control_level
+  f.no_workflows = OrlCategoriesController.no_workflows
   f.feature_category_id = fc5.id
 end.save
 

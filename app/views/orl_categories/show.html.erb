@@ -3,7 +3,7 @@
   <%= breadcrumbs %>
   <%= form_title %>
   <div class="form-horizontal" role="form">
-    <%= form_for @orl_type do |f| %>
+    <%= form_for @orl_category do |f| %>
       <%= render partial: 'shared/notice' %>
       <div class="form-group">
         <%= f.label :id, class: "col-sm-3 control-label" %>
@@ -31,10 +31,10 @@
       </div>
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-2">
-          <%= link_to t( 'button_label.edit' ), edit_orl_type_path( @orl_type ), class: "btn btn-lg btn-block btn-default" %>
+          <%= link_to t( 'button_label.edit' ), edit_orl_category_path( @orl_category ), class: "btn btn-lg btn-block btn-default" %>
         </div>
         <div class="col-sm-2">
-          <%= link_to t( 'button_label.goto_to_list' ), orl_types_path, class: "btn btn-lg btn-block btn-default" %>
+          <%= link_to t( 'button_label.goto_to_list' ), orl_categories_path, class: "btn btn-lg btn-block btn-default" %>
         </div>
       </div>
     <% end %>

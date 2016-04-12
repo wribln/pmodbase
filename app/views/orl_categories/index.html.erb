@@ -6,18 +6,18 @@
     <table class="table table-striped table-bordered">
       <thead>
         <tr>
-          <th class="col-sm-1"><%= OrlType.human_attribute_name( :id ) %></th>
-          <th class="col-sm-4"><%= OrlType.human_attribute_name( :label )%></th>
-          <th class="col-sm-2"><%= OrlType.human_attribute_name( :r_group_id )%></th>
-          <th class="col-sm-2"><%= OrlType.human_attribute_name( :o_group_id )%></th>
+          <th class="col-sm-1"><%= OrlCategory.human_attribute_name( :id ) %></th>
+          <th class="col-sm-4"><%= OrlCategory.human_attribute_name( :label )%></th>
+          <th class="col-sm-2"><%= OrlCategory.human_attribute_name( :r_group_id )%></th>
+          <th class="col-sm-2"><%= OrlCategory.human_attribute_name( :o_group_id )%></th>
           <th class="col-sm.1"><%= t( 'action_title.header' )%></th>
         </tr>
       </thead>
       <tbody>
-      <% if @orl_types.length.zero? %>
+      <% if @orl_categories.length.zero? %>
         <%= render partial: 'shared/index_empty_row', locals:{ columns: 4, with_link: true }%>
       <% else %>
-        <% @orl_types.each do |ot| %>
+        <% @orl_categories.each do |ot| %>
           <tr>
             <td><%= ot.to_id %></td>
             <td><%= ot.label %></td>

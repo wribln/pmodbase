@@ -2,3 +2,5 @@ one:
   o_group: group_one
   r_group: group_two
   label: 'group_one / group_two'
+  o_owner: account_one
+  r_owner: account_two
