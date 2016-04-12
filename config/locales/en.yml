@@ -79,7 +79,7 @@ en:
       network_line:       'Network Lines'
       network_station:    'Network Stations'
       network_stop:       'Network Stops'
-      orl_type:           'ORL Types'
+      orl_type:           'Observation and Response Log'
       permission4_group:  'Permission Records for Groups'
       permission4_flow:   'Permission Records for Workflows'
       person:             'Personal Data Records'
@@ -503,7 +503,7 @@ en:
         id:             :general.attributes.id
         o_group_id:     'Observing Group'
         r_group_id:     'Responding Group'
-        label:          'Label'
+        label:          'Name of ORL'
 
       permission4_flow:
         id:             :general.attributes.id
@@ -1507,22 +1507,22 @@ en:
       bad_no_stops:   'Cannot have more than one stop on non-transfer stations.'
 
   orl_types:
-    title:            'ORL Types'
+    title:            'Observation and Response Logs (ORL)'
     form:
       g_prompt:       :general.select_prompt
     edit:
-      form_title:     'Edit ORL Type Information'
+      form_title:     'Edit Observation and Response Log'
     new:
-      form_title:     'Create new ORL Type'
+      form_title:     'Create new Observation and Response Log'
     index:
-      form_title:     'List of All ORL Types'
+      form_title:     'List of All Observation and Response Logs'
     show:
-      form_title:     'Show ORL Type Information'
+      form_title:     'Show Observation and Response Log'
     msg:
       bad_group_id:   :general.non_existing
-      new_ok:         'ORL Type successfully created.'
-      edit_ok:        'ORL Type successfully updated.'
-      delete_ok:      'ORL Type successfully deleted'
+      new_ok:         'ORL successfully created.'
+      edit_ok:        'ORL successfully updated.'
+      delete_ok:      'ORL successfully deleted'
 
   people:
     title:            'Persons'

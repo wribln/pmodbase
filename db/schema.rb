@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160410151021) do
+ActiveRecord::Schema.define(version: 20160406090216) do
 
   create_table "a1_codes", force: :cascade do |t|
     t.string   "code",                      null: false
@@ -477,17 +477,6 @@ ActiveRecord::Schema.define(version: 20160410151021) do
   add_index "network_stops", ["network_line_id", "stop_no"], name: "index_network_stops_on_network_line_id_and_stop_no"
   add_index "network_stops", ["network_line_id"], name: "index_network_stops_on_network_line_id"
   add_index "network_stops", ["network_station_id"], name: "index_network_stops_on_network_station_id"
-
-  create_table "orl_types", force: :cascade do |t|
-    t.integer  "o_group_id", null: false
-    t.integer  "r_group_id", null: false
-    t.string   "label",      null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "orl_types", ["o_group_id"], name: "index_orl_types_on_o_group_id"
-  add_index "orl_types", ["r_group_id"], name: "index_orl_types_on_r_group_id"
 
   create_table "people", force: :cascade do |t|
     t.string   "formal_name",   limit: 70,  default: "",   null: false

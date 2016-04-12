@@ -2,14 +2,18 @@
   <div class="container">
     <%= helpcrumbs %>
     <%= help_header %>
-    <p class="lead">... lead text ...</p>
-    <h3>... subtitle ...</h3>
-    <p>... help text ...</p>
+    <p class="lead">Create and Maintain Observation and Response Logs</p>
+    <h3>Introduction</h3>
+    <p>The following attributes are administered per individual Observation and Response Log (ORL):</p>
     <ul>
-      <li><%= help_param OrlType.human_attribute_name( :id ) -%></li>
-      <li><%= help_param OrlType.human_attribute_name( :label ) -%></li>
-      <li><%= help_param OrlType.human_attribute_name( :o_group_id ) -%></li>
-      <li><%= help_param OrlType.human_attribute_name( :r_group_id ) -%></li>
+      <li><%= help_param OrlType.human_attribute_name( :id ) -%> is the unique identifier of each 
+        individual ORL.</li>
+      <li><%= help_param OrlType.human_attribute_name( :label ) -%> is the name of the ORL.</li>
+      <li><%= help_param OrlType.human_attribute_name( :o_group_id ) -%> is the project group providing 
+        observations and comments on the subjects of this ORL.</li>
+      <li><%= help_param OrlType.human_attribute_name( :r_group_id ) -%> is the project group presenting
+        the ORL subjects to be observed and commented on. This is group also provides the responses to
+        any observations and comments.</li>
     </ul>
     <%= help_footer FEATURE_ID_ORL_TYPES %>
   </div> <!-- /container -->
