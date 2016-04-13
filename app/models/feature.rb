@@ -153,7 +153,7 @@ class Feature < ActiveRecord::Base
     when ApplicationController::FEATURE_ACCESS_ALL
        FEATURE_ACCESS_LEVELS[ 5 ]
     else
-      access_level.to_s( 16 )
+      access_level.to_s( 8 )
     end
   end
 

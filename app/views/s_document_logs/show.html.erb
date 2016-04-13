@@ -49,7 +49,7 @@
           <p class="form-control-static">
             <%= ServiceCode.master_only.find_by( code: f.object.service_code ).try( :label ) unless f.object.service_code.blank? %></p>
         </div>
-      </div>try( :label )
+      </div>
       <div class="form-group">
         <%= f.label :product_code, class: "col-sm-3 control-label" %>
         <div class="col-sm-2">
