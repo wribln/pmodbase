@@ -22,7 +22,8 @@ class Holiday < ActiveRecord::Base
     presence: true
 
   validates :description,
-    presence: true
+    presence: true,
+    length: { maximum: MAX_LENGTH_OF_DESCRIPTION }
 
   validates :work,
     presence: true,

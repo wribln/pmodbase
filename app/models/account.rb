@@ -42,6 +42,7 @@ class Account < ActiveRecord::Base
   scope :ff_name,       -> ( name       ){ where( 'name LIKE ?', "%#{ name }%" )}
   scope :ff_person_id,  -> ( person_id  ){ where person_id: person_id }
   scope :ff_active,     -> ( active     ){ where active: ( active == '1' )}
+  scope :is_active, ->{ where active: true }
 
   # function which determines whether a permission should be added
 

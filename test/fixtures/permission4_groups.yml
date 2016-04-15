@@ -14,11 +14,11 @@ permission4_group_<%= p %>:
 
 <% end %>
 
-# all rights for group_two
+# FEATURE_ID_ORL_SUBJECTS
 
 permission4_group_f01:
   account:     account_two
-  feature_id:  FEATURE_ID_DSR_DOCUMENTS
+  feature_id:  69
   group:       group_two
   to_index: 1
   to_create: 1

@@ -11,8 +11,8 @@ class BaseControllerAccessTest < ActionController::TestCase
     session[ :current_user_id ] = accounts( :account_wop ).id
     get :index
     assert_response :success
-    assert_select 'title', 'pmodbase: Base Page'
-    assert_select 'h1', { text: 'Welcome to THE Project!', count: 1 }
+    assert_select 'title', 'TEST: Base Page'
+    assert_select 'h1', { text: 'Welcome to the pmodbase test system!', count: 1 }
   end
 
   test "should not get index" do

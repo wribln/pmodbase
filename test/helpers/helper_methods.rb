@@ -3,20 +3,14 @@ class ApplicationHelperTest < ActionView::TestCase
 
   # override h method which is not available for tests otherwise
 
-  def h( text )
-    text
+  def html_escape( text )
+    ERB::Util.html_escape( text )
   end 
 
   test 'display_boolean' do
     assert 'yes', display_boolean( true )
     assert 'no', display_boolean( false )
     assert '', display_boolean( nil )
-  end
-
-  test 'form title with optional subtitle' do
-    @virtual_path = 'dsr_status_records.edit'
-    assert_match /<h2 class="form-title-sm">.*><p>test<\/p>/,form_title_w_optional_sub_title( true, 'test' )
-    assert_match /<h2 class="form-title">.*>/,form_title_w_optional_sub_title( false, 'test' )
   end
 
   test 'form title with link' do
@@ -34,7 +28,14 @@ class ApplicationHelperTest < ActionView::TestCase
   end
 
   test 'display lines with breaks' do
-    assert_equal 'test<br>123', display_lines_w_br( "test\r\n123" )
+    assert_equal 'test<br />123', display_lines_w_br( "test\r\n123" )
+  end
+
+  test 'display two items w br' do
+    assert_equal '', display_two_items_w_br( nil, nil )
+    assert_equal 'item1', display_two_items_w_br( 'item1', nil )
+    assert_equal 'item2', display_two_items_w_br( nil, 'item2' )
+    assert_equal 'item1<br />item2', display_two_items_w_br( 'item1', 'item2' )
   end
 
 end

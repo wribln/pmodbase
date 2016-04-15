@@ -89,7 +89,7 @@ class Permission4GroupTest < ActiveSupport::TestCase
     @p0.group_id = nil
     assert_nil @p0.group_code
     @p0.group_id = 0
-    assert @p0.group_code, I18n.t( 'permissions.all_groups' )
+    assert @p0.group_code, I18n.t( 'permission4_groups.all_groups' )
     @p0.group_id = groups( :group_one ).id
     assert @p0.group_code, @p0.group.code_with_id
   end

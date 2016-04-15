@@ -1,8 +1,16 @@
 # This is the place to hold global constants:
 
-  # name of the project / project site
+  # (a) set name of the project / project site
+  # (b) for non-production environments, make Rails I18n throw exceptions for missing keys
 
-  SITE_NAME = 'pmodbase'.freeze
+  if Rails.env.development? || Rails.env.test? then
+    SITE_ID = 'TEST'
+    I18n.exception_handler = lambda do | exception, locale, key, options |
+      raise "missing translation for: #{key}"
+    end
+  else
+    SITE_ID = ActiveRecord::Base.connection_config[ :database ].upper
+  end
 
   # number of columns on the base page used to list the tables to which the user
   # has access to (ultimately)
@@ -134,6 +142,9 @@
   FEATURE_ID_A6_CODE = 66
   FEATURE_ID_A7_CODE = 67
   FEATURE_ID_A8_CODE = 68
+  FEATURE_ID_ORL_SUBJECTS = 69
+  FEATURE_ID_ORL_STEPS = 70
+  FEATURE_ID_ORL_ITEMS = 71
+  FEATURE_ID_ORL_MEMBERS = 72
 
-
-  FEATURE_ID_MAX_PLUS_ONE = 69 # update this when inserting new features!
+  FEATURE_ID_MAX_PLUS_ONE = 73 # update this when inserting new features!

@@ -23,7 +23,7 @@ module ApplicationHelper
   # insert a page title from the I18n library
   
   def page_title( this_title = nil )
-    content_for( :title ) { "#{SITE_NAME}: #{ this_title.nil? ? I18n.t( controller.controller_name + '.title' ) : this_title }" }
+    content_for( :title ) { "#{ SITE_ID }: #{ this_title.nil? ? I18n.t( controller.controller_name + '.title' ) : this_title }" }
   end
 
   # insert a page heading from the I18n library using the current view path
@@ -57,7 +57,7 @@ module ApplicationHelper
   # display some arbitrary value in an input box
 
   def display_value( value )
-    html = ""
+    html = String.new
     html += "<input class=\"form-control\" value=\"#{value}\" readonly />"
     html.html_safe
   end
@@ -65,7 +65,7 @@ module ApplicationHelper
   # display multiline text in a multiline textbox
 
   def display_lines( text, rows = DEFAULT_ROWS_TEXTAREA, cols = DEFAULT_COLS_TEXTAREA )
-    html = ""
+    html = String.new
     html += "<textarea class=\"form-control\" rows=\"#{ rows }\" cols=\"#{ cols }\" readonly>#{text}</textarea>"
     html.html_safe
   end
@@ -74,9 +74,19 @@ module ApplicationHelper
   # consistent with the other helpers here...
   
   def display_lines_w_br( text )
-  	html = ""
-  	html += h( text ).gsub( /(?:\n\r?|\r\n?)/, "<br>" )
+  	html = String.new
+  	html += html_escape( text ).gsub( /(?:\n\r?|\r\n?)/, tag( 'br' ))
   	html.html_safe
+  end
+
+  # display two items in one cell, insert <br/> if necessary
+
+  def display_two_items_w_br( text1, text2 )
+    html = String.new
+    html += text1.to_s
+    html += tag( 'br' ) if text1 && text2
+    html += text2.to_s
+    html.html_safe
   end
 
   # display a boolean value with two strings; the second parameter must

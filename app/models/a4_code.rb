@@ -7,7 +7,7 @@ class A4Code < ActiveRecord::Base
   # Sub-Discipline/-System
 
   validates :code,
-    format: { with: /\A.[A-Z0-9&]+\-[A-Z0-9&]+\z/, message: I18n.t( 'a_code_modules.msg.bad_code_syntax ')},
+    format: { with: /\A.[A-Z0-9&]+\-[A-Z0-9&]+\z/, message: I18n.t( 'a_code_modules.msg.bad_code_syntax2')},
     length: { maximum: 7 }
 
   validate :a3_code_part_exists

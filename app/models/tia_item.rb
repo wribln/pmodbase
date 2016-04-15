@@ -13,7 +13,7 @@ class TiaItem < ActiveRecord::Base
   validates :seqno,
     presence: true,
     numericality: { only_integer: true, greater_than: 0 },
-    uniqueness: { scope: :tia_list_id, message: I18n.t( 'our_tia_items.msg.bad_seqno' )}
+    uniqueness: { scope: :tia_list_id, message: I18n.t( 'tia_items.msg.bad_seqno' )}
 
   validates :description,
     presence: true,
@@ -91,7 +91,7 @@ class TiaItem < ActiveRecord::Base
 
   def archive_closed_only
     if archived and status_open? then
-      errors.add( :archived, I18n.t( 'our_tia_items.msg.bad_archive' )) 
+      errors.add( :archived, I18n.t( 'tia_items.msg.bad_archive' )) 
     end
   end
 

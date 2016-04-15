@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160410151021) do
+ActiveRecord::Schema.define(version: 20160414101758) do
 
   create_table "a1_codes", force: :cascade do |t|
     t.string   "code",                      null: false
@@ -496,6 +496,48 @@ ActiveRecord::Schema.define(version: 20160410151021) do
   add_index "orl_categories", ["r_deputy_id"], name: "index_orl_categories_on_r_deputy_id"
   add_index "orl_categories", ["r_group_id"], name: "index_orl_categories_on_r_group_id"
   add_index "orl_categories", ["r_owner_id"], name: "index_orl_categories_on_r_owner_id"
+
+  create_table "orl_steps", force: :cascade do |t|
+    t.integer  "orl_subject_id",                         null: false
+    t.integer  "step_no",                    default: 0, null: false
+    t.string   "subject_version", limit: 10
+    t.string   "note",            limit: 50
+    t.date     "subject_date"
+    t.date     "due_date"
+    t.integer  "subject_status",             default: 0
+    t.integer  "assessment",                 default: 0
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+  end
+
+  add_index "orl_steps", ["orl_subject_id", "step_no"], name: "orl_steps_index", unique: true
+  add_index "orl_steps", ["orl_subject_id"], name: "index_orl_steps_on_orl_subject_id"
+
+  create_table "orl_subjects", force: :cascade do |t|
+    t.integer  "orl_category_id",                             null: false
+    t.integer  "o_group_id",                                  null: false
+    t.integer  "r_group_id",                                  null: false
+    t.integer  "o_owner_id",                                  null: false
+    t.integer  "o_deputy_id"
+    t.integer  "r_owner_id",                                  null: false
+    t.integer  "r_deputy_id"
+    t.string   "desc",            limit: 255
+    t.string   "note",            limit: 50
+    t.string   "project_doc_id",  limit: 50
+    t.string   "report_doc_id",   limit: 50
+    t.boolean  "archived",                    default: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
+  end
+
+  add_index "orl_subjects", ["archived", "orl_category_id", "id"], name: "active_orl_subjects"
+  add_index "orl_subjects", ["o_deputy_id"], name: "index_orl_subjects_on_o_deputy_id"
+  add_index "orl_subjects", ["o_group_id"], name: "index_orl_subjects_on_o_group_id"
+  add_index "orl_subjects", ["o_owner_id"], name: "index_orl_subjects_on_o_owner_id"
+  add_index "orl_subjects", ["orl_category_id"], name: "index_orl_subjects_on_orl_category_id"
+  add_index "orl_subjects", ["r_deputy_id"], name: "index_orl_subjects_on_r_deputy_id"
+  add_index "orl_subjects", ["r_group_id"], name: "index_orl_subjects_on_r_group_id"
+  add_index "orl_subjects", ["r_owner_id"], name: "index_orl_subjects_on_r_owner_id"
 
   create_table "people", force: :cascade do |t|
     t.string   "formal_name",   limit: 70,  default: "",   null: false

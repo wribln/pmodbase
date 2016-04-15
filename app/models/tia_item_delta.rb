@@ -69,7 +69,7 @@ class TiaItemDelta < ActiveRecord::Base
   private
 
     def delta_hash_not_empty
-      errors.add( :base, I18n.t( 'our_tia_items.msg.no_change' )) \
+      errors.add( :base, I18n.t( 'tia_items.msg.no_change' )) \
         unless delta_hash && !delta_hash.empty?
     end
 
@@ -77,7 +77,7 @@ class TiaItemDelta < ActiveRecord::Base
 
     def given_tia_item_exists
       if self.tia_item_id.present?
-        errors.add( :tia_item_id, I18n.t( 'our_tia_items.msg.bad_tia_item_id' )) \
+        errors.add( :tia_item_id, I18n.t( 'tia_items.msg.bad_tia_item_id' )) \
           unless TiaItem.exists?( self.tia_item_id )
       end
     end

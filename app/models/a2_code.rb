@@ -7,7 +7,7 @@ class A2Code < ActiveRecord::Base
   # Stage
 
   validates :code,
-    format: { with: /\A.[0-9]+\z/, message: I18n.t( 'a_code_modules.msg.bad_code_syntax ')},
+    format: { with: /\A.[0-9]+\z/, message: I18n.t( 'a_code_modules.msg.bad_code_syntax1')},
     length: { maximum: 3 }
 
 end

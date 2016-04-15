@@ -75,7 +75,7 @@ class SDocumentLog < ActiveRecord::Base
   # create siemens document code
 
   def create_siemens_doc_id
-    '' << SITE_NAME << '(' << group.code << 
+    '' << SITE_ID << '(' << group.code << 
     ( receiver_group.blank? ? '' : ')' << receiver_group )<<
     function_code.to_s <<
     service_code.to_s << 

@@ -21,9 +21,13 @@ rake import['db/projects/dmr/a5_codes.csv','A5Code']
 rake import['db/projects/dmr/a6_codes.csv','A6Code']
 rake import['db/projects/dmr/a7_codes.csv','A7Code']
 rake import['db/projects/dmr/a8_codes.csv','A8Code']
-###
+#
 rake import['db/projects/dmr/location_codes.csv','LocationCode']
 rake import['db/projects/dmr/network_lines.csv','NetworkLine']
 rake import['db/projects/dmr/network_stations.csv','NetworkStation']
 rake db:seed:network_stops
-##
+#
+if [[ "$e4r" == p* ]]; then
+ 	cp -p db/projects/dmr/zzz.en.yml config/locales
+ 	echo -e "\n>>> Project-specific I18 file copied\n"
+fi

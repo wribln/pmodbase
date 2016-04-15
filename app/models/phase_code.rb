@@ -8,7 +8,7 @@ class PhaseCode < ActiveRecord::Base
   validates :code,
     presence: true,
     uniqueness: true,
-    format: { with: Regexp.union( /\A%!\z/,/\A%[A-Z0-9.\-]+\z/), message: I18n.t( 'code_modules.msg.bad_code_syntax' )},
+    format: { with: Regexp.union( /\A%!\z/,/\A%[A-Z0-9.\-]+\z/), message: I18n.t( 's_code_modules.msg.bad_code_syntax' )},
     length: { maximum: MAX_LENGTH_OF_CODE }
 
   validates :label,
@@ -59,7 +59,7 @@ class PhaseCode < ActiveRecord::Base
   # make sure the given code includes the class prefix
   
   def code_has_prefix
-    errors.add( :code, I18n.t( "code_modules.msg.bad_code_format", prefix: @code_prefix )) \
+    errors.add( :code, I18n.t( "s_code_modules.msg.bad_code_format", prefix: @code_prefix )) \
     unless self.class.has_code_prefix( code )
   end
 

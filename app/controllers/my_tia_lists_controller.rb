@@ -91,7 +91,7 @@ class MyTiaListsController < ApplicationController
       if @tia_list.user_is_owner_or_deputy?( current_user.id ) then
         true
       else
-        @tia_list.errors.add( :base, I18n.t( 'tia_lists.msg.invalid_account', id: current_user.id ))
+        @tia_list.errors.add( :base, I18n.t( 'tia_lists.msg.bad_account', id: current_user.id ))
         false
       end
     end

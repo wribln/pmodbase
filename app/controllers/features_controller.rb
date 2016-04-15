@@ -55,7 +55,7 @@ class FeaturesController < ApplicationController
   def destroy
     @feature.destroy
     respond_to do |format|
-      format.html { redirect_to features_url, notice: t( 'features.msg.destroy_ok' )}
+      format.html { redirect_to features_url, notice: t( 'features.msg.delete_ok' )}
     end
   end
 

@@ -35,27 +35,27 @@
     <ul>
       <li>Each individual code has a unique record identifier, the <%= help_param I18n.t( 'general.attributes.id' )-%>.
         This allows to administer more than one record with the same
-        <%= help_term I18n.t( 'activerecord.attributes.coding_system.code' )-%>. However, if more than one record with the same
-        <%= help_term I18n.t( 'activerecord.attributes.coding_system.code' )-%> is provided, one of them must be defined as 
-        <%= help_term I18n.t( 'activerecord.attributes.coding_system.master' )-%>
+        <%= help_term I18n.t( 'coding_systems.code' )-%>. However, if more than one record with the same
+        <%= help_term I18n.t( 'coding_systems.code' )-%> is provided, one of them must be defined as 
+        <%= help_term I18n.t( 'coding_systems.master' )-%>
         in order to provide a unique label for this
-        <%= help_term I18n.t( 'activerecord.attributes.coding_system.code' )-%>.</li>
-      <li><%= help_param I18n.t( 'activerecord.attributes.coding_system.code' )-%> is a short
+        <%= help_term I18n.t( 'coding_systems.code' )-%>.</li>
+      <li><%= help_param I18n.t( 'coding_systems.code' )-%> is a short
       	code. The number of characters in this code depends on the position of this code within the document code.</li>
-      <li><%= help_param I18n.t( 'activerecord.attributes.coding_system.label' )-%> is a short
+      <li><%= help_param I18n.t( 'coding_systems.label' )-%> is a short
       	description of the code.</li>
-      <li>The flag <%= help_param I18n.t( 'activerecord.attributes.coding_system.active' )-%>
+      <li>The flag <%= help_param I18n.t( 'coding_systems.active' )-%>
         marks a code as being currently usable in the system (true = active) or not
         (false = inactive). Inactive codes must not be used.</li>
-      <li>The flag <%= help_param I18n.t( 'activerecord.attributes.coding_system.master' )-%>
+      <li>The flag <%= help_param I18n.t( 'coding_systems.master' )-%>
         indicates that this entry is used as main entry for the associated code, i.e.
         when listing the code structure and a single entry per code is required, then
-        the code marked with <%= help_term I18n.t( 'activerecord.attributes.coding_system.master' )-%>
+        the code marked with <%= help_term I18n.t( 'coding_systems.master' )-%>
         will be listed. This requires that only a single code must have the
-        <%= help_term I18n.t( 'activerecord.attributes.coding_system.master' )-%> attribute.</li>
-      <li><%= help_param I18n.t( 'activerecord.attributes.coding_system.mapping' )-%> is a field available
+        <%= help_term I18n.t( 'coding_systems.master' )-%> attribute.</li>
+      <li><%= help_param I18n.t( 'coding_systems.mapping' )-%> is a field available
       	to document any mapping codes to other document management systems.</li>
-      <li>In some cases, a <%= help_param I18n.t( 'activerecord.attributes.coding_system.description' )-%>
+      <li>In some cases, a <%= help_param I18n.t( 'coding_systems.desc' )-%>
         field is provided which contains specific details on the use of the respective code.</li>
     </ul>
     <%= help_footer FEATURE_ID_HELP_PAGES %>

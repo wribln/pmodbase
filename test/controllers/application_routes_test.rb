@@ -5,6 +5,13 @@ class ApplicationRoutesTest < ActionController::TestCase
 
   @my_resources = [
     %w( A1C A1Codes ),
+    %w( A2C A2Codes ),
+    %w( A3C A3Codes ),
+    %w( A4C A4Codes ),
+    %w( A5C A5Codes ),
+    %w( A6C A6Codes ),
+    %w( A7C A7Codes ),
+    %w( A8C A8Codes ),
     %w( AAA Abbreviations ),
     %w( ANP Accounts ),
     %w( ADT Addresses ),
@@ -27,6 +34,8 @@ class ApplicationRoutesTest < ActionController::TestCase
     %w( NLN NetworkLines ),
     %w( NST NetworkStations ),
     %w( NSO NetworkStops ),
+    %w( ORC OrlCategories ),
+    %w( ORS OrlSubjects ),
     %w( APT People ),
     %w( PPC PhaseCodes ),
     %w( SCP ProductCodes ),

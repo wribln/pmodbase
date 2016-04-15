@@ -42,9 +42,9 @@ class MyTiaItemsController < ApplicationController
             if tia_item_delta.valid? then
               tia_item_delta.save!
               @tia_item.save!
-              format.html { redirect_to my_tia_item_path( @tia_item ), notice: t( 'our_tia_items.msg.edit_ok' )}
+              format.html { redirect_to my_tia_item_path( @tia_item ), notice: t( 'tia_items.msg.edit_ok' )}
             elsif tia_item_delta.delta_count == 0 then
-              format.html { redirect_to my_tia_item_path( @tia_item ), notice: t( 'our_tia_items.msg.no_change' )}
+              format.html { redirect_to my_tia_item_path( @tia_item ), notice: t( 'tia_items.msg.no_change' )}
             else
               @tia_item.errors.add( :base, 'Internal Error: TiaItemDelta record failed validation' )
               format.html{ render :edit }

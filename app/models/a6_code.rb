@@ -7,7 +7,7 @@ class A6Code < ActiveRecord::Base
   # Location
 
   validates :code,
-    format: { with: /\A.[A-Z0-9&]+\z/, message: I18n.t( 'a_code_modules.msg.bad_code_syntax ')},
+    format: { with: /\A.[A-Z0-9&]+\z/, message: I18n.t( 'a_code_modules.msg.bad_code_syntax1')},
     length: { maximum: 3 }
 
   validates :desc,

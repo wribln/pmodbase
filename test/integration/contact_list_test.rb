@@ -19,7 +19,7 @@ class ContactListsTest < ActionDispatch::IntegrationTest
     get contact_lists_path
     assert_response :success
     assert_template 'index'
-    assert_select 'title', 'pmodbase: Contact List'
+    assert_select 'title', 'TEST: Contact List'
   end
 
 end

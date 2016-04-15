@@ -2,7 +2,7 @@
     <%= render 'shared/navbar', user_name: @user_name, target_window: @target %>
     <div class="jumbotron hidden-xs hidden-sm">
       <div class="container">
-        <h1>Welcome to THE Project!</h1>
+        <h1>Welcome to the <br/><%= t( 'project.name' )%>!</h1>
         <p>Select from the topics below which information you are interested in:
            A click on the topic opens a
           <%= @target == '_blank' ? 'new' : '' -%>

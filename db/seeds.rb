@@ -183,7 +183,7 @@ end.save
 
 Feature.new do |f|
   f.id = FEATURE_ID_BASE_PAGE
-  f.label = I18n.t('base_page.title')
+  f.label = I18n.t('base.title')
   f.code = 'IBP'
   f.seqno = 12
   f.access_level = BaseController.feature_access_level
@@ -270,22 +270,11 @@ Feature.new do |f|
   f.feature_category_id = fc1.id
 end.save
 
-# Feature.new do |f|
-#   f.id = FEATURE_ID_OUR_TIA_MEMBERS
-#   f.label = I18n.t( 'our_tia_members.title' )
-#   f.code = 'OTM'
-#   f.seqno = 37
-#   f.access_level = OurTiaMembersController.feature_access_level
-#   f.control_level = OurTiaMembersController.feature_control_level
-#   f.no_workflows = OurTiaMembersController.no_workflows
-#   f.feature_category_id = fc1.id
-# end.save
-
 Feature.new do |f|
   f.id = FEATURE_ID_HASHTAGS
   f.label = I18n.t( 'hashtags.title' )
   f.code = 'HTG'
-  f.seqno = 22
+  f.seqno = 41
   f.access_level = HashtagsController.feature_access_level
   f.control_level = HashtagsController.feature_control_level
   f.no_workflows = HashtagsController.no_workflows
@@ -523,11 +512,22 @@ end.save
 Feature.new do |f|
   f.id = FEATURE_ID_ORL_CATEGORIES
   f.label = I18n.t( 'orl_categories.title' )
-  f.code = 'ORA'
+  f.code = 'ORC'
   f.seqno = 3
   f.access_level = OrlCategoriesController.feature_access_level
   f.control_level = OrlCategoriesController.feature_control_level
   f.no_workflows = OrlCategoriesController.no_workflows
+  f.feature_category_id = fc5.id
+end.save
+
+Feature.new do |f|
+  f.id = FEATURE_ID_ORL_SUBJECTS
+  f.label = I18n.t( 'orl_subjects.title' )
+  f.code = 'ORS'
+  f.seqno = 4
+  f.access_level = OrlSubjectsController.feature_access_level
+  f.control_level = OrlSubjectsController.feature_control_level
+  f.no_workflows = OrlSubjectsController.no_workflows
   f.feature_category_id = fc5.id
 end.save
 

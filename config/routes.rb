@@ -48,7 +48,12 @@ Rails.application.routes.draw do
   resources :network_lines, path: 'nln', format: false
   resources :network_stations, path: 'nst', format: false
   resources :network_stops, path: 'nso', format: false
-  resources :orl_categories, path: 'ora', format: false
+  resources :orl_categories, path: 'orc', format: false
+  resources :orl_subjects, path: 'ors', format: false # do
+#    resources :orl_items, path: 'ori', format: false, shallow: true
+#    resources :orl_members, path: 'orm', format: false, shallow: true
+#    resources :orl_steps, path: 'ort', format: false, shallow: true
+#  end
   resources :people, path: 'apt', format: false
   resources :phase_codes, path: 'ppc', format: false
   resources :product_codes, path: 'scp', format: false

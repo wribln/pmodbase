@@ -17,7 +17,7 @@
 <%- @s_document_logs.each do |sdl| -%>
 <%= CSV.generate_line([
   sdl.id,
-  SITE_NAME,
+  SITE_ID,
   sdl.group.code,
   sdl.receiver_group,
   sdl.function_code, 

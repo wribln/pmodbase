@@ -6,7 +6,7 @@ class HomePageTest < ActionDispatch::IntegrationTest
     get '/'
     assert_response :success
     assert_template 'index'
-    assert_select 'title', 'pmodbase: Home Page'
+    assert_select 'title', 'TEST: Home Page'
   end
 
 end

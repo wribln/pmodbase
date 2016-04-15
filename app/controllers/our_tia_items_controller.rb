@@ -62,7 +62,7 @@ class OurTiaItemsController < ApplicationController
       @tia_item.transaction do
         @tia_item.seqno = @tia_list.next_seqno_for_item
         if @tia_item.save
-          format.html { redirect_to our_tia_item_path( @tia_item ), notice: t( 'our_tia_items.msg.new_ok' )}
+          format.html { redirect_to our_tia_item_path( @tia_item ), notice: t( 'tia_items.msg.new_ok' )}
         else
           set_member_list
           format.html { render :new }
@@ -85,9 +85,9 @@ class OurTiaItemsController < ApplicationController
           if tia_item_delta.valid? then
             tia_item_delta.save!
             @tia_item.save!
-            format.html { redirect_to our_tia_item_path( @tia_item ), notice: t( 'our_tia_items.msg.edit_ok'   )}
+            format.html { redirect_to our_tia_item_path( @tia_item ), notice: t( 'tia_items.msg.edit_ok'   )}
           elsif tia_item_delta.delta_count == 0 then
-            format.html { redirect_to our_tia_item_path( @tia_item ), notice: t( 'our_tia_items.msg.no_change' )}
+            format.html { redirect_to our_tia_item_path( @tia_item ), notice: t( 'tia_items.msg.no_change' )}
           else
             @tia_item.errors.add( :base, 'Internal Error: TiaItemDelta record failed validation' )
             set_member_list
@@ -106,7 +106,7 @@ class OurTiaItemsController < ApplicationController
   def destroy
     @tia_item.destroy
     respond_to do |format|
-      format.html { redirect_to my_tia_list_our_tia_items_url( @tia_list ), notice: t( 'our_tia_items.msg.delete_ok' )}
+      format.html { redirect_to my_tia_list_our_tia_items_url( @tia_list ), notice: t( 'tia_items.msg.delete_ok' )}
     end
   end
 

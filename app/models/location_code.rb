@@ -12,7 +12,7 @@ class LocationCode < ActiveRecord::Base
   validates :code,
     presence: true,
     uniqueness: true,
-    format: { with: Regexp.union( /\A\+!\z/,/\A\+[A-Z0-9.\-]+\z/ ), message: I18n.t( 'code_modules.msg.bad_code_syntax' )},
+    format: { with: Regexp.union( /\A\+!\z/,/\A\+[A-Z0-9.\-]+\z/ ), message: I18n.t( 's_code_modules.msg.bad_code_syntax' )},
     length: { maximum: MAX_LENGTH_OF_CODE }
 
   #validate :code_has_prefix # not needed: prefix is part of code validation

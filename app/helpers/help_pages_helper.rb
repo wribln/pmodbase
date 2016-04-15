@@ -1,7 +1,7 @@
 module HelpPagesHelper
 
   def help_title( text )
-    content_for( :title ) { "#{SITE_NAME}: #{ text }" }
+    content_for( :title ) { "#{SITE_ID}: #{ text }" }
     content_for( :topic ) { text }
   end
 

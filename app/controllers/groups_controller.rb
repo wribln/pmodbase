@@ -2,7 +2,7 @@ class GroupsController < ApplicationController
   require 'csv'
   include ControllerMethods
 
-  initialize_feature FEATURE_ID_GROUPS, FEATURE_ACCESS_INDEX
+  initialize_feature FEATURE_ID_GROUPS, FEATURE_ACCESS_VIEW
 
   before_action :set_group, only: [ :show, :edit, :update, :destroy ]
   before_action :set_selections, only: [ :edit, :new, :create, :update ]

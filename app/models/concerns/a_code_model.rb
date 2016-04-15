@@ -39,7 +39,7 @@ module ACodeModel
   def only_one_master
     if master then
       if self.class.where( code: code, master: TRUE ).where.not( id: id ).count > 0 then
-        errors.add( :base, I18n.t( 'code_modules.msg.too_many_masters' ))
+        errors.add( :base, I18n.t( 'a_code_modules.msg.too_many_masters' ))
       end
     end
   end

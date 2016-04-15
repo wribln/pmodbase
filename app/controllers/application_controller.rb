@@ -187,6 +187,7 @@ class ApplicationController < ActionController::Base
     level.nil? || ( level == FEATURE_ACCESS_NONE ) || ( level & FEATURE_ACCESS_NDA ) != 0
   end
 
+
   private
 
   # Find the user/account with the ID store in the session with the key
