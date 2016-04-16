@@ -1,0 +1,2008 @@
+en:
+
+  project:
+    code: TEST
+    name: pmodbase test system
+
+  general:
+    none:          '-none-'
+    notice:        'Notice'
+    errors:        'Error Message(s)'
+    alerts:        'Error Message(s)'
+    non_existing:  'does not exist.'
+    select_prompt: 'Select one:'
+    download_xls:  'Download CSV File'
+    download_doc:  'Download Report'
+    statistics:    'Show Statistics'
+    upd_baseline:  'Update Baseline'
+    accounts_link: 'Show Index of Accounts'
+    total:         'Total'
+    subtotal:      'Subtotal'
+    boolean:
+      yesno:      [ 'yes', 'no']
+      truefalse:  [ 'true', 'false']
+      onoff:      [ 'on', 'off']
+      active:     [ 'active', 'inactive']
+
+    attributes:
+      id:             '[ID]'
+      project_doc_id: 'Project DMS ID'
+      group_id:       'Project Group'
+
+  time:
+    formats:
+      db_time:      '%Y-%m-%d %H:%M UTC'
+      db_date:      '%Y-%m-%d'
+  date:
+    formats:
+      db_date:      '%Y-%m-%d'
+
+  coding_systems:
+    code:           'Code'
+    label:          'Label'
+    active:         'Active'
+    master:         'Master'
+    standard:       'Standard'
+    heading:        'Heading'
+    note:           'Note'
+    desc:           'Description'
+    mapping:        'Mapping'
+
+  activerecord:
+
+    models:
+      a1_code:            'Alternate EDMS Code - Project (A1)'
+      a2_code:            'Alternate EDMS Code - Stage (A2)'
+      a3_code:            'Alternate EDMS Code - Discipline/System (A3)'
+      a4_code:            'Alternate EDMS Code - Sub-Discipline/-System (A4)'
+      a5_code:            'Alternate EDMS Code - Activity (A5)'
+      a6_code:            'Alternate EDMS Code - Location (A6)'
+      a7_code:            'Alternate EDMS Code - Document Type (A7)'
+      a8_code:            'Alternate EDMS Code - Originator (A8)'
+      a_document_log:     'Alternate Document Log (ADL)'
+      abbreviation:       'Abbreviations'
+      account:            'User Accounts'
+      address:            'Address Information Records'
+      contact_info:       'Contact Information Records'
+      country_name:       'Country Names and Codes'
+      csr_status_record:  'Correspondence Status Register (CSR)'
+      db_change_request:  'Database Change Requests'
+      dcc_code:           'Document Classification Codes'
+      dsr_status_record:  'Document Status Register (DSR)'
+      dsr_doc_group:      'DSR Document Groups'
+      dsr_progress_rate:  'DSR Progress Rates'
+      dsr_submission:     'DSR Submission Records'
+      feature:            'Features'
+      feature_category:   'Feature Categories'
+      function_code:      'Function Codes'
+      holiday:            'Local Holidays'
+      glossary_item:      'Glossary'
+      group:              'Project Groups'
+      group_category:     'Group Categories'
+      hashtag:            'Hashtags'
+      location_code:      'Location Codes'
+      network_line:       'Network Lines'
+      network_station:    'Network Stations'
+      network_stop:       'Network Stops'
+      permission4_group:  'Permission Records for Groups'
+      permission4_flow:   'Permission Records for Workflows'
+      person:             'Personal Data Records'
+      phase_code:         'Phase Codes'
+      programme_activity: 'Programme Activities'
+      product_code:       'Product Codes'
+      responsibility:     'Responsibilities'
+      region_name:        'Region Names and Codes'
+      rfc_document:       'RfC Documents / Requests for Clarifications'
+      rfc_status_record:  'RfC Status Register (RSR)'
+      reference:          'References'
+      service_code:       'Service Codes'
+      s_document_log:     'Siemens Document Log (SDL)'
+      siemens_phase:      'Siemens Phase Codes'
+      standards_body:     'Standards Body Records'
+      submission_group:   'DSR Submission Groups'
+      tia_list:           'Task/Issue/Action Item Lists'
+      tia_item:           'Task/Issue/Action Items'
+      unit_name:          'Units'
+      web_link:           'Web Links'
+
+    attributes:
+
+      a1_code:
+        id:             :general.attributes.id 
+        code:           :coding_systems.code
+        label:          :coding_systems.label
+        active:         :coding_systems.active
+        master:         :coding_systems.master
+        mapping:        :coding_systems.mapping
+
+      a2_code:
+        id:             :general.attributes.id 
+        code:           :coding_systems.code
+        label:          :coding_systems.label
+        active:         :coding_systems.active
+        master:         :coding_systems.master
+        mapping:        :coding_systems.mapping
+
+      a3_code:
+        id:             :general.attributes.id 
+        code:           :coding_systems.code
+        label:          :coding_systems.label
+        active:         :coding_systems.active
+        master:         :coding_systems.master
+        mapping:        :coding_systems.mapping
+        desc:           :coding_systems.desc
+
+      a4_code:
+        id:             :general.attributes.id 
+        code:           :coding_systems.code
+        label:          :coding_systems.label
+        active:         :coding_systems.active
+        master:         :coding_systems.master
+        mapping:        :coding_systems.mapping
+
+      a5_code:
+        id:             :general.attributes.id 
+        code:           :coding_systems.code
+        label:          :coding_systems.label
+        active:         :coding_systems.active
+        master:         :coding_systems.master
+        mapping:        :coding_systems.mapping
+        desc:           :coding_systems.desc
+
+      a6_code:
+        id:             :general.attributes.id 
+        code:           :coding_systems.code
+        label:          :coding_systems.label
+        active:         :coding_systems.active
+        master:         :coding_systems.master
+        mapping:        :coding_systems.mapping
+        desc:           :coding_systems.desc
+
+      a7_code:
+        id:             :general.attributes.id 
+        code:           :coding_systems.code
+        label:          :coding_systems.label
+        active:         :coding_systems.active
+        master:         :coding_systems.master
+        mapping:        :coding_systems.mapping
+        desc:           :coding_systems.desc
+
+      a8_code:
+        id:             :general.attributes.id 
+        code:           :coding_systems.code
+        label:          :coding_systems.label
+        active:         :coding_systems.active
+        master:         :coding_systems.master
+        mapping:        :coding_systems.mapping
+
+      a_document_log:
+        id:             :general.attributes.id
+        a1_code:        'Project (A1)'
+        a2_code:        'Stage (A2)'
+        a3_code:        'Discipline/System (A3)'
+        a34_code:       "Discipline/System (A3)\nSub-Discipline/-System (A4)"
+        a4_code:        'Sub-Discipline/-System (A4)'
+        a5_code:        'Activity (A5)'
+        a6_code:        'Location (A6)'
+        a7_code:        'Document Type (A7)'
+        a8_code:        'Originator (A8)'
+        alt_doc_id:     'Document Code'
+        title:          'Title'
+        account_id:     'Account'
+        user:           'Created by'
+
+      abbreviation:
+        id:             :general.attributes.id
+        code:           'Acronym'
+        description:    'Meaning'
+        sort_code:      'Sort Code'
+
+      account:
+        id:             :general.attributes.id
+        name:           'Account Name'
+        person_id:      'Person Data Record'
+        password:       'Password'
+        active:         'Active'
+        keep_base_open: 'Keep Base Page Open'
+
+      account/permission4_groups:
+        base:           'Group Permissions'
+        id:             :general.attributes.id
+        feature_id:     'Feature'
+        group_id:       :general.attributes.group_id
+        account_id:     'Account'
+        to_index:       'Index'
+        to_create:      'Add'
+        to_read:        'Show'
+        to_update:      'Edit'
+        to_delete:      'Delete'
+
+      address:
+        id:             :general.attributes.id
+        label:          'Description'
+        street_address: 'Street Address'
+        postal_address: 'Postal Address'
+
+      dcc_code:
+        id:             :general.attributes.id 
+        code:           :coding_systems.code
+        label:          :coding_systems.label
+        active:         :coding_systems.active
+        master:         :coding_systems.master
+        standard:       :coding_systems.standard
+        heading:        :coding_systems.heading
+        note:           :coding_systems.note
+
+      function_code:
+        id:             :general.attributes.id 
+        code:           :coding_systems.code
+        label:          :coding_systems.label
+        active:         :coding_systems.active
+        master:         :coding_systems.master
+        standard:       :coding_systems.standard
+        heading:        :coding_systems.heading
+        note:           :coding_systems.note
+
+      product_code:
+        id:             :general.attributes.id 
+        code:           :coding_systems.code
+        label:          :coding_systems.label
+        active:         :coding_systems.active
+        master:         :coding_systems.master
+        standard:       :coding_systems.standard
+        heading:        :coding_systems.heading
+        note:           :coding_systems.note
+
+      service_code:
+        id:             :general.attributes.id 
+        code:           :coding_systems.code
+        label:          :coding_systems.label
+        active:         :coding_systems.active
+        master:         :coding_systems.master
+        standard:       :coding_systems.standard
+        heading:        :coding_systems.heading
+        note:           :coding_systems.note
+
+      contact_info:
+        id:             :general.attributes.id
+        info_type:      'Type'
+        phone_no_fixed: 'Fixed Line Phone Number'
+        phone_no_mobile: 'Mobile Phone Number'
+        department:     'Department Code'
+        detail_location: 'Location Details (Building, Room, M/S)'
+        address_id:     'Address'
+        person_id:      'Person Data Record'
+
+      country_name:
+        id:             :general.attributes.id
+        code:           'Code'
+        label:          'Name'
+
+      csr_status_record:
+        id:                   :general.attributes.id
+        correspondence_type:  'Type'
+        correspondence_types: ['incoming','outgoing']
+        transmission_type:    'Transmission'
+        transmission_types:   ['Letter (by Carrier)','Letter (via E-Mail)','Faximile','Faximile (via E-Mail)','E-Mail','Aconex','<other>']
+        subject:              'Subject'
+        project_doc_id:       :general.attributes.project_doc_id
+        sender_group_id:      'Sender Group'
+        sender_doc_id:        'Sender DMS ID'
+        sender_reference:     'Sender Reference'
+        receiver_group_id:    'Receiver Group'
+        classification:       'Classification'
+        classifications:      ['Information only','Action required','Response required']
+        correspondence_date:  'Send/Receive Date'
+        plan_reply_date:      'Planned/Expected Reply Date'
+        actual_reply_date:    'Actual Reply Date'
+        reply_status_record_id: 'Reply ID'
+        status:               'Status'
+        states:               ['open','closed','archived']
+        notes:                'Notes'
+
+      db_change_request:
+        id:             :general.attributes.id
+        req_acc_id:     'Requestor'
+        res_acc_id:     'Responsible'
+        feature:        'Feature'
+        detail:         'Item / Record'
+        action:         'DB Action'
+        uri:            'Path'
+        status:         'Status'
+        states:         ['new','open','waiting','closed']
+        request_text:   'Request Details'
+        created:        'Created'
+        updated:        'Updated'
+
+        requesting_account_id:  'Requesting Account'
+        responsible_account_id: 'Responsible Account'
+
+      dsr_status_record:
+        id:                  :general.attributes.id
+        title:               'Title'
+        project_doc_id:      :general.attributes.project_doc_id
+        sender_doc_id:       'Sender''s DMS ID'
+        receiver_doc_id:     'Receiver''s DMS ID'
+        sender_group_id:     'Sender Group'
+        sender_group_b_id:   'Sender Group (Baseline)'
+        receiver_group_id:   'Receiver Group'
+        weight:              'Weight'
+        weight_b:            'Weight (Baseline)'
+        quantity:            'Quantity'
+        quantity_b:          'Quantity (Baseline)'
+        sub_purpose:         'Type of Submission'
+        sub_purposes:       ['A - for Approval','I - for Information','N - no Submission']
+        sub_frequency:       'Submission Frequency'
+        sub_frequencies:    ['single','single (in group)','per phase','annually','quarterly','monthly','bi-weekly','weekly','daily','other']
+        document_status:     'Document Status'
+        document_status_b:   'Document Status (Baseline)'
+        document_states:    ['planned','in progress','in review','in submission','submitted','approved','approved with comments','rejected','completed w/o approval','updated','withdrawn/doc group complete']
+        dsr_doc_group_id:     'Document Group'
+        submission_group_id:  'Submission Group'
+        prep_activity_id:     'Prepare/Submit Activity [ID]'
+        subm_activity_id:     'Review/Approve Activity [ID]'
+        plnd_xxx:             'Planned ...'
+        plnd_xxx_b:           'Planned ... (Baseline)'
+        estm_xxx:             'Estimated ...'
+        actl_xxx:             'Actual ...'
+        plnd_prep_start:      'Planned Start of Preparation'
+        plnd_prep_start_b:    'Planned Start of Preparation (Baseline)'
+        estm_prep_start:      'Estimated Start of Preparation'
+        actl_prep_start:      'Actual Start of Preparation'
+        plnd_submission_1:    'Planned Date of Submission'
+        plnd_submission_b:    'Planned Date of Submission (Baseline)'
+        estm_submission:      'Estimated Date of Submission'
+        actl_submission_1:    'Actual Date of Submission'
+        next_submission:      'Date of Upcoming Submission'
+        plnd_completion:      'Planned Completion Date'
+        plnd_completion_b:    'Planned Completion Date (Baseline)'
+        estm_completion:      'Estimated Completion Date'
+        actl_completion:      'Actual Document Completion'
+        notes:                'Notes'
+        current_status:       'Current Status'
+        current_status_b:     'Current Status (Baseline)'
+        current_task:         'Current Task'
+        current_task_b:       'Current Task (Baseline)'
+        current_status_task:  'Current Status / Task'
+        next_status_task:     'Next Status / Task'
+        check_box_add:        'Update Group Data?'
+
+      dsr_doc_group:
+        id:                     :general.attributes.id
+        dsr_status_record_id:   'DSR Status Record [ID]'
+        code:                   'Code'
+        title:                  'Title'
+        group_id:               :general.attributes.group_id
+
+      dsr_progress_rate:
+        document_status:    :activerecord.attributes.dsr_status_record.document_status
+        label:              'Label'
+        document_progress:  'Document Progress'
+        prepare_progress:   "Prepare/\u00adSubmit Progress"
+        approve_progress:  "Review/\u00adApprove Progress"
+
+      dsr_submission:
+        id:                   :general.attributes.id
+        dsr_status_record_id: 'DSR Status Record [ID]'
+        submission_no:        'Submission No'
+        sender_doc_id_version:        'Sender DMS Version (Document)'
+        receiver_doc_id_version:      'Receiver DMS Version (Document)'
+        project_doc_id_version:       'Project DMS version (Document)'
+        submission_receiver_doc_id:   'Receiver DMS ID (Submission)'
+        submission_project_doc_id:    'Project DMS ID (Submission)'
+        response_sender_doc_id:       'Sender DMS ID (Response)'
+        response_project_doc_id:      'Project DMS ID (Response)'
+        plnd_submission:      'Planned Submission Date'
+        actl_submission:      'Actual Submission Date'
+        xpcd_response:        'Expected Response Date'
+        xpcd_response_delta:  'Offset in Days'
+        actl_response:        'Actual Response Date'
+        response_status:    'Response Status'
+        response_states:   ['A - Approved','B - Approved w/ Comments','C - Rejected','D - Review/Approval not Required']
+
+      feature:
+        id:             :general.attributes.id
+        code:           'Acronym'
+        label:          'Description'
+        seqno:          'Sequence Number'
+        access_level:   'Access Level'
+        control_level:  'Control Level'
+#                        0      1              2               3              4         5       
+        access_levels:  ['none','user-defined','general-index','general-view','general','all']
+        control_levels: ['-','+g','+wf','+g+wf','+cug']
+        no_workflows:   'No of Workflows'
+        feature_category_id: 'Feature Category ID'
+
+      feature_category:
+        id:             :general.attributes.id
+        label:          'Category Heading'
+        seqno:          'Sequence Number'
+
+      glossary_item:
+        id:             :general.attributes.id
+        term:
+          one:          'Term'
+          other:        'Terms'
+        code:           'Abbreviation'
+        description:    'Description'
+
+      group:
+        id:             :general.attributes.id
+        code:           'Project Group Code'
+        code_short:     'Group'
+        just_code:      'Code'
+        label:          'Description'
+        notes:          'Notes'
+        grp_cat:        'Group Category'
+        seqno:          'Sequence Number'
+        participating:  'Participating'
+        s_sender_code:    'Sender Code'
+        s_receiver_code:  'Receiver Code'
+        sub_group_of_id:  'Sub-Group of'
+        belongs_to:     'belongs to'
+        active:         'Active'
+        standard:       'Standard'
+
+      group_category:
+        id:             :general.attributes.id
+        label:          'Category Heading'
+        seqno:          'Sequence Number'
+
+      hashtag:
+        id:             :general.attributes.id
+        label:          'Label'
+        feature_id:     'Feature'
+        seqno:          'Sequence Number'
+
+      holiday:
+        id:               :general.attributes.id
+        date_from:        'From Date'
+        date_until:       'Until Date'
+        country_name_id:  'Country'
+        region_name_id:   'Region'
+        region:           'Country/Region'
+        description:      'Description'
+        work:             'Work'
+
+      location_code:
+        id:             :general.attributes.id
+        code:           'Code'
+        label:          'Label'
+        loc_type:       'Type'
+        loc_types:      ['Label','Point','Line']
+        center_point:   'Center Point'
+        start_point:    'Start Point'
+        end_point:      'End Point'
+        length:         'Length'
+        note:           'Note'
+
+      network_line:
+        id:             :general.attributes.id
+        code:           'Code'
+        label:          'Label'
+        location_code_id: 'Location Code'
+        seqno:          'Sort Order'
+        note:           'Notes'
+
+      network_station:
+        id:             :general.attributes.id
+        code:           'Code'
+        transfer:       'Transfer Station'
+        alt_code_short: 'Other Code'
+        alt_code:       'Alternate/Previous Code'
+        curr_name:      'Name'
+        prev_name:      'Other/Previous Name'
+        note:           'Notes'
+        network_stops:  'Network Stop'
+
+      network_stop:
+        id:                 :general.attributes.id
+        location_code_id:   'Location Code'
+        stop_no:            'No of Stop on Line'
+        network_line_id:    'Line'
+        network_station_id: 'Station'
+        note:               'Notes'
+
+      permission4_flow:
+        id:             :general.attributes.id
+        feature_id:     'Feature'
+        account_id:     'Account'
+        workflow_id:    'Workflow'
+        label:          'Role'
+        tasklist:       'Permitted Tasks'
+
+      permission4_group:
+        id:             :general.attributes.id
+        feature_id:     'Feature'
+        group_id:       :general.attributes.group_id
+        account_id:     'Account'
+        to_index:       'Index'
+        to_create:      'Add'
+        to_read:        'Show'
+        to_update:      'Edit'
+        to_delete:      'Delete'
+
+      person:
+        id:             :general.attributes.id
+        formal_name:    'Formal Name'
+        informal_name:  'Informal Name'
+        email:          'E-Mail Address'
+        involved:       'Currently Involved'
+        accounts:       'Account Information'
+        contact_infos:  'Contact Information'
+
+      phase_code:
+        id:             :general.attributes.id
+        code_p:         'Project Phase Code'
+        siemens_phase_id: 'Siemens Phase Code'
+        acro:           'Acronym'
+        label:          'Description'
+        level:          'Level'
+
+      programme_activity:
+        id:             :general.attributes.id
+        project_id:     'Project ID'
+        activity_id:    'Activity ID'
+        activity_label: 'Activity Description'
+        start_date:     'Start Date' 
+        finish_date:    'Finish Date'
+
+      reference:
+        id:             :general.attributes.id
+        code:           'Code'
+        description:    'Description'
+        project_doc_id: :general.attributes.project_doc_id 
+
+      region_name:
+        id:               :general.attributes.id
+        country_name_id:  'Country'
+        code:             'Code'
+        label:            'Name'
+
+      responsibility:
+        id:             :general.attributes.id
+        description:    'Description'
+        seqno:          'Sequence Number'
+        person_id:      'Person'
+        group_id:       :general.attributes.group_id
+
+      rfc_document:
+        id:                     :general.attributes.id
+        rfc_status_record_id:   'RfC ID'
+        version:                'Version'
+        question:               'Request/Question'
+        answer:                 'Clarification/Answer'
+        note:                   'Notes'
+        account_id:             'Account ID'
+        created_at:             'Created at'
+        updated_at:             'Last Update'
+
+      rfc_status_record:
+        id:                     :general.attributes.id
+        rfc_type:               'Type'
+        title:                  'Title'
+        asking_group_id:        'Requesting Group'
+        answering_group_id:     'Clarifying Group'
+        project_doc_id:         :general.attributes.project_doc_id
+        project_rms_id:         'Project RMS ID'
+        asking_group_doc_id:    'Requesting Group''s Doc ID'
+        answering_group_doc_id: 'Clarifying Group''s Doc ID'
+        current_status:         'Current Status'
+        current_task:           'Current Task'
+        current_status_task:    'Current Status / Task'
+        next_status_task:       'Next Status / Task'
+
+      s_document_log:
+        id:             :general.attributes.id
+        group_id:       'Sender Group'
+        receiver_group: 'Receiver Group'
+        function_code:  'Function Code'
+        service_code:   'Service Code'
+        product_code:   'Product Code'
+        location_code:  'Location Code'
+        phase_code:     'Phase Code'
+        dcc_code:       'DCC Code'
+        revision_code:  'Revision'
+        author_date:    'Author Date'
+        siemens_doc_id: 'Document Code'
+        title:          'Title'
+        account_id:     'Account'
+        user:           'Created by'
+
+      siemens_phase:
+        id:             :general.attributes.id
+        code:           'Phase Code'
+        label_p:        'Description'
+        label_m:        'Milestone'
+
+      standards_body:
+        id:             :general.attributes.id
+        code:           'Acronym'
+        description:    'Full Name'
+
+      submission_group:
+        id:             :general.attributes.id
+        code:           'Group Code'
+        label:          'Description'
+
+      tia_list:
+        id:                 :general.attributes.id
+        code:               'List Prefix'
+        label:              'Description'
+        owner_account_id:   'Owner Account ID'
+        owner:              'Owner'
+        deputy_account_id:  'Deputy Account ID'
+        deputy:             'Deputy'
+        members:            'List Members'
+# for error messages in subform
+        tia_members:        'At least one member record'
+
+      tia_item:
+        item_id:        'Item ID'
+        tia_list_id:    'List'
+        status:         'Status'
+        states:         ['open','waiting','obsolete','closed']
+        description:    'Description'
+        comment:        'Comment'
+        prio:           'Priority'
+        priorities:     [ 1, 2, 3 ]
+        due_date:       'Due Date'
+        account_id:     'Owner'
+        archived:       'Archived'
+        created_at:     'Created'
+
+      tia_member:
+        account_id:     'Account ID'
+        to_access:      'Can Access'
+        to_update:      'Can Update'
+        member_account: 'Participants (Account ID and Name)'
+
+      unit_name:
+        id:             :general.attributes.id
+        code:           'Symbol/Abbreviation'
+        label:          'Name/Description'
+
+      web_link:
+        id:             :general.attributes.id
+        label:          'Title'
+        hyperlink:      'Hyperlink'
+        seqno:          'Sequence Number'
+
+  validators:
+    date_field:
+      bad_syntax:   "= %{bad_date} is incomplete, field must be specified with year, month, and day"
+      bad_date:     "= %{bad_date} is not a valid date (in that year)"
+
+  home:
+    title:          'Home Page'
+    index:  
+      form_title:   'Please sign on'
+      acc_name:     'Account Name'
+      acc_name_ph:  'Enter your account name here'
+      password:     'Password'
+      password_ph:  'Enter your password here'
+      signon:       'Sign on'
+    signon:
+      error:        'Wrong account name or password - please try again!'
+
+  base:
+    title:            'Base Page'
+    index:
+      title:          'Base'
+    menu:
+      my_data:        'My Data'
+      sign_off:       'Sign Off'
+      welcome:        'Welcome, %{user}!'
+    msg:
+      nothing_to_show: 'The permissions granted to this account do not allow access to any information at this time.'
+
+  action_title:
+    header:      'Action'
+    show:        'show details'
+    add:         'add'
+    delete:      'delete'
+    del_confirm: 'Are you sure?'
+    edit:        'edit'
+    empty_row:   'Nothing to display.'
+    empty_row_x: 'Nothing to display - contact your group manager or the system administration to add contact information records.'
+    filter:      'Show filter row'
+    filter_and:  'Require all filter items'
+    filter_ph:
+      id:        'ID'
+      sw:        '.....'
+      sl:        '|....'
+      st:        '....|'
+      aw:        '|...|'
+      dv:        'yyyy-mm-dd'
+      ns:        'Search in Notes Text'
+
+  helpers:
+    submit:
+      add:        'Add now'
+      create:     'Add now'
+      update:     'Update now'
+
+  button_label:
+    add:          'Add'
+    show:         'Show'
+    edit:         'Edit'
+    update:       'Update'
+    create:       'Create'
+    destroy:      'Delete'
+    filter:       'Filter'
+    index:        'Index'
+    goto_to_list: 'Go to Index'
+    cancel:       'Cancel'
+    help:         'Help'
+    history:      'History'
+    new:          'Add'
+    stats:        'Statistics'
+    wf_info:      'Workflow Information'
+    upd_baseline: 'Update Baseline'
+
+  a_code_modules:
+    search_title:  
+    edit_title:    'Edit Code'
+    new_title:     'Add new Code'
+    show_title:    'Show Code Details'
+    labels_head:   'Label / Description'
+    msg:
+      new_ok:      'Code successfully added.'
+      edit_ok:     'Code successfully modified.'
+      delete_ok:   'Code successfully removed.'
+      too_many_masters: 'There is already one record with this code marked Master.'
+      bad_code_syntax1: 'may only contain A-Z, 0-9, or &.'
+      bad_code_syntax2: 'must consist of two parts separated by -, each containing A-Z, 0-9, or &.'
+
+  a_code_search:
+    title:         'Search for Codes'
+    index:
+      form_title:  :s_code_search.title
+      list_source: "Results from %{table}"
+
+  a1_codes:
+    title:         'Project Code (A1)'
+    edit:
+      form_title:  :a_code_modules.edit_title  
+    index:
+      form_title:  'List of Project Codes (A1)'
+    new:
+      form_title:  :a_code_modules.new_title
+    show:
+      form_title:  :a_code_modules.show_title
+
+  a2_codes:
+    title:         'Stage Code (A2)'
+    edit:
+      form_title:  :a_code_modules.edit_title  
+    index:
+      form_title:  'List of Stage Codes (A2)'
+    new:
+      form_title:  :a_code_modules.new_title
+    show:
+      form_title:  :a_code_modules.show_title
+
+  a3_codes:
+    title:         'Discipline/System Code (A3)'
+    edit:
+      form_title:  :a_code_modules.edit_title  
+    index:
+      form_title:  'List of Discipline/System Codes (A3)'
+      labels_head: :a_code_modules.labels_head
+    new:
+      form_title:  :a_code_modules.new_title
+    show:
+      form_title:  :a_code_modules.show_title
+
+  a4_codes:
+    title:         'Sub-Discipline/-System Code (A4)'
+    edit:
+      form_title:  :a_code_modules.edit_title  
+    index:
+      form_title:  'List of Sub-Discipline/-System Codes (A4)'
+      labels_head: :a_code_modules.labels_head
+    new:
+      form_title:  :a_code_modules.new_title
+    show:
+      form_title:  :a_code_modules.show_title
+    msg:
+      bad_a3_part:  'first part must be an existing A3 Code'
+
+  a5_codes:
+    title:         'Activity Code (A5)'
+    edit:
+      form_title:  :a_code_modules.edit_title  
+    index:
+      form_title:  'List of Activity Codes (A5)'
+      labels_head: :a_code_modules.labels_head
+    new:
+      form_title:  :a_code_modules.new_title
+    show:
+      form_title:  :a_code_modules.show_title
+
+  a6_codes:
+    title:         'Location Code (A6)'
+    edit:
+      form_title:  :a_code_modules.edit_title  
+    index:
+      form_title:  'List of Location Codes (A6)'
+      labels_head: :a_code_modules.labels_head
+    new:
+      form_title:  :a_code_modules.new_title
+    show:
+      form_title:  :a_code_modules.show_title
+
+  a7_codes:
+    title:         'Document Type Code (A7)'
+    edit:
+      form_title:  :a_code_modules.edit_title  
+    index:
+      form_title:  'List of Document Type Codes (A7)'
+      labels_head: :a_code_modules.labels_head
+    new:
+      form_title:  :a_code_modules.new_title
+    show:
+      form_title:  :a_code_modules.show_title
+
+  a8_codes:
+    title:         'Originator Code (A8)'
+    edit:
+      form_title:  :a_code_modules.edit_title  
+    index:
+      form_title:  'List of Originator Codes (A8)'
+    new:
+      form_title:  :a_code_modules.new_title
+    show:
+      form_title:  :a_code_modules.show_title
+
+  a_document_logs:
+    title:            'Alternate EDMS Document Log (ADL)'
+    form:
+      g_prompt:       :general.select_prompt
+    index:
+      form_title:     'List of Alternate EDMS Documents'
+    show:
+      form_title:     'Show Document Attributes'
+    edit:
+      form_title:     'Edit Document Attributes'
+    new:
+      form_title:     'Add new Document and Attributes'
+    msg:
+      new_ok:         'Document and Attributes successfully added.'
+      edit_ok:        'Document Attributes successfully updated.'
+      delete_ok:      'Document and Attributes successfully removed.'
+      invalid_code:   'does not exist.'
+
+  abbr_search:
+    title:         'Search for Abbreviations'
+    index:
+      form_title:  :abbr_search.title
+      list_source: "Results from %{table}"
+
+  abbreviations:
+    title:          'Abbreviations'
+    edit:
+      form_title:   'Edit Abbreviation'
+    index:
+      form_title:   'List of Abbreviations'
+    new:
+      form_title:   'Add New Abbreviation'
+    show:
+      form_title:   'Show Abbreviation Details'
+
+    msg:
+      new_ok:       'Abbreviation was successfully stored.'
+      edit_ok:      'Abbreviation was successfully edited.'
+      delete_ok:    'Abbreviation was successfully removed.'
+
+  accounts:
+    title:          'Accounts and Permissions'
+    password_conf:  'Confirm Password'
+    ff_active:
+      true_val:     'active'
+      false_val:    'inactive'
+    edit:
+      form_title:   'Edit Details of Account'
+    index:
+      form_title:   'Index of Accounts'
+    new:
+      form_title:   'Add New Account'
+    show:
+      form_title:   'Show Details of Account'
+
+    msg:
+      bad_person_id:  :general.non_existing
+      bad_group_id:   :general.non_existing
+      bad_syntax:     'syntax rules violated - see help for required format.'
+      new_ok:         'Account was successfully created, add permission records now.'
+      edit_ok:        'Account and/or permissions were successfully updated.'
+      delete_ok:      'Account and permissions were successfully removed.'
+
+  addresses:
+    title:            'Addresses'
+    edit:
+      form_title:     'Edit Address Details'
+    index:
+      form_title:     'Index of Addresses'
+    new:
+      form_title:     'Add New Address'
+    show:
+      form_title:     'Show Address Details'
+
+    msg:
+      new_ok:         'Address was successfully created.'
+      edit_ok:        'Address was successfully updated.'
+      delete_ok:      'Address was successfully removed.'
+
+  contact_infos:
+    title:            'Contact Information Records'
+    info_type_help:   'Preferred: ''Company'', ''Project'''
+
+    edit:
+      form_title:     'Edit Contact Information'
+    index:
+      form_title:     'Index of Contact Information Records'
+    new:
+      form_title:     'Add New Contact Information'
+    show:
+      form_title:     'Show Contact Information'
+
+    msg:
+      bad_person_id:  :general.non_existing
+      bad_address_id: :general.non_existing
+      no_dup_types:   'must be different.'
+      new_ok:         'Contact Information was successfully created.'
+      edit_ok:        'Contact Information was successfully updated.'
+      delete_ok:      'Contact Information was successfully removed.'
+
+  contact_lists:
+    title:            'Contact List'
+    index:
+      form_title:     'Contact Distribution List'
+      group:          'Group'
+      g_name:         'Group Name'
+      name:           'Name'
+      p_name:         'Person Name'
+      resp:           'Responsibility'
+      e_mail:         'E-Mail Address'
+      ctype:          'Contact Type'
+      dept:           'Department'
+      a_details:      'Address Details'
+      a_link:         'Address Link'
+      phone_nos:      'Phone Office / Mobile'
+      phone_off:      'Phone Office'
+      phone_mob:      'Phone Mobile'
+    show:
+      form_title:     'Details to Person'
+    info:
+      form_title:     'Accounts and Names'
+      a_id:           'Account ID'
+      p_name:         'Person Name'
+
+  country_names:
+    title:            'Country Names and Codes'
+    index:
+      form_title:     'List of Countries'
+    new:
+      form_title:     'Add Country'
+    show:
+      form_title:     'Show Country'
+    edit:
+      form_title:     'Update Country'
+    msg:
+      new_ok:         'Country Information was successfully added.'
+      edit_ok:        'Country Information was successfully updated.'
+      delete_ok:      'Country Information was successfully deleted.'
+
+  csr_status_records:
+    title:            'Correspondence Status Register (CSR)'
+    form:
+      g_prompt:       :general.select_prompt
+    index:
+      form_title:     :csr_status_records.title
+      other_group_id: 'Sender/ Receiver Group'
+      other_date:     'Send/ Receive Date'
+      reply_date:     'Planned/ Actual Reply Date'
+      classification: 'Class.'
+    new:
+      form_title:     'Add Correspondence Status Record'
+    show:
+      form_title:     'Show Correspondence Status Record'
+    edit:
+      form_title:     'Modify Correspondence Status Record'
+    msg:
+      new_ok:         'Correspondence Status Record successfully added.'
+      edit_ok:        'Correspondence Status Record successfully updated.'
+      delete_ok:      'Correspondence Status Record successfully deleted.'
+      bad_csr_item:   'Referenced CSR Item does not exist.'
+      bad_group_id:   :general.non_existing
+      bad_csr_id:     'refers to own record which is not permitted.'
+      bad_types:      'reply correspondence is same type as this: '
+
+  db_change_requests:
+    title:            'All Database Change Requests'
+    req_text_prompt:  'Please provide as many details as you can. Thank you.'
+
+    new:
+      form_title:     'Add New Change Request'
+    show:
+      form_title:     'Show Details of Change Request'
+    edit:
+      form_title:     'Modify Change Request'
+    index:
+      form_title:     'List of Change Requests'
+
+    msg:
+      new_ok:         'Change request was successfully created.'
+      edit_ok:        'Change request was successfully updated.'
+      delete_ok:      'Change request was successfully deleted.'
+      bad_feature_id: :general.non_existing
+      bad_account_id: :general.non_existing
+
+  dcc_codes:
+    title:            'Document Classification Codes (DCCs)'
+    index: 
+      form_title:     'List of Document Classification Codes'
+    show:
+      form_title:     'Show Document Classification Codes'
+    edit:
+      form_title:     'Edit Document Classification Codes'  
+    new:
+      form_title:     'Add Document Classification Codes'
+    msg:
+      new_ok:         'DCC successfully created.'
+      edit_ok:        'DCC successfully updated.'
+      delete_ok:      'DCC successfully removed.'
+
+  dsr_doc_groups:
+    title:            'DSR Document Groups'
+    form:
+      g_prompt:       :general.select_prompt
+    edit:
+      form_title:     'Edit DSR Document Group'
+    index:
+      form_title:     'List of DSR Document Groups'
+    new:
+      form_title:     'Create DSR Document Group'
+    show:
+      form_title:     'Show DSR Document Group'
+    msg:
+      edit_ok:        'DSR Document Group was successfully updated.'
+      delete_ok:      'DSR Document Group was successfully deleted.'
+      new_ok:         'DSR Document Group was successfully created.'
+      you_no_edit:    'You have no permission to update this DSR Document Group.'
+      bad_group_id:   :general.non_existing
+
+  dsr_progress_rates:
+    title:            'DSR Progress Rates'
+    edit:
+      form_title:     'Edit DSR Progress Rate'
+    index:
+      form_title:     'Table of DSR Progress Rates'
+    show:
+      form_title:     'Show DSR Progress Rate'
+    msg:
+      edit_ok:        'DSR Progress Rate successfully updated.'
+
+  dsr_status_records:
+    title:            'Document Status Register (DSR)'
+    sub_title:        'as of: %{stats_date}'
+    form:
+      ddg_link:       'Show Document Groups'
+      ppa_link:       'Show Programme Activities'
+      g_prompt:       :general.select_prompt
+      no_groups:      'No eligible submission groups found.'
+      cb_add_text:    'Corresponding DSR entry %{dsr_id} will be updated.'
+      sub_title:      'with Baseline as of: %{bl_date}'
+      no_bl_date:     '<not yet set>'
+      no_group:       '<unassigned>' # keep it short, must fit into code column (10 chars max)
+
+    info:
+      form_title:     'DSR Workflow Information'
+    stats:
+      form_title:     'Document Status Register (DSR) Statistics'
+      curr:           'Current'
+      base:           'Baseline'
+      var:            'Variance'
+      ds:             'Document Status'
+      wfs:            'Workflow Status'
+      wft:            'Workflow Task'
+      abs:            'absolute'
+      rel:            'relative'
+      grand_total:    'Grand Total'
+      sub_total:      'Sub Total'
+      progress:       'Progress'
+      progress_wgt:   'Weighted Progress'
+      pa_id:          'Programme Activity [ID]'
+    stats_1:
+      form_title:     'Quantity by Project Group, Document Status'
+    stats_2:
+      form_title:     'Weight by Project Group, Document Status'
+    stats_3:
+      form_title:     'Progress by Project Group'
+    stats_4:
+      form_title:     'Weighted Progress by Project Group'
+    stats_5:
+      form_title:     'Documents in Workflow Tasks by Project Group'
+    stats_6:
+      form_title:     'Workflow Status of Documents by Project Group'
+    stats_7:
+      form_title:     'Quantity by Submission Group, Document Status'
+    stats_8:
+      form_title:     'Weight by Submission Group, Document Status'
+    stats_9:
+      form_title:     'Progress by Submission Group'
+    stats_10:
+      form_title:     'Weighted Progress by Submission Group'
+    stats_11:
+      form_title:     'Documents in Workflow Tasks by Submission Group'
+    stats_12:
+      form_title:     'Workflow Status of Documents by Submission Group'
+    stats_13:
+      form_title:     'Absolute Progress per Prepare/Submit Activity'
+    stats_14:
+      form_title:     'Weighted Progress per Prepare/Submit Activity'
+    stats_15:
+      form_title:     'Absolute Progress per Review/Approve Activity'
+    stats_16: 
+      form_title:     'Weighted Progress per Review/Approve Activity'
+    edit:
+      form_title:     'Edit Document Status Record'
+    index:
+      form_title:     'List of Documents (DSR)'
+    new:
+      form_title:     'Create Document Status Record (DSR)'
+    add:
+      form_title:     'Add New Document Status Record (DSR)'
+    show:
+      form_title:     'Show Document Status Record (DSR)'
+    msg:
+      new_ok:         'DSR entry was successfully created.'
+      add_ok:         'DSR entry was successfully added and original source updated.'
+      edit_ok:        'DSR entry was successfully updated.'
+      delete_ok:      'DSR entry was successfully deleted.'
+      update_ok:      'DSR entry''s baseline was updated.'
+      no_edit_now:    'Nothing can be updated at this stage.'
+      you_no_edit:    'You have no permission to update this document.'
+      you_no_new:     'You have no permission to create a document.'      
+      bad_sgp_item:   :general.non_existing
+      bad_group_id:   'does not exist or belongs to another Project Group.'
+      bad_activity:   :general.non_existing
+      bad_sub_rec:    :general.non_existing
+      bad_frequency:  'only ''single'' Submission Frequencies permitted for the next task.'
+      bad_purpose:    'setting does not consider submission.'
+      bad_state:      'must be for information only to close workflow.'
+      bad_weight1:    'must be non-zero for the next task.'
+      bad_quantity1:  'must be one for the next task.'
+      bad_weight0:    'must be zero for the next task.'
+      bad_quantity0:  'must be zero for the next task.'
+      bad_fq_combo:   'If Quantity is ''1'' then Submission Frequency must be ''single''.'
+      bad_sd_combo:   'If no submission is planned, Review/Approve Activity [ID] and Estimated Date of Submission must not be set.'
+      bad_pa_combo:   'Prepare/Submit and Review/Approve Activity must not be the same.'
+      add_created:    'Add from Group Document: Submission Frequency, Quantity and Weight were adjusted!'
+      bad_resp_sts:   'Next Status / Task must correspond to Submission Response Status.'
+      baseline_done:  'Baseline data successfully saved.'
+
+    workflows:
+      w00:
+        label:    'Document Status Register'
+        tasks:
+          t00:    '<start new workflow>'
+          t01:    'Plan'
+          t02:    'Stage'
+          t03:    'Prepare'
+          t04:    'Review'
+          t05:    'Prepare for Release'
+          t06:    'Perform Submission'
+          t07:    'Review/Approve'
+          t08:    'Process Receipt'
+          t09:    'Process Comments'
+          t10:    '<workflow completed>'
+        states:
+          s00:    '<initial>'
+          s01:    'planned'
+          s02:    'ready to start'
+          s03:    'in progress'
+          s04:    'ready to review'
+          s05:    'reviewed'
+          s06:    'released'
+          s07:    'reconsider release'
+          s08:    'submitted'
+          s09:    'received'
+          s10:    'B - approved with comments'
+          s11:    'C - rejected'
+          s12:    'ready for re-review'
+          s13:    'closed - A - approved'
+          s14:    'closed - D - approval not required'
+          s15:    'closed - submitted for information'
+          s16:    'closed - submission not required'
+          s17:    'closed - withdrawn'
+          s18:    'closed - planned group complete'
+
+  dsr_submissions:
+    title:            'DSR Submission Records'
+    form:
+      g_prompt:       :general.select_prompt
+    new:
+      form_title:     'Add New DSR Submission Record'
+    show:
+      form_title:     'Show Details of DSR Submission Record'
+    edit:
+      form_title:     'Modify DSR Submission Record'
+    index:
+      form_title:     'List all DSR Submission Records'
+    msg:
+      edit_ok:        'DSR Submission Record was successfully updated.'
+      new_ok:         'DSR Submission Record was successfully created.'
+      delete_ok:      'DSR Submission Record was successfully destroyed.'
+      bad_dsr_id:     'does not refer to a valid DSR Status Record.'
+      not_unique:     '/ Submission No combination already exists.'
+      bad_resp_date:  '+ Offset in Days must be on or after Actual Submission Date.'
+
+  my_change_requests:
+    title:            'My Database Change Requests'
+    new:
+      form_title:     'Add New Change Request'
+      flash:
+        to_create:    'Your account does not allow you to complete the requested action. However, we would like to ask you to complete this change request, so an eligible project member can be informed to process the requested modification.'
+        to_update:    :my_change_requests.new.flash.to_create
+        to_delete:    :my_change_requests.new.flash.to_create
+        to_read:      'Your account does not allow you to access detailed information on this item. If you require access, please complete this form and an eligible project member will be informed about your request.'
+        to_index:     'Your account does not allow you to access the requested information. If you require access, please complete this form and an eligible project member will be informed about your request.'
+    show:
+      form_title:     'Show Details of Change Request'
+    edit:
+      form_title:     'Modify Change Request'
+    index:
+      form_title:     'List of my Change Requests'
+
+  features:
+    title:            'Feature Items Table'
+    edit:
+      form_title:     'Edit Details of Feature'
+    index:
+      form_title:     'List of Features'
+    new:
+      form_title:     'Add New Feature'
+      fc_prompt:      :general.select_prompt
+    show:
+      form_title:     'Show Details of Feature'
+
+    msg:
+      bad_feature_cat: :general.non_existing
+      bad_code:       'may only consist of uppercase letters, digits, and underscores'
+      edit_ok:        'Feature was successfully updated.'
+      new_ok:         'Feature was successfully created.'
+      delete_ok:      'Feature was successfully destroyed.'
+
+  feature_categories:
+    title:            'Feature Categories Table' 
+    edit:
+      form_title:     'Edit Details of Feature Category'
+    index:
+      form_title:     'List of Feature Categories'
+    new:
+      form_title:     'Add New Feature Category'
+    show:
+      form_title:     'Show Details of Feature Category'
+
+    msg:
+      new_ok:         'Feature category was successfully created.'
+      edit_ok:        'Feature category was successfully updated.'
+      delete_ok:      'Feature category was successfully destroyed.'
+
+  feature_responsibilities:
+    title:            'Feature Responsibilities'
+    index:
+      form_title:     'Feature Responsibilities'
+
+  function_codes:
+    title:            'Function Codes'
+    index: 
+      form_title:     'List of Function Codes'
+    show:
+      form_title:     'Show Function Code'
+    edit:
+      form_title:     'Edit Function Code'  
+    new:
+      form_title:     'Add Function Code'
+    msg:
+      new_ok:         'Function Code successfully created.'
+      edit_ok:        'Function Code successfully updated.'
+      delete_ok:      'Function Code successfully removed.'
+
+  glossary_items:
+    title:            'Glossary'
+    edit:
+      form_title:     'Edit Glossary Item'
+    new:
+      form_title:     'Add New Glossary Item'
+    show:
+      form_title:     'Show Glossary Item Data'
+    index:
+      form_title:     'Project Glossary'
+
+    msg:
+      new_ok:         'Glossary Item was successfully added.'
+      edit_ok:        'Glossary Item was successfully updated.'
+      delete_ok:      'Glossary Item was successfully removed.'
+      bad_reference_id: :general.non_existing
+
+  groups:
+    title:            'Project Groups'
+    edit:
+      form_title:     'Edit Details of Project Group'
+    index:
+      form_title:     'List of Project Groups'
+    new:
+      form_title:     'Add New Project Group'
+      gc_prompt:      :general.select_prompt
+    show:
+      form_title:     'Show Details of Project Group'
+    msg:
+      new_ok:         'Group Information was successfully created.'
+      edit_ok:        'Group Information was successfully updated.'
+      delete_ok:      'Group Information was successfully destroyed.'
+      bad_group_cat:  'Selected Group Category does not exist.'
+      bad_sub_group:  'Specified (master) group does not exist.'
+      bad_sub_ref:    'Cannot be sub-group of itself.'  
+      no_deactivate:  'Can clear active flag only when no user has permissions for this group.'
+      in_use:         'Cannot delete group because it is still in use.'
+
+  group_categories:
+    title:            'Project Groups Categories'
+    edit:
+      form_title:     'Edit Details of Group Category'
+    index:
+      form_title:     'List of Group Categories'
+    new:
+      form_title:     'Add New Group Category'
+    show:
+      form_title:     'Show Details of Group Category'
+
+    msg:
+      new_ok:         'Group category was successfully created.'
+      edit_ok:        'Group category was successfully updated.'
+      delete_ok:      'Group category was successfully destroyed.'
+
+  help_pages:
+    title:            'Help Information'
+    main_help:        'Main Help'
+    message:
+      not_found:      "Requested help information not found: %{topic}"
+
+  hashtags:
+    title:            'Hashtag Labels'
+    form:
+      f_prompt:       :general.select_prompt
+    edit:
+      form_title:     'Edit Hashtag Label'
+    index:
+      form_title:     'List of all Hashtag Labels'
+    new:
+      form_title:     'Add new Hashtag Label'
+    show:
+      form_title:     'Show Hashtag Label'
+    msg:
+      new_ok:           'Hashtag was successfully created.'
+      edit_ok:          'Hashtag was successfully updated.'
+      delete_ok:        'Hashtag was successfully destroyed.'
+      uniq_per_feature: 'must be unique for this feature.'
+      bad_feature_id:   'is not a valid feature'
+      bad_code_syntax:  'syntax is invalid'
+
+  holidays:
+    title:            'Holiday Periods'
+    edit:
+      form_title:     'Edit Holiday Information'
+    index:
+      form_title:     'Schedule of Holidays'
+    add:
+      form_title:     'Add another Holiday'
+    new:
+      form_title:     'Add New Holiday'
+    show:
+      form_title:     'Show Holiday Information'
+    msg:
+      new_ok:         'Holiday period was successfully created.'
+      edit_ok:        'Holiday period was successfully updated.'
+      delete_ok:      'Holiday period was successfully removed.'
+      bad_region_id:  :general.non_existing
+      bad_country_id: :general.non_existing
+      bad_period:     'must be after start of period'
+      bad_years:      'must be in the same year as start of period'
+
+  location_codes:
+    title:            'Location Codes'
+    form:
+      t_prompt:       :general.select_prompt
+    edit:
+      form_title:     'Edit Location Code'
+    index:
+      form_title:     'List of Location Codes'
+    new:
+      form_title:     'Add new Location Code'
+    show:
+      form_title:     'Show Location Code Details'
+    msg:
+      new_ok:         'Location Code was successfully created.'
+      edit_ok:        'Location Code was successfully updated.'
+      delete_ok:      'Location Code was successfully removed.'
+      bad_start:      'must be before/less than End Point.'
+      bad_center:     'must be between Start and End Point.'
+
+  network_lines:
+    title:            'Network Lines'
+    edit:
+      form_title:     'Edit Line'      
+    index:
+      form_title:     'Lines in the Network'
+      stats_title:    'Statistics Based on Selected Lines'
+      code:           'Tag'
+      item:           'Item'
+      count:          'Count'
+      line_title:     'Total Count of Selected Lines'
+      station_title:  'Total Count of Selected Stations'
+      stop_title:     'Total Count of Selected Stops'
+      orphans_title:  'Total Count of Unassigned Stations'
+    new:
+      form_title:     'Add Line'
+    show:
+      form_title:     'Show Line Details'
+    stats:
+      form_title:     'Statistics on the Lines in the Network'
+      code:           'Tag'
+      item:           'Item'
+      count:          'Count'
+      total:          'Total count of selected Lines in the Network'
+
+    msg:
+      new_ok:         'Line was successfully created.'
+      edit_ok:        'Line was successfully updated.'
+      delete_ok:      'Line was successfully removed.'
+      bad_loc_code:   :general.non_existing
+
+  network_stations:
+    title:            'Network Stations'
+    edit:
+      form_title:     'Edit Station Data'
+    new:
+      form_title:     'Add new Station'
+    show:
+      form_title:     'Show Station Data'
+    index:
+      form_title:     'List of Stations'
+      transfer:       'Transfer / Line'
+      transfer_short: 'Transfer'
+      notes:          'Notes'
+    msg:
+      new_ok:         'Station successfully created.'
+      edit_ok:        'Station successfully updated.'
+      delete_ok:      'Station successfully deleted.'
+      xfer_check:     'cannot be cleared with more than one stop assigned.'
+    ff_xfer:
+      true_val:       'yes'
+      false_val:      'no'
+    account_heading:  'Account Information'
+    no_stop_info:     'No stops assigned to this station.'
+    stop_heading:     'Stops at this Station'
+    add_label:        'Add additional Stops'
+    action:           'Action'
+
+  network_stops:
+    title:              'Network Stops'
+    network_station_id: 'Station'
+    network_line_id:    'Stop'
+    edit:
+      form_title:     'Edit Network Stop'
+    new:
+      form_title:     'Add Network Stop'
+    show:
+      form_title:     'Show Network Stop'
+    index:
+      form_title:     'List of all Network Stops'
+    msg:
+      new_ok:         'Network Stop successfully added.'
+      edit_ok:        'Network Stop successfully updated.'
+      delete_ok:      'Network Stop successfully deleted.'
+      bad_nw_line:    'bad reference to line.'
+      bad_nw_stn:     'bad reference to station.'
+      bad_no_stops:   'Cannot have more than one stop on non-transfer stations.'
+
+  people:
+    title:            'Persons'
+    action:           'Action'
+    no_name_given:    'N.N.'
+    account_heading:  'Account Information'
+    no_contact_info:  'Contact information not available.'
+    ci_heading:       'Contact Information Details'
+    add_label:        'Add additional Contact Information'
+
+    edit:
+      form_title:     'Edit Details Person'
+    index:
+      form_title:     'List of Persons'
+    new:
+      form_title:     'Add New Details of Person'
+    show:
+      form_title:     'Show Details of Person'
+
+    msg:
+      one_name_at_least: 'At least one must be given: Formal or Informal Name'
+      new_ok:         'Personal data record was successfully created, add contact information records now.'
+      edit_ok:        'Personal data and/or contact information records were successfully updated.'
+      delete_ok:      'Personal data and contact information records were successfully removed.'
+
+  permission4_groups:
+    action:         'Action'
+    feature:        'Feature'
+    group:          'Group'
+    all_groups:     '<all> [0]'
+    add_label:      'Add another group permissions record'
+
+    msg:
+      bad_feature_id:   :general.non_existing
+      bad_group_id:     'must be 0 (all) or group must exist.'
+      bad_account_id:   :general.non_existing
+      none_given:       'at least one permission level must be > 0.'
+      upd_req_read:     'update permission level must be less or equal to read permission level.'
+      group_inactive:   'must be active.'
+
+  permission4_flows:
+    title:          'Permissions for Workflows'
+    action:         'Action'
+    feature:        'Feature'
+    workflow_id:    'Workflow'
+    add_label:      'Add another workflow permissions record'
+    msg:  
+      bad_feature_id: :general.non_existing
+      bad_tasklist:   'List of permitted tasks is ill-formatted.'
+      bad_workflow:   'value is out of range.'
+      bad_account_id: :general.non_existing
+
+  phase_codes:
+    title:          'Phase Codes'
+    index:
+      form_title:   'List of Phase Codes'
+    new:
+      form_title:   'Add new Phase Code'
+    edit:
+      form_title:   'Modify Phase Code'
+    show:
+      form_title:   'Show Phase Code Details'
+    msg:
+      new_ok:       'Phase code was successfully added.'
+      edit_ok:      'Phase code was successfully modified.'
+      delete_ok:    'Phase code was successfully deleted.'
+      bad_s_phase:  :general.non_existing
+      acro_eq_code: 'must not be the same as the Project Phase Code'
+
+  product_codes:
+    title:            'Product Codes'
+    index: 
+      form_title:     'List of Product Codes'
+    show:
+      form_title:     'Show Product Code'
+    edit:
+      form_title:     'Edit Product Code'  
+    new:
+      form_title:     'Add Product Code'
+    msg:
+      new_ok:         'Product Code successfully created.'
+      edit_ok:        'Product Code successfully updated.'
+      delete_ok:      'Product Code successfully removed.'
+
+  profiles:
+    title:          'User Profile'
+    heading:        'Your Personal Data'
+    notice:
+      update_ok:    'Your Personal Data were successfully updated.'
+      pls_signon:   'You need to be signed on in order to access this information.'
+    ci_heading:     :people.ci_heading
+    edit:
+      form_title:   'Update Your Personal Data'
+    show:
+      form_title:   :profiles.heading
+      click2edit:   'Click ''Edit'' to change your password!'
+
+  programme_activities:
+    title:          'Programme Activities'
+    index:
+      form_title:   'List of Programme Activities'
+    new:
+      form_title:   'Add New Activity'
+    show: 
+      form_title:   'Show Activity'
+    edit:
+      form_title:   'Update Activity'
+    msg:
+      new_ok:       'Activity was successfully added.'
+      edit_ok:      'Activity was successfully updated.'
+      delete_ok:    'Activity was successfully deleted.'
+      no_dates:     'At least one date must be given: Start or Finish.'
+      unique_id:    'Activity ID must be unique (within a project).'
+      bad_dates:    'Finish Date must be later or equal to Start Date.'
+
+  references:
+    title:          'References'
+    index:
+      form_title:   'List of References'
+    new:
+      form_title:   'Add Reference'
+    show:
+      form_title:   'Show Reference'
+    edit:
+      form_title:   'Update Reference'
+    msg:
+      new_ok:       'Reference was successfully added.'
+      edit_ok:      'Reference was successfully updated.'
+      delete_ok:    'Reference was successfully deleted.'
+      dup_name:     'must be unique'
+
+  region_names:
+    title:          'Region Names and Codes'
+    index:
+      form_title:   'List of Regions'
+    new:
+      form_title:   'Add Region'
+    show:
+      form_title:   'Show Region'
+    edit:
+      form_title:   'Update Region'
+    msg:
+      new_ok:       'Region Information was successfully added.'
+      edit_ok:      'Region Information was successfully updated.'
+      delete_ok:    'Region Information was successfully deleted.'
+      dup_name:     'must be unique within a country.'
+      bad_country_id: :general.non_existing
+
+  responsibilities:
+    title:          'Responsibilities'
+    form:
+      g_prompt:     :general.select_prompt
+      people_link:  'Show Index of People'
+    edit:
+      form_title:   'Edit Responsibility'
+    index:
+      form_title:   'List of Responsibilities'
+    new:
+      form_title:   'Add New Responsibility'
+    show:
+      form_title:   'Show Responsibility'
+
+    msg:
+      bad_group_id: :general.non_existing
+      bad_person_id: :general.non_existing
+      new_ok:       'Responsibility was successfully created.'
+      edit_ok:      'Responsibility was successfully updated.'
+      delete_ok:    'Responsibility was successfully removed.'
+
+  rfc_documents:
+    title:          'RfC Documents'
+    edit:
+      form_title:   'Edit RfC Document'
+    index:
+      form_title:   'List of RfC Documents'
+    new:
+      form_title:   'Add New RfC Document'
+    show:
+      form_title:   'Show RfC Document'
+    msg:
+      new_ok:       'RfC Document was successfully created.'
+      edit_ok:      'RfC Document was successfully updated.'
+      delete_ok:    'RfC Document was successfully removed.'
+
+  rfc_status_records:
+    title:          'RfC Status Register (RSR)'
+    form:
+      g_prompt:     :general.select_prompt
+    info:
+      form_title:   'Workflow Information'
+    stats:
+      form_title:   'RfC Status Register (RSR) Statistics'   
+    index:
+      form_title:   'List of Requests for Clarification (RfC)'
+    new:
+      form_title:   'Add New Request for Clarification (RfC)'
+      g_prompt:     'Select type of RfC'
+    edit:
+      form_title:   'Edit Request for Clarification (RfC)'
+    show:
+      form_title:   'Show Request for Clarification (RfC)'
+    msg:
+      new_ok:       'RfC was successfully created.'
+      edit_ok:      'RfC was successfully updated.'
+      delete_ok:    'RfC was successfully removed.'
+      bad_group_id: :general.non_existing
+      no_edit_now:  'Nothing can be updated at this stage.'
+      you_no_edit:  'You have no permission to update this RfC.'
+      you_no_new:   'You have no permission to create an RfC of this type.'      
+    workflows:
+      w00:
+        label:  'incoming'
+        tasks:
+          t00:  '<start new workflow>'
+          t01:  'Receive Question'
+          t02:  'Review Question'
+          t03:  'Prepare/Update Answer'
+          t04:  'Review Answer'
+          t05:  'Release Answer'
+          t06:  'Submit Answer'
+          t07:  '<workflow completed>'
+        states:
+          s00:  '<initial>'
+          s01:  'new'
+          s02:  'assigned'
+          s03:  're-evaluate'
+          s04:  'ready'
+          s05:  'update'
+          s06:  'reviewed'
+          s07:  'update'
+          s08:  'released'
+          s09:  'closed'
+      w01:
+        label:  'outgoing'
+        tasks:
+          t00:  '<start new workflow>'
+          t01:  'Create Question'
+          t02:  'Review Question'
+          t03:  'Release Question'
+          t04:  'Reconsider/Update Question'
+          t05:  'Submit Question'
+          t06:  'Answer Question'
+          t07:  'Receive Answer'
+          t08:  'Review Answer'
+          t09:  '<workflow completed>'
+        states:
+          s00:  '<initial>'
+          s01:  'new'
+          s02:  'reviewed'
+          s03:  'hold'
+          s04:  'reconsider'
+          s05:  'update'
+          s06:  'updated'
+          s07:  'released'
+          s08:  'submitted'
+          s09:  'answered'
+          s10:  'received'
+          s11:  'closed - answer confirmed'
+          s12:  'closed - answer rejected'
+          s13:  'closed - question withdrawn'
+      w02:
+        label:  'copy'
+        tasks:
+          t00:  '<start new workflow>'
+          t01:  'Copy RfC'
+          t02:  'Review RfC'
+          t03:  '<workflow completed>'
+        states:
+          s00:  '<initial>'
+          s01:  'new'
+          s02:  'closed'
+
+  s_code_modules:
+    msg:
+      bad_code_format:  "prefix ''%{prefix}'' must be given"
+      bad_h_m_combo:    'codes cannot be Master.'
+      bad_h_a_combo:    'codes must not be Active.'
+      too_many_masters: 'There is already one record with this code marked Master.'
+      bad_code_syntax:  'may only contain A-Z, 0-9, period, or dash.'
+
+  s_code_search:
+    title:            'Search for Codes'
+    index:
+      form_title:     :s_code_search.title
+      list_source:    "Results from %{table}"
+
+  s_document_logs:
+    title:            'Siemens Document Log (SDL)'
+    form:
+      g_prompt:       :general.select_prompt
+    index:
+      form_title:     'List of Siemens Documents'
+    show:
+      form_title:     'Show Document Attributes'
+    edit:
+      form_title:     'Edit Document Attributes'
+    new:
+      form_title:     'Add new Document and Attributes'
+    msg:
+      new_ok:         'Document and Attributes successfully added.'
+      edit_ok:        'Document Attributes successfully updated.'
+      delete_ok:      'Document and Attributes successfully removed.'
+      at_least_one:   'At least of the following attributes must be given: Function Code, Service Code, Product Code, or Phase Code'
+      invalid_code:   'does not exist.'
+
+  service_codes:
+    title:            'Service Codes'
+    index: 
+      form_title:     'List of Service Codes'
+    show:
+      form_title:     'Show Service Code'
+    edit:
+      form_title:     'Edit Service Code'  
+    new:
+      form_title:     'Add Service Code'
+    msg:
+      new_ok:         'Service Code successfully created.'
+      edit_ok:        'Service Code successfully updated.'
+      delete_ok:      'Service Code successfully removed.'
+
+  siemens_phases:
+    title:          'Siemens Phase Codes'
+    edit:
+      form_title:   'Edit Siemens Phases'
+    index:
+      form_title:   'List of Siemens Phases'
+    new:
+      form_title:   'Add New Siemens Phase'
+    show:
+      form_title:   'Show Siemens Phase Details'
+
+    msg:
+      new_ok:       'Siemens Phase was successfully created.'
+      edit_ok:      'Siemens Phase was successfully updated.'
+      delete_ok:    'Siemens Phase was successfully removed.'
+
+  standards_bodies:
+    title:          'Standards Organizations'
+    edit:
+      form_title:   'Edit Standards Body Record'
+    index:
+      form_title:   'List of Standards Bodies'
+    new:
+      form_title:   'Add new Standards Body Record'
+    show:
+      form_title:   'Show Standards Body Record'
+    msg:
+      new_ok:       'Standards Body Record was successfully created.'
+      edit_ok:      'Standards Body Record was successfully updated.'
+      delete_ok:    'Standards Body Record was successfully removed.'
+
+  statistics:
+    title:          'Database Statistics'
+    description:    'Description'
+    category:       'Category'
+    count:          'Count'
+
+    index:
+      form_title:   'Global Database Statistics'
+
+  submission_groups:
+    title:          'DSR Submission Groups'
+    index:
+      form_title:   'Index of Submission Groups'
+    new:
+      form_title:   'Add New Submission Group'
+    edit:
+      form_title:   'Modify Submission Group'
+    show:
+      form_title:   'Show Details of Submission Group'
+    msg:
+      new_ok:       'Submission Group successfully added.'
+      edit_ok:      'Submission Group successfully modified.'
+      delete_ok:    'Submission Group successfully removed.'
+
+  tia_members:
+    msg:
+      bad_feature_id: :general.non_existing
+      bad_account_id: :general.non_existing
+      dup_account_id: 'is already a member in this list.'
+      own_account_id: 'is already Owner or Deputy for this list.'
+
+  tia_items:
+    msg:
+      bad_account_id: :general.non_existing
+      bad_archive:    'cannot be set on open items.'
+      bad_seqno:      'must be unique within this Task/Issue/Action Item List.'
+      new_ok:         'Item successfully added.'
+      edit_ok:        'Item successfully modified.'
+      delete_ok:      'Item successfully removed.'
+      no_change:      'Nothing was modified.'
+      bad_tia_item_id: :general.non_existing
+
+  our_tia_items:
+    title:          'Our Tasks/Issues/Action Items'
+    index:
+      form_title:   'All Items for: '
+    new:
+      form_title:   'Add New Item for: '
+    show:
+      form_title:   'Show Item for: '
+      button_info:  'History'  
+    edit:
+      form_title:   'Edit Item for: '
+    info:
+      form_title:   'Details on Task/Issue/Action Item'
+      status:       'Status as of %{at}:'
+      changes:      'Changes as per %{at}:'
+      created:      'Created on %{at}:'
+    msg:
+      bad_tia_item_id:  'given Task/Issue/Action Item does not exist.'
+      bad_seqno:        'is not unique for this Task/Issue/Action Item List.'
+
+  my_tia_items:
+    title:          'My Tasks/Issues/Action Items'
+    index:
+      form_title:   'All My Tasks/Issues/Action Items'
+    show:
+      form_title:   'Show My Task/Issue/Action Item'
+      button_info:  'History'  
+    edit:
+      form_title:   'Comment on My Task/Issue/Action Item'
+    msg:
+      edit_ok:       'Item successfully modified.'
+
+  tia_lists:
+    no_members_info:    'No participants assigned yet.'
+    members_heading:    'Participants in this list'
+    add_label:          'Add additional participants'
+    action:             'Action'
+    msg:
+      bad_tia_list_id:  'given Task/Issue/Action Item List does not exist.'
+      new_ok:       'Task/Issue/Action Item List successfully added.'
+      edit_ok:      'Task/Issue/Action Item List successfully modified.'
+      delete_ok:    'Task/Issue/Action Item List successfully removed.'
+      account_nonexist: :general.non_existing
+      bad_account:      'Current user must be owner or deputy of this Task/Issue/Action Item List for this task.'
+
+  all_tia_lists:
+    title:          'All Task/Issue/Action Item Lists'
+    index:
+      form_title:   'All Task/Issue/Action Item Lists'
+    show:
+      form_title:   'Show Task/Issue/Action Item List Details'
+    edit:
+      form_title:   'Edit Task/Issue/Action Item List Details'
+    new:
+      form_title:   'Add a New Task/Issue/Action Item List'
+
+  my_tia_lists:
+    title:          'My Task/Issue/Action Item Lists'
+    index:
+      form_title:   'My Task/Issue/Action Item Lists'
+    show:
+      form_title:   :all_tia_lists.show.form_title
+    edit:
+      form_title:   'Edit Task/Issue/Action Item List Details'
+    new:
+      form_title:   'Add a New Task/Issue/Action Item List'
+    msg:
+      invalid_account:  "Either Owner or Deputy must be set to your account id: %{id}"
+
+  unit_names:
+    title:          'Unit Symbols and Names'
+    index:
+      form_title:   'Units'
+    new:
+      form_title:   'Add Unit'
+    edit:
+      form_title:   'Edit Unit'
+    show:
+      form_title:   'Show Unit'
+    msg:
+      new_ok:       'Unit successfully added.'
+      edit_ok:      'Unit successfully modified.'
+      delete_ok:    'Unit successfully removed.'
+
+  web_links:
+    title:          'Web Links'
+    form:
+      req_link_prompt: 'Insert hyperlink here:'
+    index:
+      form_title:   'List of Web Links'
+    new:
+      form_title:   'Add Web Link'
+    edit:
+      form_title:   'Edit Web Link'
+    show:
+      form_title:   'Show Web Link'
+    msg:
+      new_ok:       'Web Link successfully added.'
+      edit_ok:      'Web Link successfully modified.'
+      delete_ok:    'Web Link successfully removed.'
+
+  workflow_responsibilities:
+    title:          'Workflow Responsibilities'
+    index:
+      form_title:   'List of Workflow Roles and Permissions'

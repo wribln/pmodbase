@@ -1,0 +1,14 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  orl_category:   one
+  desc:           'Some description'
+  note:           'Some notes/#tags'
+  project_doc_id: 'TEST(MIR)DIR_000001'
+  o_group:         group_one
+  o_owner:         account_one     
+  o_deputy:
+  r_group:         group_one 
+  r_owner:         account_one
+  r_deputy: 
+  report_doc_id:  'TEST(MIR)DIR_000002'
