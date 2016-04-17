@@ -29,47 +29,71 @@
         </div>
       </div>
       <!-- request input for groups and accounts only when updating -->
-      <%- unless action_name == 'new' -%> 
+      <%- unless action_name == 'new' -%>
        <div class="form-group">
         <%= form.label :r_group_id, class: "col-sm-3 control-label" %>
         <div class="col-sm-4">
-          <%= form.select :r_group_id, @group_selection, { prompt: t( '.g_prompt' )},{ class: 'form-control', required: true }%>
+          <%- if @orl_step.in_reviewing_group? then -%>
+            <%= form.select :r_group_id, @group_selection, { prompt: t( '.g_prompt' )},{ class: 'form-control', required: true }%>
+          <%- else -%>
+            <%= display_value form.object.r_group.code_and_label %>
+          <%- end -%>
         </div>
       </div>
       <div class="form-group">
         <%= form.label :r_owner_id, class: "col-sm-3 control-label" %>
         <div class="col-sm-1">
-          <%= form.text_field :r_owner_id, class: "form-control", required: true %>
+          <%- if @orl_step.in_reviewing_group? then -%>
+            <%= form.text_field :r_owner_id, class: "form-control", required: true %>
         </div>
         <div class="col-sm-2">
-          <%= link_to t( 'general.accounts_link' ), account_list_path, class: 'btn btn-sm btn-block btn-default', target: '_blank' %>
+            <%= link_to t( 'general.accounts_link' ), account_list_path, class: 'btn btn-sm btn-block btn-default', target: '_blank' %>
+          <%- else -%>
+            <%= display_value form.object.r_owner_id %>
+          <%- end -%>
         </div>
       </div>
       <div class="form-group">
         <%= form.label :r_deputy_id, class: "col-sm-3 control-label" %>
         <div class="col-sm-1">
-          <%= form.text_field :r_deputy_id, class: "form-control" %>
+          <%- if @orl_step.in_reviewing_group? then -%>
+            <%= form.text_field :r_deputy_id, class: "form-control" %>
+          <%- else -%>
+            <%= display_value form.object.r_deputy_id %>
+          <%- end -%>
         </div>
       </div>
       <div class="form-group">
         <%= form.label :o_group_id, class: "col-sm-3 control-label" %>
         <div class="col-sm-4">
-          <%= form.select :o_group_id, @group_selection, { prompt: t( '.g_prompt' )},{ class: 'form-control', required: true }%>
+          <%- if @orl_step.in_originating_group? then -%>
+            <%= form.select :o_group_id, @group_selection, { prompt: t( '.g_prompt' )},{ class: 'form-control', required: true }%>
+          <%- else -%>
+            <%= display_value form.object.o_group.code_and_label %>
+          <%- end -%>
         </div>
       </div>
       <div class="form-group">
         <%= form.label :o_owner_id, class: "col-sm-3 control-label" %>
         <div class="col-sm-1">
+          <%- if @orl_step.in_originating_group? then -%>
           <%= form.text_field :o_owner_id, class: "form-control", required: true %>
         </div>
         <div class="col-sm-2">
-          <%= link_to t( 'general.accounts_link' ), account_list_path, class: 'btn btn-sm btn-block btn-default', target: '_blank' %>
+            <%= link_to t( 'general.accounts_link' ), account_list_path, class: 'btn btn-sm btn-block btn-default', target: '_blank' %>
+          <%- else -%>
+            <%= display_value form.object.o_owner_id %>
+          <%- end -%>
         </div>
       </div>
       <div class="form-group">
         <%= form.label :o_deputy_id, class: "col-sm-3 control-label" %>
         <div class="col-sm-1">
-          <%= form.text_field :o_deputy_id, class: "form-control" %>
+          <%- if @orl_step.in_originating_group? then -%>
+            <%= form.text_field :o_deputy_id, class: "form-control" %>
+          <%- else -%>
+            <%= display_value form.object.o_deputy_id %>
+          <%- end -%>
         </div>
       </div>
       <%- end -%>
@@ -96,7 +120,7 @@
         <div class="form-group">
           <%= os.label :subject_date, class: "col-sm-3 control-label" %>
           <div class="col-sm-2">
-            <%- if os.object.in_responding_group? then -%>
+            <%- if os.object.in_originating_group? then -%>
               <div class="input-group date" data-provide="datepicker">
                 <%= os.text_field :subject_date, class: "form-control" %>
                 <span class="input-group-addon">:::</span>
@@ -109,7 +133,7 @@
         <div class="form-group">
           <%= os.label :subject_version, class: "col-sm-3 control-label" %>
           <div class="col-sm-2">
-            <%- if os.object.in_responding_group? then -%>
+            <%- if os.object.in_originating_group? then -%>
               <%= os.text_field :subject_version, class: "form-control", length: MAX_LENGTH_OF_DOC_VERSION %>
             <%- else -%>
               <%= display_value os.object.subject_version %>
@@ -134,20 +158,10 @@
         <div class="form-group">
           <%= os.label :assessment, class: "col-sm-3 control-label" %>
           <div class="col-sm-4">
-            <%- if os.object.in_observing_group? then -%>
-              <%# ... %>
+            <%- if os.object.in_reviewing_group? then -%>
+              <%= os.select :assessment, select_options( OrlStep::ASSESSMENT_LABELS ), { prompt: t( '.g_prompt' ) }, { class: "form-control" }%>
             <%- else -%>
               <%= display_value os.object.assessment_label %>
-            <%- end -%>
-          </div>
-        </div>
-        <div class="form-group">
-          <%= os.label :subject_status, class: "col-sm-3 control-label" %>
-          <div class="col-sm-2">
-            <%- if os.object.in_observing_group? then -%>
-              <%# ... %>
-            <%- else -%>
-              <%= display_value os.object.subject_status_label %>
             <%- end -%>
           </div>
         </div>

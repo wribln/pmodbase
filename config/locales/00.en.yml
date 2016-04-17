@@ -739,6 +739,7 @@ en:
     stats:        'Statistics'
     wf_info:      'Workflow Information'
     upd_baseline: 'Update Baseline'
+    release:      'Release'
 
   a_code_modules:
     search_title:  

@@ -98,11 +98,11 @@ class OrlStep < ActiveRecord::Base
     step_no & 1
   end
 
-  def in_responding_group?
+  def in_originating_group?
     ballpark == 0
   end
 
-  def in_observing_group?
+  def in_reviewing_group?
     ballpark == 1
   end
 

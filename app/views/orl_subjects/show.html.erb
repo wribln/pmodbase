@@ -133,16 +133,13 @@
             <%= display_value os.object.assessment_label %>
           </div>
         </div>
-        <div class="form-group">
-          <%= os.label :subject_status, class: "col-sm-3 control-label" %>
-          <div class="col-sm-2">
-            <%= display_value os.object.subject_status_label %>
-          </div>
-        </div>
       <%- end -%>
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-2">
           <%= link_to t( 'button_label.edit' ), edit_orl_subject_path( @orl_subject ), class: "btn btn-lg btn-block btn-default" %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to t( 'button_label.release' ), edit_orl_subject_path( @orl_subject ), class: "btn btn-lg btn-block btn-default" %>
         </div>
         <div class="col-sm-2">
           <%= link_to t( 'button_label.goto_to_list' ), orl_subjects_path, class: "btn btn-lg btn-block btn-default" %>
