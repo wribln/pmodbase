@@ -48,12 +48,12 @@ Rails.application.routes.draw do
   resources :network_lines, path: 'nln', format: false
   resources :network_stations, path: 'nst', format: false
   resources :network_stops, path: 'nso', format: false
-  resources :orl_categories, path: 'orc', format: false
-  resources :orl_subjects, path: 'ors', format: false # do
-#    resources :orl_items, path: 'ori', format: false, shallow: true
-#    resources :orl_members, path: 'orm', format: false, shallow: true
-#    resources :orl_steps, path: 'ort', format: false, shallow: true
+  resources :pcp_categories, path: 'pcc', format: false
+  resources :pcp_subjects, path: 'pcs', format: false # do
+#    resources :pcp_items, path: 'pci', format: false, shallow: true
+#    resources :pcp_members, path: 'pcm', format: false, shallow: true
 #  end
+  get 'pcs/:id/release', to: 'pcp_subjects#update_release', as: 'pcp_subject_release', format: false
   resources :people, path: 'apt', format: false
   resources :phase_codes, path: 'ppc', format: false
   resources :product_codes, path: 'scp', format: false

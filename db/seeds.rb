@@ -510,24 +510,24 @@ Feature.new do |f|
 end.save
 
 Feature.new do |f|
-  f.id = FEATURE_ID_ORL_CATEGORIES
-  f.label = I18n.t( 'orl_categories.title' )
-  f.code = 'ORC'
+  f.id = FEATURE_ID_PCP_CATEGORIES
+  f.label = I18n.t( 'pcp_categories.title' )
+  f.code = 'PCC'
   f.seqno = 3
-  f.access_level = OrlCategoriesController.feature_access_level
-  f.control_level = OrlCategoriesController.feature_control_level
-  f.no_workflows = OrlCategoriesController.no_workflows
+  f.access_level = PcpCategoriesController.feature_access_level
+  f.control_level = PcpCategoriesController.feature_control_level
+  f.no_workflows = PcpCategoriesController.no_workflows
   f.feature_category_id = fc5.id
 end.save
 
 Feature.new do |f|
-  f.id = FEATURE_ID_ORL_SUBJECTS
-  f.label = I18n.t( 'orl_subjects.title' )
-  f.code = 'ORS'
+  f.id = FEATURE_ID_PCP_SUBJECTS
+  f.label = I18n.t( 'pcp_subjects.title' )
+  f.code = 'PCS'
   f.seqno = 4
-  f.access_level = OrlSubjectsController.feature_access_level
-  f.control_level = OrlSubjectsController.feature_control_level
-  f.no_workflows = OrlSubjectsController.no_workflows
+  f.access_level = PcpSubjectsController.feature_access_level
+  f.control_level = PcpSubjectsController.feature_control_level
+  f.no_workflows = PcpSubjectsController.no_workflows
   f.feature_category_id = fc5.id
 end.save
 

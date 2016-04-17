@@ -1,0 +1,68 @@
+<% help_title "Help on #{ PcpSubject.model_name.human }" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">Manage the Status of Observation/Response Log Subjects</p>
+    <h3>Attributes of PCP Subjects</h3>
+    <p>Each PCP Subject belongs to a specific PCP Category. Overall statistics
+      on the status of all subjects will be collected per PCP Category.</p>
+    <p>PCP Subjects represent the status of typical review/comment processes:
+      An PCP Subject is often a document to be reviewed by another party. Any
+      review comments are returned to the originating party: Problems are 
+      resolved by updating the original document or by clarifying responses to
+      the initial comments. The updated document is re-submitted and the process
+      is repeated until the document has reached an 'approved' status.</p>
+    <p>The status of each process step (submission - review - response - re-review -...)
+      is collected in the current PCP Step section of the PCP Subject.</p>
+    <ul>
+      <li><%= help_param PcpSubject.human_attribute_name( :id ) -%> is the unique
+        identifier of the PCP Subject.</li>
+      <li><%= help_param PcpSubject.human_attribute_name( :pcp_category ) -%> is
+        the PCP Category to which this PCP Subject belongs to. The initial assignment
+        to specific project groups (originating/responding and reviewing/observing group)
+        is taken from the PCP Category setting when a new PCP Subject is created.</li>
+      <li><%= help_param PcpSubject.human_attribute_name( :desc )-%> is a description
+        of the subject under review, for documents, this should be the document's title.</li>
+      <li>The <%= help_param PcpSubject.human_attribute_name( :note )-%> provides a field
+        for remarks and tags on the subjects. Tags can be used to categorize statistics on
+        the PCP Subjects within a specific PCP Category.</li>
+      <li>The <%= help_param PcpSubject.human_attribute_name( :project_doc_id )-%> should
+        be used to enter the complete document EDMS code for the document under review - 
+        without the version code: This will be entered further below in the PCP Step
+        section.</li>
+      <li><%= help_param PcpSubject.human_attribute_name( :p_group_id )-%>...</li>
+      <li><%= help_param PcpSubject.human_attribute_name( :p_owner_id )-%>...</li>
+      <li><%= help_param PcpSubject.human_attribute_name( :p_deputy_id )-%>...</li>
+      <li><%= help_param PcpSubject.human_attribute_name( :c_group_id )-%>...</li>
+      <li><%= help_param PcpSubject.human_attribute_name( :c_owner_id )-%>...</li>
+      <li><%= help_param PcpSubject.human_attribute_name( :c_deputy_id )-%>...</li>
+      <li><%= help_param PcpSubject.human_attribute_name( :archived )-%> is a flag which 
+        can be used to 'hide' closed PCP Subjects: This flag becomes visible for
+        modification when an PCP Subject has a 'closed' status. If this flag is set,
+        this PCP Subject will not be listed anymore here. However, it will still be 
+        used for any statistics on the PCP Subjects.</li>
+    </ul>
+    <h3>Attributes on the Current PCP Step</h3>
+    <p>These attributes can only be set by the party currently in charge of the
+      process:</p>
+    <ul>
+      <li><%= help_param PcpStep.human_attribute_name( :subject_date )-%> is the date
+        on which the PCP Subject has reached the current status: For documents, this
+        could be the release date as shown on the document's meta data. For site
+        visits, this would be the date of the site visit. The originating/responding party can
+        set this attribute, the reviewing/observing party can only view this attribute.</li>
+      <li><%= help_param PcpStep.human_attribute_name( :subject_version )-%>...</li>
+      <li><%= help_param PcpStep.human_attribute_name( :note )-%>...</li>
+      <li><%= help_param PcpStep.human_attribute_name( :due_date )-%>...</li>
+      <li><%= help_param PcpStep.human_attribute_name( :assessment )-%>...</li>
+      <li><%= help_param PcpStep.human_attribute_name( :subject_status )-%> is automatically
+        set to <%= help_term PcpStep.human_attribute_name( :subject_states )[ 0 ]-%> when a new subject is created; after the
+        first round - when the initial observations are released to the originating party -
+        the status changes to <%= help_term PcpStep.human_attribute_name( :subject_states )[ 1 ]-%>; finally, the status is
+        set to <%= help_term PcpStep.human_attribute_name( :subject_states )[ 2 ]-%> when any of the terminal assessment states
+        have been reached.</li>
+
+
+    </ul>
+    <%= help_footer FEATURE_ID_PCP_SUBJECTS %>
+  </div> <!-- /container -->

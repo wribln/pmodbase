@@ -1,0 +1,34 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="table-responsive col-sm-10">
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th class="col-sm-1"><%= PcpCategory.human_attribute_name( :id ) %></th>
+          <th class="col-sm-4"><%= PcpCategory.human_attribute_name( :label )%></th>
+          <th class="col-sm-2"><%= PcpCategory.human_attribute_name( :p_group_id )%></th>
+          <th class="col-sm-2"><%= PcpCategory.human_attribute_name( :c_group_id )%></th>
+          <th class="col-sm-1 hidden-print"><%= t( 'action_title.header' )%></th>
+        </tr>
+      </thead>
+      <tbody>
+      <% if @pcp_categories.length.zero? %>
+        <%= render partial: 'shared/index_empty_row', locals:{ columns: 4, with_link: true }%>
+      <% else %>
+        <% @pcp_categories.each do |pc| %>
+          <tr>
+            <td><%= pc.to_id %></td>
+            <td><%= pc.label %></td>
+            <td><%= pc.p_group.code %></td>
+            <td><%= pc.c_group.code %></td>
+            <td><%= render partial: 'shared/actions', object: pc %></td>
+          </tr>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+    <%= render partial: 'shared/footer' %>
+  </div>
+</div>

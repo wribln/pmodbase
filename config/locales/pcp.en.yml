@@ -1,0 +1,106 @@
+en:
+
+  activerecord:
+
+    models:
+      pcp_category:   'Present-Comment Process (PCP) Categories'
+      pcp_subject:    'Present-Comment Process (PCP) Subjects'
+      pcp_step:       'Present-Comment Process (PCP) Steps'
+
+    attributes:
+
+      pcp_category:
+        id:             :general.attributes.id
+        c_group_id:     'Commenting Group'
+        p_group_id:     'Presenting Group'
+        c_owner_id:     'Owner (Commenting Group)'
+        p_owner_id:     'Owner (Presenting Group)'
+        c_deputy_id:    'Deputy (Commenting Group)'
+        p_deputy_id:    'Deputy (Presenting Group)'
+        label:          'Category Label'
+
+      pcp_subject:
+        id:             :general.attributes.id
+        pcp_category_id: 'PCP Category'
+        desc:           'Description/Title'
+        note:           'Note'
+        project_doc_id: :general.attributes.project_doc_id
+        report_doc_id:  'Project DMS ID for PCP Report'
+        c_group_id:     'Commenting Group'
+        p_group_id:     'Presenting Group'
+        c_owner_id:     'Owner (Commenting Group)'
+        p_owner_id:     'Owner (Presenting Group)'
+        c_deputy_id:    'Deputy (Commenting Group)'
+        p_deputy_id:    'Deputy (Presenting Group)'
+        archived:       'Archived'
+
+      pcp_step:
+        id:             :general.attributes.id
+        pcp_subject_id: 'PCP Subject'
+        step_no:        'Step'
+        subject_date:   'Subject Status as of'
+        subject_version: 'Subject Version'
+        note:           'Notes for this Step'
+        due_date:       'Step Due Date'
+#                          0              1                     2                 3
+        step_labels:    [ 'New Subject', 'Initial Release', 'Initial Review', 'First Response' ]
+        step_states:    [ 'Review', 'Response' ]
+        subject_status: 'Subject Status'
+#                                         must be last status
+        subject_states: [ 'new', 'open', 'closed' ]
+        assessment:     'Assessment'
+        ass_codes:      [ '?', 'A', 'B', 'C', 'D' ]
+        ass_labels:     [ '<not yet determined>', A - Approved', 'B - Approved w/ Comments', 'C - Rejected', 'D - Review not Required' ]
+
+  pcp_categories:
+    title:            'PCP Categories'
+    form:
+      g_prompt:       :general.select_prompt
+    edit:
+      form_title:     'Edit PCP Category'
+    new:
+      form_title:     'Create new PCP Category'
+    index:
+      form_title:     'List of All PCP Categories'
+      group_short:    'Code'
+      owner_short:    'Owner'
+      deputy_short:   'Deputy'
+    show:
+      form_title:     'Show PCP Category'
+    msg:
+      bad_group_id:   :general.non_existing
+      new_ok:         'PCP category successfully created.'
+      edit_ok:        'PCP category successfully updated.'
+      delete_ok:      'PCP category successfully deleted'
+      no_access:      'has no permission to modify PCP Subjects for his group'
+      bad_account:    :general.non_existing
+
+  pcp_subjects:
+    title:            'PCP Subjects'
+    form:
+      g_prompt:       :general.select_prompt
+      cs_heading:     'Current Step: %{label}'
+    edit:
+      form_title:     'Edit PCP Subject'
+    new:
+      form_title:     'Create new PCP Subject'
+    show:
+      form_title:     'Show PCP Subject Details'
+      cs_heading:     'Current Step: %{label}'
+    index:
+      form_title:     'List of all PCP Subjects'
+      status_subj:    'Subject'
+      assessment:     'Code'
+      status_step:    'Current Step' 
+      ballpark:       'At Group'
+    msg:
+      new_ok:         'PCP subject successfully created.'
+      edit_ok:        'PCP subject successfully updated.'
+      delete_ok:      'PCP subject successfully deleted.'
+      no_access:      'has no permission to modify this PCP Subject for his group.'
+      bad_category:   :general.non_existing
+
+  pcp_steps:
+    msg:
+      dup_step:       'has already been used.'
+      bad_subject:    :general.non_existing

@@ -1,0 +1,44 @@
+<% help_title "Help on #{ PcpCategory.model_name.human }" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">Create and Maintain Observation/Response Log (PCP) Categories</p>
+    <h3>Introduction</h3>
+    <p>An PCP Category represents the agreement between two project groups to participate in a
+      process where an PCP Subject (e.g. a document or a site) presented by the
+      <%= help_term PcpCategory.human_attribute_name( :p_grour_id )-%> to the 
+      <%= help_term PcpCategory.human_attribute_name( :c_group_id )-%> for review and comments.</p>
+    <p>PCP Categories are thus used to group Observation/Response Logs having the same kind of subjects and
+      the same originating and receiving project groups. For example, all reviews of project 
+      documents by the client's organisation would be one PCP Category; another PCP Category would be all
+      reviews of civil works documents by the systems groups; again another PCP Category would be all
+      internal reviews within a group.</p>
+    <p>The following attributes are administered per category:</p>
+    <ul>
+      <li><%= help_param PcpCategory.human_attribute_name( :id ) -%> is the unique identifier of each 
+        individual PCP Category.</li>
+      <li><%= help_param PcpCategory.human_attribute_name( :label ) -%> is the name of the PCP Category.
+        The link here will lead to all PCP Subjects within this PCP Category.</li>
+      <li><%= help_param PcpCategory.human_attribute_name( :c_group_id ) -%> is the project group providing 
+        comments and observations on the PCP Subjects in this PCP Category.</li>
+      <li><%= help_param PcpCategory.human_attribute_name( :p_group_id ) -%> is the project group presenting
+        the PCP Subjects to be reviewed and commented on. This is group also provides the responses to
+        any observations and comments.</li>
+      <li><%= help_param PcpCategory.human_attribute_name( :c_owner_id )-%> is the default owner for
+        the <%= help_term PcpCategory.human_attribute_name( :c_grour_id )-%> for any
+        new PCP Subjects in this PCP Category. This parameter is required to ensure that there is always
+        an owner defined for any PCP Subject.</li>
+      <li><%= help_param PcpCategory.human_attribute_name( :p_owner_id )-%> is the default owner for
+        the <%= help_term PcpCategory.human_attribute_name( :p_grour_id )-%> for any
+        new PCP Subjects in this PCP Category. This parameter is required to ensure that there is always
+        an owner defined for any PCP Subject.</li>
+      <li><%= help_param PcpCategory.human_attribute_name( :c_deputy_id )-%> can be used to define a
+        default deputy for the <%= help_term PcpCategory.human_attribute_name( :c_owner_id )-%>.
+      <li><%= help_param PcpCategory.human_attribute_name( :p_deputy_id )-%> can be used to define a
+        default deputy for the <%= help_term PcpCategory.human_attribute_name( :p_owner_id )-%>.
+    </ul>
+    <p>Any accounts (owner or deputy) must have the necessary permissions for their respective group 
+      to manage the PCP Subjects in this PCP Category.</p>
+    <%= help_footer FEATURE_ID_PCP_CATEGORIES %>
+  </div> <!-- /container -->
+
