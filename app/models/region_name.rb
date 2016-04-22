@@ -22,12 +22,14 @@ class RegionName < ActiveRecord::Base
     presence: true
 
   default_scope { order( :country_name_id, :code )}
-  scope :as_abbr,    -> ( abbr ){ where( 'code  LIKE ?',  "#{ abbr }%" )}
-  scope :as_desc,    -> ( desc ){ where( 'label LIKE ?', "%#{ desc }%" )}
-  scope :ff_id,      -> ( id   ){ where id: id }
-  scope :ff_country, -> ( cnty ){ where country_name: cnty }
-  scope :ff_code,    -> ( code ){ as_abbr( code )}
-  scope :ff_label,   -> ( desc ){ as_desc( desc )}
+  scope :as_abbr,    -> ( a ){ where( 'code  LIKE ?',  "#{ a }%" )}
+  scope :as_desc,    -> ( d ){ where( 'label LIKE ?', "%#{ d }%" )}
+  scope :ff_id,      -> ( i ){ where id: i }
+  scope :ff_country, -> ( c ){ where country_name: c }
+  class << self;
+    alias :ff_code  :as_abbr
+    alias :ff_label :as_desc
+  end
 
   # overwrite write accessors to ensure that text fields do not contain
   # any redundant blanks

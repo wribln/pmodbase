@@ -1,4 +1,4 @@
-code;label;desc
+code;label;description
 INF;Infrastructure;for all infrastructure and architecture related documentation
 INT;Interfaces/Integration;for all interfaces or integration related documentation, including with stakeholders between contractors, ...
 O&M;Operation and Maintenance;for all operation and maintenance related documentation, including training

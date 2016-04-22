@@ -45,7 +45,7 @@ en:
     standard:       'Standard'
     heading:        'Heading'
     note:           'Note'
-    desc:           'Description'
+    description:    'Description'
     mapping:        'Mapping'
 
   activerecord:
@@ -130,7 +130,7 @@ en:
         active:         :coding_systems.active
         master:         :coding_systems.master
         mapping:        :coding_systems.mapping
-        desc:           :coding_systems.desc
+        description:    :coding_systems.description
 
       a4_code:
         id:             :general.attributes.id 
@@ -147,7 +147,7 @@ en:
         active:         :coding_systems.active
         master:         :coding_systems.master
         mapping:        :coding_systems.mapping
-        desc:           :coding_systems.desc
+        description:    :coding_systems.description
 
       a6_code:
         id:             :general.attributes.id 
@@ -156,7 +156,7 @@ en:
         active:         :coding_systems.active
         master:         :coding_systems.master
         mapping:        :coding_systems.mapping
-        desc:           :coding_systems.desc
+        description:    :coding_systems.description
 
       a7_code:
         id:             :general.attributes.id 
@@ -165,7 +165,7 @@ en:
         active:         :coding_systems.active
         master:         :coding_systems.master
         mapping:        :coding_systems.mapping
-        desc:           :coding_systems.desc
+        description:    :coding_systems.description
 
       a8_code:
         id:             :general.attributes.id 

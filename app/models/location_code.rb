@@ -98,7 +98,6 @@ class LocationCode < ActiveRecord::Base
     when 1 # point only, no start, end, length
       self.start_point = self.end_point = self.length = nil 
     when 2
-      #puts "\n>>> old: type #{ self.loc_type }, center: #{ self.center_point }, start: #{ self.start_point }, end: #{ self.end_point }, l: #{ self.length }"
       if self.center_point.nil? then
         if self.length.nil? then
           if self.start_point && self.end_point then

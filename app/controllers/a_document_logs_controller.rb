@@ -90,10 +90,8 @@ class ADocumentLogsController < ApplicationController
       else
         a34m = nil
       end
-      p = params.require( :a_document_log ).merge( a34m ).permit( 
+      params.require( :a_document_log ).merge( a34m ).permit( 
         :a1_code, :a2_code, :a3_code, :a4_code, :a5_code, :a6_code, :a7_code, :a8_code, :title )
-      puts p.to_json
-      p
     end
 
     def filter_params

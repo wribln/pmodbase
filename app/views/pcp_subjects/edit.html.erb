@@ -5,6 +5,7 @@
   <div class="form-horizontal" role="form">
     <%= form_for @pcp_subject do |f| %>
       <%= render partial: 'shared/errors', object: @pcp_subject.errors %>
+      <%= render partial: 'shared/errors', object: @pcp_step.errors %>
       <%= render partial: 'form', object: f %>
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-2">

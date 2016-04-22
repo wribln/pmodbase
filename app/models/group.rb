@@ -43,8 +43,8 @@ class Group < ActiveRecord::Base
   scope :active_only, ->    { where( active: true )}
   scope :sender_codes, ->   { where( s_sender_code: true )}
   scope :receiver_codes, -> { where( s_receiver_code: true )}
-  scope :as_abbr, -> ( abbr ){ where( 'code LIKE ?', "#{ abbr }%" )}
-  scope :as_desc, -> ( desc ){ where( 'label LIKE ?', "%#{ desc }%" )}
+  scope :as_abbr, -> ( a ){ where( 'code LIKE ?',   "#{ a }%" )}
+  scope :as_desc, -> ( d ){ where( 'label LIKE ?', "%#{ d }%" )}
   class << self; alias :as_code :as_abbr end
 
   # permitted_groups: scope helper in conjunction with Account.permitted_groups

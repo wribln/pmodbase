@@ -10,7 +10,7 @@ class PcpSubject < ActiveRecord::Base
   belongs_to :p_owner,  -> { readonly }, foreign_key: :p_owner_id, class_name: Account
   belongs_to :c_deputy, -> { readonly }, foreign_key: :c_deputy_id, class_name: Account
   belongs_to :p_deputy, -> { readonly }, foreign_key: :p_deputy_id, class_name: Account
-  has_many   :pcp_steps, dependent: :destroy, validate: false, inverse_of: :pcp_subject
+  has_many   :pcp_steps,    -> { most_recent }, dependent: :destroy, validate: false, inverse_of: :pcp_subject
   accepts_nested_attributes_for :pcp_steps
 
   before_validation :set_defaults_from_pcp_categories, on: :create
@@ -22,8 +22,8 @@ class PcpSubject < ActiveRecord::Base
     presence: true,
     on: :update
 
-  validates :desc,
-    length: { maximum: MAX_LENGTH_OF_DESCRIPTION }
+  validates :title,
+    length: { maximum: MAX_LENGTH_OF_TITLE }
 
   validates :note,
     length: { maximum: MAX_LENGTH_OF_NOTE }
@@ -68,18 +68,18 @@ class PcpSubject < ActiveRecord::Base
     pcp_steps.most_recent.first
   end
 
-  # providing the ballpark as parameter is mostly more efficient than 
-  # referring to current_step.ballpark as the current_step is mostly 
+  # providing the acting_group_switch as parameter is mostly more efficient than 
+  # referring to current_step.acting_group_switch as the current_step is mostly 
   # known/retrieved when this method is called
 
-  def acting_group( bp )
-    Group.find( bp == 0 ? c_group_id : p_group_id )
+  def acting_group( ags )
+    Group.find( ags == 0 ? c_group_id : p_group_id )
   end
 
   # fix assignments
 
-  def desc=( text )
-    write_attribute( :desc, AppHelper.clean_up( text, MAX_LENGTH_OF_DESCRIPTION ))
+  def title=( text )
+    write_attribute( :title, AppHelper.clean_up( text, MAX_LENGTH_OF_DESCRIPTION ))
   end
 
   def project_doc_id=( text )
@@ -88,6 +88,24 @@ class PcpSubject < ActiveRecord::Base
 
   def report_doc_id=( text )
     write_attribute( :report_doc_id, AppHelper.clean_up( text, MAX_LENGTH_OF_DOC_ID ))
+  end
+
+  # access control helper
+
+  def user_is_owner_or_deputy?( id, ags )
+    if ags == 0
+      ( id == p_owner_id )||( id == p_deputy_id )
+    else
+      ( id == c_owner_id )||( id == c_deputy_id )
+    end
+  end
+
+  def permitted_to_access?( id )
+#    user_is_owner_or_deputy?( id )||pcp_members.exists?( account: id, to_access: true )
+  end
+
+  def permitted_to_update?( id )
+#    user_is_owner_or_deputy?( id )||pcp_members.exists?( account: id, to_access: true, to_update: true )
   end
 
   protected

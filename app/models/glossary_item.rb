@@ -16,13 +16,13 @@ class GlossaryItem < ActiveRecord::Base
   validate :given_reference_exists
 
   default_scope { order( term: :asc )}
-  scope :as_abbr, ->  ( abbr ){ where( 'code LIKE ?', "#{ abbr }%" )}
-  scope :as_desc, ->  ( desc ){ where( '(code IS NOT NULL) AND (term LIKE ?)', "%#{ desc }%" )}
-  scope :ff_id, ->    ( id   ){ where id: id }
-  scope :ff_code, ->  ( abbr ){ as_abbr( abbr )}
-  scope :ff_term, ->  ( term ){ where( 'term LIKE ?', "%#{ term }%" )}
-  scope :ff_desc, ->  ( desc ){ where( 'description LIKE ?', "%#{ desc }%" )}
-  scope :ff_ref,  ->  ( ref  ){ where( ref == '0' ? 'reference_id IS NULL' : 'reference_id = ?', ref )}
+  scope :as_abbr, ->  ( a ){ where( 'code LIKE ?', "#{ a }%" )}
+  scope :as_desc, ->  ( d ){ where( '(code IS NOT NULL) AND (term LIKE ?)', "%#{ d }%" )}
+  scope :ff_id, ->    ( i ){ where id: i }
+  scope :ff_code, ->  ( a ){ as_abbr( a )}
+  scope :ff_term, ->  ( t ){ where( 'term LIKE ?', "%#{ t }%" )}
+  scope :ff_desc, ->  ( d ){ where( 'description LIKE ?', "%#{ d }%" )}
+  scope :ff_ref,  ->  ( r ){ where( r == '0' ? 'reference_id IS NULL' : 'reference_id = ?', r )}
 
   def term=( text )
     write_attribute( :term, AppHelper.clean_up( text, MAX_LENGTH_OF_TERM ))

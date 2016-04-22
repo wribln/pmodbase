@@ -4,6 +4,9 @@
   <%= form_title %>
   <div class="form-horizontal" role="form">
     <%= form_for @pcp_subject do |f| %>
+      <%= render partial: 'shared/errors', object: @pcp_subject.errors %>
+      <%= ( render partial: 'shared/errors', object: @pcp_step_new.errors )unless @pcp_step_new.nil? %>
+      <%= ( render partial: 'shared/errors', object: @pcp_step.errors )unless @pcp_step.nil? %>
       <%= render partial: 'shared/notice' %>
       <div class="form-group">
         <%= f.label :id, class: "col-sm-3 control-label" %>
@@ -18,9 +21,9 @@
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :desc, class: "col-sm-3 control-label" %>
+        <%= f.label :title, class: "col-sm-3 control-label" %>
         <div class="col-sm-4">
-          <%= display_value f.object.desc %>
+          <%= display_value f.object.title %>
         </div>
       </div>
       <div class="form-group">
@@ -36,9 +39,9 @@
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :r_group_id, class: "col-sm-3 control-label" %>
+        <%= f.label :p_group_id, class: "col-sm-3 control-label" %>
         <div class="col-sm-4">
-          <%= display_value f.object.r_group.code_and_label %>
+          <%= display_value f.object.p_group.code_and_label %>
         </div>
       </div>
       <div class="form-group">
@@ -89,14 +92,20 @@
           <%= display_value f.object.report_doc_id %>
         </div>
       </div>
-      <%- if @pcp_step.status_closed? then -%>
+      <div class="form-group">
+        <%= f.label :status, class: "col-sm-3 control-label" %>
+        <div class="col-sm-1">
+          <%= display_value @pcp_step.subject_status_label %>
+        </div>
+      </div>
+      <%- if @pcp_step && @pcp_step.status_closed? then -%>
       <div class="form-group">
         <%= f.label :archived, class: "col-sm-3 control-label" %>
         <div class="col-sm-1">
           <%= f.check_box :archived, disabled: true, readonly: true %>
         </div>
       </div>
-      <%- end -%>
+      <%- else -%>
       <!-- data on current step -->
       <%= f.fields_for :pcp_steps, @pcp_step do |os| -%>
         <div class="form-group">
@@ -111,7 +120,7 @@
         </div>
         <div class="form-group">
           <%= os.label :subject_version, class: "col-sm-3 control-label" %>
-          <div class="col-sm-2">
+          <div class="col-sm-1">
             <%= display_value os.object.subject_version %>
           </div>
         </div>
@@ -128,18 +137,28 @@
           </div>
         </div>
         <div class="form-group">
-          <%= os.label :assessment, class: "col-sm-3 control-label" %>
+          <%= os.label :prev_assmt, class: "col-sm-3 control-label" %>
           <div class="col-sm-4">
-            <%= display_value os.object.assessment_label %>
+            <%= display_value PcpStep.assessment_label( os.object.prev_assmt) %>
           </div>
         </div>
+        <div class="form-group">
+          <%= os.label :new_assmt, class: "col-sm-3 control-label" %>
+          <div class="col-sm-4">
+            <%= display_value PcpStep.assessment_label( os.object.new_assmt) %>
+          </div>
+        </div>
+      <%- end -%>
       <%- end -%>
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-2">
           <%= link_to t( 'button_label.edit' ), edit_pcp_subject_path( @pcp_subject ), class: "btn btn-lg btn-block btn-default" %>
         </div>
         <div class="col-sm-2">
-          <%= link_to t( 'button_label.release' ), pcp_subject_release( @pcp_subject ), class: "btn btn-lg btn-block btn-default" %>
+          <%= link_to t( 'button_label.release' ), pcp_subject_release_path( @pcp_subject ), class: "btn btn-lg btn-block btn-default" %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to t( 'button_label.history' ), pcp_subject_history_path( @pcp_subject ), class: "btn btn-lg btn-block btn-default", target: '_blank' %>
         </div>
         <div class="col-sm-2">
           <%= link_to t( 'button_label.goto_to_list' ), pcp_subjects_path, class: "btn btn-lg btn-block btn-default" %>

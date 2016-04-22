@@ -29,7 +29,7 @@
           <%= render partial: 'shared/index_empty_row', locals:{ columns: 6, with_link: true }%>
         <% else %>
           <% @a5_codes.each do |a5| %>
-            <%- rowspan = a5.desc.blank? ? 1 : 2 -%>
+            <%- rowspan = a5.description.blank? ? 1 : 2 -%>
             <tr>
               <td rowspan="<%= rowspan -%>"><%= a5.to_id %></td>
               <td rowspan="<%= rowspan -%>"><%= a5.code %></td>
@@ -39,9 +39,9 @@
               <td><%= a5.mapping %></td>
               <td rowspan="<%= rowspan -%>"><%= render partial: 'shared/actions', object: a5 %></td>
             </tr>
-            <%- unless a5.desc.blank? -%>
+            <%- unless a5.description.blank? -%>
             <tr>
-              <td colspan="4"><small><%= a5.desc %></small></td>
+              <td colspan="4"><small><%= a5.description %></small></td>
             </tr>
             <%- end -%>
           <% end %>

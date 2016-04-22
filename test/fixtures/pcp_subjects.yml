@@ -1,6 +1,6 @@
 one:
   pcp_category:   one
-  desc:           'Some description'
+  title:          'Some description'
   note:           'Some notes/#tags'
   project_doc_id: 'TEST(MIR)DIR_000001'
   c_group:         group_one

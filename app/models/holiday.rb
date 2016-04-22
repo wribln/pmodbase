@@ -35,10 +35,10 @@ class Holiday < ActiveRecord::Base
   validate :date_combination_valid
 
   default_scope { order( date_from: :asc, country_name_id: :asc )}
-  scope :ff_id,       -> ( id   ){ where id: id }
-  scope :ff_country,  -> ( cnty ){ where country_name: cnty }
-  scope :ff_year,     -> ( year ){ where year_period:  year }
-  scope :ff_desc,     -> ( desc ){ where( 'description LIKE ?', "%#{ desc }%" )}
+  scope :ff_id,       -> ( i ){ where id: i }
+  scope :ff_country,  -> ( c ){ where country_name: c }
+  scope :ff_year,     -> ( y ){ where year_period:  y }
+  scope :ff_desc,     -> ( d ){ where( 'description LIKE ?', "%#{ d }%" )}
 
   # date_combination_valid checks if date_until is correct in relationship
   # to date_from, i.e. date_until must be >= date_from, if date_until is

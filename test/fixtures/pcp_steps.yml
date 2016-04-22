@@ -6,7 +6,8 @@ one:
   note:
   due_date:
   subject_status:   0
-  assessment:       0
+  prev_assmt:       0
+  new_assmt:
 
 two:
   pcp_subject:      one 
@@ -15,7 +16,8 @@ two:
   subject_date:
   note:
   due_date:         2016-04-24
-  subject_status:   0
-  assessment:       0
-
-
+  subject_status:   1
+  prev_assmt:       0
+  new_assmt:
+  released_by:      'someone'
+  released_at:      2016-04-25

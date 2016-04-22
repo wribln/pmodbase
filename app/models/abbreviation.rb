@@ -17,11 +17,11 @@ class Abbreviation < ActiveRecord::Base
     length: { maximum: MAX_LENGTH_OF_CODE }
 
   default_scope { order( sort_code: :asc )}
-  scope :as_abbr, ->  ( abbr ){ where( 'code LIKE ?', "#{ abbr }%" )}
-  scope :as_desc, ->  ( desc ){ where( 'description LIKE ?', "%#{ desc }%" )}
-  scope :ff_id, ->    ( id   ){ where id: id }
-  scope :ff_code, ->  ( abbr ){ as_abbr( abbr ) }
-  scope :ff_desc, ->  ( desc ){ as_desc( desc ) }
+  scope :as_abbr, ->  ( a ){ where( 'code LIKE ?', "#{ a }%" )}
+  scope :as_desc, ->  ( d ){ where( 'description LIKE ?', "%#{ d }%" )}
+  scope :ff_id, ->    ( i ){ where id: i }
+  scope :ff_code, ->  ( a ){ as_abbr( a ) }
+  scope :ff_desc, ->  ( d ){ as_desc( d ) }
 
   def code=( text )
     write_attribute( :code, AppHelper.clean_up( text, MAX_LENGTH_OF_CODE, '' ))

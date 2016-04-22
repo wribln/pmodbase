@@ -4,36 +4,52 @@
           <%= display_value form.object.id %>
         </div>
       </div>
-      <div class="form-group">
-        <%= form.label :pcp_category_id, class: "col-sm-3 control-label" %>
-        <div class="col-sm-4">
-          <%= form.select :pcp_category_id, @pcp_categories, { prompt: t( '.g_prompt' )}, { class: 'form-control', required: true }%>
+        <div class="form-group">
+          <%= form.label :pcp_category_id, class: "col-sm-3 control-label" %>
+          <div class="col-sm-4">
+            <%- if @valid_subject_params.include? :pcp_category_id then -%>
+              <%= form.select :pcp_category_id, @pcp_categories, { prompt: t( '.g_prompt' )}, { class: 'form-control', required: true }%>
+            <%- else -%>
+              <%= display_value form.object.pcp_category.label %>
+            <%- end -%>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <%= form.label :desc, class: "col-sm-3 control-label" %>
-        <div class="col-sm-4">
-          <%= form.text_field :desc, class: "form-control", length: MAX_LENGTH_OF_DESCRIPTION %>
+        <div class="form-group">
+          <%= form.label :title, class: "col-sm-3 control-label" %>
+          <div class="col-sm-4">
+            <%- if @valid_subject_params.include? :title then -%>
+              <%= form.text_field :title, class: "form-control", length: MAX_LENGTH_OF_DESCRIPTION %>
+            <%- else -%>
+              <%= display_value form.object.title %>
+            <%- end -%>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <%= form.label :note, class: "col-sm-3 control-label" %>
-        <div class="col-sm-4">
-          <%= form.text_field :note, class: "form-control", length: MAX_LENGTH_OF_NOTE %>
+        <div class="form-group">
+          <%= form.label :note, class: "col-sm-3 control-label" %>
+          <div class="col-sm-4">
+            <%- if @valid_subject_params.include? :note then -%>
+              <%= form.text_field :note, class: "form-control", length: MAX_LENGTH_OF_NOTE %>
+            <%- else -%>
+              <%= display_value form.object.note %>
+            <%- end -%>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <%= form.label :project_doc_id, class: "col-sm-3 control-label" %>
-        <div class="col-sm-4">
-          <%= form.text_field :project_doc_id, class: "form-control", length: MAX_LENGTH_OF_DOC_ID %>
+        <div class="form-group">
+          <%= form.label :project_doc_id, class: "col-sm-3 control-label" %>
+          <div class="col-sm-4">
+            <%- if @valid_subject_params.include? :project_doc_id then -%>
+              <%= form.text_field :project_doc_id, class: "form-control", length: MAX_LENGTH_OF_DOC_ID %>
+            <%- else -%>
+              <%= display_value form.object.project_doc_id %>
+            <%- end -%>
+          </div>
         </div>
-      </div>
       <!-- request input for groups and accounts only when updating -->
       <%- unless action_name == 'new' -%>
        <div class="form-group">
         <%= form.label :p_group_id, class: "col-sm-3 control-label" %>
         <div class="col-sm-4">
-          <%- if @pcp_step.in_commenting_group? then -%>
+          <%- if @valid_subject_params.include? :p_group_id then -%>
             <%= form.select :p_group_id, @group_selection, { prompt: t( '.g_prompt' )},{ class: 'form-control', required: true }%>
           <%- else -%>
             <%= display_value form.object.p_group.try( :code_and_label) %>
@@ -43,7 +59,7 @@
       <div class="form-group">
         <%= form.label :p_owner_id, class: "col-sm-3 control-label" %>
         <div class="col-sm-1">
-          <%- if @pcp_step.in_commenting_group? then -%>
+          <%- if @valid_subject_params.include? :p_owner_id then -%>
             <%= form.text_field :p_owner_id, class: "form-control", required: true %>
         </div>
         <div class="col-sm-2">
@@ -56,7 +72,7 @@
       <div class="form-group">
         <%= form.label :p_deputy_id, class: "col-sm-3 control-label" %>
         <div class="col-sm-1">
-          <%- if @pcp_step.in_commenting_group? then -%>
+          <%- if @valid_subject_params.include? :p_deputy_id then -%>
             <%= form.text_field :p_deputy_id, class: "form-control" %>
           <%- else -%>
             <%= display_value form.object.p_deputy_id %>
@@ -66,7 +82,7 @@
       <div class="form-group">
         <%= form.label :c_group_id, class: "col-sm-3 control-label" %>
         <div class="col-sm-4">
-          <%- if @pcp_step.in_presenting_group? then -%>
+          <%- if @valid_subject_params.include? :c_group_id then -%>
             <%= form.select :c_group_id, @group_selection, { prompt: t( '.g_prompt' )},{ class: 'form-control', required: true }%>
           <%- else -%>
             <%= display_value form.object.c_group.try( :code_and_label )%>
@@ -76,7 +92,7 @@
       <div class="form-group">
         <%= form.label :c_owner_id, class: "col-sm-3 control-label" %>
         <div class="col-sm-1">
-          <%- if @pcp_step.in_presenting_group? then -%>
+          <%- if @valid_subject_params.include? :c_owner_id then -%>
           <%= form.text_field :c_owner_id, class: "form-control", required: true %>
         </div>
         <div class="col-sm-2">
@@ -89,7 +105,7 @@
       <div class="form-group">
         <%= form.label :c_deputy_id, class: "col-sm-3 control-label" %>
         <div class="col-sm-1">
-          <%- if @pcp_step.in_presenting_group? then -%>
+          <%- if @valid_subject_params.include? :c_deputy_id then -%>
             <%= form.text_field :c_deputy_id, class: "form-control" %>
           <%- else -%>
             <%= display_value form.object.c_deputy_id %>
@@ -100,10 +116,20 @@
       <div class="form-group">
         <%= form.label :report_doc_id, class: "col-sm-3 control-label" %>
         <div class="col-sm-4">
-          <%= form.text_field :report_doc_id, class: "form-control", length: MAX_LENGTH_OF_DOC_ID %>
+          <%- if @valid_subject_params.include? :report_doc_id then -%>
+            <%= form.text_field :report_doc_id, class: "form-control", length: MAX_LENGTH_OF_DOC_ID %>
+          <%- else -%>
+            <%= display_value form.object.report_doc_id %>
+          <%- end -%>
         </div>
       </div>
-      <%- if @pcp_step.try( :status_closed? )%>
+      <div class="form-group">
+        <%= form.label :subject_status, class: "col-sm-3 control-label" %>
+        <div class="col-sm-1">
+          <%= display_value @pcp_step.try( :subject_status_label )%>
+        </div>
+      </div>
+      <%- if @valid_subject_params.include? :archived then %>
       <div class="form-group">
         <%= form.label :archived, class: "col-sm-3 control-label" %>
         <div class="col-sm-1">
@@ -112,6 +138,7 @@
       </div>
       <%- end -%>
       <!-- data on current step -->
+      <%- unless @pcp_step && @pcp_step.status_closed? then -%>
       <%= form.fields_for :pcp_steps, @pcp_step do |os| -%>
         <div class="form-group">
           <%= os.label :step_no, t( '.cs_heading', label: os.object.step_label ), class: "col-sm-3 control-label" %>
@@ -132,7 +159,7 @@
         </div>
         <div class="form-group">
           <%= os.label :subject_version, class: "col-sm-3 control-label" %>
-          <div class="col-sm-2">
+          <div class="col-sm-1">
             <%- if os.object.in_presenting_group? then -%>
               <%= os.text_field :subject_version, class: "form-control", length: MAX_LENGTH_OF_DOC_VERSION %>
             <%- else -%>
@@ -156,15 +183,20 @@
           </div>
         </div>
         <div class="form-group">
-          <%= os.label :assessment, class: "col-sm-3 control-label" %>
+          <%= os.label :prev_assmt, class: "col-sm-3 control-label" %>
+          <div class="col-sm-4">
+            <%= display_value PcpStep.assessment_label( os.object.prev_assmt )%>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= os.label :new_assmt, class: "col-sm-3 control-label" %>
           <div class="col-sm-4">
             <%- if os.object.in_commenting_group? then -%>
-              <%= os.select :assessment, select_options( PcpStep::ASSESSMENT_LABELS ), { prompt: t( '.g_prompt' ) }, { class: "form-control" }%>
+              <%= os.select :new_assmt, select_options( PcpStep::ASSESSMENT_LABELS ), { prompt: t( '.g_prompt' ) }, { class: "form-control" }%>
             <%- else -%>
-              <%= display_value os.object.assessment_label %>
+              <%= display_value PcpStep.assessment_label( os.object.new_assmt ) %>
             <%- end -%>
           </div>
         </div>
       <%- end -%>
-
-
+      <%- end -%>

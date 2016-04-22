@@ -33,6 +33,7 @@
   # maximum length of ...
 
   MAX_LENGTH_OF_ACCOUNT_NAME = 20
+  MAX_LENGTH_OF_ACCOUNT_INFO = 127    # string to hold account and person name
   MAX_LENGTH_OF_ADDRESS = 255
   MAX_LENGTH_OF_DEPARTMENT = 30
   MAX_LENGTH_OF_EMAIL_STRING = 255

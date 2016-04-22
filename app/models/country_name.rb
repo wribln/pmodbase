@@ -16,11 +16,14 @@ class CountryName < ActiveRecord::Base
     presence: true
 
   default_scope { order( code: :asc )}
-  scope :as_abbr, ->  ( abbr ){ where( 'code  LIKE ?',  "#{ abbr }%" )}
-  scope :as_desc, ->  ( desc ){ where( 'label LIKE ?', "%#{ desc }%" )}
-  scope :ff_id, ->    ( id   ){ where id: id }
-  scope :ff_code, ->  ( code ){ as_abbr( code ) }
-  scope :ff_label, -> ( desc ){ as_desc( desc ) }
+  scope :as_abbr, ->  ( a ){ where( 'code  LIKE ?',  "#{ a }%" )}
+  scope :as_desc, ->  ( l ){ where( 'label LIKE ?', "%#{ l }%" )}
+  scope :ff_id, ->    ( i ){ where id: i }
+  class << self;
+    alias :ff_code  :as_abbr
+    alias :ff_label :as_desc
+  end
+
 
   def code=( text )
     write_attribute( :code, AppHelper.clean_up( text, MAX_LENGTH_OF_CODE ))

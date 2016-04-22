@@ -8,7 +8,7 @@ class CreatePcpSubjects < ActiveRecord::Migration
       t.belongs_to  :c_deputy,                    index: true, foreign_key: true
       t.belongs_to  :p_owner,       null: false,  index: true, foreign_key: true
       t.belongs_to  :p_deputy,                    index: true, foreign_key: true
-      t.string      :desc,            limit: MAX_LENGTH_OF_DESCRIPTION
+      t.string      :title,           limit: MAX_LENGTH_OF_TITLE
       t.string      :note,            limit: MAX_LENGTH_OF_NOTE
       t.string      :project_doc_id,  limit: MAX_LENGTH_OF_DOC_ID
       t.string      :report_doc_id,   limit: MAX_LENGTH_OF_DOC_ID

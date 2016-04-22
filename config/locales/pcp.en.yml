@@ -22,8 +22,8 @@ en:
       pcp_subject:
         id:             :general.attributes.id
         pcp_category_id: 'PCP Category'
-        desc:           'Description/Title'
-        note:           'Note'
+        title:          'Title/Description'
+        note:           'Notes on this Subject'
         project_doc_id: :general.attributes.project_doc_id
         report_doc_id:  'Project DMS ID for PCP Report'
         c_group_id:     'Commenting Group'
@@ -42,15 +42,22 @@ en:
         subject_version: 'Subject Version'
         note:           'Notes for this Step'
         due_date:       'Step Due Date'
-#                          0              1                     2                 3
-        step_labels:    [ 'New Subject', 'Initial Release', 'Initial Review', 'First Response' ]
-        step_states:    [ 'Review', 'Response' ]
+#                          0                  1                 2                 3                4 
+        step_labels:    [ 'Initial Release', 'Initial Review', 'First Response', 'Second Review', 'Second Response' ]
+        step_states:    [ 'Response', 'Review' ]
+        step_label:     '%{ss} No %{no}'
         subject_status: 'Subject Status'
 #                                         must be last status
         subject_states: [ 'new', 'open', 'closed' ]
-        assessment:     'Assessment'
+        prev_assmt:     'Previous Assessment'
+        new_assmt:      'New Assessment'
+#                          0    1    2    3    4
         ass_codes:      [ '?', 'A', 'B', 'C', 'D' ]
         ass_labels:     [ '<not yet determined>', A - Approved', 'B - Approved w/ Comments', 'C - Rejected', 'D - Review not Required' ]
+        released_by:    'Released by'
+        released_at:    'Released at'
+        subject_title:  :activerecord.attributes.pcp_subject.title
+        project_doc_id: :activerecord.attributes.pcp_subject.project_doc_id
 
   pcp_categories:
     title:            'PCP Categories'
@@ -92,15 +99,25 @@ en:
       status_subj:    'Subject'
       assessment:     'Code'
       status_step:    'Current Step' 
-      ballpark:       'At Group'
+      acting_group:   'At Group'
+    info:
+      form_title:     'History of PCP Subject'
+      step_heading:   'Step %{id}: %{label}'
+      status:         'Status as of %{at}:'
     msg:
-      new_ok:         'PCP subject successfully created.'
-      edit_ok:        'PCP subject successfully updated.'
-      delete_ok:      'PCP subject successfully deleted.'
+      new_ok:         'PCP Subject successfully created.'
+      edit_ok:        'PCP Subject successfully updated.'
+      delete_ok:      'PCP Subject successfully deleted.'
+      release_ok:     'PCP Subject released for next step.'
       no_access:      'has no permission to modify this PCP Subject for his group.'
       bad_category:   :general.non_existing
+      bad_status:     'can only be set on closed subjects.'
 
   pcp_steps:
     msg:
       dup_step:       'has already been used.'
       bad_subject:    :general.non_existing
+      bad_assessment: 'cannot be set for initial step.'
+      mis_assessment: 'must be set to Release this step.'
+      clsd_subj_no_r: 'Cannot Release closed subject.'
+      missng_subject: 'Cannot Release without Description, Title, or Project DMS ID.'

@@ -38,14 +38,14 @@ ActiveRecord::Schema.define(version: 20160414101758) do
   add_index "a2_codes", ["code"], name: "index_a2_codes_on_code"
 
   create_table "a3_codes", force: :cascade do |t|
-    t.string   "code",                      null: false
-    t.string   "label",                     null: false
-    t.boolean  "active",     default: true, null: false
-    t.boolean  "master",     default: true, null: false
+    t.string   "code",                       null: false
+    t.string   "label",                      null: false
+    t.boolean  "active",      default: true, null: false
+    t.boolean  "master",      default: true, null: false
     t.string   "mapping"
-    t.string   "desc"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.string   "description"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   add_index "a3_codes", ["code"], name: "index_a3_codes_on_code"
@@ -63,40 +63,40 @@ ActiveRecord::Schema.define(version: 20160414101758) do
   add_index "a4_codes", ["code"], name: "index_a4_codes_on_code"
 
   create_table "a5_codes", force: :cascade do |t|
-    t.string   "code",                      null: false
-    t.string   "label",                     null: false
-    t.boolean  "active",     default: true, null: false
-    t.boolean  "master",     default: true, null: false
+    t.string   "code",                       null: false
+    t.string   "label",                      null: false
+    t.boolean  "active",      default: true, null: false
+    t.boolean  "master",      default: true, null: false
     t.string   "mapping"
-    t.string   "desc"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.string   "description"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   add_index "a5_codes", ["code"], name: "index_a5_codes_on_code"
 
   create_table "a6_codes", force: :cascade do |t|
-    t.string   "code",                      null: false
-    t.string   "label",                     null: false
-    t.boolean  "active",     default: true, null: false
-    t.boolean  "master",     default: true, null: false
+    t.string   "code",                       null: false
+    t.string   "label",                      null: false
+    t.boolean  "active",      default: true, null: false
+    t.boolean  "master",      default: true, null: false
     t.string   "mapping"
-    t.string   "desc"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.string   "description"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   add_index "a6_codes", ["code"], name: "index_a6_codes_on_code"
 
   create_table "a7_codes", force: :cascade do |t|
-    t.string   "code",                      null: false
-    t.string   "label",                     null: false
-    t.boolean  "active",     default: true, null: false
-    t.boolean  "master",     default: true, null: false
+    t.string   "code",                       null: false
+    t.string   "label",                      null: false
+    t.boolean  "active",      default: true, null: false
+    t.boolean  "master",      default: true, null: false
     t.string   "mapping"
-    t.string   "desc"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.string   "description"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   add_index "a7_codes", ["code"], name: "index_a7_codes_on_code"
@@ -498,16 +498,21 @@ ActiveRecord::Schema.define(version: 20160414101758) do
   add_index "pcp_categories", ["p_owner_id"], name: "index_pcp_categories_on_p_owner_id"
 
   create_table "pcp_steps", force: :cascade do |t|
-    t.integer  "pcp_subject_id",                         null: false
-    t.integer  "step_no",                    default: 0, null: false
+    t.integer  "pcp_subject_id",                          null: false
+    t.integer  "step_no",                     default: 0, null: false
     t.string   "subject_version", limit: 10
     t.string   "note",            limit: 50
     t.date     "subject_date"
     t.date     "due_date"
-    t.integer  "subject_status",             default: 0
-    t.integer  "assessment",                 default: 0
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
+    t.integer  "subject_status",              default: 0
+    t.integer  "prev_assmt",                  default: 0
+    t.integer  "new_assmt"
+    t.string   "released_by",     limit: 90
+    t.datetime "released_at"
+    t.string   "subject_title",   limit: 255
+    t.string   "project_doc_id",  limit: 128
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
   end
 
   add_index "pcp_steps", ["pcp_subject_id", "step_no"], name: "pcp_steps_index", unique: true
@@ -521,7 +526,7 @@ ActiveRecord::Schema.define(version: 20160414101758) do
     t.integer  "c_deputy_id"
     t.integer  "p_owner_id",                                  null: false
     t.integer  "p_deputy_id"
-    t.string   "desc",            limit: 255
+    t.string   "title",           limit: 128
     t.string   "note",            limit: 50
     t.string   "project_doc_id",  limit: 50
     t.string   "report_doc_id",   limit: 50

@@ -42,9 +42,9 @@ class SDocumentLog < ActiveRecord::Base
 
   scope :reverse, -> { order( id: :desc )}
   scope :inorder, -> { order( id: :asc  )}
-  scope :ff_srec, -> ( id   ){ where id: id }
-  scope :ff_sdic, -> ( sdic ){ where( 'siemens_doc_id LIKE ? ESCAPE \'\\\'', "%#{ sanitize_sql_like( sdic, '\\' )}%" )}
-  scope :ff_titl, -> ( titl ){ where( 'title LIKE ?', "%#{ titl }%" )}
+  scope :ff_srec, -> ( i ){ where id: i }
+  scope :ff_sdic, -> ( s ){ where( 'siemens_doc_id LIKE ? ESCAPE \'\\\'', "%#{ sanitize_sql_like( s, '\\' )}%" )}
+  scope :ff_titl, -> ( t ){ where( 'title LIKE ?', "%#{ t }%" )}
 
   # check that at least one of the attribute codes are given
 

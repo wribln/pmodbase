@@ -71,7 +71,7 @@ class A3CodesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
 
     def a3_code_params
-      params.require( :a3_code ).permit( :code, :label, :active, :master, :mapping, :desc )
+      params.require( :a3_code ).permit( :code, :label, :active, :master, :mapping, :description )
     end
 
     def filter_params

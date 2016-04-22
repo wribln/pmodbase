@@ -10,9 +10,9 @@ class A5Code < ActiveRecord::Base
     format: { with: /\A.[A-Z0-9&]+\z/, message: I18n.t( 'a_code_modules.msg.bad_code_syntax1')},
     length: { maximum: 3 }
 
-  validates :desc,
+  validates :description,
     length: { maximum: MAX_LENGTH_OF_DESCRIPTION }
 
-  scope :as_desc, -> ( l ){ where( 'label LIKE ? OR desc LIKE ?', "%#{ l }%", "%#{ l }%" )}
+  scope :as_desc, -> ( l ){ where( 'label LIKE ? OR description LIKE ?', "%#{ l }%", "%#{ l }%" )}
 
 end

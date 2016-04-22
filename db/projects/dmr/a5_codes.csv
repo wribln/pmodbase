@@ -1,4 +1,4 @@
-code;label;desc
+code;label;description
 MAN;Manage;for general activities that cannot be specifically related to any of the other activities, including project controls, overall contract management
 CON;Control;for all controlling related works, including HSE, QA/QC, cost
 DES;Design;for all design related activities at all the stages, including interfaces, as-built

@@ -12,8 +12,8 @@ class UnitName < ActiveRecord::Base
     presence: true
 
   default_scope { order( 'LOWER(code) ASC' )}
-  scope :as_abbr,    -> ( abbr ){ where( 'code  LIKE ?',  "#{ abbr }%" )}
-  scope :as_desc,    -> ( desc ){ where( 'label LIKE ?', "%#{ desc }%" )}
+  scope :as_abbr,    -> ( a ){ where( 'code  LIKE ?',  "#{ a }%" )}
+  scope :as_desc,    -> ( d ){ where( 'label LIKE ?', "%#{ d }%" )}
 
   # overwrite write accessors to ensure that text fields do not contain
   # any redundant blanks

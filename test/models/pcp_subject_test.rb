@@ -3,7 +3,7 @@ class PcpSubjectTest < ActiveSupport::TestCase
 
   test 'check fixture' do
     ps = pcp_subjects( :one )
-    refute_empty ps.desc
+    refute_empty ps.title
     refute_empty ps.note
     refute_empty ps.project_doc_id
     refute_empty ps.report_doc_id
@@ -27,7 +27,7 @@ class PcpSubjectTest < ActiveSupport::TestCase
     refute_includes ps.errors, :p_group_id
     refute_includes ps.errors, :c_deputy_id
     refute_includes ps.errors, :p_deputy_id
-    refute_includes ps.errors, :desc
+    refute_includes ps.errors, :title
     refute_includes ps.errors, :note
     refute_includes ps.errors, :project_doc_id
     refute_includes ps.errors, :report_doc_id
@@ -142,6 +142,78 @@ class PcpSubjectTest < ActiveSupport::TestCase
     assert_includes ps.errors, :p_deputy_id
     ps.p_deputy_id = accounts( :account_one ).id
     assert ps.valid?
+  end
+
+  # archived must be clear unless status of subject is closed
+
+  test 'archive flag' do
+    ps = pcp_subjects( :one )
+    refute ps.archived
+    refute ps.current_step.status_closed?
+    assert ps.valid?
+    ps.archived = true
+    refute ps.valid?
+    assert_includes ps.errors, :archived
+
+    pt = ps.current_step
+    pt.subject_status = 2 # close
+    assert pt.save, pt.errors.messages
+    assert ps.valid?, ps.errors.messages
+    ps.archived = true
+    assert ps.valid?, pt.errors.messages
+  end
+
+  # check current step
+
+  test 'current_step' do
+    ps = pcp_subjects( :one )
+    assert 2, PcpStep.count
+    assert 2, ps.pcp_steps.count
+    s1 = pcp_steps( :one )
+    s2 = pcp_steps( :two )
+    assert_equal ps.current_step.id, s2.id
+    assert_equal ps.pcp_steps[ 0 ].id, s2.id
+    assert_equal ps.pcp_steps[ 1 ].id, s1.id
+  end
+
+  test 'acting_group' do
+    ps = pcp_subjects( :one )
+    gp = ps.p_group_id
+    pc = ps.c_group_id
+    assert ps.p_group_id, ps.acting_group( 0 ).id
+    assert ps.c_group_id, ps.acting_group( 1 ).id
+  end
+
+  test 'user access - p_group/owner == c_group/owner' do
+    ps = pcp_subjects( :one )
+    c1 = accounts( :account_one ).id
+    c2 = accounts( :account_two ).id
+    assert ps.user_is_owner_or_deputy?( c1, 0 )
+    assert ps.user_is_owner_or_deputy?( c1, 1 )
+    refute ps.user_is_owner_or_deputy?( c2, 0 )
+    refute ps.user_is_owner_or_deputy?( c2, 1 )
+    ps.p_deputy_id = c2
+    assert ps.user_is_owner_or_deputy?( c1, 0 )
+    assert ps.user_is_owner_or_deputy?( c1, 1 )
+    assert ps.user_is_owner_or_deputy?( c2, 0 )
+    refute ps.user_is_owner_or_deputy?( c2, 1 )
+    ps.p_deputy_id = nil
+    ps.c_deputy_id = c2
+    assert ps.user_is_owner_or_deputy?( c1, 0 )
+    assert ps.user_is_owner_or_deputy?( c1, 1 )
+    refute ps.user_is_owner_or_deputy?( c2, 0 )
+    assert ps.user_is_owner_or_deputy?( c2, 1 )
+    ps.c_owner_id = nil
+    assert ps.user_is_owner_or_deputy?( c1, 0 )
+    refute ps.user_is_owner_or_deputy?( c1, 1 )
+    refute ps.user_is_owner_or_deputy?( c2, 0 )
+    assert ps.user_is_owner_or_deputy?( c2, 1 )
+    ps.c_owner_id = c2
+    ps.c_deputy_id = nil
+    assert ps.user_is_owner_or_deputy?( c1, 0 )
+    refute ps.user_is_owner_or_deputy?( c1, 1 )
+    refute ps.user_is_owner_or_deputy?( c2, 0 )
+    assert ps.user_is_owner_or_deputy?( c2, 1 )
   end
 
 end

@@ -9,12 +9,12 @@
       <thead>
         <tr>
           <th class="col-sm-1"><%= PcpSubject.human_attribute_name( :id )%></th>
-          <th class="col-sm-4"><%= PcpSubject.human_attribute_name( :desc )%> /
+          <th class="col-sm-4"><%= PcpSubject.human_attribute_name( :title )%> /
                                <%= PcpSubject.human_attribute_name( :project_doc_id )%></th>
           <th class="col-sm-1"><%= t( '.status_subj' )%></th>
           <th class="col-sm-1"><%= t( '.assessment' )%></th>
           <th class="col-sm-2"><%= t( '.status_step' )%></th>
-          <th class="col-sm-1"><%= t( '.ballpark' )%></th>
+          <th class="col-sm-1"><%= t( '.acting_group' )%></th>
           <th class="col-sm-1 hidden-print"><%= filter_action_title_header %></th>
         </tr>
       </thead>
@@ -26,11 +26,11 @@
           <% cs = ps.current_step %>
           <tr>
             <td><%= ps.id %></td>
-            <td><%= display_two_items_w_br ps.desc, ps.project_doc_id %></td>
-            <td><%= cs.subject_status_label %></td>
-            <td><%= cs.assessment_code %></td>
-            <td><%= cs.step_label %></td>
-            <td><%= ps.acting_group( cs.ballpark ).code %></td>
+            <td><%= display_two_items_w_br ps.title, ps.project_doc_id %></td>
+            <td><%= cs.try :subject_status_label %></td>
+            <td><%= PcpStep.assessment_code( cs.try :current_assmt )%></td>
+            <td><%= cs.try :step_label %></td>
+            <td><%= ps.acting_group( cs.try :acting_group_switch ).code %></td>
             <td><%= render partial: 'shared/actions', object: ps %></td>
           </tr>
         <% end %>

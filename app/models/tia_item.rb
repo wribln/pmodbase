@@ -50,12 +50,12 @@ class TiaItem < ActiveRecord::Base
 
   # define scopes for filters
 
-  scope :ff_seqno,  -> ( seqn  ){ where seqno: seqn }
-  scope :ff_desc,   -> ( desc  ){ where( 'description LIKE ? OR comment LIKE ?', "%#{ desc }%", "%#{ desc }%" )}
-  scope :ff_prio,   -> ( prio  ){ where prio: prio }
-  scope :ff_owner,  -> ( owner ){ where account_id: owner }
-  scope :ff_status, -> ( state ){ where status: state }
-  scope :ff_due,    -> ( due   ){ where( 'due_date <= Date( ? )', due )}
+  scope :ff_seqno,  -> ( s ){ where seqno: s }
+  scope :ff_desc,   -> ( d ){ where( 'description LIKE ? OR comment LIKE ?', "%#{ d }%", "%#{ d }%" )}
+  scope :ff_prio,   -> ( p ){ where prio: p }
+  scope :ff_owner,  -> ( o ){ where account_id: o }
+  scope :ff_status, -> ( s ){ where status: s }
+  scope :ff_due,    -> ( d ){ where( 'due_date <= Date( ? )', d )}
 
   # returns the status label
 
