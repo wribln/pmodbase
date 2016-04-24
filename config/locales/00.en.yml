@@ -731,6 +731,7 @@ en:
     destroy:      'Delete'
     filter:       'Filter'
     index:        'Index'
+    print:        'Print'
     goto_to_list: 'Go to Index'
     cancel:       'Cancel'
     help:         'Help'

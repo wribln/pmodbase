@@ -1,5 +1,5 @@
 class PcpSubjectsController < ApplicationController
-  before_action :set_pcp_subject,  only: [ :show, :edit, :info, :update, :destroy, :update_release ]
+  before_action :set_pcp_subject,  only: [ :show, :edit, :info, :update, :destroy, :update_release, :show_release ]
   before_action :set_selections,   only: [ :edit, :new, :update ]
   before_action :set_valid_params, only: [ :edit, :new, :update, :create,  ]
 
@@ -20,6 +20,16 @@ class PcpSubjectsController < ApplicationController
 
   def info
     set_final_breadcrumb( :history )
+  end
+
+  # GET /pcs/1/show_release/1
+
+  def show_release
+    @pcp_step = @pcp_subject.pcp_steps.where( step_no: params[ :step_no ]).first
+    if @pcp_step then
+      render :reldoc, layout: 'plain_print'
+    else
+    end
   end
 
   # GET /pcs/new
@@ -72,7 +82,7 @@ class PcpSubjectsController < ApplicationController
           @pcp_step_new.create_release_from( @pcp_step, current_user )
           PcpStep.transaction do
             if @pcp_step_new.save && @pcp_step.save then
-              format.html { redirect_to @pcp_subject, notice: I18n.t( 'pcp_subjects.msg.release_ok' )}
+              format.html { redirect_to action: :show_release, id: @pcp_subject.id, step_no: @pcp_step_new.step_no, notice: I18n.t( 'pcp_subjects.msg.release_ok' )}
             else
               format.html { render :show }
             end
@@ -81,7 +91,8 @@ class PcpSubjectsController < ApplicationController
           set_final_breadcrumb( :release )
           @pcp_step.set_release_data( current_user )
           if @pcp_step.save then
-            format.html { redirect_to @pcp_subject, notice: I18n.t( 'pcp_subjects.msg.release_ok' )}
+            format.html
+#            format.html { redirect_to @pcp_subject, notice: I18n.t( 'pcp_subjects.msg.release_ok' )}
           else
             format.html { render :show }
           end

@@ -140,7 +140,7 @@ class PcpStepTest < ActiveSupport::TestCase
     assert_equal PcpStep::ASSESSMENT_LABELS[ 4 ], PcpStep.assessment_label( 4 )
   end
 
-  test "subject status for step 0" do
+  test 'subject status for step 0' do
     ps = PcpStep.new
     ps.step_no = 0
     ps.new_assmt = nil
@@ -150,7 +150,6 @@ class PcpStepTest < ActiveSupport::TestCase
       ps.subject_status = ps.new_subject_status
       refute ps.status_closed?
       assert_equal 0, ps.subject_status
-      assert_equal 'new', ps.subject_status_label
     end
 
     ps.prev_assmt = 0
@@ -159,68 +158,64 @@ class PcpStepTest < ActiveSupport::TestCase
       ps.subject_status = ps.new_subject_status
       refute ps.status_closed?
       assert_equal 0, ps.subject_status
-      assert_equal 'new', ps.subject_status_label
     end
   end
 
-#  test "subject status for step 1" do
-#    ps = PcpStep.new
-#    ps.step_no = 1
-#
-#    ps.assessment = 0 # ?
-#    ps.determine_subject_status
-#    refute ps.status_closed?
-#    assert_equal 1, ps.subject_status
-#    assert_equal 'open', ps.subject_status_label
-#
-#    ps.assessment = 1 # A
-#    ps.determine_subject_status
-#    assert ps.status_closed?
-#    assert_equal 2, ps.subject_status
-#    assert_equal 'closed', ps.subject_status_label
-#
-#    ps.assessment = 2 # B
-#    ps.determine_subject_status
-#    refute ps.status_closed?
-#    assert_equal 1, ps.subject_status
-#    assert_equal 'open', ps.subject_status_label
-#
-#    ps.assessment = 3 # C
-#    ps.determine_subject_status
-#    refute ps.status_closed?
-#    assert_equal 1, ps.subject_status
-#    assert_equal 'open', ps.subject_status_label
-#
-#    ps.assessment = 4 # D
-#    ps.determine_subject_status
-#    assert ps.status_closed?
-#    assert_equal 2, ps.subject_status
-#    assert_equal 'closed', ps.subject_status_label
-#  end
-#
-#  test 'acting_group_switch and related methods' do
-#    ps = PcpStep.new
-#
-#    ps.step_no = 0
-#    assert_equal 0, ps.acting_group_switch
-#    assert ps.in_presenting_group?
-#    refute ps.in_commenting_group?
-#
-#    ps.step_no = 1
-#    assert_equal 1, ps.acting_group_switch
-#    refute ps.in_presenting_group?
-#    assert ps.in_commenting_group?
-#
-#    ps.step_no = 2
-#    assert_equal 0, ps.acting_group_switch
-#    assert ps.in_presenting_group?
-#    refute ps.in_commenting_group?
-#
-#    ps.step_no = 3
-#    assert_equal 1, ps.acting_group_switch
-#    refute ps.in_presenting_group?
-#    assert ps.in_commenting_group?
-#
-#  end
+  test 'subject status for step 1' do
+    ps = PcpStep.new
+    ps.step_no = 1
+
+    # now at step 1 - try to close subject
+
+    ps.prev_assmt = 0
+    ps.subject_status = ps.new_subject_status
+    refute ps.status_closed?
+
+    ps.new_assmt = 0
+    ps.subject_status = ps.new_subject_status
+    refute ps.status_closed?
+
+    ps.new_assmt = 1
+    ps.subject_status = ps.new_subject_status
+    assert ps.status_closed?
+
+    ps.new_assmt = 2
+    ps.subject_status = ps.new_subject_status
+    refute ps.status_closed?
+
+    ps.new_assmt = 3
+    ps.subject_status = ps.new_subject_status
+    refute ps.status_closed?
+
+    ps.new_assmt = 4
+    ps.subject_status = ps.new_subject_status
+    assert ps.status_closed?
+
+  end
+
+  test 'acting_group_switch and related methods' do
+    ps = PcpStep.new
+
+    ps.step_no = 0
+    assert_equal 0, ps.acting_group_switch
+    assert ps.in_presenting_group?
+    refute ps.in_commenting_group?
+
+    ps.step_no = 1
+    assert_equal 1, ps.acting_group_switch
+    refute ps.in_presenting_group?
+    assert ps.in_commenting_group?
+
+    ps.step_no = 2
+    assert_equal 0, ps.acting_group_switch
+    assert ps.in_presenting_group?
+    refute ps.in_commenting_group?
+
+    ps.step_no = 3
+    assert_equal 1, ps.acting_group_switch
+    refute ps.in_presenting_group?
+    assert ps.in_commenting_group?
+
+  end
 
 end

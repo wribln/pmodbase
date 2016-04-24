@@ -104,6 +104,16 @@ en:
       form_title:     'History of PCP Subject'
       step_heading:   'Step %{id}: %{label}'
       status:         'Status as of %{at}:'
+    reldoc:
+      main_heading:   'Present-Comment Process Release Report'
+      code_vers_sep:  ' - '
+      report_doc_id:  :general.attributes.project_doc_id
+      project_doc_id: :general.attributes.project_doc_id
+      version:        'Version'
+      subject_title:  'Subject'
+      subject_date:   'as of'
+      released_by:    'Released by'
+      released_at:    'Released at'
     msg:
       new_ok:         'PCP Subject successfully created.'
       edit_ok:        'PCP Subject successfully updated.'

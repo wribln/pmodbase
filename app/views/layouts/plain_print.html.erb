@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+    <title><%= content_for?( :title ) ? content_for( :title ) : SITE_ID %></title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%= stylesheet_link_tag 'plain_print', media: 'all' %>
+    <%= csrf_meta_tags %>
+	</head>
+	<body>
+
+		<%= yield %>
+
+    <%# display notice on index pages as alert %>
+    <%- if !flash.empty? -%>
+      <script type="text/javascript">
+        $(window).load( function() {
+          <% flash.each do |name, msg| -%>
+          alert("<%= msg %>");
+          <% end -%>
+        });
+      </script>
+      <%- flash.clear -%>
+    <%- end -%>
+	</body>
+</html>

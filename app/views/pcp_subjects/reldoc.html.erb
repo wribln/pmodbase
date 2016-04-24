@@ -1,0 +1,43 @@
+  <%- page_title %>
+  <div class="no-print" id="nav">
+    <a href="javascript:window.print()"><%= t( 'button_label.print' )%></a>
+    <%= link_to t( 'button_label.show'  ), @pcp_subject %>
+    <%= link_to t( 'button_label.index' ), pcp_subjects_path %>
+  </div>
+  <h1><%= t( '.main_heading' )%></h1>
+  <table class="noborder">
+    <tbody>
+      <tr>
+        <td class="no-wrap"><%= t( '.report_doc_id' )%><%= t( '.code_vers_sep' )%><%= t( '.version' )%>:</td>
+        <td><%= @pcp_subject.report_doc_id %><%= t( '.code_vers_sep' )%><%= @pcp_step.step_no %></td>
+      </tr>
+      <tr><td></td><td></td></tr>
+      <tr>
+        <td class="no-wrap"><%= t( '.subject_title' )%>:</td>
+        <td style="font-weight: bold"><%= @pcp_step.subject_title %></td>
+      </tr>
+      <tr>
+        <td class="no-wrap"><%= t( '.project_doc_id' )%><%= t( '.code_vers_sep' )%><%= t( '.version' )%>:</td>
+        <td style="font-weight: bold"><%= @pcp_step.project_doc_id %><%= t( '.code_vers_sep' )%><%= @pcp_step.subject_version %></td>
+      </tr>
+      <tr>
+        <td class="no-wrap"><%= t( '.subject_date' )%>:</td>
+        <td><%= db_formatted_d( @pcp_step.subject_date )%></td>
+      </tr>
+      <tr><td></td><td></td></tr>
+      <tr>
+        <td class="no-wrap"><%= t( '.released_by' )%>:</td>
+        <td><%= @pcp_step.released_by %></td>
+      </tr>
+      <tr>
+        <td class="no-wrap"><%= t( '.released_by' )%>:</td>
+        <td><%= @pcp_step.released_at %></td>
+      </tr>
+      <%- if @pcp_step.in_commenting_group? -%>
+      <tr>
+        <td class="no-wrap"><%= t( '.assessment' )%>:</td>
+        <td><%= @pcp_step.assessment_label( @pcp_step.new_assmt )%></td>
+      </tr>
+      <%- end -%>
+    </tbody>
+  </table>

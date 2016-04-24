@@ -55,6 +55,7 @@ Rails.application.routes.draw do
 #  end
   get 'pcs/:id/release', to: 'pcp_subjects#update_release', as: 'pcp_subject_release', format: false
   get 'pcs/:id/info', to: 'pcp_subjects#info', as: 'pcp_subject_history', format: false
+  get 'pcs/:id/reldoc/:step_no', to: 'pcp_subjects#show_release', format: false
   resources :people, path: 'apt', format: false
   resources :phase_codes, path: 'ppc', format: false
   resources :product_codes, path: 'scp', format: false

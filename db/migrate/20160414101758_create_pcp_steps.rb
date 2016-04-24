@@ -12,7 +12,7 @@ class CreatePcpSteps < ActiveRecord::Migration
       t.integer     :new_assmt
       t.string      :released_by,     limit: MAX_LENGTH_OF_ACCOUNT_NAME + MAX_LENGTH_OF_PERSON_NAMES
       t.datetime    :released_at
-      t.string      :subject_title,   limit: MAX_LENGTH_OF_DESCRIPTION
+      t.string      :subject_title,   limit: MAX_LENGTH_OF_TITLE
       t.string      :project_doc_id,  limit: MAX_LENGTH_OF_TITLE
 
       t.timestamps null: false
