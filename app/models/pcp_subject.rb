@@ -68,12 +68,35 @@ class PcpSubject < ActiveRecord::Base
     pcp_steps.most_recent.first
   end
 
-  # providing the acting_group_switch as parameter is mostly more efficient than 
-  # referring to current_step.acting_group_switch as the current_step is mostly 
-  # known/retrieved when this method is called
+  # providing the acting_group_index as parameter is more efficient than
+  # referring to current_step.acting_group_index as the current_step is mostly
+  # likely known/retrieved when this method is called
 
-  def acting_group( ags )
+  def get_acting_group( ags )
     Group.find( ags == 0 ? c_group_id : p_group_id )
+  end
+
+  # determine from the account of the current user whether she belongs to the acting
+  # group, i.e. either to the presenting group or to the commenting group or even to
+  # another group; this controls what information the user is able to view; as we can
+  # have the same project group for both presenting and commenting group, I will use
+  # a bit map for this purpose
+  # 0 - other group
+  # 1 - presenting group
+  # 2 - commenting group
+  # 3 - both presenting and commenting group
+
+  def viewing_group_index( id )
+    r = 0
+    r =     1 if ( id == p_owner_id )||( id == p_deputy_id ) 
+    r = r | 2 if ( id == c_owner_id )||( id == c_deputy_id )
+    return r
+  end
+
+  # check if acting_group (0 or 1) is same as viewing group ...
+
+  def self.same_group?( acting, viewing )
+    ( acting + 1 )&( viewing ) != 0
   end
 
   # fix assignments

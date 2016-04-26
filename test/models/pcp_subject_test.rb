@@ -176,12 +176,12 @@ class PcpSubjectTest < ActiveSupport::TestCase
     assert_equal ps.pcp_steps[ 1 ].id, s1.id
   end
 
-  test 'acting_group' do
+  test 'get_acting_group' do
     ps = pcp_subjects( :one )
     gp = ps.p_group_id
     pc = ps.c_group_id
-    assert ps.p_group_id, ps.acting_group( 0 ).id
-    assert ps.c_group_id, ps.acting_group( 1 ).id
+    assert ps.p_group_id, ps.get_acting_group( 0 ).id
+    assert ps.c_group_id, ps.get_acting_group( 1 ).id
   end
 
   test 'user access - p_group/owner == c_group/owner' do
@@ -214,6 +214,46 @@ class PcpSubjectTest < ActiveSupport::TestCase
     refute ps.user_is_owner_or_deputy?( c1, 1 )
     refute ps.user_is_owner_or_deputy?( c2, 0 )
     assert ps.user_is_owner_or_deputy?( c2, 1 )
+  end
+
+  test 'acting and viewing group' do
+    ps = pcp_subjects( :one )
+
+    # we have the same account for both presenting and commenting group
+
+    assert_equal ps.p_owner_id, ps.c_owner_id
+    assert_equal 1, ps.current_step.acting_group_index
+    pvgi = ps.viewing_group_index( ps.p_owner_id )
+    cvgi = ps.viewing_group_index( ps.c_owner_id )
+    assert_equal 3, pvgi
+    assert_equal 3, cvgi
+
+    assert PcpSubject.same_group?( 0, pvgi )
+    assert PcpSubject.same_group?( 0, cvgi )
+    assert PcpSubject.same_group?( 1, pvgi )
+    assert PcpSubject.same_group?( 1, cvgi )
+
+    # now try different accounts
+
+    ps.c_owner_id = accounts( :account_two ).id
+    refute_equal ps.p_owner_id, ps.c_owner_id
+    cvgi = ps.viewing_group_index( ps.c_owner_id )
+    pvgi = ps.viewing_group_index( ps.p_owner_id )
+    assert_equal 1, pvgi
+    assert_equal 2, cvgi
+
+    assert PcpSubject.same_group?( 0, pvgi )
+    assert PcpSubject.same_group?( 1, cvgi )
+    refute PcpSubject.same_group?( 1, pvgi )
+    refute PcpSubject.same_group?( 0, cvgi )
+
+    # test for account outside of both groups
+
+    xvgi = ps.viewing_group_index( accounts( :account_wop ).id )
+    assert_equal 0, xvgi
+    refute PcpSubject.same_group?( 1, xvgi )
+    refute PcpSubject.same_group?( 0, xvgi )
+
   end
 
 end

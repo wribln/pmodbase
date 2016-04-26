@@ -106,6 +106,7 @@
           <td><%= PcpStep.human_attribute_name( :subject_status )%></td>
           <td><%= ps.subject_status_label %></td>
         </tr>
+        <%- unless ps.released_at.nil? -%>
         <tr>
           <td><%= PcpStep.human_attribute_name( :released_by )%></td>
           <td><%= ps.released_by %></td>
@@ -114,6 +115,11 @@
           <td><%= PcpStep.human_attribute_name( :released_at )%></td>
           <td><%= db_formatted_dt( ps.released_at )%></td>
         </tr>
+        <tr>
+          <td><%= PcpSubject.human_attribute_name( :report_doc_id )%></td>
+          <td><%= link_to combine_doc_id_and_version( @pcp_subject.report_doc_id, ps.step_no ), pcp_release_doc_path( id: @pcp_subject.id, step_no: ps.step_no )%></td>
+        </tr>
+        <%- end -%>
       </tbody>
     </table>
     <%- end -%>

@@ -87,14 +87,14 @@ class PcpStep < ActiveRecord::Base
   # (2) not possible to release due to errors
 
   def release_type
-    if in_commenting_group? then
-      errors.add( :new_assmt, I18n.t( 'pcp_steps.msg.mis_assessment' )) \
-        if new_assmt.nil?
-    else # in_presenting_group
+    if in_presenting_group? then
       errors.add( :base, I18n.t( 'pcp_steps.msg.missng_subject' )) \
         if pcp_subject.title.blank? && pcp_subject.project_doc_id.blank? 
       errors.add( :base, I18n.t( 'pcp_steps.msg.clsd_subj_no_r' )) \
         if status_closed?
+    else # in commenting group
+      errors.add( :new_assmt, I18n.t( 'pcp_steps.msg.mis_assessment' )) \
+        if new_assmt.nil?
     end
     if errors.empty? then
       new_subject_status == 2 ? 1 : 0
@@ -161,23 +161,40 @@ class PcpStep < ActiveRecord::Base
     if step_no < STEP_LABELS.size then
       STEP_LABELS[ step_no ]
     else
-      I18n.t( 'activerecord.attributes.pcp_step.step_label', ss: STEP_STATES[ acting_group_switch ], no: (( step_no + 1 ) >> 1 ))
+      I18n.t( 'activerecord.attributes.pcp_step.step_label', ss: STEP_STATES[ acting_group_index ], no: (( step_no + 1 ) >> 1 ))
     end
   end
 
-  # return 0 if current owner is presenting group,
-  #        1 if current owner is commenting group
 
-  def acting_group_switch
-    status_closed? ? 0 : step_no & 1
+  # Regarding PCP subjects, I need to distinguish between the 'acting_group' -
+  # this can be the presenting or the commenting group, and the 'viewing_group'
+  # which determins what the user can view. The viewing_group is determined in
+  # the (PCP subjects) controller as this is derived from the current user.
+
+  # The acting_group is either
+  #  0 - presenting group, or
+  #  1 - commenting group
+  # which can easily be derived from the step_no (the presenting group starts
+  # with the initial release step 0, the reviewing group is next with step 1).
+  # However, once the PCP subject is closed by the reviewing group, there is no
+  # new step but the acting_group is the presenting group.
+
+  def acting_group_index
+    if status_closed? then
+      0
+    else
+      step_no & 1
+    end
   end
 
+  public
+
   def in_presenting_group?
-    acting_group_switch == 0
+    acting_group_index == 0
   end
 
   def in_commenting_group?
-    acting_group_switch == 1
+    acting_group_index == 1
   end
 
   # create a new step based on the current one
@@ -186,12 +203,12 @@ class PcpStep < ActiveRecord::Base
     prev_step.set_release_data( current_user )
     self.step_no = prev_step.step_no + 1
     self.subject_status = prev_step.subject_status
-    if in_commenting_group? then
-      self.prev_assmt = prev_step.prev_assmt
-      self.new_assmt = prev_step.new_assmt
-    else
+    if in_presenting_group? then
       self.prev_assmt = prev_step.new_assmt || prev_step.prev_assmt
       self.new_assmt = nil
+    else
+      self.prev_assmt = prev_step.prev_assmt
+      self.new_assmt = prev_step.new_assmt
     end
   end
 

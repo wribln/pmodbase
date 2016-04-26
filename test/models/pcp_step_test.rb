@@ -1,7 +1,7 @@
 require 'test_helper'
 class PcpStepTest < ActiveSupport::TestCase
 
-  test 'fixture 1' do
+  test 'fixture 1' do # first release
     ps = pcp_steps( :one )
     assert ps.valid?, ps.errors.messages
     assert_equal ps.pcp_subject_id, pcp_subjects( :one ).id
@@ -19,49 +19,49 @@ class PcpStepTest < ActiveSupport::TestCase
     assert_nil ps.project_doc_id
   end
 
-  test 'fixture 2' do
+  test 'fixture 2' do # first review - return 'A' - close subject
     ps = pcp_steps( :two )
     assert ps.valid?, ps.errors.messages
     assert_equal ps.pcp_subject_id, pcp_subjects( :one ).id
     assert_equal 1, ps.step_no
     refute_empty ps.subject_version
     assert_equal 1, ps.subject_status
-    assert_equal 0, ps.prev_assmt
+    assert_equal 2, ps.prev_assmt
+    assert_equal 2, ps.new_assmt
     assert_nil ps.subject_date
     assert_nil ps.note
-    assert_nil ps.new_assmt
     refute_nil ps.due_date
-    refute_nil ps.released_by
-    refute_nil ps.released_at
+    assert_nil ps.released_by
+    assert_nil ps.released_at
     assert_nil ps.subject_title
     assert_nil ps.project_doc_id
   end
 
-  test 'step labels / acting_group_switch' do
+  test 'step labels / acting_group_index' do
     ps = pcp_steps( :one )
     assert_equal PcpStep::STEP_LABELS[ 0 ], ps.step_label, 'Initial Release'
-    assert_equal 0, ps.acting_group_switch, '0 - originator'
+    assert_equal 0, ps.acting_group_index, '0 - originator'
     ps.step_no += 1
     assert_equal PcpStep::STEP_LABELS[ 1 ], ps.step_label, 'Initial Review'
-    assert_equal 1, ps.acting_group_switch, '1 - reviewing party'
+    assert_equal 1, ps.acting_group_index, '1 - reviewing party'
     ps.step_no += 1
     assert_equal PcpStep::STEP_LABELS[ 2 ], ps.step_label, 'First Response'
-    assert_equal 0, ps.acting_group_switch, '0 - responding party'
+    assert_equal 0, ps.acting_group_index, '0 - responding party'
     ps.step_no += 1
     assert_equal PcpStep::STEP_LABELS[ 3 ], ps.step_label, 'Second Review'
-    assert_equal 1, ps.acting_group_switch, '1 - reviewing party'
+    assert_equal 1, ps.acting_group_index, '1 - reviewing party'
     ps.step_no += 1
     assert_equal PcpStep::STEP_LABELS[ 4 ], ps.step_label, 'Second Response'
-    assert_equal 0, ps.acting_group_switch, '0 - responding party'
+    assert_equal 0, ps.acting_group_index, '0 - responding party'
     ps.step_no += 1
     assert_equal 'Review No 3', ps.step_label
-    assert_equal 1, ps.acting_group_switch, '1 - reviewing party'
+    assert_equal 1, ps.acting_group_index, '1 - reviewing party'
     ps.step_no += 1
     assert_equal 'Response No 3', ps.step_label
-    assert_equal 0, ps.acting_group_switch, '0 - responding party'
+    assert_equal 0, ps.acting_group_index, '0 - responding party'
     ps.step_no += 1
     assert_equal 'Review No 4', ps.step_label
-    assert_equal 1, ps.acting_group_switch, '1 - reviewing party'
+    assert_equal 1, ps.acting_group_index, '1 - reviewing party'
   end
 
   test 'related pcp subject must exist' do
@@ -193,29 +193,35 @@ class PcpStepTest < ActiveSupport::TestCase
 
   end
 
-  test 'acting_group_switch and related methods' do
+  test 'acting_group_index and related methods' do
     ps = PcpStep.new
 
     ps.step_no = 0
-    assert_equal 0, ps.acting_group_switch
+    assert_equal 0, ps.acting_group_index
     assert ps.in_presenting_group?
     refute ps.in_commenting_group?
 
     ps.step_no = 1
-    assert_equal 1, ps.acting_group_switch
+    assert_equal 1, ps.acting_group_index
     refute ps.in_presenting_group?
     assert ps.in_commenting_group?
 
     ps.step_no = 2
-    assert_equal 0, ps.acting_group_switch
+    assert_equal 0, ps.acting_group_index
     assert ps.in_presenting_group?
     refute ps.in_commenting_group?
 
     ps.step_no = 3
-    assert_equal 1, ps.acting_group_switch
+    assert_equal 1, ps.acting_group_index
     refute ps.in_presenting_group?
     assert ps.in_commenting_group?
 
+    # however, closed subjects are always in presenting group ...
+
+    ps.new_assmt = 1 # Approved
+    ps.subject_status = ps.new_subject_status
+    assert ps.in_presenting_group?
+    refute ps.in_commenting_group?
   end
 
 end

@@ -29,6 +29,7 @@ class PcpSubjectsController < ApplicationController
     if @pcp_step then
       render :reldoc, layout: 'plain_print'
     else
+      render file: 'public/404.html', status: :not_found
     end
   end
 
@@ -73,7 +74,7 @@ class PcpSubjectsController < ApplicationController
   # GET /pcs/1/release
 
   def update_release
-    if @pcp_subject.user_is_owner_or_deputy?( current_user.id, @pcp_step.acting_group_switch )
+    if @pcp_subject.user_is_owner_or_deputy?( current_user.id, @pcp_step.acting_group_index )
       respond_to do |format|
         case @pcp_step.release_type
         when 0
@@ -82,7 +83,8 @@ class PcpSubjectsController < ApplicationController
           @pcp_step_new.create_release_from( @pcp_step, current_user )
           PcpStep.transaction do
             if @pcp_step_new.save && @pcp_step.save then
-              format.html { redirect_to action: :show_release, id: @pcp_subject.id, step_no: @pcp_step_new.step_no, notice: I18n.t( 'pcp_subjects.msg.release_ok' )}
+              flash[ :notice ] = I18n.t( 'pcp_subjects.msg.release_ok' )
+              format.html { redirect_to action: :show_release, id: @pcp_subject.id, step_no: @pcp_step.step_no }
             else
               format.html { render :show }
             end
@@ -91,8 +93,8 @@ class PcpSubjectsController < ApplicationController
           set_final_breadcrumb( :release )
           @pcp_step.set_release_data( current_user )
           if @pcp_step.save then
-            format.html
-#            format.html { redirect_to @pcp_subject, notice: I18n.t( 'pcp_subjects.msg.release_ok' )}
+            flash[ :notice ] = I18n.t( 'pcp_subjects.msg.release_ok' )
+            format.html { redirect_to action: :show_release, id: @pcp_subject.id, step_no: @pcp_step.step_no }
           else
             format.html { render :show }
           end

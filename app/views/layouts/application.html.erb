@@ -14,7 +14,7 @@
 		<%= yield %>
 
     <%# display notice on index pages as alert %>
-    <%if params[:action] == "index" && !flash.empty? %>
+    <%- if params[:action] == "index" && !flash.empty? -%>
       <script type="text/javascript">
         $(window).load( function() {
           <% flash.each do |name, msg| -%>
@@ -23,7 +23,6 @@
         });
       </script>
       <%- flash.clear -%>
-    <% end %>
-   
+    <%- end -%>
 	</body>
 </html>

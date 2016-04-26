@@ -23,6 +23,7 @@ class OurTiaItemsController < ApplicationController
         @tia_items = @tia_list.tia_items.active.filter( filter_params )
         @tia_stats = @tia_list.tia_items.active.filter( filter_params ).group( :status ).count
         set_header( :doc, 'tia-items.doc' )
+        render layout: 'plain_docs'
       end
     end
   end

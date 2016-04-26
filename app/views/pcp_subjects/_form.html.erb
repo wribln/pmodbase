@@ -191,10 +191,10 @@
         <div class="form-group">
           <%= os.label :new_assmt, class: "col-sm-3 control-label" %>
           <div class="col-sm-4">
-            <%- if os.object.in_commenting_group? then -%>
-              <%= os.select :new_assmt, select_options( PcpStep::ASSESSMENT_LABELS ), { prompt: t( '.g_prompt' ) }, { class: "form-control" }%>
-            <%- else -%>
+            <%- if os.object.in_presenting_group? then -%>
               <%= display_value PcpStep.assessment_label( os.object.new_assmt ) %>
+            <%- else -%>
+              <%= os.select :new_assmt, select_options( PcpStep::ASSESSMENT_LABELS ), { prompt: t( '.g_prompt' ) }, { class: "form-control" }%>
             <%- end -%>
           </div>
         </div>

@@ -17,7 +17,7 @@ two:
   note:
   due_date:         2016-04-24
   subject_status:   1
-  prev_assmt:       0
-  new_assmt:
-  released_by:      'someone'
-  released_at:      2016-04-25
+  prev_assmt:       2
+  new_assmt:        2
+  released_by:
+  released_at:

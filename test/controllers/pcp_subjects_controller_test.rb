@@ -17,6 +17,22 @@ class PcpSubjectsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test 'should get release document' do
+    get :show_release, id: @pcp_subject, step_no: pcp_steps( :two ).step_no
+    refute_nil assigns( :pcp_step )
+    refute_nil assigns( :pcp_subject )
+    assert_response :success
+  end
+
+  test 'should release step' do
+    assert_difference( 'PcpStep.count' ) do
+      get :update_release, id: @pcp_subject
+    end
+    refute_nil assigns( :pcp_step )
+    refute_nil assigns( :pcp_subject )
+    assert_redirected_to pcp_release_doc_path( id: assigns( :pcp_subject ).id, step_no: assigns( :pcp_step ).step_no )
+  end
+
   test 'should get history' do
     get :info, id: @pcp_subject
     assert_response :success

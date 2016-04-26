@@ -30,7 +30,7 @@
             <td><%= cs.try :subject_status_label %></td>
             <td><%= PcpStep.assessment_code( cs.try :current_assmt )%></td>
             <td><%= cs.try :step_label %></td>
-            <td><%= ps.acting_group( cs.try :acting_group_switch ).code %></td>
+            <td><%= ps.get_acting_group( cs.try :acting_group_index ).code %></td>
             <td><%= render partial: 'shared/actions', object: ps %></td>
           </tr>
         <% end %>

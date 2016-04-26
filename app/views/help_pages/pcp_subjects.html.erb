@@ -2,10 +2,8 @@
   <div class="container">
     <%= helpcrumbs %>
     <%= help_header %>
-    <p class="lead">Manage the Status of Observation/Response Log Subjects</p>
+    <p class="lead">Manage the Status of various Present-Comment Processes (PCP)</p>
     <h3>Attributes of PCP Subjects</h3>
-    <p>Each PCP Subject belongs to a specific PCP Category. Overall statistics
-      on the status of all subjects will be collected per PCP Category.</p>
     <p>PCP Subjects represent the status of typical present and comment processes:
       An PCP Subject is often a document to be reviewed by another project group.
       Any review comments are returned to the originating/presenting project group.
@@ -13,9 +11,11 @@
       or by clarifying responses to the initial comments. The updated document is
       re-submitted and the process is repeated until the document has reached an
       'approved' status and the PCP Subject reaches a 'closed' state.</p>
+    <p>Each PCP Subject belongs to a specific PCP Category. Overall statistics
+      on the status of all subjects will be collected per PCP Category.</p>
     <p>The status of each process step (submission - review - response - re-review -...)
-      is collected in the current <a href='#pcp_step'>PCP Step
-        section</a> of the PCP Subject.</p>
+      is collected in the current <a href='#pcp_step'>PCP Step section</a>
+      of the PCP Subject.</p>
     <ul>
       <li><%= help_param PcpSubject.human_attribute_name( :id ) -%> is the unique
         identifier of the PCP Subject.</li>
@@ -116,9 +116,19 @@
     <p>The presenting project group can only release a PCP Step if a
       <%= help_term PcpSubject.human_attribute_name( :title )-%> or a
       <%= help_term PcpSubject.human_attribute_name( :project_doc_id )-%> is given.</p>
+    <p>A successful release will open a new window with a 
+      <%= help_term t( 'pcp_subjects.reldoc.main_heading')%>. This report is formatted
+      to be printed on A4 paper directly from your browser - or to be saved as PDF-formatted
+      file using your favourite PDF printer driver.</p>
     <h3 id='pcp_history'>Show History of PCP Subject</h3>
     <p>A complete history of all steps for the current PCP Subject can be requested via the
       <%= help_term t( 'button_label.history' )-%> button on the  
-      <%= link_to t( 'pcp_subjects.show.form_title' ), '#pcp_history' -%> page.
+      <%= link_to t( 'pcp_subjects.show.form_title' ), '#pcp_history' -%> page. The history
+      of a PCP Subject consists of the PCP Subject attributes and a listing of all
+      PCP Step attributes for each of the previous releases at the time of the release. The
+      PCP Steps are listed in reverse chronological order, i.e. the most currently active
+      step is listed first, the initial release step is listed last.</p>
+    <p>The <%= help_term PcpSubject.human_attribute_name( :report_doc_id )%> attribute has
+      a link to the respective Release document.</p>
     <%= help_footer FEATURE_ID_PCP_SUBJECTS %>
   </div> <!-- /container -->

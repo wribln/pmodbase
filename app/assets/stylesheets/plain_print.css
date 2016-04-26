@@ -1,4 +1,6 @@
-/* layout for all (try wysiwyg) */
+/* layout for all (try wysiwyg)
+ *= require_self
+*/
 
   * {
     font-family: arial,verdana,sans-serif;
@@ -16,20 +18,23 @@
     {
     table-layout: fixed;
     border-collapse: collapse;
-    border: 0.05pt solid grey;
     margin: 0;
-    line-height: 100%;
-    padding: 0.2cm;
+    padding-top: 0.2cm;
+    padding-bottom: 0.2cm;
+    padding-left: 0cm;
+    padding-right: 0.5cm;
     }
-  td.nowrap
+  td .nowrap
     {
     white-space: nowrap;
     }
-  table.noborder
+  table .with-lines, td, th
+    {
+    border: 0.05pt solid grey;
+    }
+  table .no-lines, td, th
     {
     border: none;
-    padding-left: 0;
-    padding-right: 0.4cm;
     }
   caption
     {

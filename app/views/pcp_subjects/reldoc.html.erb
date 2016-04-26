@@ -5,7 +5,7 @@
     <%= link_to t( 'button_label.index' ), pcp_subjects_path %>
   </div>
   <h1><%= t( '.main_heading' )%></h1>
-  <table class="noborder">
+  <table class="no-lines">
     <tbody>
       <tr>
         <td class="no-wrap"><%= t( '.report_doc_id' )%><%= t( '.code_vers_sep' )%><%= t( '.version' )%>:</td>
@@ -30,13 +30,18 @@
         <td><%= @pcp_step.released_by %></td>
       </tr>
       <tr>
-        <td class="no-wrap"><%= t( '.released_by' )%>:</td>
+        <td class="no-wrap"><%= t( '.released_at' )%>:</td>
         <td><%= @pcp_step.released_at %></td>
       </tr>
-      <%- if @pcp_step.in_commenting_group? -%>
+      <tr>
+        <td class="no-wrap"><%= t( '.release_reason' )%>:</td>
+        <td><%= @pcp_step.step_label %></td>
+      </tr>
+      <%- if @pcp_step.in_commenting_group? || @pcp_step.status_closed? -%>
+      <%# show assessment for review results or final step %>
       <tr>
         <td class="no-wrap"><%= t( '.assessment' )%>:</td>
-        <td><%= @pcp_step.assessment_label( @pcp_step.new_assmt )%></td>
+        <td><%= PcpStep.assessment_label( @pcp_step.new_assmt )%></td>
       </tr>
       <%- end -%>
     </tbody>
