@@ -1,3 +1,4 @@
+require 'core_ext/string'
 class PcpSubject < ActiveRecord::Base
   include ApplicationModel
   include Filterable
@@ -14,6 +15,7 @@ class PcpSubject < ActiveRecord::Base
   accepts_nested_attributes_for :pcp_steps
 
   before_validation :set_defaults_from_pcp_categories, on: :create
+  after_validation :set_title_and_doc_ids
 
   validates :pcp_category_id,
     presence: true
@@ -29,7 +31,7 @@ class PcpSubject < ActiveRecord::Base
     length: { maximum: MAX_LENGTH_OF_NOTE }
 
   validates :project_doc_id, :report_doc_id,
-    length: { maximum: MAX_LENGTH_OF_DOC_ID }
+    length: { maximum: ProjectDocLog::MAX_LENGTH_OF_DOC_ID }
 
   validate :pcp_category_exists
 
@@ -49,7 +51,7 @@ class PcpSubject < ActiveRecord::Base
   def archived_and_status
     if archived then
       errors.add( :archived, I18n.t( 'pcp_subjects.msg.bad_status' )) \
-        unless current_step.status_closed?
+        unless current_steps[ 0 ].status_closed?
     end
   end
 
@@ -62,10 +64,10 @@ class PcpSubject < ActiveRecord::Base
     end
   end
 
-  # retrieve the current pcp_step
+  # retrieve the current and previous pcp_step
 
-  def current_step
-    pcp_steps.most_recent.first
+  def current_steps
+    pcp_steps.most_recent.first(2)
   end
 
   # providing the acting_group_index as parameter is more efficient than
@@ -99,6 +101,25 @@ class PcpSubject < ActiveRecord::Base
     ( acting + 1 )&( viewing ) != 0
   end
 
+  # if an unsigned integer was given as doc id, retrieve complete doc id and
+  # title to be used
+
+  def set_title_and_doc_ids
+    if report_doc_id && report_doc_id.is_n? then
+      doc = ProjectDocLog.get_title_and_doc_id( report_doc_id.to_i )
+      unless doc.nil? then
+        write_attribute( :report_doc_id, doc[ 1 ])
+      end
+    end
+    if project_doc_id && project_doc_id.is_n? then
+      doc = ProjectDocLog.get_title_and_doc_id( project_doc_id.to_i )
+      unless doc.nil? then
+        write_attribute( :title, doc[ 0 ])
+        write_attribute( :project_doc_id, doc[ 1 ])
+      end
+    end
+  end 
+
   # fix assignments
 
   def title=( text )
@@ -106,11 +127,11 @@ class PcpSubject < ActiveRecord::Base
   end
 
   def project_doc_id=( text )
-    write_attribute( :project_doc_id, AppHelper.clean_up( text, MAX_LENGTH_OF_DOC_ID ))
+    write_attribute( :project_doc_id, AppHelper.clean_up( text, ProjectDocLog::MAX_LENGTH_OF_DOC_ID ))
   end
 
   def report_doc_id=( text )
-    write_attribute( :report_doc_id, AppHelper.clean_up( text, MAX_LENGTH_OF_DOC_ID ))
+    write_attribute( :report_doc_id, AppHelper.clean_up( text, ProjectDocLog::MAX_LENGTH_OF_DOC_ID ))
   end
 
   # access control helper

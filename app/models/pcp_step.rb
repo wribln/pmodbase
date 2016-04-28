@@ -18,7 +18,7 @@ class PcpStep < ActiveRecord::Base
   STEP_LABELS = PcpStep.human_attribute_name( :step_labels ).freeze
   STEP_STATES = PcpStep.human_attribute_name( :step_states ).freeze
 
-  validates :subject_version,
+  validates :subject_version, :report_version,
     length: { maximum: MAX_LENGTH_OF_DOC_VERSION }
 
   validates :note,
@@ -37,7 +37,7 @@ class PcpStep < ActiveRecord::Base
     length: { maximum: MAX_LENGTH_OF_DESCRIPTION }
 
   validates :project_doc_id,
-    length: { maximum: MAX_LENGTH_OF_DOC_ID }
+    length: { maximum: ProjectDocLog::MAX_LENGTH_OF_DOC_ID }
 
   ASSESSMENT_CODES = PcpStep.human_attribute_name(  :ass_codes  ).freeze
   ASSESSMENT_LABELS = PcpStep.human_attribute_name( :ass_labels ).freeze
@@ -87,15 +87,28 @@ class PcpStep < ActiveRecord::Base
   # (2) not possible to release due to errors
 
   def release_type
+
+    # general test
+
+    errors.add( :report_version, I18n.t( 'pcp_steps.msg.no_reqd_input' )) \
+      if report_version.blank?
+
+    # acting group specific tests
+
     if in_presenting_group? then
       errors.add( :base, I18n.t( 'pcp_steps.msg.missng_subject' )) \
         if pcp_subject.title.blank? && pcp_subject.project_doc_id.blank? 
       errors.add( :base, I18n.t( 'pcp_steps.msg.clsd_subj_no_r' )) \
         if status_closed?
+      errors.add( :base, I18n.t( 'pcp_steps.msg.no_subject_status' )) \
+        if subject_date.blank? && subject_version.blank?
     else # in commenting group
-      errors.add( :new_assmt, I18n.t( 'pcp_steps.msg.mis_assessment' )) \
+      errors.add( :new_assmt, I18n.t( 'pcp_steps.msg.no_reqd_input' )) \
         if new_assmt.nil?
     end
+
+    # finally
+
     if errors.empty? then
       new_subject_status == 2 ? 1 : 0
     else
@@ -165,6 +178,15 @@ class PcpStep < ActiveRecord::Base
     end
   end
 
+  # make sure no leading/trailing blanks are stored
+
+  def subject_version=( text )
+    write_attribute( :subject_version, AppHelper.clean_up( text, MAX_LENGTH_OF_DOC_VERSION ))
+  end
+
+  def report_version=( text )
+    write_attribute( :report_version, AppHelper.clean_up( text, MAX_LENGTH_OF_DOC_VERSION ))
+  end
 
   # Regarding PCP subjects, I need to distinguish between the 'acting_group' -
   # this can be the presenting or the commenting group, and the 'viewing_group'
@@ -203,10 +225,13 @@ class PcpStep < ActiveRecord::Base
     prev_step.set_release_data( current_user )
     self.step_no = prev_step.step_no + 1
     self.subject_status = prev_step.subject_status
+    self.report_version = nil
     if in_presenting_group? then
       self.prev_assmt = prev_step.new_assmt || prev_step.prev_assmt
       self.new_assmt = nil
+      self.subject_version = nil
     else
+      self.subject_version = prev_step.subject_version
       self.prev_assmt = prev_step.prev_assmt
       self.new_assmt = prev_step.new_assmt
     end

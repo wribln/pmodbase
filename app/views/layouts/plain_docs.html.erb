@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+    <title><%= content_for?( :title ) ? content_for( :title ) : SITE_ID %></title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+    @media print
+    {
+    @page
+      {
+      margin-top: 1.5cm;
+      margin-bottom: 1.5cm;
+      margin-left: 2.0cm;
+      margin-right: 1.5cm;
+      size: A4 portrait;
+      }
+    * {
+      font-family: arial,verdana,sans-serif;
+      font-size: 12pt;
+      line-height: 120%;
+      direction: ltr;
+      text-align: left;
+      orphans: 2;
+      widows: 2;
+      }
+    h1  { font-size: 18pt; }
+    h2  { font-size: 16pt; }
+    h3  { font-size: 14pt; }
+    table, th, td
+      {
+      border: 0.5pt solid black;
+      border-collapse: collapse;
+      padding: 8pt;
+      vertical-align: left;
+      }
+    }
+    </style>
+	</head>
+	<body>
+
+		<%= yield %>
+
+	</body>
+</html>

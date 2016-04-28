@@ -33,6 +33,7 @@ en:
         c_deputy_id:    'Deputy (Commenting Group)'
         p_deputy_id:    'Deputy (Presenting Group)'
         archived:       'Archived'
+        subject_status: 'Subject Status'
 
       pcp_step:
         id:             :general.attributes.id
@@ -40,6 +41,7 @@ en:
         step_no:        'Step'
         subject_date:   'Subject Status as of'
         subject_version: 'Subject Version'
+        report_version:  'PCP Report Version'
         note:           'Notes for this Step'
         due_date:       'Step Due Date'
 #                          0                  1                 2                 3                4 
@@ -87,6 +89,7 @@ en:
     form:
       g_prompt:       :general.select_prompt
       cs_heading:     'Current Step: %{label}'
+      prev_version:   'previously:'
     edit:
       form_title:     'Edit PCP Subject'
     new:
@@ -95,7 +98,7 @@ en:
       form_title:     'Show PCP Subject Details'
       cs_heading:     'Current Step: %{label}'
     index:
-      form_title:     'List of all PCP Subjects'
+      form_title:     'List of all PCP Subjects (by Category)'
       status_subj:    'Subject'
       assessment:     'Code'
       status_step:    'Current Step' 
@@ -106,7 +109,6 @@ en:
       status:         'Status as of %{at}:'
     reldoc:
       main_heading:   'Present-Comment Process Release Report'
-      code_vers_sep:  ' - '
       report_doc_id:  :general.attributes.project_doc_id
       project_doc_id: :general.attributes.project_doc_id
       version:        'Version'
@@ -131,6 +133,7 @@ en:
       dup_step:       'has already been used.'
       bad_subject:    :general.non_existing
       bad_assessment: 'cannot be set for initial step.'
-      mis_assessment: 'must be set in order to Release this step.'
+      no_reqd_input:  'must be set in order to Release this step.'
       clsd_subj_no_r: 'Cannot Release closed subject.'
       missng_subject: 'Cannot Release without Description, Title, or Project DMS ID.'
+      no_subject_status: 'Subject Date or Subject Version must be given to Release this step.'

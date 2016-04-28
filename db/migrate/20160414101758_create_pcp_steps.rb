@@ -4,6 +4,7 @@ class CreatePcpSteps < ActiveRecord::Migration
       t.belongs_to  :pcp_subject, null: false, index: true, foreign_key: true
       t.integer     :step_no,     null: false, default: 0
       t.string      :subject_version, limit: MAX_LENGTH_OF_DOC_VERSION
+      t.string      :report_version,  limit: MAX_LENGTH_OF_DOC_VERSION
       t.string      :note,            limit: MAX_LENGTH_OF_NOTE
       t.date        :subject_date
       t.date        :due_date
@@ -13,7 +14,7 @@ class CreatePcpSteps < ActiveRecord::Migration
       t.string      :released_by,     limit: MAX_LENGTH_OF_ACCOUNT_NAME + MAX_LENGTH_OF_PERSON_NAMES
       t.datetime    :released_at
       t.string      :subject_title,   limit: MAX_LENGTH_OF_TITLE
-      t.string      :project_doc_id,  limit: MAX_LENGTH_OF_TITLE
+      t.string      :project_doc_id,  limit: MAX_LENGTH_OF_DOC_ID
 
       t.timestamps null: false
     end

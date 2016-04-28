@@ -73,7 +73,7 @@ class DsrStatusRecord < ActiveRecord::Base
 
   validates :project_doc_id,
     allow_blank: true,
-    length: { maximum: MAX_LENGTH_OF_DOC_ID }
+    length: { maximum: ProjectDocLog::MAX_LENGTH_OF_DOC_ID }
 
   validate { given_group_exists( :receiver_group_id )}
 
@@ -277,7 +277,7 @@ class DsrStatusRecord < ActiveRecord::Base
   end
 
   def project_doc_id=( text )
-    write_attribute( :project_doc_id, AppHelper.clean_up( text, MAX_LENGTH_OF_DOC_ID ))
+    write_attribute( :project_doc_id, AppHelper.clean_up( text, ProjectDocLog::MAX_LENGTH_OF_DOC_ID ))
   end
 
   # logic checks: all conditions met?

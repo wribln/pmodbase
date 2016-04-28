@@ -5,7 +5,7 @@ class ReferenceTest < ActiveSupport::TestCase
     ref = references( :one )
     assert ref.code.length < MAX_LENGTH_OF_CODE
     assert ref.description.length <= MAX_LENGTH_OF_DESCRIPTION
-    assert ref.project_doc_id.length <= MAX_LENGTH_OF_DOC_ID
+    assert ref.project_doc_id.length <= ProjectDocLog::MAX_LENGTH_OF_DOC_ID
   end
 
   test "default values of new record" do

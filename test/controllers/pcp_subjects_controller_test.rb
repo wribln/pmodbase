@@ -2,8 +2,14 @@ require 'test_helper'
 class PcpSubjectsControllerTest < ActionController::TestCase
 
   setup do
-    @pcp_subject = pcp_subjects(:one)
+    @pcp_subject = pcp_subjects( :one )
     session[ :current_user_id ] = accounts( :account_one ).id
+  end
+
+  test 'check class attributes' do
+    validate_feature_class_attributes FEATURE_ID_PCP_SUBJECTS, 
+      ApplicationController::FEATURE_ACCESS_INDEX,
+      ApplicationController::FEATURE_CONTROL_CUG
   end
 
   test 'should get index' do
@@ -19,7 +25,7 @@ class PcpSubjectsControllerTest < ActionController::TestCase
 
   test 'should get release document' do
     get :show_release, id: @pcp_subject, step_no: pcp_steps( :two ).step_no
-    refute_nil assigns( :pcp_step )
+    refute_nil assigns( :pcp_curr_step )
     refute_nil assigns( :pcp_subject )
     assert_response :success
   end
@@ -28,9 +34,9 @@ class PcpSubjectsControllerTest < ActionController::TestCase
     assert_difference( 'PcpStep.count' ) do
       get :update_release, id: @pcp_subject
     end
-    refute_nil assigns( :pcp_step )
+    refute_nil assigns( :pcp_curr_step )
     refute_nil assigns( :pcp_subject )
-    assert_redirected_to pcp_release_doc_path( id: assigns( :pcp_subject ).id, step_no: assigns( :pcp_step ).step_no )
+    assert_redirected_to pcp_release_doc_path( id: assigns( :pcp_subject ).id, step_no: assigns( :pcp_curr_step ).step_no )
   end
 
   test 'should get history' do
@@ -48,20 +54,20 @@ class PcpSubjectsControllerTest < ActionController::TestCase
         p_deputy_id: @pcp_subject.p_deputy_id, p_owner_id: @pcp_subject.p_owner_id,
         report_doc_id: @pcp_subject.report_doc_id }
     end
-    assert_not_nil assigns( :pcp_step )
+    assert_not_nil assigns( :pcp_curr_step )
     assert_redirected_to pcp_subject_path( assigns( :pcp_subject ))
   end
 
   test 'should show pcp_subject' do
     get :show, id: @pcp_subject
-    assert_not_nil assigns( :pcp_step )
+    assert_not_nil assigns( :pcp_curr_step )
     assert_not_nil assigns( :pcp_subject )
     assert_response :success
   end
 
   test 'should get edit' do
     get :edit, id: @pcp_subject
-    assert_not_nil assigns( :pcp_step )
+    assert_not_nil assigns( :pcp_curr_step )
     assert_not_nil assigns( :pcp_subject )
     assert_response :success
   end
@@ -73,7 +79,7 @@ class PcpSubjectsControllerTest < ActionController::TestCase
       project_doc_id: @pcp_subject.project_doc_id,
       p_deputy_id: @pcp_subject.p_deputy_id, p_owner_id: @pcp_subject.p_owner_id,
       report_doc_id: @pcp_subject.report_doc_id }
-    assert_not_nil assigns( :pcp_step )
+    assert_not_nil assigns( :pcp_curr_step )
     assert_redirected_to pcp_subject_path( assigns( :pcp_subject ))
   end
 

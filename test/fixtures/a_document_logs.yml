@@ -9,4 +9,4 @@ one:
   a8_code:      'ABC'
   title:        'Test Document'
   account:      account_one
-  alt_doc_id:   ABC-123-ABC-DEF-ABC-ABC-ABC-ABC-<%= ActiveRecord::FixtureSet.identify(:one)%>
+  doc_id:       ABC-123-ABC-DEF-ABC-ABC-ABC-ABC-<%= ActiveRecord::FixtureSet.identify(:one)%>

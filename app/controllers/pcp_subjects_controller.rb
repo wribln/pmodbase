@@ -25,8 +25,8 @@ class PcpSubjectsController < ApplicationController
   # GET /pcs/1/show_release/1
 
   def show_release
-    @pcp_step = @pcp_subject.pcp_steps.where( step_no: params[ :step_no ]).first
-    if @pcp_step then
+    @pcp_curr_step = @pcp_subject.pcp_steps.where( step_no: params[ :step_no ]).first
+    if @pcp_curr_step then
       render :reldoc, layout: 'plain_print'
     else
       render file: 'public/404.html', status: :not_found
@@ -48,7 +48,7 @@ class PcpSubjectsController < ApplicationController
 
   def create
     @pcp_subject = PcpSubject.new( pcp_subject_params )
-    @pcp_step = @pcp_subject.pcp_steps.build
+    @pcp_curr_step = @pcp_subject.pcp_steps.build
     respond_to do |format|
       if @pcp_subject.save then
         format.html { redirect_to @pcp_subject, notice: I18n.t( 'pcp_subjects.msg.new_ok' )}
@@ -74,27 +74,27 @@ class PcpSubjectsController < ApplicationController
   # GET /pcs/1/release
 
   def update_release
-    if @pcp_subject.user_is_owner_or_deputy?( current_user.id, @pcp_step.acting_group_index )
+    if @pcp_subject.user_is_owner_or_deputy?( current_user.id, @pcp_curr_step.acting_group_index )
       respond_to do |format|
-        case @pcp_step.release_type
+        case @pcp_curr_step.release_type
         when 0
           set_final_breadcrumb( :release )
-          @pcp_step_new = @pcp_subject.pcp_steps.create
-          @pcp_step_new.create_release_from( @pcp_step, current_user )
+          @pcp_new_step = @pcp_subject.pcp_steps.create
+          @pcp_new_step.create_release_from( @pcp_curr_step, current_user )
           PcpStep.transaction do
-            if @pcp_step_new.save && @pcp_step.save then
+            if @pcp_new_step.save && @pcp_curr_step.save then
               flash[ :notice ] = I18n.t( 'pcp_subjects.msg.release_ok' )
-              format.html { redirect_to action: :show_release, id: @pcp_subject.id, step_no: @pcp_step.step_no }
+              format.html { redirect_to action: :show_release, id: @pcp_subject.id, step_no: @pcp_curr_step.step_no }
             else
               format.html { render :show }
             end
           end
         when 1
           set_final_breadcrumb( :release )
-          @pcp_step.set_release_data( current_user )
-          if @pcp_step.save then
+          @pcp_curr_step.set_release_data( current_user )
+          if @pcp_curr_step.save then
             flash[ :notice ] = I18n.t( 'pcp_subjects.msg.release_ok' )
-            format.html { redirect_to action: :show_release, id: @pcp_subject.id, step_no: @pcp_step.step_no }
+            format.html { redirect_to action: :show_release, id: @pcp_subject.id, step_no: @pcp_curr_step.step_no }
           else
             format.html { render :show }
           end
@@ -123,7 +123,10 @@ class PcpSubjectsController < ApplicationController
 
     def set_pcp_subject
       @pcp_subject = PcpSubject.find( params[ :id ])
-      @pcp_step = @pcp_subject.current_step
+      most_recent_steps = @pcp_subject.current_steps
+      @pcp_curr_step = most_recent_steps[ 0 ]
+      @pcp_prev_step = most_recent_steps[ 1 ] 
+      @pcp_viewing_group = @pcp_subject.viewing_group_index( current_user.id )
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -140,16 +143,16 @@ class PcpSubjectsController < ApplicationController
         @valid_step_params = []
         @valid_subject_params = [ :pcp_category_id, :title, :note, :project_doc_id, :report_doc_id ]
       else
-        if @pcp_step.in_presenting_group? then
-          if @pcp_step.status_closed? then
+        if @pcp_curr_step.in_presenting_group? then
+          if @pcp_curr_step.status_closed? then
             @valid_step_params = []
             @valid_subject_params = [ :archived ]
           else
-            @valid_step_params = [ :id, :subject_version, :note, :subject_date, :due_date ]
+            @valid_step_params = [ :id, :subject_version, :note, :subject_date, :due_date, :report_version ]
             @valid_subject_params = [ :pcp_category_id, :title, :note, :project_doc_id, :report_doc_id, :p_group_id, :p_owner_id, :p_deputy_id ]
           end
         else
-          @valid_step_params = [ :id, :note, :due_date, :new_assmt ]
+          @valid_step_params = [ :id, :note, :due_date, :new_assmt, :report_version ]
           @valid_subject_params = [ :c_group_id, :c_owner_id, :c_deputy_id ]
         end
       end

@@ -40,7 +40,7 @@ class CsrStatusRecord < ActiveRecord::Base
     date_field: { presence: false }
 
   validates :project_doc_id,
-    length: { maximum: MAX_LENGTH_OF_DOC_ID }
+    length: { maximum: ProjectDocLog::MAX_LENGTH_OF_DOC_ID }
 
   validate { given_group_exists( :receiver_group_id )}
 

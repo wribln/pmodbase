@@ -9,7 +9,7 @@
       <thead>
         <tr>
           <th class="col-sm-1"><%= SDocumentLog.human_attribute_name( :id )%></th>
-          <th class="col-sm-6"><%= SDocumentLog.human_attribute_name( :siemens_doc_id )%></th>
+          <th class="col-sm-6"><%= SDocumentLog.human_attribute_name( :doc_id )%></th>
           <th class="col-sm-4"><%= SDocumentLog.human_attribute_name( :title )%></th>
           <th class="col-sm-1 hidden-print"><%= filter_action_title_header %></th>
         </tr>
@@ -27,7 +27,7 @@
         <% @s_document_logs.each do |sdl| %>
           <tr>
             <td><%= sdl.to_id %></td>
-            <td><%= sdl.siemens_doc_id %></td>
+            <td><%= sdl.doc_id %></td>
             <td><%= sdl.title %></td>
             <td><%= render partial: 'shared/actions', object: sdl %></td>
           </tr>

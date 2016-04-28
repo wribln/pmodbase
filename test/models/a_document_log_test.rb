@@ -207,7 +207,7 @@ class ADocumentLogTest < ActiveSupport::TestCase
 
   test 'create document code' do
     adl = a_document_logs( :one )
-    assert_equal adl.alt_doc_id, adl.create_alt_doc_id
+    assert_equal adl.doc_id, adl.create_alt_doc_id
   end
 
 end

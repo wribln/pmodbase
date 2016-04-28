@@ -115,7 +115,7 @@ class DsrSubmission < ActiveRecord::Base
   end
 
   def submission_project_doc_id=( text )
-    write_attribute( :submission_project_doc_id, AppHelper.clean_up( text, MAX_LENGTH_OF_DOC_ID ))
+    write_attribute( :submission_project_doc_id, AppHelper.clean_up( text, ProjectDocLog::MAX_LENGTH_OF_DOC_ID ))
   end
 
   def response_sender_doc_id=( text )

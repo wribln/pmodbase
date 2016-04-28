@@ -27,6 +27,11 @@ rake import['db/projects/dmr/network_lines.csv','NetworkLine']
 rake import['db/projects/dmr/network_stations.csv','NetworkStation']
 rake db:seed:network_stops
 #
+# the following file determines which is the project-specific document log 
+# SiemensDocumentLog or ADocumentLog
+#
+cp -p db/projects/dmr/project_doc_log.rb app/models/
+#
 if [[ "$e4r" == p* ]]; then
  	cp -p db/projects/dmr/zzz.en.yml config/locales
  	echo -e "\n>>> Project-specific I18 file copied\n"

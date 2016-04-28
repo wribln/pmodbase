@@ -11,4 +11,4 @@ one:
   author_date:      2016-03-03
   title:            'Test Document'
   account:          account_one
-  siemens_doc_id:   TEST(ONE)TWO=ABC$ABC-ABC+1.ST.01%PM200&ABC_20160303_TDD<%= ActiveRecord::FixtureSet.identify(:one)%>_0
+  doc_id:           TEST(ONE)TWO=ABC$ABC-ABC+1.ST.01%PM200&ABC_20160303_TDD<%= ActiveRecord::FixtureSet.identify(:one)%>_0

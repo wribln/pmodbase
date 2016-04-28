@@ -7,7 +7,7 @@ class ADocumentLog < ActiveRecord::Base
   belongs_to :account, -> { readonly }
 
   before_save do
-    self.alt_doc_id = create_alt_doc_id
+    self.doc_id = create_alt_doc_id
     self.set_default!( :author_date, Date.today )
   end
 
@@ -15,8 +15,8 @@ class ADocumentLog < ActiveRecord::Base
     presence: true,
     length: { maximum: MAX_LENGTH_OF_CODE }
 
-  validates :alt_doc_id,
-    length: { maximum: MAX_LENGTH_OF_DOC_ID }
+  validates :doc_id,
+    length: { maximum: MAX_LENGTH_OF_DOC_ID_A }
 
   validates :title,
     length: { maximum: MAX_LENGTH_OF_TITLE }
@@ -27,7 +27,7 @@ class ADocumentLog < ActiveRecord::Base
   scope :reverse, -> { order( id: :desc )}
   scope :inorder, -> { order( id: :asc  )}
   scope :ff_srec, -> ( id   ){ where id: id }
-  scope :ff_adic, -> ( adic ){ where( 'alt_doc_id LIKE ?', "%#{ adic }%" )}
+  scope :ff_adic, -> ( adic ){ where( 'doc_id LIKE ?', "%#{ adic }%" )}
   scope :ff_titl, -> ( titl ){ where( 'title LIKE ?', "%#{ titl }%" )}
 
   # make sure all codes entered are valid
@@ -59,5 +59,22 @@ class ADocumentLog < ActiveRecord::Base
     a8_code << '-' <<
     sprintf( "%5.5d", id || 0 )
   end
+
+  # return title and doc id for a given id
+
+  def self.get_title_and_doc_id( i )
+    where( id: i ).pluck( :title, :doc_id ).first
+  end
+
+  # this returns the doc_id with the version attribute appended
+  # using the correct syntax
+
+  def self.combine_doc_id_and_version( doc_id, version )
+    doc_id.to_s << '-' << version.to_s
+  end
+
+  # for error checking
+
+  MAX_LENGTH_OF_DOC_ID = MAX_LENGTH_OF_DOC_ID_A.freeze
 
 end

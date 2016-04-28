@@ -8,7 +8,7 @@
   :a6_code,
   :a7_code,
   :a8_code,
-  :alt_doc_id,
+  :doc_id,
   :title,
   :user ], STD_CSV_OPTIONS ) -%>
 <%- @a_document_logs.each do |adl| -%>
@@ -22,7 +22,7 @@
   adl.a6_code,
   adl.a7_code,
   adl.a8_code,
-  adl.alt_doc_id,
+  adl.doc_id,
   adl.title,
   adl.account.user_name ], STD_CSV_OPTIONS ).html_safe -%>
 <%- end -%>

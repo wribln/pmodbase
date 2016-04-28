@@ -45,7 +45,7 @@
       <%- if @workflow.permitted_to_show?( :project_doc_id ) then -%>
       <div class="form-group">
         <%= form.label :project_doc_id, class: "col-sm-3 control-label" %>
-        <div class="col-sm-4">
+        <div class="col-sm-6">
           <%= display_value form.object.project_doc_id %>
         </div>
       </div>
@@ -53,8 +53,8 @@
       <%- if @workflow.permitted_to_edit?( :project_doc_id ) then %>
       <div class="form-group">
         <%= form.label :project_doc_id, class: "col-sm-3 control-label" %>
-        <div class="col-sm-4">
-          <%= form.text_field :project_doc_id, class: "form-control", max_length: MAX_LENGTH_OF_DOC_ID %>
+        <div class="col-sm-6">
+          <%= form.text_field :project_doc_id, class: "form-control", max_length: ProjectDocLog::MAX_LENGTH_OF_DOC_ID %>
         </div>
       </div>
       <%- end -%>

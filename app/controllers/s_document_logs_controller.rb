@@ -46,7 +46,7 @@ class SDocumentLogsController < ApplicationController
     @s_document_log.account_id = current_user.id
     respond_to do |format|
       if @s_document_log.save
-        @s_document_log.update_attribute( :siemens_doc_id, '' )
+        @s_document_log.update_attribute( :doc_id, '' )
         format.html { redirect_to @s_document_log, notice: t( 's_document_logs.msg.new_ok' )}
       else
         set_selections( :to_create )

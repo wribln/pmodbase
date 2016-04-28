@@ -45,8 +45,9 @@
   MAX_LENGTH_OF_PROGRAMME_IDS = 20    # for P6 ids such as project ids, activity ids
   MAX_LENGTH_OF_RMS_ID = 20           # for DOORS requirement IDs
   MAX_LENGTH_OF_TERM = 60
-  MAX_LENGTH_OF_DOC_ID = 50
+  MAX_LENGTH_OF_DOC_ID_A = 50         # for Alternative document codes
   MAX_LENGTH_OF_DOC_ID_S = 100        # for Siemens document codes
+  MAX_LENGTH_OF_DOC_ID = 100          # for either Siemens or Alternative document code
   MAX_LENGTH_OF_DOC_VERSION = 10      # length of string for version information
 
 	MAX_LENGTH_OF_LABEL = 50

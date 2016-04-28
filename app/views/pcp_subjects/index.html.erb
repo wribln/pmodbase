@@ -23,7 +23,14 @@
         <%= render partial: 'shared/index_empty_row', locals:{ columns: 6, with_link: true }%>
       <% else %>
         <% @pcp_subjects.each do |ps| %>
-          <% cs = ps.current_step %>
+          <%- if @pcp_category != ps.pcp_category then -%>
+            <tr>
+              <td colspan="6"><strong><%= ps.pcp_category.label %></strong></td>
+              <td class="hidden-print"></td>
+            <tr>
+            <%- @pcp_category = ps.pcp_category -%>
+          <%- end -%>
+          <%- cs = ps.current_steps[ 0 ] -%>
           <tr>
             <td><%= ps.id %></td>
             <td><%= display_two_items_w_br ps.title, ps.project_doc_id %></td>
@@ -33,11 +40,11 @@
             <td><%= ps.get_acting_group( cs.try :acting_group_index ).code %></td>
             <td><%= render partial: 'shared/actions', object: ps %></td>
           </tr>
-        <% end %>
-      <% end %>
+        <%- end -%>
+      <%- end -%>
       </tbody>
     </table>
-    <% end %>
+    <%- end -%>
     <%= render partial: 'shared/footer' %>
   </div>
 </div>

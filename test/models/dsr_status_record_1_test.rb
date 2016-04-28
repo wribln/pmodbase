@@ -52,11 +52,11 @@ class DsrStatusRecordTest1 < ActiveSupport::TestCase
     assert dd.title.length <= MAX_LENGTH_OF_TITLE
     assert_equal 1, dd.document_status
     refute dd.project_doc_id.nil?
-    assert dd.project_doc_id.length <= MAX_LENGTH_OF_DOC_ID
+    assert dd.project_doc_id.length <= ProjectDocLog::MAX_LENGTH_OF_DOC_ID
     assert groups( :group_one ).id, dd.sender_group_id
     assert groups( :group_two ).id, dd.receiver_group_id
     refute dd.project_doc_id.nil?
-    assert dd.project_doc_id.length <= MAX_LENGTH_OF_DOC_ID
+    assert dd.project_doc_id.length <= ProjectDocLog::MAX_LENGTH_OF_DOC_ID
     refute dd.sender_doc_id.nil?
     assert dd.sender_doc_id.length <= MAX_LENGTH_OF_DOC_ID
     refute dd.receiver_doc_id.nil?

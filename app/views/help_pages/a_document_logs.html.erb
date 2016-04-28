@@ -13,7 +13,7 @@
       more than the one record per code for standardization of specific
       subject allocations.</p>
     <p>The following codes are used here to generate the 
-      <%= help_param ADocumentLog.human_attribute_name( :alt_doc_id )-%>:</p>
+      <%= help_param ADocumentLog.human_attribute_name( :doc_id )-%>:</p>
     <ul>
       <li><%= help_param ADocumentLog.human_attribute_name( :a1_code )-%></li>
       <li><%= help_param ADocumentLog.human_attribute_name( :a2_code )-%></li>
@@ -37,7 +37,7 @@
         a field for the title of the document. Although this is not used as part
         of the code, it can be used to search for a specific document with this
         title or part of it.</li>
-      <li><%= help_param ADocumentLog.human_attribute_name( :alt_doc_id )-%>
+      <li><%= help_param ADocumentLog.human_attribute_name( :doc_id )-%>
         is the generated document code, or - when modifying a record - the
         previously generated code.</li>
       <li><%= help_param ADocumentLog.human_attribute_name( :user )-%>

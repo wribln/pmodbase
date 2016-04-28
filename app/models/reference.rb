@@ -15,7 +15,7 @@ class Reference < ActiveRecord::Base
 
   validates :project_doc_id,
     allow_blank: true,
-    length: { maximum: MAX_LENGTH_OF_DOC_ID }
+    length: { maximum: ProjectDocLog::MAX_LENGTH_OF_DOC_ID }
 
   default_scope { order( code: :asc )}
 
@@ -24,6 +24,10 @@ class Reference < ActiveRecord::Base
 
   def code=( text )
     write_attribute( :code, AppHelper.clean_up( text, MAX_LENGTH_OF_CODE ))
+  end
+
+  def project_doc_id=( text )
+    write_attribute( :project_doc_id, AppHelper.clean_up( text, ProjectDocLog::MAX_LENGTH_OF_DOC_ID ))
   end
 
   # prepare a collection which includes an entry to be used for empty records

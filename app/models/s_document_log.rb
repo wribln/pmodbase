@@ -9,7 +9,7 @@ class SDocumentLog < ActiveRecord::Base
   belongs_to :group,   -> { readonly }
 
   before_save do
-    self.siemens_doc_id = create_siemens_doc_id
+    self.doc_id = create_siemens_doc_id
     self.set_default!( :author_date, Date.today )
   end
 
@@ -32,7 +32,7 @@ class SDocumentLog < ActiveRecord::Base
   validates :author_date,
     date_field: { presence: false }
 
-  validates :siemens_doc_id,
+  validates :doc_id,
     length: { maximum: MAX_LENGTH_OF_DOC_ID_S }
 
   validate :given_account_exists
@@ -43,7 +43,7 @@ class SDocumentLog < ActiveRecord::Base
   scope :reverse, -> { order( id: :desc )}
   scope :inorder, -> { order( id: :asc  )}
   scope :ff_srec, -> ( i ){ where id: i }
-  scope :ff_sdic, -> ( s ){ where( 'siemens_doc_id LIKE ? ESCAPE \'\\\'', "%#{ sanitize_sql_like( s, '\\' )}%" )}
+  scope :ff_sdic, -> ( s ){ where( 'doc_id LIKE ? ESCAPE \'\\\'', "%#{ sanitize_sql_like( s, '\\' )}%" )}
   scope :ff_titl, -> ( t ){ where( 'title LIKE ?', "%#{ t }%" )}
 
   # check that at least one of the attribute codes are given
@@ -87,5 +87,23 @@ class SDocumentLog < ActiveRecord::Base
     '_TDD' << sprintf( "%5.5d", id || 0 ) <<
     ( revision_code.blank? ? '' : '_' << revision_code )
   end
+
+  # return title and doc id for a given id, returns nil if given id
+  # is not found
+
+  def self.get_title_and_doc_id( i )
+    where( id: i ).pluck( :title, :doc_id ).first
+  end
+
+  # this returns the doc_id with the version attribute appended
+  # using the correct syntax
+
+  def self.combine_doc_id_and_version( doc_id, version )
+    doc_id.to_s << '_' << version.to_s
+  end
+
+  # for error checking
+
+  MAX_LENGTH_OF_DOC_ID = MAX_LENGTH_OF_DOC_ID_S.freeze
 
 end

@@ -37,7 +37,7 @@ class RfcStatusRecord < ActiveRecord::Base
 
   validates :project_doc_id,
     allow_blank: true,
-    length: { maximum: MAX_LENGTH_OF_DOC_ID }
+    length: { maximum: ProjectDocLog::MAX_LENGTH_OF_DOC_ID }
 
   validates :project_rms_id,
     allow_blank: true,
@@ -82,7 +82,7 @@ class RfcStatusRecord < ActiveRecord::Base
   # any redundant blanks
 
   def project_doc_id=( text )
-    write_attribute( :project_doc_id, AppHelper.clean_up( text, MAX_LENGTH_OF_DOC_ID ))
+    write_attribute( :project_doc_id, AppHelper.clean_up( text, ProjectDocLog::MAX_LENGTH_OF_DOC_ID ))
   end
 
   def project_rms_id=( text )

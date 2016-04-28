@@ -43,7 +43,7 @@ class ADocumentLogsController < ApplicationController
     @a_document_log.account_id = current_user.id
     respond_to do |format|
       if @a_document_log.save
-        @a_document_log.update_attribute( :alt_doc_id, '' )
+        @a_document_log.update_attribute( :doc_id, '' )
         format.html { redirect_to @a_document_log, notice: t( 'a_document_logs.msg.new_ok' )}
       else
         format.html { render :new }

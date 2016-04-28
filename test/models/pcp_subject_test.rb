@@ -149,13 +149,13 @@ class PcpSubjectTest < ActiveSupport::TestCase
   test 'archive flag' do
     ps = pcp_subjects( :one )
     refute ps.archived
-    refute ps.current_step.status_closed?
+    refute ps.current_steps[ 0 ].status_closed?
     assert ps.valid?
     ps.archived = true
     refute ps.valid?
     assert_includes ps.errors, :archived
 
-    pt = ps.current_step
+    pt = ps.current_steps[ 0 ]
     pt.subject_status = 2 # close
     assert pt.save, pt.errors.messages
     assert ps.valid?, ps.errors.messages
@@ -171,7 +171,7 @@ class PcpSubjectTest < ActiveSupport::TestCase
     assert 2, ps.pcp_steps.count
     s1 = pcp_steps( :one )
     s2 = pcp_steps( :two )
-    assert_equal ps.current_step.id, s2.id
+    assert_equal ps.current_steps[ 0 ].id, s2.id
     assert_equal ps.pcp_steps[ 0 ].id, s2.id
     assert_equal ps.pcp_steps[ 1 ].id, s1.id
   end
@@ -222,7 +222,7 @@ class PcpSubjectTest < ActiveSupport::TestCase
     # we have the same account for both presenting and commenting group
 
     assert_equal ps.p_owner_id, ps.c_owner_id
-    assert_equal 1, ps.current_step.acting_group_index
+    assert_equal 1, ps.current_steps[ 0 ].acting_group_index
     pvgi = ps.viewing_group_index( ps.p_owner_id )
     cvgi = ps.viewing_group_index( ps.c_owner_id )
     assert_equal 3, pvgi

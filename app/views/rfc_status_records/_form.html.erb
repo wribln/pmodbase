@@ -83,7 +83,7 @@
         <%= form.label :project_doc_id, class: "col-sm-3 control-label" %>
         <div class="col-sm-6">
           <%- if @workflow.param_permitted?( :project_doc_id ) then %>
-            <%= form.text_field :project_doc_id, class: "form-control", maxlength: MAX_LENGTH_OF_DOC_ID %>
+            <%= form.text_field :project_doc_id, class: "form-control", maxlength: ProjectDocLog::MAX_LENGTH_OF_DOC_ID %>
           <%- else -%>
             <%= form.text_field :project_doc_id, class: "form-control", disabled: true %>
           <%- end -%>

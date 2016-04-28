@@ -11,7 +11,7 @@ class CreateADocumentLogs < ActiveRecord::Migration
       t.string :a8_code, limit: MAX_LENGTH_OF_CODE, null: false
       t.belongs_to :account,      null: false 
       t.string :title,        limit: MAX_LENGTH_OF_TITLE
-      t.string :alt_doc_id,   limit: MAX_LENGTH_OF_DOC_ID
+      t.string :doc_id,       limit: MAX_LENGTH_OF_DOC_ID_A
 
       t.timestamps null: false
     end

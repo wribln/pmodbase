@@ -8,40 +8,40 @@
   <table class="no-lines">
     <tbody>
       <tr>
-        <td class="no-wrap"><%= t( '.report_doc_id' )%><%= t( '.code_vers_sep' )%><%= t( '.version' )%>:</td>
-        <td><%= @pcp_subject.report_doc_id %><%= t( '.code_vers_sep' )%><%= @pcp_step.step_no %></td>
+        <td class="no-wrap"><%= t( '.report_doc_id' )%> - <%= t( '.version' )%>:</td>
+        <td><%= ProjectDocLog.combine_doc_id_and_version( @pcp_subject.report_doc_id, @pcp_curr_step.report_version )%></td>
       </tr>
       <tr><td></td><td></td></tr>
       <tr>
         <td class="no-wrap"><%= t( '.subject_title' )%>:</td>
-        <td style="font-weight: bold"><%= @pcp_step.subject_title %></td>
+        <td style="font-weight: bold"><%= @pcp_curr_step.subject_title %></td>
       </tr>
       <tr>
-        <td class="no-wrap"><%= t( '.project_doc_id' )%><%= t( '.code_vers_sep' )%><%= t( '.version' )%>:</td>
-        <td style="font-weight: bold"><%= @pcp_step.project_doc_id %><%= t( '.code_vers_sep' )%><%= @pcp_step.subject_version %></td>
+        <td class="no-wrap"><%= t( '.project_doc_id' )%> - <%= t( '.version' )%>:</td>
+        <td style="font-weight: bold"><%= ProjectDocLog.combine_doc_id_and_version( @pcp_curr_step.project_doc_id, @pcp_curr_step.subject_version )%></td>
       </tr>
       <tr>
         <td class="no-wrap"><%= t( '.subject_date' )%>:</td>
-        <td><%= db_formatted_d( @pcp_step.subject_date )%></td>
+        <td><%= db_formatted_d( @pcp_curr_step.subject_date )%></td>
       </tr>
       <tr><td></td><td></td></tr>
       <tr>
         <td class="no-wrap"><%= t( '.released_by' )%>:</td>
-        <td><%= @pcp_step.released_by %></td>
+        <td><%= @pcp_curr_step.released_by %></td>
       </tr>
       <tr>
         <td class="no-wrap"><%= t( '.released_at' )%>:</td>
-        <td><%= @pcp_step.released_at %></td>
+        <td><%= @pcp_curr_step.released_at %></td>
       </tr>
       <tr>
         <td class="no-wrap"><%= t( '.release_reason' )%>:</td>
-        <td><%= @pcp_step.step_label %></td>
+        <td><%= @pcp_curr_step.step_label %></td>
       </tr>
-      <%- if @pcp_step.in_commenting_group? || @pcp_step.status_closed? -%>
+      <%- if @pcp_curr_step.in_commenting_group? || @pcp_curr_step.status_closed? -%>
       <%# show assessment for review results or final step %>
       <tr>
         <td class="no-wrap"><%= t( '.assessment' )%>:</td>
-        <td><%= PcpStep.assessment_label( @pcp_step.new_assmt )%></td>
+        <td><%= PcpStep.assessment_label( @pcp_curr_step.new_assmt )%></td>
       </tr>
       <%- end -%>
     </tbody>

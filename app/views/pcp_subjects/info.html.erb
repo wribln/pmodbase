@@ -2,14 +2,14 @@
 <div class="container">
   <%= breadcrumbs %>
   <%= form_title %>
-  <div class="table-responsive col-sm-7">
+  <div class="table-responsive col-sm-9">
     <table class="table table-striped table-bordered table-condensed">
       <caption><%= t( '.status', at: db_formatted_dt( @pcp_subject.updated_at ))%></caption>
       <thead style="display: none"><tr><th class="col-sm-3"></th><th class="col-sm-4"></th></tr></thead>
       <tbody>
         <tr>
           <td class="col-sm-3"><%= PcpSubject.human_attribute_name( :id )%></td>
-          <td class="col-sm-4"><%= @pcp_subject.to_id %></td>
+          <td class="col-sm-6"><%= @pcp_subject.to_id %></td>
         </tr>
         <tr>
           <td><%= PcpSubject.human_attribute_name( :pcp_category_id )%></td>
@@ -72,7 +72,7 @@
       <tbody>
         <tr>
           <td class="col-sm-3"><%= PcpStep.human_attribute_name( :subject_title )%></td>
-          <td class="col-sm-4"><%= ps.subject_title %></td>
+          <td class="col-sm-6"><%= ps.subject_title %></td>
         </tr>
         <tr>
           <td><%= PcpStep.human_attribute_name( :subject_date )%></td>
@@ -86,14 +86,16 @@
           <td><%= PcpStep.human_attribute_name( :subject_version )%></td>
           <td><%= ps.subject_version %></td>
         </tr>
-        <tr>
-          <td><%= PcpStep.human_attribute_name( :note )%></td>
-          <td><%= ps.note %></td>
-        </tr>
-        <tr>
-          <td><%= PcpStep.human_attribute_name( :due_date )%></td>
-          <td><%= db_formatted_d( ps.due_date )%></td>
-        </tr>
+        <%- if PcpSubject.same_group?( ps.acting_group_index, @pcp_viewing_group )-%>
+          <tr>
+            <td><%= PcpStep.human_attribute_name( :note )%></td>
+            <td><%= ps.note %></td>
+          </tr>
+          <tr>
+            <td><%= PcpStep.human_attribute_name( :due_date )%></td>
+            <td><%= db_formatted_d( ps.due_date )%></td>
+          </tr>
+        <%- end -%>
         <tr>
           <td><%= PcpStep.human_attribute_name( :new_assmt )%></td>
           <td><%= PcpStep.assessment_label( ps.new_assmt )%></td>
@@ -117,7 +119,7 @@
         </tr>
         <tr>
           <td><%= PcpSubject.human_attribute_name( :report_doc_id )%></td>
-          <td><%= link_to combine_doc_id_and_version( @pcp_subject.report_doc_id, ps.step_no ), pcp_release_doc_path( id: @pcp_subject.id, step_no: ps.step_no )%></td>
+          <td><%= link_to ProjectDocLog.combine_doc_id_and_version( @pcp_subject.report_doc_id, ps.report_version ), pcp_release_doc_path( id: @pcp_subject.id, step_no: ps.step_no )%></td>
         </tr>
         <%- end -%>
       </tbody>

@@ -124,7 +124,7 @@ ActiveRecord::Schema.define(version: 20160414101758) do
     t.string   "a8_code",    limit: 10,  null: false
     t.integer  "account_id",             null: false
     t.string   "title",      limit: 128
-    t.string   "alt_doc_id", limit: 50
+    t.string   "doc_id",     limit: 50
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
@@ -194,9 +194,9 @@ ActiveRecord::Schema.define(version: 20160414101758) do
     t.date     "actual_reply_date"
     t.integer  "reply_status_record_id"
     t.integer  "status",                             default: 0
-    t.string   "project_doc_id",         limit: 50
-    t.string   "sender_doc_id",          limit: 50
-    t.string   "sender_reference",       limit: 50
+    t.string   "project_doc_id",         limit: 100
+    t.string   "sender_doc_id",          limit: 100
+    t.string   "sender_reference",       limit: 100
     t.string   "notes",                  limit: 50
     t.datetime "created_at",                                     null: false
     t.datetime "updated_at",                                     null: false
@@ -257,12 +257,12 @@ ActiveRecord::Schema.define(version: 20160414101758) do
     t.string   "title",                     limit: 128
     t.integer  "document_status",                       default: 0
     t.integer  "document_status_b",                     default: 0
-    t.string   "project_doc_id",            limit: 50
+    t.string   "project_doc_id",            limit: 100
     t.integer  "sender_group_id",                                     null: false
     t.integer  "sender_group_b_id",                                   null: false
-    t.string   "sender_doc_id",             limit: 50
+    t.string   "sender_doc_id",             limit: 100
     t.integer  "receiver_group_id"
-    t.string   "receiver_doc_id",           limit: 50
+    t.string   "receiver_doc_id",           limit: 100
     t.integer  "sub_purpose",                           default: 0
     t.integer  "sub_frequency",                         default: 0
     t.integer  "quantity",                              default: 1
@@ -306,22 +306,22 @@ ActiveRecord::Schema.define(version: 20160414101758) do
   add_index "dsr_status_records", ["submission_group_id"], name: "index_dsr_status_records_on_submission_group_id"
 
   create_table "dsr_submissions", force: :cascade do |t|
-    t.integer  "dsr_status_record_id",                              null: false
-    t.integer  "submission_no",                         default: 1, null: false
+    t.integer  "dsr_status_record_id",                               null: false
+    t.integer  "submission_no",                          default: 1, null: false
     t.string   "sender_doc_id_version",      limit: 10
     t.string   "receiver_doc_id_version",    limit: 10
     t.string   "project_doc_id_version",     limit: 10
-    t.string   "submission_receiver_doc_id", limit: 50
-    t.string   "submission_project_doc_id",  limit: 50
-    t.string   "response_sender_doc_id",     limit: 50
-    t.string   "response_project_doc_id",    limit: 50
+    t.string   "submission_receiver_doc_id", limit: 100
+    t.string   "submission_project_doc_id",  limit: 100
+    t.string   "response_sender_doc_id",     limit: 100
+    t.string   "response_project_doc_id",    limit: 100
     t.date     "plnd_submission"
     t.date     "actl_submission"
     t.date     "xpcd_response"
     t.date     "actl_response"
     t.integer  "response_status"
-    t.datetime "created_at",                                        null: false
-    t.datetime "updated_at",                                        null: false
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
   end
 
   add_index "dsr_submissions", ["dsr_status_record_id", "submission_no"], name: "dsr_submissions_key2", unique: true
@@ -501,6 +501,7 @@ ActiveRecord::Schema.define(version: 20160414101758) do
     t.integer  "pcp_subject_id",                          null: false
     t.integer  "step_no",                     default: 0, null: false
     t.string   "subject_version", limit: 10
+    t.string   "report_version",  limit: 10
     t.string   "note",            limit: 50
     t.date     "subject_date"
     t.date     "due_date"
@@ -509,8 +510,8 @@ ActiveRecord::Schema.define(version: 20160414101758) do
     t.integer  "new_assmt"
     t.string   "released_by",     limit: 90
     t.datetime "released_at"
-    t.string   "subject_title",   limit: 255
-    t.string   "project_doc_id",  limit: 128
+    t.string   "subject_title",   limit: 128
+    t.string   "project_doc_id",  limit: 100
     t.datetime "created_at",                              null: false
     t.datetime "updated_at",                              null: false
   end
@@ -528,8 +529,8 @@ ActiveRecord::Schema.define(version: 20160414101758) do
     t.integer  "p_deputy_id"
     t.string   "title",           limit: 128
     t.string   "note",            limit: 50
-    t.string   "project_doc_id",  limit: 50
-    t.string   "report_doc_id",   limit: 50
+    t.string   "project_doc_id",  limit: 100
+    t.string   "report_doc_id",   limit: 100
     t.boolean  "archived",                    default: false
     t.datetime "created_at",                                  null: false
     t.datetime "updated_at",                                  null: false
@@ -617,7 +618,7 @@ ActiveRecord::Schema.define(version: 20160414101758) do
   create_table "references", force: :cascade do |t|
     t.string   "code",           limit: 10,  null: false
     t.string   "description",    limit: 255
-    t.string   "project_doc_id", limit: 50
+    t.string   "project_doc_id", limit: 100
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
   end
@@ -661,10 +662,10 @@ ActiveRecord::Schema.define(version: 20160414101758) do
     t.string   "title",                  limit: 128
     t.integer  "asking_group_id"
     t.integer  "answering_group_id"
-    t.string   "project_doc_id",         limit: 50
+    t.string   "project_doc_id",         limit: 100
     t.string   "project_rms_id",         limit: 20
-    t.string   "asking_group_doc_id",    limit: 50
-    t.string   "answering_group_doc_id", limit: 50
+    t.string   "asking_group_doc_id",    limit: 100
+    t.string   "answering_group_doc_id", limit: 100
     t.integer  "current_status",                     default: 0, null: false
     t.integer  "current_task",                       default: 0, null: false
     t.datetime "created_at",                                     null: false
@@ -684,7 +685,7 @@ ActiveRecord::Schema.define(version: 20160414101758) do
     t.string   "revision_code",  limit: 10
     t.date     "author_date"
     t.string   "title",          limit: 128
-    t.string   "siemens_doc_id", limit: 100
+    t.string   "doc_id",         limit: 100
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
   end

@@ -9,7 +9,7 @@
       <thead>
         <tr>
           <th class="col-sm-1"><%= ADocumentLog.human_attribute_name( :id )%></th>
-          <th class="col-sm-4"><%= ADocumentLog.human_attribute_name( :alt_doc_id )%></th>
+          <th class="col-sm-4"><%= ADocumentLog.human_attribute_name( :doc_id )%></th>
           <th class="col-sm-6"><%= ADocumentLog.human_attribute_name( :title )%></th>
           <th class="col-sm-1 hidden-print"><%= filter_action_title_header %></th>
         </tr>
@@ -27,7 +27,7 @@
         <% @a_document_logs.each do |adl| %>
           <tr>
             <td><%= adl.to_id %></td>
-            <td><%= adl.alt_doc_id %></td>
+            <td><%= adl.doc_id %></td>
             <td><%= adl.title %></td>
             <td><%= render partial: 'shared/actions', object: adl %></td>
           </tr>

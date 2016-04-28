@@ -11,7 +11,7 @@
   :dcc_code,
   :revision_code,
   :author_date,
-  :siemens_doc_id,
+  :doc_id,
   :title,
   :user ], STD_CSV_OPTIONS ) -%>
 <%- @s_document_logs.each do |sdl| -%>
@@ -28,7 +28,7 @@
   sdl.dcc_code,
   sdl.revision_code,
   sdl.author_date,
-  sdl.siemens_doc_id,
+  sdl.doc_id,
   sdl.title,
   sdl.account.user_name ], STD_CSV_OPTIONS ).html_safe -%>
 <%- end -%>
