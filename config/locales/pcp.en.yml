@@ -90,6 +90,8 @@ en:
       g_prompt:       :general.select_prompt
       cs_heading:     'Current Step: %{label}'
       prev_version:   'previously:'
+      this_due_date:  'This %{step} Due Date'
+      next_due_date:  'Next %{step} Due Date'
     edit:
       form_title:     'Edit PCP Subject'
     new:
@@ -119,6 +121,7 @@ en:
       release_reason: 'Reason'
       assessment:     'Subject Overall Assessment'
       not_given:      '<not specified>'
+      due_date:       'Reply requested until'
     msg:
       new_ok:         'PCP Subject successfully created.'
       edit_ok:        'PCP Subject successfully updated.'

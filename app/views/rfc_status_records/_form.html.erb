@@ -44,7 +44,7 @@
             <%- if @workflow.param_permitted?( :rfc_document, :answer ) -%> 
               <%= doc_fields.text_area :answer, cols: DEFAULT_COLS_TEXTAREA, rows: ( DEFAULT_ROWS_TEXTAREA * 2 ), class: "form-control" %>
             <%- else -%>
-              <%= doc_fields.text_area :answer, cols: DEFAULT_COLS_TEXTAREA, rows: ( DEFAULT_ROWS_TEXTAREA * 2 ), class: "form-control", readonly: true %>
+              <%= doc_fields.text_area :answer, cols: DEFAULT_COLS_TEXTAREA, rows: ( DEFAULT_ROWS_TEXTAREA * 2 ), class: "form-control", disabled: true %>
             <%- end -%>            
           </div>
         </div>
@@ -54,7 +54,7 @@
             <%- if @workflow.param_permitted?( :rfc_document, :note ) -%> 
               <%= doc_fields.text_area :note, cols: DEFAULT_COLS_TEXTAREA, rows: DEFAULT_ROWS_TEXTAREA, class: "form-control" %>
             <%- else -%>
-              <%= doc_fields.text_area :note, cols: DEFAULT_COLS_TEXTAREA, rows: DEFAULT_ROWS_TEXTAREA, class: "form-control", readonly: true %>
+              <%= doc_fields.text_area :note, cols: DEFAULT_COLS_TEXTAREA, rows: DEFAULT_ROWS_TEXTAREA, class: "form-control", disabled: true %>
             <%- end -%>            
           </div>
         </div>

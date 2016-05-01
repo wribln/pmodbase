@@ -110,9 +110,6 @@ class DsrStatusRecordTest1 < ActiveSupport::TestCase
     assert_nil dd.prep_activity_id
     assert_nil dd.subm_activity_id
     assert_nil dd.dsr_current_submission_id
-
-
-
     assert_nil dd.notes
     assert_equal 0, dd.current_status
     assert_equal 0, dd.current_task
@@ -299,6 +296,60 @@ class DsrStatusRecordTest1 < ActiveSupport::TestCase
     dd.sender_group_id = dg.group_id
     assert dd.valid?
     
+  end
+
+  test 'all scopes' do 
+    as = DsrStatusRecord.ff_id( dsr_status_records( :dsr_rec_one ).id )
+    assert_equal 1, as.length
+
+    as = DsrStatusRecord.ff_id( 0 )
+    assert_equal 0, as.length
+
+    as = DsrStatusRecord.ff_group( groups( :group_one ))
+    assert_equal 2, as.length
+
+    as = DsrStatusRecord.ff_group( 0 )
+    assert_equal 0, as.length
+
+    as = DsrStatusRecord.ff_title( 'document' )
+    assert_equal 2, as.length
+
+    as = DsrStatusRecord.ff_title( 'foobar' )
+    assert_equal 0, as.length
+
+    as = DsrStatusRecord.ff_docgr( dsr_doc_groups( :dsr_group_one ).id )
+    assert_equal 1, as.length
+
+    as = DsrStatusRecord.ff_docgr( 0 )
+    assert_equal 0, as.length
+
+    as = DsrStatusRecord.ff_subgr( submission_groups( :sub_group_one ).id )
+    assert_equal 1, as.length
+
+    as = DsrStatusRecord.ff_subgr( 0 )
+    assert_equal 0, as.length
+
+    as = DsrStatusRecord.ff_docsts( 1 )
+    assert_equal 1, as.length
+
+    as = DsrStatusRecord.ff_docsts( 0 )
+    assert_equal 1, as.length
+
+    as = DsrStatusRecord.ff_docsts( 1 )
+    assert_equal 1, as.length
+
+    as = DsrStatusRecord.ff_docsts( 2 )
+    assert_equal 0, as.length
+
+    as = DsrStatusRecord.ff_wflsts( 0 )
+    assert_equal 1, as.length
+
+    as = DsrStatusRecord.ff_wflsts( 1 )
+    assert_equal 1, as.length
+
+    as = DsrStatusRecord.ff_wflsts( 2 )
+    assert_equal 0, as.length
+
   end
 
 end

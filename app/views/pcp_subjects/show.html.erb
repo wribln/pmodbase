@@ -130,21 +130,30 @@
             <%= display_value os.object.report_version %>
           </div>
         </div>
-        <%# show note and due date only to acting group %>
+        <%# show note only to acting group %>
         <%- if PcpSubject.same_group?( os.object.acting_group_index, @pcp_viewing_group )-%>
-          <div class="form-group">
-            <%= os.label :note, class: "col-sm-3 control-label" %>
-            <div class="col-sm-4">
-              <%= display_value os.object.note %>
-            </div>
+        <div class="form-group">
+          <%= os.label :note, class: "col-sm-3 control-label" %>
+          <div class="col-sm-4">
+            <%= display_value os.object.note %>
           </div>
-          <div class="form-group">
-            <%= os.label :due_date, class: "col-sm-3 control-label" %>
-            <div class="col-sm-2">
-              <%= display_value db_formatted_d( os.object.due_date )%>
-            </div>
-          </div>
+        </div>
         <%- end -%>
+        <%# show current step due date (from previous step) only for steps > 0 %>
+        <%- if os.object.step_no > 0 then -%>
+        <div class="form-group">
+          <%= os.label :due_date, t( 'pcp_subjects.form.this_due_date', step: PcpStep.step_state_label( os.object.step_no )), class: "col-sm-3 control-label" %> 
+          <div class="col-sm-2">  
+            <%= display_value db_formatted_d( @pcp_prev_step.due_date )%>
+          </div>
+        </div>
+        <%- end -%>
+        <div class="form-group">
+          <%= os.label :due_date, t( 'pcp_subjects.form.next_due_date', step: PcpStep.step_state_label( os.object.step_no + 1 )), class: "col-sm-3 control-label" %>
+          <div class="col-sm-2">
+            <%= display_value db_formatted_d( @pcp_curr_step.due_date )%>
+          </div>
+        </div>
         <div class="form-group">
           <%= os.label :prev_assmt, class: "col-sm-3 control-label" %>
           <div class="col-sm-4">

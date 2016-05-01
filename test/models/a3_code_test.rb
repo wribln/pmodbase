@@ -65,4 +65,27 @@ class A3CodeTest < ActiveSupport::TestCase
     assert an.valid?, a3.errors.messages
   end
 
+  test 'all scopes' do
+    as = A3Code.std_order
+    assert_equal 1, as.length
+
+    as = A3Code.active_only
+    assert_equal 1, as.length
+
+    as = A3Code.as_code( 'A' )
+    assert_equal 1, as.length
+
+    as = A3Code.as_code( 'Z' )
+    assert_equal 0, as.length
+
+    as = A3Code.as_desc( 'Alpha')
+    assert_equal 1, as.length
+
+    as = A3Code.as_desc( 'what')
+    assert_equal 1, as.length
+
+    as = A3Code.as_desc( 'foobar')
+    assert_equal 0, as.length
+  end
+
 end

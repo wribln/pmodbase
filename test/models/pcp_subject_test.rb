@@ -256,4 +256,39 @@ class PcpSubjectTest < ActiveSupport::TestCase
 
   end
 
+  test 'all scopes' do
+
+    # mainly to ensure that the syntax there is correct ...
+
+    as = PcpSubject.all_active
+    assert_equal 1, as.length
+
+    as = PcpSubject.ff_id( pcp_subjects( :one ).id )
+    assert_equal 1, as.length
+
+    as = PcpSubject.ff_id( 0 )
+    assert_equal 0, as.length
+
+    as = PcpSubject.ff_titl( 'TEST')
+    assert_equal 1, as.length
+
+    as = PcpSubject.ff_titl( 'foobar')
+    assert_equal 0, as.length
+
+    as = PcpSubject.ff_igrp( groups( :group_one ).id )
+    assert_equal 1, as.length
+
+    as = PcpSubject.ff_igrp( groups( :group_two ).id )
+    assert_equal 0, as.length
+
+    as = PcpSubject.ff_note( '#tags' )
+    assert_equal 1, as.length
+
+    as = PcpSubject.ff_note( 'notes' )
+    assert_equal 1, as.length
+
+    as = PcpSubject.ff_note( 'foobar' )
+    assert_equal 0, as.length
+  end
+
 end

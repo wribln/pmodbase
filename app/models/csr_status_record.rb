@@ -78,7 +78,7 @@ class CsrStatusRecord < ActiveRecord::Base
 
   scope :ff_id,     -> ( id     ){ where id: id }
   scope :ff_type,   -> ( type   ){ where correspondence_type: type }
-  scope :ff_group,  -> ( group  ){ where( 'sender_group_id = ? OR receiver_group_id = ?', group, group ) }
+  scope :ff_group,  -> ( group  ){ where( 'sender_group_id = :param OR receiver_group_id = :param', param: group ) }
   scope :ff_class,  -> ( clftn  ){ where classification: clftn }
   scope :ff_status, -> ( status ){ where status: status }
   scope :ff_subj,   -> ( subj   ){ where( 'subject LIKE ?', "%#{ subj }%" )}

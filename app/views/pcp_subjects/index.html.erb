@@ -3,22 +3,29 @@
   <%= breadcrumbs %>
   <%= form_title %>
   <div class="table-responsive col-sm-11">
-    <%= form_tag({},{ method: :get, class: 'form_inline' }) do %>
+    <%= form_tag({},{ method: :get }) do %>
     <%= will_paginate @pcp_subjects %>
     <table class="table table-bordered">
       <thead>
         <tr>
-          <th class="col-sm-1"><%= PcpSubject.human_attribute_name( :id )%></th>
+          <th class="col-sm-1"><%= label_tag :ff_id, PcpSubject.human_attribute_name( :id ), class: 'control-label'%></th>
           <th class="col-sm-4"><%= PcpSubject.human_attribute_name( :title )%> /
                                <%= PcpSubject.human_attribute_name( :project_doc_id )%></th>
           <th class="col-sm-1"><%= t( '.status_subj' )%></th>
           <th class="col-sm-1"><%= t( '.assessment' )%></th>
           <th class="col-sm-2"><%= t( '.status_step' )%></th>
-          <th class="col-sm-1"><%= t( '.acting_group' )%></th>
+          <th class="col-sm-1"><%= label_tag :ff_igrp, t( '.acting_group' ), class: 'control-label'%></th>
           <th class="col-sm-1 hidden-print"><%= filter_action_title_header %></th>
         </tr>
       </thead>
       <tbody>
+        <tr <%= filter_row( @filter_fields )%>>
+          <td><%= filter_field @filter_fields, :ff_id, :id %></td>
+          <td><%= filter_field @filter_fields, :ff_titl, :sw %></td>
+          <td colspan="3"><%= filter_field @filter_fields, :ff_note, :ns %></td>
+          <td><%= filter_select_from_array @filter_fields, :ff_igrp, @filter_groups %></td>
+          <td><%= filter_action_button -%></td>
+        </tr>
       <% if @pcp_subjects.length.zero? %>
         <%= render partial: 'shared/index_empty_row', locals:{ columns: 6, with_link: true }%>
       <% else %>

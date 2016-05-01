@@ -65,4 +65,18 @@ class A2CodeTest < ActiveSupport::TestCase
     assert an.valid?, a2.errors.messages
   end
 
+  test 'all scopes' do
+    as = A2Code.std_order
+    assert_equal 1, as.length
+
+    as = A2Code.active_only
+    assert_equal 1, as.length
+
+    as = A2Code.as_code( '1' )
+    assert_equal 1, as.length
+
+    as = A2Code.as_code( 'Z' )
+    assert_equal 0, as.length
+  end
+
 end

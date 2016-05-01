@@ -37,11 +37,18 @@
         <td class="no-wrap"><%= t( '.release_reason' )%>:</td>
         <td><%= @pcp_curr_step.step_label %></td>
       </tr>
+      <tr><td></td><td></td></tr>
       <%- if @pcp_curr_step.in_commenting_group? || @pcp_curr_step.status_closed? -%>
       <%# show assessment for review results or final step %>
       <tr>
         <td class="no-wrap"><%= t( '.assessment' )%>:</td>
         <td><%= PcpStep.assessment_label( @pcp_curr_step.new_assmt )%></td>
+      </tr>
+      <%- end -%>
+      <%- unless @pcp_curr_step.status_closed? || @pcp_curr_step.due_date.nil? -%>
+      <tr>
+        <td class="no-wrap"><%= t( '.due_date' )%>:</td>
+        <td><%= db_formatted_d( @pcp_curr_step.due_date )%></td>
       </tr>
       <%- end -%>
     </tbody>

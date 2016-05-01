@@ -65,4 +65,26 @@ class A6CodeTest < ActiveSupport::TestCase
     assert an.valid?, a6.errors.messages
   end
 
+  test 'all scopes' do
+    as = A6Code.std_order
+    assert_equal 1, as.length
+
+    as = A6Code.active_only
+    assert_equal 1, as.length
+
+    as = A6Code.as_code( 'A' )
+    assert_equal 1, as.length
+
+    as = A6Code.as_code( 'Z' )
+    assert_equal 0, as.length
+
+    as = A6Code.as_desc( 'Alpha')
+    assert_equal 1, as.length
+
+    as = A6Code.as_desc( 'what')
+    assert_equal 1, as.length
+
+    as = A6Code.as_desc( 'foobar')
+    assert_equal 0, as.length
+  end
 end

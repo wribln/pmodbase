@@ -45,8 +45,6 @@ class DbChangeRequest < ActiveRecord::Base
   validates :request_text,
     presence: true
 
-  #scope :for_user, lambda { |user_id|
-  #  where( "requesting_account_id == #{ user_id}" )}
   scope :for_user, -> ( id ){ where requesting_account_id: id }
 
   def status_label_with_id

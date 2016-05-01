@@ -156,4 +156,25 @@ class FunctionCodeTest < ActiveSupport::TestCase
     assert xn.valid?, xc.errors.messages
   end
 
+  test 'all scopes' do
+    as = FunctionCode.active_only
+    assert_equal 2, as.length
+
+    as = FunctionCode.master_only
+    assert_equal 2, as.length
+
+    as = FunctionCode.as_code( '=ABC' )
+    assert_equal 1, as.length
+
+    as = FunctionCode.as_code( 'ABC' )
+    assert_equal 1, as.length
+
+    as = FunctionCode.as_desc( 'Alphabet' )
+    assert_equal 1, as.length
+
+    as = FunctionCode.as_desc( 'foobar' )
+    assert_equal 0, as.length
+  end
+
+
 end

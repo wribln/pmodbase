@@ -2,7 +2,7 @@
 <div class="container">
   <%= breadcrumbs %>
   <%= form_title %>
-    <%= form_tag({},{ method: :get, class: 'form-inline' }) do %>
+    <%= form_tag({},{ method: :get }) do %>
     <%= will_paginate @a1_codes %>
     <div class="table-responsive">
       <table class="table table-striped table-bordered">

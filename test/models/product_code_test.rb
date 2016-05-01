@@ -156,4 +156,24 @@ class ProductCodeTest < ActiveSupport::TestCase
     assert xn.save
   end
 
+  test 'all scopes' do
+    as = ProductCode.active_only
+    assert_equal 2, as.length
+
+    as = ProductCode.master_only
+    assert_equal 2, as.length
+
+    as = ProductCode.as_code( '-ABC' )
+    assert_equal 1, as.length
+
+    as = ProductCode.as_code( 'ABC' )
+    assert_equal 1, as.length
+
+    as = ProductCode.as_desc( 'Alphabet' )
+    assert_equal 1, as.length
+
+    as = ProductCode.as_desc( 'foobar' )
+    assert_equal 0, as.length
+  end
+
 end

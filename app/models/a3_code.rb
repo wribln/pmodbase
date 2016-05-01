@@ -13,6 +13,6 @@ class A3Code < ActiveRecord::Base
   validates :description,
     length: { maximum: MAX_LENGTH_OF_DESCRIPTION }
 
-  scope :as_desc, -> ( l ){ where( 'label LIKE ? OR description LIKE ?', "%#{ l }%", "%#{ l }%" )}
+  scope :as_desc, -> ( l ){ where( 'label LIKE :param OR description LIKE :param', param: "%#{ l }%" )}
 
 end

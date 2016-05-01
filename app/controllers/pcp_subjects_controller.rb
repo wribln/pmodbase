@@ -8,7 +8,9 @@ class PcpSubjectsController < ApplicationController
 # GET /ors
 
   def index
-    @pcp_subjects = PcpSubject.includes( :pcp_steps ).all_active.paginate( page: params[ :page ])
+    @filter_fields = filter_params
+    @filter_groups = permitted_groups( :to_index )
+    @pcp_subjects = PcpSubject.filter( @filter_fields ).all_active.includes( :pcp_steps ).paginate( page: params[ :page ])
   end
 
   # GET /pcs/1
@@ -132,7 +134,11 @@ class PcpSubjectsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
 
     def pcp_subject_params
-        params.require( :pcp_subject ).permit( @valid_subject_params << { pcp_steps_attributes: @valid_step_params })
+      params.require( :pcp_subject ).permit( @valid_subject_params << { pcp_steps_attributes: @valid_step_params })
+    end
+
+    def filter_params
+      params.slice( :ff_id, :ff_titl, :ff_igrp, :ff_note ).clean_up
     end
 
     # define list of parameters which can be modified
@@ -163,6 +169,13 @@ class PcpSubjectsController < ApplicationController
     def set_selections
       @group_selection = Group.active_only.participants_only.collect{ |g| [ g.code_and_label, g.id ]}
       @pcp_categories = PcpCategory.all.collect{ |c| [ c.label, c.id ]}
+    end
+
+    # prepare list of groups for selections
+
+    def permitted_groups( action )
+      pg = current_user.permitted_groups( FEATURE_ID_PCP_SUBJECTS, action, :id )
+      Group.permitted_groups( pg ).all.collect{ |g| [ g.code, g.id ]}
     end
 
 end

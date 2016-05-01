@@ -101,11 +101,13 @@
         field will not be carried over to the next step, i.e. it will be cleared for the next
         step once the current step is released. This field is only shown to members of the 
         acting group.</li>
-      <li><%= help_param PcpStep.human_attribute_name( :due_date )-%> can be used to define
-        a due date for the current step. The contents of this
-        field will not be carried over to the next step, i.e. it will be cleared for the next
-        step once the current step is released. This field is only shown to members of the
-        acting group.</li>
+      <li><%= help_param PcpStep.human_attribute_name( :due_date )-%> is an attribute of a
+        PCP Step shown as 
+        <%= help_param t( 'pcp_subjects.form.this_due_date', step: '...' )-%> for the
+        current step, and as 
+        <%= help_param t( 'pcp_subjects.form.next_due_date', step: '...' )-%> for the
+        next step with ... being <%= help_param PcpStep::STEP_STATES[ 0 ] -%> and 
+        <%= help_param PcpStep::STEP_STATES[ 1 ] -%> accordingly.</li>
       <li><%= help_param PcpStep.human_attribute_name( :prev_assmt )-%> is the assessment code
         by the commenting project group for the current step. This code is replaced by the
         <%= help_param PcpStep.human_attribute_name( :new_assmt )-%> once the PCP Subject
@@ -136,6 +138,14 @@
       <%= help_term t( 'pcp_subjects.reldoc.main_heading')%>. This report is formatted
       to be printed on A4 paper directly from your browser - or to be saved as PDF-formatted
       file using your favourite PDF printer driver.</p>
+    <h3><%= t( 'pcp_subjects.index.form_title' )%></h3>
+    <p>When you filter by a specific group, all PCP Subjects will be listed where the given 
+      group is either
+      the <%= help_term PcpSubject.human_attribute_name( :p_group_id )-%> or
+      the <%= help_term PcpSubject.human_attribute_name( :c_group_id )-%>.<br/>
+      The values shown in column <%= help_term t( 'pcp_subjects.index.acting_group' )%> will be either
+      the selected group (when currently responsible for the PCP Subject) or the partner group
+      (which is currently responsible for this PCP Subject).</p>
     <h3 id='pcp_history'>Show History of PCP Subject</h3>
     <p>A complete history of all steps for the current PCP Subject can be requested via the
       <%= help_term t( 'button_label.history' )-%> button on the  

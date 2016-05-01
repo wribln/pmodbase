@@ -236,4 +236,30 @@ class LocationCodeTest < ActiveSupport::TestCase
 
   end
 
+  test 'all scopes' do
+    as = LocationCode.as_code( '+1' )
+    assert_equal 3, as.length
+
+    as = LocationCode.as_code( '1' )
+    assert_equal 3, as.length
+
+    as = LocationCode.as_desc( 'Line' )
+    assert_equal 2, as.length
+
+    as = LocationCode.as_desc( 'foobar' )
+    assert_equal 0, as.length
+
+    as = LocationCode.ff_type( 0 )
+    assert_equal 1, as.length
+
+    as = LocationCode.ff_type( 1 )
+    assert_equal 1, as.length
+
+    as = LocationCode.ff_type( 2 )
+    assert_equal 2, as.length
+
+    as = LocationCode.ff_type( 3 )
+    assert_equal 0, as.length
+  end
+
 end

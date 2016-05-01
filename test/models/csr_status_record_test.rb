@@ -114,6 +114,57 @@ class CsrStatusRecordTest < ActiveSupport::TestCase
     csr.receiver_group_id = nil
     assert_equal "",csr.receiver_group_code
 
-  end    
+  end
+
+  test 'all scopes' do
+    as = CsrStatusRecord.ff_id( csr_status_records( :csr_one ).id )
+    assert_equal 1, as.length
+
+    as = CsrStatusRecord.ff_id( 0 )
+    assert_equal 0, as.length
+
+    as = CsrStatusRecord.ff_type( 0 )
+    assert_equal 1, as.length
+
+    as = CsrStatusRecord.ff_type( 1 )
+    assert_equal 1, as.length
+
+    as = CsrStatusRecord.ff_type( 2 )
+    assert_equal 0, as.length
+
+    as = CsrStatusRecord.ff_group( groups( :group_one ).id )
+    assert_equal 2, as.length
+
+    as = CsrStatusRecord.ff_group( groups( :group_two ).id )
+    assert_equal 2, as.length
+
+    as = CsrStatusRecord.ff_group( 0 )
+    assert_equal 0, as.length
+
+    as = CsrStatusRecord.ff_class( 1 )
+    assert_equal 2, as.length
+
+    as = CsrStatusRecord.ff_class( 0 )
+    assert_equal 0, as.length
+
+    as = CsrStatusRecord.ff_status( 1 )
+    assert_equal 2, as.length
+
+    as = CsrStatusRecord.ff_status( 0 )
+    assert_equal 0, as.length
+
+    as = CsrStatusRecord.ff_subj( 'Test' )
+    assert_equal 2, as.length
+
+    as = CsrStatusRecord.ff_subj( 'foobar' )
+    assert_equal 0, as.length
+
+    as = CsrStatusRecord.ff_note( 'note' )
+    assert_equal 2, as.length
+
+    as = CsrStatusRecord.ff_note( 'foobar' )
+    assert_equal 0, as.length
+
+  end
 
 end

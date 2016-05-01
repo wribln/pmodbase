@@ -3,7 +3,7 @@
   <%= breadcrumbs %>
   <%= form_title %>
   <div class="table-responsive">
-    <%= form_tag({},{ method: :get, class: 'form-inline' }) do %>
+    <%= form_tag({},{ method: :get }) do %>
     <%= will_paginate @function_codes %>
     <table class="table table-striped table-bordered">
       <thead>

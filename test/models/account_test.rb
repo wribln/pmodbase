@@ -189,4 +189,30 @@ class AccountTest < ActiveSupport::TestCase
     assert_equal "some_id IN (#{ gl })", a.permitted_groups( 1, :to_index, :some_id )
   end
 
+  test 'all scopes' do
+    as = Address.ff_id( addresses( :address_one ).id )
+    assert_equal 1, as.length
+
+    as = Address.ff_id( 0 )
+    assert_equal 0, as.length
+
+    as = Address.ff_label( 'Address' )
+    assert_equal 2, as.length
+
+    as = Address.ff_label( '1' )
+    assert_equal 1, as.length
+
+    as = Address.ff_label( 'foobar' )
+    assert_equal 0, as.length
+
+    as = Address.ff_address( 'Address' )
+    assert_equal 2, as.length
+
+    as = Address.ff_address( '1' )
+    assert_equal 1, as.length
+
+    as = Address.ff_address( 'foobar' )
+    assert_equal 0, as.length
+  end
+
 end

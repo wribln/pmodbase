@@ -19,7 +19,7 @@
         </tr>
       </thead> 
       <tbody>
-        <tr <%= filter_row( @filter_fields ) -%>>
+        <tr <%= filter_row( @filter_fields )-%>>
           <td><%= filter_field @filter_fields, :ff_id,   :id %></td>
           <td><%= filter_select_from_array @filter_fields, :ff_type, @workflow.workflow_labels_for_select %></td>
           <td><%= filter_field @filter_fields, :ff_titl, :sw %></td>

@@ -224,4 +224,9 @@ class PcpStepTest < ActiveSupport::TestCase
     refute ps.in_commenting_group?
   end
 
+  test 'all scopes' do
+    as = PcpStep.most_recent
+    assert 2, as.length
+  end
+
 end

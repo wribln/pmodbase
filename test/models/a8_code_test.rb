@@ -65,4 +65,18 @@ class A8CodeTest < ActiveSupport::TestCase
     assert an.valid?, a8.errors.messages
   end
 
+  test 'all scopes' do
+    as = A8Code.std_order
+    assert_equal 1, as.length
+
+    as = A8Code.active_only
+    assert_equal 1, as.length
+
+    as = A8Code.as_code( 'A' )
+    assert_equal 1, as.length
+
+    as = A8Code.as_code( 'Z' )
+    assert_equal 0, as.length
+  end
+
 end

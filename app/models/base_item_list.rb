@@ -82,7 +82,6 @@ class BaseItemList
     all_categories.each do |tgv|
       column_item_count.each_index do |ci|
         if (column_item_count[ci] + tgv[1].item_count) <= no_items_per_col then
-          # Rails.logger.debug "Allocate group #{tgv[0]} to column #{ci}"
           column_item_count[ci] += tgv[1].item_count
           total_no_items -= tgv[1].item_count
           tgv[1].column_no = ci
@@ -104,7 +103,6 @@ class BaseItemList
           i_max = tgi
         end
       end
-      # Rails.logger.debug "Allocate group #{all_categories[i_max][0]} to column #{ci}"
       column_item_count[ci] += all_categories[i_max][1].item_count
       total_no_items -= all_categories[i_max][1].item_count
       all_categories[i_max][1].column_no = ci

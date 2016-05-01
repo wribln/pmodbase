@@ -210,4 +210,31 @@ class ADocumentLogTest < ActiveSupport::TestCase
     assert_equal adl.doc_id, adl.create_alt_doc_id
   end
 
+  test 'all scopes' do
+    as = ADocumentLog.reverse
+    assert_equal 1, as.length
+
+    as = ADocumentLog.inorder
+    assert_equal 1, as.length
+
+    as = ADocumentLog.ff_srec( a_document_logs( :one ).id )
+    assert_equal 1, as.length
+
+    as = ADocumentLog.ff_srec( 0 )
+    assert_equal 0, as.length
+
+    as = ADocumentLog.ff_adic( '123' )
+    assert_equal 1, as.length
+
+    as = ADocumentLog.ff_adic( 'foobar' )
+    assert_equal 0, as.length
+
+    as = ADocumentLog.ff_titl( 'Test' )
+    assert_equal 1, as.length
+
+    as = ADocumentLog.ff_titl( 'foobar' )
+    assert_equal 0, as.length
+
+  end
+
 end

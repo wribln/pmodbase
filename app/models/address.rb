@@ -16,7 +16,7 @@ class Address < ActiveRecord::Base
 
   scope :ff_id,       -> ( id       ){ where id: id }
   scope :ff_label,    -> ( label    ){ where( 'label LIKE ?', "%#{ label }%" )}
-  scope :ff_address,  -> ( address  ){ where( 'street_address LIKE ?', "%#{ address }%" )}
+  scope :ff_address,  -> ( address  ){ where( 'street_address LIKE :param OR postal_address LIKE :param', param: "%#{ address }%" )}
 
   # overwrite write accessors to ensure that text fields do not contain
   # any redundant blanks

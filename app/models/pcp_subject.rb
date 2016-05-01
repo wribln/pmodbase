@@ -45,6 +45,10 @@ class PcpSubject < ActiveRecord::Base
   # all_active is used by controller - make sure it matches an index
 
   scope :all_active, ->{ where( archived: false ).order( pcp_category_id: :asc, id: :desc )}
+  scope :ff_id,   -> ( id   ){ where id: id }
+  scope :ff_titl, -> ( titl ){ where( 'title LIKE :param OR project_doc_id LIKE :param', param: "%#{ titl }%" )}
+  scope :ff_igrp, -> ( igrp ){ where( 'p_group_id = :param OR c_group_id = :param', param: igrp )} 
+  scope :ff_note, -> ( note ){ where( 'note LIKE ?', "%#{ note }%" )}
 
   # make sure that archived status can only be set if subject status is closed
 

@@ -85,4 +85,19 @@ class A4CodeTest < ActiveSupport::TestCase
     assert_includes a4.errors, :code
   end
 
+  test 'all scopes' do
+    as = A4Code.std_order
+    assert_equal 1, as.length
+
+    as = A4Code.active_only
+    assert_equal 1, as.length
+
+    as = A4Code.as_code( 'D' )
+    assert_equal 1, as.length
+
+    as = A4Code.as_code( 'A' )
+    assert_equal 0, as.length
+  end
+
+
 end

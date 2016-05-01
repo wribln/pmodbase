@@ -25,7 +25,7 @@ class TiaList < ActiveRecord::Base
 
   # use this scope for own lists
 
-  scope :for_user, -> ( id ){ where 'owner_account_id = ? OR deputy_account_id = ?', id, id }
+  scope :for_user, -> ( id ){ where 'owner_account_id = :param OR deputy_account_id = :param', param: id }
 
   # check if related records exist
 

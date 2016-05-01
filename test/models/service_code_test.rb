@@ -156,4 +156,24 @@ class ServiceCodeTest < ActiveSupport::TestCase
     assert_equal '$NEW - Test', xc.code_and_label
   end
 
+  test 'all scopes' do
+    as = ServiceCode.active_only
+    assert_equal 2, as.length
+
+    as = ServiceCode.master_only
+    assert_equal 2, as.length
+
+    as = ServiceCode.as_code( '$ABC' )
+    assert_equal 1, as.length
+
+    as = ServiceCode.as_code( 'ABC' )
+    assert_equal 1, as.length
+
+    as = ServiceCode.as_desc( 'Alphabet' )
+    assert_equal 1, as.length
+
+    as = ServiceCode.as_desc( 'foobar' )
+    assert_equal 0, as.length
+  end
+
 end

@@ -20,8 +20,10 @@ class Abbreviation < ActiveRecord::Base
   scope :as_abbr, ->  ( a ){ where( 'code LIKE ?', "#{ a }%" )}
   scope :as_desc, ->  ( d ){ where( 'description LIKE ?', "%#{ d }%" )}
   scope :ff_id, ->    ( i ){ where id: i }
-  scope :ff_code, ->  ( a ){ as_abbr( a ) }
-  scope :ff_desc, ->  ( d ){ as_desc( d ) }
+  class << self; 
+    alias :ff_code :as_abbr
+    alias :ff_desc :as_desc
+  end
 
   def code=( text )
     write_attribute( :code, AppHelper.clean_up( text, MAX_LENGTH_OF_CODE, '' ))

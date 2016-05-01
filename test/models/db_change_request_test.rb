@@ -2,7 +2,7 @@ require 'test_helper'
 
 class DbChangeRequestTest < ActiveSupport::TestCase
 
-  test "default settings" do
+  test 'default settings' do
     dbcr = DbChangeRequest.new
     assert_equal 0, dbcr.status
     assert_nil dbcr.requesting_account_id
@@ -14,7 +14,7 @@ class DbChangeRequestTest < ActiveSupport::TestCase
     assert_nil dbcr.request_text
   end
 
-  test "ensure status dimensions" do
+  test 'ensure status dimensions' do
     assert_equal 4, DbChangeRequest::DBCR_STATUS_LABELS.size
     assert_equal 'new', DbChangeRequest::DBCR_STATUS_LABELS[ 0 ]
     assert_equal 'open', DbChangeRequest::DBCR_STATUS_LABELS[ 1 ]
@@ -22,7 +22,7 @@ class DbChangeRequestTest < ActiveSupport::TestCase
     assert_equal 'closed', DbChangeRequest::DBCR_STATUS_LABELS[ 3 ]
   end
 
-  test "status label with id" do
+  test 'status label with id' do
     dbcr = DbChangeRequest.new
     dbcr.status = 0
     assert_equal text_with_id( 'new',     0 ), dbcr.status_label_with_id
@@ -34,16 +34,16 @@ class DbChangeRequestTest < ActiveSupport::TestCase
     assert_equal text_with_id( 'closed',  3 ), dbcr.status_label_with_id
   end
 
-  test "feature with id" do
+  test 'feature with id' do
     dbcr = db_change_requests( :dbcr_one )
     f = features( :feature_one )
     dbcr.feature_id = f.id
     assert_equal text_with_id( f.label, f.id ), dbcr.feature_label_with_id
     dbcr.feature_id = nil
-    assert_equal "", dbcr.feature_label_with_id 
+    assert_equal '', dbcr.feature_label_with_id 
   end
 
-  test "requestor with id" do
+  test 'requestor with id' do
     dbcr = DbChangeRequest.new
     a = accounts( :account_one )
     dbcr.requesting_account_id = a.id
@@ -55,7 +55,7 @@ class DbChangeRequestTest < ActiveSupport::TestCase
     assert_equal '[0]', dbcr.requestor_with_id
   end
 
-  test "responsible with id" do
+  test 'responsible with id' do
     dbcr = DbChangeRequest.new
     a = accounts( :account_one )
     dbcr.responsible_account_id = a.id
@@ -67,14 +67,14 @@ class DbChangeRequestTest < ActiveSupport::TestCase
     assert_equal '[0]', dbcr.responsible_with_id
   end
 
-  test "required attributes" do
+  test 'required attributes' do
     dbcr = DbChangeRequest.new
     assert_not dbcr.valid?
     assert_includes dbcr.errors, :requesting_account_id
     assert_includes dbcr.errors, :request_text
   end
 
-  test "required attributes (requesting account id)" do
+  test 'required attributes (requesting account id)' do
     dbcr = db_change_requests( :dbcr_one )
     assert dbcr.valid?
     
@@ -87,7 +87,7 @@ class DbChangeRequestTest < ActiveSupport::TestCase
     assert_includes dbcr.errors, :requesting_account_id
   end
 
-  test "optional attribute valid (responsible_account_id)" do
+  test 'optional attribute valid (responsible_account_id)' do
     dbcr = db_change_requests( :dbcr_one )
     dbcr.responsible_account_id = nil
     assert dbcr.valid?
@@ -100,25 +100,36 @@ class DbChangeRequestTest < ActiveSupport::TestCase
     assert dbcr.valid?
   end    
 
-  test "required attributes (request text)" do
+  test 'required attributes (request text)' do
     dbcr = db_change_requests( :dbcr_one )
     assert dbcr.valid?
     dbcr.request_text = nil
     assert_not dbcr.valid?
-    dbcr.request_text = ""
+    dbcr.request_text = ''
     assert_not dbcr.valid?
-    dbcr.request_text = " "
+    dbcr.request_text = ' '
     assert_not dbcr.valid?
-    dbcr.request_text = "              "
+    dbcr.request_text = '              '
     assert_not dbcr.valid?
-    dbcr.request_text = "."
+    dbcr.request_text = '.'
     assert dbcr.valid?    
   end
 
-  test "stats" do
+  test 'stats' do
     assert_equal 2, DbChangeRequest.count
     assert_equal 2, DbChangeRequest.where( status: 0 ).count
     assert_equal [['Database Change Requests', 'Total', 2], ['new', 2]], DbChangeRequest.get_stats
+  end
+
+  test 'all scopes' do
+    as = DbChangeRequest.for_user( accounts( :account_one ).id )
+    assert_equal 1, as.length
+
+    as = DbChangeRequest.for_user( accounts( :account_wop ).id )
+    assert_equal 1, as.length
+
+    as = DbChangeRequest.for_user( 0 )
+    assert_equal 0, as.length
   end
 
 end

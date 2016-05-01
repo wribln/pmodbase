@@ -42,7 +42,8 @@ class PcpStep < ActiveRecord::Base
   ASSESSMENT_CODES = PcpStep.human_attribute_name(  :ass_codes  ).freeze
   ASSESSMENT_LABELS = PcpStep.human_attribute_name( :ass_labels ).freeze
 
-  validates :prev_assmt,
+  validates :new_assmt,
+    allow_nil: true,
     numericality: { only_integer: true },
     inclusion: { in: 0..( ASSESSMENT_CODES.size - 1 )}
 
@@ -178,6 +179,10 @@ class PcpStep < ActiveRecord::Base
     end
   end
 
+  def self.step_state_label( step )
+    STEP_STATES[ step & 1 ]
+  end
+
   # make sure no leading/trailing blanks are stored
 
   def subject_version=( text )
@@ -241,6 +246,7 @@ class PcpStep < ActiveRecord::Base
 
   def set_release_data( current_user )
     self.subject_status = new_subject_status
+    self.due_date = nil if self.status_closed? # ignore due date for closed subject
     self.released_by = "#{ current_user.user_name } (#{ current_user.name_with_id })"
     self.released_at = DateTime.now
     self.subject_title = pcp_subject.title

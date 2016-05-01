@@ -189,8 +189,17 @@
             <%= os.text_field :note, class: "form-control", length: MAX_LENGTH_OF_NOTE %>
           </div>
         </div>
+        <%# show current step due date (from previous step) only for steps > 0 %>
+        <%- if os.object.step_no > 0 then -%>
         <div class="form-group">
-          <%= os.label :due_date, class: "col-sm-3 control-label" %>
+          <%= os.label :due_date, t( '.this_due_date', step: PcpStep.step_state_label( os.object.step_no )), class: "col-sm-3 control-label" %> 
+          <div class="col-sm-2">  
+            <%= display_value db_formatted_d( @pcp_prev_step.due_date )%>
+          </div>
+        </div>
+        <%- end -%>
+        <div class="form-group">
+          <%= os.label :due_date, t( '.next_due_date', step: PcpStep.step_state_label( os.object.step_no + 1 )), class: "col-sm-3 control-label" %>
           <div class="col-sm-2">
             <div class="input-group date" data-provide="datepicker">
               <%= os.text_field :due_date, class: "form-control" %>

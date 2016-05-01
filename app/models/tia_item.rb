@@ -51,7 +51,7 @@ class TiaItem < ActiveRecord::Base
   # define scopes for filters
 
   scope :ff_seqno,  -> ( s ){ where seqno: s }
-  scope :ff_desc,   -> ( d ){ where( 'description LIKE ? OR comment LIKE ?', "%#{ d }%", "%#{ d }%" )}
+  scope :ff_desc,   -> ( d ){ where( 'description LIKE :param OR comment LIKE :param', param: "%#{ d }%" )}
   scope :ff_prio,   -> ( p ){ where prio: p }
   scope :ff_owner,  -> ( o ){ where account_id: o }
   scope :ff_status, -> ( s ){ where status: s }
