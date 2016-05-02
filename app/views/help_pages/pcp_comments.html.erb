@@ -1,0 +1,12 @@
+<% help_title "Help on #{ PcpComment.model_name.human }" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">... lead text ...</p>
+    <h3>... subtitle ...</h3>
+    <p>... help text ...</p>
+    <ul>
+      <li><%= help_param PcpComment.human_attribute_name( :id ) -%></li>
+    </ul>
+    <%= help_footer FEATURE_ID_PCP_COMMENTS %>
+  </div> <!-- /container -->

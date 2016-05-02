@@ -1,0 +1,15 @@
+one:
+  pcp_subject:  one
+  pcp_step:     one
+  seqno:        1
+  reference:    'chapter 1'
+  description:  'not what it should be'
+  item_status:  0
+
+two:
+  pcp_subject:  one
+  pcp_step:     one
+  seqno:        2
+  reference:    'dito'
+  description:  'dito'
+  item_status:  1

@@ -1,0 +1,34 @@
+<% help_title "Help on #{ PcpItem.model_name.human }" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">Identified items/issues which need to be resolved</p>
+    <h3>Introduction</h3>
+    <p>A single PCP Item describes an observation found during a review cycle which needs 
+      clarification or resolution. PCP Items can only be added by the commenting group.</p>
+    <p>The following attributes are administered:</p>
+    <ul>
+      <li><%= help_param PcpItem.human_attribute_name( :seqno )-%> is a unique number
+        created for each PCP Item for a specific PCP Subject. This number is computed
+        automatically by the system and cannot be modified. If PCP Items are removed,
+        this number does not change so it can be used as unique identifier.</li>
+      <li><%= help_param PcpItem.human_attribute_name( :reference )-%> is a text field
+        to be used to describe the location of the problem. In documents, this would be
+        a chapter or a page number.</li>
+      <li><%= help_param PcpItem.human_attribute_name( :description )-%> holds details
+        on the observation.</li>
+      <li><%= help_param PcpItem.human_attribute_name( :item_status )-%> is similar to
+        the PCP Subject <%= help_term PcpStep.human_attribute_name( :status )-%>:
+        <ul>
+          <li><%= help_term PcpItem::ITEM_STATES[ 0 ]-%> are newly created PCP Items;</li>
+          <li><%= help_term PcpItem::ITEM_STATES[ 1 ]-%> are PCP Items with no final
+            status; and</li>
+          <li><%= help_term PcpItem::ITEM_STATES[ 2 ]-%> are all PCP Items having reached
+            a terminal status.</li>
+        </ul>
+      </li>
+      <li>The current <%= help_param PcpItem.human_attribute_name( :pcp_step_id )-%> is shown
+        for information as <%= help_term t( 'pcp_items.pcp_step' )%>.</li>
+    </ul>
+    <%= help_footer FEATURE_ID_PCP_ITEMS %>
+  </div> <!-- /container -->

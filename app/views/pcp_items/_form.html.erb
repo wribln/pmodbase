@@ -1,0 +1,27 @@
+      <div class="form-group">
+        <%= form.label :seqno, class: "col-sm-3 control-label" %>
+        <div class="col-sm-1">
+          <%= display_value form.object.seqno %>
+        </div>
+        <%= form.label :item_status, class: "col-sm-1 control-label" %>
+        <div class="col-sm-1">
+          <%= display_value form.object.item_status_label %>
+        </div>
+        <%= form.label :pcp_step_id, t( 'pcp_items.pcp_step' ), class: "col-sm-2 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value form.object.pcp_step.try :step_label %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :reference, class: "col-sm-3 control-label" %>
+        <div class="col-sm-7">
+          <%= form.text_field :reference, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :description, class: "col-sm-3 control-label" %>
+        <div class="col-sm-7">
+          <%= form.text_area :description, cols: DEFAULT_COLS_TEXTAREA, rows: DEFAULT_ROWS_TEXTAREA, class: "form-control", required: true %>
+        </div>
+      </div>
+

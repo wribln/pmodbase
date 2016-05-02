@@ -1,0 +1,54 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="form-horizontal" role="form">
+    <%= form_for @pcp_comment do |f| %>
+      <%= render partial: 'shared/notice' %>
+      <div class="form-group">
+        <%= f.label :id, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value f.object.id %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :pcp_item, class: "col-sm-3 control-label" %>
+        <div class="col-sm-4">
+          <%= f.text_field :pcp_item, class: "form-control", readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :pcp_step, class: "col-sm-3 control-label" %>
+        <div class="col-sm-4">
+          <%= f.text_field :pcp_step, class: "form-control", readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :desc, class: "col-sm-3 control-label" %>
+        <div class="col-sm-4">
+          <%= f.text_field :desc, class: "form-control", readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :author, class: "col-sm-3 control-label" %>
+        <div class="col-sm-4">
+          <%= f.text_field :author, class: "form-control", readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :public, class: "col-sm-3 control-label" %>
+        <div class="col-sm-4">
+          <%= f.text_field :public, class: "form-control", readonly: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-2">
+          <%= link_to t( 'button_label.edit' ), edit_pcp_comment_path( @pcp_comment ), class: "btn btn-lg btn-block btn-default" %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to t( 'button_label.goto_to_list' ), pcp_comments_path, class: "btn btn-lg btn-block btn-default" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
