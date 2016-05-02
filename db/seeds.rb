@@ -531,6 +531,17 @@ Feature.new do |f|
   f.feature_category_id = fc5.id
 end.save
 
+Feature.new do |f|
+  f.id = FEATURE_ID_PCP_ITEMS
+  f.label = I18n.t( 'pcp_items.title' )
+  f.code = 'PCI'
+  f.seqno = 5
+  f.access_level = PcpItemsController.feature_access_level
+  f.control_level = PcpItemsController.feature_control_level
+  f.no_workflows = PcpItemsController.no_workflows
+  f.feature_category_id = fc5.id
+end.save
+
 # - - - - - - - - - - utilities
 
 Feature.new do |f|

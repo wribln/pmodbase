@@ -6,6 +6,7 @@
 class PcpStep < ActiveRecord::Base
 
   belongs_to :pcp_subject, -> { readonly }, inverse_of: :pcp_steps
+  has_many   :pcp_items,   -> { readonly }
 
   validates :pcp_subject_id,
     presence: true

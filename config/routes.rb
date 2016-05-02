@@ -49,10 +49,10 @@ Rails.application.routes.draw do
   resources :network_stations, path: 'nst', format: false
   resources :network_stops, path: 'nso', format: false
   resources :pcp_categories, path: 'pcc', format: false
-  resources :pcp_subjects, path: 'pcs', format: false # do
-#    resources :pcp_items, path: 'pci', format: false, shallow: true
+  resources :pcp_subjects, path: 'pcs', format: false do
+    resources :pcp_items, path: 'pci', format: false, shallow: true
 #    resources :pcp_members, path: 'pcm', format: false, shallow: true
-#  end
+  end
   get 'pcs/:id/release', to: 'pcp_subjects#update_release', as: 'pcp_subject_release', format: false
   get 'pcs/:id/info', to: 'pcp_subjects#info', as: 'pcp_subject_history', format: false
   get 'pcs/:id/reldoc/:step_no', to: 'pcp_subjects#show_release', as: 'pcp_release_doc', format: false

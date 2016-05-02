@@ -123,12 +123,14 @@
           <%- end -%>
         </div>
       </div>
-      <div class="form-group">
-        <%= form.label :subject_status, class: "col-sm-3 control-label" %>
-        <div class="col-sm-1">
-          <%= display_value @pcp_curr_step.try( :subject_status_label )%>
+      <%- unless @pcp_curr_step.nil? -%>
+        <div class="form-group">
+          <%= form.label :subject_status, class: "col-sm-3 control-label" %>
+          <div class="col-sm-1">
+            <%= display_value @pcp_curr_step.subject_status_label %>
+          </div>
         </div>
-      </div>
+      <%- end -%>
       <%- if @valid_subject_params.include? :archived then %>
       <div class="form-group">
         <%= form.label :archived, class: "col-sm-3 control-label" %>

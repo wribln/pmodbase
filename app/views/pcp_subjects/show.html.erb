@@ -182,6 +182,11 @@
           <%= link_to t( 'button_label.goto_to_list' ), pcp_subjects_path, class: "btn btn-lg btn-block btn-default" %>
         </div>
       </div>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-2">
+          <%= link_to t( '.items_button' ), pcp_subject_pcp_items_path( @pcp_subject ), class: "btn btn-lg btn-block btn-default" %>
+        </div>
+      </div>
     <% end %>
   </div>
 </div>

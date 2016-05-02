@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160414101758) do
+ActiveRecord::Schema.define(version: 20160501131040) do
 
   create_table "a1_codes", force: :cascade do |t|
     t.string   "code",                      null: false
@@ -496,6 +496,34 @@ ActiveRecord::Schema.define(version: 20160414101758) do
   add_index "pcp_categories", ["p_deputy_id"], name: "index_pcp_categories_on_p_deputy_id"
   add_index "pcp_categories", ["p_group_id"], name: "index_pcp_categories_on_p_group_id"
   add_index "pcp_categories", ["p_owner_id"], name: "index_pcp_categories_on_p_owner_id"
+
+  create_table "pcp_comments", force: :cascade do |t|
+    t.integer  "pcp_item_id"
+    t.integer  "pcp_step_id"
+    t.string   "description", limit: 255
+    t.string   "author",      limit: 90
+    t.boolean  "public",                  default: true
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+  end
+
+  add_index "pcp_comments", ["pcp_item_id"], name: "index_pcp_comments_on_pcp_item_id"
+  add_index "pcp_comments", ["pcp_step_id"], name: "index_pcp_comments_on_pcp_step_id"
+
+  create_table "pcp_items", force: :cascade do |t|
+    t.integer  "pcp_subject_id"
+    t.integer  "pcp_step_id"
+    t.integer  "seqno",                      default: 1
+    t.string   "reference",      limit: 50
+    t.string   "description",    limit: 255
+    t.integer  "item_status",                default: 0
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+  end
+
+  add_index "pcp_items", ["pcp_step_id"], name: "index_pcp_items_on_pcp_step_id"
+  add_index "pcp_items", ["pcp_subject_id", "seqno"], name: "pcp_items_index"
+  add_index "pcp_items", ["pcp_subject_id"], name: "index_pcp_items_on_pcp_subject_id"
 
   create_table "pcp_steps", force: :cascade do |t|
     t.integer  "pcp_subject_id",                          null: false

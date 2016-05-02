@@ -4,6 +4,8 @@ en:
 
     models:
       pcp_category:   'Present-Comment Process (PCP) Categories'
+      pcp_comment:    'Present-Comment Process (PCP) Comments'
+      pcp_item:       'Present-Comment Process (PCP) Items'
       pcp_subject:    'Present-Comment Process (PCP) Subjects'
       pcp_step:       'Present-Comment Process (PCP) Steps'
 
@@ -18,6 +20,25 @@ en:
         c_deputy_id:    'Deputy (Commenting Group)'
         p_deputy_id:    'Deputy (Presenting Group)'
         label:          'Category Label'
+
+      pcp_comment:
+        id:             :general.attributes.id
+        pcp_item_id:    'PCP Item'
+        pcp_step_id:    'PCP Step'
+        description:    'Comment'
+        author:         'Author'
+        public:         'Public Flag'
+        assessments:    [ 'closed/A', 'minor/B', 'major/C', 'closed/D'  ]
+
+      pcp_item:
+        id:             :general.attributes.id
+        pcp_subject_id: 'PCP Subject'
+        pcp_step_id:    'PCP Step'
+        seqno:          'Sequence Number'
+        reference:      'Reference'
+        description:    'Description'
+        item_status:    'Status'
+        item_states:    [ 'new', 'open', 'closed' ]
 
       pcp_subject:
         id:             :general.attributes.id
@@ -34,6 +55,7 @@ en:
         p_deputy_id:    'Deputy (Presenting Group)'
         archived:       'Archived'
         subject_status: 'Subject Status'
+        short_title:    'PCP Subject'
 
       pcp_step:
         id:             :general.attributes.id
@@ -84,6 +106,25 @@ en:
       no_access:      'has no permission to modify PCP Subjects for his group'
       bad_account:    :general.non_existing
 
+  pcp_items:
+    title:            'PCP Items'
+    pcp_step:         'Reported in Step'
+    index:
+      form_title:     'All Items of PCP Subject '
+    new:
+      form_title:     'Add new Item for PCP Subject '
+    show:
+      form_title:     'Show Item Details for PCP Subject '
+    edit:
+      form_title:     'Edit Item Details for PCP Subject '
+    msg:
+      new_ok:         'PCP Item successfully created.'
+      edit_ok:        'PCP Item successfully updated.'
+      delete_ok:      'PCP Item successfully deleted.'
+      no_pcp_subject: :general.non_existing
+      no_pcp_step:    :general.non_existing
+      pcp_subject_step: 'PCP Subject/Step mismatch.'
+
   pcp_subjects:
     title:            'PCP Subjects'
     form:
@@ -99,6 +140,7 @@ en:
     show:
       form_title:     'Show PCP Subject Details'
       cs_heading:     'Current Step: %{label}'
+      items_button:   'Index of Items'
     index:
       form_title:     'List of all PCP Subjects (by Category)'
       status_subj:    'Subject'

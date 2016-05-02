@@ -148,5 +148,6 @@
   FEATURE_ID_PCP_STEPS = 70
   FEATURE_ID_PCP_ITEMS = 71
   FEATURE_ID_PCP_MEMBERS = 72
+  FEATURE_ID_PCP_COMMENTS = 73
 
-  FEATURE_ID_MAX_PLUS_ONE = 73 # update this when inserting new features!
+  FEATURE_ID_MAX_PLUS_ONE = 74 # update this when inserting new features!

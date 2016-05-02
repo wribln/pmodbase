@@ -56,6 +56,16 @@ class PcpSubjectTest < ActiveSupport::TestCase
     assert ps.valid?, ps.errors.messages
   end
 
+  test 'nice title' do
+    ps = PcpSubject.new
+    ps.id = 1
+    assert_equal '[1]', ps.subject_title
+    ps.project_doc_id = 'A-B-C-D'
+    assert_equal 'A-B-C-D', ps.subject_title
+    ps.title = 'foobar'
+    assert_equal 'foobar', ps.subject_title
+  end
+
   test 'pcp_category must be valid' do
     ps = pcp_subjects( :one )
     ps.pcp_category_id = nil 

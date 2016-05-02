@@ -12,6 +12,7 @@ class PcpSubject < ActiveRecord::Base
   belongs_to :c_deputy, -> { readonly }, foreign_key: :c_deputy_id, class_name: Account
   belongs_to :p_deputy, -> { readonly }, foreign_key: :p_deputy_id, class_name: Account
   has_many   :pcp_steps,    -> { most_recent }, dependent: :destroy, validate: false, inverse_of: :pcp_subject
+  has_many   :pcp_items,                        dependent: :destroy, validate: false, inverse_of: :pcp_subject
   accepts_nested_attributes_for :pcp_steps
 
   before_validation :set_defaults_from_pcp_categories, on: :create
@@ -154,6 +155,13 @@ class PcpSubject < ActiveRecord::Base
 
   def permitted_to_update?( id )
 #    user_is_owner_or_deputy?( id )||pcp_members.exists?( account: id, to_access: true, to_update: true )
+  end
+
+  # this returns a nice title for the subject, for example to be used in reports
+  # or as header for the related PCP Items
+
+  def subject_title
+    self.title || self.project_doc_id || self.to_id
   end
 
   protected
