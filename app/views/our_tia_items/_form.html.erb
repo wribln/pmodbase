@@ -43,9 +43,13 @@
       <div class="form-group">
         <%= form.label :due_date, class: "col-sm-3 control-label" %>
         <div class="col-sm-2">
+        <%- if comment_only -%>
           <div class="input-group date" data-provide="datepicker" data-date-start-date="0d">
             <%= form.text_field :due_date, class: "form-control", readonly: comment_only  %>
             <span class="input-group-addon">:::</span>
+        <%- else -%>
+            <%= display_value db_formatted_d( form.object.due_date )%>
+        <%- end -%>
           </div>
         </div>
       </div>
