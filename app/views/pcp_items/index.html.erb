@@ -10,21 +10,21 @@
           <th class="th-right col-sm-1"><%= PcpItem.human_attribute_name( :seqno )%></th>
           <th class="col-sm-2"><%= PcpItem.human_attribute_name( :reference )%></th>
           <th class="col-sm-5"><%= PcpItem.human_attribute_name( :description )%></th>
-          <th class="col-sm-1"><%= PcpItem.human_attribute_name( :item_status )%></th>
+          <th class="col-sm-1"><%= PcpItem.human_attribute_name( :item_assmnt )%></th>
           <th class="col-sm-2"><%= t( 'pcp_items.pcp_step' )%></th>
           <th class="col-sm-1 hidden-print"><%= t( 'action_title.header' )%></th>
         </tr>
       </thead>
       <tbody>
       <% if @pcp_items.length.zero? %>
-        <%= render partial: 'shared/index_empty_row', locals:{ columns: 4, with_link: true }%>
+        <%= render partial: 'shared/index_empty_row', locals:{ columns: 5, with_link: true }%>
       <% else %>
         <% @pcp_items.each do |pi| %>
           <tr>
             <td class="td-right"><%= pi.seqno %></td>
             <td><%= pi.reference %></td>
             <td><%= pi.description %></td>
-            <td><%= pi.item_status_label %></td>
+            <td><%= PcpItem.assessment_label( pi.item_assmnt ) %></td>
             <td><%= pi.pcp_step.try :step_label %></td>
             <td><%= render partial: 'shared/actions', object: pi %></td>
           </tr>

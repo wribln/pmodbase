@@ -737,6 +737,7 @@ en:
     help:         'Help'
     history:      'History'
     new:          'Add'
+    next:         'Next'
     stats:        'Statistics'
     wf_info:      'Workflow Information'
     upd_baseline: 'Update Baseline'

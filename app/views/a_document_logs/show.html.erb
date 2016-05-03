@@ -98,7 +98,7 @@
       <div class="form-group">
         <%= f.label :user, class: "col-sm-3 control-label" %>
         <div class="col-sm-6">
-          <%= display_value ApplicationModel::some_text_and_id( f.object.account.user_name, f.object.account.id )%>
+          <%= display_value f.object.account.account_info %>
         </div>
       </div>
       <div class="form-group">

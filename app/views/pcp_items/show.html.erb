@@ -10,30 +10,45 @@
         <div class="col-sm-1">
           <%= display_value f.object.seqno %>
         </div>
-        <%= f.label :item_status, class: "col-sm-1 control-label" %>
-        <div class="col-sm-1">
-          <%= display_value f.object.item_status_label %>
-        </div>
-        <%= f.label :pcp_step_id, t( 'pcp_items.pcp_step' ), class: "col-sm-2 control-label" %>
+        <%= f.label :pcp_step_id, t( 'pcp_items.pcp_step' ), class: "col-sm-3 control-label" %>
         <div class="col-sm-2">
           <%= display_value f.object.pcp_step.try :step_label %>
         </div>
       </div>
       <div class="form-group">
+        <%= f.label :item_assmnt, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value PcpItem.assessment_label( f.object.item_assmnt ) %>
+        </div>
+        <%= f.label :author, t( 'pcp_items.author' ), class: "col-sm-2 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value f.object.author %>
+        </div>
+      </div>
+      <div class="form-group">
         <%= f.label :reference, class: "col-sm-3 control-label" %>
-        <div class="col-sm-7">
+        <div class="col-sm-6">
           <%= display_value f.object.reference %>
         </div>
       </div>
       <div class="form-group">
         <%= f.label :description, class: "col-sm-3 control-label" %>
-        <div class="col-sm-7">
+        <div class="col-sm-6">
           <%= display_lines f.object.description %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :assessment, class: "col-sm-3 control-label" %>
+        <div class="col-sm-2">
+          <%= display_value PcpItem.assessment_label( f.object.assessment ) %>
         </div>
       </div>
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-2">
           <%= link_to t( 'button_label.edit' ), edit_pcp_item_path( @pcp_item ), class: "btn btn-lg btn-block btn-default" %>
+        </div>
+        <div class="col-sm-2">
+        	<%= link_to t( 'button_label.next' ), pcp_item_next_path( @pcp_item ), class: "btn btn-lg btn-block btn-default" %>
         </div>
         <div class="col-sm-2">
           <%= link_to t( 'button_label.goto_to_list' ), pcp_subject_pcp_items_path( @pcp_subject ), class: "btn btn-lg btn-block btn-default" %>

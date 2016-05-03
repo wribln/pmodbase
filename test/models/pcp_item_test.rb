@@ -7,7 +7,7 @@ class PcpItemTest < ActiveSupport::TestCase
     assert pi.pcp_subject.id, pcp_subjects( :one ).id
     assert pi.pcp_step.id, pcp_steps( :one ).id
     assert 1, pi.seqno
-    assert 0, pi.item_status
+    assert 1, pi.item_assmnt
   end
 
   test 'fixture 2' do
@@ -16,7 +16,7 @@ class PcpItemTest < ActiveSupport::TestCase
     assert pi.pcp_subject.id, pcp_subjects( :one ).id
     assert pi.pcp_step.id, pcp_steps( :one ).id
     assert 2, pi.seqno
-    assert 1, pi.item_status
+    assert 0, pi.item_assmnt
   end
 
   test 'defaults' do
@@ -27,6 +27,7 @@ class PcpItemTest < ActiveSupport::TestCase
     assert_includes pi.errors, :description
     pi.pcp_subject = pcp_subjects( :one )
     pi.pcp_step = pcp_steps( :one )
+    pi.seqno = 1
     pi.description = 'foobar'
     assert pi.valid?, pi.errors.messages
   end

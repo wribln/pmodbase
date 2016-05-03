@@ -4,7 +4,7 @@ class PcpItemsController < ApplicationController
   initialize_feature FEATURE_ID_PCP_ITEMS, FEATURE_ACCESS_VIEW + FEATURE_ACCESS_NDA, FEATURE_CONTROL_CUG
 
   before_action :set_pcp_subject, only: [ :index, :create, :new ]
-  before_action :set_pcp_item, only: [ :show, :edit, :update, :destroy ]
+  before_action :set_pcp_item, only: [ :show, :show_next, :edit, :update, :destroy ]
   before_action :set_breadcrumb
 
   # GET /pcs/:pcp_subject_id/pci
@@ -21,6 +21,20 @@ class PcpItemsController < ApplicationController
     set_breadcrumb_path( pcp_subject_pcp_items_path( @pcp_item.pcp_subject ))
   end
 
+  # GET /pci/1/next
+
+  def show_next
+    pi = @pcp_item.find_next
+    if pi.nil? then
+      flash.now[ :notice ] = t( 'pcp_items.msg.last_reached' )
+    else
+      @pcp_item = pi
+    end
+    set_breadcrumb_path( pcp_subject_pcp_items_path( @pcp_item.pcp_subject ))
+    set_final_breadcrumb( :show )
+    render :show
+  end
+
   # GET /pci/:pcp_subject_id/pci/new
 
   def new
@@ -28,6 +42,7 @@ class PcpItemsController < ApplicationController
     @pcp_item = @pcp_subject.pcp_items.new
     @pcp_item.pcp_step_id = @pcp_step.id
     @pcp_item.set_next_seqno
+    @pcp_item.author = current_user.account_info
   end
 
   # GET /pci/1/edit

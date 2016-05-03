@@ -5,7 +5,7 @@ class OurTiaItemsControllerTest < ActionController::TestCase
     @tia_item = tia_items( :tia_item_one )
     @tia_list = @tia_item.tia_list
     @account = accounts( :account_one )
-    session[ :current_user_id ] = accounts( :account_one ).id
+    session[ :current_user_id ] = @account.id
   end
 
   test 'should get index' do

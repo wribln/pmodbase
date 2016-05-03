@@ -53,6 +53,7 @@ Rails.application.routes.draw do
     resources :pcp_items, path: 'pci', format: false, shallow: true
 #    resources :pcp_members, path: 'pcm', format: false, shallow: true
   end
+  get 'pci/:id/next', to: 'pcp_items#show_next', as: 'pcp_item_next', format: false
   get 'pcs/:id/release', to: 'pcp_subjects#update_release', as: 'pcp_subject_release', format: false
   get 'pcs/:id/info', to: 'pcp_subjects#info', as: 'pcp_subject_history', format: false
   get 'pcs/:id/reldoc/:step_no', to: 'pcp_subjects#show_release', as: 'pcp_release_doc', format: false

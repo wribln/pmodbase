@@ -25,10 +25,12 @@ en:
         id:             :general.attributes.id
         pcp_item_id:    'PCP Item'
         pcp_step_id:    'PCP Step'
+        public:         'Public Flag'
+#
         description:    'Comment'
         author:         'Author'
-        public:         'Public Flag'
-        assessments:    [ 'closed/A', 'minor/B', 'major/C', 'closed/D'  ]
+        author:         :activerecord.attributes.pcp_item.author
+        assessment:     :activerecord.attributes.pcp_item.assessment
 
       pcp_item:
         id:             :general.attributes.id
@@ -36,9 +38,11 @@ en:
         pcp_step_id:    'PCP Step'
         seqno:          'Sequence Number'
         reference:      'Reference'
+        item_assmnt:    'Item Assessment'
+#
         description:    'Description'
-        item_status:    'Status'
-        item_states:    [ 'new', 'open', 'closed' ]
+        assessment:     'Assessment'
+        assessments:    [ 'Minor/Open', 'Critical/Open', 'Resolved/Closed'  ]
 
       pcp_subject:
         id:             :general.attributes.id
@@ -106,9 +110,16 @@ en:
       no_access:      'has no permission to modify PCP Subjects for his group'
       bad_account:    :general.non_existing
 
+  pcp_comments:
+    msg:
+      no_pcp_step:    :general.non_existing
+      no_pcp_item:    :general.non_existing
+      pcp_subject_ref: 'PCP Subject mismatch in Step/Item.'
+
   pcp_items:
     title:            'PCP Items'
     pcp_step:         'Reported in Step'
+    author:           'by'
     index:
       form_title:     'All Items of PCP Subject '
     new:
@@ -124,6 +135,7 @@ en:
       no_pcp_subject: :general.non_existing
       no_pcp_step:    :general.non_existing
       pcp_subject_step: 'PCP Subject/Step mismatch.'
+      last_reached:   'Last PCP Item reached.'
 
   pcp_subjects:
     title:            'PCP Subjects'
@@ -147,6 +159,7 @@ en:
       assessment:     'Code'
       status_step:    'Current Step' 
       acting_group:   'At Group'
+      items_status:   'Items m&nbsp;/&nbsp;c&nbsp;/&nbsp;r'
     info:
       form_title:     'History of PCP Subject'
       step_heading:   'Step %{id}: %{label}'

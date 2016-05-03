@@ -157,6 +157,17 @@
     <p>The <%= help_term PcpSubject.human_attribute_name( :report_doc_id )%> attribute has
       a link to the respective Release document.</p>
     <h3>Further Notes</h3>
+    <p>On the Index page ('<%= t( 'pcp_subjects.index.form_title' )-%>'), the entry in 
+      column with the header '<%= t( 'pcp_subjects.index.items_status' ).html_safe-%>' shows the
+      number of PCP Steps for this PCP Subject with the possible states:
+      <ul>
+        <li>m - <%= PcpItem::ASSESSMENT_LABELS[ 0 ]-%></li>
+        <li>c - <%= PcpItem::ASSESSMENT_LABELS[ 1 ]-%></li>
+        <li>r - <%= PcpItem::ASSESSMENT_LABELS[ 2 ]-%></li>
+      </ul>
+      The link under these numbers leads directly to the Index page of all PCP Items for
+      this PCP Subject.</p>
+    <br/>
     <p>At this time, no need was seen to implement a 'withdrawn' status in order to allow
       PCP Subjects to be removed from this process before they reach a terminal, closing
       status. If this is necessary, such PCP Subjects should be deleted. This means they

@@ -93,6 +93,19 @@ class ApplicationRoutesTest < ActionController::TestCase
     end
   end
 
+  test 'pcs nested routing' do
+    [ %w( pci pcp_items )].each do |r|
+      assert_routing({ method: 'get',    path: "pcs/1/#{ r[ 0 ] }"     }, { controller: r[ 1 ], action: 'index',  pcp_subject_id: '1' })
+      assert_routing({ method: 'post',   path: "pcs/1/#{ r[ 0 ] }"     }, { controller: r[ 1 ], action: 'create', pcp_subject_id: '1' })
+      assert_routing({ method: 'get',    path: "pcs/1/#{ r[ 0 ] }/new" }, { controller: r[ 1 ], action: 'new',    pcp_subject_id: '1' })
+  
+      assert_routing({ method: 'get',    path: "#{ r[ 0 ]}/1"           }, { controller: r[ 1 ], action: 'show',    id: '1' })
+      assert_routing({ method: 'get',    path: "#{ r[ 0 ]}/1/edit"      }, { controller: r[ 1 ], action: 'edit',    id: '1' })
+      assert_routing({ method: 'put',    path: "#{ r[ 0 ]}/1"           }, { controller: r[ 1 ], action: 'update',  id: '1' })
+      assert_routing({ method: 'delete', path: "#{ r[ 0 ]}/1"           }, { controller: r[ 1 ], action: 'destroy', id: '1' })
+    end
+  end
+
   test 'special routes: home/root' do
     assert_routing({ method: 'get',  path: '/'             }, { controller: 'home', action: 'index'   })
     assert_routing({ method: 'post', path: '/home/signon'  }, { controller: 'home', action: 'signon'  })
@@ -167,6 +180,10 @@ class ApplicationRoutesTest < ActionController::TestCase
     assert_routing({ method: 'get', path: '/pcs/1/release'  }, { controller: 'pcp_subjects', action: 'update_release', id: '1' })
     assert_routing({ method: 'get', path: '/pcs/1/info'     }, { controller: 'pcp_subjects', action: 'info',           id: '1' })
     assert_routing({ method: 'get', path: '/pcs/1/reldoc/1' }, { controller: 'pcp_subjects', action: 'show_release',   id: '1', step_no: '1' })
+  end
+
+  test 'special routes: PcpItems' do
+    assert_routing({ method: 'get', path: 'pci/1/next'      }, { controller: 'pcp_items',    action: 'show_next',      id: '1' })
   end
 
 end

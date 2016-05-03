@@ -1,15 +1,22 @@
+# the id of these need to have the same sequence as the seqno,
+# i.e. if seqno.1 < seqno.2 then id.1 < id.2
+
 one:
+  id:           12345
   pcp_subject:  one
   pcp_step:     one
   seqno:        1
   reference:    'chapter 1'
   description:  'not what it should be'
-  item_status:  0
+  item_assmnt:  1
+  assessment:   1
 
 two:
+  id:           67890
   pcp_subject:  one
   pcp_step:     one
   seqno:        2
   reference:    'dito'
   description:  'dito'
-  item_status:  1
+  item_assmnt:  0
+  assessment:   0

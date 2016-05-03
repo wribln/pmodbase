@@ -248,7 +248,7 @@ class PcpStep < ActiveRecord::Base
   def set_release_data( current_user )
     self.subject_status = new_subject_status
     self.due_date = nil if self.status_closed? # ignore due date for closed subject
-    self.released_by = "#{ current_user.user_name } (#{ current_user.name_with_id })"
+    self.released_by = current_user.account_info
     self.released_at = DateTime.now
     self.subject_title = pcp_subject.title
     self.project_doc_id = pcp_subject.project_doc_id

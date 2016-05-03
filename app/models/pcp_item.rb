@@ -20,17 +20,19 @@ class PcpItem < ActiveRecord::Base
     length: { maximum: MAX_LENGTH_OF_NOTE }
 
   validates :description,
-    presence: true,
-    length: { maximum: MAX_LENGTH_OF_DESCRIPTION }
+    presence: true
 
-  ITEM_STATES = PcpItem.human_attribute_name( :item_states ).freeze
+  ASSESSMENT_LABELS = PcpItem.human_attribute_name( :assessments ).freeze
 
-  # item_status is computed internally, just shown to user
+  validates :item_assmnt,
+    allow_blank: true,
+    numericality: { only_integer: true },
+    inclusion: { in: 0..( ASSESSMENT_LABELS.size - 1 )}
 
-  validates :item_status,
+  validates :assessment,
     presence: true,
     numericality: { only_integer: true },
-    inclusion: { in: 0..( ITEM_STATES.size - 1 )}
+    inclusion: { in: 0..( ASSESSMENT_LABELS.size - 1 )}
 
   validate :pcp_parents_must_exist
 
@@ -59,12 +61,18 @@ class PcpItem < ActiveRecord::Base
     m = a.maximum( :seqno ) || 0
     n = a.count
     self.seqno = ( n > m ? n : m ) + 1
-  end    
+  end 
 
-  # label for status
+  # try to get the next item in sequence: I am doing this on the id as the seqno is not
+  # fully reliable; id and seqno are a positive linear function, they are in the same
+  # sequence, i.e. pcp_item_1.id > pcp_item_2.id => pcp_item_1.seqno > pcp_item_2.seqno
 
-  def item_status_label
-    ITEM_STATES[ item_status ]
+  def find_next
+    PcpItem.where( pcp_subject_id: pcp_subject_id ).where( 'id > ?', id ).order( id: :asc ).first
+  end
+
+  def self.assessment_label( i )
+    ASSESSMENT_LABELS[ i ] unless i.nil?
   end
 
 end

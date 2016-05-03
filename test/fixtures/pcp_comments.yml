@@ -1,15 +1,13 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
-  pcp_item_id: 
-  pcp_step_id: 
-  description: MyString
-  author: MyString
-  public: false
+  pcp_item:     :one
+  pcp_step:     :one
+  description:  MyString
+  author:       MyString
+  public:       true
 
 two:
-  pcp_item_id: 
-  pcp_step_id: 
-  description: MyString
-  author: MyString
-  public: false
+  pcp_item:     :two 
+  pcp_step:     :one
+  description:  MyString
+  author:       MyString
+  public:       true

@@ -215,4 +215,15 @@ class AccountTest < ActiveSupport::TestCase
     assert_equal 0, as.length
   end
 
+  test 'account_info' do
+    as = accounts( :account_one )
+    assert_equal "One (Master [#{ as.id }])", as.account_info
+    as = accounts( :account_wop )
+    assert_equal "One (Account without permissions [#{ as.id }])", as.account_info
+    as = accounts( :account_two )
+    assert_equal "One (Account for testing [#{ as.id }])", as.account_info
+    as = accounts( :account_three )
+    assert_equal "One (Another Test Account [#{ as.id }])", as.account_info
+  end
+
 end

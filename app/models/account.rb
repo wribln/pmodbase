@@ -177,6 +177,12 @@ class Account < ActiveRecord::Base
     Account.find( id ).user_name unless id.nil?
   end
 
+  # provide account and user information for storage in the database
+
+  def account_info
+    "#{ user_name } (#{ name_with_id })"
+  end
+
   # provide statistics (must use self. here to override super.method)
 
   def self.get_stats

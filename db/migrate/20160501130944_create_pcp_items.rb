@@ -4,12 +4,16 @@ class CreatePcpItems < ActiveRecord::Migration
       t.belongs_to  :pcp_subject, index: true, foreign_key: true
       t.belongs_to  :pcp_step,    index: true, foreign_key: true
       t.integer     :seqno,       null: false
-      t.string      :reference,                 limit: MAX_LENGTH_OF_NOTE
-      t.string      :description, null: false,  limit: MAX_LENGTH_OF_DESCRIPTION
-      t.integer     :item_status, default: 0
+      t.string      :reference,   limit: MAX_LENGTH_OF_NOTE
+      t.integer     :item_assmnt
+# the following should/must be identical to those in PcpComment, except that the
+# description is optional there and we have an additional public flag there
+      t.text        :description, null: false
+      t.string      :author,      limit: MAX_LENGTH_OF_ACCOUNT_NAME + MAX_LENGTH_OF_PERSON_NAMES
+      t.integer     :assessment,  null: false, default: 0
 
       t.timestamps null: false
     end
-    add_index :pcp_items, [ :pcp_subject_id, :seqno ], name: 'pcp_items_index'
+    add_index :pcp_items, [ :pcp_subject_id, :id ], name: 'pcp_items_index'
   end
 end
