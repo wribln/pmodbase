@@ -59,3 +59,31 @@ th, td {
 
 ol.upper-alpha { list-style-type: upper-alpha; }
 ol.lower-alpha { list-style-type: lower-alpha; }
+
+/* replacement for control-label */
+
+p.p-label {
+  font-weight: bold;
+  text-align: left;
+  margin-bottom: 0px;
+  }
+
+@media (min-width: 768px){
+  p.p-label {
+    text-align: right;
+    margin-bottom: 10px;
+  }
+}
+
+/* replacement for form-group */
+
+div.p-group {
+  margin-bottom: 0px;
+}
+
+/* horizontal line with small border */
+
+hr.hr-small {
+  margin-top: 5px;
+  margin-bottom: 15px;
+  }

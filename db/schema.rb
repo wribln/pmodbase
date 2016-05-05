@@ -502,10 +502,10 @@ ActiveRecord::Schema.define(version: 20160501131040) do
     t.integer  "pcp_step_id"
     t.text     "description"
     t.string   "author",      limit: 90
-    t.integer  "assessment",             default: 0,    null: false
-    t.boolean  "public",                 default: true
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.integer  "assessment",             default: 0,     null: false
+    t.boolean  "is_public",              default: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
   end
 
   add_index "pcp_comments", ["pcp_item_id"], name: "index_pcp_comments_on_pcp_item_id"

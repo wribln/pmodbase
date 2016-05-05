@@ -4,6 +4,9 @@ class PcpItem < ActiveRecord::Base
 
   belongs_to :pcp_subject,  -> { readonly }, inverse_of: :pcp_items
   belongs_to :pcp_step,     -> { readonly }, inverse_of: :pcp_items
+  has_many   :pcp_comments, -> { readonly }, inverse_of: :pcp_item
+
+  before_save :update_item_assessment
 
   # pcp_step is set automatically, only reported to user
 
@@ -52,6 +55,24 @@ class PcpItem < ActiveRecord::Base
     # last check - only if previous checks were OK
     errors.add( :base, I18n.t( 'pcp_items.msg.pcp_subject_step' )) \
       if errors.empty? && ( pt.pcp_subject.id != pcp_subject_id )
+  end
+
+  # collect from comment records the current step's assessment
+
+  def update_item_assessment
+    lc = self.pcp_comments.last
+    self.item_assmnt = lc.nil? ? self.assessment : lc.assessment
+  end
+
+  # return true if the given assessment leads to a closed status
+  # MUST CHECK this if assessment states are modified
+
+  def closed?
+    self.class.closed?( assessment )
+  end
+
+  def self.closed?( a )
+    a == 2
   end
 
   # return the sequence number to use for the next item

@@ -1,13 +1,15 @@
 one:
-  pcp_item:     :one
-  pcp_step:     :one
-  description:  MyString
-  author:       MyString
-  public:       true
+  pcp_item_id:  12345
+  pcp_step:     two
+  description:  'Comment 1 for Item 1 in Initial Review'
+  author:       'me'
+  is_public:    true
+  assessment:   0
 
 two:
-  pcp_item:     :two 
-  pcp_step:     :one
-  description:  MyString
-  author:       MyString
-  public:       true
+  pcp_item_id:  67890 
+  pcp_step:     two
+  description:  'Comment 1 for Item 2 in Initial Review'
+  author:       'me'
+  is_public:    true
+  assessment:   1

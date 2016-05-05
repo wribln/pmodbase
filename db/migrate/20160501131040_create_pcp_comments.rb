@@ -8,7 +8,7 @@ class CreatePcpComments < ActiveRecord::Migration
       t.text        :description
       t.string      :author,      limit: MAX_LENGTH_OF_ACCOUNT_NAME + MAX_LENGTH_OF_PERSON_NAMES
       t.integer     :assessment,  null: false, default: 0
-      t.boolean     :public, default: true
+      t.boolean     :is_public, default: false
 
       t.timestamps null: false
     end

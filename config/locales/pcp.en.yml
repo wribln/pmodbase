@@ -115,11 +115,15 @@ en:
       no_pcp_step:    :general.non_existing
       no_pcp_item:    :general.non_existing
       pcp_subject_ref: 'PCP Subject mismatch in Step/Item.'
+      descr_mssng:    'must not be empty unless Item can be closed.'
 
   pcp_items:
     title:            'PCP Items'
     pcp_step:         'Reported in Step'
     author:           'by'
+    first_assessment: 'Initial Assessment'
+    form:
+      g_prompt:       :general.select_prompt
     index:
       form_title:     'All Items of PCP Subject '
     new:

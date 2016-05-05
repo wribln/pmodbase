@@ -11,6 +11,7 @@ class PcpComment < ActiveRecord::Base
     inclusion: { in: 0..( PcpItem::ASSESSMENT_LABELS.size - 1 )}
 
   validate :pcp_parents_must_exist
+  validate :public_requirements
 
   # make sure we have a corresponding pcp_item and pcp_step
 
@@ -28,6 +29,16 @@ class PcpComment < ActiveRecord::Base
     # last check - only if previous checks were ok
     errors.add( :base, I18n.t( 'pcp_comments.msg.pcp_subject_ref' )) \
       if errors.empty? && ( ps.pcp_subject_id != pi.pcp_subject_id )
+  end
+
+  # make sure public can only be set when
+  # (1) a description is there - unless the assessment is terminal
+
+  def public_requirements
+    if self.is_public then
+      errors.add( :description, I18n.t( 'pcp_comments.msg.descr_mssng' )) \
+        if description.blank? && !PcpItem.closed?( assessment )
+    end
   end
 
 end
