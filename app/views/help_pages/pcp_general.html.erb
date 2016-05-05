@@ -1,0 +1,91 @@
+<% help_title "Help on PCP - Present-Comment Process"%>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">The Present-Comment Process (PCP) reflects processes in a project environment
+      where one project group presents work results (documents, drawings, site conditions), and another
+      project group records observations and makes comments on this work result.</p>
+    <h3>Overview</h3>
+    <p>The Present-Comment Process (PCP) is represented using the following model:</p>
+    <ul>
+      <li><%= help_param 'PCP Categories' -%> reflect an agreement between two project parties to
+        perform a Present-Comment Process. For example, the review of Civil Works drawings by the
+        Systems Engineering Group is such an agreement between the Civil Works group and the 
+        Systems group. Statistics on the status of the all subjects in each PCP Category can be
+        produced at any time. In addition, hashtags can be used to further define sub-categories
+        for statistics; for example, the status of Civil Works drawings can be reported on a
+        location by location basis by using location-specific hashtags.</li>
+      <li><%= help_param 'PCP Subjects' -%> are items on which the Present-Comment Process is
+        performed: a PCP Subject could be single document, an individual drawing, or a punch
+        list for a specific site.<br/>
+        While in the Present-Comment Process, a PCP Subject will be handled by either the
+        Presenting Group, or by the Commenting Group. The handing-over from one group to the
+        other is a 'Release'. Initially, the Presenting Group will release the PCP Subject to
+        the Commenting Group. The Commenting Group will then report their observations and
+        an overall assessment of the PCP Subject.<br/>
+        In the next step, the Commenting Group will release the PCP Subject (back) to the
+        Presenting Group. The Presenting Group can now respond to the observations by 
+        commenting on each and every observation. Once this step is completed, the PCP Subject
+        is released again to the Commenting Group. With documents or drawings, this step 
+        normally involves the submission of a new revision of the document or drawing.</li>
+      <li>Each of the above steps is called <%= help_param 'PCP Step'-%>. The first
+        step would be the <%= help_term PcpStep::STEP_LABELS[ 0 ]-%>, the second 
+        <%= help_term PcpStep::STEP_LABELS[ 1 ]-%>, the third
+        <%= help_term PcpStep::STEP_LABELS[ 2 ]-%>, and so on.<br/>
+        The transition from one PCP Step to the next PCP Step is performed by a formal
+        <%= help_param 'Release' -%>. This action includes the preparation of a 'Release'
+        document containing the current status of the PCP Subject and including all current
+        (and public) observations and comments.</li>
+      <li>Observations and comments on a PCP Subject are collected on a <%= help_param 'PCP Item'-%>
+        basis: Each single observation is added to a PCP Subject as an individual PCP Item with a reference to the specific location of the issue (e.g. chapter, page, area). An initial
+        assessment of the issue becomes the basis for the initial overall assessment of the PCP
+        Subject.<br/>
+        In subsequent PCP Steps, comments can be added to PCP Items as response to the original 
+        observation. These comments can be public or non-public/internal. Public comments will
+        become visible by anyone once the respective PCP Step is released. Non-public/internal
+        comments are only visible to the originating group (Presenting or Commenting Group).<br/>
+        Before a PCP Subject can be released, at least one public comment must be made for each
+        and every PCP Item as a response to the current PCP Step.</li>
+    </ul>
+    <h3>Roles for PCP Categories</h3>
+    <p>The PCP Categories are administered by one or more persons with specific access rights. PCP
+    Categories are created based on a specific agreement (explicit or implicit by the project
+    environment) between two project groups.</p>
+    <p>Each party is expected to name a representative and a deputy. These two persons would be entered
+    as Owner and Deputy for their respective groups (PCP Category attributes
+    <%= help_term PcpCategory.human_attribute_name( :p_owner_id )-%> and
+    <%= help_term PcpCategory.human_attribute_name( :p_deputy_id )-%>, and as 
+    <%= help_term PcpCategory.human_attribute_name( :c_owner_id )-%> and
+    <%= help_term PcpCategory.human_attribute_name( :c_deputy_id )-%> respectively).</p>
+    <p>For any new PCP Subject of this PCP Category, the above users would be inserted as main
+    responsible persons until another person is assigned for their respective role. Only the current
+    owner or her deputy can assign another person to be the owner or deputy of a PCP Subject.</p>
+    <p>Users which are responsible for the administration of PCP Categories need the add and edit
+    access rights for the feature
+    <%= help_term Feature.find_by_id( FEATURE_ID_PCP_CATEGORIES ).label_with_id-%>.</p>
+    <h3>Roles for PCP Subjects</h3>
+    <p>Each PCP Subject has at least two owners, optionally also a respective deputy:
+    <%= help_term PcpSubject.human_attribute_name( :p_owner_id )-%> and
+    <%= help_term PcpSubject.human_attribute_name( :p_deputy_id )-%>, and as 
+    <%= help_term PcpSubject.human_attribute_name( :c_owner_id )-%> and
+    <%= help_term PcpSubject.human_attribute_name( :c_deputy_id )-%> respectively.</p>
+    <p>An owner (or her deputy) must have edit access rights for the feature
+    <%= help_term Feature.find_by_id( FEATURE_ID_PCP_SUBJECTS ).label_with_id-%> in order
+    to be able to view and/or modify PCP Subject attributes and to perform a Release.</p>
+    <h3>Roles for PCP Items</h3>
+    <p>An owner or deputy may also assign other users as participants of the Present-Comment
+    Process for her PCP Subject. These users may require add and edit permissions for the
+    feature <%= help_term Feature.find_by_id( FEATURE_ID_PCP_ITEMS ).label_with_id-%> in
+    order to add and edit observations and/or comments.</p>
+    <p>PCP Subject participants of the Presenting Group may comment on PCP Items;
+    participants of the Commenting Group may make create observations (PCP Items),
+    or add comments to existing items.</p>
+    <p>All observations are public by default and can be viewed by anyone as soon as the
+    respective PCP Step is released.</p>
+    <p>All comments are created non-public/internal and can be viewed only by the
+    PCP Subject participants. Only a PCP Subject owner or deputy (for his respective
+    group) can make flag a comment as public or create a public comment. Once a PCP
+    Step is released, the comments marked as public can be viewed by anyone.</p>
+
+    <%= help_footer FEATURE_ID_HELP_PAGES %>
+  </div> <!-- /container -->
