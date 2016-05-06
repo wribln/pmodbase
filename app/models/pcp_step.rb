@@ -98,12 +98,15 @@ class PcpStep < ActiveRecord::Base
     # acting group specific tests
 
     if in_presenting_group? then
-      errors.add( :base, I18n.t( 'pcp_steps.msg.missng_subject' )) \
-        if pcp_subject.title.blank? && pcp_subject.project_doc_id.blank? 
-      errors.add( :base, I18n.t( 'pcp_steps.msg.clsd_subj_no_r' )) \
-        if status_closed?
-      errors.add( :base, I18n.t( 'pcp_steps.msg.no_subject_status' )) \
-        if subject_date.blank? && subject_version.blank?
+      # avoid unnessary error messages by checking for closed first:
+      if status_closed? then
+        errors.add( :base, I18n.t( 'pcp_steps.msg.clsd_subj_no_r' ))
+      else
+        errors.add( :base, I18n.t( 'pcp_steps.msg.missng_subject' )) \
+          if pcp_subject.title.blank? && pcp_subject.project_doc_id.blank? 
+        errors.add( :base, I18n.t( 'pcp_steps.msg.no_subject_status' )) \
+          if subject_date.blank? && subject_version.blank?
+      end
     else # in commenting group
       errors.add( :new_assmt, I18n.t( 'pcp_steps.msg.no_reqd_input' )) \
         if new_assmt.nil?
@@ -166,6 +169,10 @@ class PcpStep < ActiveRecord::Base
 
   # provide label for subject status
 
+  def self.subject_status_label( s )
+    SUBJECT_STATES[ s || 0 ]
+  end
+
   def subject_status_label
     SUBJECT_STATES[ subject_status ]
   end
@@ -225,7 +232,7 @@ class PcpStep < ActiveRecord::Base
     acting_group_index == 1
   end
 
-  # create a new step based on the current one
+  # create a new step as preparation for a release based on the current one
 
   def create_release_from( prev_step, current_user )
     prev_step.set_release_data( current_user )

@@ -98,7 +98,7 @@
           <%= display_value @pcp_curr_step.subject_status_label %>
         </div>
       </div>
-      <%- if @pcp_step && @pcp_step.status_closed? then -%>
+      <%- if @pcp_curr_step && @pcp_curr_step.status_closed? then -%>
       <div class="form-group">
         <%= f.label :archived, class: "col-sm-3 control-label" %>
         <div class="col-sm-1">

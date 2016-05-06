@@ -75,7 +75,8 @@ en:
         step_states:    [ 'Response', 'Review' ]
         step_label:     '%{ss} No %{no}'
         subject_status: 'Subject Status'
-#                                         must be last status
+#                         first status must also fit non-existing steps (e.g. 'new')
+#                         last status must be the terminal status
         subject_states: [ 'new', 'open', 'closed' ]
         prev_assmt:     'Previous Assessment'
         new_assmt:      'New Assessment'
@@ -159,11 +160,10 @@ en:
       items_button:   'Index of Items'
     index:
       form_title:     'List of all PCP Subjects (by Category)'
-      status_subj:    'Subject'
+      status_subj:    'Status'
       assessment:     'Code'
       status_step:    'Current Step' 
       acting_group:   'At Group'
-      items_status:   'Items m&nbsp;/&nbsp;c&nbsp;/&nbsp;r'
     info:
       form_title:     'History of PCP Subject'
       step_heading:   'Step %{id}: %{label}'

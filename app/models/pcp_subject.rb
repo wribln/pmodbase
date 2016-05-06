@@ -164,12 +164,12 @@ class PcpSubject < ActiveRecord::Base
     self.title || self.project_doc_id || self.to_id
   end
 
-  # return hash of counts per item_status
-
-  def get_stats
-    h = self.pcp_items.group( :item_assmnt ).count
-  end
-
+#  # return hash of counts per item_status
+#
+#  def get_stats
+#    h = self.pcp_items.group( :item_assmnt ).count
+#  end
+#
   protected
     
     # when creating a new pcp_subject, we should take the default values from the

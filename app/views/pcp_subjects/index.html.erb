@@ -2,7 +2,7 @@
 <div class="container">
   <%= breadcrumbs %>
   <%= form_title %>
-  <div class="table-responsive col-sm-12">
+  <div class="table-responsive col-sm-11">
     <%= form_tag({},{ method: :get }) do %>
     <%= will_paginate @pcp_subjects %>
     <table class="table table-bordered">
@@ -14,7 +14,6 @@
           <th class="col-sm-1"><%= t( '.assessment' )%></th>
           <th class="col-sm-2"><%= t( '.status_step' )%></th>
           <th class="col-sm-1"><%= label_tag :ff_igrp, t( '.acting_group' ), class: 'control-label'%></th>
-          <th class="col-sm-1"><%= t( '.items_status' ).html_safe %></th>
           <th class="col-sm-1 hidden-print"><%= filter_action_title_header %></th>
         </tr>
       </thead>
@@ -42,11 +41,10 @@
           <tr>
             <td><%= ps.to_id %></td>
             <td><%= display_two_items_w_br ps.title, ps.project_doc_id %></td>
-            <td><%= cs.try :subject_status_label %></td>
+            <td><%= link_to PcpStep.subject_status_label( cs.try :subject_status ), pcp_subject_pcp_items_path( ps )%></td>
             <td><%= PcpStep.assessment_code( cs.try :current_assmt )%></td>
             <td><%= cs.try :step_label %></td>
             <td><%= ps.get_acting_group( cs.try :acting_group_index ).code %></td>
-            <td><%= s = ps.get_stats; s.default = 0; link_to sprintf( "%i / %i / %i", s[ 0 ], s[ 1 ], s[ 2 ]), pcp_subject_pcp_items_path( ps )%></td>
             <td><%= render partial: 'shared/actions', object: ps %></td>
           </tr>
         <%- end -%>

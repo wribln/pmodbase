@@ -1,7 +1,7 @@
 class PcpSubjectsController < ApplicationController
   before_action :set_pcp_subject,  only: [ :show, :edit, :info, :update, :destroy, :update_release, :show_release ]
   before_action :set_selections,   only: [ :edit, :new, :update ]
-  before_action :set_valid_params, only: [ :edit, :new, :update, :create,  ]
+  before_action :set_valid_params, only: [ :edit, :new, :update, :create ]
 
   initialize_feature FEATURE_ID_PCP_SUBJECTS, FEATURE_ACCESS_INDEX, FEATURE_CONTROL_CUG
 

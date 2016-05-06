@@ -115,13 +115,17 @@
         for the current step.</li>
       <li>The <%= help_param PcpStep.human_attribute_name( :subject_status )-%> is automatically
         set to <%= help_term PcpStep.human_attribute_name( :subject_states )[ 0 ]-%> when a
-        new subject is created; after the first round - when the initial observations are
-        released to the originating project group - the status changes to
+        new subject is created; after the first round -&nbsp;when the initial observations are
+        released to the originating project group&nbsp;- the status changes to
         <%= help_term PcpStep.human_attribute_name( :subject_states )[ 1 ]-%>;
         finally, the status is set to 
         <%= help_term PcpStep.human_attribute_name( :subject_states )[ 2 ]-%>
-        when any of the terminal assessment states have been reached. In this final state,
-        it is not possible anymore to Release the PCP Subject for further reviews.</li>
+        when any of the terminal assessment states for the PCP Subject have been reached 
+        following a release of the PCP Subject. Consequently, a further release in such a final state
+        for more reviews is not possible anymore.<br/>
+        On the index page, the link under <%= help_term t('pcp_subjects.index.status_subj' )-%>
+        leads directly to the list of all items of this PCP Subject.</li>
+        </li>
     </ul>
     <h3 id='pcp_release'>Release a PCP Step</h3>
     <p>In order to close the current PCP Step and to release it to the other party, use the
@@ -155,19 +159,8 @@
       PCP Steps are listed in reverse chronological order, i.e. the most currently active
       step is listed first, the initial release step is listed last.</p>
     <p>The <%= help_term PcpSubject.human_attribute_name( :report_doc_id )%> attribute has
-      a link to the respective Release document.</p>
+      a link to the respective release document.</p>
     <h3>Further Notes</h3>
-    <p>On the Index page ('<%= t( 'pcp_subjects.index.form_title' )-%>'), the entry in 
-      column with the header '<%= t( 'pcp_subjects.index.items_status' ).html_safe-%>' shows the
-      number of PCP Steps for this PCP Subject with the possible states:
-      <ul>
-        <li>m - <%= PcpItem::ASSESSMENT_LABELS[ 0 ]-%></li>
-        <li>c - <%= PcpItem::ASSESSMENT_LABELS[ 1 ]-%></li>
-        <li>r - <%= PcpItem::ASSESSMENT_LABELS[ 2 ]-%></li>
-      </ul>
-      The link under these numbers leads directly to the Index page of all PCP Items for
-      this PCP Subject.</p>
-    <br/>
     <p>At this time, no need was seen to implement a 'withdrawn' status in order to allow
       PCP Subjects to be removed from this process before they reach a terminal, closing
       status. If this is necessary, such PCP Subjects should be deleted. This means they
