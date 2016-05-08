@@ -6,7 +6,7 @@
 class PcpStep < ActiveRecord::Base
 
   belongs_to :pcp_subject, -> { readonly }, inverse_of: :pcp_steps
-  has_many   :pcp_items,   -> { readonly }
+  has_many   :pcp_items,   -> { readonly }, inverse_of: :pcp_step
 
   validates :pcp_subject_id,
     presence: true
@@ -62,6 +62,7 @@ class PcpStep < ActiveRecord::Base
   # default scope for access through PCP Subjects
 
   scope :most_recent, -> { order( step_no: :desc )}
+  scope :released,    -> { where.not( released_at: nil )}
 
   # make sure the given pcp_subject really exists - just to be on the safe side...
 
