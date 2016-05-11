@@ -15,8 +15,7 @@ class RfcStatusRecordsController < ApplicationController
 
   # GET /rsrs/info
 
-  def info
-    set_final_breadcrumb( :wf_info )
+  def info_workflow
   end
 
   # GET /rsrs/stats

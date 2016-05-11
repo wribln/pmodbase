@@ -50,7 +50,7 @@
         <%= form.label :p_group_id, class: "col-sm-3 control-label" %>
         <div class="col-sm-4">
           <%- if @valid_subject_params.include? :p_group_id then -%>
-            <%= form.select :p_group_id, @group_selection, { prompt: t( '.g_prompt' )},{ class: 'form-control', required: true }%>
+            <%= form.select :p_group_id, @pcp_groups, { prompt: t( '.g_prompt' )},{ class: 'form-control', required: true }%>
           <%- else -%>
             <%= display_value form.object.p_group.try( :code_and_label) %>
           <%- end -%>
@@ -83,7 +83,7 @@
         <%= form.label :c_group_id, class: "col-sm-3 control-label" %>
         <div class="col-sm-4">
           <%- if @valid_subject_params.include? :c_group_id then -%>
-            <%= form.select :c_group_id, @group_selection, { prompt: t( '.g_prompt' )},{ class: 'form-control', required: true }%>
+            <%= form.select :c_group_id, @pcp_groups, { prompt: t( '.g_prompt' )},{ class: 'form-control', required: true }%>
           <%- else -%>
             <%= display_value form.object.c_group.try( :code_and_label )%>
           <%- end -%>

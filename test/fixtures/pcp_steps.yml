@@ -9,6 +9,8 @@ one:
   subject_status:   0
   prev_assmt:       0
   new_assmt:
+  released_by:      'Releaser'
+  released_at:      2016-03-03
 
 two:
   pcp_subject:      one 

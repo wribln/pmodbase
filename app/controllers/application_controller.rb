@@ -211,7 +211,7 @@ class ApplicationController < ActionController::Base
     @dbcr.action = action_name
     @dbcr.uri = request.fullpath
     flash.now[ :notice ] = t( map_action_to_permission, scope: 'my_change_requests.new.flash' )
-    render 'my_change_requests/new'
+    render 'my_change_requests/new', status: :unauthorized
   end
 
   # This is a general handler for all unauthorized access attempts

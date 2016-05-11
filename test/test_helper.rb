@@ -37,8 +37,8 @@ class ActiveSupport::TestCase
   end
 
   def check_for_cr
-    assert_response :success
-    assert_select 'h2', I18n.t( 'my_change_requests.new.form_title' )
+    assert_response :unauthorized
+    assert_template 'my_change_requests/new'
   end
 
 end

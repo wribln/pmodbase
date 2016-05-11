@@ -27,15 +27,13 @@ class ResponsibilitiesController2Test < ActionController::TestCase
 
   test "should get index" do
     get :index
-    assert_response :success
     assert_nil assigns( :responsibilities )
-    assert_template 'my_change_requests/new'
+    check_for_cr
   end
 
   test "should get new" do
     get :new
-    assert_response :success
-    assert_template 'my_change_requests/new'
+    check_for_cr
   end
 
   test "should create responsibility" do
@@ -45,28 +43,24 @@ class ResponsibilitiesController2Test < ActionController::TestCase
         person_id: @responsibility.person_id,
         description: @responsibility.description, seqno: @responsibility.seqno }
     end
-    assert_response :success
-    assert_template 'my_change_requests/new'
+    check_for_cr
   end
 
   test "should show responsibility" do
     assert_equal false, @a.permission_to_access( FEATURE_ID_RESPONSIBILITIES, :to_read, @responsibility.group_id ), 'no permission!'
     get :show, id: @responsibility
-    assert_response :success
-    assert_template 'my_change_requests/new'
+    check_for_cr
   end
 
   test "should get edit" do
     get :edit, id: @responsibility
-    assert_response :success
-    assert_template 'my_change_requests/new'
+    check_for_cr
   end
 
   test "should update responsibility" do
     assert_equal false, @a.permission_to_access( FEATURE_ID_RESPONSIBILITIES, :to_update, @responsibility.group_id ), 'no permission!'
     patch :update, id: @responsibility, responsibility: { description: @responsibility.description, seqno: @responsibility.seqno }
-    assert_response :success
-    assert_template 'my_change_requests/new'
+    check_for_cr
   end
 
   test "should destroy responsibility" do
@@ -74,7 +68,6 @@ class ResponsibilitiesController2Test < ActionController::TestCase
     assert_difference( 'Responsibility.count', 0 ) do
       delete :destroy, id: @responsibility
     end
-    assert_response :success
-    assert_template 'my_change_requests/new'
+    check_for_cr
   end
 end

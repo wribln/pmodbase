@@ -3,6 +3,7 @@
     <%= helpcrumbs %>
     <%= help_header %>
     <p class="lead">Observations, comments and responses on issues to be resolved.</p>
+    <p>For general information on the PCP, see <%= link_to_help :pcp_general, 'PCP - The Present-Comment Process' -%>.</p>
     <h3>Introduction</h3>
     <p>A single PCP Item describes an observation found during a review cycle which needs 
       clarification or resolution. PCP Items can only be added by the Commenting Group;
@@ -39,7 +40,8 @@
         could be categorized as <%= help_term PcpStep::ASSESSMENT_LABELS[ 2 ]-%>.</li>
         <li><%= help_term  PcpItem::ASSESSMENT_LABELS[ 1 ]-%> are those issues requiring rework
           on the PCP Subject before it can be approved. Any PCP Item with this assessment normally
-          leads to an overall PCP Subject assessment of <%= help_term PcpStep::ASSESSMENT_LABELS[ 3 ]-%>.</li>
+          leads to an overall PCP Subject assessment of <%= help_term PcpStep::ASSESSMENT_LABELS[ 3 ]-%>.
+          </li>
         <li><%= help_term PcpItem::ASSESSMENT_LABELS[ 2 ]-%> indicates that the issue
           is resolved and the PCP Item can be considered as closed, i.e. no further comments
           are required or possible. When all PCP Items of a PCP Subject have this status, then this 

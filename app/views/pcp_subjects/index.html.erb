@@ -23,7 +23,6 @@
           <td><%= filter_field @filter_fields, :ff_titl, :sw %></td>
           <td colspan="3"><%= filter_field @filter_fields, :ff_note, :ns %></td>
           <td><%= filter_select_from_array @filter_fields, :ff_igrp, @filter_groups %></td>
-          <td></td>
           <td><%= filter_action_button -%></td>
         </tr>
       <% if @pcp_subjects.length.zero? %>

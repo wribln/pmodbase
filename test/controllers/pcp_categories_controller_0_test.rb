@@ -1,5 +1,6 @@
 require 'test_helper'
-class PcpCategoriesControllerTest < ActionController::TestCase
+class PcpCategoriesController0Test < ActionController::TestCase
+  tests PcpCategoriesController
 
   setup do
     @pcp_category = pcp_categories(:one)

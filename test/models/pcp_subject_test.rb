@@ -34,6 +34,7 @@ class PcpSubjectTest < ActiveSupport::TestCase
   end
 
   test 'new object inherits defaults from given pcp_category' do
+    # except p_owner_id which will become the current user's id
     ps = PcpSubject.new
     oc = pcp_categories( :one )
     ps.pcp_category = oc
@@ -41,7 +42,7 @@ class PcpSubjectTest < ActiveSupport::TestCase
     assert_equal ps.c_group_id, oc.c_group_id
     assert_equal ps.p_group_id, oc.p_group_id
     assert_equal ps.c_owner_id, oc.c_owner_id
-    assert_equal ps.p_owner_id, oc.p_owner_id
+    assert_nil ps.p_owner_id
     assert_equal ps.c_deputy_id, oc.c_deputy_id
     assert_equal ps.p_deputy_id, oc.p_deputy_id
   end
@@ -233,8 +234,8 @@ class PcpSubjectTest < ActiveSupport::TestCase
 
     assert_equal ps.p_owner_id, ps.c_owner_id
     assert_equal 1, ps.current_steps[ 0 ].acting_group_index
-    pvgi = ps.viewing_group_index( ps.p_owner_id )
-    cvgi = ps.viewing_group_index( ps.c_owner_id )
+    pvgi = ps.viewing_group_map( ps.p_owner_id )
+    cvgi = ps.viewing_group_map( ps.c_owner_id )
     assert_equal 3, pvgi
     assert_equal 3, cvgi
 
@@ -247,8 +248,8 @@ class PcpSubjectTest < ActiveSupport::TestCase
 
     ps.c_owner_id = accounts( :account_two ).id
     refute_equal ps.p_owner_id, ps.c_owner_id
-    cvgi = ps.viewing_group_index( ps.c_owner_id )
-    pvgi = ps.viewing_group_index( ps.p_owner_id )
+    cvgi = ps.viewing_group_map( ps.c_owner_id )
+    pvgi = ps.viewing_group_map( ps.p_owner_id )
     assert_equal 1, pvgi
     assert_equal 2, cvgi
 
@@ -259,7 +260,7 @@ class PcpSubjectTest < ActiveSupport::TestCase
 
     # test for account outside of both groups
 
-    xvgi = ps.viewing_group_index( accounts( :account_wop ).id )
+    xvgi = ps.viewing_group_map( accounts( :account_wop ).id )
     assert_equal 0, xvgi
     refute PcpSubject.same_group?( 1, xvgi )
     refute PcpSubject.same_group?( 0, xvgi )

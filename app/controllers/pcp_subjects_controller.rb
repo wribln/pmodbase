@@ -1,9 +1,8 @@
 class PcpSubjectsController < ApplicationController
-  before_action :set_pcp_subject,  only: [ :show, :edit, :info, :update, :destroy, :update_release, :show_release ]
-  before_action :set_selections,   only: [ :edit, :new, :update ]
+  before_action :set_pcp_subject,  only: [ :show, :edit, :info_history, :update, :destroy, :update_release, :show_release ]
   before_action :set_valid_params, only: [ :edit, :new, :update, :create ]
 
-  initialize_feature FEATURE_ID_PCP_SUBJECTS, FEATURE_ACCESS_INDEX, FEATURE_CONTROL_CUG
+  initialize_feature FEATURE_ID_PCP_SUBJECTS, FEATURE_ACCESS_VIEW, FEATURE_CONTROL_CUG + FEATURE_CONTROL_GRP
 
 # GET /ors
 
@@ -20,14 +19,13 @@ class PcpSubjectsController < ApplicationController
 
   # GET /pcs/1/info - history
 
-  def info
-    set_final_breadcrumb( :history )
+  def info_history
   end
 
-  # GET /pcs/1/show_release/1
+  # GET /pcs/1/reldoc/1
 
   def show_release
-    @pcp_curr_step = @pcp_subject.pcp_steps.where( step_no: params[ :step_no ]).first
+    @pcp_curr_step = @pcp_subject.pcp_steps.released.where( step_no: params[ :step_no ]).first
     if @pcp_curr_step then
       render :reldoc, layout: 'plain_print'
     else
@@ -39,36 +37,52 @@ class PcpSubjectsController < ApplicationController
 
   def new
     @pcp_subject = PcpSubject.new
+    @pcp_categories = permitted_categories
   end
 
   # GET /pcs/1/edit
 
   def edit
+    permission_to_modify?
+    @pcp_categories = permitted_categories
+    @pcp_groups = permitted_groups( :to_update )
   end
 
   # POST /pcs
 
   def create
     @pcp_subject = PcpSubject.new( pcp_subject_params )
-    @pcp_curr_step = @pcp_subject.pcp_steps.build
-    respond_to do |format|
-      if @pcp_subject.save then
-        format.html { redirect_to @pcp_subject, notice: I18n.t( 'pcp_subjects.msg.new_ok' )}
-      else
-        set_selections
-        format.html { render :new }
+    if @pcp_subject.permitted_to_create?( current_user ) then
+      Rails.logger.debug "OK 1"
+      @pcp_subject.p_owner_id = current_user.id
+      @pcp_curr_step = @pcp_subject.pcp_steps.build( step_no: 0, prev_assmt: 0 )
+      # this works due to the AutosaveAssocation
+      respond_to do |format|
+        if @pcp_subject.save then
+          format.html { redirect_to @pcp_subject, notice: I18n.t( 'pcp_subjects.msg.new_ok' )}
+        else
+          @pcp_groups = permitted_groups( :to_create )
+          @pcp_categories = permitted_categories
+          format.html { render :new }
+        end
       end
+    else
+      render_no_permission
     end
   end
 
   # PATCH/PUT /pcs/1
 
   def update
-    respond_to do |format|
-      if @pcp_subject.update( pcp_subject_params )
-        format.html { redirect_to @pcp_subject, notice: I18n.t( 'pcp_subjects.msg.edit_ok' )}
-      else
-        format.html { render :edit }
+    if permission_to_modify? then
+      respond_to do |format|
+        if @pcp_subject.update( pcp_subject_params )
+          format.html { redirect_to @pcp_subject, notice: I18n.t( 'pcp_subjects.msg.edit_ok' )}
+        else
+          @pcp_groups = permitted_groups( :to_update )
+          @pcp_categories = permitted_categories
+          format.html { render :edit }
+        end
       end
     end
   end
@@ -80,7 +94,6 @@ class PcpSubjectsController < ApplicationController
       respond_to do |format|
         case @pcp_curr_step.release_type
         when 0
-          set_final_breadcrumb( :release )
           @pcp_new_step = @pcp_subject.pcp_steps.create
           @pcp_new_step.create_release_from( @pcp_curr_step, current_user )
           PcpStep.transaction do
@@ -92,7 +105,6 @@ class PcpSubjectsController < ApplicationController
             end
           end
         when 1
-          set_final_breadcrumb( :release )
           @pcp_curr_step.set_release_data( current_user )
           if @pcp_curr_step.save then
             flash[ :notice ] = I18n.t( 'pcp_subjects.msg.release_ok' )
@@ -128,7 +140,7 @@ class PcpSubjectsController < ApplicationController
       most_recent_steps = @pcp_subject.current_steps
       @pcp_curr_step = most_recent_steps[ 0 ]
       @pcp_prev_step = most_recent_steps[ 1 ] 
-      @pcp_viewing_group = @pcp_subject.viewing_group_index( current_user.id )
+      @pcp_viewing_group = @pcp_subject.viewing_group_map( current_user.id )
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -164,11 +176,11 @@ class PcpSubjectsController < ApplicationController
       end
     end
 
-    # retrieve groups for drop-down list box
+    # retrieve categories for drop-down list box
 
-    def set_selections
-      @group_selection = Group.active_only.participants_only.collect{ |g| [ g.code_and_label, g.id ]}
-      @pcp_categories = PcpCategory.all.collect{ |c| [ c.label, c.id ]}
+    def permitted_categories
+      pg = current_user.permitted_groups( FEATURE_ID_PCP_SUBJECTS, :to_update, :p_group_id )
+      PcpCategory.permitted_groups( pg ).collect{ |c| [ c.label, c.id ]}
     end
 
     # prepare list of groups for selections
@@ -176,6 +188,21 @@ class PcpSubjectsController < ApplicationController
     def permitted_groups( action )
       pg = current_user.permitted_groups( FEATURE_ID_PCP_SUBJECTS, action, :id )
       Group.permitted_groups( pg ).all.collect{ |g| [ g.code, g.id ]}
+    end
+
+    # check if current user has permission to modify PCP subject or step: 
+    # must have permission for his respective group (p_group_id or c_group_id)...
+    # we wouldn't get here if the current user would not have the respective
+    # permissions (edit, update, destroy)
+
+    def permission_to_modify?
+      if PcpSubject.same_group?( @pcp_curr_step.acting_group_index, @pcp_viewing_group )
+        true
+      else
+        flash[ :notice ] = I18n.t( 'pcp_subjects.msg.no_permissn' )
+        render :show, status: :forbidden
+        false
+      end
     end
 
 end

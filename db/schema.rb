@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160501131040) do
+ActiveRecord::Schema.define(version: 20160511091429) do
 
   create_table "a1_codes", force: :cascade do |t|
     t.string   "code",                      null: false
@@ -527,6 +527,21 @@ ActiveRecord::Schema.define(version: 20160501131040) do
   add_index "pcp_items", ["pcp_step_id"], name: "index_pcp_items_on_pcp_step_id"
   add_index "pcp_items", ["pcp_subject_id", "id"], name: "pcp_items_index"
   add_index "pcp_items", ["pcp_subject_id"], name: "index_pcp_items_on_pcp_subject_id"
+
+  create_table "pcp_members", force: :cascade do |t|
+    t.integer  "pcp_subject_id",                 null: false
+    t.integer  "account_id",                     null: false
+    t.integer  "pcp_group",                      null: false
+    t.boolean  "to_access",      default: true,  null: false
+    t.boolean  "to_update",      default: false, null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
+  add_index "pcp_members", ["account_id"], name: "index_pcp_members_on_account_id"
+  add_index "pcp_members", ["pcp_subject_id", "account_id", "pcp_group"], name: "pcp_members_index", unique: true
+  add_index "pcp_members", ["pcp_subject_id", "pcp_group"], name: "pcp_group_members"
+  add_index "pcp_members", ["pcp_subject_id"], name: "index_pcp_members_on_pcp_subject_id"
 
   create_table "pcp_steps", force: :cascade do |t|
     t.integer  "pcp_subject_id",                          null: false

@@ -15,11 +15,12 @@ class PcpSubjectsController1Test < ActionController::TestCase
     # create new subject
 
     assert_difference([ 'PcpSubject.count', 'PcpStep.count' ], 1 )do
-    post :create, pcp_subject: {
+      post :create, pcp_subject: {
         pcp_category_id: @pcp_subject.pcp_category_id,
         title: 'Test Document',
         project_doc_id: 'PROJECT-DOC-ID',
         report_doc_id: 'REPORT-DOC-ID' }
+      assert_response :redirect
     end
     @new_pcp_subject = assigns( :pcp_subject )
     @new_pcp_step = @new_pcp_subject.pcp_steps.first
@@ -36,7 +37,7 @@ class PcpSubjectsController1Test < ActionController::TestCase
     @new_pcp_subject = assigns( :pcp_subject )
     @new_pcp_step = @new_pcp_subject.pcp_steps.first
 
-    # attempt release
+    # attempt release: must fail with missing report version
 
     assert @new_pcp_subject.user_is_owner_or_deputy?( @account_id, @new_pcp_step.acting_group_index )
     assert_equal 2, @new_pcp_step.release_type, @new_pcp_step.errors.messages
@@ -49,6 +50,7 @@ class PcpSubjectsController1Test < ActionController::TestCase
 
     # update for release to commenting part - provide report_version
 
+    assert @new_pcp_subject.user_is_owner_or_deputy?( @account_id, @new_pcp_step.acting_group_index )
     assert_no_difference([ 'PcpSubject.count', 'PcpStep.count' ])do
       patch :update, id: @new_pcp_subject, 
         pcp_subject: { p_owner_id: @account_id,
@@ -57,7 +59,6 @@ class PcpSubjectsController1Test < ActionController::TestCase
     @new_pcp_subject = assigns( :pcp_subject )
     @new_pcp_step = @new_pcp_subject.pcp_steps.first
     assert_equal 0, @new_pcp_step.step_no
-    assert_equal '0', @new_pcp_step.subject_version
     assert_equal 'A', @new_pcp_step.report_version
 
     # perform first release: presenting to commenting party

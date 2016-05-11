@@ -13,6 +13,7 @@ class PcpSubject < ActiveRecord::Base
   belongs_to :p_deputy, -> { readonly }, foreign_key: :p_deputy_id, class_name: Account
   has_many   :pcp_steps,    -> { most_recent }, dependent: :destroy, validate: false, inverse_of: :pcp_subject
   has_many   :pcp_items,                        dependent: :destroy, validate: false, inverse_of: :pcp_subject
+  has_many   :pcp_members,                      dependent: :destroy, validate: false, inverse_of: :pcp_subject
   accepts_nested_attributes_for :pcp_steps
 
   before_validation :set_defaults_from_pcp_categories, on: :create
@@ -80,7 +81,7 @@ class PcpSubject < ActiveRecord::Base
   # likely known/retrieved when this method is called
 
   def get_acting_group( ags )
-    Group.find( ags == 0 ? c_group_id : p_group_id )
+    Group.find( ags == 0 ? p_group_id : c_group_id )
   end
 
   # determine from the account of the current user whether she belongs to the acting
@@ -93,7 +94,7 @@ class PcpSubject < ActiveRecord::Base
   # 2 - commenting group
   # 3 - both presenting and commenting group
 
-  def viewing_group_index( id )
+  def viewing_group_map( id )
     r = 0
     r =     1 if ( id == p_owner_id )||( id == p_deputy_id ) 
     r = r | 2 if ( id == c_owner_id )||( id == c_deputy_id )
@@ -102,8 +103,8 @@ class PcpSubject < ActiveRecord::Base
 
   # check if acting_group (0 or 1) is same as viewing group ...
 
-  def self.same_group?( acting, viewing )
-    ( acting + 1 )&( viewing ) != 0
+  def self.same_group?( acting, viewing_group_map )
+    ( acting + 1 )&( viewing_group_map ) != 0
   end
 
   # if an unsigned integer was given as doc id, retrieve complete doc id and
@@ -157,6 +158,16 @@ class PcpSubject < ActiveRecord::Base
 #    user_is_owner_or_deputy?( id )||pcp_members.exists?( account: id, to_access: true, to_update: true )
   end
 
+  # user must have access to group of associated PCP Category
+
+  def permitted_to_create?( account )
+    if pcp_category_id.nil? then
+      false
+    else
+      account.permission_to_access( FEATURE_ID_PCP_SUBJECTS, :to_create, pcp_category.p_group_id )
+    end
+  end
+
   # this returns a nice title for the subject, for example to be used in reports
   # or as header for the related PCP Items
 
@@ -172,8 +183,9 @@ class PcpSubject < ActiveRecord::Base
 #
   protected
     
-    # when creating a new pcp_subject, we should take the default values from the
-    # pcp_category
+    # when creating a new PCP Subject, we should take the default values from the
+    # PCP Category, except for the creator of that PCP Subject which should be
+    # assigned as p_owner_id in the respective controller
 
     def set_defaults_from_pcp_categories
       oc = self.pcp_category
@@ -181,7 +193,6 @@ class PcpSubject < ActiveRecord::Base
         set_default!( :c_group_id, oc.c_group_id )
         set_default!( :p_group_id, oc.p_group_id )
         set_default!( :c_owner_id, oc.c_owner_id )
-        set_default!( :p_owner_id, oc.p_owner_id )
         set_default!( :c_deputy_id, oc.c_deputy_id )
         set_default!( :p_deputy_id, oc.p_deputy_id )
       end

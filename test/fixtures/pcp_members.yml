@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  pcp_subject:  one
+  account:      account_one
+  pcp_group:    0
+  to_access:    true
+  to_update:    true
+
+two:
+  pcp_subject:  one 
+  account:      account_wop 
+  pcp_group:    1
+  to_access:    true
+  to_update:    true

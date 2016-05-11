@@ -27,4 +27,17 @@ class PcpCategory < ActiveRecord::Base
   validate{ given_account_has_access( :p_owner_id,  :p_group_id )}
   validate{ given_account_has_access( :p_deputy_id, :p_group_id )}
 
+  # see Group.permitted_groups
+
+  def self.permitted_groups( pg )
+    case pg
+    when nil
+      none
+    when ""
+      all
+    else
+      where pg
+    end
+  end
+
 end

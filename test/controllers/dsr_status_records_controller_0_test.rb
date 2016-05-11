@@ -39,7 +39,7 @@ class DsrStatusRecordsControllerTest < ActionController::TestCase
   end
 
   test 'should get info' do
-    get :info
+    get :info_workflow
     assert_response :success
     assert_nil assigns( :dsr_previous_record )
     assert_nil assigns( :dsr_show_add_checkbox )

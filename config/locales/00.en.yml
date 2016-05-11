@@ -739,7 +739,7 @@ en:
     new:          'Add'
     next:         'Next'
     stats:        'Statistics'
-    wf_info:      'Workflow Information'
+    workflow:     'Workflow Information'
     upd_baseline: 'Update Baseline'
     release:      'Release'
 
@@ -1100,7 +1100,7 @@ en:
       no_bl_date:     '<not yet set>'
       no_group:       '<unassigned>' # keep it short, must fit into code column (10 chars max)
 
-    info:
+    info_workflow:
       form_title:     'DSR Workflow Information'
     stats:
       form_title:     'Document Status Register (DSR) Statistics'
@@ -1699,7 +1699,7 @@ en:
     title:          'RfC Status Register (RSR)'
     form:
       g_prompt:     :general.select_prompt
-    info:
+    info_workflow:
       form_title:   'Workflow Information'
     stats:
       form_title:   'RfC Status Register (RSR) Statistics'   

@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   resources :country_names, path: 'cnc', format: false
   resources :csr_status_records, path: 'csr', format: false
   resources :db_change_requests, path: 'acr', format: false
-  get 'dsr/info', to: 'dsr_status_records#info', as: 'dsr_workflow_info', format: false
+  get 'dsr/info', to: 'dsr_status_records#info_workflow', as: 'dsr_workflow_info', format: false
   get 'dsr/stats', to: 'dsr_status_records#stats', as: 'dsr_statistics_index', format: false
   get 'dsr/:id/stats', to: 'dsr_status_records#stats', as: 'dsr_statistics_detail', format: false
   get 'dsr/update', to: 'dsr_status_records#update_b_all', as: 'update_dsr_status_records', format: false
@@ -51,11 +51,11 @@ Rails.application.routes.draw do
   resources :pcp_categories, path: 'pcc', format: false
   resources :pcp_subjects, path: 'pcs', format: false do
     resources :pcp_items, path: 'pci', format: false, shallow: true
-#    resources :pcp_members, path: 'pcm', format: false, shallow: true
+    resources :pcp_members, path: 'pcm', format: false
   end
   get 'pci/:id/next', to: 'pcp_items#show_next', as: 'pcp_item_next', format: false
   get 'pcs/:id/release', to: 'pcp_subjects#update_release', as: 'pcp_subject_release', format: false
-  get 'pcs/:id/info', to: 'pcp_subjects#info', as: 'pcp_subject_history', format: false
+  get 'pcs/:id/info', to: 'pcp_subjects#info_history', as: 'pcp_subject_history', format: false
   get 'pcs/:id/reldoc/:step_no', to: 'pcp_subjects#show_release', as: 'pcp_release_doc', format: false
   resources :people, path: 'apt', format: false
   resources :phase_codes, path: 'ppc', format: false
@@ -66,7 +66,7 @@ Rails.application.routes.draw do
   resources :region_names, path: 'rnc', format: false
   resources :responsibilities, path: 'rpp', format: false
   resources :rfc_documents, path: 'rcd', format: false
-  get 'rsr/info', to: 'rfc_status_records#info', as: 'rfc_workflow_info', format: false
+  get 'rsr/info', to: 'rfc_status_records#info_workflow', as: 'rfc_workflow_info', format: false
   get 'rsr/stats', to: 'rfc_status_records#stats', as: 'rfc_status_info', format: false
   resources :rfc_status_records, path: 'rsr', format: false
   resources :s_document_logs, path: 'sdl', format: false

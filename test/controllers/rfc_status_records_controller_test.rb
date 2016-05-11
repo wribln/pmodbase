@@ -28,7 +28,7 @@ class RfcStatusRecordsControllerTest < ActionController::TestCase
   end
 
   test 'should get info' do
-    get :info
+    get :info_workflow
     assert_response :success
   end
 

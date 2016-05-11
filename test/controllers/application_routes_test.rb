@@ -164,12 +164,12 @@ class ApplicationRoutesTest < ActionController::TestCase
   end
 
   test 'special routes: RfcStatusRecords' do
-    assert_routing({ method: 'get', path: '/rsr/info'    }, { controller: 'rfc_status_records', action: 'info'  })
+    assert_routing({ method: 'get', path: '/rsr/info'    }, { controller: 'rfc_status_records', action: 'info_workflow' })
     assert_routing({ method: 'get', path: '/rsr/stats'   }, { controller: 'rfc_status_records', action: 'stats' })
   end
 
   test 'special routes: DsrStatusRecords' do
-    assert_routing({ method: 'get', path: '/dsr/info'    }, { controller: 'dsr_status_records', action: 'info'  })
+    assert_routing({ method: 'get', path: '/dsr/info'    }, { controller: 'dsr_status_records', action: 'info_workflow' })
     assert_routing({ method: 'get', path: '/dsr/stats'   }, { controller: 'dsr_status_records', action: 'stats' })
     assert_routing({ method: 'get', path: '/dsr/1/stats' }, { controller: 'dsr_status_records', action: 'stats', id: '1'})
     assert_routing({ method: 'get', path: '/dsr/update'  }, { controller: 'dsr_status_records', action: 'update_b_all' })
@@ -178,7 +178,7 @@ class ApplicationRoutesTest < ActionController::TestCase
 
   test 'special routes: PcpSubjects' do
     assert_routing({ method: 'get', path: '/pcs/1/release'  }, { controller: 'pcp_subjects', action: 'update_release', id: '1' })
-    assert_routing({ method: 'get', path: '/pcs/1/info'     }, { controller: 'pcp_subjects', action: 'info',           id: '1' })
+    assert_routing({ method: 'get', path: '/pcs/1/info'     }, { controller: 'pcp_subjects', action: 'info_history',   id: '1' })
     assert_routing({ method: 'get', path: '/pcs/1/reldoc/1' }, { controller: 'pcp_subjects', action: 'show_release',   id: '1', step_no: '1' })
   end
 

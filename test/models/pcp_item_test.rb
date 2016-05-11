@@ -64,6 +64,7 @@ class PcpItemTest < ActiveSupport::TestCase
     ps = PcpSubject.new
     ps.pcp_category_id = pcp_subjects( :one ).pcp_category_id
     ps.title = 'foobar'
+    ps.p_owner_id = accounts( :account_one ).id
     px = PcpStep.new
     assert_difference( 'PcpSubject.count', 1 )do
       assert ps.save, ps.errors.messages

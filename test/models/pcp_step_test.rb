@@ -13,8 +13,8 @@ class PcpStepTest < ActiveSupport::TestCase
     assert_nil ps.subject_date
     assert_nil ps.note
     assert_nil ps.due_date
-    assert_nil ps.released_by
-    assert_nil ps.released_at
+    refute_nil ps.released_by
+    refute_nil ps.released_at
     assert_nil ps.subject_title
     assert_nil ps.project_doc_id
   end

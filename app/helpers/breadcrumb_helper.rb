@@ -10,7 +10,7 @@ module BreadcrumbHelper
     controller.breadcrumbs_to_here.try( :each ) do |i|
       i == breadcrumbs_to_here.last ? options = { class: 'active' } : nil
       if i.first.nil? then # show action only (normally last)
-        r += content_tag( :li, I18n.t( 'button_label.' + i.second.to_s ), options )
+        r += content_tag( :li, I18n.t( 'button_label.' + action_label( i.second )), options )
       elsif i.second.nil? # show text only, no path
         r += content_tag( :li, I18n.t( i.first.to_s + '.title' ), options )
       else  # show text with path
@@ -35,6 +35,17 @@ module BreadcrumbHelper
     r += content_tag( :li, link_to_help( :help_pages, t( 'help_pages.main_help' )))
     r += content_tag( :li, content_for( :topic ))
     content_tag( :ol, r.html_safe, class: 'breadcrumb' ) unless r.empty?
+  end
+
+  private
+
+  # in situations where the requested action consists of a major action and
+  # a minor action, such as update_release, pick the second part for the 
+  # breadcrumb label
+  
+  def action_label( s )
+    action_string = s.to_s.split( '_' )
+    action_string.length == 1 ? action_string.first : action_string.last
   end
 
 end
