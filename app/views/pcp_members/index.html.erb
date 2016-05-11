@@ -21,7 +21,7 @@
         <% @pcp_members.each do |pm| %>
           <tr>
             <td><%= pm.account.to_id %></td>
-            <td><%= link_to_contact_list( pcp_member.account ) %></td>
+            <td><%= link_to_contact_list( pm.account ) %></td>
             <td><%= pm.pcp_group_label %></td>
             <td><%= display_boolean pm.to_access %></td>
             <td><%= display_boolean pm.to_update %></td>

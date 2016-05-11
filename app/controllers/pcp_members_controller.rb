@@ -30,8 +30,7 @@ class PcpMembersController < ApplicationController
   # GET /pcs/:pcp_subject_id/pcm/new
 
   def new
-    @pcp_member = PcpMember.new
-    @pcp_member.pcp_subject_id = params[ :pcp_subject_id ]
+    @pcp_member = @pcp_subject.pcp_members.new
   end
 
   # GET /pcs/:pcp_subject_id/pcm/1/edit
@@ -42,10 +41,10 @@ class PcpMembersController < ApplicationController
   # POST /pcs/:pcp_subject_id/pcm
 
   def create
-    @pcp_member = PcpMember.new( pcp_member_params )
+    @pcp_member = @pcp_subject.pcp_members.new( pcp_member_params )
     respond_to do |format|
       if @pcp_member.save
-        format.html { redirect_to @pcp_member, notice: I18n.t( 'pcp_members.msg.new_ok' )}
+        format.html { redirect_to pcp_subject_pcp_member_path( @pcp_subject, @pcp_member ), notice: I18n.t( 'pcp_members.msg.new_ok' )}
       else
         format.html { render :new }
       end
@@ -56,8 +55,9 @@ class PcpMembersController < ApplicationController
 
   def update
     respond_to do |format|
-      if @pcp_member.update(pcp_member_params)
-        format.html { redirect_to @pcp_member, notice: I18n.t( 'pcp_members.msg.edit_ok' )}
+      if @pcp_member.update( pcp_member_params )
+        format.html { redirect_to pcp_subject_pcp_member_path( @pcp_subject, @pcp_member ), notice: I18n.t( 'pcp_members.msg.edit_ok' )}
+      else
         format.html { render :edit }
       end
     end
@@ -68,7 +68,7 @@ class PcpMembersController < ApplicationController
   def destroy
     @pcp_member.destroy
     respond_to do |format|
-      format.html { redirect_to pcp_members_url, notice: I18n.t( 'pcp_members.msg.delete_ok' )}
+      format.html { redirect_to pcp_subject_pcp_members_path( @pcp_subject ), notice: I18n.t( 'pcp_members.msg.delete_ok' )}
     end
   end
 

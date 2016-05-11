@@ -4,6 +4,9 @@ class PcpMember < ActiveRecord::Base
   belongs_to :pcp_subject,  -> { readonly }, inverse_of: :pcp_members
   belongs_to :account,      -> { readonly }, inverse_of: :pcp_members
 
+  validates :pcp_subject_id,
+    presence: true
+
   validates :account_id,
     uniqueness: { scope: [ :pcp_subject_id, :pcp_group ],
       message: I18n.t( 'pcp_members.msg.dup_account_id' )},
