@@ -11,13 +11,13 @@
         <%= form.label :pcp_group, class: "col-sm-3 control-label" %>
         <%- if @viewing_group == 3 then -%>
           <%- PcpMember::PCP_GROUP_LABELS.each_with_index do |pgl,pgi| -%>
-            <div class="col-sm-2 radio">
+            <div class="col-sm-2 radio" style="margin-bottom:7px">
               <label><%= form.radio_button :pcp_group, pgi %>&nbsp;<%= pgl %></label>
             </div>
           <%- end -%>
         <%- else -%>
         <div class="col-sm-2">
-          <%= display_value form.object.pcp_group_label, class: "form-control" %>
+          <%= display_value form.object.pcp_group_label %>
         </div>
         <%- end -%>
       </div>

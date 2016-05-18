@@ -51,12 +51,22 @@ Rails.application.routes.draw do
   resources :pcp_categories, path: 'pcc', format: false
   resources :pcp_subjects, path: 'pcs', format: false do
     resources :pcp_items, path: 'pci', format: false, shallow: true
-    resources :pcp_members, path: 'pcm', format: false
+    resources :pcp_members, path: 'pcm', format: false, shallow: true
   end
-  get 'pci/:id/next', to: 'pcp_items#show_next', as: 'pcp_item_next', format: false
+  # additional routes for pcp_subjects
   get 'pcs/:id/release', to: 'pcp_subjects#update_release', as: 'pcp_subject_release', format: false
   get 'pcs/:id/info', to: 'pcp_subjects#info_history', as: 'pcp_subject_history', format: false
   get 'pcs/:id/reldoc/:step_no', to: 'pcp_subjects#show_release', as: 'pcp_release_doc', format: false
+  # additional routes for pcp_items
+  get 'pci/:id/next', to: 'pcp_items#show_next', as: 'pcp_item_next', format: false
+  # shallow routing for PCP Comments, handling by pcp_items_controller
+  post 'pci/:id/pco', to: 'pcp_items#create_comment', as: 'create_pcp_comment', format: false
+  get 'pci/:id/pco/new', to: 'pcp_items#new_comment', as: 'new_pcp_comment', format: false
+  get 'pco/:id/edit', to: 'pcp_items#edit_comment', as: 'edit_pcp_comment', format: false
+  put 'pco/:id', to: 'pcp_items#update_comment', as: 'update_pcp_comment', format: false
+  patch 'pco/:id', to: 'pcp_items#update_comment', format: false
+  delete 'pco/:id', to: 'pcp_items#destroy_comment', format: false
+  #
   resources :people, path: 'apt', format: false
   resources :phase_codes, path: 'ppc', format: false
   resources :product_codes, path: 'scp', format: false

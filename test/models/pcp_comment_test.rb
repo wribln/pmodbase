@@ -25,9 +25,13 @@ class PcpCommentTest < ActiveSupport::TestCase
     refute pc.valid?
     assert_includes pc.errors, :pcp_step_id
     assert_includes pc.errors, :pcp_item_id
+    assert_includes pc.errors, :description
+    assert_includes pc.errors, :author
 
     pc.pcp_step_id = pcp_steps( :two ).id 
     pc.pcp_item_id = pcp_items( :one ).id
+    pc.description = 'foobar'
+    pc.author = 'tester'
     assert pc.valid?, pc.errors.messages
   end
 

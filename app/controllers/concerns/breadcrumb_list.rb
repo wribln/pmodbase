@@ -17,6 +17,12 @@
 # the action name to be appended; the second item can be nil 
 # (indicating that no path should be created for that breadcrumb),
 # or a path for the controller.
+#
+# Path setting (must be done manually, depending on curren action):
+#   1st breadcrumb: <base page> (default)
+#  last breadcrumb: action
+#   n-1 breadcrumb: link to index of current controller unless action is index
+#   n-2 breadcrumb: parent of n-1
 
 module BreadcrumbList
   extend ActiveSupport::Concern 

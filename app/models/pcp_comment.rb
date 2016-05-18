@@ -5,10 +5,19 @@ class PcpComment < ActiveRecord::Base
   validates :pcp_step_id, :pcp_item_id,
     presence: true
 
+  validates :description,
+    presence: true
+
   validates :assessment,
     presence: true,
     numericality: { only_integer: true },
     inclusion: { in: 0..( PcpItem::ASSESSMENT_LABELS.size - 1 )}
+
+  # author is set to current user automatically but may be changed: 
+
+  validates :author,
+    presence: true,
+    length: { maximum: MAX_LENGTH_OF_ACCOUNT_NAME + MAX_LENGTH_OF_PERSON_NAMES }
 
   validate :pcp_parents_must_exist
   validate :public_requirements
@@ -39,6 +48,12 @@ class PcpComment < ActiveRecord::Base
       errors.add( :description, I18n.t( 'pcp_comments.msg.descr_mssng' )) \
         if description.blank? && !PcpItem.closed?( assessment )
     end
+  end
+
+  # determine whether this comment is public and step was released
+
+  def published?
+    is_public && pcp_step.released?
   end
 
 end

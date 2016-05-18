@@ -3,7 +3,8 @@
     <%= helpcrumbs %>
     <%= help_header %>
     <p class="lead">Observations, comments and responses on issues to be resolved.</p>
-    <p>For general information on the PCP, see <%= link_to_help :pcp_general, 'PCP - The Present-Comment Process' -%>.</p>
+    <p>For general information on the PCP, see
+      <%= link_to_help :pcp_general, 'PCP - The Present-Comment Process' -%>.</p>
     <h3>Introduction</h3>
     <p>A single PCP Item describes an observation found during a review cycle which needs 
       clarification or resolution. PCP Items can only be added by the Commenting Group;
@@ -27,8 +28,8 @@
         the Commenting Group.</li>
       <li>The current <%= help_param PcpItem.human_attribute_name( :pcp_step_id )-%> is shown
         for information as <%= help_term t( 'pcp_items.pcp_step' )%>.</li>
-      <li>The <%= help_param PcpItem.human_attribute_name( :author )-%> is the user (account)
-      who created this PCP Item or Comment.</li>
+      <li>The <%= help_param PcpItem.human_attribute_name( :author )-%> is set to the user
+        (account) who created this PCP Item or Comment.</li>
       <li><%= help_param PcpItem.human_attribute_name( :assessment )-%> is the evaluation of
       the current PCP Item by the Commenting Group. This assessment is set with the creation
       of an PCP Item or when adding a comment to a response by the Presenting Group.<br/>
@@ -55,7 +56,7 @@
       For any release, at least one comment on the current PCP Step must have this flag set.</li> 
     </ul>
     <h3>Error Messages</h3>
-    <p>"<%= t( 'pcp_items.msg.pcp_subject_step' )%>" is reported when the PCP Subject referenced
+    <p>"<%= t( 'pcp_comments.msg.pcp_subject_ref' )%>" is reported when the PCP Subject referenced
     by the PCP Item is not the same as the PCP Subject referenced by the related PCP Step. Normally,
     this error should not occur as this information is set internally. However, in rare instances,
     this message might occur and can only be fixed by a direct change to the database.</p>

@@ -2,11 +2,28 @@
   <div class="container">
     <%= helpcrumbs %>
     <%= help_header %>
-    <p class="lead">... lead text ...</p>
-    <h3>... subtitle ...</h3>
-    <p>... help text ...</p>
+    <p class="lead">Manage PCP Participants for a given PCP Subject</p>
+    <p>PCP Participants can view and - if permitted - make comments to
+      PCP Steps. The owners and the deputies of a PCP Subject can add
+      PCP Participants for their respective PCP Group (Presenting or
+      Commenting).</p>
+    <p>The following attributes can be administered:</p>
     <ul>
-      <li><%= help_param PcpMember.human_attribute_name( :id ) -%></li>
+      <li><%= help_param PcpMember.human_attribute_name( :account_id )-%> is
+        the account ID of the user to be permitted to access the PCP Steps. The
+        button next to the input field provides a list of all accounts in
+        a new window or tab in your browser.</li>
+      <li><%= help_param PcpMember.human_attribute_name( :pcp_group )-%> can 
+        be set only if the owner or deputy of the PCP Subject is owner or
+        deputy of both PCP Groups (Presenting or Commenting).</li>
+      <li><%= help_param PcpMember.human_attribute_name( :to_access )-%> 
+        must be set in order to allow the user to view the PCP Steps and
+        related comments.</li>
+      <li><%= help_param PcpMember.human_attribute_name( :to_update )-%>
+        must be set in order to allow the user to create PCP Steps and to
+        make comments to existing PCP Steps. If this attribute is set,
+        the <%= help_term PcpMember.human_attribute_name( :to_access )-%>
+        attribute must also be set.</li>
     </ul>
     <%= help_footer FEATURE_ID_PCP_MEMBERS %>
   </div> <!-- /container -->

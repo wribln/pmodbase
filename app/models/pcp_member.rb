@@ -24,24 +24,18 @@ class PcpMember < ActiveRecord::Base
 
   scope :presenting_group, -> { where( pcp_group: 0 )}
   scope :commenting_group, -> { where( pcp_group: 1 )}
+  scope :presenting_member, ->( m ){ presenting_group.where( id: m )}
+  scope :commenting_member, ->( m ){ commenting_group.where( id: m )}
 
-  # a member must not be owner or deputy of the givene PCP Subject
-  # at the same time as they are already default members with
-  # access and update rights for their respective PCP Group
-
-  def account_not_owner_or_deputy
-    errors.add( :account_id, I18n.t( 'pcp_members.msg.own_account_id' )) \
-      if pcp_subject_id && account_id && pcp_subject.user_is_owner_or_deputy?( account_id )
-  end
-
-  # pcp subject must exist
+  # pcp subject must exist - just for safety
 
   def given_subject_exists
     errors.add( :pcp_subject_id, I18n.t( 'pcp_members.msg.bad_subject_id' )) \
       unless PcpSubject.exists?( pcp_subject_id )
   end
 
-  # if to_update is set, to_access must also be set
+  # if to_update is set, to_access must also be set: this could be done
+  # by default but I cannot assume that this was the user's intention
 
   def update_requires_access
     errors.add( :to_access, I18n.t( 'pcp_members.msg.access_req' )) \

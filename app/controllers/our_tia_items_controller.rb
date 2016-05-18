@@ -121,13 +121,13 @@ class OurTiaItemsController < ApplicationController
     def set_tia_list
       @tia_list = TiaList.find( params[ :my_tia_list_id ])
       # permit access if current user is either owner or deputy of this list
-      render_no_access unless @tia_list.user_is_owner_or_deputy?( current_user.id )
+      render_no_permission unless @tia_list.user_is_owner_or_deputy?( current_user.id )
     end
 
     def set_tia_item
       @tia_item = TiaItem.find( params[ :id ])
       @tia_list = @tia_item.tia_list
-      render_no_access unless @tia_list.user_is_owner_or_deputy?( current_user.id )
+      render_no_permission unless @tia_list.user_is_owner_or_deputy?( current_user.id )
     end
 
     def set_member_list

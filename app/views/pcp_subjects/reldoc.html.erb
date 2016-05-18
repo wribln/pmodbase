@@ -53,3 +53,36 @@
       <%- end -%>
     </tbody>
   </table>
+  <h1 class="page-break"><%= t( '.sub_heading' )%></h1>
+  <table class="with-lines">
+    <thead>
+      <tr>
+        <%- @col_widths = t( '.col_widths' )-%>
+        <%- @col_heads =  t( '.col_heads' )-%>
+        <%- @col_widths.each_with_index do |c,i|-%>
+          <%= "<th class=\"with-lines\" style=\"width:#{ c }\">#{ @col_heads[ i ]}</th>".html_safe %>
+        <%- end -%>
+      </tr>
+      <%- @pcp_items.each do |pi|-%>
+        <tr>
+          <td class="with-lines right"><%= pi.seqno %></td>
+          <td class="with-lines"><%= pi.pcp_step.step_label %></td>
+          <td class="with-lines"><%= pi.author %></td>
+          <td class="with-lines"><%= pi.reference %></td>
+          <td class="with-lines"><%= display_lines_w_br pi.description %></td>
+          <td class="with-lines"><%= PcpStep.assessment_label( pi.assessment )%></td>
+        </tr>
+        <%- pi.pcp_comments.each do |pc|-%>
+          <tr>
+            <td class="with-lines small right">&nbsp;</td>
+            <td class="with-lines small"><%= pc.pcp_step.step_label %></td>
+            <td class="with-lines small"><%= pc.author %></td>
+            <td class="with-lines small">&nbsp;</td>
+            <td class="with-lines small"><%= display_lines_w_br pc.description %></td>
+            <td class="with-lines small"><%= PcpStep.assessment_label( pi.assessment )%></td>
+          </tr>
+        <%- end -%>
+      <%- end -%>
+    </thead>
+  </table>
+

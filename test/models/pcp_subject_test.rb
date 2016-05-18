@@ -1,7 +1,7 @@
 require 'test_helper'
 class PcpSubjectTest < ActiveSupport::TestCase
 
-  test 'check fixture' do
+  test 'check fixture 1' do
     ps = pcp_subjects( :one )
     refute_empty ps.title
     refute_empty ps.note
@@ -15,6 +15,24 @@ class PcpSubjectTest < ActiveSupport::TestCase
     assert_nil ps.c_deputy_id
     assert_nil ps.p_deputy_id
     assert ps.valid?, ps.errors.messages
+    assert ps.pcp_steps.count > 0, 'A PCP Subject should have at least one PCP Step'
+  end
+
+  test 'check fixture 2' do
+    ps = pcp_subjects( :two )
+    refute_empty ps.title
+    refute_empty ps.note
+    refute_empty ps.project_doc_id
+    refute_empty ps.report_doc_id
+    refute_nil ps.c_group_id
+    refute_nil ps.p_group_id
+    refute_nil ps.pcp_category_id
+    refute_nil ps.c_owner_id
+    refute_nil ps.p_owner_id
+    assert_nil ps.c_deputy_id
+    assert_nil ps.p_deputy_id
+    assert ps.valid?, ps.errors.messages
+    assert ps.pcp_steps.count > 0, 'A PCP Subject should have at least one PCP Step'
   end
 
   test 'create new subject with defaults' do
@@ -229,6 +247,7 @@ class PcpSubjectTest < ActiveSupport::TestCase
 
   test 'acting and viewing group' do
     ps = pcp_subjects( :one )
+    ps.pcp_members.destroy
 
     # we have the same account for both presenting and commenting group
 
@@ -272,31 +291,34 @@ class PcpSubjectTest < ActiveSupport::TestCase
     # mainly to ensure that the syntax there is correct ...
 
     as = PcpSubject.all_active
-    assert_equal 1, as.length
+    assert_equal 2, as.length
 
     as = PcpSubject.ff_id( pcp_subjects( :one ).id )
+    assert_equal 1, as.length
+
+    as = PcpSubject.ff_id( pcp_subjects( :two ).id )
     assert_equal 1, as.length
 
     as = PcpSubject.ff_id( 0 )
     assert_equal 0, as.length
 
     as = PcpSubject.ff_titl( 'TEST')
-    assert_equal 1, as.length
+    assert_equal 2, as.length
 
     as = PcpSubject.ff_titl( 'foobar')
     assert_equal 0, as.length
 
     as = PcpSubject.ff_igrp( groups( :group_one ).id )
-    assert_equal 1, as.length
+    assert_equal 2, as.length
 
     as = PcpSubject.ff_igrp( groups( :group_two ).id )
-    assert_equal 0, as.length
+    assert_equal 1, as.length
 
     as = PcpSubject.ff_note( '#tags' )
-    assert_equal 1, as.length
+    assert_equal 2, as.length
 
     as = PcpSubject.ff_note( 'notes' )
-    assert_equal 1, as.length
+    assert_equal 2, as.length
 
     as = PcpSubject.ff_note( 'foobar' )
     assert_equal 0, as.length

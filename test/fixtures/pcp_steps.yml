@@ -25,3 +25,17 @@ two:
   new_assmt:        2
   released_by:
   released_at:
+
+two_one:
+  pcp_subject:      two
+  step_no:          0
+  subject_version:
+  report_version:   A
+  subject_date:     2016-05-17
+  note:
+  due_date:
+  subject_status:   0
+  prev_assmt:       0
+  new_assmt:
+  released_by:
+  released_at:

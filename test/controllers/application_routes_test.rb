@@ -94,7 +94,7 @@ class ApplicationRoutesTest < ActionController::TestCase
   end
 
   test 'pcs nested routing' do
-    [ %w( pci pcp_items )].each do |r|
+    [ %w( pci pcp_items ), %w( pcm pcp_members )].each do |r|
       assert_routing({ method: 'get',    path: "pcs/1/#{ r[ 0 ] }"     }, { controller: r[ 1 ], action: 'index',  pcp_subject_id: '1' })
       assert_routing({ method: 'post',   path: "pcs/1/#{ r[ 0 ] }"     }, { controller: r[ 1 ], action: 'create', pcp_subject_id: '1' })
       assert_routing({ method: 'get',    path: "pcs/1/#{ r[ 0 ] }/new" }, { controller: r[ 1 ], action: 'new',    pcp_subject_id: '1' })

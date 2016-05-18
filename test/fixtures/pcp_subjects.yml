@@ -10,3 +10,16 @@ one:
   p_owner:         account_one
   p_deputy: 
   report_doc_id:  'TEST(MIR)DIR_000002'
+
+two:
+  pcp_category:   one
+  title:          'Some description'
+  note:           'Some #tags/notes'
+  project_doc_id: 'TEST(MIR)DIR_000003'
+  c_group:         group_two
+  c_owner:         account_two     
+  c_deputy:
+  p_group:         group_one 
+  p_owner:         account_one
+  p_deputy: 
+  report_doc_id:  'TEST(MIR)DIR_000004'

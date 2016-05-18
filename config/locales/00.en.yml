@@ -727,6 +727,7 @@ en:
     show:         'Show'
     edit:         'Edit'
     update:       'Update'
+    comment:      'Comment'
     create:       'Create'
     destroy:      'Delete'
     filter:       'Filter'

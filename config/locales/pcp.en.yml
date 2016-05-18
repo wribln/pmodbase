@@ -42,7 +42,7 @@ en:
 #
         description:    'Description'
         assessment:     'Assessment'
-        assessments:    [ 'Minor/Open', 'Critical/Open', 'Resolved/Closed'  ]
+        assessments:    [ 'Minor/Open', 'Critical/Open', 'Resolved/Closed' ]
 
       pcp_member:
         id:             :general.attributes.id
@@ -122,10 +122,14 @@ en:
 
   pcp_comments:
     msg:
+      new_ok:         'Comment successfully created.'
+      edit_ok:        'Comment successfully updated.'
+      delete_ok:      'Comment successfully deleted.'
       no_pcp_step:    :general.non_existing
       no_pcp_item:    :general.non_existing
-      pcp_subject_ref: 'PCP Subject mismatch in Step/Item.'
+      pcp_subject_ref: 'PCP Subject mismatch between Step and Item.'
       descr_mssng:    'must not be empty unless Item can be closed.'
+      cannot_del:     'Cannot delete public and released comment.'
 
   pcp_items:
     title:            'PCP Items'
@@ -134,12 +138,24 @@ en:
     first_assessment: 'Initial Assessment'
     form:
       g_prompt:       :general.select_prompt
+    comment:
+      g_prompt:       :general.select_prompt
+      make_public:    'Show in Public'
+      in_step:        'in Step'
     index:
       form_title:     'All Items of PCP Subject '
     new:
       form_title:     'Add new Item for PCP Subject '
+    new_comment:
+      form_title:     'Add Comment on PCP Subject '
+    edit_comment:
+      form_title:     'Edit Comment on PCP Subject '
     show:
       form_title:     'Show Item Details for PCP Subject '
+      add_comment:    'Add Comment'
+    show_comment:
+      public:         'Public Comment added by'
+      internal:       'Comment added by'
     edit:
       form_title:     'Edit Item Details for PCP Subject '
     msg:
@@ -150,6 +166,7 @@ en:
       no_pcp_step:    :general.non_existing
       pcp_subject_step: 'PCP Subject/Step mismatch.'
       last_reached:   'Last PCP Item reached.'
+      cannot_del:     'Cannot delete PCP Item once it is released.'    
 
   pcp_members:
     title:            'PCP Participants'
@@ -169,9 +186,10 @@ en:
       bad_subject_id: :general.non_existing
       bad_account_id: :general.non_existing
       dup_account_id: 'is already a Participant for this PCP Subject.'
-      own_account_id: 'is already Owner or Deputy for this PCP Subject.'
       access_req:     'must be set if ''Can Update'' is set.'
 
+  pcp_subject:
+    title:            'PCP Subject'
   pcp_subjects:
     title:            'PCP Subjects'
     form:
@@ -201,6 +219,7 @@ en:
       status:         'Status as of %{at}:'
     reldoc:
       main_heading:   'Present-Comment Process Release Report'
+      sub_heading:    'Detailed Listing of Items'
       report_doc_id:  :general.attributes.project_doc_id
       project_doc_id: :general.attributes.project_doc_id
       version:        'Version'
@@ -212,6 +231,10 @@ en:
       assessment:     'Subject Overall Assessment'
       not_given:      '<not specified>'
       due_date:       'Reply requested until'
+      #
+      col_widths:     [ '1cm','3cm','3cm','4cm','12cm','3cm' ]
+      col_heads:      [ 'No.','Step','Author','Reference','Description/Comment','Assessment' ]
+
     msg:
       new_ok:         'PCP Subject successfully created.'
       edit_ok:        'PCP Subject successfully updated.'

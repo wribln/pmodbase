@@ -1,0 +1,28 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title_w_link( @pcp_subject.subject_title, pcp_subject_path( @pcp_subject ), { seqno: @pcp_item.seqno }) %>
+  <div class="form-horizontal" role="form">
+    <%= form_for @pcp_item, url: create_pcp_comment_path( @pcp_item ), method: :post do |f| %>
+      <%= render partial: 'shared/errors', object: @pcp_comment.errors %>
+      <%= render partial: 'show_item', object: @pcp_item %>
+      <%- @pcp_comments_show.each do |pc| -%>
+        <%- next unless PcpSubject.same_group?( pc.pcp_step.acting_group_index, @pcp_group_map )-%>
+        <hr class="hr-small col-sm-9"/>
+        <%= render partial: 'show_comment', object: pc %>
+      <%- end -%>
+      <hr class="hr-small col-sm-9"/>
+      <%= fields_for @pcp_comment do |nc| %>
+        <%= render partial: 'comment', object: nc %>
+      <%- end -%>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-2">
+          <%= f.submit class: "btn btn-lg btn-block btn-primary" %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to t( 'button_label.cancel' ), pcp_item_path( @pcp_item ), class: "btn btn-lg btn-block btn-default" %>
+        </div>
+      <div>
+    <% end %>
+  </div>
+</div>

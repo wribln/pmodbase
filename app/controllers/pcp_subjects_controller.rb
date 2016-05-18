@@ -27,6 +27,8 @@ class PcpSubjectsController < ApplicationController
   def show_release
     @pcp_curr_step = @pcp_subject.pcp_steps.released.where( step_no: params[ :step_no ]).first
     if @pcp_curr_step then
+      @pcp_items = PcpItem.released_until( @pcp_subject, @pcp_curr_step.step_no ).includes( :pcp_comments, :pcp_step )
+#test      @pcp_items = @pcp_subject.pcp_items.includes( :pcp_comments, :pcp_step )
       render :reldoc, layout: 'plain_print'
     else
       render file: 'public/404.html', status: :not_found
@@ -53,7 +55,6 @@ class PcpSubjectsController < ApplicationController
   def create
     @pcp_subject = PcpSubject.new( pcp_subject_params )
     if @pcp_subject.permitted_to_create?( current_user ) then
-      Rails.logger.debug "OK 1"
       @pcp_subject.p_owner_id = current_user.id
       @pcp_curr_step = @pcp_subject.pcp_steps.build( step_no: 0, prev_assmt: 0 )
       # this works due to the AutosaveAssocation

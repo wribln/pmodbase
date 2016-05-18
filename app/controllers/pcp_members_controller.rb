@@ -3,16 +3,15 @@ class PcpMembersController < ApplicationController
 
   initialize_feature FEATURE_ID_PCP_MEMBERS, FEATURE_ACCESS_USER + FEATURE_ACCESS_NDA, FEATURE_CONTROL_CUG
 
-  before_action :set_pcp_member,  only: [ :show, :edit, :update, :destroy ]
-  before_action :set_pcp_subject
+  before_action :set_pcp_member_and_subject, only: [ :show, :edit, :update, :destroy ]
+  before_action :set_pcp_subject, only: [ :index, :new, :create ]
+  before_action :set_viewing_group
   before_action :set_breadcrumb
 
   # GET /pcs/:pcp_subject_id/pcm
 
   def index
     case @viewing_group
-    when 0
-      render_no_permission
     when 1 
       @pcp_members = @pcp_subject.pcp_members.presenting_group
     when 2
@@ -22,7 +21,7 @@ class PcpMembersController < ApplicationController
     end
   end
 
-  # GET /pcs/:pcp_subject_id/pcm/1
+  # GET /pcm/1
 
   def show
   end
@@ -31,9 +30,10 @@ class PcpMembersController < ApplicationController
 
   def new
     @pcp_member = @pcp_subject.pcp_members.new
+    @pcp_member.pcp_group = ( @viewing_group == 3 )? nil : @viewing_group >> 1
   end
 
-  # GET /pcs/:pcp_subject_id/pcm/1/edit
+  # GET /pcm/1/edit
 
   def edit
   end
@@ -42,21 +42,22 @@ class PcpMembersController < ApplicationController
 
   def create
     @pcp_member = @pcp_subject.pcp_members.new( pcp_member_params )
+    @pcp_member.pcp_group ||= @viewing_group >> 1
     respond_to do |format|
       if @pcp_member.save
-        format.html { redirect_to pcp_subject_pcp_member_path( @pcp_subject, @pcp_member ), notice: I18n.t( 'pcp_members.msg.new_ok' )}
+        format.html { redirect_to pcp_member_path( @pcp_member ), notice: I18n.t( 'pcp_members.msg.new_ok' )}
       else
         format.html { render :new }
       end
     end
   end
 
-  # PATCH/PUT /pcs/:pcp_subject_id/pcm/1
+  # PATCH/PUT /pcm/1
 
   def update
     respond_to do |format|
       if @pcp_member.update( pcp_member_params )
-        format.html { redirect_to pcp_subject_pcp_member_path( @pcp_subject, @pcp_member ), notice: I18n.t( 'pcp_members.msg.edit_ok' )}
+        format.html { redirect_to pcp_member_path( @pcp_member ), notice: I18n.t( 'pcp_members.msg.edit_ok' )}
       else
         format.html { render :edit }
       end
@@ -76,13 +77,23 @@ class PcpMembersController < ApplicationController
 
     # Use callbacks to share common setup or constraints between actions.
 
-    def set_pcp_member
+    def set_pcp_member_and_subject
       @pcp_member = PcpMember.find( params[ :id ])
+      @pcp_subject = @pcp_member.pcp_subject
     end
+
+    # determine PCP Subject for current action
 
     def set_pcp_subject
       @pcp_subject = PcpSubject.find( params[ :pcp_subject_id ])
-      @viewing_group = @pcp_subject.viewing_group_map( current_user.id )      
+    end
+
+    # determine which side the user is on - at the same time
+    # reject all unlawful visitors
+
+    def set_viewing_group
+      @viewing_group = @pcp_subject.viewing_group_map( current_user.id )
+      render_no_permission if @viewing_group == 0    
     end
 
    # Never trust parameters from the scary internet, only allow the white list through.
@@ -95,7 +106,7 @@ class PcpMembersController < ApplicationController
 
     def set_breadcrumb
       parent_breadcrumb( :pcp_subjects, pcp_subjects_path )
-      set_breadcrumb_path( pcp_subject_pcp_members_path( params[ :pcp_subject_id ]))
+      set_breadcrumb_path( pcp_subject_pcp_members_path( @pcp_subject ))
     end
 
 end

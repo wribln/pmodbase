@@ -10,6 +10,7 @@ one:
   description:  'not what it should be'
   item_assmnt:  1
   assessment:   1
+  author:       'me'
 
 two:
   id:           67890
@@ -20,3 +21,4 @@ two:
   description:  'dito'
   item_assmnt:  0
   assessment:   0
+  author:       'me, too'

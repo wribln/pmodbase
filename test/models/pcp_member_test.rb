@@ -3,7 +3,7 @@ class PcpMemberTest < ActiveSupport::TestCase
 
   test 'fixture 1' do 
     pm = pcp_members( :one )
-    assert_equal pm.pcp_subject_id, pcp_subjects( :one ).id
+    assert_equal pm.pcp_subject_id, pcp_subjects( :two ).id
     assert_equal pm.account_id, accounts( :account_one ).id
     assert_equal pm.pcp_group, 0
     assert pm.to_access
@@ -13,7 +13,7 @@ class PcpMemberTest < ActiveSupport::TestCase
 
   test 'fixture 2' do 
     pm = pcp_members( :two )
-    assert_equal pm.pcp_subject_id, pcp_subjects( :one ).id
+    assert_equal pm.pcp_subject_id, pcp_subjects( :two ).id
     assert_equal pm.account_id, accounts( :account_wop ).id
     assert_equal pm.pcp_group, 1
     assert pm.to_access
@@ -30,7 +30,7 @@ class PcpMemberTest < ActiveSupport::TestCase
 
   test 'pcp subject must exist 2' do
     pm = pcp_members( :one )
-    assert pcp_subjects( :one ).destroy
+    assert pcp_subjects( :two ).destroy
     refute pm.valid?
     assert_includes pm.errors, :pcp_subject_id
   end
@@ -55,17 +55,17 @@ class PcpMemberTest < ActiveSupport::TestCase
   end
 
   test 'scopes' do
-    pm = pcp_subjects( :one ).pcp_members
+    pm = pcp_subjects( :two ).pcp_members
     assert_equal 2, pm.length
 
-    pm = pcp_subjects( :one ).pcp_members.presenting_group
+    pm = pcp_subjects( :two ).pcp_members.presenting_group
     assert_equal 1, pm.length
 
-    pm = pcp_subjects( :one ).pcp_members.commenting_group
+    pm = pcp_subjects( :two ).pcp_members.commenting_group
     assert_equal 1, pm.length
   end
 
-  test 'update requires test' do
+  test 'update requires access' do
     pm = pcp_members( :one )
     pm.to_access = true
     pm.to_update = false

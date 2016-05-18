@@ -25,10 +25,12 @@ class PcpItemTest < ActiveSupport::TestCase
     assert_includes pi.errors, :pcp_subject_id
     assert_includes pi.errors, :pcp_step_id
     assert_includes pi.errors, :description
+    assert_includes pi.errors, :author
     pi.pcp_subject = pcp_subjects( :one )
     pi.pcp_step = pcp_steps( :one )
     pi.seqno = 1
     pi.description = 'foobar'
+    pi.author = 'I'
     assert pi.valid?, pi.errors.messages
   end
 
@@ -96,6 +98,7 @@ class PcpItemTest < ActiveSupport::TestCase
     assert_equal 3, pi.seqno
     pi.description = 'foobar'
     pi.pcp_step_id = pcp_items( :two ).pcp_step_id
+    pi.author = 'tester'
     assert pi.save
     pn = pi.dup
     pn.set_next_seqno
@@ -116,9 +119,26 @@ class PcpItemTest < ActiveSupport::TestCase
     assert_equal 0, PcpItem.count
     pn.set_next_seqno
     assert_equal 1, pn.seqno
-
   end
 
-
+  test 'get released items' do
+    s = pcp_subjects( :one )
+    pr = PcpItem.released( s )
+    assert_equal 2, pr.count
+    pr.each do |p|
+      assert p.released?
+    end
+    pn = s.pcp_items.new
+    pn.pcp_step = pcp_steps( :two )
+    pn.set_next_seqno
+    pn.author = 'me'
+    pn.description = 'foobar'
+    assert pn.save, pn.errors.inspect
+    pr = PcpItem.released( s )
+    assert_equal 2, pr.count
+    pr.each do |p|
+      assert p.released?
+    end
+  end
 
 end

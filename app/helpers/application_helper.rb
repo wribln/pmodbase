@@ -36,9 +36,9 @@ module ApplicationHelper
     content_tag( :h2, t( '.form_title' ) + subject, class: 'form-title' )
   end
 
-  def form_title_w_link( subject, path )
+  def form_title_w_link( subject, path, params = {} )
     content_tag( :h2, class: 'form-title' )do
-      concat t( '.form_title' )
+      concat t( '.form_title', params )
       concat link_to( subject, path )
     end
   end
@@ -59,6 +59,16 @@ module ApplicationHelper
   def display_value( value )
     html = String.new
     html += "<input class=\"form-control\" value=\"#{value}\" readonly />"
+    html.html_safe
+  end
+
+  # display a check box
+
+  def display_check_box( value )
+    html = String.new
+    html += "<input type=\"checkbox\" readonly disabled"
+    html += " checked" if value
+    html += "/>"
     html.html_safe
   end
   

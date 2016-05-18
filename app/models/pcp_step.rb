@@ -5,8 +5,9 @@
 
 class PcpStep < ActiveRecord::Base
 
-  belongs_to :pcp_subject, -> { readonly }, inverse_of: :pcp_steps
-  has_many   :pcp_items,   -> { readonly }, inverse_of: :pcp_step
+  belongs_to :pcp_subject,  -> { readonly }, inverse_of: :pcp_steps
+  has_many   :pcp_items,    -> { readonly }, inverse_of: :pcp_step
+  has_many   :pcp_comments, -> { readonly }, inverse_of: :pcp_step
 
   validates :pcp_subject_id,
     presence: true
@@ -63,6 +64,7 @@ class PcpStep < ActiveRecord::Base
 
   scope :most_recent, -> { order( step_no: :desc )}
   scope :released,    -> { where.not( released_at: nil )}
+  scope :released_until, ->( n ){ where.not( released_at: nil ).where( "step_no <= ?", n )}
 
   # make sure the given pcp_subject really exists - just to be on the safe side...
 
@@ -260,6 +262,10 @@ class PcpStep < ActiveRecord::Base
     self.released_at = DateTime.now
     self.subject_title = pcp_subject.title
     self.project_doc_id = pcp_subject.project_doc_id
-  end    
+  end
+
+  def released?
+    !released_at.nil?
+  end
 
 end

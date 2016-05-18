@@ -28,13 +28,23 @@
     {
     white-space: nowrap;
     }
-  table .with-lines, td, th
+  .with-lines
     {
     border: 0.05pt solid grey;
+    padding-left: 0.2cm;
+    font-size: 11pt;
     }
-  table .no-lines, td, th
+  .no-lines
     {
     border: none;
+    }
+  .right
+    {
+    text-align: right;
+    }
+  .small
+    {
+    font-size: 9pt;  
     }
   caption
     {
@@ -71,7 +81,7 @@
     margin-bottom: 1.5cm;
     margin-left: 2.0cm;
     margin-right: 1.5cm;
-    size: A4 portrait;
+    size: A4 landscape;
     }
 
   h1, h2, h3, h4, h5, h6

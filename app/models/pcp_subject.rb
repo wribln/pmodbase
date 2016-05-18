@@ -96,8 +96,8 @@ class PcpSubject < ActiveRecord::Base
 
   def viewing_group_map( id )
     r = 0
-    r =     1 if ( id == p_owner_id )||( id == p_deputy_id ) 
-    r = r | 2 if ( id == c_owner_id )||( id == c_deputy_id )
+    r =     1 if ( id == p_owner_id )||( id == p_deputy_id ) || pcp_members.presenting_member( id ).exists?
+    r = r | 2 if ( id == c_owner_id )||( id == c_deputy_id ) || pcp_members.commenting_member( id ).exists?
     return r
   end
 
@@ -140,7 +140,7 @@ class PcpSubject < ActiveRecord::Base
     write_attribute( :report_doc_id, AppHelper.clean_up( text, ProjectDocLog::MAX_LENGTH_OF_DOC_ID ))
   end
 
-  # access control helper
+  # access control helper: ags is the acting_group_switch
 
   def user_is_owner_or_deputy?( id, ags )
     if ags == 0
@@ -148,14 +148,6 @@ class PcpSubject < ActiveRecord::Base
     else
       ( id == c_owner_id )||( id == c_deputy_id )
     end
-  end
-
-  def permitted_to_access?( id )
-#    user_is_owner_or_deputy?( id )||pcp_members.exists?( account: id, to_access: true )
-  end
-
-  def permitted_to_update?( id )
-#    user_is_owner_or_deputy?( id )||pcp_members.exists?( account: id, to_access: true, to_update: true )
   end
 
   # user must have access to group of associated PCP Category

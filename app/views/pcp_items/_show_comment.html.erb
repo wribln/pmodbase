@@ -1,0 +1,16 @@
+      <div class="form-group p-group">
+        <p class="col-sm-3 p-label"><%= t( show_comment.is_public ? '.public' : '.internal' )%></p>
+        <p class="col-sm-2"><%= show_comment.author %></p>
+        <p class="col-sm-2 p-label"><%= t( 'pcp_items.comment.in_step' )%></p>
+        <p class="col-sm-2"><%= show_comment.pcp_step.try :step_label %></p>
+      </div>
+      <div class="form-group p-group">
+        <p class="col-sm-3 p-label"><%= PcpComment.human_attribute_name( :description )%></p>
+        <p class="col-sm-6"><%= show_comment.description %></p>
+      </div>
+      <div class="form-group p-group">
+        <p class="col-sm-3 p-label"><%= PcpComment.human_attribute_name( :assessment )%></p>
+        <p class="col-sm-2"><%= PcpItem.assessment_label( show_comment.assessment )%></p>
+        <p class="col-sm-2 p-label"><%= t( 'pcp_items.comment.make_public' )%></p>
+        <p class="col-sm-1"><%= display_boolean show_comment.is_public %></p>
+      </div>

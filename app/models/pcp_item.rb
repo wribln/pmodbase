@@ -4,7 +4,7 @@ class PcpItem < ActiveRecord::Base
 
   belongs_to :pcp_subject,  -> { readonly }, inverse_of: :pcp_items
   belongs_to :pcp_step,     -> { readonly }, inverse_of: :pcp_items
-  has_many   :pcp_comments, -> { readonly }, inverse_of: :pcp_item
+  has_many   :pcp_comments,    dependent: :destroy, inverse_of: :pcp_item
 
   before_save :update_item_assessment
 
@@ -18,6 +18,12 @@ class PcpItem < ActiveRecord::Base
   validates :seqno,
     presence: true,
     numericality: { only_integer: true }
+
+  # author is set to current user automatically but may be changed: 
+
+  validates :author,
+    presence: true,
+    length: { maximum: MAX_LENGTH_OF_ACCOUNT_NAME + MAX_LENGTH_OF_PERSON_NAMES }
 
   validates :reference,
     length: { maximum: MAX_LENGTH_OF_NOTE }
@@ -38,6 +44,18 @@ class PcpItem < ActiveRecord::Base
     inclusion: { in: 0..( ASSESSMENT_LABELS.size - 1 )}
 
   validate :pcp_parents_must_exist
+
+  # released items of given subject for public viewing
+
+  scope :released, ->( s ){ where( pcp_subject: s ).joins( :pcp_step ).merge( PcpStep.released )}
+  scope :released_until, ->( s, n ){ where( pcp_subject: s ).joins( :pcp_step ).merge( PcpStep.released_until( n ))}
+
+  # test whether item is released (needed for permissions):
+  # this is recognized by the release date not being set
+
+  def released?
+    pcp_step.released?
+  end 
 
   # make sure we have a corresponding pcp_subject and pcp_step
 

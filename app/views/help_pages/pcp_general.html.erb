@@ -92,28 +92,36 @@
       and the <%= help_term PcpCategory.human_attribute_name( :p_group_id )-%> in order
       to create new PCP Subjects. She can later change this group if she also has these
       access permissions for the new group.</p>
-    <p>Also, PCP owners and deputies should have access permissions for the feature
-      <%= help_term Feature.find_by_id( FEATURE_ID_PCP_MEMBERS ).label_with_id-%> in order
-      to add PCP Participants to their respective PCP Group.</p>
     <h3>Roles for PCP Items</h3>
-    <p>An owner or deputy may also assign other users as participants of the Present-Comment
-    Process for her PCP Subject. These users may require add and edit permissions for the
-    feature <%= help_term Feature.find_by_id( FEATURE_ID_PCP_ITEMS ).label_with_id-%> in
-    order to add and edit observations and/or comments.</p>
-    <p>PCP Participants of the Presenting Group may comment on PCP Items;
-    PCP Participants of the Commenting Group may make create observations (PCP Items),
-    or add comments to existing items.</p>
-    <p>All observations are public by default and can be viewed by anyone as soon as the
-    respective PCP Step is released.</p>
-    <p>All comments are created non-public/internal and can be viewed only by the
-    PCP Subject participants. Only a PCP Subject owner or deputy (for his respective
-    group) can make flag a comment as public or create a public comment. Once a PCP
-    Step is released, the comments marked as public can be viewed by anyone.</p>
+      <p>An owner or deputy may also assign other users as participants of the Present-Comment
+        Process for her PCP Subject. These users are then eligable to add and edit observations
+        (PCP Items) and/or comments.</p>
+      <p>PCP Participants of the Presenting Group may comment on PCP Items;
+        PCP Participants of the Commenting Group may make create observations (PCP Items),
+        or add comments to existing items.</p>
+      <p>All observations are public by default and can be viewed by anyone as soon as the
+        respective PCP Step is released.</p>
+      <p>All comments are created non-public/internal and can be viewed only by the
+        PCP Subject participants. Only a PCP Subject owner or deputy (for his respective
+        group) can make flag a comment as public or create a public comment. Once a PCP
+        Step is released, the comments marked as public can be viewed by anyone.</p>
     <h3>Principles of Reporting</h3>
-    <p>Generally, only the status at the most-recent release will be shown. However,
-    the detailed status of a specific PCP Subject will be visible to the participants
-    of the currently responsible group (owner, deputy and any other user). This
-    ensures that the current work-status is restricted to those actually working on
-    the PCP Subject.</p>
+      <p>Generally, only the status at the most-recent release will be shown. However,
+        the detailed status of a specific PCP Subject will be visible to the participants
+        of the currently responsible group (owner, deputy and any other user). This
+        ensures that the current work-status is restricted to those actually working on
+        the PCP Subject.</p>
+    <h3>Track Review Status of Groups</h3>
+      <p>When several project groups should review a PCP Subject and you want to trace
+        their statements, specifically if they have any comments at all, you could use the
+        following procedure:</p>
+      <p>When the PCP Subject is released to you, add one PCP Item per Group with a text
+        'Review Statement by &lt;group code&gt;'. This PCP Item must then be commented by
+        each group. The comment could be 'Reviewed - no further comment' and its
+        assessment set to <%= help_term PcpItem::ASSESSMENT_LABELS[ 2 ]-%>, or the
+        description of the PCP Item should be replaced by an observation or issue with
+        the respective assessment.</p>
+      <p>This way, you have recorded that each group has contributed to the review process
+        and that a group having no comments is also documented.</p>
     <%= help_footer FEATURE_ID_HELP_PAGES %>
   </div> <!-- /container -->

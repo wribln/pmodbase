@@ -37,6 +37,23 @@ class PcpStepTest < ActiveSupport::TestCase
     assert_nil ps.project_doc_id
   end
 
+  test 'fixture 3 - for subject two' do
+    ps = pcp_steps( :two_one )
+    assert ps.valid?, ps.errors.messages
+    assert_equal ps.pcp_subject_id, pcp_subjects( :two ).id
+    assert_equal 0, ps.step_no
+    assert_nil ps.subject_version
+    assert_equal 0, ps.subject_status
+    assert_equal 0, ps.prev_assmt
+    assert_nil ps.new_assmt
+    refute_nil ps.subject_date
+    assert_nil ps.due_date
+    assert_nil ps.released_by
+    assert_nil ps.released_at
+    assert_nil ps.subject_title
+    assert_nil ps.project_doc_id
+  end
+
   test 'step labels / acting_group_index' do
     ps = pcp_steps( :one )
     assert_equal PcpStep::STEP_LABELS[ 0 ], ps.step_label, 'Initial Release'
@@ -226,7 +243,9 @@ class PcpStepTest < ActiveSupport::TestCase
 
   test 'all scopes' do
     as = PcpStep.most_recent
-    assert 2, as.length
+    assert_equal 3, as.length
+    as = PcpStep.released
+    assert_equal 1, as.length
   end
 
 end
