@@ -3,18 +3,19 @@ en:
   activerecord:
 
     models:
-      pcp_category:   'Present-Comment Process (PCP) Categories'
-      pcp_comment:    'Present-Comment Process (PCP) Comments'
-      pcp_item:       'Present-Comment Process (PCP) Items'
-      pcp_subject:    'Present-Comment Process (PCP) Subjects'
-      pcp_step:       'Present-Comment Process (PCP) Steps'
+      pcp_category:   'PCP Categories'
+      pcp_comment:    'PCP Comments'
+      pcp_item:       'PCP Items'
+      pcp_subject:    'PCP Subjects'
+      pcp_step:       'PCP Steps'
+      pcp_member:     'PCP Participants'
 
     attributes:
 
       pcp_category:
         id:             :general.attributes.id
-        c_group_id:     'Commenting Group'
-        p_group_id:     'Presenting Group'
+        c_group_id:     'Commenting Project Group'
+        p_group_id:     'Presenting Project Group'
         c_owner_id:     'Owner (Commenting Group)'
         p_owner_id:     'Owner (Presenting Group)'
         c_deputy_id:    'Deputy (Commenting Group)'
@@ -25,7 +26,7 @@ en:
         id:             :general.attributes.id
         pcp_item_id:    'PCP Item'
         pcp_step_id:    'PCP Step'
-        public:         'Public Flag'
+        is_public:      'Public Flag'
 #
         description:    'Comment'
         author:         'Author'
@@ -38,10 +39,11 @@ en:
         pcp_step_id:    'PCP Step'
         seqno:          'Sequence Number'
         reference:      'Reference'
-        item_assmnt:    'Item Assessment'
+        assessment:     'Item Assessment'
 #
         description:    'Description'
-        assessment:     'Assessment'
+        pub_assmt:      'Previous Assessment'
+        new_assmt:      'New Assessment'
         assessments:    [ 'Minor/Open', 'Critical/Open', 'Resolved/Closed' ]
 
       pcp_member:
@@ -77,7 +79,8 @@ en:
         subject_date:   'Subject Status as of'
         subject_version: 'Subject Version'
         report_version:  'PCP Report Version'
-        note:           'Notes for this Step'
+        note:           'Internal Notes for this Step'
+        release_notice: 'Release Notice'
         due_date:       'Step Due Date'
 #                          0                  1                 2                 3                4 
         step_labels:    [ 'Initial Release', 'Initial Review', 'First Response', 'Second Review', 'Second Response' ]
@@ -91,7 +94,7 @@ en:
         new_assmt:      'New Assessment'
 #                          0    1    2    3    4
         ass_codes:      [ '?', 'A', 'B', 'C', 'D' ]
-        ass_labels:     [ '<not yet determined>', A - Approved', 'B - Approved w/ Comments', 'C - Rejected', 'D - Review not Required' ]
+        ass_labels:     [ '<not yet determined>', 'A - Approved', 'B - Approved w/ Comments', 'C - Rejected', 'D - Review not Required' ]
         released_by:    'Released by'
         released_at:    'Released at'
         subject_title:  :activerecord.attributes.pcp_subject.title
@@ -134,8 +137,7 @@ en:
   pcp_items:
     title:            'PCP Items'
     pcp_step:         'Reported in Step'
-    author:           'by'
-    first_assessment: 'Initial Assessment'
+    author:           'Author'
     form:
       g_prompt:       :general.select_prompt
     comment:
@@ -144,6 +146,7 @@ en:
       in_step:        'in Step'
     index:
       form_title:     'All Items of PCP Subject '
+      assessment:     [ 'Assessment',"Previous/New\nAssessment" ]     
     new:
       form_title:     'Add new Item for PCP Subject '
     new_comment:
@@ -153,9 +156,15 @@ en:
     show:
       form_title:     'Show Item Details for PCP Subject '
       add_comment:    'Add Comment'
+      publish:        'Publish'
+    show_item:
+      assessment:     'Item Assessment'
+      pub_assmt:      'Previous Assessment'
+      new_assmt:      'New Assessment'
     show_comment:
       public:         'Public Comment added by'
       internal:       'Comment added by'
+      assessment:     'Assessment'
     edit:
       form_title:     'Edit Item Details for PCP Subject '
     msg:
@@ -166,7 +175,22 @@ en:
       no_pcp_step:    :general.non_existing
       pcp_subject_step: 'PCP Subject/Step mismatch.'
       last_reached:   'Last PCP Item reached.'
-      cannot_del:     'Cannot delete PCP Item once it is released.'    
+      cannot_del:     'Cannot delete PCP Item once it is released.'
+      edit_bad_step:  'Cannot edit PCP Item as it is already released but you can add a Comment.'
+      pub_no_need:    'PCP Items are public by definition - no need to publish.'
+      pub_no_comment: 'No Comment to publish: Add Comment first and mark it public.'
+      pub_comment_no: 'Cannot publish last Comment as it is from a previous step. Add new Comment first.'
+      publish_ok:     'Last Comment set to public.'
+      comment_step:   'Cannot edit last Comment as it is from a previous Step. Add new Comment first.'
+      comment_pub:    'Last Comment is already public.'
+      # logic errors
+      nop_4_new_item: 'You have no permission to add PCP Items for this PCP Subject.'
+      not_com_grp:    'You must be a member of the Commenting Group to add PCP Items.'
+      subj_closed:    'PCP Subject is closed.'
+
+      nop_not_yet:    'Cannot show you this PCP Item as it is not yet released.'
+      nop_to_view:    'This PCP Item is not yet released.'
+
 
   pcp_members:
     title:            'PCP Participants'
@@ -190,14 +214,27 @@ en:
 
   pcp_subject:
     title:            'PCP Subject'
+
+  pcp_all_subjects:
+    title:            'All PCP Subjects'
+    index:
+      form_title:     'List of All PCP Subjects (by Category)'
+    show:
+      form_title:     'Show PCP Subject Details'
+    stats:
+      form_title:     'Statistics on PCP Subjects'
+
   pcp_subjects:
-    title:            'PCP Subjects'
+    title:            'My PCP Subjects'
     form:
       g_prompt:       :general.select_prompt
       cs_heading:     'Current Step: %{label}'
       prev_version:   'previously:'
       this_due_date:  'This %{step} Due Date'
       next_due_date:  'Next %{step} Due Date'
+    stats:
+      stats:          'Assessment Statistics'
+      stats_tag:      '(Total = Minor / Major / Resolved)'
     edit:
       form_title:     'Edit PCP Subject'
     new:
@@ -208,11 +245,13 @@ en:
       items_button:   'Items'
       members_button: 'Participants'
     index:
-      form_title:     'List of all PCP Subjects (by Category)'
+      form_title:     'List of My PCP Subjects (by Category)'
       status_subj:    'Status'
       assessment:     'Code'
       status_step:    'Current Step' 
       acting_group:   'At Group'
+      p_group:        'Presenting Group'
+      c_group:        'Commenting Group'
     info_history:
       form_title:     'History of PCP Subject'
       step_heading:   'Step %{id}: %{label}'
@@ -228,12 +267,14 @@ en:
       released_by:    'Released by User (Account)'
       released_at:    'at'
       release_reason: 'Reason'
+      release_notice: 'Release Notice'
       assessment:     'Subject Overall Assessment'
       not_given:      '<not specified>'
       due_date:       'Reply requested until'
       #
-      col_widths:     [ '1cm','3cm','3cm','4cm','12cm','3cm' ]
-      col_heads:      [ 'No.','Step','Author','Reference','Description/Comment','Assessment' ]
+      empty_report:   'The report does not contain any items to list.'
+      col_widths:     [ '1cm','4cm','12cm','3cm','3cm','3cm' ]
+      col_heads:      [ 'No.','Reference','Description/Comment','Assessment','Step','Author' ]
 
     msg:
       new_ok:         'PCP Subject successfully created.'
@@ -244,6 +285,12 @@ en:
       bad_category:   :general.non_existing
       bad_status:     'can only be set on closed subjects.'
       no_permissn:    'You have no permission to modify this PCP Subject at this time.'
+      rel_not_ok:
+        one:          'Cannot release PCP Subject: 1 open Item has no (public) comment.'   
+        other:        'Cannot release PCP Subject: %{count} open Items have no (public) comment.'
+      subj_closed:    :pcp_items.msg.subj_closed
+      nop_release:    'Only configured owners and deputies may Release a PCP Subject.'
+      nop_4_new_subj: 'You must be owner or deputy of the selected PCP Category in order to create a PCP Subject for that category.'
 
   pcp_steps:
     msg:
@@ -254,3 +301,4 @@ en:
       clsd_subj_no_r: 'Cannot Release closed subject.'
       missng_subject: 'Cannot Release without Description, Title, or Project DMS ID.'
       no_subject_status: 'Subject Date or Subject Version must be given to Release this step.'
+      need_assessment: 'needed to Release PCP Subject.'

@@ -57,7 +57,7 @@
         </tr>
         <tr>
           <td><%= PcpStep.human_attribute_name( :subject_status )%></td>
-          <td><%= @pcp_step.try :subject_status_label %>
+          <td><%= @pcp_curr_step.subject_status_label %>
         <tr>
           <td><%= PcpSubject.human_attribute_name( :archived )%></td>
           <td><%= display_boolean @pcp_subject.archived, :yesno %></td>
@@ -96,6 +96,9 @@
             <td><%= db_formatted_d( ps.due_date )%></td>
           </tr>
         <%- end -%>
+        <tr>
+          <td><%= PcpStep.human_attribute_name( :release_notice )%></td>
+          <td><%= ps.release_notice %></td>
         <tr>
           <td><%= PcpStep.human_attribute_name( :new_assmt )%></td>
           <td><%= PcpStep.assessment_label( ps.new_assmt )%></td>

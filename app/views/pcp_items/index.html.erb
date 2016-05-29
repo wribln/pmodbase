@@ -10,7 +10,7 @@
           <th class="th-right col-sm-1"><%= PcpItem.human_attribute_name( :seqno )%></th>
           <th class="col-sm-2"><%= PcpItem.human_attribute_name( :reference )%></th>
           <th class="col-sm-5"><%= PcpItem.human_attribute_name( :description )%></th>
-          <th class="col-sm-1"><%= PcpItem.human_attribute_name( :item_assmnt )%></th>
+          <th class="col-sm-1"><%= t( 'pcp_items.index.assessment' )[ @pcp_group ]%></th>
           <th class="col-sm-2"><%= t( 'pcp_items.pcp_step' )%></th>
           <th class="col-sm-1 hidden-print"><%= t( 'action_title.header' )%></th>
         </tr>
@@ -24,7 +24,11 @@
             <td class="td-right"><%= pi.seqno %></td>
             <td><%= pi.reference %></td>
             <td><%= pi.description %></td>
-            <td><%= PcpItem.assessment_label( pi.item_assmnt ) %></td>
+            <td><%= PcpItem.assessment_label( pi.pub_assmt )-%>
+            <%- if @pcp_group == 1 then -%>
+              <br/><%= PcpItem.assessment_label( pi.new_assmt )-%>
+            <%- end -%>
+            </td>
             <td><%= pi.pcp_step.try :step_label %></td>
             <td><%= render partial: 'shared/actions', object: pi %></td>
           </tr>

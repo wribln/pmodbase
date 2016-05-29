@@ -81,7 +81,7 @@ class PcpItemsController0Test < ActionController::TestCase
 
   test 'should get edit - redirect to edit comment' do
     get :edit, id: @pcp_item
-    assert_redirected_to edit_pcp_comment_path( assigns( :pcp_item ))
+    assert_redirected_to edit_pcp_comment_path( pcp_comments( :one ))
   end
 
   test 'should update pcp_item' do

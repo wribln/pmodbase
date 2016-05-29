@@ -24,9 +24,10 @@
     padding-left: 0cm;
     padding-right: 0.5cm;
     }
-  td .nowrap
+  td.row-head
     {
     white-space: nowrap;
+    vertical-align: text-top;
     }
   .with-lines
     {

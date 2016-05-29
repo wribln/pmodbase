@@ -6,8 +6,11 @@ class PcpItemTest < ActiveSupport::TestCase
     assert pi.valid?
     assert pi.pcp_subject.id, pcp_subjects( :one ).id
     assert pi.pcp_step.id, pcp_steps( :one ).id
-    assert 1, pi.seqno
-    assert 1, pi.item_assmnt
+    assert_equal 1, pi.seqno
+    assert_equal 1, pi.pub_assmt
+    assert_equal 0, pi.new_assmt
+    assert_equal 1, pi.assessment
+    assert_equal 0, pi.valid_assessment?
   end
 
   test 'fixture 2' do
@@ -15,8 +18,11 @@ class PcpItemTest < ActiveSupport::TestCase
     assert pi.valid?
     assert pi.pcp_subject.id, pcp_subjects( :one ).id
     assert pi.pcp_step.id, pcp_steps( :one ).id
-    assert 2, pi.seqno
-    assert 0, pi.item_assmnt
+    assert_equal 2, pi.seqno
+    assert_equal 0, pi.pub_assmt
+    assert_equal 1, pi.new_assmt
+    assert_equal 0, pi.assessment
+    assert_equal 0, pi.valid_assessment?
   end
 
   test 'defaults' do
@@ -139,6 +145,145 @@ class PcpItemTest < ActiveSupport::TestCase
     pr.each do |p|
       assert p.released?
     end
+  end
+
+  test 'assessments' do
+    cu = accounts( :account_one )
+    # create new item
+    ps = pcp_steps( :two_one )
+    pi = nil
+    assert_difference( 'PcpItem.count' )do
+      pi = ps.pcp_items.create( pcp_subject: ps.pcp_subject, description: 'foobar', seqno: 1, author: 'me' )
+    end
+    assert_equal 0, pi.valid_assessment?, pi.inspect
+    assert_equal 0, pi.new_assmt
+    assert_equal 0, pi.assessment
+    assert_nil pi.pub_assmt
+    # change of :assessment should also change :new_assmt here
+    pi.assessment = 2
+    assert_equal 2, pi.new_assmt
+    # add internal comment to PCP Item w/o prior release
+    pc0 = nil
+    assert_difference( 'PcpComment.count' )do
+      pc0 = pi.pcp_comments.create( description: 'Step 0, Comment 0', pcp_step: ps, author: 'me', assessment: 1 )
+    end
+    pi.reload
+    assert_equal 0, pi.valid_assessment?, pi.inspect
+    assert_nil pi.pub_assmt
+    assert_equal 2, pi.new_assmt
+    assert_equal 2, pi.assessment
+    # make last comment public
+    pc0.make_public
+    pi.reload
+    assert_equal 0, pi.valid_assessment?, pi.inspect
+    assert_nil pi.pub_assmt
+    assert_equal 1, pi.new_assmt
+    assert_equal 2, pi.assessment
+    # change assessment of comment
+    pc0.assessment = 2
+    assert pc0.save, pc0.errors.inspect
+    assert_equal 0, pi.valid_assessment?, pi.inspect
+    assert_nil pi.pub_assmt
+    assert_equal 2, pi.new_assmt
+    assert_equal 2, pi.assessment
+    # release item with a new step
+    ps_new = PcpStep.new( pcp_subject: ps.pcp_subject )
+    ps_new.create_release_from( ps, cu )
+    ps.set_release_data( cu )
+    assert_difference( 'PcpStep.count' )do
+      assert ps.save, ps.errors.inspect
+      assert ps_new.save, ps_new.errors.inspect
+    end
+    ps = ps_new
+    assert_no_difference( 'PcpItem.count' )do
+      pi.release_item
+      assert pi.save, pi.errors.inspect
+    end
+    assert_equal 0, pi.valid_assessment?, pi.inspect
+    assert_equal 2, pi.pub_assmt
+    assert_equal 2, pi.new_assmt
+    assert_equal 2, pi.assessment
+    # change of :assessment should not modify :new_assmt anymore
+    pi.assessment = 0
+    assert_equal 2, pi.new_assmt
+    assert_equal 0, pi.valid_assessment?, pi.inspect
+    # therefore, we change it back
+    pi.assessment = 2
+    assert_equal 0, pi.valid_assessment?, pi.inspect
+    # add internal comment #1
+    pc1 = nil
+    assert_difference( 'PcpComment.count' )do
+      pc1 = pi.pcp_comments.create( description: 'Step 1, Comment 1', pcp_step: ps, author: 'me', assessment: 1 )
+    end
+    pi.reload
+    assert_equal 0, pi.valid_assessment?, pi.inspect
+    assert_equal 2, pi.pub_assmt
+    assert_equal 1, pi.new_assmt
+    assert_equal 2, pi.assessment
+    # add internal comment #2
+    pc2 = nil
+    assert_difference( 'PcpComment.count' )do
+      pc2 = pi.pcp_comments.create( description: 'Step 1, Comment 2', pcp_step: ps, author: 'me', assessment: 2 )
+    end
+    pi.reload
+    assert_equal 0, pi.valid_assessment?, pi.inspect
+    assert_equal 2, pi.pub_assmt
+    assert_equal 2, pi.new_assmt
+    assert_equal 2, pi.assessment
+    # make comment #1 public - this is NOT the implemented process:
+    # there only the last comment should be modified ...
+    pc1.make_public
+    pi.reload
+    assert_equal 0, pi.valid_assessment?, pi.inspect
+    assert_equal 2, pi.pub_assmt
+    assert_equal 1, pi.new_assmt
+    assert_equal 2, pi.assessment
+    # now delete first comment
+    assert_difference( 'PcpComment.count', -1 ){ pc1.delete }
+    pi.update_new_assmt( nil )
+    pi.reload
+    assert_equal 0, pi.valid_assessment?, pi.inspect
+    assert_equal 2, pi.pub_assmt
+    assert_equal 2, pi.new_assmt
+    assert_equal 2, pi.assessment
+    # make one more comment and set it to public
+    pc3 = nil
+    assert_difference( 'PcpComment.count' )do
+      pc3 = pi.pcp_comments.create( description: 'Step 1, Comment 3', pcp_step: ps, author: 'me', assessment: 1, is_public: true )
+    end
+    pi.reload
+    assert_equal 0, pi.valid_assessment?, pi.inspect
+    assert_equal 2, pi.pub_assmt
+    assert_equal 1, pi.new_assmt
+    assert_equal 2, pi.assessment
+    # final comment, internal
+    pc4 = nil
+    assert_difference( 'PcpComment.count' )do
+      pc4 = pi.pcp_comments.create( description: 'Step 1, Comment 4', pcp_step: ps, author: 'me', assessment: 2, is_public: false )
+    end
+    pi.reload
+    assert_equal 0, pi.valid_assessment?, pi.inspect
+    assert_equal 2, pi.pub_assmt
+    assert_equal 1, pi.new_assmt
+    assert_equal 2, pi.assessment
+    # now, release this step and start a new one
+    ps_new = PcpStep.new( pcp_subject: ps.pcp_subject )
+    ps_new.create_release_from( ps, cu )
+    ps.set_release_data( cu )
+    assert_difference( 'PcpStep.count' )do
+      assert ps.save, ps.errors.inspect
+      assert ps_new.save, ps_new.errors.inspect
+    end
+    ps = ps_new
+    assert_no_difference( 'PcpItem.count' )do
+      pi.release_item
+      assert pi.save, pi.errors.inspect
+    end
+    # we should have new_assmt from the previous step as new pub_assmt
+    assert_equal 0, pi.valid_assessment?, pi.inspect
+    assert_equal 1, pi.pub_assmt
+    assert_equal 1, pi.new_assmt
+    assert_equal 2, pi.assessment
   end
 
 end

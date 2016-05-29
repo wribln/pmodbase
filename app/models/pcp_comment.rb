@@ -1,6 +1,10 @@
 class PcpComment < ActiveRecord::Base
-  belongs_to :pcp_item, -> { readonly }, inverse_of: :pcp_comments
+  belongs_to :pcp_item,                  inverse_of: :pcp_comments
   belongs_to :pcp_step, -> { readonly }, inverse_of: :pcp_comments
+
+  attr_accessor :update_item_flag
+
+  after_save :update_item, :if => :update_item_flag
 
   validates :pcp_step_id, :pcp_item_id,
     presence: true
@@ -21,6 +25,10 @@ class PcpComment < ActiveRecord::Base
 
   validate :pcp_parents_must_exist
   validate :public_requirements
+
+  default_scope{ order( created_at: :asc )}
+  scope :for_step, ->( s ){ where( pcp_step: s )}
+  scope :is_public, ->{ where( is_public: true )}
 
   # make sure we have a corresponding pcp_item and pcp_step
 
@@ -44,7 +52,7 @@ class PcpComment < ActiveRecord::Base
   # (1) a description is there - unless the assessment is terminal
 
   def public_requirements
-    if self.is_public then
+    if is_public then
       errors.add( :description, I18n.t( 'pcp_comments.msg.descr_mssng' )) \
         if description.blank? && !PcpItem.closed?( assessment )
     end
@@ -54,6 +62,37 @@ class PcpComment < ActiveRecord::Base
 
   def published?
     is_public && pcp_step.released?
+  end
+
+  # use make_public to set the is_public flag alone
+  # Note: this triggers also the update_item callback -
+  # no need to explicitly do this here
+
+  def make_public
+    update_attribute( :is_public, true )
+  end
+
+  # if the :is_public or :assessment attribute changes, we need to
+  # report it up to the PCP Item so the assessment for the current step
+  # is updated accordingly:
+  #
+  # this is implemented by setting a flag which triggers a 
+  # before_save callback later
+
+  def is_public=( f )
+    self.update_item_flag = ( is_public != f )
+    write_attribute( :is_public, f ) if self.update_item_flag
+  end
+
+  def assessment=( a )
+    self.update_item_flag = ( assessment != a )
+    write_attribute( :assessment, a ) if self.update_item_flag
+  end
+
+  # callback to update related PCP Item
+
+  def update_item
+    pcp_item.update_new_assmt( self )
   end
 
 end

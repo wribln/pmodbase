@@ -120,73 +120,80 @@ class AccountTest < ActiveSupport::TestCase
 
     # access for all actions, for all groups
 
-    assert_equal '',a.permitted_groups( 1, :to_index, :some_id )
-    assert_equal '',a.permitted_groups( 1, :to_create, :some_id )
-    assert_equal '',a.permitted_groups( 1, :to_read, :some_id )
-    assert_equal '',a.permitted_groups( 1, :to_update, :some_id )
-    assert_equal '',a.permitted_groups( 1, :to_delete, :some_id )
+    assert_equal '',a.permitted_groups( 1, :to_index  )
+    assert_equal '',a.permitted_groups( 1, :to_create )
+    assert_equal '',a.permitted_groups( 1, :to_read   )
+    assert_equal '',a.permitted_groups( 1, :to_update )
+    assert_equal '',a.permitted_groups( 1, :to_delete )
 
     # remove right :to_delete and test again
 
     p.to_delete = 0
     assert p.save
-    assert_equal '',a.permitted_groups( 1, :to_index, :some_id )
-    assert_equal '',a.permitted_groups( 1, :to_create, :some_id )
-    assert_equal '',a.permitted_groups( 1, :to_read, :some_id )
-    assert_equal '',a.permitted_groups( 1, :to_update, :some_id )
-    assert_nil a.permitted_groups( 1, :to_delete, :some_id )
+    assert_equal '',a.permitted_groups( 1, :to_index  )
+    assert_equal '',a.permitted_groups( 1, :to_create )
+    assert_equal '',a.permitted_groups( 1, :to_read   )
+    assert_equal '',a.permitted_groups( 1, :to_update )
+    assert_nil a.permitted_groups( 1, :to_delete )
 
     # remove right :to_update and test again
 
     p.to_update = 0
     assert p.save
-    assert_equal '',a.permitted_groups( 1, :to_index, :some_id )
-    assert_equal '',a.permitted_groups( 1, :to_create, :some_id )
-    assert_equal '',a.permitted_groups( 1, :to_read, :some_id )
-    assert_nil a.permitted_groups( 1, :to_update, :some_id )
-    assert_nil a.permitted_groups( 1, :to_delete, :some_id )
+    assert_equal '',a.permitted_groups( 1, :to_index  )
+    assert_equal '',a.permitted_groups( 1, :to_create )
+    assert_equal '',a.permitted_groups( 1, :to_read   )
+    assert_nil a.permitted_groups( 1, :to_update )
+    assert_nil a.permitted_groups( 1, :to_delete )
 
     # remove right :to_create and test again
 
     p.to_create = 0
     assert p.save
-    assert_equal '',a.permitted_groups( 1, :to_index, :some_id )
-    assert_nil a.permitted_groups( 1, :to_create, :some_id )
-    assert_equal '',a.permitted_groups( 1, :to_read, :some_id )
-    assert_nil a.permitted_groups( 1, :to_update, :some_id )
-    assert_nil a.permitted_groups( 1, :to_delete, :some_id )
+    assert_equal '',a.permitted_groups( 1, :to_index )
+    assert_nil a.permitted_groups( 1, :to_create )
+    assert_equal '',a.permitted_groups( 1, :to_read )
+    assert_nil a.permitted_groups( 1, :to_update )
+    assert_nil a.permitted_groups( 1, :to_delete )
 
     # now specify a specific group on the same permissions
 
     p.group_id = groups( :group_one ).id
     assert p.save
-    assert_equal "some_id IN (#{ p.group_id })", a.permitted_groups( 1, :to_read, :some_id )
-    assert_nil a.permitted_groups( 1, :to_create, :some_id )
-    assert_equal "some_id IN (#{ p.group_id })", a.permitted_groups( 1, :to_index, :some_id )
-    assert_nil a.permitted_groups( 1, :to_update, :some_id )
-    assert_nil a.permitted_groups( 1, :to_delete, :some_id )
+    assert_equal [ p.group_id ], a.permitted_groups( 1, :to_read )
+    assert_nil a.permitted_groups( 1, :to_create )
+    assert_equal [ p.group_id ], a.permitted_groups( 1, :to_index )
+    assert_nil a.permitted_groups( 1, :to_update )
+    assert_nil a.permitted_groups( 1, :to_delete )
 
     # now try with two groups, identical permissions
 
     p2 = p.dup
     p2.group_id = groups( :group_two ).id
-    gl = [ p.group_id, p2.group_id ].sort.join( ',')
     assert p2.save
-    assert_nil a.permitted_groups( 1, :to_delete, :some_id )
-    assert_nil a.permitted_groups( 1, :to_update, :some_id )
-    assert_nil a.permitted_groups( 1, :to_create, :some_id )
-    assert_equal "some_id IN (#{ gl })", a.permitted_groups( 1, :to_read, :some_id )
-    assert_equal "some_id IN (#{ gl })", a.permitted_groups( 1, :to_index, :some_id )
+    assert_nil a.permitted_groups( 1, :to_delete )
+    assert_nil a.permitted_groups( 1, :to_update )
+    assert_nil a.permitted_groups( 1, :to_create )
+    apg = a.permitted_groups( 1, :to_read  )
+    assert_includes apg, p.group_id
+    assert_includes apg, p2.group_id
+    apg = a.permitted_groups( 1, :to_index  )
+    assert_includes apg, p.group_id
+    assert_includes apg, p2.group_id
 
     # two groups, identical permissions except for :to_create
 
     p2.to_create = 1
     assert p2.save
-    assert_nil a.permitted_groups( 1, :to_update, :some_id )
-    assert_nil a.permitted_groups( 1, :to_delete, :some_id )
-    assert_equal "some_id IN (#{ p2.group_id })", a.permitted_groups( 1, :to_create, :some_id )
-    assert_equal "some_id IN (#{ gl })", a.permitted_groups( 1, :to_read, :some_id )
-    assert_equal "some_id IN (#{ gl })", a.permitted_groups( 1, :to_index, :some_id )
+    assert_nil a.permitted_groups( 1, :to_update )
+    assert_nil a.permitted_groups( 1, :to_delete )
+    assert_equal [ p2.group_id ], a.permitted_groups( 1, :to_create )
+    apg = a.permitted_groups( 1, :to_read  )
+    assert_includes apg, p.group_id
+    assert_includes apg, p2.group_id
+    apg = a.permitted_groups( 1, :to_index  )
+    assert_includes apg, p.group_id
+    assert_includes apg, p2.group_id
   end
 
   test 'all scopes' do

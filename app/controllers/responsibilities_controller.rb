@@ -83,7 +83,7 @@ class ResponsibilitiesController < ApplicationController
     # Groups to select from are those for which the current user has access to
 
     def set_selections( action )
-      pg = current_user.permitted_groups( FEATURE_ID_RESPONSIBILITIES, action, :id )
+      pg = current_user.permitted_groups( FEATURE_ID_RESPONSIBILITIES, action )
       @group_selection = Group.active_only.participants_only.permitted_groups( pg ).collect{ |g| [ g.code_and_label, g.id ]}
     end
 

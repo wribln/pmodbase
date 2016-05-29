@@ -4,9 +4,6 @@
   <%= form_title %>
   <div class="form-horizontal" role="form">
     <%= form_for @pcp_subject do |f| %>
-      <%= render partial: 'shared/errors', object: @pcp_subject.errors %>
-      <%= ( render partial: 'shared/errors', object: @pcp_new_step.errors )unless @pcp_new_step.nil? %>
-      <%= ( render partial: 'shared/errors', object: @pcp_curr_step.errors )unless @pcp_curr_step.nil? %>
       <%= render partial: 'shared/notice' %>
       <div class="form-group">
         <%= f.label :id, class: "col-sm-3 control-label" %>
@@ -109,7 +106,7 @@
       <!-- data on current step -->
       <%= f.fields_for :pcp_steps, @pcp_curr_step do |os| -%>
         <div class="form-group">
-          <%= os.label :step_no, t( '.cs_heading', label: os.object.step_label ), class: "col-sm-3 control-label" %>
+          <%= os.label :step_no, t( 'pcp_subjects.show.cs_heading', label: os.object.step_label ), class: "col-sm-3 control-label" %>
           <div class="col-sm-4"><hr /></div>
         </div>
         <div class="form-group">
@@ -130,53 +127,24 @@
             <%= display_value os.object.report_version %>
           </div>
         </div>
-        <%# show note only to acting group %>
-        <%- if PcpSubject.same_group?( os.object.acting_group_index, @pcp_viewing_group )-%>
-        <div class="form-group">
-          <%= os.label :note, class: "col-sm-3 control-label" %>
-          <div class="col-sm-4">
-            <%= display_value os.object.note %>
-          </div>
-        </div>
-        <%- end -%>
         <div class="form-group">
           <%= os.label :release_notice, class: "col-sm-3 control-label" %>
           <div class="col-sm-6">
             <%= display_value os.object.release_notice %>
           </div>
         </div>
-        <%# show current step due date (from previous step) only for steps > 0 %>
-        <%- if os.object.step_no > 0 then -%>
         <div class="form-group">
           <%= os.label :due_date, t( 'pcp_subjects.form.this_due_date', step: PcpStep.step_state_label( os.object.step_no )), class: "col-sm-3 control-label" %> 
           <div class="col-sm-2">  
-            <%= display_value db_formatted_d( @pcp_prev_step.due_date )%>
+            <%= display_value db_formatted_d( @pcp_prev_step.due_date ) unless @pcp_prev_step.nil? %>
           </div>
         </div>
-        <%- end -%>
         <div class="form-group">
-          <%= os.label :due_date, t( 'pcp_subjects.form.next_due_date', step: PcpStep.step_state_label( os.object.step_no + 1 )), class: "col-sm-3 control-label" %>
-          <div class="col-sm-2">
-            <%= display_value db_formatted_d( @pcp_curr_step.due_date )%>
+          <%= os.label :prev_assmt, class: "col-sm-3 control-label" %>
+          <div class="col-sm-4">
+            <%= display_value PcpStep.assessment_label( os.object.prev_assmt) %>
           </div>
         </div>
-        <%- if @pcp_curr_step.step_no > 0 then %>
-          <div class="form-group">
-            <%= os.label :prev_assmt, class: "col-sm-3 control-label" %>
-            <div class="col-sm-4">
-              <%= display_value PcpStep.assessment_label( os.object.prev_assmt) %>
-            </div>
-          </div>
-          <%- if @pcp_curr_step.in_commenting_group? then -%>
-            <div class="form-group">
-              <%= os.label :new_assmt, class: "col-sm-3 control-label" %>
-              <div class="col-sm-4">
-                <%= display_value PcpStep.assessment_label( os.object.new_assmt) %>
-              </div>
-            </div>
-            <%= render partial: 'stats' %>
-          <%- end -%>
-        <%- end -%>
       <%- end -%>
       <%- end -%>
       <div class="form-group">
@@ -184,21 +152,7 @@
           <%= link_to t( 'button_label.edit' ), edit_pcp_subject_path( @pcp_subject ), class: "btn btn-lg btn-block btn-default" %>
         </div>
         <div class="col-sm-2">
-          <%= link_to t( 'button_label.release' ), pcp_subject_release_path( @pcp_subject ), class: "btn btn-lg btn-block btn-default" %>
-        </div>
-        <div class="col-sm-2">
-          <%= link_to t( 'button_label.history' ), pcp_subject_history_path( @pcp_subject ), class: "btn btn-lg btn-block btn-default", target: "_blank" %>
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="col-sm-offset-3 col-sm-2">
-          <%= link_to t( '.items_button' ), pcp_subject_pcp_items_path( @pcp_subject ), class: "btn btn-lg btn-block btn-default" %>
-        </div>
-        <div class="col-sm-2">
-          <%= link_to t( '.members_button' ), pcp_subject_pcp_members_path( @pcp_subject ), class: "btn btn-lg btn-block btn-default" %>
-        </div>
-        <div class="col-sm-2">
-          <%= link_to t( 'button_label.goto_to_list' ), pcp_subjects_path, class: "btn btn-lg btn-block btn-default" %>
+          <%= link_to t( 'button_label.goto_to_list' ), pcp_all_subjects_path, class: "btn btn-lg btn-block btn-default" %>
         </div>
       </div>
     <% end %>

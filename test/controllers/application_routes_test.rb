@@ -1,6 +1,10 @@
 require 'test_helper'
 class ApplicationRoutesTest < ActionController::TestCase
 
+  # permitted action prefix:
+
+  @@action_prefix = %w( index info stats new add create update destroy show edit )
+
   # test all standard resources:
 
   @my_resources = [
@@ -36,6 +40,7 @@ class ApplicationRoutesTest < ActionController::TestCase
     %w( NSO NetworkStops ),
     %w( PCC PcpCategories ),
     %w( PCS PcpSubjects ),
+    %w( PCA PcpAllSubjects ),
     %w( APT People ),
     %w( PPC PhaseCodes ),
     %w( SCP ProductCodes ),
@@ -64,126 +69,142 @@ class ApplicationRoutesTest < ActionController::TestCase
       p = Feature.create_target(r[ 0 ])
       c = r[1].underscore
 
-      assert_routing({ method: 'get',    path: "#{ p }"        }, { controller: c, action: 'index'   })
-      assert_routing({ method: 'get',    path: "#{ p }/new"    }, { controller: c, action: 'new'     })
-      assert_routing({ method: 'post',   path: "#{ p }"        }, { controller: c, action: 'create'  })
-      assert_routing({ method: 'get',    path: "#{ p }/1"      }, { controller: c, action: 'show'    , id: '1' })
-      assert_routing({ method: 'get',    path: "#{ p }/1/edit" }, { controller: c, action: 'edit'    , id: '1' })
-      assert_routing({ method: 'put',    path: "#{ p }/1"      }, { controller: c, action: 'update'  , id: '1' })
-      assert_routing({ method: 'delete', path: "#{ p }/1"      }, { controller: c, action: 'destroy' , id: '1' })
+      check_routing( 'get',    "#{ p }"        , c, 'index'   )
+      check_routing( 'get',    "#{ p }/new"    , c, 'new'     )
+      check_routing( 'post',   "#{ p }"        , c, 'create'  )
+      check_routing( 'get',    "#{ p }/1"      , c, 'show'    , id: '1' )
+      check_routing( 'get',    "#{ p }/1/edit" , c, 'edit'    , id: '1' )
+      check_routing( 'put',    "#{ p }/1"      , c, 'update'  , id: '1' )
+      check_routing( 'delete', "#{ p }/1"      , c, 'destroy' , id: '1' )
     end
   end
 
   test 'mtl nested routing' do
     [ %w( oti our_tia_items ) ].each do |r|
-      assert_routing({ method: 'get',    path: "mtl/1/#{ r[ 0 ] }"     }, { controller: r[ 1 ], action: 'index',  my_tia_list_id: '1' })
-      assert_routing({ method: 'post',   path: "mtl/1/#{ r[ 0 ] }"     }, { controller: r[ 1 ], action: 'create', my_tia_list_id: '1' })
-      assert_routing({ method: 'get',    path: "mtl/1/#{ r[ 0 ] }/new" }, { controller: r[ 1 ], action: 'new',    my_tia_list_id: '1' })
+      check_routing( 'get',    "mtl/1/#{ r[ 0 ] }"    , r[ 1 ], 'index',  my_tia_list_id: '1' )
+      check_routing( 'post',   "mtl/1/#{ r[ 0 ] }"    , r[ 1 ], 'create', my_tia_list_id: '1' )
+      check_routing( 'get',    "mtl/1/#{ r[ 0 ] }/new", r[ 1 ], 'new',    my_tia_list_id: '1' )
   
-      assert_routing({ method: 'get',    path: "#{ r[ 0 ]}/1"           }, { controller: r[ 1 ], action: 'show',    id: '1' })
-      assert_routing({ method: 'get',    path: "#{ r[ 0 ]}/1/edit"      }, { controller: r[ 1 ], action: 'edit',    id: '1' })
-      assert_routing({ method: 'put',    path: "#{ r[ 0 ]}/1"           }, { controller: r[ 1 ], action: 'update',  id: '1' })
-      assert_routing({ method: 'delete', path: "#{ r[ 0 ]}/1"           }, { controller: r[ 1 ], action: 'destroy', id: '1' })
+      check_routing( 'get',    "#{ r[ 0 ]}/1"         , r[ 1 ], 'show',    id: '1' )
+      check_routing( 'get',    "#{ r[ 0 ]}/1/edit"    , r[ 1 ], 'edit',    id: '1' )
+      check_routing( 'put',    "#{ r[ 0 ]}/1"         , r[ 1 ], 'update',  id: '1' )
+      check_routing( 'delete', "#{ r[ 0 ]}/1"         , r[ 1 ], 'destroy', id: '1' )
     end
   end
 
   test 'special routes: tia_items' do
     [ %w( mti my_tia_items ), %w( oti our_tia_items )].each do |r|
-      assert_routing({ method: 'get', path: "/#{ r[ 0 ]}/1/info" }, { controller: r[ 1 ], action: 'info', id: '1' })
+      check_routing( 'get', "/#{ r[ 0 ]}/1/info", r[ 1 ], 'info', id: '1' )
     end
   end
 
   test 'pcs nested routing' do
     [ %w( pci pcp_items ), %w( pcm pcp_members )].each do |r|
-      assert_routing({ method: 'get',    path: "pcs/1/#{ r[ 0 ] }"     }, { controller: r[ 1 ], action: 'index',  pcp_subject_id: '1' })
-      assert_routing({ method: 'post',   path: "pcs/1/#{ r[ 0 ] }"     }, { controller: r[ 1 ], action: 'create', pcp_subject_id: '1' })
-      assert_routing({ method: 'get',    path: "pcs/1/#{ r[ 0 ] }/new" }, { controller: r[ 1 ], action: 'new',    pcp_subject_id: '1' })
+      check_routing( 'get',    "pcs/1/#{ r[ 0 ] }"    , r[ 1 ], 'index',   pcp_subject_id: '1' )
+      check_routing( 'post',   "pcs/1/#{ r[ 0 ] }"    , r[ 1 ], 'create',  pcp_subject_id: '1' )
+      check_routing( 'get',    "pcs/1/#{ r[ 0 ] }/new", r[ 1 ], 'new',     pcp_subject_id: '1' )
   
-      assert_routing({ method: 'get',    path: "#{ r[ 0 ]}/1"           }, { controller: r[ 1 ], action: 'show',    id: '1' })
-      assert_routing({ method: 'get',    path: "#{ r[ 0 ]}/1/edit"      }, { controller: r[ 1 ], action: 'edit',    id: '1' })
-      assert_routing({ method: 'put',    path: "#{ r[ 0 ]}/1"           }, { controller: r[ 1 ], action: 'update',  id: '1' })
-      assert_routing({ method: 'delete', path: "#{ r[ 0 ]}/1"           }, { controller: r[ 1 ], action: 'destroy', id: '1' })
+      check_routing( 'get',    "#{ r[ 0 ]}/1"         , r[ 1 ], 'show',    id: '1' )
+      check_routing( 'get',    "#{ r[ 0 ]}/1/edit"    , r[ 1 ], 'edit',    id: '1' )
+      check_routing( 'put',    "#{ r[ 0 ]}/1"         , r[ 1 ], 'update',  id: '1' )
+      check_routing( 'delete', "#{ r[ 0 ]}/1"         , r[ 1 ], 'destroy', id: '1' )
     end
   end
 
   test 'special routes: home/root' do
-    assert_routing({ method: 'get',  path: '/'             }, { controller: 'home', action: 'index'   })
-    assert_routing({ method: 'post', path: '/home/signon'  }, { controller: 'home', action: 'signon'  })
-    assert_routing({ method: 'get',  path: '/home/signoff' }, { controller: 'home', action: 'signoff' })
+    check_routing( 'get',  '/'            , 'home', 'index'   )
+    check_routing( 'post', '/home/signon' , 'home', 'signon'  )
+    check_routing( 'get',  '/home/signoff', 'home', 'signoff' )
   end
 
   test 'special routes: CDL ContactLists index only' do
-    assert_routing({ method: 'get', path: '/cdl' }, { controller: 'contact_lists', action: 'index' })
+    check_routing( 'get', '/cdl', 'contact_lists', 'index' )
   end
 
   test 'special routes: SFA AbbrSearch' do
-    assert_routing({ method: 'get', path: '/sfa' }, { controller: 'abbr_search', action: 'index' })
+    check_routing( 'get', '/sfa', 'abbr_search', 'index' )
   end
 
   test 'special routes: SCS SCodeSearch' do
-    assert_routing({ method: 'get', path: '/scs' }, { controller: 's_code_search', action: 'index' })
+    check_routing( 'get', '/scs', 's_code_search', 'index' )
   end
 
   test 'special routes: ACS ACodeSearch' do
-    assert_routing({ method: 'get', path: '/acs' }, { controller: 'a_code_search', action: 'index' })
+    check_routing( 'get', '/acs', 'a_code_search', 'index' )
   end
 
   test 'special routes: FRQ FeatureResponsibilities' do
-    assert_routing({ method: 'get', path: '/frq' }, { controller: 'feature_responsibilities', action: 'index' })
+    check_routing( 'get', '/frq', 'feature_responsibilities', 'index' )
   end
 
   test 'special routes: WRQ WorkflowResponsibilities' do
-    assert_routing({ method: 'get', path: '/wrq' }, { controller: 'workflow_responsibilities', action: 'index' })
+    check_routing( 'get', '/wrq', 'workflow_responsibilities', 'index' )
   end
 
   test 'special routes: Help Pages' do
-    assert_routing({ method: 'get', path: '/help'       }, { controller: 'help_pages', action: 'show_default' })
-    assert_routing({ method: 'get', path: '/help/topic' }, { controller: 'help_pages', action: 'show', title: 'topic' })
+    check_routing( 'get', '/help'      , 'help_pages', 'show_default' )
+    check_routing( 'get', '/help/topic', 'help_pages', 'show', title: 'topic' )
   end
 
-  test 'special routes: Add Holidays' do
-    assert_routing({ method: 'get', path: '/hld/1/new' }, { controller: 'holidays', action: 'add', id: '1' })
+  test 'special routes: HLD Add Holidays' do
+    check_routing( 'get', '/hld/1/new', 'holidays', 'add', id: '1' )
   end
 
   test 'special routes: Profile' do
-    assert_routing({ method: 'get', path: '/profile'      }, { controller: 'profiles', action: 'show'   })
-    assert_routing({ method: 'get', path: '/profile/edit' }, { controller: 'profiles', action: 'edit'   })
-    assert_routing({ method: 'put', path: '/profile'      }, { controller: 'profiles', action: 'update' })
+    check_routing( 'get', '/profile'     , 'profiles', 'show'   )
+    check_routing( 'get', '/profile/edit', 'profiles', 'edit'   )
+    check_routing( 'put', '/profile'     , 'profiles', 'update' )
   end
 
-  test 'special routes: DsrProgressRates' do # only: index, show, edit, update
-    assert_routing({ method: 'get', path: '/dpr'        }, { controller: 'dsr_progress_rates', action: 'index'  })
-    assert_routing({ method: 'get', path: '/dpr/1'      }, { controller: 'dsr_progress_rates', action: 'show',   id: '1' })
-    assert_routing({ method: 'get', path: '/dpr/1/edit' }, { controller: 'dsr_progress_rates', action: 'edit',   id: '1' })
-    assert_routing({ method: 'put', path: '/dpr/1'      }, { controller: 'dsr_progress_rates', action: 'update', id: '1' })
+  test 'special routes: DPR DsrProgressRates' do # only: index, show, edit, update
+    check_routing( 'get', '/dpr'       , 'dsr_progress_rates', 'index'           )
+    check_routing( 'get', '/dpr/1'     , 'dsr_progress_rates', 'show',   id: '1' )
+    check_routing( 'get', '/dpr/1/edit', 'dsr_progress_rates', 'edit',   id: '1' )
+    check_routing( 'put', '/dpr/1'     , 'dsr_progress_rates', 'update', id: '1' )
   end
 
-  test 'special routes: My Change Requests' do
-    assert_routing({ method: 'get', path: '/mcr/new/1'   }, { controller: 'my_change_requests', action: 'new', feature_id: '1' })
-    assert_routing({ method: 'get', path: '/mcr/new/1/2' }, { controller: 'my_change_requests', action: 'new', feature_id: '1', detail: '2' })
+  test 'special routes: MCR My Change Requests' do
+    check_routing( 'get', '/mcr/new/1'  , 'my_change_requests', 'new', feature_id: '1' )
+    check_routing( 'get', '/mcr/new/1/2', 'my_change_requests', 'new', feature_id: '1', detail: '2' )
   end
 
-  test 'special routes: RfcStatusRecords' do
-    assert_routing({ method: 'get', path: '/rsr/info'    }, { controller: 'rfc_status_records', action: 'info_workflow' })
-    assert_routing({ method: 'get', path: '/rsr/stats'   }, { controller: 'rfc_status_records', action: 'stats' })
+  test 'special routes: RSR RfcStatusRecords' do
+    check_routing( 'get', '/rsr/info'   , 'rfc_status_records', 'info_workflow' )
+    check_routing( 'get', '/rsr/stats'  , 'rfc_status_records', 'stats'         )
   end
 
-  test 'special routes: DsrStatusRecords' do
-    assert_routing({ method: 'get', path: '/dsr/info'    }, { controller: 'dsr_status_records', action: 'info_workflow' })
-    assert_routing({ method: 'get', path: '/dsr/stats'   }, { controller: 'dsr_status_records', action: 'stats' })
-    assert_routing({ method: 'get', path: '/dsr/1/stats' }, { controller: 'dsr_status_records', action: 'stats', id: '1'})
-    assert_routing({ method: 'get', path: '/dsr/update'  }, { controller: 'dsr_status_records', action: 'update_b_all' })
-    assert_routing({ method: 'get', path: '/dsr/1/update'}, { controller: 'dsr_status_records', action: 'update_b_one', id: '1' })
+  test 'special routes: DSR DsrStatusRecords' do
+    check_routing( 'get', '/dsr/info'    , 'dsr_status_records', 'info_workflow' )
+    check_routing( 'get', '/dsr/stats'   , 'dsr_status_records', 'stats' )
+    check_routing( 'get', '/dsr/1/stats' , 'dsr_status_records', 'stats', id: '1' )
+    check_routing( 'get', '/dsr/update'  , 'dsr_status_records', 'update_b_all' )
+    check_routing( 'get', '/dsr/1/update', 'dsr_status_records', 'update_b_one', id: '1' )
   end
 
-  test 'special routes: PcpSubjects' do
-    assert_routing({ method: 'get', path: '/pcs/1/release'  }, { controller: 'pcp_subjects', action: 'update_release', id: '1' })
-    assert_routing({ method: 'get', path: '/pcs/1/info'     }, { controller: 'pcp_subjects', action: 'info_history',   id: '1' })
-    assert_routing({ method: 'get', path: '/pcs/1/reldoc/1' }, { controller: 'pcp_subjects', action: 'show_release',   id: '1', step_no: '1' })
+  test 'special routes: PCS PcpSubjects' do
+    check_routing( 'get', '/pcs/1/release' , 'pcp_subjects', 'update_release', id: '1' )
+    check_routing( 'get', '/pcs/1/info'    , 'pcp_subjects', 'info_history',   id: '1' )
+    check_routing( 'get', '/pcs/1/reldoc/1', 'pcp_subjects', 'show_release',   id: '1', step_no: '1' )
   end
 
-  test 'special routes: PcpItems' do
-    assert_routing({ method: 'get', path: 'pci/1/next'      }, { controller: 'pcp_items',    action: 'show_next',      id: '1' })
+  test 'special routes: PCI PcpItems' do
+    check_routing( 'get',   'pci/1/next'   , 'pcp_items', 'show_next',      id: '1' )
+    check_routing( 'get',   'pci/1/publish', 'pcp_items', 'update_publish', id: '1' )
+    # PcpComments
+    check_routing( 'post',  'pci/1/pco'    , 'pcp_items', 'create_comment', id: '1' )
+    check_routing( 'get',   'pci/1/pco/new', 'pcp_items', 'new_comment',    id: '1' )
+    check_routing( 'get',   'pco/1/edit'   , 'pcp_items', 'edit_comment',   id: '1' )
+    check_routing( 'put',   'pco/1'        , 'pcp_items', 'update_comment', id: '1' )
+    check_routing( 'patch', 'pco/1'        , 'pcp_items', 'update_comment', id: '1' )
+  end
+
+  test 'special routes: PCA PcpAllSubjects' do
+    check_routing( 'get', 'pca/stats',  'pcp_all_subjects', 'stats' )
+  end
+
+  def check_routing( method, path, controller, action, ids = {})
+    assert_routing({ method: method, path: path },{ controller: controller, action: action }.merge( ids ))
+    refute_nil @@action_prefix.include?( action[/[a-z]+/]),"action #{action} has no permitted prefix"
   end
 
 end

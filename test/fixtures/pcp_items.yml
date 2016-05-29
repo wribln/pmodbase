@@ -8,7 +8,8 @@ one:
   seqno:        1
   reference:    'chapter 1'
   description:  'not what it should be'
-  item_assmnt:  1
+  pub_assmt:    1
+  new_assmt:    0
   assessment:   1
   author:       'me'
 
@@ -17,8 +18,9 @@ two:
   pcp_subject:  one
   pcp_step:     one
   seqno:        2
-  reference:    'dito'
-  description:  'dito'
-  item_assmnt:  0
+  reference:    'chapter 2'
+  description:  'another problem'
+  pub_assmt:    0
+  new_assmt:    1
   assessment:   0
   author:       'me, too'

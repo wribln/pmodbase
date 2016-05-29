@@ -57,10 +57,10 @@ class Group < ActiveRecord::Base
     case pg
     when nil
       none
-    when ""
+    when ''
       all
     else
-      where pg
+      where( id: pg )
     end
   end
 

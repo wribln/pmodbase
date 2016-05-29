@@ -516,7 +516,8 @@ ActiveRecord::Schema.define(version: 20160511091429) do
     t.integer  "pcp_step_id"
     t.integer  "seqno",                                 null: false
     t.string   "reference",      limit: 50
-    t.integer  "item_assmnt"
+    t.integer  "pub_assmt"
+    t.integer  "new_assmt",                 default: 0, null: false
     t.text     "description",                           null: false
     t.string   "author",         limit: 90
     t.integer  "assessment",                default: 0, null: false
@@ -549,6 +550,7 @@ ActiveRecord::Schema.define(version: 20160511091429) do
     t.string   "subject_version", limit: 10
     t.string   "report_version",  limit: 10
     t.string   "note",            limit: 50
+    t.string   "release_notice",  limit: 255
     t.date     "subject_date"
     t.date     "due_date"
     t.integer  "subject_status",              default: 0

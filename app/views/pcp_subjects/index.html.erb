@@ -44,7 +44,7 @@
             <td><%= PcpStep.assessment_code( cs.try :current_assmt )%></td>
             <td><%= cs.try :step_label %></td>
             <td><%= ps.get_acting_group( cs.try :acting_group_index ).code %></td>
-            <td><%= render partial: 'shared/actions', object: ps %></td>
+            <td><%= render partial: 'shared/actions', object: ps, locals: { use_model_route: true } %></td>
           </tr>
         <%- end -%>
       <%- end -%>

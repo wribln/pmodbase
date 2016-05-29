@@ -409,7 +409,7 @@ en:
         control_level:  'Control Level'
 #                        0      1              2               3              4         5       
         access_levels:  ['none','user-defined','general-index','general-view','general','all']
-        control_levels: ['-','+g','+wf','+g+wf','+cug']
+        control_levels: ['-','+g','+wf','+g+wf','+cug','+g+cug']
         no_workflows:   'No of Workflows'
         feature_category_id: 'Feature Category ID'
 

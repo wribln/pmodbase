@@ -6,6 +6,7 @@ class CreatePcpSteps < ActiveRecord::Migration
       t.string      :subject_version, limit: MAX_LENGTH_OF_DOC_VERSION
       t.string      :report_version,  limit: MAX_LENGTH_OF_DOC_VERSION
       t.string      :note,            limit: MAX_LENGTH_OF_NOTE
+      t.string      :release_notice,  limit: MAX_LENGTH_OF_DESCRIPTION
       t.date        :subject_date
       t.date        :due_date
       t.integer     :subject_status,  default: 0

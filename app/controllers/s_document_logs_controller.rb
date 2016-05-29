@@ -98,7 +98,7 @@ class SDocumentLogsController < ApplicationController
     end
 
     def set_selections( action )
-      pg = current_user.permitted_groups( FEATURE_ID_S_DOCUMENT_LOG, action, :id )
+      pg = current_user.permitted_groups( FEATURE_ID_S_DOCUMENT_LOG, action )
       @group_selection = Group.active_only.sender_codes.permitted_groups( pg ).all.collect{ |g| [ g.code_and_label, g.id ]}
     end
 

@@ -126,7 +126,7 @@
       <%- unless @pcp_curr_step.nil? -%>
         <div class="form-group">
           <%= form.label :subject_status, class: "col-sm-3 control-label" %>
-          <div class="col-sm-1">
+          <div class="col-sm-2">
             <%= display_value @pcp_curr_step.subject_status_label %>
           </div>
         </div>
@@ -191,6 +191,12 @@
             <%= os.text_field :note, class: "form-control", length: MAX_LENGTH_OF_NOTE %>
           </div>
         </div>
+        <div class="form-group">
+          <%= os.label :release_notice, class: "col-sm-3 control-label" %>
+          <div class="col-sm-6">
+            <%= os.text_field :release_notice, class: "form-control", length: MAX_LENGTH_OF_DESCRIPTION %>
+          </div>
+        </div>
         <%# show current step due date (from previous step) only for steps > 0 %>
         <%- if os.object.step_no > 0 then -%>
         <div class="form-group">
@@ -209,21 +215,22 @@
             </div>
           </div>
         </div>
-        <div class="form-group">
-          <%= os.label :prev_assmt, class: "col-sm-3 control-label" %>
-          <div class="col-sm-4">
-            <%= display_value PcpStep.assessment_label( os.object.prev_assmt )%>
+        <%- if os.object.step_no > 0 then %>
+          <div class="form-group">
+            <%= os.label :prev_assmt, class: "col-sm-3 control-label" %>
+            <div class="col-sm-4">
+              <%= display_value PcpStep.assessment_label( os.object.prev_assmt )%>
+            </div>
           </div>
-        </div>
-        <div class="form-group">
-          <%= os.label :new_assmt, class: "col-sm-3 control-label" %>
-          <div class="col-sm-4">
-            <%- if os.object.in_presenting_group? then -%>
-              <%= display_value PcpStep.assessment_label( os.object.new_assmt ) %>
-            <%- else -%>
-              <%= os.select :new_assmt, select_options( PcpStep::ASSESSMENT_LABELS ), { prompt: t( '.g_prompt' ) }, { class: "form-control" }%>
-            <%- end -%>
-          </div>
-        </div>
+          <%- if os.object.in_commenting_group? then -%>
+            <div class="form-group">
+              <%= os.label :new_assmt, class: "col-sm-3 control-label" %>
+              <div class="col-sm-4">
+                  <%= os.select :new_assmt, select_options( PcpStep::ASSESSMENT_LABELS ), { prompt: t( '.g_prompt' ) }, { class: "form-control" }%>
+              </div>
+            </div>
+            <%= render partial: 'stats' %>
+          <%- end -%>
+        <%- end -%>
       <%- end -%>
       <%- end -%>

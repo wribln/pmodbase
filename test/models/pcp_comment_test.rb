@@ -19,6 +19,15 @@ class PcpCommentTest < ActiveSupport::TestCase
     assert pc.valid?, pc.errors.messages
   end
 
+  test 'fixture 3' do
+    pc = pcp_comments( :three )
+    refute_nil pc.description
+    refute_nil pc.author
+    refute_nil pc.assessment
+    refute pc.is_public
+    assert pc.valid?, pc.errors.messages
+  end
+
   test 'defaults' do
     pc = PcpComment.new
     refute pc.is_public
@@ -33,6 +42,40 @@ class PcpCommentTest < ActiveSupport::TestCase
     pc.description = 'foobar'
     pc.author = 'tester'
     assert pc.valid?, pc.errors.messages
+  end
+
+  test 'scopes' do
+    assert 0, PcpComment.for_step( pcp_steps( :one )).count
+    assert 3, PcpComment.for_step( pcp_steps( :two )).count
+    assert 0, pcp_items( :one ).pcp_comments.for_step( pcp_steps( :one )).count
+    assert 1, pcp_items( :one ).pcp_comments.for_step( pcp_steps( :two )).count
+    assert 0, pcp_items( :two ).pcp_comments.for_step( pcp_steps( :one )).count
+    assert 2, pcp_items( :two ).pcp_comments.for_step( pcp_steps( :two )).count
+
+    assert 2, PcpComment.is_public.count
+    assert 1, pcp_items( :one ).pcp_comments.is_public.count
+    assert 1, pcp_items( :two ).pcp_comments.is_public.count
+  end
+
+  test 'make public' do
+    pc = PcpComment.where( is_public: false ).first
+    assert_difference( 'PcpComment.is_public.count' ) do
+      pc.make_public
+    end
+  end
+
+  test 'making a comment public should trigger update_item' do
+    pc = PcpComment.where( is_public: false ).first
+    refute_equal pc.assessment, pc.pcp_item.new_assmt
+    
+    pc.is_public = true
+    assert pc.update_item_flag, 'update_item_flag should be true'
+    pc.save
+    assert_equal pc.assessment, pc.pcp_item.new_assmt
+
+    pc.is_public = false
+    assert pc.update_item_flag, 'update_item_flag should be true'
+    pc.save
   end
 
 end

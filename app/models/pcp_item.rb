@@ -6,8 +6,6 @@ class PcpItem < ActiveRecord::Base
   belongs_to :pcp_step,     -> { readonly }, inverse_of: :pcp_items
   has_many   :pcp_comments,    dependent: :destroy, inverse_of: :pcp_item
 
-  before_save :update_item_assessment
-
   # pcp_step is set automatically, only reported to user
 
   validates :pcp_step_id, :pcp_subject_id,
@@ -33,7 +31,17 @@ class PcpItem < ActiveRecord::Base
 
   ASSESSMENT_LABELS = PcpItem.human_attribute_name( :assessments ).freeze
 
-  validates :item_assmnt,
+  # pub_assmt is the current, public assessment of this PCP Item
+  # new_assmt is the current assessment by the acting party for the
+  # next release where this assessment would become the next public
+  # assessment.
+  # pub_assmt must be set to new_assmt during release of step
+  # assessment is the initial assessment of the PCP Item.
+
+  # NOTE: if assessments are modified, closed? methods may need to
+  # be modified as well!
+
+  validates :pub_assmt, :new_assmt,
     allow_blank: true,
     numericality: { only_integer: true },
     inclusion: { in: 0..( ASSESSMENT_LABELS.size - 1 )}
@@ -47,16 +55,25 @@ class PcpItem < ActiveRecord::Base
 
   # released items of given subject for public viewing
 
+  default_scope{ order( id: :asc )}
   scope :released, ->( s ){ where( pcp_subject: s ).joins( :pcp_step ).merge( PcpStep.released )}
   scope :released_until, ->( s, n ){ where( pcp_subject: s ).joins( :pcp_step ).merge( PcpStep.released_until( n ))}
 
   # test whether item is released (needed for permissions):
-  # this is recognized by the release date not being set
+  # this is recognized by the release date not being set;
+  # another, equivalent condition should be pub_assmt not being nil
 
   def released?
-    pcp_step.released?
-  end 
+    pub_assmt || pcp_step.released?
+  end
 
+  # need to update :new_assmt if :assessment changes while :pub_assmt is nil
+
+  def assessment=( a )
+    write_attribute( :assessment, a )
+    self.new_assmt = a if pub_assmt.nil? && pcp_comments.is_public.empty?
+  end 
+  
   # make sure we have a corresponding pcp_subject and pcp_step
 
   def pcp_parents_must_exist
@@ -75,15 +92,94 @@ class PcpItem < ActiveRecord::Base
       if errors.empty? && ( pt.pcp_subject.id != pcp_subject_id )
   end
 
-  # collect from comment records the current step's assessment
+  # during a release, update pub_assmt to reflect the assessment of the
+  # the last public comment
 
-  def update_item_assessment
-    lc = self.pcp_comments.last
-    self.item_assmnt = lc.nil? ? self.assessment : lc.assessment
+  def release_item
+    self.pub_assmt = new_assmt
+  end
+
+  # use update_new_assmt when changing the :is_public attribute
+  # of a PCP Comments belonging to this item; or when removing a
+  # PCP Comment.
+  # NOTE: in the current process, I assume that an update can only be
+  # performed on the last, current PCP Comment. Hence, if this record
+  # is published, its assessment will become the next public assessment
+  # for this item.
+  # NOTE: in order for this method to work also when a PCP Comment is
+  # destroyed, I need to check for a valid last comment
+
+  def update_new_assmt( c )
+    if c && c.is_public then
+      new_assmt_to_set = c.assessment
+    else
+      # need to find assessment to use
+      if c.nil? then # comment is destroyed, look for last to use
+        ps = pcp_subject.current_step
+        pc = pcp_comments.for_step( ps )
+        if pc.count == 0 then # no comments exists for this step
+          new_assmt_to_set = pub_assmt # use last released assessment
+        else # use last comment unless a public comment exists
+          new_assmt_to_set = pc.last.assessment
+          pc.each do |p|
+            new_assmt_to_set = p.assessment if p.is_public
+          end
+        end
+      else
+        pc = pcp_comments.is_public.for_step( c.pcp_step )
+        if pc.count == 0 then # no further public comments for current step
+          if c.pcp_step == pcp_step then # we are at the PCP Item here
+            new_assmt_to_set = assessment # use PCP Item's assessment
+          else 
+            new_assmt_to_set = c.assessment # uses current (assumed: last) comment
+          end
+        else # use last public comment
+          new_assmt_to_set = pc.last.assessment # use last public comment
+        end
+      end
+    end
+    update_attribute( :new_assmt, new_assmt_to_set )
+  end
+
+  # the following method is only to validate the assessment setting
+  # (to be used for testing or validation of the objects' integrity)
+  # it returns 0 if all is ok, else an indicator on what went wrong
+
+  def valid_assessment?
+    ps = pcp_subject.current_steps
+    if ps[ 1 ].nil? then # current step is the first, initial step
+      pc = pcp_comments.is_public.for_step( pcp_step )
+      if pc.count == 0 then # no public comments for first step
+        ( ps[ 0 ] == pcp_step && pub_assmt.nil? && new_assmt == assessment ) ? 0 : 1
+      else # public comment overrides assessment of PCP Item
+        ( ps[ 0 ] == pcp_step && pub_assmt.nil? && new_assmt == pc.last.assessment ) ? 0 : 2
+      end
+    else # determine current assessment
+      pc = pcp_comments.for_step( ps[ 0 ])
+      if pc.count > 0 then
+        pla = pc.last.assessment # default: last comment, public or not
+        pc.each do | c |
+          pla = c.assessment if c.is_public
+        end
+      else
+        pla = nil # have no current assessment
+      end
+      # determine last released assessment
+      pc = pcp_comments.is_public.for_step( ps[ 1 ])
+      if pc.count > 0 then
+        plp = pc.last.assessment # default: last public comment
+      else # no public comments, this can only mean, that we are at PCP Step 0:
+        plp = self.assessment
+      end
+      if pla.nil? then
+        ( pub_assmt == plp && new_assmt == plp ) ? 0 : 3
+      else
+        ( pub_assmt == plp && new_assmt == pla ) ? 0 : 4
+      end
+    end
   end
 
   # return true if the given assessment leads to a closed status
-  # MUST CHECK this if assessment states are modified
 
   def closed?
     self.class.closed?( assessment )
@@ -107,7 +203,7 @@ class PcpItem < ActiveRecord::Base
   # sequence, i.e. pcp_item_1.id > pcp_item_2.id => pcp_item_1.seqno > pcp_item_2.seqno
 
   def find_next
-    PcpItem.where( pcp_subject_id: pcp_subject_id ).where( 'id > ?', id ).order( id: :asc ).first
+    PcpItem.where( pcp_subject_id: pcp_subject_id ).where( 'id > ?', id ).first
   end
 
   def self.assessment_label( i )

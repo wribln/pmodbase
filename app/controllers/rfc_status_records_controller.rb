@@ -188,7 +188,7 @@ class RfcStatusRecordsController < ApplicationController
     # prepare list of groups for selections
 
     def permitted_groups( action )
-      pg = current_user.permitted_groups( FEATURE_ID_RFC_STATUS_RECORDS, action, :id )
+      pg = current_user.permitted_groups( FEATURE_ID_RFC_STATUS_RECORDS, action )
       Group.permitted_groups( pg ).all.collect{ |g| [ g.code, g.id ]}
     end
 

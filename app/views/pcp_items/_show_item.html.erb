@@ -5,9 +5,9 @@
         <p class="col-sm-2"><%= show_item.pcp_step.try :step_label %></p>
       </div>
       <div class="p-group form-group">
-      	<p class="col-sm-3 p-label"><%= PcpItem.human_attribute_name( :item_assmnt )%></p>
-        <p class="col-sm-2"><%= PcpItem.assessment_label( show_item.item_assmnt ) %></p>
-        <p class="col-sm-2 p-label"><%= t( 'pcp_items.author' )%></p>
+        <p class="col-sm-3 p-label"><%= t( '.assessment' )%></p>
+        <p class="col-sm-2"><%= PcpItem.assessment_label( show_item.assessment )%></p>
+        <p class="col-sm-2 p-label"><%= PcpItem.human_attribute_name( :author )%></p>
         <p class="col-sm-2"><%= show_item.author %></p>
       </div>
       <div class="form-group p-group">
@@ -19,6 +19,8 @@
         <p class="col-sm-6"><%= show_item.description %></p>
       </div>
       <div class="form-group p-group">
-        <p class="col-sm-3 p-label"><%= t( 'pcp_items.first_assessment' )%></p>
-        <p class="col-sm-2"><%= PcpItem.assessment_label( show_item.assessment )%></p>
+        <p class="col-sm-3 p-label"><%= t( '.pub_assmt' )%></p>
+        <p class="col-sm-2"><%= PcpItem.assessment_label( show_item.pub_assmt )%></p>
+        <p class="col-sm-2 p-label"><%= t( '.new_assmt' )%></p>
+        <p class="col-sm-2"><%= PcpItem.assessment_label( show_item.new_assmt )%></p>
       </div>

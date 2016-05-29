@@ -194,7 +194,7 @@ class PcpSubjectTest < ActiveSupport::TestCase
 
   # check current step
 
-  test 'current_step' do
+  test 'current_steps' do
     ps = pcp_subjects( :one )
     assert 2, PcpStep.count
     assert 2, ps.pcp_steps.count
@@ -203,6 +203,7 @@ class PcpSubjectTest < ActiveSupport::TestCase
     assert_equal ps.current_steps[ 0 ].id, s2.id
     assert_equal ps.pcp_steps[ 0 ].id, s2.id
     assert_equal ps.pcp_steps[ 1 ].id, s1.id
+    assert_equal ps.current_step.id, s2.id
   end
 
   test 'get_acting_group' do
@@ -322,6 +323,18 @@ class PcpSubjectTest < ActiveSupport::TestCase
 
     as = PcpSubject.ff_note( 'foobar' )
     assert_equal 0, as.length
+
+    as = PcpSubject.all_permitted( accounts( :account_one ).id )
+    assert_equal 2, as.length
+
+    as = PcpSubject.all_permitted( accounts( :account_two ).id )
+    assert_equal 1, as.length
+    assert_equal as[ 0 ].id, pcp_subjects( :two ).id
+
+    as = PcpSubject.all_permitted( accounts( :account_wop ).id )
+    assert_equal 1, as.length
+    assert_equal as[ 0 ].id, pcp_subjects( :two ).id
+
   end
 
 end

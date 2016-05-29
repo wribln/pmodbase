@@ -26,6 +26,9 @@ class PcpStep < ActiveRecord::Base
   validates :note,
     length: { maximum: MAX_LENGTH_OF_NOTE }
 
+  validates :release_notice,
+    length: { maximum: MAX_LENGTH_OF_DESCRIPTION }
+
   validates :subject_date, :due_date,
     date_field: { presence: false }
 
@@ -58,7 +61,7 @@ class PcpStep < ActiveRecord::Base
     length: { maximum: MAX_LENGTH_OF_ACCOUNT_NAME + MAX_LENGTH_OF_PERSON_NAMES }
 
   validate :pcp_subject_must_exist
-  validate :no_assessment_in_step_0
+  validate :check_assessment_in_step
 
   # default scope for access through PCP Subjects
 
@@ -75,14 +78,18 @@ class PcpStep < ActiveRecord::Base
     end
   end
 
-  # there should be no assessment in step 0!
+  # there should be no assessment in step 0 but there must be an
+  # assessment in all steps > 0
 
-  def no_assessment_in_step_0
-    if step_no == 0
+  def check_assessment_in_step
+    if step_no == 0 then
       errors.add( :prev_assmt, I18n.t( 'pcp_steps.msg.bad_assessment' )) \
         unless prev_assmt == 0
       errors.add( :new_assmt, I18n.t( 'pcp_steps.msg.bad_assessment' )) \
         unless new_assmt.nil?
+    else
+      errors.add( :new_assmt, I18n.t( 'pcp_steps.msg.need_assessment' )) \
+        if current_assmt.nil?
     end
   end
 
@@ -139,7 +146,7 @@ class PcpStep < ActiveRecord::Base
   # the assumed requirement is that prev_assmt is
   # always set (not nil) and the new_assmt may
   # be nil until set; if set, then the new assessment
-  # is certainly new_assmt:
+  # is certainly :new_assmt
 
   def current_assmt
     new_assmt || prev_assmt
@@ -246,8 +253,10 @@ class PcpStep < ActiveRecord::Base
       self.prev_assmt = prev_step.new_assmt || prev_step.prev_assmt
       self.new_assmt = nil
       self.subject_version = nil
+      self.subject_date = nil
     else
       self.subject_version = prev_step.subject_version
+      self.subject_date = prev_step.subject_date
       self.prev_assmt = prev_step.prev_assmt
       self.new_assmt = prev_step.new_assmt
     end

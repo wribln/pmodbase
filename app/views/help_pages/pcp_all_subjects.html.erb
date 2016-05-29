@@ -1,0 +1,25 @@
+<% help_title "Help on #{ t( 'pcp_all_subjects.title' )}" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">View information on all PCP Subjects</p>
+    <p>For general information on the PCP, see
+      <%= link_to_help :pcp_general, 'PCP - The Present-Comment Process' -%>.</p>
+    <p>For specific information on PCP Subjects, see
+      <%= link_to_help :pcp_subjects, PcpSubject.model_name.human -%>.</p>
+    <p>This feature allows any permitted user to view information on all PCP 
+      Subjects, or - if configured - only for specific groups. If the access to
+      this feature is restricted to specific groups, the user will only see
+      PCP Subjects here where the specific group is either the Presenting or the
+      Commenting Group.</p>
+    <p>Access to information is restricted to the overview
+      (<%= t( 'pcp_all_subjects.index.form_title' )-%>), the detailed information
+      (<%= t( 'pcp_all_subjects.show.form_title' )-%>), and the statistics page
+      (<%= t( 'pcp_all_subjects.stats.form_title' )-%>).</p>
+    <p>The information shown here is slightly different to the information shown
+      by the <%= help_term Feature.find_by_id( FEATURE_ID_MY_PCP_SUBJECTS ).label %>:
+      We show here only the current status of the PCP Subject without any details
+      on the current PCP Step (unless the PCP Subject's status is 'closed'). The
+      status here is also used for reporting any statistics.</p>
+    <%= help_footer FEATURE_ID_ALL_PCP_SUBJECTS %>
+  </div> <!-- /container -->

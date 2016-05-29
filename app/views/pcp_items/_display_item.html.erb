@@ -10,11 +10,11 @@
           </div>
         </div>
         <div class="form-group">
-          <%= f.label :item_assmnt, class: "col-sm-3 control-label" %>
+          <%= f.label :assessment, class: "col-sm-3 control-label" %>
           <div class="col-sm-2">
-            <%= display_value PcpItem.assessment_label( display_item.item_assmnt ) %>
+            <%= display_value PcpItem.assessment_label( display_item.assessment ) %>
           </div>
-          <%= f.label :author, t( 'pcp_items.author' ), class: "col-sm-2 control-label" %>
+          <%= f.label :author, class: "col-sm-2 control-label" %>
           <div class="col-sm-2">
             <%= display_value display_item.author %>
           </div>
@@ -29,12 +29,6 @@
           <%= f.label :description, class: "col-sm-3 control-label" %>
           <div class="col-sm-6">
             <%= display_lines display_item.description %>
-          </div>
-        </div>
-        <div class="form-group">
-          <%= f.label :assessment, t( 'pcp_items.first_assessment' ), class: "col-sm-3 control-label" %>
-          <div class="col-sm-2">
-            <%= display_value PcpItem.assessment_label( display_item.assessment ) %>
           </div>
         </div>
       <%- end -%>

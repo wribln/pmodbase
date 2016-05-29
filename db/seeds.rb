@@ -521,26 +521,26 @@ Feature.new do |f|
 end.save
 
 Feature.new do |f|
-  f.id = FEATURE_ID_PCP_SUBJECTS
+  f.id = FEATURE_ID_ALL_PCP_SUBJECTS
+  f.label = I18n.t( 'pcp_all_subjects.title' )
+  f.code = 'PCA'
+  f.seqno = 4
+  f.access_level = PcpAllSubjectsController.feature_access_level
+  f.control_level = PcpAllSubjectsController.feature_control_level
+  f.no_workflows = PcpAllSubjectsController.no_workflows
+  f.feature_category_id = fc5.id
+end.save
+
+Feature.new do |f|
+  f.id = FEATURE_ID_MY_PCP_SUBJECTS
   f.label = I18n.t( 'pcp_subjects.title' )
   f.code = 'PCS'
-  f.seqno = 4
+  f.seqno = 5
   f.access_level = PcpSubjectsController.feature_access_level
   f.control_level = PcpSubjectsController.feature_control_level
   f.no_workflows = PcpSubjectsController.no_workflows
   f.feature_category_id = fc5.id
 end.save
-
-#Feature.new do |f|
-#  f.id = FEATURE_ID_PCP_ITEMS
-#  f.label = I18n.t( 'pcp_items.title' )
-#  f.code = 'PCI'
-#  f.seqno = 5
-#  f.access_level = PcpItemsController.feature_access_level
-#  f.control_level = PcpItemsController.feature_control_level
-#  f.no_workflows = PcpItemsController.no_workflows
-#  f.feature_category_id = fc5.id
-#end.save
 
 # - - - - - - - - - - utilities
 
@@ -919,7 +919,7 @@ a1.save
 
 a2 = Account.new
 a2.name = 'tester1'
-a2.password = 'password-TSTR1'
+a2.password = 'A10ha!tester1'
 a2.person_id = p2.id
 a2.keep_base_open = false
 a2.save

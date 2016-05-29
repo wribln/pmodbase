@@ -8,9 +8,10 @@
  Pass the item's id as object.
 
  By default, routing is done for the current controller. By specifying
- :use_model_route as local, routing will be done based on the objects
- model_name.route_key. This is necessary for search results, where 
- details will be found on the respective model's controllers...
+ :use_model_route as local (with any type of value), routing will be
+ done based on the objects model_name.route_key. This was implemented
+ for use in search results, where details will be found on the respective
+ model's controllers...
 
  The local parameter 'enable_buttons' can be used to specify which 
  buttons should be enabled. This variable represents a bitmap where
@@ -23,7 +24,7 @@
  Example (from User view)
 
  <td>< %= render partial: 'shared/action_links', 
-          object: @user, locals: { :use_model_route } % ></td>
+          object: @user, locals: { use_model_route: true } % ></td>
 
 =end
 %>

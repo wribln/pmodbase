@@ -12,7 +12,7 @@
 
     <% if flash[:notice] %>
     <div class="form-group">
-      <label class="<%= %Q(control-label col-sm-#{ BT_COL_WIDTH_LABELS }) %>"><%= t( 'general.notice' ) %></label>
+      <label class="control-label col-sm-3"><%= t( 'general.notice' ) %></label>
       <div class="col-sm-4">
         <p class="btn-lg bg-info"><%= flash[ :notice ] -%></p>
       </div>

@@ -85,23 +85,20 @@ class Account < ActiveRecord::Base
   #
   # Please note that this code is written to easily understand the checks.
 
-  def permitted_groups( feature, action = :to_index, check_var = :group_id, check_val = nil )
+  def permitted_groups( feature, action = :to_index, check_val = nil )
     if active
       if $DEBUG then
         raise ArgumentError.new( "invalid action: #{ action }" ) \
           unless [ :to_index, :to_create, :to_read, :to_update, :to_delete ].include? action
-        raise ArgumentError.new( "invalid id: #{ check_var } - must be a symbol") \
-          unless check_var.kind_of? Symbol
       end
-      p = permission4_groups.where( feature: feature ).where( check_val.nil? ? "#{action} > 0" : "#{action} = #{check_val}" ).order( :group_id )
+      p = permission4_groups.where( feature: feature ).where( check_val.nil? ? "#{action} > 0" : "#{action} = #{check_val}" ).pluck( :group_id )
       if p.empty?
         return nil # none
       else
-        if p[ 0 ][ :group_id ] == 0
-          return "" # all
+        if p.include?( 0 )
+          return '' # all
         else
-          return "#{ check_var } IN (#{ p.collect{ |pp| pp[ :group_id ] }.join(',')})"
-          # -> where check_var IN (id1,id2,...,idn)
+          return p
         end
       end
     else

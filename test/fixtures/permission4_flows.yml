@@ -7,7 +7,7 @@ rsr:
 
 dsr:
   account:      account_one
-  feature_id:   40
+  feature_id:   39
   workflow_id:  0
   label:        'another role'
   tasklist:     '0,1,2,3,4,5,6,7,8,9,10'

@@ -18,19 +18,19 @@ Rails.application.routes.draw do
   resources :abbreviations, path: 'aaa', format: false
   resources :accounts, path: 'anp', format: false
   resources :addresses, path: 'adt', format: false
-  get 'cdl/info', to: 'contact_lists#info', as: 'account_list', format: false
+    get 'cdl/info', to: 'contact_lists#info', as: 'account_list', format: false
   resources :contact_lists, path: 'cdl', format: false, only: [ :index, :show ]
   resources :contact_infos, path: 'cci', format: false
   resources :country_names, path: 'cnc', format: false
   resources :csr_status_records, path: 'csr', format: false
   resources :db_change_requests, path: 'acr', format: false
+  resources :dcc_codes, path: 'sc2', format: false
   get 'dsr/info', to: 'dsr_status_records#info_workflow', as: 'dsr_workflow_info', format: false
   get 'dsr/stats', to: 'dsr_status_records#stats', as: 'dsr_statistics_index', format: false
   get 'dsr/:id/stats', to: 'dsr_status_records#stats', as: 'dsr_statistics_detail', format: false
   get 'dsr/update', to: 'dsr_status_records#update_b_all', as: 'update_dsr_status_records', format: false
   get 'dsr/:id/new', to: 'dsr_status_records#add', as: 'add_dsr_status_record', format: false
   get 'dsr/:id/update', to: 'dsr_status_records#update_b_one', as: 'update_dsr_status_record', format: false
-  resources :dcc_codes, path: 'sc2', format: false
   resources :dsr_status_records, path: 'dsr', format: false
   resources :dsr_doc_groups, path: 'ddg', format: false
   resources :dsr_progress_rates, path: 'dpr', format: false, only: [ :index, :show, :edit, :update ]
@@ -49,16 +49,19 @@ Rails.application.routes.draw do
   resources :network_stations, path: 'nst', format: false
   resources :network_stops, path: 'nso', format: false
   resources :pcp_categories, path: 'pcc', format: false
+  get 'pca/stats', to: 'pcp_all_subjects#stats', as: 'pcp_statistics', format: false
+  resources :pcp_all_subjects, path: 'pca', format: false
   resources :pcp_subjects, path: 'pcs', format: false do
     resources :pcp_items, path: 'pci', format: false, shallow: true
     resources :pcp_members, path: 'pcm', format: false, shallow: true
   end
-  # additional routes for pcp_subjects
+  # additional routes for pcp_my_subjects
   get 'pcs/:id/release', to: 'pcp_subjects#update_release', as: 'pcp_subject_release', format: false
   get 'pcs/:id/info', to: 'pcp_subjects#info_history', as: 'pcp_subject_history', format: false
   get 'pcs/:id/reldoc/:step_no', to: 'pcp_subjects#show_release', as: 'pcp_release_doc', format: false
   # additional routes for pcp_items
   get 'pci/:id/next', to: 'pcp_items#show_next', as: 'pcp_item_next', format: false
+  get 'pci/:id/publish', to: 'pcp_items#update_publish', as: 'pcp_item_publish', format: false
   # shallow routing for PCP Comments, handling by pcp_items_controller
   post 'pci/:id/pco', to: 'pcp_items#create_comment', as: 'create_pcp_comment', format: false
   get 'pci/:id/pco/new', to: 'pcp_items#new_comment', as: 'new_pcp_comment', format: false
@@ -76,8 +79,8 @@ Rails.application.routes.draw do
   resources :region_names, path: 'rnc', format: false
   resources :responsibilities, path: 'rpp', format: false
   resources :rfc_documents, path: 'rcd', format: false
-  get 'rsr/info', to: 'rfc_status_records#info_workflow', as: 'rfc_workflow_info', format: false
-  get 'rsr/stats', to: 'rfc_status_records#stats', as: 'rfc_status_info', format: false
+    get 'rsr/info', to: 'rfc_status_records#info_workflow', as: 'rfc_workflow_info', format: false
+    get 'rsr/stats', to: 'rfc_status_records#stats', as: 'rfc_statistics', format: false
   resources :rfc_status_records, path: 'rsr', format: false
   resources :s_document_logs, path: 'sdl', format: false
   resources :a_document_logs, path: 'adl', format: false
@@ -91,12 +94,12 @@ Rails.application.routes.draw do
   resources :my_tia_lists, path: 'mtl', format: false do
     resources :our_tia_items, path: 'oti', format: false, shallow: true
   end
-  get 'mti/:id/info', to: 'my_tia_items#info', as: 'my_tia_item_info', format: false
-  get 'oti/:id/info', to: 'our_tia_items#info', as: 'our_tia_item_info', format: false
+    get 'mti/:id/info', to: 'my_tia_items#info', as: 'my_tia_item_info', format: false
+    get 'oti/:id/info', to: 'our_tia_items#info', as: 'our_tia_item_info', format: false
   resources :my_tia_items, path: 'mti', format: false
   resources :unit_names, path: 'unc', format: false
   resources :my_change_requests, path: 'mcr', format: false
-  get 'mcr/new/:feature_id/(:detail)' => 'my_change_requests#new', as: :add_my_change_request, format: false 
+    get 'mcr/new/:feature_id/(:detail)' => 'my_change_requests#new', as: :add_my_change_request, format: false 
   # rarely used ...
   resources :a1_codes, path: 'a1c', format: false
   resources :a2_codes, path: 'a2c', format: false

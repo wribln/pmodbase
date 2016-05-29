@@ -17,7 +17,7 @@ private
 
   def show_help_on( title )
     begin
-      render title.downcase
+      render title.downcase, layout: 'help_files'
     rescue ActionView::MissingTemplate
       render plain: t( 'help_pages.message.not_found', :topic => title ), :status => 404
     end

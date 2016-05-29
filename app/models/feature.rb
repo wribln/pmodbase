@@ -38,12 +38,12 @@ class Feature < ActiveRecord::Base
 
   # control_level must correspond to application controller's feature_control_level
 
+  FEATURE_CONTROL_LEVELS = Feature.human_attribute_name( :control_levels ).freeze
+
   validates :control_level,
     presence: true,
     numericality: { only_integer: true },
-    inclusion: { in: 0..4 }
-
-  FEATURE_CONTROL_LEVELS = Feature.human_attribute_name( :control_levels ).freeze
+    inclusion: { in: 0..( FEATURE_CONTROL_LEVELS.size - 1 )}
 
   # no_workflows must correspond to application controller's no_workflows
 

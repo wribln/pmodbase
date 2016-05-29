@@ -17,6 +17,7 @@ class PcpStepTest < ActiveSupport::TestCase
     refute_nil ps.released_at
     assert_nil ps.subject_title
     assert_nil ps.project_doc_id
+    assert_nil ps.release_notice
   end
 
   test 'fixture 2' do # first review - return 'A' - close subject
@@ -35,6 +36,7 @@ class PcpStepTest < ActiveSupport::TestCase
     assert_nil ps.released_at
     assert_nil ps.subject_title
     assert_nil ps.project_doc_id
+    assert_nil ps.release_notice
   end
 
   test 'fixture 3 - for subject two' do
@@ -52,6 +54,7 @@ class PcpStepTest < ActiveSupport::TestCase
     assert_nil ps.released_at
     assert_nil ps.subject_title
     assert_nil ps.project_doc_id
+    assert_nil ps.release_notice
   end
 
   test 'step labels / acting_group_index' do

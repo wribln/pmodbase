@@ -224,4 +224,12 @@ class ApplicationController < ActionController::Base
     render file: 'public/403.html', status: :forbidden
   end
 
+  # output message with details why this is not allowed;
+  # the status code 422 seems to be appropriate
+
+  def render_bad_logic( msg )
+    @details = msg
+    render file: 'public/422.html.erb', status: :unprocessable_entity
+  end
+
 end

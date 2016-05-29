@@ -2,15 +2,17 @@
   <div class="container">
     <%= helpcrumbs %>
     <%= help_header %>
-    <p class="lead">Manage the Status of various Present-Comment Processes (PCP)</p>
+    <p class="lead">Manage Instances of the Present-Comment Process (PCP)</p>
+    <p>For general information on the PCP, see
+      <%= link_to_help :pcp_general, 'PCP - The Present-Comment Process' -%>.</p>
     <h3>Attributes of PCP Subjects</h3>
-    <p>PCP Subjects represent the status of typical present and comment processes:
-      An PCP Subject is often a document to be reviewed by another project group.
+    <p>A PCP Subject represents an instance of a Present-Comment Process (PCP):
+      It is often a document to be reviewed by another project group.
       Any review comments are returned to the originating/presenting project group.
       Issues are resolved by providing an updated version of the original document
       or by clarifying responses to the initial comments. The updated document is
       re-submitted and the process is repeated until the document has reached an
-      'approved' status and the PCP Subject reaches a 'closed' state.</p>
+      'Approved' status and the PCP Subject reaches a 'closed' state.</p>
     <p>Each PCP Subject belongs to a specific PCP Category. Overall statistics
       on the status of all subjects will be collected per PCP Category.</p>
     <p>The status of each process step (submission - review - response - re-review -...)
@@ -29,14 +31,16 @@
         require a resolution.</li>
       <li>The <%= help_param PcpSubject.human_attribute_name( :note )-%> provides a field
         for remarks and tags on the specific PCP Subject. Tags can be used to categorize
-        statistics on the PCP Subjects within a specific PCP Category.</li>
+        statistics on the PCP Subjects within a specific PCP Category, or to filter PCP
+        Subjects.</li>
       <li>The <%= help_param PcpSubject.human_attribute_name( :project_doc_id )-%> should
         be used to enter the complete document EDMS code for the document under review - 
         without the version code: This will be entered further below in the <a href='#pcp_step'>PCP Step
         section</a>.<br/>
         If you enter just a number (unsigned integer) here, the tool will automatically
         retrieve the complete code and the title of the document from the project's document
-        log having this sequence number.</li>
+        log having this sequence number. The title of the document will then be used as
+        <%= help_term PcpSubject.human_attribute_name( :title )-%> for the PCP Subject.</li>
       <li><%= help_param PcpSubject.human_attribute_name( :p_group_id )-%> is the 
         project group presenting the PCP Subject for review and comment. For documents
         and drawings, this would be the project group which prepared the document or
@@ -65,7 +69,7 @@
         <%= help_term PcpStep.human_attribute_name( :report_version )-%> field in the 
         respective PCP Step.<br/>
         If you enter just a number (unsigned integer) here, the tool will automatically
-        retrieve the complete code and the title of the document from the project's document
+        retrieve the complete code of the document from the project's document
         log having this sequence number.</li>
       <li><%= help_param PcpSubject.human_attribute_name( :archived )-%> is a flag which 
         can be used to 'hide' closed PCP Subjects: This flag becomes visible for
@@ -74,8 +78,8 @@
         used for any statistics on the PCP Subjects.</li>
     </ul>
     <h3 id='pcp_step'>Attributes on the Current PCP Step</h3>
-    <p>These attributes can only be set by the project group currently in charge of the
-      process:</p>
+    <p>These attributes can only be set by the PCP Group currently in charge of the
+      process; i.e. either the Presenting or the Commenting Group:</p>
     <ul>
       <li><%= help_param PcpStep.human_attribute_name( :subject_date )-%> is the date
         on which the PCP Subject has reached the current status: For documents, this
@@ -101,6 +105,9 @@
         field will not be carried over to the next step, i.e. it will be cleared for the next
         step once the current step is released. This field is only shown to members of the 
         acting group.</li>
+      <li><%= help_param PcpStep.human_attribute_name( :release_notice )-%> can be used
+        to add release-specific comments to the release document. This is simply text to
+        be published with a release.</li>
       <li><%= help_param PcpStep.human_attribute_name( :due_date )-%> is an attribute of a
         PCP Step shown as 
         <%= help_param t( 'pcp_subjects.form.this_due_date', step: '...' )-%> for the
@@ -109,14 +116,13 @@
         next step with ... being <%= help_param PcpStep::STEP_STATES[ 0 ] -%> and 
         <%= help_param PcpStep::STEP_STATES[ 1 ] -%> accordingly.</li>
       <li><%= help_param PcpStep.human_attribute_name( :prev_assmt )-%> is the assessment code
-        by the commenting project group for the current step. This code is replaced by the
+        by the Commenting Group for the current PCP Step. This code is replaced by the
         <%= help_param PcpStep.human_attribute_name( :new_assmt )-%> once the PCP Subject
-        is released by the commenting project group: It is the summary assessment of the subject
-        for the current step.</li>
+        is released by the Commenting Group.</li>
       <li>The <%= help_param PcpStep.human_attribute_name( :subject_status )-%> is automatically
         set to <%= help_term PcpStep.human_attribute_name( :subject_states )[ 0 ]-%> when a
         new subject is created; after the first round -&nbsp;when the initial observations are
-        released to the originating project group&nbsp;- the status changes to
+        released by the Commenting Group (back) to the Presenting Group&nbsp;- the status changes to
         <%= help_term PcpStep.human_attribute_name( :subject_states )[ 1 ]-%>;
         finally, the status is set to 
         <%= help_term PcpStep.human_attribute_name( :subject_states )[ 2 ]-%>
@@ -133,11 +139,18 @@
       <%= link_to t( 'pcp_subjects.show.form_title' ), '#pcp_release' -%> page. This action
       can only be performed by either the owner or the deputy of the currently responsible
       party (as defined for this PCP Subject).</p>
-    <p>The commenting project group can only release a PCP Step when a
-      <%= help_term PcpStep.human_attribute_name( :new_assmt )-%> is set.</p>
-    <p>The presenting project group can only release a PCP Step if a
+    <p>The Presenting Group can only perform the initial 'Release' a PCP Subject if a
       <%= help_term PcpSubject.human_attribute_name( :title )-%> or a
       <%= help_term PcpSubject.human_attribute_name( :project_doc_id )-%> is given.</p>
+    <p>The Commenting Group can only release a new PCP Step when:
+      <ul>
+        <li>each item has an assessment, and an overall 
+          <%= help_term PcpStep.human_attribute_name( :new_assmt )-%> is set for the PCP Step.</li>
+        <li>For each PCP Item with comments, at least one comment added for this PCP Step has a
+        <%= help_term PcpComment.human_attribute_name( :is_public )-%> flag set.</li>
+      </ul></p>
+    <p>Subsequent releases by the Presenting Group require at least one public comment on each
+      open PCP Item.</p>
     <p>A successful release will open a new window with a 
       <%= help_term t( 'pcp_subjects.reldoc.main_heading')%>. This report is formatted
       to be printed on A4 paper directly from your browser - or to be saved as PDF-formatted
@@ -148,8 +161,8 @@
       the <%= help_term PcpSubject.human_attribute_name( :p_group_id )-%> or
       the <%= help_term PcpSubject.human_attribute_name( :c_group_id )-%>.<br/>
       The values shown in column <%= help_term t( 'pcp_subjects.index.acting_group' )%> will be either
-      the selected group (when currently responsible for the PCP Subject) or the partner group
-      (which is currently responsible for this PCP Subject).</p>
+      the selected group (when currently responsible for the PCP Subject) or the other PCP Group
+      (currently being responsible for this PCP Subject).</p>
     <h3 id='pcp_history'>Show History of PCP Subject</h3>
     <p>A complete history of all steps for the current PCP Subject can be requested via the
       <%= help_term t( 'button_label.history' )-%> button on the  
@@ -165,5 +178,5 @@
       PCP Subjects to be removed from this process before they reach a terminal, closing
       status. If this is necessary, such PCP Subjects should be deleted. This means they
       will disappear from the system and will not be reported anymore in any statistics.</p>
-    <%= help_footer FEATURE_ID_PCP_SUBJECTS %>
+    <%= help_footer FEATURE_ID_MY_PCP_SUBJECTS %>
   </div> <!-- /container -->

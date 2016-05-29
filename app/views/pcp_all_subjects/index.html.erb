@@ -1,0 +1,67 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="table-responsive col-sm-12">
+    <%= form_tag({},{ method: :get }) do %>
+    <%= will_paginate @pcp_subjects %>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th rowspan="2" class="col-sm-1"><%= PcpSubject.human_attribute_name( :id )%></th>
+          <th class="col-sm-4"><%= PcpSubject.human_attribute_name( :title )%></th>
+          <th class="col-sm-1"><%= t( 'pcp_subjects.index.status_subj' )%></th>
+          <th class="col-sm-1"><%= t( 'pcp_subjects.index.assessment' )%></th>
+          <th class="col-sm-2"><%= t( 'pcp_subjects.index.status_step' )%></th>
+          <th rowspan="2" class="col-sm-1"><%= t( 'pcp_subjects.index.p_group' )%></th>
+          <th rowspan="2" class="col-sm-1"><%= t( 'pcp_subjects.index.c_group' )%></th>
+          <th rowspan="2" class="col-sm-1 hidden-print"><%= filter_action_title_header %></th>
+        </tr>
+        <tr>
+          <th><%= PcpSubject.human_attribute_name( :project_doc_id )%></th>
+          <th colspan="3"><%= PcpSubject.human_attribute_name( :note )%></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr <%= filter_row( @filter_fields )%>>
+          <td><%= filter_field @filter_fields, :ff_id, :id %></td>
+          <td><%= filter_field @filter_fields, :ff_titl, :sw %></td>
+          <td colspan="3"><%= filter_field @filter_fields, :ff_note, :ns %></td>
+          <td colspan="2"><%= filter_select_from_array @filter_fields, :ff_igrp, @filter_groups %></td>
+          <td><%= filter_action_button -%></td>
+        </tr>
+      <% if @pcp_subjects.length.zero? %>
+        <%= render partial: 'shared/index_empty_row', locals:{ columns: 7, with_link: true }%>
+      <% else %>
+        <% @pcp_subjects.each do |ps| %>
+          <%- if @pcp_category != ps.pcp_category then -%>
+            <tr>
+              <td colspan="7"><strong><%= ps.pcp_category.label %></strong></td>
+              <td class="hidden-print"></td>
+            <tr>
+            <%- @pcp_category = ps.pcp_category -%>
+          <%- end -%>
+          <%- cs = ps.current_steps[ 0 ] -%>
+          <tr>
+            <td rowspan="2"><%= ps.to_id %></td>
+            <td><%= display_lines_w_br ps.title %></td>
+            <td><%= link_to PcpStep.subject_status_label( cs.try :subject_status ), pcp_subject_pcp_items_path( ps )%></td>
+            <td><%= PcpStep.assessment_code( cs.try :current_assmt )%></td>
+            <td><%= cs.try :step_label %></td>
+            <td rowspan="2"><%= ps.p_group.code %></td>
+            <td rowspan="2"><%= ps.c_group.code %></td>
+            <td rowspan="2"><%= render partial: 'shared/actions', object: ps %></td>
+          </tr>
+          <tr>
+            <td><%= display_lines_w_br ps.project_doc_id %></td>
+            <td colspan="3"><%= ps.note %></td>
+          </tr>
+        <%- end -%>
+      <%- end -%>
+      </tbody>
+    </table>
+    <%- end -%>
+    <%= link_to t( 'general.statistics' ), pcp_statistics_path %>
+    <%= render partial: 'shared/footer' %>
+  </div>
+</div>

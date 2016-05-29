@@ -87,3 +87,11 @@ hr.hr-small {
   margin-top: 5px;
   margin-bottom: 15px;
   }
+
+/* remove url from links when printing */
+
+@media print {
+	a[href]:after {
+		content: none !important;
+	}
+}

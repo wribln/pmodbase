@@ -8,81 +8,90 @@
   <table class="no-lines">
     <tbody>
       <tr>
-        <td class="no-wrap"><%= t( '.report_doc_id' )%> - <%= t( '.version' )%>:</td>
+        <td class="row-head"><%= t( '.report_doc_id' )%> - <%= t( '.version' )%>:</td>
         <td><%= ProjectDocLog.combine_doc_id_and_version( @pcp_subject.report_doc_id, @pcp_curr_step.report_version )%></td>
       </tr>
       <tr><td></td><td></td></tr>
       <tr>
-        <td class="no-wrap"><%= t( '.subject_title' )%>:</td>
+        <td class="row-head"><%= t( '.subject_title' )%>:</td>
         <td style="font-weight: bold"><%= @pcp_curr_step.subject_title %></td>
       </tr>
       <tr>
-        <td class="no-wrap"><%= t( '.project_doc_id' )%> - <%= t( '.version' )%>:</td>
+        <td class="row-head"><%= t( '.project_doc_id' )%> - <%= t( '.version' )%>:</td>
         <td style="font-weight: bold"><%= ProjectDocLog.combine_doc_id_and_version( @pcp_curr_step.project_doc_id, @pcp_curr_step.subject_version )%></td>
       </tr>
       <tr>
-        <td class="no-wrap"><%= t( '.subject_date' )%>:</td>
+        <td class="row-head"><%= t( '.subject_date' )%>:</td>
         <td><%= db_formatted_d( @pcp_curr_step.subject_date )%></td>
       </tr>
       <tr><td></td><td></td></tr>
       <tr>
-        <td class="no-wrap"><%= t( '.released_by' )%>:</td>
+        <td class="row-head"><%= t( '.released_by' )%>:</td>
         <td><%= @pcp_curr_step.released_by %></td>
       </tr>
       <tr>
-        <td class="no-wrap"><%= t( '.released_at' )%>:</td>
+        <td class="row-head"><%= t( '.released_at' )%>:</td>
         <td><%= @pcp_curr_step.released_at %></td>
       </tr>
       <tr>
-        <td class="no-wrap"><%= t( '.release_reason' )%>:</td>
+        <td class="row-head"><%= t( '.release_reason' )%>:</td>
         <td><%= @pcp_curr_step.step_label %></td>
       </tr>
+      <tr><td></td><td></td></tr>
+      <tr>
+        <td class="row-head"><%= t( '.release_notice' )%>:</td>
+        <td><%= @pcp_curr_step.release_notice %></td>
+      </tr>      
       <tr><td></td><td></td></tr>
       <%- if @pcp_curr_step.in_commenting_group? || @pcp_curr_step.status_closed? -%>
       <%# show assessment for review results or final step %>
       <tr>
-        <td class="no-wrap"><%= t( '.assessment' )%>:</td>
-        <td><%= PcpStep.assessment_label( @pcp_curr_step.new_assmt )%></td>
+        <td class="row-head"><%= t( '.assessment' )%>:</td>
+        <td style="font-weight: bold"><%= PcpStep.assessment_label( @pcp_curr_step.new_assmt )%></td>
       </tr>
       <%- end -%>
       <%- unless @pcp_curr_step.status_closed? || @pcp_curr_step.due_date.nil? -%>
       <tr>
-        <td class="no-wrap"><%= t( '.due_date' )%>:</td>
+        <td class="row-head"><%= t( '.due_date' )%>:</td>
         <td><%= db_formatted_d( @pcp_curr_step.due_date )%></td>
       </tr>
       <%- end -%>
     </tbody>
   </table>
-  <h1 class="page-break"><%= t( '.sub_heading' )%></h1>
-  <table class="with-lines">
-    <thead>
-      <tr>
-        <%- @col_widths = t( '.col_widths' )-%>
-        <%- @col_heads =  t( '.col_heads' )-%>
-        <%- @col_widths.each_with_index do |c,i|-%>
-          <%= "<th class=\"with-lines\" style=\"width:#{ c }\">#{ @col_heads[ i ]}</th>".html_safe %>
-        <%- end -%>
-      </tr>
-      <%- @pcp_items.each do |pi|-%>
+  <%- if @pcp_items.count > 0 then -%>
+    <h1 class="page-break"><%= t( '.sub_heading' )%></h1>
+    <table class="with-lines">
+      <thead>
         <tr>
-          <td class="with-lines right"><%= pi.seqno %></td>
-          <td class="with-lines"><%= pi.pcp_step.step_label %></td>
-          <td class="with-lines"><%= pi.author %></td>
-          <td class="with-lines"><%= pi.reference %></td>
-          <td class="with-lines"><%= display_lines_w_br pi.description %></td>
-          <td class="with-lines"><%= PcpStep.assessment_label( pi.assessment )%></td>
+          <%- @col_widths = t( '.col_widths' )-%>
+          <%- @col_heads =  t( '.col_heads' )-%>
+          <%- @col_widths.each_with_index do |c,i|-%>
+            <%= "<th class=\"with-lines\" style=\"width:#{ c }\">#{ @col_heads[ i ]}</th>".html_safe %>
+          <%- end -%>
         </tr>
-        <%- pi.pcp_comments.each do |pc|-%>
+        <%- @pcp_items.each do |pi|-%>
           <tr>
-            <td class="with-lines small right">&nbsp;</td>
-            <td class="with-lines small"><%= pc.pcp_step.step_label %></td>
-            <td class="with-lines small"><%= pc.author %></td>
-            <td class="with-lines small">&nbsp;</td>
-            <td class="with-lines small"><%= display_lines_w_br pc.description %></td>
-            <td class="with-lines small"><%= PcpStep.assessment_label( pi.assessment )%></td>
+            <td class="with-lines right"><%= pi.seqno %></td>
+            <td class="with-lines"><%= pi.reference %></td>
+            <td class="with-lines"><%= display_lines_w_br pi.description %></td>
+            <td class="with-lines"><%= PcpItem.assessment_label( pi.assessment )%></td>
+            <td class="with-lines"><%= pi.pcp_step.step_label %></td>
+            <td class="with-lines"><%= pi.author %></td>
           </tr>
+          <%- pi.pcp_comments.each do |pc|-%>
+            <tr>
+              <td class="with-lines small right">&nbsp;</td>
+              <td class="with-lines small">&nbsp;</td>
+              <td class="with-lines small"><%= display_lines_w_br pc.description %></td>
+              <td class="with-lines small"><%= PcpItem.assessment_label( pc.assessment )%></td>
+              <td class="with-lines small"><%= pc.pcp_step.step_label %></td>
+              <td class="with-lines small"><%= pc.author %></td>
+            </tr>
+          <%- end -%>
         <%- end -%>
-      <%- end -%>
-    </thead>
-  </table>
+      </thead>
+    </table>
+  <%- else -%>
+    <p><%= t( '.empty_report' )-%></p>
+  <%- end -%>
 

@@ -55,13 +55,14 @@
 </head>
 
 <body>
-  <!-- This file lives in public/422.html -->
+  <!-- This file lives in public/422.html.erb -->
   <div class="dialog">
     <div>
       <h1>The change you wanted was rejected.</h1>
-      <p>Maybe you tried to change something you didn't have access to.</p>
+      <p>You probably tried to perform an action which is not allowed or possible
+        in the current context:</p>
     </div>
-    <p>If you are the application owner check the logs for more information.</p>
+    <p><%= @details %></p>
   </div>
 </body>
 </html>

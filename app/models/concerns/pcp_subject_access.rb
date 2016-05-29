@@ -28,7 +28,7 @@ module PcpSubjectAccess
     g_id = self.send( group_id )
     return if g_id.nil?
     errors.add( account_id, I18n.t( "#{ self.class.table_name }.msg.no_access" )) \
-      unless a.permission_to_access( FEATURE_ID_PCP_SUBJECTS, :to_update, g_id )
+      unless a.permission_to_access( FEATURE_ID_MY_PCP_SUBJECTS, :to_update, g_id )
   end
 
 end

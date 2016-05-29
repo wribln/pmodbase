@@ -2,17 +2,17 @@
   <div class="container">
     <%= helpcrumbs %>
     <%= help_header %>
-    <p class="lead">Observations, comments and responses on issues to be resolved.</p>
+    <p class="lead">Observations, comments and responses on issues or observations to be resolved.</p>
     <p>For general information on the PCP, see
       <%= link_to_help :pcp_general, 'PCP - The Present-Comment Process' -%>.</p>
     <h3>Introduction</h3>
-    <p>A single PCP Item describes an observation found during a review cycle which needs 
+    <p>A single PCP Item normally describes an observation found during a review cycle which needs 
       clarification or resolution. PCP Items can only be added by the Commenting Group;
-      comments can be added later by both the Presenting and the Commenting Group.</p>
+      comments and responses to these comments can be added later by both the Presenting and the Commenting Group.</p>
     <p>The following attributes are administered:</p>
     <ul>
       <li><%= help_param PcpItem.human_attribute_name( :seqno )-%> is a unique number
-        created for each PCP Item for a specific PCP Subject. This number is computed
+        created for each PCP Item of the given PCP Subject. This number is computed
         automatically by the system and cannot be modified. If PCP Items are removed,
         this number does not change so it can be used as unique identifier.</li>
       <li><%= help_param PcpItem.human_attribute_name( :reference )-%> is a text field
@@ -20,19 +20,16 @@
         a chapter or a page number.</li>
       <li><%= help_param PcpItem.human_attribute_name( :description )-%> holds details
         on the observation.</li>
-      <li><%= help_param PcpItem.human_attribute_name( :item_assmnt )-%> reflects the
-        status of this PCP Item. It is derived from the
-        <%= help_term PcpItem.human_attribute_name( :assessment )-%> of the initial
-        observation, or from the most recent
-        <%= help_term PcpComment.human_attribute_name( :assessment )-%> as given by
-        the Commenting Group.</li>
-      <li>The current <%= help_param PcpItem.human_attribute_name( :pcp_step_id )-%> is shown
+      <li>The <%= help_param PcpItem.human_attribute_name( :pcp_step_id )-%> for which this
+        PCP Item was created is shown
         for information as <%= help_term t( 'pcp_items.pcp_step' )%>.</li>
       <li>The <%= help_param PcpItem.human_attribute_name( :author )-%> is set to the user
-        (account) who created this PCP Item or Comment.</li>
+        (account) who created this PCP Item or Comment. It can be changed to a more 
+        meaningful code or string if desired.</li>
       <li><%= help_param PcpItem.human_attribute_name( :assessment )-%> is the evaluation of
-      the current PCP Item by the Commenting Group. This assessment is set with the creation
-      of an PCP Item or when adding a comment to a response by the Presenting Group.<br/>
+      the current PCP Item by the Commenting Group. This assessment can be set with the creation
+      of an PCP Item or when adding a comment to a response by the Presenting Group - the
+      Presenting Group cannot make or change any assessments.<br/>
       The possible values are:
       <ul>
         <li><%= help_term PcpItem::ASSESSMENT_LABELS[ 0 ]-%> should be used for issues with minimal
@@ -49,12 +46,32 @@
           PCP Subject can be set to <%= help_term PcpStep::ASSESSMENT_LABELS[ 1 ]-%>.</li>
       </ul>
       </li>
+      <li><%= help_param PcpItem.human_attribute_name( :pub_assmt )-%> shows the current
+        published status of this item. It will be replaced by the 
+        <%= help_term PcpItem.human_attribute_name( :new_assmt )-%> once the current
+        step is released by the Commenting Group.</li>
+      <li><%= help_param PcpItem.human_attribute_name( :new_assmt )-%> reflects 
+        the current status of this PCP Item if it would be released now. It is derived from the
+        <%= help_term PcpItem.human_attribute_name( :assessment )-%> of the initial
+        observation, or from the most recent (public)
+        <%= help_term PcpComment.human_attribute_name( :assessment )-%> as given by
+        the Commenting Group.</li>
       <li><%= help_param PcpComment.human_attribute_name( :is_public )-%> can be set by the
       owner or deputy of the respective PCP Subject on comments. Only comments where this flag
       is set, are listed on Release reports and are visible to anyone. Comments where this flag
       is clear, are only visible to the group responsible for the current PCP Step.<br/>
-      For any release, at least one comment on the current PCP Step must have this flag set.</li> 
+      For any release, at least one comment on the current PCP Step must have this flag set.</li>
     </ul>
+    <h3><%= t( 'button_label.next')%></h3>
+      <p>A click on this button advances to the next possible PCP Item. This makes it easier
+        for the user to advance step-by-step through all PCP Items.</p> 
+    <h3><%= t( 'pcp_items.show.add_comment' )%></h3>
+      <p>This button adds a new comment to the shown PCP Item.</p>
+    <h3><%= t( 'pcp_items.show.publish' )%></h3>
+      <p>This is a shortcut for PCP Subject owners and deputies to set the
+        <%= help_term PcpComment.human_attribute_name( :is_public )-%> flag for the shown
+        PCP Item. It has the same effect as editing the PCP Item, setting the flag manually
+        on the last comment, and saving the comment again.</p>
     <h3>Error Messages</h3>
     <p>"<%= t( 'pcp_comments.msg.pcp_subject_ref' )%>" is reported when the PCP Subject referenced
     by the PCP Item is not the same as the PCP Subject referenced by the related PCP Step. Normally,
