@@ -9,7 +9,7 @@ class AccountTest < ActiveSupport::TestCase
     end
     a = accounts( :account_one )
     a.person_id = people( :person_two ).id
-    assert a.save
+    assert a.save, a.errors.inspect
     assert_equal a.user_name, Account.user_name( a.id )
     assert_equal a.user_name, people( :person_two ).user_name
   end

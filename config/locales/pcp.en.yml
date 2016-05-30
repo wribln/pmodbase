@@ -184,13 +184,12 @@ en:
       comment_step:   'Cannot edit last Comment as it is from a previous Step. Add new Comment first.'
       comment_pub:    'Last Comment is already public.'
       # logic errors
-      nop_4_new_item: 'You have no permission to add PCP Items for this PCP Subject.'
       not_com_grp:    'You must be a member of the Commenting Group to add PCP Items.'
+      nop_for_new:    'You have no permission to add PCP Items for this PCP Subject.'
       subj_closed:    'PCP Subject is closed.'
-
       nop_not_yet:    'Cannot show you this PCP Item as it is not yet released.'
       nop_to_view:    'This PCP Item is not yet released.'
-
+      wrong_group:    'must be for Commenting Group.'
 
   pcp_members:
     title:            'PCP Participants'
@@ -290,7 +289,6 @@ en:
         other:        'Cannot release PCP Subject: %{count} open Items have no (public) comment.'
       subj_closed:    :pcp_items.msg.subj_closed
       nop_release:    'Only configured owners and deputies may Release a PCP Subject.'
-      nop_4_new_subj: 'You must be owner or deputy of the selected PCP Category in order to create a PCP Subject for that category.'
 
   pcp_steps:
     msg:

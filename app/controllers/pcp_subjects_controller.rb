@@ -11,7 +11,7 @@ class PcpSubjectsController < ApplicationController
 
   initialize_feature FEATURE_ID_MY_PCP_SUBJECTS, FEATURE_ACCESS_SOME, FEATURE_CONTROL_CUG
 
-# GET /pcs
+# GET /ors
 
   def index
     @filter_fields = filter_params
@@ -43,7 +43,7 @@ class PcpSubjectsController < ApplicationController
       @pcp_items = PcpItem.released_until( @pcp_subject, @pcp_curr_step.step_no ).includes( :pcp_comments, :pcp_step )
       render :reldoc, layout: 'plain_print'
     else
-      render file: 'public/404.html', status: :not_found
+      render_no_resource
     end
   end
 
@@ -69,8 +69,8 @@ class PcpSubjectsController < ApplicationController
 
   def create
     @pcp_subject = PcpSubject.new( pcp_subject_params )
-    unless @pcp_subject.pcp_category && @pcp_subject.pcp_category.permitted_to_create_subject?( current_user )
-      render_bad_logic t( 'pcp_subjects.msg.nop_4_new_subj' )
+    unless @pcp_subject.permitted_to_create?( current_user )
+      render_no_permission
       return
     end
     @pcp_subject.p_owner_id = current_user.id
@@ -176,6 +176,10 @@ class PcpSubjectsController < ApplicationController
   # DELETE /pcs/1
 
   def destroy
+    unless @pcp_subject.permitted_to_access?( current_user, :to_delete )
+      render_no_permission
+      return
+    end
     @pcp_subject.destroy
     respond_to do |format|
       format.html { redirect_to pcp_subjects_url, notice: I18n.t( 'pcp_subjects.msg.delete_ok' )}
@@ -243,7 +247,7 @@ class PcpSubjectsController < ApplicationController
       @pcp_viewing_group > 0
     end
 
-    # check if current user has permission to modify PCP subject or step now: 
+    # check if current user has permission to modify PCP subject or step now:
     # must have permission for his respective group (p_group_id or c_group_id)...
     # we wouldn't get here if the current user would not have the respective
     # permissions (edit, update, destroy) for FEATURE_ID_MY_PCP_SUBJECTS...

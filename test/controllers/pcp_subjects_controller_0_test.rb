@@ -9,7 +9,7 @@ class PcpSubjectsController0Test < ActionController::TestCase
 
   test 'check class attributes' do
     validate_feature_class_attributes FEATURE_ID_MY_PCP_SUBJECTS, 
-      ApplicationController::FEATURE_ACCESS_SOME,
+      ApplicationController::FEATURE_ACCESS_VIEW,
       ApplicationController::FEATURE_CONTROL_CUG
   end
 
@@ -51,7 +51,7 @@ class PcpSubjectsController0Test < ActionController::TestCase
   end
 
   test 'should create pcp_subject' do
-#    assert_difference( 'PcpSubject.count', 1 ) do
+    assert_difference( 'PcpSubject.count', 1 ) do
       post :create, pcp_subject: {
         pcp_category_id: @pcp_subject.pcp_category_id,
         title: @pcp_subject.title, note: @pcp_subject.note,
@@ -59,8 +59,7 @@ class PcpSubjectsController0Test < ActionController::TestCase
         project_doc_id: @pcp_subject.project_doc_id,
         p_deputy_id: @pcp_subject.p_deputy_id, p_owner_id: @pcp_subject.p_owner_id,
         report_doc_id: @pcp_subject.report_doc_id }
-#    end
-    assert_response :success
+    end
     assert_not_nil assigns( :pcp_curr_step )
     assert_redirected_to pcp_subject_path( assigns( :pcp_subject ))
   end

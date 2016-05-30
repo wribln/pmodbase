@@ -15,7 +15,8 @@ class PcpSubjectTest < ActiveSupport::TestCase
     assert_nil ps.c_deputy_id
     assert_nil ps.p_deputy_id
     assert ps.valid?, ps.errors.messages
-    assert ps.pcp_steps.count > 0, 'A PCP Subject should have at least one PCP Step'
+    assert_equal 0, ps.valid_subject?
+    assert_equal 2, ps.pcp_steps.count
   end
 
   test 'check fixture 2' do
@@ -32,7 +33,8 @@ class PcpSubjectTest < ActiveSupport::TestCase
     assert_nil ps.c_deputy_id
     assert_nil ps.p_deputy_id
     assert ps.valid?, ps.errors.messages
-    assert ps.pcp_steps.count > 0, 'A PCP Subject should have at least one PCP Step'
+    assert_equal 0, ps.valid_subject?
+    assert_equal 1, ps.pcp_steps.count
   end
 
   test 'create new subject with defaults' do
@@ -198,8 +200,8 @@ class PcpSubjectTest < ActiveSupport::TestCase
     ps = pcp_subjects( :one )
     assert 2, PcpStep.count
     assert 2, ps.pcp_steps.count
-    s1 = pcp_steps( :one )
-    s2 = pcp_steps( :two )
+    s1 = pcp_steps( :one_one )
+    s2 = pcp_steps( :one_two )
     assert_equal ps.current_steps[ 0 ].id, s2.id
     assert_equal ps.pcp_steps[ 0 ].id, s2.id
     assert_equal ps.pcp_steps[ 1 ].id, s1.id

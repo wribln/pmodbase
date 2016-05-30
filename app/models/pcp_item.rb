@@ -51,7 +51,7 @@ class PcpItem < ActiveRecord::Base
     numericality: { only_integer: true },
     inclusion: { in: 0..( ASSESSMENT_LABELS.size - 1 )}
 
-  validate :pcp_parents_must_exist
+  validate :pcp_relationship
 
   # released items of given subject for public viewing
 
@@ -74,20 +74,27 @@ class PcpItem < ActiveRecord::Base
     self.new_assmt = a if pub_assmt.nil? && pcp_comments.is_public.empty?
   end 
   
-  # make sure we have a corresponding pcp_subject and pcp_step
+  # make sure we have a corresponding PCP Subject and a correct PCP Step, i.e.
+  # both must exist, and PCP Step must be by Commenting Group (PCP Steps can
+  # only be created by Commenting Group)
 
-  def pcp_parents_must_exist
+  def pcp_relationship
     # pcp subject must exist if given
     unless pcp_subject_id.blank? then
       pu = PcpSubject.find_by_id( pcp_subject_id )
       errors.add( :pcp_subject_id, I18n.t( 'pcp_items.msg.no_pcp_subject' )) if pu.nil?
     end
     # pcp step must exist if given
+    pt = nil # scope
     unless pcp_step_id.blank? then
       pt = PcpStep.find_by_id( pcp_step_id )
-      errors.add( :pcp_step_id, I18n.t( 'pcp_items.msg.no_pcp_step' )) if pt.nil?
+      if pt.nil? then
+        errors.add( :pcp_step_id, I18n.t( 'pcp_items.msg.no_pcp_step' ))
+      elsif pt.in_presenting_group?
+        errors.add( :pcp_step_id, I18n.t( 'pcp_items.msg.wrong_group' ))
+      end
     end
-    # last check - only if previous checks were OK
+    # last check - only if all previous validations were OK
     errors.add( :base, I18n.t( 'pcp_items.msg.pcp_subject_step' )) \
       if errors.empty? && ( pt.pcp_subject.id != pcp_subject_id )
   end
@@ -141,41 +148,47 @@ class PcpItem < ActiveRecord::Base
     update_attribute( :new_assmt, new_assmt_to_set )
   end
 
-  # the following method is only to validate the assessment setting
-  # (to be used for testing or validation of the objects' integrity)
-  # it returns 0 if all is ok, else an indicator on what went wrong
+  # the following method is only to validate the integrity of the current item,
+  # specifically its assessment setting; the method returns 0 if all is ok,
+  # else an indicator on what went wrong; use it as additional validation AFTER
+  # self.valid?
 
-  def valid_assessment?
+  def valid_item?
+    pca = ppa = nil # scope
     ps = pcp_subject.current_steps
-    if ps[ 1 ].nil? then # current step is the first, initial step
-      pc = pcp_comments.is_public.for_step( pcp_step )
-      if pc.count == 0 then # no public comments for first step
-        ( ps[ 0 ] == pcp_step && pub_assmt.nil? && new_assmt == assessment ) ? 0 : 1
-      else # public comment overrides assessment of PCP Item
-        ( ps[ 0 ] == pcp_step && pub_assmt.nil? && new_assmt == pc.last.assessment ) ? 0 : 2
+    # here I can assume that there are at least two current steps ... because
+    # it is not allowed to add PCP Items to PCP Step 0, hence the current step
+    # is at least PCP Step 1. Note: The current step is not yet released unless
+    # it is the last step...
+    pc = pcp_comments.for_step( ps[ 0 ])
+    if pc.count > 0 then
+      pca = pc.last.assessment # default: last comment, public or not
+      pc.each do | c |
+        pca = c.assessment if c.is_public
       end
-    else # determine current assessment
-      pc = pcp_comments.for_step( ps[ 0 ])
-      if pc.count > 0 then
-        pla = pc.last.assessment # default: last comment, public or not
-        pc.each do | c |
-          pla = c.assessment if c.is_public
-        end
-      else
-        pla = nil # have no current assessment
-      end
-      # determine last released assessment
-      pc = pcp_comments.is_public.for_step( ps[ 1 ])
-      if pc.count > 0 then
-        plp = pc.last.assessment # default: last public comment
-      else # no public comments, this can only mean, that we are at PCP Step 0:
-        plp = self.assessment
-      end
-      if pla.nil? then
-        ( pub_assmt == plp && new_assmt == plp ) ? 0 : 3
-      else
-        ( pub_assmt == plp && new_assmt == pla ) ? 0 : 4
-      end
+    else
+      pca = nil # have no new assessment for the current step
+    end
+    # if PCP Subject is done, this is the final step and we are done:
+    if ps[ 0 ].status_closed? then
+      ( pca && pub_assmt == pca && new_assmt == pca ) ? 0 : 1
+      return
+    end
+    # determine last released assessment, if any
+    pc = pcp_comments.is_public.for_step( ps[ 1 ])
+    if pc.count > 0 then
+      ppa = pc.last.assessment # default: last public comment
+    elsif pcp_step_id == ps[ 0 ].id # PCP Item is new for current step
+      ppa = nil # no previous assessment
+    elsif pcp_step_id == ps[ 1 ].id # PCP Item is new for previous step
+      ppa = pub_assmt
+    else
+      return 4 # public comment missing for previous step
+    end
+    if pca.nil? # no current assessment
+      ( pub_assmt == ppa && new_assmt == assessment ) ? 0 : 2
+    else
+      ( pub_assmt == ppa && new_assmt == pca ) ? 0 : 3
     end
   end
 

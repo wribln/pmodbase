@@ -1,10 +1,10 @@
-one:
+one_one:
   pcp_subject:      one 
   step_no:          0
   subject_version:  V0
   report_version:   A
   subject_date:
-  note:
+  note:             'initial release completed'
   due_date:
   subject_status:   0
   prev_assmt:       0
@@ -12,13 +12,13 @@ one:
   released_by:      'Releaser'
   released_at:      2016-03-03
 
-two:
+one_two:
   pcp_subject:      one 
   step_no:          1
   subject_version:  V0
   report_version:   B
   subject_date:
-  note:
+  note:             'during initial review'
   due_date:         2016-04-24
   subject_status:   1
   prev_assmt:       2
@@ -32,7 +32,7 @@ two_one:
   subject_version:
   report_version:   A
   subject_date:     2016-05-17
-  note:
+  note:             'before initial release'
   due_date:
   subject_status:   0
   prev_assmt:       0

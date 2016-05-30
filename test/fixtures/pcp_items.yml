@@ -4,11 +4,11 @@
 one:
   id:           12345
   pcp_subject:  one
-  pcp_step:     one
+  pcp_step:     one_two
   seqno:        1
   reference:    'chapter 1'
-  description:  'not what it should be'
-  pub_assmt:    1
+  description:  'not what it should be, one comment'
+  pub_assmt:
   new_assmt:    0
   assessment:   1
   author:       'me'
@@ -16,11 +16,24 @@ one:
 two:
   id:           67890
   pcp_subject:  one
-  pcp_step:     one
+  pcp_step:     one_two
   seqno:        2
   reference:    'chapter 2'
-  description:  'another problem'
-  pub_assmt:    0
+  description:  'another problem, two comments'
+  pub_assmt:
   new_assmt:    1
   assessment:   0
   author:       'me, too'
+
+three:
+  id:           78901
+  pcp_subject:  one
+  pcp_step:     one_two
+  seqno:        3
+  reference:    'chapter 3'
+  description:  'another problem w/o comments'
+  pub_assmt:
+  new_assmt:    0
+  assessment:   0
+  author:       'me, too'
+

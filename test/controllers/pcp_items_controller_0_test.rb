@@ -13,11 +13,15 @@ class PcpItemsController0Test < ActionController::TestCase
     get :index, pcp_subject_id: @pcp_subject
     assert_response :success
     assert_not_nil assigns( :pcp_items )
+    assert_not_nil assigns( :pcp_subject )
+    assert_not_nil assigns( :pcp_group )
   end
 
   test 'should get new' do
     get :new, pcp_subject_id: @pcp_subject
     assert_response :success
+    assert_not_nil assigns( :pcp_subject )
+    assert_not_nil assigns( :pcp_item )
   end
 
   test 'should create pcp item' do
@@ -29,6 +33,7 @@ class PcpItemsController0Test < ActionController::TestCase
         pcp_subject_id: @pcp_item.pcp_subject_id
     end
     assert_redirected_to pcp_item_path( assigns( :pcp_item ))
+    assert_not_nil assigns( :pcp_subject )
   end
 
   test 'should create pcp comment' do
@@ -52,6 +57,8 @@ class PcpItemsController0Test < ActionController::TestCase
   test 'should show pcp_item' do
     get :show, id: @pcp_item
     assert_response :success
+    assert_not_nil assigns( :pcp_subject )
+    assert_not_nil assigns( :pcp_item )
   end
 
   test 'should get next item' do
@@ -69,19 +76,25 @@ class PcpItemsController0Test < ActionController::TestCase
 
   test 'create new item and edit it' do
     pcp_item = @pcp_subject.pcp_items.new
-    pcp_item.pcp_step = @pcp_subject.current_steps.first
-    pcp_item.seqno = 0
+    pcp_item.pcp_step = @pcp_subject.current_step
+    pcp_item.seqno = 1
     pcp_item.description = 'test'
     pcp_item.author = 'me'
     assert pcp_item.valid?, pcp_item.errors.inspect
     assert pcp_item.save
+    @pcp_subject.reload
+    assert_equal 0, @pcp_subject.valid_subject?
     get :edit, id: pcp_item
     assert_response :success  
   end
 
-  test 'should get edit - redirect to edit comment' do
+  test 'should get edit' do
     get :edit, id: @pcp_item
-    assert_redirected_to edit_pcp_comment_path( pcp_comments( :one ))
+    assert_response :success
+    assert_not_nil assigns( :pcp_subject )
+  end
+
+  test 'should get edit redirected to edit comment' do
   end
 
   test 'should update pcp_item' do

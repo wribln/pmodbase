@@ -214,7 +214,7 @@ class ApplicationController < ActionController::Base
     render 'my_change_requests/new', status: :unauthorized
   end
 
-  # This is a general handler for all unauthorized access attempts
+  # This is a general handler for all unauthorized/invalid access attempts
 
   def render_no_access
     render file: 'public/401.html', status: :unauthorized
@@ -222,6 +222,10 @@ class ApplicationController < ActionController::Base
 
   def render_no_permission
     render file: 'public/403.html', status: :forbidden
+  end
+
+  def render_no_resource
+    render file: 'public/404.html', status: :not_found
   end
 
   # output message with details why this is not allowed;

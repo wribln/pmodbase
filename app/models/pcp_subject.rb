@@ -168,6 +168,17 @@ class PcpSubject < ActiveRecord::Base
     end
   end
 
+  # user must have access to group of associated PCP Category in order
+  # to create PCP Subjects (possible only in PcpMySubjectsController)
+
+  def permitted_to_create?( account )
+    if pcp_category_id.nil? then
+      false
+    else
+      account.permission_to_access( FEATURE_ID_MY_PCP_SUBJECTS, :to_create, pcp_category.p_group_id )
+    end
+  end
+
   # general permission to access PCP Subjects in PcpAllSubjectsController
 
   def permitted_to_access?( account, action = :to_read )
@@ -212,6 +223,20 @@ class PcpSubject < ActiveRecord::Base
     a = Array.new( PcpItem::ASSESSMENT_LABELS.count, 0 )
     h.each {|k,v| a[ k ] = v }
     return a
+  end
+
+  # use this method to determine whether this PCP Subject is valid
+
+  def valid_subject?
+    # each PCP Subject should have at least one step
+    if pcp_steps.count == 0
+      return 1
+    end
+    # no PCP Items should be assigned in PCP Step 0
+    if pcp_steps.most_recent.last.pcp_items.count > 0
+      return 2
+    end
+    0
   end
 
   protected

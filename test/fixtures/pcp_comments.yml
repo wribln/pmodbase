@@ -1,6 +1,6 @@
 one:
   pcp_item_id:  12345
-  pcp_step:     two
+  pcp_step:     one_two
   description:  'Public Comment 1 for Item 1 in Initial Review'
   author:       'me'
   is_public:    true
@@ -8,7 +8,7 @@ one:
 
 two:
   pcp_item_id:  67890 
-  pcp_step:     two
+  pcp_step:     one_two
   description:  'Public Comment 1 for Item 2 in Initial Review'
   author:       'me'
   is_public:    true
@@ -16,7 +16,7 @@ two:
 
 three:
   pcp_item_id:  67890
-  pcp_step:     two
+  pcp_step:     one_two
   description:  'Internal Comment 2 for Item 2 in Initial Review'
   author:       'still me'
   is_public:    false

@@ -7,9 +7,13 @@ class PcpItemsController < ApplicationController
 
   initialize_feature FEATURE_ID_PCP_ITEMS, FEATURE_ACCESS_USER + FEATURE_ACCESS_NDA, FEATURE_CONTROL_CUG
 
+  # GET /pcs/:pcp_subject_id/pci
+  #
   # show list of all pcp items for the given pcp subject
   #
-  # GET /pcs/:pcp_subject_id/pci
+  # permitted users must have feature access;
+  # to see items not yet released, user must be member of the current PCP Group
+  # with explicit access permission.
 
   def index
     get_subject
@@ -23,17 +27,13 @@ class PcpItemsController < ApplicationController
     @pcp_items = @pcp_items.filter( filter_params ).paginate( page: params[ :page ])
   end
 
-  # show item and all comments
-  #
   # GET /pci/:id
+  #
+  # show item and comments
 
   def show
     get_item
     @pcp_subject = @pcp_item.pcp_subject
-    unless @pcp_subject.permitted_to_access?( current_user, :to_read )
-      render_no_permission
-      return
-    end
     @pcp_step = @pcp_item.pcp_step
     unless user_has_permission?( :to_access )
       render_bad_logic t( 'pcp_items.msg.nop_to_view' )
@@ -48,18 +48,14 @@ class PcpItemsController < ApplicationController
     get_item_details
   end
 
-  # show next item and all comments
-  #
   # GET /pci/:id/next
+  #
+  # show next item and all comments
 
   def show_next
     get_item
     @pcp_subject = @pcp_item.pcp_subject
     @pcp_step = @pcp_item.pcp_step
-    unless @pcp_subject.permitted_to_access?( current_user, :to_read )
-      render_no_permission
-      return
-    end
     # try to find next item, check access to remaining item later
     ps = @pcp_item # save original record
     loop do
@@ -92,43 +88,46 @@ class PcpItemsController < ApplicationController
     render :show
   end
 
-  # mark last comment as public
+  # mark last comment as public; only for owner or deputy
 
   def update_publish
     get_item
     @pcp_subject = @pcp_item.pcp_subject
     @pcp_step = @pcp_subject.current_step
-    if user_has_permission?( :to_update )then
-      if @pcp_item.pcp_comments.empty? then
-        if @pcp_item.pcp_step == @pcp_step then
-          notice = 'pcp_items.msg.pub_no_need'
-        else
-          notice = 'pcp_items.msg.pub_no_comment'
-        end
+    determine_group_map( :to_update )
+    unless @pcp_subject.user_is_owner_or_deputy?( current_user.id, @pcp_group_map )
+      render_no_permission
+      return
+    end
+    if @pcp_item.pcp_comments.empty? then
+      if @pcp_item.pcp_step == @pcp_step then
+        notice = 'pcp_items.msg.pub_no_need'
       else
-        @pcp_comment = @pcp_item.pcp_comments.last
-        if @pcp_comment.pcp_step == @pcp_subject.current_step then
-          if @pcp_comment.is_public then
-            notice 'pcp_items.msg.comment_pub'
-          else
-            @pcp_comment.make_public
-            notice = 'pcp_items.msg.publish_ok'
-          end
-        else
-          notice = 'pcp_items.msg.pub_comment_no'
-        end
-      end
-      respond_to do |format|
-        format.html { redirect_to @pcp_item, notice: t( notice )}
+        notice = 'pcp_items.msg.pub_no_comment'
       end
     else
-      render_no_permission
+      @pcp_comment = @pcp_item.pcp_comments.last
+      if @pcp_comment.pcp_step == @pcp_subject.current_step then
+        if @pcp_comment.is_public then
+          notice 'pcp_items.msg.comment_pub'
+        else
+          @pcp_comment.make_public
+          notice = 'pcp_items.msg.publish_ok'
+        end
+      else
+        notice = 'pcp_items.msg.pub_comment_no'
+      end
+    end
+    respond_to do |format|
+      format.html { redirect_to @pcp_item, notice: t( notice )}
     end
   end
 
-  # prepare form for new pcp item for the given pcp subject
-  #
   # GET /pci/:pcp_subject_id/pci/new
+  #
+  # prepare form for new pcp item for the given pcp subject
+  # any PCP Participant in commenting group with :to_update permission may
+  # create items unless PCP Subject is closed.
 
   def new
     get_subject
@@ -142,7 +141,7 @@ class PcpItemsController < ApplicationController
       return
     end
     unless user_has_permission?( :to_update )
-      render_bad_logic t( 'pcp_items.msg.nop_4_new_item' )
+      render_bad_logic t( 'pcp_items.msg.nop_for_new' )
       return
     end
     parent_breadcrumb( :pcp_subject, pcp_subject_path( @pcp_subject ))
@@ -153,55 +152,62 @@ class PcpItemsController < ApplicationController
     @pcp_item.author = current_user.account_info
   end
 
-  # new pcp comment for given pcp item
-  #
   # GET /pci/:id/pco/new
+  #
+  # new PCP Comment for given pcp item; any PCP Participant with :to_update
+  # permission may comment on items if (a) PCP Subject is not yet closed;
+  # (b) user is in current PCP Group.
 
   def new_comment
     get_item
     @pcp_subject = @pcp_item.pcp_subject
     @pcp_step = @pcp_subject.current_step
-    if @pcp_step.in_commenting_group? && user_has_permission?( :to_update ) then
-      parent_breadcrumb( :pcp_subject, pcp_subject_path( @pcp_subject ))
-      set_breadcrumb_path( pcp_subject_pcp_items_path( @pcp_subject ))
-      @pcp_comment = PcpComment.new
-      @pcp_comment.pcp_item = @pcp_item
-      @pcp_comment.author = current_user.account_info
-      @pcp_comment.pcp_step = @pcp_step
-      @pcp_comment.assessment = @pcp_item.new_assmt
-      @pcp_comment.is_public = false
-      @pcp_comments_show = @pcp_item.pcp_comments
-    else
-      render_no_permission
+    if @pcp_step.status_closed?
+      render_bad_logic t( 'pcp_items.msg.subj_closed' )
+      return
     end
+    unless user_has_permission?( :to_update )
+      render_no_permission
+      return
+    end
+    parent_breadcrumb( :pcp_subject, pcp_subject_path( @pcp_subject ))
+    set_breadcrumb_path( pcp_subject_pcp_items_path( @pcp_subject ))
+    @pcp_comment = PcpComment.new do |c|
+      c.pcp_item = @pcp_item
+      c.author = current_user.account_info
+      c.pcp_step = @pcp_step
+      c.assessment = @pcp_item.new_assmt
+      c.is_public = false
+    end
+    @pcp_comments_show = @pcp_item.pcp_comments
   end
 
-  # edit pcp item  
-  #
   # GET /pci/:id/edit
+  #
+  # edit pcp item; any user with :to_update permission for this PCP Subject
+  # can make changes to the PCP Item. 
 
   def edit
     get_item
     @pcp_subject = @pcp_item.pcp_subject
-    if @pcp_item.pcp_comments.empty? then
-      if @pcp_item.pcp_step == @pcp_subject.current_step then
-        @pcp_subject = @pcp_item.pcp_subject
-        @pcp_step = @pcp_subject.current_step
-        if user_has_permission?( :to_update ) then
-          parent_breadcrumb( :pcp_subject, pcp_subject_path( @pcp_subject ))
-          set_breadcrumb_path( pcp_subject_pcp_items_path( @pcp_subject ))
-        else
-          render_no_permission
-        end
-      else
-        respond_to do |format|
-          format.html { redirect_to @pcp_item, notice: t( 'pcp_items.msg.edit_bad_step' )}
-        end
-      end
-    else
-      respond_to do |format|
+    respond_to do |format|
+      # if there already PCP Comments, redirect to modify last comment
+      unless @pcp_item.pcp_comments.empty?
         format.html { redirect_to edit_pcp_comment_path @pcp_item.pcp_comments.last }
+        return
       end
+      # can only edit PCP Item while it is not yet released
+      unless @pcp_item.pcp_step == @pcp_subject.current_step
+        format.html { redirect_to @pcp_item, notice: t( 'pcp_items.msg.edit_bad_step' )}
+        return
+      end
+      @pcp_step = @pcp_subject.current_step
+      unless user_has_permission?( :to_update )
+        render_no_permission
+        return
+      end
+      parent_breadcrumb( :pcp_subject, pcp_subject_path( @pcp_subject ))
+      set_breadcrumb_path( pcp_subject_pcp_items_path( @pcp_subject ))
     end
   end
 
@@ -436,11 +442,11 @@ class PcpItemsController < ApplicationController
     end
 
     # check if current user is owner, deputy, or member of acting group;
-    # save result in @pcp_access to avoid duplicate method calls.
+    # save result in @pcp_access to avoid duplicate database access calls.
     # Note: since one action requires only one type of access, it is safe
     # to assume that the result in @pcp_access is valid throughout the action!
 
-    def user_has_permission?( access_type = :to_access )
+    def user_has_permission?( access_type )
       if @pcp_permission.nil? then
         determine_group_map( access_type )
         @pcp_group_act = @pcp_step.acting_group_index
