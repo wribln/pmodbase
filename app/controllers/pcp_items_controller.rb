@@ -190,25 +190,28 @@ class PcpItemsController < ApplicationController
   def edit
     get_item
     @pcp_subject = @pcp_item.pcp_subject
-    respond_to do |format|
-      # if there already PCP Comments, redirect to modify last comment
-      unless @pcp_item.pcp_comments.empty?
+    # if there already PCP Comments, redirect to modify last comment
+    unless @pcp_item.pcp_comments.empty?
+      respond_to do |format|
         format.html { redirect_to edit_pcp_comment_path @pcp_item.pcp_comments.last }
-        return
       end
-      # can only edit PCP Item while it is not yet released
-      unless @pcp_item.pcp_step == @pcp_subject.current_step
-        format.html { redirect_to @pcp_item, notice: t( 'pcp_items.msg.edit_bad_step' )}
-        return
-      end
-      @pcp_step = @pcp_subject.current_step
-      unless user_has_permission?( :to_update )
-        render_no_permission
-        return
-      end
-      parent_breadcrumb( :pcp_subject, pcp_subject_path( @pcp_subject ))
-      set_breadcrumb_path( pcp_subject_pcp_items_path( @pcp_subject ))
+      return
     end
+    # can only edit PCP Item while it is not yet released
+    unless @pcp_item.pcp_step == @pcp_subject.current_step
+      respond_to do |format|
+        format.html { redirect_to @pcp_item, notice: t( 'pcp_items.msg.edit_bad_step' )}
+      end
+      return
+    end
+    
+    @pcp_step = @pcp_subject.current_step
+    unless user_has_permission?( :to_update )
+      render_no_permission
+      return
+    end
+    parent_breadcrumb( :pcp_subject, pcp_subject_path( @pcp_subject ))
+    set_breadcrumb_path( pcp_subject_pcp_items_path( @pcp_subject ))
   end
 
   # edit pcp comment
@@ -245,13 +248,15 @@ class PcpItemsController < ApplicationController
     @pcp_step = @pcp_subject.current_step
     if @pcp_step.in_commenting_group? && user_has_permission?( :to_update ) then
       @pcp_item =  @pcp_subject.pcp_items.new( pcp_item_params )
-      respond_to do |format|
-        @pcp_item.transaction do
-          @pcp_item.pcp_step_id = @pcp_step.id
-          @pcp_item.set_next_seqno
-          if @pcp_item.save
+      @pcp_item.transaction do
+        @pcp_item.pcp_step_id = @pcp_step.id
+        @pcp_item.set_next_seqno
+        if @pcp_item.save
+          respond_to do |format|
             format.html { redirect_to @pcp_item, notice: t( 'pcp_items.msg.new_ok' )}
-          else
+          end
+        else
+          respond_to do |format|
             format.html { render :new }
           end
         end
@@ -484,6 +489,15 @@ class PcpItemsController < ApplicationController
 
     def filter_params
       params.slice( :ff_seqno, :ff_refs, :ff_desc, :ff_status ).clean_up
+    end
+
+    # for testing, I need to be able to reset internal variables
+
+  public
+
+    def reset_4_test
+      @pcp_group_map = nil
+      @pcp_permission = nil
     end
 
 end

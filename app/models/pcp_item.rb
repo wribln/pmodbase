@@ -1,5 +1,6 @@
 class PcpItem < ActiveRecord::Base
   include ApplicationModel
+  include PcpAssessmentModel
   include Filterable
 
   belongs_to :pcp_subject,  -> { readonly }, inverse_of: :pcp_items
@@ -29,8 +30,6 @@ class PcpItem < ActiveRecord::Base
   validates :description,
     presence: true
 
-  ASSESSMENT_LABELS = PcpItem.human_attribute_name( :assessments ).freeze
-
   # pub_assmt is the current, public assessment of this PCP Item
   # new_assmt is the current assessment by the acting party for the
   # next release where this assessment would become the next public
@@ -43,11 +42,6 @@ class PcpItem < ActiveRecord::Base
 
   validates :pub_assmt, :new_assmt,
     allow_blank: true,
-    numericality: { only_integer: true },
-    inclusion: { in: 0..( ASSESSMENT_LABELS.size - 1 )}
-
-  validates :assessment,
-    presence: true,
     numericality: { only_integer: true },
     inclusion: { in: 0..( ASSESSMENT_LABELS.size - 1 )}
 
@@ -154,52 +148,62 @@ class PcpItem < ActiveRecord::Base
   # self.valid?
 
   def valid_item?
-    pca = ppa = nil # scope
+    # PCP Steps can only be created by Commenting Group
+    return 1 if pcp_step.in_presenting_group?
+
+    # scenario without comments; note that I can safely assume that there are at
+    # least two steps ... because it is not allowed to add PCP Items to the first
+    # PCP Step (0), hence the current step is at least PCP Step (1).
     ps = pcp_subject.current_steps
-    # here I can assume that there are at least two current steps ... because
-    # it is not allowed to add PCP Items to PCP Step 0, hence the current step
-    # is at least PCP Step 1. Note: The current step is not yet released unless
-    # it is the last step...
-    pc = pcp_comments.for_step( ps[ 0 ])
-    if pc.count > 0 then
-      pca = pc.last.assessment # default: last comment, public or not
-      pc.each do | c |
-        pca = c.assessment if c.is_public
+    if pcp_comments.count == 0 then
+      if pcp_step == ps[ 0 ] # newly created?
+        return ( pub_assmt.nil? && new_assmt == assessment ) ? 0 : 2
+      elsif pcp_step == ps[ 1 ] # new item released
+        return ( pub_assmt == new_assmt && new_assmt == assessment ) ? 0 : 3
+      else
+        # inconsistent: there should be comments in the previous step
+        return 4
       end
+    end
+    # we have comments here ( pcp_comments.count > 0 )
+    
+    # if PCP Item was newly created for step, last public comment -
+    # if existing - determines current assessment, else assessment
+    if pcp_step == ps[ 0 ]
+      return 5 unless pub_assmt.nil?
+      na = assessment
+      pcp_comments.each do | c |
+        return 6 unless c.pcp_step == pcp_step
+        na = c.assessment if c.is_public
+      end
+      return ( new_assmt == na ) ? 0 : 7
+    end
+
+    # PCP Item was created for earlier step, determine current assessment
+    # from current comments: default is last, most recent comment, look
+    # for any public comments which then override new_assmt
+    pc = pcp_comments.for_step( ps[ 0 ])
+    if pc.count == 0 
+      # no comments for current step (yet - or if closed)
+      return 8 unless ( pub_assmt == new_assmt )
     else
-      pca = nil # have no new assessment for the current step
+      na = pc.last.assessment
+      pc.each do | c |
+        na = c.assessment if c.is_public
+      end
+      return 9 unless ( new_assmt ==  na )
     end
-    # if PCP Subject is done, this is the final step and we are done:
-    if ps[ 0 ].status_closed? then
-      ( pca && pub_assmt == pca && new_assmt == pca ) ? 0 : 1
-      return
-    end
+
+    # now check if pub_assmt is correctly computed from previous step:
     # determine last released assessment, if any
+
     pc = pcp_comments.is_public.for_step( ps[ 1 ])
     if pc.count > 0 then
-      ppa = pc.last.assessment # default: last public comment
-    elsif pcp_step_id == ps[ 0 ].id # PCP Item is new for current step
-      ppa = nil # no previous assessment
-    elsif pcp_step_id == ps[ 1 ].id # PCP Item is new for previous step
-      ppa = pub_assmt
+      return 10 unless ( pub_assmt == pc.last.assessment )
     else
-      return 4 # public comment missing for previous step
+      return 12 unless ( pub_assmt == new_asmt )
     end
-    if pca.nil? # no current assessment
-      ( pub_assmt == ppa && new_assmt == assessment ) ? 0 : 2
-    else
-      ( pub_assmt == ppa && new_assmt == pca ) ? 0 : 3
-    end
-  end
-
-  # return true if the given assessment leads to a closed status
-
-  def closed?
-    self.class.closed?( assessment )
-  end
-
-  def self.closed?( a )
-    a == 2
+    return 0
   end
 
   # return the sequence number to use for the next item
@@ -217,10 +221,6 @@ class PcpItem < ActiveRecord::Base
 
   def find_next
     PcpItem.where( pcp_subject_id: pcp_subject_id ).where( 'id > ?', id ).first
-  end
-
-  def self.assessment_label( i )
-    ASSESSMENT_LABELS[ i ] unless i.nil?
   end
 
 end

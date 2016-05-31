@@ -4,7 +4,7 @@ class HomeController < ApplicationController
   # index: initial view, shows homepage for sign-on
 
   def index
-    session[:current_user_id] = nil
+    session[ :current_user_id ] = nil
   end
 
   # "create" a signed-on, current user
@@ -17,7 +17,7 @@ class HomeController < ApplicationController
       session[ :keep_base_open  ] = user.keep_base_open
       redirect_to base_url
     else
-      flash[:alert] = t( 'home.signon.error' )
+      flash[ :alert ] = t( 'home.signon.error' )
       redirect_to home_url
     end
   end
@@ -25,7 +25,8 @@ class HomeController < ApplicationController
   # "delete" a signed-on, current user
 
   def signoff
-    session[ :current_user_id ] = nil
+    delete_user
+    #session[ :current_user_id ] = nil
     redirect_to home_url
   end
 

@@ -1,5 +1,5 @@
 require 'test_helper'
-class DsrStatusRecordTest1 < ActiveSupport::TestCase
+class DsrStatusRecord3Test < ActiveSupport::TestCase
 
   test 'upon destroy all related submissions will be deleted' do 
     d = dsr_status_records( :dsr_rec_two )

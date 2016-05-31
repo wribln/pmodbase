@@ -80,7 +80,6 @@ class PcpSubjectsController < ApplicationController
       if @pcp_subject.save then
         format.html { redirect_to @pcp_subject, notice: I18n.t( 'pcp_subjects.msg.new_ok' )}
       else
-        @pcp_groups = get_groups_for_select
         @pcp_categories = permitted_categories
         format.html { render :new }
       end
@@ -88,6 +87,10 @@ class PcpSubjectsController < ApplicationController
   end
 
   # PATCH/PUT /pcs/1
+  #
+  # perform update: need permission to modify;
+  # check for update closed PCP Subjects is performed implicitly by
+  # whitelisting only :archived flag for closed PCP Subjects
 
   def update
     unless permission_to_modify?
@@ -106,6 +109,9 @@ class PcpSubjectsController < ApplicationController
   end
 
   # GET /pcs/1/release
+  #
+  # perform release; only possible on PCP Subject not closed and by
+  # owner or deputy.
 
   def update_release
     # PCP Subject must not be closed yet
@@ -114,7 +120,7 @@ class PcpSubjectsController < ApplicationController
       return
     end
     # current user must be owner or deputy for the acting group
-    unless @pcp_subject.user_is_owner_or_deputy?( current_user, @pcp_curr_step.acting_group_index )
+    unless @pcp_subject.user_is_owner_or_deputy?( current_user.id, @pcp_curr_step.acting_group_index )
       render_bad_logic t( 'pcp_subjects.msg.nop_release' )
       return
     end 
@@ -247,16 +253,14 @@ class PcpSubjectsController < ApplicationController
       @pcp_viewing_group > 0
     end
 
-    # check if current user has permission to modify PCP subject or step now:
-    # must have permission for his respective group (p_group_id or c_group_id)...
-    # we wouldn't get here if the current user would not have the respective
-    # permissions (edit, update, destroy) for FEATURE_ID_MY_PCP_SUBJECTS...
+    # check if current user has permission to modify PCP Subject or PCP Step now
 
     def permission_to_modify?
       PcpSubject.same_group?( @pcp_curr_step.acting_group_index, @pcp_viewing_group )
     end
 
-    # prepare set of statistics for display in forms
+    # prepare set of statistics for display in forms, i.e. no of items and 
+    # current assessment
 
     def get_item_stats
       @pcp_item_stats = @pcp_subject.get_item_stats

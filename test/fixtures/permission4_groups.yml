@@ -14,7 +14,7 @@ permission4_group_<%= p %>:
 
 <% end %>
 
-# FEATURE_ID_PCP_SUBJECTS
+# FEATURE_ID_MY_PCP_SUBJECTS
 
 permission4_group_f01:
   account:     account_two

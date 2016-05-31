@@ -4,10 +4,9 @@ class PcpItemsController1Test < ActionController::TestCase
 
   setup do
     @pcp_subject = pcp_subjects( :two )
-    @account = accounts( :account_one )
     @account_p = accounts( :account_one )
     @account_c = accounts( :account_two )
-    session[ :current_user_id ] = @account.id
+    session[ :current_user_id ] = @account_p.id
     assert @pcp_subject.pcp_members.destroy_all
   end
 
@@ -19,8 +18,9 @@ class PcpItemsController1Test < ActionController::TestCase
     assert_equal 0, @pcp_subject.pcp_items.count
     assert_equal @pcp_subject.p_owner, @account_p
     assert_equal @pcp_subject.c_owner, @account_c
-    assert_equal @account, @account_p
     assert_equal 0, @pcp_subject.pcp_members.count
+    assert @pcp_subject.valid?, @pcp_subject.errors.inspect
+    assert @pcp_subject.valid_subject?
   end
 
   test 'create pcp_item' do
@@ -35,18 +35,49 @@ class PcpItemsController1Test < ActionController::TestCase
     end
     assert_response :forbidden
 
-    # create item for further tests
+    # must release current step in order to add PCP Items
 
-    @pcp_item = @pcp_subject.pcp_items.new
-    @pcp_item.author = 'tester'
-    @pcp_item.description = 'test only'
-    @pcp_item.seqno = 0
-    @pcp_item.pcp_step = @pcp_subject.pcp_steps.most_recent.first
-    assert_difference( 'PcpItem.count' )do
-      assert @pcp_item.save, @pcp_item.errors.inspect
-    end    
+    assert_difference( 'PcpStep.count', 1 )do
+      current_controller = @controller
+      @controller = PcpSubjectsController.new
+      get :update_release, id: @pcp_subject
+      @controller = current_controller 
+    end
+    @pcp_subject.reload
+    assert @pcp_subject.valid_subject?
 
-    # try to add response
+    # the following shall fail because presenter may not add PCP Items
+
+    assert_no_difference( 'PcpItem.count' )do
+      post :create, pcp_item: {
+        author: 'presenter',
+        description: 'Item 1 description' },
+        pcp_subject_id: @pcp_subject
+    end
+    assert_response :forbidden
+
+    # let the commenter do his job:
+
+    @controller.reset_4_test
+    @controller.delete_user
+
+    session[ :current_user_id ] = @account_c.id
+
+    assert_difference( 'PcpItem.count', 1 )do
+      post :create, pcp_item: {
+        author: 'commenter',
+        description: 'Item 1 description' },
+        pcp_subject_id: @pcp_subject
+    end
+    @pcp_subject = assigns( :pcp_subject )
+    @pcp_item = assigns( :pcp_item )
+    assert_redirected_to pcp_item_path( @pcp_item )
+    refute_nil @pcp_item
+    refute_nil @pcp_subject
+    assert_equal 0, @pcp_item.valid_item?
+    assert_equal 0, @pcp_subject.valid_subject?
+
+    # add comment to newly created item
 
     assert_difference( 'PcpComment.count' ) do
       post :create_comment, pcp_comment: {
@@ -54,7 +85,9 @@ class PcpItemsController1Test < ActionController::TestCase
         description: 'Item 1 Response 1 by Presenting Party' },
         id: @pcp_item
     end
-    assert_redirected_to pcp_item_path( assigns( :pcp_item ))
+    @pcp_item = assigns( :pcp_item )
+    assert_redirected_to pcp_item_path( @pcp_item )
+    assert_equal 0, @pcp_item.valid_item?
 
   end
 

@@ -50,7 +50,7 @@ class PcpSubjectsController1Test < ActionController::TestCase
 
     # update for release to commenting part - provide report_version
 
-    assert @new_pcp_subject.user_is_owner_or_deputy?( @account_id, @new_pcp_step.acting_group_index )
+    assert @new_pcp_subject.user_is_owner_or_deputy?( @account, @new_pcp_step.acting_group_index )
     assert_no_difference([ 'PcpSubject.count', 'PcpStep.count' ])do
       patch :update, id: @new_pcp_subject, 
         pcp_subject: { p_owner_id: @account_id,

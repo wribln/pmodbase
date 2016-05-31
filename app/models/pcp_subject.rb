@@ -159,8 +159,7 @@ class PcpSubject < ActiveRecord::Base
 
   # access control helper: ags is the acting_group_switch
 
-  def user_is_owner_or_deputy?( account, ags )
-    id = account.id
+  def user_is_owner_or_deputy?( id, ags )
     if ags == 0
       ( id == p_owner_id )||( id == p_deputy_id )
     else
@@ -225,18 +224,17 @@ class PcpSubject < ActiveRecord::Base
     return a
   end
 
-  # use this method to determine whether this PCP Subject is valid
+  # use this method to determine whether this PCP Subject is valid;
+  # this contains additional integrity checks not covered in model
+  # validations
 
   def valid_subject?
     # each PCP Subject should have at least one step
-    if pcp_steps.count == 0
-      return 1
-    end
+    return 1 if pcp_steps.count == 0
     # no PCP Items should be assigned in PCP Step 0
-    if pcp_steps.most_recent.last.pcp_items.count > 0
-      return 2
-    end
-    0
+    return 2 if pcp_steps.most_recent.last.pcp_items.count > 0
+    # only closed PCP Subjects can be archived
+    return 0
   end
 
   protected

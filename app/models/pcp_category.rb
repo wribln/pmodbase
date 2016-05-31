@@ -37,7 +37,7 @@ class PcpCategory < ActiveRecord::Base
     when ''
       all
     else
-      where( 'p_group_id IN :param OR c_group_id IN :param', param: pg )
+      where( 'p_group_id IN ( :param ) OR c_group_id IN ( :param )', param: pg )
     end
   end
 

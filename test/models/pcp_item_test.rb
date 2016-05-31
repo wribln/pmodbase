@@ -216,22 +216,28 @@ class PcpItemTest < ActiveSupport::TestCase
     assert_nil pi.pub_assmt
     assert_equal 2, pi.new_assmt
     assert_equal 2, pi.assessment
-    flunk
+
     # make last comment public
+
     pc0.make_public
     pi.reload
     assert_equal 0, pi.valid_item?, pi.inspect
     assert_nil pi.pub_assmt
     assert_equal 1, pi.new_assmt
     assert_equal 2, pi.assessment
-    # change assessment of comment
+
+    # change assessment of last comment
+
     pc0.assessment = 2
     assert pc0.save, pc0.errors.inspect
+    pi.reload
     assert_equal 0, pi.valid_item?, pi.inspect
     assert_nil pi.pub_assmt
     assert_equal 2, pi.new_assmt
     assert_equal 2, pi.assessment
+
     # release item with a new step
+
     ps_new = PcpStep.new( pcp_subject: ps.pcp_subject )
     ps_new.create_release_from( ps, cu )
     ps.set_release_data( cu )
@@ -248,14 +254,28 @@ class PcpItemTest < ActiveSupport::TestCase
     assert_equal 2, pi.pub_assmt
     assert_equal 2, pi.new_assmt
     assert_equal 2, pi.assessment
-    # change of :assessment should not modify :new_assmt anymore
+
+    assert_equal 1, pi.pcp_comments.count
+
+    # change of :assessment (i.e. original assessment) has no effect on
+    # PCP Item's integrity
+
     pi.assessment = 0
     assert_equal 2, pi.new_assmt
     assert_equal 0, pi.valid_item?, pi.inspect
-    # therefore, we change it back
-    pi.assessment = 2
+
+    pi.assessment = 1
+    assert_equal 2, pi.new_assmt
     assert_equal 0, pi.valid_item?, pi.inspect
-    # add internal comment #1
+
+    # therefore, we change it back
+
+    pi.assessment = 2
+    assert_equal 2, pi.new_assmt
+    assert_equal 0, pi.valid_item?, pi.inspect
+
+    # add internal comment #1 as first comment for new step
+
     pc1 = nil
     assert_difference( 'PcpComment.count' )do
       pc1 = pi.pcp_comments.create( description: 'Step 1, Comment 1', pcp_step: ps, author: 'me', assessment: 1 )
@@ -265,7 +285,9 @@ class PcpItemTest < ActiveSupport::TestCase
     assert_equal 2, pi.pub_assmt
     assert_equal 1, pi.new_assmt
     assert_equal 2, pi.assessment
+
     # add internal comment #2
+
     pc2 = nil
     assert_difference( 'PcpComment.count' )do
       pc2 = pi.pcp_comments.create( description: 'Step 1, Comment 2', pcp_step: ps, author: 'me', assessment: 2 )
@@ -275,15 +297,19 @@ class PcpItemTest < ActiveSupport::TestCase
     assert_equal 2, pi.pub_assmt
     assert_equal 2, pi.new_assmt
     assert_equal 2, pi.assessment
+
     # make comment #1 public - this is NOT the implemented process:
     # there only the last comment should be modified ...
+
     pc1.make_public
     pi.reload
     assert_equal 0, pi.valid_item?, pi.inspect
     assert_equal 2, pi.pub_assmt
     assert_equal 1, pi.new_assmt
     assert_equal 2, pi.assessment
+
     # now delete first comment
+
     assert_difference( 'PcpComment.count', -1 ){ pc1.delete }
     pi.update_new_assmt( nil )
     pi.reload
@@ -291,7 +317,9 @@ class PcpItemTest < ActiveSupport::TestCase
     assert_equal 2, pi.pub_assmt
     assert_equal 2, pi.new_assmt
     assert_equal 2, pi.assessment
+
     # make one more comment and set it to public
+
     pc3 = nil
     assert_difference( 'PcpComment.count' )do
       pc3 = pi.pcp_comments.create( description: 'Step 1, Comment 3', pcp_step: ps, author: 'me', assessment: 1, is_public: true )
@@ -301,7 +329,9 @@ class PcpItemTest < ActiveSupport::TestCase
     assert_equal 2, pi.pub_assmt
     assert_equal 1, pi.new_assmt
     assert_equal 2, pi.assessment
+
     # final comment, internal
+
     pc4 = nil
     assert_difference( 'PcpComment.count' )do
       pc4 = pi.pcp_comments.create( description: 'Step 1, Comment 4', pcp_step: ps, author: 'me', assessment: 2, is_public: false )
@@ -311,7 +341,9 @@ class PcpItemTest < ActiveSupport::TestCase
     assert_equal 2, pi.pub_assmt
     assert_equal 1, pi.new_assmt
     assert_equal 2, pi.assessment
+
     # now, release this step and start a new one
+
     ps_new = PcpStep.new( pcp_subject: ps.pcp_subject )
     ps_new.create_release_from( ps, cu )
     ps.set_release_data( cu )
@@ -324,7 +356,9 @@ class PcpItemTest < ActiveSupport::TestCase
       pi.release_item
       assert pi.save, pi.errors.inspect
     end
+
     # we should have new_assmt from the previous step as new pub_assmt
+
     assert_equal 0, pi.valid_item?, pi.inspect
     assert_equal 1, pi.pub_assmt
     assert_equal 1, pi.new_assmt

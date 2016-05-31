@@ -1,5 +1,5 @@
 require 'test_helper'
-class DsrStatusRecordTest4 < ActiveSupport::TestCase
+class DsrStatusRecord4Test < ActiveSupport::TestCase
 
   # add missing tests for 'possible to derive (this)':
   # they basically just call this method to ensure that

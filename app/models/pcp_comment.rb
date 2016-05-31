@@ -1,4 +1,6 @@
 class PcpComment < ActiveRecord::Base
+  includes PcpAssessmentModel
+  
   belongs_to :pcp_item,                  inverse_of: :pcp_comments
   belongs_to :pcp_step, -> { readonly }, inverse_of: :pcp_comments
 
@@ -11,11 +13,6 @@ class PcpComment < ActiveRecord::Base
 
   validates :description,
     presence: true
-
-  validates :assessment,
-    presence: true,
-    numericality: { only_integer: true },
-    inclusion: { in: 0..( PcpItem::ASSESSMENT_LABELS.size - 1 )}
 
   # author is set to current user automatically but may be changed: 
 

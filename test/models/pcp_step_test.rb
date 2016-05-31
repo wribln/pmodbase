@@ -2,7 +2,7 @@ require 'test_helper'
 class PcpStepTest < ActiveSupport::TestCase
 
   test 'fixture 1' do # first release
-    ps = pcp_steps( :one )
+    ps = pcp_steps( :one_one )
     assert ps.valid?, ps.errors.messages
     assert_equal ps.pcp_subject_id, pcp_subjects( :one ).id
     assert_equal 0, ps.step_no
@@ -11,7 +11,7 @@ class PcpStepTest < ActiveSupport::TestCase
     assert_equal 0, ps.prev_assmt
     assert_nil ps.new_assmt
     assert_nil ps.subject_date
-    assert_nil ps.note
+    refute_nil ps.note
     assert_nil ps.due_date
     refute_nil ps.released_by
     refute_nil ps.released_at
@@ -21,7 +21,7 @@ class PcpStepTest < ActiveSupport::TestCase
   end
 
   test 'fixture 2' do # first review - return 'A' - close subject
-    ps = pcp_steps( :two )
+    ps = pcp_steps( :one_two )
     assert ps.valid?, ps.errors.messages
     assert_equal ps.pcp_subject_id, pcp_subjects( :one ).id
     assert_equal 1, ps.step_no
@@ -30,7 +30,7 @@ class PcpStepTest < ActiveSupport::TestCase
     assert_equal 2, ps.prev_assmt
     assert_equal 2, ps.new_assmt
     assert_nil ps.subject_date
-    assert_nil ps.note
+    refute_nil ps.note
     refute_nil ps.due_date
     assert_nil ps.released_by
     assert_nil ps.released_at
@@ -49,6 +49,7 @@ class PcpStepTest < ActiveSupport::TestCase
     assert_equal 0, ps.prev_assmt
     assert_nil ps.new_assmt
     refute_nil ps.subject_date
+    refute_nil ps.note
     assert_nil ps.due_date
     assert_nil ps.released_by
     assert_nil ps.released_at
@@ -58,7 +59,7 @@ class PcpStepTest < ActiveSupport::TestCase
   end
 
   test 'step labels / acting_group_index' do
-    ps = pcp_steps( :one )
+    ps = pcp_steps( :one_one )
     assert_equal PcpStep::STEP_LABELS[ 0 ], ps.step_label, 'Initial Release'
     assert_equal 0, ps.acting_group_index, '0 - originator'
     ps.step_no += 1
@@ -85,14 +86,14 @@ class PcpStepTest < ActiveSupport::TestCase
   end
 
   test 'related pcp subject must exist' do
-    ps = pcp_steps( :one )
+    ps = pcp_steps( :one_one )
     ps.pcp_subject_id = nil 
     refute ps.valid?
     assert_includes ps.errors, :pcp_subject_id
   end
 
   test 'prev/new assessment not possible in step 0' do
-    ps = pcp_steps( :one )
+    ps = pcp_steps( :one_one )
     ps.prev_assmt = nil
 
     (1..4).each do |i|
@@ -103,7 +104,7 @@ class PcpStepTest < ActiveSupport::TestCase
   end
 
   test 'prev/new assignment range' do
-    ps = pcp_steps( :one )
+    ps = pcp_steps( :one_one )
 
     ps.prev_assmt = -1
     ps.new_assmt = -1
@@ -119,7 +120,7 @@ class PcpStepTest < ActiveSupport::TestCase
   end
 
   test 'current overall assessment - new assessment prevails unless nil' do
-    ps = pcp_steps( :one )
+    ps = pcp_steps( :one_one )
 
     ps.prev_assmt = nil
     ps.new_assmt = nil

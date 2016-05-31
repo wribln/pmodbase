@@ -1,5 +1,5 @@
 require 'test_helper'
-class DsrStatusRecordTest1 < ActiveSupport::TestCase
+class DsrStatusRecord1Test < ActiveSupport::TestCase
 
   test 'fixture usefulness 1 - minimum content' do
     dd = dsr_status_records( :dsr_rec_one )

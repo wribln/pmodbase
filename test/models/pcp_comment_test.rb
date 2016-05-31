@@ -37,7 +37,7 @@ class PcpCommentTest < ActiveSupport::TestCase
     assert_includes pc.errors, :description
     assert_includes pc.errors, :author
 
-    pc.pcp_step_id = pcp_steps( :two ).id 
+    pc.pcp_step_id = pcp_steps( :one_two ).id 
     pc.pcp_item_id = pcp_items( :one ).id
     pc.description = 'foobar'
     pc.author = 'tester'
@@ -45,12 +45,12 @@ class PcpCommentTest < ActiveSupport::TestCase
   end
 
   test 'scopes' do
-    assert 0, PcpComment.for_step( pcp_steps( :one )).count
-    assert 3, PcpComment.for_step( pcp_steps( :two )).count
-    assert 0, pcp_items( :one ).pcp_comments.for_step( pcp_steps( :one )).count
-    assert 1, pcp_items( :one ).pcp_comments.for_step( pcp_steps( :two )).count
-    assert 0, pcp_items( :two ).pcp_comments.for_step( pcp_steps( :one )).count
-    assert 2, pcp_items( :two ).pcp_comments.for_step( pcp_steps( :two )).count
+    assert 0, PcpComment.for_step( pcp_steps( :one_one )).count
+    assert 3, PcpComment.for_step( pcp_steps( :one_two )).count
+    assert 0, pcp_items( :one ).pcp_comments.for_step( pcp_steps( :one_one )).count
+    assert 1, pcp_items( :one ).pcp_comments.for_step( pcp_steps( :one_two )).count
+    assert 0, pcp_items( :two ).pcp_comments.for_step( pcp_steps( :one_one )).count
+    assert 2, pcp_items( :two ).pcp_comments.for_step( pcp_steps( :one_two )).count
 
     assert 2, PcpComment.is_public.count
     assert 1, pcp_items( :one ).pcp_comments.is_public.count

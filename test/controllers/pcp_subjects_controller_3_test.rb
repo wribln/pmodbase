@@ -13,7 +13,7 @@ class PcpSubjectsController3Test < ActionController::TestCase
   end
 
   test 'user has not access' do
-    # see test case in pcp_subjects_controller_1_test.rb
+    # see test cases in pcp_subjects_controller_1_test.rb
   end
 
   test 'user has access for different group' do
@@ -24,7 +24,7 @@ class PcpSubjectsController3Test < ActionController::TestCase
     assert g.save, g.errors.inspect
     p = Permission4Group.new( 
       account_id: @account_id,
-      feature_id: FEATURE_ID_PCP_SUBJECTS,
+      feature_id: FEATURE_ID_MY_PCP_SUBJECTS,
       group_id: g.id,
       to_index: 1, to_create: 1, to_read: 1, to_update: 1 )
     assert p.save, p.errors.inspect
@@ -40,7 +40,7 @@ class PcpSubjectsController3Test < ActionController::TestCase
   test 'user has access to commenting group' do
     p = Permission4Group.new( 
       account_id: @account_id,
-      feature_id: FEATURE_ID_PCP_SUBJECTS,
+      feature_id: FEATURE_ID_MY_PCP_SUBJECTS,
       group_id: @pcp_category.c_group_id,
       to_index: 1, to_create: 1, to_read: 1, to_update: 1 )
     assert p.save, p.errors.inspect
@@ -56,7 +56,7 @@ class PcpSubjectsController3Test < ActionController::TestCase
   test 'finally, user has access to presenting group' do
     p = Permission4Group.new( 
       account_id: @account_id,
-      feature_id: FEATURE_ID_PCP_SUBJECTS,
+      feature_id: FEATURE_ID_MY_PCP_SUBJECTS,
       group_id: @pcp_category.p_group_id,
       to_index: 1, to_create: 1, to_read: 1, to_update: 1 )
     assert p.save, p.errors.inspect
@@ -93,7 +93,7 @@ class PcpSubjectsController3Test < ActionController::TestCase
 
     p = Permission4Group.new( 
       account_id: @account_id,
-      feature_id: FEATURE_ID_PCP_SUBJECTS,
+      feature_id: FEATURE_ID_MY_PCP_SUBJECTS,
       group_id: g.id,
       to_index: 1, to_create: 1, to_read: 1, to_update: 1 )
     assert p.save, p.errors.inspect

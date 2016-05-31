@@ -12,6 +12,10 @@ en:
 
     attributes:
 
+      pcp_assessment:
+        #                  0             1                2
+        assessments:    [ 'Minor/Open', 'Critical/Open', 'Resolved/Closed' ]
+
       pcp_category:
         id:             :general.attributes.id
         c_group_id:     'Commenting Project Group'
@@ -31,7 +35,7 @@ en:
         description:    'Comment'
         author:         'Author'
         author:         :activerecord.attributes.pcp_item.author
-        assessment:     :activerecord.attributes.pcp_item.assessment
+        assessment:     'assessment'
 
       pcp_item:
         id:             :general.attributes.id
@@ -44,7 +48,6 @@ en:
         description:    'Description'
         pub_assmt:      'Previous Assessment'
         new_assmt:      'New Assessment'
-        assessments:    [ 'Minor/Open', 'Critical/Open', 'Resolved/Closed' ]
 
       pcp_member:
         id:             :general.attributes.id
@@ -184,12 +187,12 @@ en:
       comment_step:   'Cannot edit last Comment as it is from a previous Step. Add new Comment first.'
       comment_pub:    'Last Comment is already public.'
       # logic errors
-      not_com_grp:    'You must be a member of the Commenting Group to add PCP Items.'
+      not_com_grp:    'Adding PCP Items is only possible when the PCP Subject is released to the Commenting Group.'
       nop_for_new:    'You have no permission to add PCP Items for this PCP Subject.'
       subj_closed:    'PCP Subject is closed.'
       nop_not_yet:    'Cannot show you this PCP Item as it is not yet released.'
       nop_to_view:    'This PCP Item is not yet released.'
-      wrong_group:    'must be for Commenting Group.'
+      wrong_group:    'is bad: Only Commenting Group may add PCP Items.'
 
   pcp_members:
     title:            'PCP Participants'

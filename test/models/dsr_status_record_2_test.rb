@@ -1,5 +1,5 @@
 require 'test_helper'
-class DsrStatusRecordTest2 < ActiveSupport::TestCase
+class DsrStatusRecord2Test < ActiveSupport::TestCase
 
   test 'submission group' do     
     # must be existing submission group or nil

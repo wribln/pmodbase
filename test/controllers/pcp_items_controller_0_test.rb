@@ -3,7 +3,7 @@ class PcpItemsController0Test < ActionController::TestCase
   tests PcpItemsController
 
   setup do
-    @pcp_item = pcp_items( :one )
+    @pcp_item = pcp_items( :three )
     @pcp_subject = @pcp_item.pcp_subject
     @account = accounts( :account_one )
     session[ :current_user_id ] = @account.id
@@ -63,15 +63,25 @@ class PcpItemsController0Test < ActionController::TestCase
 
   test 'should get next item' do
     assert pcp_items( :one ).id < pcp_items( :two ).id, "This test requires #{ pcp_items( :one ).id } < #{ pcp_items( :two ).id}"
-    assert_equal 1, @pcp_item.seqno
-    get :show_next, id: @pcp_item
+    assert pcp_items( :two ).id < pcp_items( :three ).id, "This test requires #{ pcp_items( :two ).id } < #{ pcp_items( :three ).id}"
+    assert_equal 1, pcp_items( :one ).seqno
+
+    get :show_next, id: pcp_items( :one )
     assert_response :success
     @pcp_item = assigns( :pcp_item )
     assert_equal 2, @pcp_item.seqno
+
     get :show_next, id: @pcp_item
     assert_response :success
     @pcp_item = assigns( :pcp_item )
-    assert_equal 2, @pcp_item.seqno
+    assert_equal 3, @pcp_item.seqno
+
+    # last item:
+
+    get :show_next, id: @pcp_item
+    assert_response :success
+    @pcp_item = assigns( :pcp_item )
+    assert_equal 3, @pcp_item.seqno    
   end
 
   test 'create new item and edit it' do
@@ -81,6 +91,7 @@ class PcpItemsController0Test < ActionController::TestCase
     pcp_item.description = 'test'
     pcp_item.author = 'me'
     assert pcp_item.valid?, pcp_item.errors.inspect
+    assert pcp_item.valid_item?, pcp_item.inspect
     assert pcp_item.save
     @pcp_subject.reload
     assert_equal 0, @pcp_subject.valid_subject?
@@ -109,7 +120,7 @@ class PcpItemsController0Test < ActionController::TestCase
     # create new item for next step
     @pcp_item = @pcp_subject.pcp_items.new
     @pcp_item.seqno = 0
-    @pcp_item.pcp_step = pcp_steps( :two )
+    @pcp_item.pcp_step = pcp_steps( :one_two )
     @pcp_item.description = 'foobar'
     @pcp_item.author = 'me'
     assert @pcp_item.save, @pcp_item.errors.inspect

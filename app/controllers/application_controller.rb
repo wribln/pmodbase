@@ -187,7 +187,6 @@ class ApplicationController < ActionController::Base
     level.nil? || ( level == FEATURE_ACCESS_NONE ) || ( level & FEATURE_ACCESS_NDA ) != 0
   end
 
-
   private
 
   # Find the user/account with the ID store in the session with the key
@@ -199,6 +198,15 @@ class ApplicationController < ActionController::Base
     @_current_user ||=  session[ :current_user_id ] &&
     Account.find_by_id( session[ :current_user_id ])
   end
+
+  # mostly for testing, I needed a method which allows me to clear the current
+  # user in the system; now I am using it for the home page as well when
+  # signing off
+
+  def delete_user
+    @_current_user = session[ :current_user_id ] = nil
+  end
+  public :delete_user
 
   # Request_change creates a user-specific change request if she clicks on a
   # link but does not have the permission to use the action on that feature.

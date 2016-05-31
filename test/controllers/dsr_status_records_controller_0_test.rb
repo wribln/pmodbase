@@ -1,5 +1,6 @@
 require 'test_helper'
-class DsrStatusRecordsControllerTest < ActionController::TestCase
+class DsrStatusRecordsController0Test < ActionController::TestCase
+  tests DsrStatusRecordsController
 
   setup do
     # set maximum permission

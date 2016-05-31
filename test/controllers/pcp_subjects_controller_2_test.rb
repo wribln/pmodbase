@@ -2,11 +2,6 @@ require 'test_helper'
 class PcpSubjectsController2Test < ActionController::TestCase
   tests PcpSubjectsController
 
-  # test access to controller: create new PCP Subject is only
-  # permitted to users having access to the PCP Category's
-  # presenter group; 
-  # the creator becomes automatically the owner of the subject
-
   # USER HAS NO PERMISSION AT ALL
 
   setup do
@@ -17,8 +12,7 @@ class PcpSubjectsController2Test < ActionController::TestCase
 
   test 'should get index' do
     get :index
-    assert_response :success
-    assert_not_nil assigns( :pcp_subjects )
+    check_for_cr
   end
 
   test 'should get new' do
@@ -28,9 +22,7 @@ class PcpSubjectsController2Test < ActionController::TestCase
 
   test 'should get release document' do
     get :show_release, id: @pcp_subject, step_no: 0
-    refute_nil assigns( :pcp_curr_step )
-    refute_nil assigns( :pcp_subject )
-    assert_response :forbidden
+    check_for_cr
   end
 
   test 'should release step' do
@@ -42,7 +34,7 @@ class PcpSubjectsController2Test < ActionController::TestCase
 
   test 'should get history' do
     get :info_history, id: @pcp_subject
-    assert_response :forbidden
+    check_for_cr
   end
 
   test 'should create pcp_subject' do
@@ -60,9 +52,7 @@ class PcpSubjectsController2Test < ActionController::TestCase
 
   test 'should show pcp_subject' do
     get :show, id: @pcp_subject
-    assert_not_nil assigns( :pcp_curr_step )
-    assert_not_nil assigns( :pcp_subject )
-    assert_response :forbidden
+    check_for_cr
   end
 
   test 'should get edit' do
