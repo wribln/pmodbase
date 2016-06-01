@@ -101,25 +101,25 @@ class PcpItemsController < ApplicationController
     end
     if @pcp_item.pcp_comments.empty? then
       if @pcp_item.pcp_step == @pcp_step then
-        notice = 'pcp_items.msg.pub_no_need'
+        notice_text = 'pcp_items.msg.pub_no_need'
       else
-        notice = 'pcp_items.msg.pub_no_comment'
+        notice_text = 'pcp_items.msg.pub_no_comment'
       end
     else
       @pcp_comment = @pcp_item.pcp_comments.last
       if @pcp_comment.pcp_step == @pcp_subject.current_step then
         if @pcp_comment.is_public then
-          notice 'pcp_items.msg.comment_pub'
+          notice_text = 'pcp_items.msg.comment_pub'
         else
           @pcp_comment.make_public
-          notice = 'pcp_items.msg.publish_ok'
+          notice_text = 'pcp_items.msg.publish_ok'
         end
       else
-        notice = 'pcp_items.msg.pub_comment_no'
+        notice_text = 'pcp_items.msg.pub_comment_no'
       end
     end
     respond_to do |format|
-      format.html { redirect_to @pcp_item, notice: t( notice )}
+      format.html { redirect_to @pcp_item, notice: t( notice_text )}
     end
   end
 
@@ -275,6 +275,7 @@ class PcpItemsController < ApplicationController
     if user_has_permission?( :to_update ) then
       @pcp_comment = @pcp_item.pcp_comments.new( pcp_comment_params )
       @pcp_comment.pcp_step = @pcp_step
+      @pcp_comment.assessment = @pcp_item.pub_assmt if @pcp_step.in_presenting_group?
       respond_to do |format|
         if @pcp_comment.save
           format.html { redirect_to @pcp_item, notice: t( 'pcp_comments.msg.new_ok' )}

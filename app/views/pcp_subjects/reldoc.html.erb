@@ -78,7 +78,7 @@
             <td class="with-lines"><%= pi.pcp_step.step_label %></td>
             <td class="with-lines"><%= pi.author %></td>
           </tr>
-          <%- pi.pcp_comments.each do |pc|-%>
+          <%- pi.pcp_comments.is_public.each do |pc|-%>
             <tr>
               <td class="with-lines small right">&nbsp;</td>
               <td class="with-lines small">&nbsp;</td>

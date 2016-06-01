@@ -2,6 +2,8 @@ require 'test_helper'
 class PcpItemsController1Test < ActionController::TestCase
   tests PcpItemsController
 
+  # this performs tests starting with the presenting party
+
   setup do
     @pcp_subject = pcp_subjects( :two )
     @account_p = accounts( :account_one )
@@ -86,6 +88,36 @@ class PcpItemsController1Test < ActionController::TestCase
         id: @pcp_item
     end
     @pcp_item = assigns( :pcp_item )
+    assert_redirected_to pcp_item_path( @pcp_item )
+    assert_equal 0, @pcp_item.valid_item?
+
+    # add one more comment, make it public
+
+    assert_difference( 'PcpComment.count' ) do
+      post :create_comment, pcp_comment: {
+        author: 'presenting party',
+        description: 'Item 1 Response 2 by Presenting Party',
+        is_public: true,
+        assessment: 1 },
+        id: @pcp_item
+    end
+
+    @pcp_item = assigns( :pcp_item )
+    assert_redirected_to pcp_item_path( @pcp_item )
+    assert_equal 0, @pcp_item.valid_item?
+
+    # attempt one more comment, try to close item
+
+    assert_no_difference( 'PcpComment.count' ) do
+      post :create_comment, pcp_comment: {
+        author: 'presenting party',
+        description: 'Item 1 Response 2 by Presenting Party',
+        is_public: true,
+        assessment: 2 },
+        id: @pcp_item
+    end
+    @pcp_item = assigns( :pcp_item )
+    puts @pcp_items.errors.inspect
     assert_redirected_to pcp_item_path( @pcp_item )
     assert_equal 0, @pcp_item.valid_item?
 

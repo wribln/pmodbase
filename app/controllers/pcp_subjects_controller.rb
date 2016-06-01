@@ -139,19 +139,21 @@ class PcpSubjectsController < ApplicationController
       end
       open_pi += 1
     end
-    respond_to do |format|
-      if open_pi > 0 then
-        # ignore release request
-        set_final_breadcrumb( :show )
-        flash.now[ :notice ] = I18n.t( 'pcp_subjects.msg.rel_not_ok', count: open_pi )
+    if open_pi > 0 then
+      # ignore release request
+      set_final_breadcrumb( :show )
+      flash.now[ :notice ] = I18n.t( 'pcp_subjects.msg.rel_not_ok', count: open_pi )
+      respond_to do |format|
         format.html { render :show }
-      else
-        # process request
-        case @pcp_curr_step.release_type
-        when 0
-          @pcp_new_step = @pcp_subject.pcp_steps.create
-          @pcp_new_step.create_release_from( @pcp_curr_step, current_user )
-          PcpStep.transaction do
+      end
+    else
+      # process request
+      case @pcp_curr_step.release_type
+      when 0
+        @pcp_new_step = @pcp_subject.pcp_steps.create
+        @pcp_new_step.create_release_from( @pcp_curr_step, current_user )
+        PcpStep.transaction do
+          respond_to do |format|
             if @pcp_new_step.save && @pcp_curr_step.save then
               @pcp_subject.pcp_items.each { |pi| pi.release_item }
               flash[ :notice ] = I18n.t( 'pcp_subjects.msg.release_ok' )
@@ -160,9 +162,11 @@ class PcpSubjectsController < ApplicationController
               format.html { render :show }
             end
           end
-        when 1
-          @pcp_curr_step.set_release_data( current_user )
-          PcpStep.transaction do
+        end
+      when 1
+        @pcp_curr_step.set_release_data( current_user )
+        PcpStep.transaction do
+          respond_to do |format|
             if @pcp_curr_step.save then
               @pcp_subject.pcp_items.each{ |pi| pi.release_item }
               flash[ :notice ] = I18n.t( 'pcp_subjects.msg.release_ok' )
@@ -171,7 +175,9 @@ class PcpSubjectsController < ApplicationController
               format.html { render :show }
             end
           end
-        else
+        end
+      else
+        respond_to do |format|
           set_final_breadcrumb( :show )
           format.html { render :show }
         end

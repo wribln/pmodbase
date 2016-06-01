@@ -17,14 +17,18 @@
       <div class="form-group">
         <%= comment.label :assessment, class: "col-sm-3 control-label" %>
         <div class="col-sm-2">
-          <%= comment.select :assessment, select_options( PcpItem::ASSESSMENT_LABELS ), { prompt: t( '.g_prompt' )}, { class: "form-control" }%>
+          <%- if @pcp_step.in_commenting_group? then -%>
+            <%= comment.select :assessment, select_options( PcpItem::ASSESSMENT_LABELS ), { prompt: t( '.g_prompt' )}, { class: "form-control" }%>
+          <%- else -%>
+            <%= display_value PcpItem.assessment_label( comment.object.assessment ) %>
+          <%- end -%>
         </div>
         <%= comment.label :is_public, t( '.make_public' ), class: "col-sm-2 control-label" %>
         <div class="col-sm-1">
           <%- if permitted_to_publish? then -%>
             <%= comment.check_box :is_public %>
           <%- else -%>
-            <%= display_check_box display_comment.is_public %>
+            <%= display_check_box comment.object.is_public %>
           <%- end -%>
         </div>
       </div>

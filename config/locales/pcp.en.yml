@@ -35,7 +35,7 @@ en:
         description:    'Comment'
         author:         'Author'
         author:         :activerecord.attributes.pcp_item.author
-        assessment:     'assessment'
+        assessment:     'Assessment'
 
       pcp_item:
         id:             :general.attributes.id
@@ -136,6 +136,8 @@ en:
       pcp_subject_ref: 'PCP Subject mismatch between Step and Item.'
       descr_mssng:    'must not be empty unless Item can be closed.'
       cannot_del:     'Cannot delete public and released comment.'
+      nop_to_assess:  'must not be modified by Presenting Group.'
+      nop_to_close:   'must not be closed by Presenting Group.'
 
   pcp_items:
     title:            'PCP Items'

@@ -61,6 +61,12 @@ class PcpItem < ActiveRecord::Base
     pub_assmt || pcp_step.released?
   end
 
+  # when is an item closed?
+
+  def closed?
+    self.class.closed?( pub_assmt )
+  end
+  
   # need to update :new_assmt if :assessment changes while :pub_assmt is nil
 
   def assessment=( a )
@@ -97,12 +103,12 @@ class PcpItem < ActiveRecord::Base
   # the last public comment
 
   def release_item
-    self.pub_assmt = new_assmt
+    update_attribute( :pub_assmt, new_assmt )
   end
 
   # use update_new_assmt when changing the :is_public attribute
   # of a PCP Comments belonging to this item; or when removing a
-  # PCP Comment.
+  # PCP Comment; or when creating a new PCP Comment.
   # NOTE: in the current process, I assume that an update can only be
   # performed on the last, current PCP Comment. Hence, if this record
   # is published, its assessment will become the next public assessment
@@ -131,15 +137,26 @@ class PcpItem < ActiveRecord::Base
         if pc.count == 0 then # no further public comments for current step
           if c.pcp_step == pcp_step then # we are at the PCP Item here
             new_assmt_to_set = assessment # use PCP Item's assessment
-          else 
+          elsif c.pcp_step.in_commenting_group?
             new_assmt_to_set = c.assessment # uses current (assumed: last) comment
+          elsif new_assmt == c.assessment
+            return # ignore update request - all is OK
+          else
+            # c.pcp_step.in_presenting_group? - business logic error!
+            raise I18n.t( 'pcp_comments.msg.nop_to_assess')
           end
         else # use last public comment
           new_assmt_to_set = pc.last.assessment # use last public comment
         end
       end
     end
-    update_attribute( :new_assmt, new_assmt_to_set )
+    update_attribute( :new_assmt, new_assmt_to_set ) if new_assmt != new_assmt_to_set
+  end
+
+  # helper method to check if assessment has changed
+
+  def assessment_changed?( a = nil )
+    ( pub_assmt != new_assmt ) || ( new_assmt != ( a || assessment ))
   end
 
   # the following method is only to validate the integrity of the current item,
@@ -148,7 +165,7 @@ class PcpItem < ActiveRecord::Base
   # self.valid?
 
   def valid_item?
-    # PCP Steps can only be created by Commenting Group
+    # PCP Items can only be created by Commenting Group
     return 1 if pcp_step.in_presenting_group?
 
     # scenario without comments; note that I can safely assume that there are at
@@ -186,23 +203,39 @@ class PcpItem < ActiveRecord::Base
     if pc.count == 0 
       # no comments for current step (yet - or if closed)
       return 8 unless ( pub_assmt == new_assmt )
-    else
+    elsif ps[ 0 ].in_commenting_group?
       na = pc.last.assessment
       pc.each do | c |
         na = c.assessment if c.is_public
       end
       return 9 unless ( new_assmt ==  na )
+    else
+      # no assessment changes allowed by presenting group
+      pc.each do | c |
+        return 10 if assessment_changed?( c.assessment )
+      end
     end
 
     # now check if pub_assmt is correctly computed from previous step:
     # determine last released assessment, if any
 
-    pc = pcp_comments.is_public.for_step( ps[ 1 ])
-    if pc.count > 0 then
-      return 10 unless ( pub_assmt == pc.last.assessment )
-    else
-      return 12 unless ( pub_assmt == new_asmt )
+    if ps[ 1 ].in_presenting_group?
+      # there should be no changes at all
+      pc = pcp_comments.for_step( ps[ 1 ])
+      pc.each do | c |
+        return 11 unless ( pub_assmt == c.assessment )
+        # note: new_assmt could be different now due to new comments
+        # in current step ...
+      end
+    else # in_commenting_group?
+      pc = pcp_comments.is_public.for_step( ps[ 1 ])
+      if pc.count > 0
+        return 12 unless ( pub_assmt == pc.last.assessment )
+      else # no public comments, assessment comes from item
+        return 13 unless ( pub_assmt == new_assmt && new_assmt == assessment )
+      end
     end
+
     return 0
   end
 

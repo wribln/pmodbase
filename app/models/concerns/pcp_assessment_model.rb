@@ -17,18 +17,14 @@ module PcpAssessmentModel
 
   class_methods do
 
-    def closed?( a )
-      a == 3
-    end
-  
     def assessment_label( i )
       ASSESSMENT_LABELS[ i ] unless i.nil?
     end
 
-  end
-
-  def closed?
-    self.class.closed?( assessment )
+    def closed?( a )
+      a == 2
+    end
+  
   end
 
   def assessment_label

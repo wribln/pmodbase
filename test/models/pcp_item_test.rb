@@ -192,30 +192,31 @@ class PcpItemTest < ActiveSupport::TestCase
 
   test 'assessments' do
     cu = accounts( :account_one )
-    # create new item, for second step
+    # create new item, for second step, use default assessment 0
     ps = pcp_steps( :one_two )
     pi = nil
     assert_difference( 'PcpItem.count' )do
-      pi = ps.pcp_items.create( pcp_subject: ps.pcp_subject, description: 'Item 4', seqno: 1, author: 'me' )
+      pi = ps.pcp_items.create( pcp_subject: ps.pcp_subject, description: 'Item 1', seqno: 1, author: 'me' )
     end
     assert_equal 0, pi.valid_item?, pi.inspect
     assert_equal 0, pi.new_assmt
-    assert_equal 0, pi.assessment
+    assert_equal 0, pi.assessment # default
     assert_nil pi.pub_assmt
     # change of :assessment should also change :new_assmt here
-    pi.assessment = 2
-    assert_equal 2, pi.new_assmt
+    pi.assessment = 1
+    assert_equal 1, pi.new_assmt
+    assert pi.save
     # add internal comment to PCP Item w/o prior release
     pc0 = nil
     assert_difference( 'PcpComment.count' )do
-      pc0 = pi.pcp_comments.create( description: 'Item 4, Comment 1', pcp_step: ps, author: 'me', assessment: 1 )
+      pc0 = pi.pcp_comments.create( description: 'Step 1, Item 1, Comment 1', pcp_step: ps, author: 'me', assessment: 0 )
     end
     pi.reload
 
     assert_equal 0, pi.valid_item?, pi.inspect
     assert_nil pi.pub_assmt
-    assert_equal 2, pi.new_assmt
-    assert_equal 2, pi.assessment
+    assert_equal 1, pi.new_assmt
+    assert_equal 1, pi.assessment
 
     # make last comment public
 
@@ -223,20 +224,20 @@ class PcpItemTest < ActiveSupport::TestCase
     pi.reload
     assert_equal 0, pi.valid_item?, pi.inspect
     assert_nil pi.pub_assmt
-    assert_equal 1, pi.new_assmt
-    assert_equal 2, pi.assessment
+    assert_equal 0, pi.new_assmt
+    assert_equal 1, pi.assessment
 
     # change assessment of last comment
 
-    pc0.assessment = 2
+    pc0.assessment = 0
     assert pc0.save, pc0.errors.inspect
     pi.reload
     assert_equal 0, pi.valid_item?, pi.inspect
     assert_nil pi.pub_assmt
-    assert_equal 2, pi.new_assmt
-    assert_equal 2, pi.assessment
+    assert_equal 0, pi.new_assmt
+    assert_equal 1, pi.assessment
 
-    # release item with a new step
+    # release item with a new step to the Presenting Party
 
     ps_new = PcpStep.new( pcp_subject: ps.pcp_subject )
     ps_new.create_release_from( ps, cu )
@@ -251,96 +252,113 @@ class PcpItemTest < ActiveSupport::TestCase
       assert pi.save, pi.errors.inspect
     end
     assert_equal 0, pi.valid_item?, pi.inspect
-    assert_equal 2, pi.pub_assmt
-    assert_equal 2, pi.new_assmt
-    assert_equal 2, pi.assessment
+    assert_equal 0, pi.pub_assmt
+    assert_equal 0, pi.new_assmt
+    assert_equal 1, pi.assessment
 
     assert_equal 1, pi.pcp_comments.count
 
     # change of :assessment (i.e. original assessment) has no effect on
     # PCP Item's integrity
 
-    pi.assessment = 0
-    assert_equal 2, pi.new_assmt
-    assert_equal 0, pi.valid_item?, pi.inspect
-
     pi.assessment = 1
-    assert_equal 2, pi.new_assmt
+    assert_equal 0, pi.new_assmt
     assert_equal 0, pi.valid_item?, pi.inspect
 
     # therefore, we change it back
 
-    pi.assessment = 2
-    assert_equal 2, pi.new_assmt
+    pi.assessment = 0
+    assert_equal 0, pi.new_assmt
     assert_equal 0, pi.valid_item?, pi.inspect
 
     # add internal comment #1 as first comment for new step
+    # BUT changing the assessment is not allowed by presenting group
 
     pc1 = nil
-    assert_difference( 'PcpComment.count' )do
-      pc1 = pi.pcp_comments.create( description: 'Step 1, Comment 1', pcp_step: ps, author: 'me', assessment: 1 )
+    assert pi.assessment_changed?( 1 )
+    assert_no_difference( 'PcpComment.count' )do
+      pc1 = pi.pcp_comments.create( description: 'Step 2, Comment 1', pcp_step: ps, author: 'me', assessment: 1 )
     end
+    assert_includes pc1.errors, :assessment
+
+    assert pi.assessment_changed?( 2 )
+    assert_no_difference( 'PcpComment.count' )do
+      pc1 = pi.pcp_comments.create( description: 'Step 2, Comment 1', pcp_step: ps, author: 'me', assessment: 2 )
+    end
+    assert_includes pc1.errors, :assessment
+
+    refute pi.assessment_changed?( 0 )
+    assert_difference( 'PcpComment.count', 1 )do
+      pc1 = pi.pcp_comments.create( description: 'Step 2, Comment 1', pcp_step: ps, author: 'me', assessment: 0 )
+    end
+
     pi.reload
+    assert_equal 1, pi.pcp_comments.for_step( ps ).count
     assert_equal 0, pi.valid_item?, pi.inspect
-    assert_equal 2, pi.pub_assmt
-    assert_equal 1, pi.new_assmt
-    assert_equal 2, pi.assessment
+    assert_equal 0, pi.pub_assmt
+    assert_equal 0, pi.new_assmt
+    assert_equal 1, pi.assessment
 
     # add internal comment #2
 
     pc2 = nil
     assert_difference( 'PcpComment.count' )do
-      pc2 = pi.pcp_comments.create( description: 'Step 1, Comment 2', pcp_step: ps, author: 'me', assessment: 2 )
+      pc2 = pi.pcp_comments.create( description: 'Step 2, Comment 2', pcp_step: ps, author: 'me', assessment: 0 )
     end
     pi.reload
+    assert_equal 2, pi.pcp_comments.for_step( ps ).count
     assert_equal 0, pi.valid_item?, pi.inspect
-    assert_equal 2, pi.pub_assmt
-    assert_equal 2, pi.new_assmt
-    assert_equal 2, pi.assessment
+    assert_equal 0, pi.pub_assmt
+    assert_equal 0, pi.new_assmt
+    assert_equal 1, pi.assessment
 
     # make comment #1 public - this is NOT the implemented process:
-    # there only the last comment should be modified ...
+    # there, only the last comment should be modified ...
 
     pc1.make_public
     pi.reload
+    assert_equal 2, pi.pcp_comments.for_step( ps ).count
     assert_equal 0, pi.valid_item?, pi.inspect
-    assert_equal 2, pi.pub_assmt
-    assert_equal 1, pi.new_assmt
-    assert_equal 2, pi.assessment
+    assert_equal 0, pi.pub_assmt
+    assert_equal 0, pi.new_assmt
+    assert_equal 1, pi.assessment
 
     # now delete first comment
 
     assert_difference( 'PcpComment.count', -1 ){ pc1.delete }
     pi.update_new_assmt( nil )
     pi.reload
+    assert_equal 1, pi.pcp_comments.for_step( ps ).count
     assert_equal 0, pi.valid_item?, pi.inspect
-    assert_equal 2, pi.pub_assmt
-    assert_equal 2, pi.new_assmt
-    assert_equal 2, pi.assessment
+    assert_equal 0, pi.pub_assmt
+    assert_equal 0, pi.new_assmt
+    assert_equal 1, pi.assessment
 
     # make one more comment and set it to public
 
     pc3 = nil
     assert_difference( 'PcpComment.count' )do
-      pc3 = pi.pcp_comments.create( description: 'Step 1, Comment 3', pcp_step: ps, author: 'me', assessment: 1, is_public: true )
+      pc3 = pi.pcp_comments.create( description: 'Step 2, Comment 3', pcp_step: ps, author: 'me', assessment: 0, is_public: true )
     end
     pi.reload
+    assert_equal 2, pi.pcp_comments.for_step( ps ).count
     assert_equal 0, pi.valid_item?, pi.inspect
-    assert_equal 2, pi.pub_assmt
-    assert_equal 1, pi.new_assmt
-    assert_equal 2, pi.assessment
+    assert_equal 0, pi.pub_assmt
+    assert_equal 0, pi.new_assmt
+    assert_equal 1, pi.assessment
 
     # final comment, internal
 
     pc4 = nil
     assert_difference( 'PcpComment.count' )do
-      pc4 = pi.pcp_comments.create( description: 'Step 1, Comment 4', pcp_step: ps, author: 'me', assessment: 2, is_public: false )
+      pc4 = pi.pcp_comments.create( description: 'Step 2, Comment 4', pcp_step: ps, author: 'me', assessment: 0, is_public: false )
     end
     pi.reload
+    assert_equal 3, pi.pcp_comments.for_step( ps ).count
     assert_equal 0, pi.valid_item?, pi.inspect
-    assert_equal 2, pi.pub_assmt
-    assert_equal 1, pi.new_assmt
-    assert_equal 2, pi.assessment
+    assert_equal 0, pi.pub_assmt
+    assert_equal 0, pi.new_assmt
+    assert_equal 1, pi.assessment
 
     # now, release this step and start a new one
 
@@ -357,12 +375,31 @@ class PcpItemTest < ActiveSupport::TestCase
       assert pi.save, pi.errors.inspect
     end
 
-    # we should have new_assmt from the previous step as new pub_assmt
+    # we are now back to the commenting group
+
+    assert ps.in_commenting_group?
+    assert_equal 0, pi.valid_item?, pi.inspect
+    assert_equal 0, pi.pub_assmt
+    assert_equal 0, pi.new_assmt
+    assert_equal 1, pi.assessment
+
+    # let's add another internal comment with new assessment
+
+    assert_equal 0, pi.pcp_comments.for_step( ps ).count
+
+    pc5 = nil
+    assert_difference( 'PcpComment.count' )do
+      pc5 = pi.pcp_comments.create( description: 'Step 3, Comment 5', pcp_step: ps, author: 'me', assessment: 1, is_public: false )
+    end
+    pi.reload
+
+    assert_equal 1, pi.pcp_comments.for_step( ps ).count
 
     assert_equal 0, pi.valid_item?, pi.inspect
-    assert_equal 1, pi.pub_assmt
+    assert_equal 0, pi.pub_assmt
     assert_equal 1, pi.new_assmt
-    assert_equal 2, pi.assessment
+    assert_equal 1, pi.assessment
+
   end
 
 end
