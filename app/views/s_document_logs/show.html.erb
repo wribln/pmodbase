@@ -6,13 +6,13 @@
     <%= form_for @s_document_log do |f| %>
       <%= render partial: 'shared/notice' %>
       <div class="form-group">
-        <%= f.label :id, class: "col-sm-3 control-label" %>
+        <%= f.label :id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <%= display_value f.object.id %>
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :group_id, class: "col-sm-3 control-label" %>
+        <%= f.label :group_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <%= display_value f.object.group.code %>
         </div>
@@ -21,7 +21,7 @@
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :receiver_group, class: "col-sm-3 control-label" %>
+        <%= f.label :receiver_group, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <%= display_value f.object.receiver_group %>
         </div>
@@ -31,7 +31,7 @@
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :function_code, class: "col-sm-3 control-label" %>
+        <%= f.label :function_code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <%= display_value f.object.function_code %>
         </div>
@@ -41,7 +41,7 @@
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :service_code, class: "col-sm-3 control-label" %>
+        <%= f.label :service_code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <%= display_value f.object.service_code %>
         </div>
@@ -51,7 +51,7 @@
         </div>
       </div>try( :label )
       <div class="form-group">
-        <%= f.label :product_code, class: "col-sm-3 control-label" %>
+        <%= f.label :product_code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <%= display_value f.object.product_code %>
         </div>
@@ -61,7 +61,7 @@
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :location_code, class: "col-sm-3 control-label" %>
+        <%= f.label :location_code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <%= display_value f.object.location_code %>
         </div>
@@ -71,7 +71,7 @@
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :phase_code, class: "col-sm-3 control-label" %>
+        <%= f.label :phase_code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <%= display_value f.object.phase_code %>
         </div>
@@ -81,7 +81,7 @@
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :dcc_code, class: "col-sm-3 control-label" %>
+        <%= f.label :dcc_code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <%= display_value f.object.dcc_code %>
         </div>
@@ -91,41 +91,41 @@
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :revision_code, class: "col-sm-3 control-label" %>
+        <%= f.label :revision_code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <%= display_value f.object.revision_code %>
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :author_date, class: "col-sm-3 control-label" %>
+        <%= f.label :author_date, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <%= display_value db_formatted_d( f.object.author_date )%>
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :title, class: "col-sm-3 control-label" %>
+        <%= f.label :title, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
           <%= display_value f.object.title %>
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :doc_id, class: "col-sm-3 control-label" %>
+        <%= f.label :doc_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
           <%= display_value f.object.doc_id %>
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :user, class: "col-sm-3 control-label" %>
+        <%= f.label :user, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
           <%= display_value ApplicationModel::some_text_and_id( f.object.account.user_name, f.object.account.id )%>
         </div>
       </div>
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-2">
-          <%= link_to t( 'button_label.edit' ), edit_s_document_log_path( @s_document_log ), class: "btn btn-lg btn-block btn-default" %>
+          <%= link_to t( 'button_label.edit' ), edit_s_document_log_path( @s_document_log ), class: 'btn btn-lg btn-block btn-default' %>
         </div>
         <div class="col-sm-2">
-          <%= link_to t( 'button_label.goto_to_list' ), s_document_logs_path, class: "btn btn-lg btn-block btn-default" %>
+          <%= link_to t( 'button_label.goto_to_list' ), s_document_logs_path, class: 'btn btn-lg btn-block btn-default' %>
         </div>
       </div>
     <% end %>

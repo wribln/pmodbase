@@ -51,19 +51,19 @@ class NetworkStation < ActiveRecord::Base
   # any redundant blanks 
 
   def code=( text )
-    write_attribute( :code, AppHelper.clean_up( text, MAX_LENGTH_OF_CODE ))
+    write_attribute( :code, AppHelper.clean_up( text ))
   end
 
   def alt_code=( text )
-    write_attribute( :alt_code, AppHelper.clean_up( text, MAX_LENGTH_OF_CODE ))
+    write_attribute( :alt_code, AppHelper.clean_up( text ))
   end
 
   def curr_name=( text )
-    write_attribute( :curr_name, AppHelper.clean_up( text, MAX_LENGTH_OF_LABEL ))
+    write_attribute( :curr_name, AppHelper.clean_up( text ))
   end
 
   def prev_name=( text )
-    write_attribute( :prev_name, AppHelper.clean_up( text, MAX_LENGTH_OF_LABEL ))
+    write_attribute( :prev_name, AppHelper.clean_up( text ))
   end
 
 end

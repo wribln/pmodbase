@@ -265,19 +265,19 @@ class DsrStatusRecord < ActiveRecord::Base
   # fix assignments
 
   def title=( text )
-    write_attribute( :title, AppHelper.clean_up( text, MAX_LENGTH_OF_TITLE ))
+    write_attribute( :title, AppHelper.clean_up( text ))
   end
 
   def sender_doc_id=( text )
-    write_attribute( :sender_doc_id, AppHelper.clean_up( text, MAX_LENGTH_OF_DOC_ID ))
+    write_attribute( :sender_doc_id, AppHelper.clean_up( text ))
   end
 
   def receiver_doc_id=( text )
-    write_attribute( :receiver_doc_id, AppHelper.clean_up( text, MAX_LENGTH_OF_DOC_ID ))
+    write_attribute( :receiver_doc_id, AppHelper.clean_up( text ))
   end
 
   def project_doc_id=( text )
-    write_attribute( :project_doc_id, AppHelper.clean_up( text, ProjectDocLog::MAX_LENGTH_OF_DOC_ID ))
+    write_attribute( :project_doc_id, AppHelper.clean_up( text ))
   end
 
   # logic checks: all conditions met?

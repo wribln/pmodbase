@@ -1,86 +1,86 @@
       <div class="form-group">
-        <%= form.label :id, class: "col-sm-3 control-label" %>
+        <%= form.label :id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <%= display_value form.object.id %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :dsr_status_record_id, class: "col-sm-3 control-label" %>
+        <%= form.label :dsr_status_record_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
-          <%= form.text_field :dsr_status_record_id, class: "form-control", required: true %>
+          <%= form.text_field :dsr_status_record_id, class: 'form-control', required: true %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :submission_no, class: "col-sm-3 control-label" %>
+        <%= form.label :submission_no, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
-          <%= form.text_field :submission_no, class: "form-control" %>
+          <%= form.text_field :submission_no, class: 'form-control' %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :sender_doc_id_version, class: "col-sm-3 control-label" %>
+        <%= form.label :sender_doc_id_version, class: 'col-sm-3 control-label' %>
         <div class="col-sm-3">
           <%= display_value form.object.dsr_status_record.try( :sender_doc_id )%>
         </div>
         <div class="col-sm-1">
-          <%= form.text_field :sender_doc_id_version, class: "form-control" %>
+          <%= form.text_field :sender_doc_id_version, class: 'form-control' %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :project_doc_id_version, class: "col-sm-3 control-label" %>
+        <%= form.label :project_doc_id_version, class: 'col-sm-3 control-label' %>
         <div class="col-sm-3">
           <%= display_value form.object.dsr_status_record.try( :project_doc_id )%>
         </div>
         <div class="col-sm-1">
-          <%= form.text_field :project_doc_id_version, class: "form-control" %>
+          <%= form.text_field :project_doc_id_version, class: 'form-control' %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :receiver_doc_id_version, class: "col-sm-3 control-label" %>
+        <%= form.label :receiver_doc_id_version, class: 'col-sm-3 control-label' %>
         <div class="col-sm-3">
           <%= display_value form.object.dsr_status_record.try( :receiver_doc_id )%>
         </div>
         <div class="col-sm-1">
-          <%= form.text_field :receiver_doc_id_version, class: "form-control" %>
+          <%= form.text_field :receiver_doc_id_version, class: 'form-control' %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :submission_receiver_doc_id, class: "col-sm-3 control-label" %>
+        <%= form.label :submission_receiver_doc_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= form.text_field :submission_receiver_doc_id, class: "form-control" %>
+          <%= form.text_field :submission_receiver_doc_id, class: 'form-control' %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :submission_project_doc_id, class: "col-sm-3 control-label" %>
+        <%= form.label :submission_project_doc_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= form.text_field :submission_project_doc_id, class: "form-control" %>
+          <%= form.text_field :submission_project_doc_id, class: 'form-control' %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :response_sender_doc_id, class: "col-sm-3 control-label" %>
+        <%= form.label :response_sender_doc_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= form.text_field :response_sender_doc_id, class: "form-control" %>
+          <%= form.text_field :response_sender_doc_id, class: 'form-control' %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :response_project_doc_id, class: "col-sm-3 control-label" %>
+        <%= form.label :response_project_doc_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= form.text_field :response_project_doc_id, class: "form-control" %>
+          <%= form.text_field :response_project_doc_id, class: 'form-control' %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :plnd_submission, class: "col-sm-3 control-label" %>
+        <%= form.label :plnd_submission, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <div class="input-group date" data-provide="datepicker">
-            <%= form.text_field :plnd_submission, class: "form-control" %>
+            <%= form.text_field :plnd_submission, class: 'form-control' %>
             <span class="input-group-addon">:::</span>
           </div>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :actl_submission, class: "col-sm-3 control-label" %>
+        <%= form.label :actl_submission, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <div class="input-group date" data-provide="datepicker">
-            <%= form.text_field :actl_submission, class: "form-control" %>
+            <%= form.text_field :actl_submission, class: 'form-control' %>
             <span class="input-group-addon">:::</span>
           </div>
         </div>
@@ -110,8 +110,8 @@
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :response_status, class: "col-sm-3 control-label" %>
+        <%= form.label :response_status, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= form.select :response_status, select_options( DsrSubmission::DSR_RESPONSE_STATUS_LABELS ), { prompt: t('.g_prompt') }, { class: "form-control" }%>
+          <%= form.select :response_status, select_options( DsrSubmission::DSR_RESPONSE_STATUS_LABELS ), { prompt: t('.g_prompt') }, { class: 'form-control' }%>
         </div>
       </div>

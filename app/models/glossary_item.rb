@@ -25,11 +25,11 @@ class GlossaryItem < ActiveRecord::Base
   scope :ff_ref,  ->  ( r ){ where( r == '0' ? 'reference_id IS NULL' : 'reference_id = ?', r )}
 
   def term=( text )
-    write_attribute( :term, AppHelper.clean_up( text, MAX_LENGTH_OF_TERM ))
+    write_attribute( :term, AppHelper.clean_up( text ))
   end
 
   def code=( text )
-    write_attribute( :code, AppHelper.clean_up( text, MAX_LENGTH_OF_CODE ))
+    write_attribute( :code, AppHelper.clean_up( text ))
   end
 
   def reference_with_id

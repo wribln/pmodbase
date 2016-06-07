@@ -45,11 +45,11 @@ class TiaList < ActiveRecord::Base
   # make sure there are no leading or trailing blanks in the strings
 
   def code=( text )
-    write_attribute( :code, AppHelper.clean_up( text, MAX_LENGTH_OF_CODE ))
+    write_attribute( :code, AppHelper.clean_up( text ))
   end
 
   def label=( text )
-    write_attribute( :label, AppHelper.clean_up( text, MAX_LENGTH_OF_LABEL ))
+    write_attribute( :label, AppHelper.clean_up( text ))
   end
 
   def next_seqno_for_item

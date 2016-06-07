@@ -1,71 +1,71 @@
       <div class="form-group">
-        <%= form.label :id, class: "col-sm-3 control-label" %>
+        <%= form.label :id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
           <%= display_value form.object.id %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :code, class: "col-sm-3 control-label" %>
+        <%= form.label :code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= form.text_field :code, class: "form-control", maxlength: MAX_LENGTH_OF_CODE, required: true %>
+          <%= form.text_field :code, class: 'form-control', required: true %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :label, class: "col-sm-3 control-label" %>
+        <%= form.label :label, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= form.text_field :label, class: "form-control", maxlength: MAX_LENGTH_OF_LABEL, required: true %>
+          <%= form.text_field :label, class: 'form-control', required: true %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :notes, class: "col-sm-3 control-label" %>
+        <%= form.label :notes, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= form.text_field :notes, class: "form-control", maxlength: MAX_LENGTH_OF_NOTE %>
+          <%= form.text_field :notes, class: 'form-control' %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :seqno, class: "col-sm-3 control-label" %>
+        <%= form.label :seqno, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
-          <%= form.text_field :seqno, class: "form-control", required: true %>
+          <%= form.text_field :seqno, class: 'form-control', required: true %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :group_category_id, class: "col-sm-3 control-label" %>
+        <%= form.label :group_category_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= form.collection_select :group_category_id, @group_categories, :id, :label, { prompt: ( action_name == 'new' ? t( 'general.select_prompt' ) : true )}, { class: "form-control", required: true } %>
+          <%= form.collection_select :group_category_id, @group_categories, :id, :label, { prompt: ( action_name == 'new' ? t( 'general.select_prompt' ) : true )}, { class: 'form-control', required: true } %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :sub_group_of_id, class: "col-sm-3 control-label" %>
+        <%= form.label :sub_group_of_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= form.collection_select :sub_group_of_id, Group.where.not( id: form.object.id ), :id, :code_and_label, { include_blank: true }, { class: "form-control" }%>
+          <%= form.collection_select :sub_group_of_id, Group.where.not( id: form.object.id ), :id, :code_and_label, { include_blank: true }, { class: 'form-control' }%>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :participating, class: "col-sm-3 control-label" %>
+        <%= form.label :participating, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
           <%= form.check_box :participating %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :s_sender_code, class: "col-sm-3 control-label" %>
+        <%= form.label :s_sender_code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
           <%= form.check_box :s_sender_code %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :s_receiver_code, class: "col-sm-3 control-label" %>
+        <%= form.label :s_receiver_code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
           <%= form.check_box :s_receiver_code %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :active, class: "col-sm-3 control-label" %>
+        <%= form.label :active, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
           <%= form.check_box :active %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :standard, class: "col-sm-3 control-label" %>
+        <%= form.label :standard, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
           <%= form.check_box :standard %>
         </div>

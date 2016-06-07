@@ -2,81 +2,187 @@ require 'test_helper'
 class PcpItemsController2Test < ActionController::TestCase
   tests PcpItemsController
 
+  # tests on closed subject
+
   setup do
     @pcp_subject = pcp_subjects( :two )
-    @account = accounts( :account_two )
     @account_p = accounts( :account_one )
     @account_c = accounts( :account_two )
-    session[ :current_user_id ] = @account.id
+    session[ :current_user_id ] = @account_p.id
     assert @pcp_subject.pcp_members.destroy_all
   end
 
-  # need two accounts in for the two different sides,
-  # presenting and commenting party; start with
-  # presenting party and no items
+  [ '1', '4' ].each do |final_assessment|
 
-  test 'set up' do
-    assert_equal 0, @pcp_subject.pcp_items.count
-    assert_equal @pcp_subject.p_owner, @account_p
-    assert_equal @pcp_subject.c_owner, @account_c
-    assert_equal @account, @account_c
-    assert_equal 0, @pcp_subject.pcp_members.count
-  end
+  test "closed subjects with final assessment = #{ final_assessment }" do
 
-  # other party should not be able to add items now
+    # using subject :two which was not yet released
 
-  test 'should not create pcp_item' do
-    assert_no_difference( 'PcpItem.count' ) do
+    @pcp_step = @pcp_subject.current_step
+    refute @pcp_step.status_closed?
+    assert_equal 0, @pcp_step.release_type # yes we can release step
+    assert @pcp_step.in_presenting_group?
+
+    current_controller = @controller
+    @controller = PcpSubjectsController.new
+
+    # release to commenting party
+
+    assert_difference( 'PcpStep.count' )do
+      get :update_release, id: @pcp_subject
+    end
+    @pcp_subject = assigns( :pcp_subject )
+    @pcp_step = @pcp_subject.current_step
+    assert_redirected_to pcp_release_doc_path( @pcp_subject, @pcp_subject.previous_step.step_no )
+
+    # commenting party makes release w/ just 1 item and 1 comment
+
+    @controller.delete_user
+    session[ :current_user_id ] = @account_c.id
+
+    @controller, current_controller = current_controller, @controller
+
+    assert_difference( 'PcpItem.count', 1 )do
       post :create, pcp_item: {
-        author: 'commenting party',
-        description: 'Item 1 by Commenting Party' },
+        author: 'commenter',
+        description: 'Nice work!' },
         pcp_subject_id: @pcp_subject
     end
-    assert_response :forbidden
+    @pcp_item = assigns( :pcp_item )
+    assert_redirected_to pcp_item_path( @pcp_item )
 
-    # create item for further tests
-
-    @pcp_item = @pcp_subject.pcp_items.new
-    @pcp_item.author = 'tester'
-    @pcp_item.description = 'test only'
-    @pcp_item.seqno = 0
-    @pcp_item.pcp_step = @pcp_subject.pcp_steps.most_recent.first
-    assert_difference( 'PcpItem.count' )do
-      assert @pcp_item.save, @pcp_item.errors.inspect
-    end    
-
-    # try to add comment - should fail
-
-    assert_no_difference( 'PcpComment.count' ) do
+    assert_difference( 'PcpComment.count', 1 )do
       post :create_comment, pcp_comment: {
-        author: 'commenting party',
-        description: 'Item 1 Comment 1 by Commenting Party' },
+        author: 'commenter',
+        description: 'Really!',
+        is_public: true },
         id: @pcp_item
     end
-    assert_response :forbidden
+    @pcp_comment = assigns( :pcp_comment )
+    refute_nil @pcp_comment
+    assert_redirected_to pcp_item_path( @pcp_item )
 
-    # add comment for further tests
+    @controller, current_controller = current_controller, @controller
 
-    @pcp_comment = @pcp_item.pcp_comments.new
-    @pcp_comment.author = 'tester'
-    @pcp_comment.description = 'test only'
-    @pcp_comment.pcp_step = @pcp_item.pcp_step
-    assert_difference( 'PcpComment.count' )do
-      assert @pcp_comment.save, @pcp_comment.errors.inspect
+    patch :update, id: @pcp_subject, 
+      pcp_subject: { 
+      pcp_steps_attributes: {  '0' => { id: @pcp_step.id, report_version: 'B', new_assmt: final_assessment }}}
+    @pcp_subject = assigns( :pcp_subject )
+    @pcp_step = @pcp_subject.current_step
+    assert_redirected_to pcp_subject_path( @pcp_subject )
+
+    assert_no_difference( 'PcpStep.count' )do
+      get :update_release, id: @pcp_subject
     end
+    @pcp_subject = assigns( :pcp_subject )
+    @pcp_step = @pcp_subject.current_step
+    assert_redirected_to pcp_release_doc_path( @pcp_subject, @pcp_step.step_no )
 
-    # attempt to delete comment
+    # subject is closed and with presenting party, return to PcpItemsController
+
+    @controller = current_controller
+    @controller.delete_user
+    @controller.reset_4_test
+    session[ :current_user_id ] = @account_p.id
+
+    assert @pcp_step.in_presenting_group?, @pcp_step.inspect
+    assert @pcp_step.status_closed?
+
+    # start testing
+
+    # should get index
+
+    get :index, pcp_subject_id: @pcp_subject
+    assert_response :success
+    refute_nil assigns( :pcp_items )
+    refute_nil assigns( :pcp_subject )
+    refute_nil assigns( :pcp_group )
+
+    # should get show
+
+    get :show, id: @pcp_item
+    assert_response :success
+    refute_nil assigns( :pcp_subject )
+    refute_nil assigns( :pcp_step )
+    assert_nil @pcp_comments_show
+    assert_nil @pcp_comment_edit
+    assert_nil @pcp_item_show
+    assert_nil @pcp_item_edit
+
+    # should get next
+
+    get :show_next, id: @pcp_item
+    assert_response :success
+    refute_nil assigns( :pcp_item )
+    refute_nil assigns( :pcp_step )
+    assert_nil @pcp_comments_show
+    assert_nil @pcp_comment_edit
+    assert_nil @pcp_item_show
+    assert_nil @pcp_item_edit#
+
+    # should not do an update_publish
+
+    get :update_publish, id: @pcp_item
+    assert_response :unprocessable_entity
+
+    # should not get new
+
+    get :new, pcp_subject_id: @pcp_subject
+    assert_response :unprocessable_entity
+
+    # should not get new_comment
+
+    get :new_comment, id: @pcp_item
+    assert_response :unprocessable_entity
+
+    # should not edit item
+
+    get :edit, id: @pcp_item
+    assert_response :unprocessable_entity
+
+    # should not edit comment
+
+    get :edit_comment, id: @pcp_comment
+    assert_response :unprocessable_entity
+
+    # should not create item
+
+    post :create, pcp_subject_id: @pcp_subject
+    assert_response :unprocessable_entity
+
+    # should not create comment
+
+    post :create_comment, id: @pcp_item
+    assert_response :unprocessable_entity
+
+    # should not update item
+
+    patch :update, id: @pcp_item
+    assert_response :unprocessable_entity
+
+    # should not update comment
+
+    patch :update_comment, id: @pcp_comment
+    assert_response :unprocessable_entity
+
+    # should not destroy item
+
+    assert_no_difference( 'PcpItem.count' )do
+      delete :destroy, id: @pcp_item
+    end
+    assert @pcp_subject.user_is_owner_or_deputy?( @account_p.id, @pcp_item.pcp_step.acting_group_index )
+    refute_nil assigns( :pcp_subject )
+    refute_nil assigns( :pcp_item )
+    assert_redirected_to pcp_subject_pcp_items_path( @pcp_subject )
+
+    # should not destroy comment
 
     assert_no_difference( 'PcpComment.count' )do
       delete :destroy_comment, id: @pcp_comment
     end
-    assert_response :forbidden
+    assert_redirected_to pcp_item_path( @pcp_item )
 
-    # a good situation to remove item plus comment
-
-    assert_difference([ 'PcpComment.count', 'PcpItem.count' ], -1 )do
-      @pcp_item.destroy
-    end
+  end
 
   end
 

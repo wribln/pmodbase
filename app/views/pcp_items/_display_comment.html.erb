@@ -1,26 +1,26 @@
     <%= fields_for :pcp_comment, display_comment do |f| %>
       <div class="form-group">
-        <%= f.label :author, class: "col-sm-3 control-label" %>
+        <%= f.label :author, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <%= display_value display_comment.author %>
         </div>
-        <%= f.label :pcp_step, t( 'pcp_items.comment.in_step' ), class: "col-sm-2 control-label" %>
+        <%= f.label :pcp_step, t( 'pcp_items.comment.in_step' ), class: 'col-sm-2 control-label' %>
         <div class="col-sm-2">
           <%= display_value display_comment.pcp_step.try :step_label %>
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :description, class: "col-sm-3 control-label" %>
+        <%= f.label :description, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
           <%= display_lines display_comment.description %>
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :assessment, class: "col-sm-3 control-label" %>
+        <%= f.label :assessment, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <%= display_value PcpItem.assessment_label( display_comment.assessment ) %>
         </div>
-        <%= f.label :is_public, t( 'pcp_items.comment.make_public' ), class: "col-sm-2 control-label" %>
+        <%= f.label :is_public, t( 'pcp_items.comment.make_public' ), class: 'col-sm-2 control-label' %>
         <div class="col-sm-1">
           <%= display_check_box display_comment.is_public %>
         </div>

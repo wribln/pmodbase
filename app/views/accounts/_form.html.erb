@@ -1,41 +1,41 @@
       <div class="form-group">
-        <%= form.label :id, class: "col-sm-3 control-label" %>
+        <%= form.label :id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <%= display_value form.object.id %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :name, class: "col-sm-3 control-label" %>
+        <%= form.label :name, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= form.text_field :name, class: "form-control", maxlength: MAX_LENGTH_OF_ACCOUNT_NAME, required: true %>
+          <%= form.text_field :name, class: 'form-control', required: true %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :password, class: "col-sm-3 control-label" %>
+        <%= form.label :password, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= form.password_field :password, class: "form-control", maxlength: MAX_LENGTH_OF_PASSWORD, required: ( action_name == 'new' )%>
+          <%= form.password_field :password, class: 'form-control', required: ( action_name == 'new' )%>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :password_confirmation, t( 'accounts.password_conf' ), class: "col-sm-3 control-label" %>
+        <%= form.label :password_confirmation, t( 'accounts.password_conf' ), class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= form.password_field :password_confirmation, class: "form-control", maxlength: MAX_LENGTH_OF_PASSWORD, required: ( action_name == 'new' )%>
+          <%= form.password_field :password_confirmation, class: 'form-control', required: ( action_name == 'new' )%>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :person_id, class: "col-sm-3 control-label" %>
+        <%= form.label :person_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= form.text_field :person_id, class: "form-control", required: true %>
+          <%= form.text_field :person_id, class: 'form-control', required: true %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :active, class: "col-sm-3 control-label" %>
+        <%= form.label :active, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
           <%= form.check_box :active %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :keep_base_open, class: "col-sm-3 control-label" %>
+        <%= form.label :keep_base_open, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
           <%= form.check_box :keep_base_open %>
         </div>

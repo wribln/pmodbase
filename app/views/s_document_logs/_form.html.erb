@@ -1,86 +1,86 @@
       <div class="form-group">
-        <%= form.label :id, class: "col-sm-3 control-label" %>
+        <%= form.label :id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <%= display_value form.object.id %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :group_id, class: "col-sm-3 control-label" %>
+        <%= form.label :group_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
           <%= form.select :group_id, @group_selection, { prompt: t( '.g_prompt' )},{ class: 'form-control', required: true }%>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :receiver_group, class: "col-sm-3 control-label" %>
+        <%= form.label :receiver_group, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
           <%= form.collection_select( :receiver_group, Group.active_only.receiver_codes, :code, :code_and_label, { include_blank: true }, { class: 'form-control' })%>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :function_code, class: "col-sm-3 control-label" %>
+        <%= form.label :function_code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
           <%= form.collection_select( :function_code, FunctionCode.active_only, :code, :code_and_label, { include_blank: true }, { class: 'form-control' })%>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :service_code, class: "col-sm-3 control-label" %>
+        <%= form.label :service_code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
           <%= form.collection_select( :service_code, ServiceCode.active_only, :code, :code_and_label, { include_blank: true }, { class: 'form-control' })%>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :product_code, class: "col-sm-3 control-label" %>
+        <%= form.label :product_code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
           <%= form.collection_select( :product_code, ProductCode.active_only, :code, :code_and_label, { include_blank: true }, { class: 'form-control' })%>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :location_code, class: "col-sm-3 control-label" %>
+        <%= form.label :location_code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
           <%= form.collection_select( :location_code, LocationCode.all, :code, :code_and_label, { include_blank: true }, { class: 'form-control' })%>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :phase_code, class: "col-sm-3 control-label" %>
+        <%= form.label :phase_code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
           <%= form.collection_select( :phase_code, SiemensPhase.all, :code, :code_and_label, { include_blank: true }, { class: 'form-control' })%>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :dcc_code, class: "col-sm-3 control-label" %>
+        <%= form.label :dcc_code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
           <%= form.collection_select( :dcc_code, DccCode.active_only, :code, :code_and_label, { prompt: t( '.g_prompt' )}, { class: 'form-control' })%>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :revision_code, class: "col-sm-3 control-label" %>
+        <%= form.label :revision_code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= form.text_field :revision_code, class: "form-control" %>
+          <%= form.text_field :revision_code, class: 'form-control' %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :author_date, class: "col-sm-3 control-label" %>
+        <%= form.label :author_date, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <div class="input-group date" data-provide="datepicker">
-            <%= form.text_field :author_date, class: "form-control" %>
+            <%= form.text_field :author_date, class: 'form-control' %>
             <span class="input-group-addon">:::</span>
           </div>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :title, class: "col-sm-3 control-label" %>
+        <%= form.label :title, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
-          <%= form.text_field :title, class: "form-control" %>
+          <%= form.text_field :title, class: 'form-control' %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :doc_id, class: "col-sm-3 control-label" %>
+        <%= form.label :doc_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
           <%= display_value form.object.doc_id %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :user, class: "col-sm-3 control-label" %>
+        <%= form.label :user, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
           <%= display_value ApplicationModel::some_text_and_id( form.object.account.user_name, form.object.account.id )%>
         </div>

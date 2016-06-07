@@ -99,31 +99,31 @@ class DsrSubmission < ActiveRecord::Base
   # fix assignments
 
   def sender_doc_id_version=( text )
-    write_attribute( :sender_doc_id_version, AppHelper.clean_up( text, MAX_LENGTH_OF_DOC_VERSION ))
+    write_attribute( :sender_doc_id_version, AppHelper.clean_up( text ))
   end
 
   def receiver_doc_id_version=( text )
-    write_attribute( :receiver_doc_id_version, AppHelper.clean_up( text, MAX_LENGTH_OF_DOC_VERSION ))
+    write_attribute( :receiver_doc_id_version, AppHelper.clean_up( text ))
   end
 
   def project_doc_id_version=( text )
-    write_attribute( :project_doc_id_version, AppHelper.clean_up( text, MAX_LENGTH_OF_DOC_VERSION ))
+    write_attribute( :project_doc_id_version, AppHelper.clean_up( text ))
   end    
 
   def submission_receiver_doc_id=( text )
-    write_attribute( :submission_receiver_doc_id, AppHelper.clean_up( text, MAX_LENGTH_OF_DOC_ID ))
+    write_attribute( :submission_receiver_doc_id, AppHelper.clean_up( text ))
   end
 
   def submission_project_doc_id=( text )
-    write_attribute( :submission_project_doc_id, AppHelper.clean_up( text, ProjectDocLog::MAX_LENGTH_OF_DOC_ID ))
+    write_attribute( :submission_project_doc_id, AppHelper.clean_up( text ))
   end
 
   def response_sender_doc_id=( text )
-    write_attribute( :response_sender_doc_id, AppHelper.clean_up( text, MAX_LENGTH_OF_DOC_ID ))
+    write_attribute( :response_sender_doc_id, AppHelper.clean_up( text ))
   end
 
   def response_project_doc_id=( text )
-    write_attribute( :response_project_doc_id, AppHelper.clean_up( text, MAX_LENGTH_OF_DOC_ID ))
+    write_attribute( :response_project_doc_id, AppHelper.clean_up( text ))
   end
 
 end

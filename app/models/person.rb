@@ -38,11 +38,11 @@ class Person < ActiveRecord::Base
   # any redundant blanks
 
   def formal_name=( text )
-    write_attribute( :formal_name, AppHelper.clean_up( text, MAX_LENGTH_OF_PERSON_NAMES, '' ))
+    write_attribute( :formal_name, AppHelper.clean_up( text ))
   end
 
   def informal_name=( text )
-    write_attribute( :informal_name, AppHelper.clean_up( text, MAX_LENGTH_OF_PERSON_NAMES, '' ))
+    write_attribute( :informal_name, AppHelper.clean_up( text ))
   end
 
   # return (in)formal name unless it is empty, then return the other name

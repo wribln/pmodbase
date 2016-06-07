@@ -21,15 +21,15 @@ class SiemensPhase < ActiveRecord::Base
   # any redundant blanks 
 
   def code=( text )
-    write_attribute( :code, AppHelper.clean_up( text, MAX_LENGTH_OF_CODE ))
+    write_attribute( :code, AppHelper.clean_up( text ))
   end
 
   def label_p=( text )
-    write_attribute( :label_p, AppHelper.clean_up( text, MAX_LENGTH_OF_LABEL ))
+    write_attribute( :label_p, AppHelper.clean_up( text ))
   end
 
   def label_m=( text )
-    write_attribute( :label_m, AppHelper.clean_up( text, MAX_LENGTH_OF_LABEL ))
+    write_attribute( :label_m, AppHelper.clean_up( text ))
   end
 
   def code_and_label

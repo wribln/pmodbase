@@ -23,11 +23,11 @@ class Reference < ActiveRecord::Base
   # any redundant blanks
 
   def code=( text )
-    write_attribute( :code, AppHelper.clean_up( text, MAX_LENGTH_OF_CODE ))
+    write_attribute( :code, AppHelper.clean_up( text ))
   end
 
   def project_doc_id=( text )
-    write_attribute( :project_doc_id, AppHelper.clean_up( text, ProjectDocLog::MAX_LENGTH_OF_DOC_ID ))
+    write_attribute( :project_doc_id, AppHelper.clean_up( text ))
   end
 
   # prepare a collection which includes an entry to be used for empty records

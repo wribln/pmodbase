@@ -94,6 +94,10 @@ class PcpItemsController < ApplicationController
     get_item
     @pcp_subject = @pcp_item.pcp_subject
     @pcp_step = @pcp_subject.current_step
+    if @pcp_step.status_closed?
+      render_bad_logic t( 'pcp_items.msg.subj_closed')
+      return
+    end
     determine_group_map( :to_update )
     unless @pcp_subject.user_is_owner_or_deputy?( current_user.id, @pcp_group_map )
       render_no_permission
@@ -160,8 +164,7 @@ class PcpItemsController < ApplicationController
 
   def new_comment
     get_item
-    @pcp_subject = @pcp_item.pcp_subject
-    @pcp_step = @pcp_subject.current_step
+    @pcp_step = @pcp_item.pcp_step
     if @pcp_step.status_closed?
       render_bad_logic t( 'pcp_items.msg.subj_closed' )
       return
@@ -189,7 +192,11 @@ class PcpItemsController < ApplicationController
 
   def edit
     get_item
-    @pcp_subject = @pcp_item.pcp_subject
+    @pcp_step = @pcp_item.pcp_step
+    if @pcp_step.status_closed?
+      render_bad_logic t( 'pcp_items.msg.subj_closed')
+      return
+    end
     # if there already PCP Comments, redirect to modify last comment
     unless @pcp_item.pcp_comments.empty?
       respond_to do |format|
@@ -197,15 +204,18 @@ class PcpItemsController < ApplicationController
       end
       return
     end
-    # can only edit PCP Item while it is not yet released
-    unless @pcp_item.pcp_step == @pcp_subject.current_step
+    if @pcp_step.status_closed?
+      render_bad_logic t( 'pcp_items.msg.subj_closed' )
+      return
+    end
+     # can only edit PCP Item while it is not yet released
+    @pcp_subject = @pcp_item.pcp_subject
+    unless @pcp_step == @pcp_subject.current_step
       respond_to do |format|
         format.html { redirect_to @pcp_item, notice: t( 'pcp_items.msg.edit_bad_step' )}
       end
       return
     end
-    
-    @pcp_step = @pcp_subject.current_step
     unless user_has_permission?( :to_update )
       render_no_permission
       return
@@ -223,6 +233,10 @@ class PcpItemsController < ApplicationController
     @pcp_item = @pcp_comment.pcp_item
     @pcp_subject = @pcp_item.pcp_subject
     @pcp_step = @pcp_subject.current_step
+    if @pcp_step.status_closed?
+      render_bad_logic t( 'pcp_items.msg.subj_closed' )
+      return
+    end
     if @pcp_comment.pcp_step == @pcp_step then
       if user_has_permission?( :to_update ) then
         parent_breadcrumb( :pcp_subject, pcp_subject_path( @pcp_subject ))
@@ -246,6 +260,10 @@ class PcpItemsController < ApplicationController
   def create
     get_subject
     @pcp_step = @pcp_subject.current_step
+    if @pcp_step.status_closed?
+      render_bad_logic t( 'pcp_items.msg.subj_closed' )
+      return
+    end
     if @pcp_step.in_commenting_group? && user_has_permission?( :to_update ) then
       @pcp_item =  @pcp_subject.pcp_items.new( pcp_item_params )
       @pcp_item.transaction do
@@ -272,6 +290,10 @@ class PcpItemsController < ApplicationController
     get_item
     @pcp_subject = @pcp_item.pcp_subject
     @pcp_step = @pcp_subject.current_step
+    if @pcp_step.status_closed?
+      render_bad_logic t( 'pcp_items.msg.subj_closed')
+      return
+    end
     if user_has_permission?( :to_update ) then
       @pcp_comment = @pcp_item.pcp_comments.new( pcp_comment_params )
       @pcp_comment.pcp_step = @pcp_step
@@ -297,6 +319,10 @@ class PcpItemsController < ApplicationController
     get_item
     @pcp_subject = @pcp_item.pcp_subject
     @pcp_step = @pcp_subject.current_step
+    if @pcp_step.status_closed?
+      render_bad_logic t( 'pcp_items.msg.subj_closed')
+      return
+    end
     if user_has_permission?( :to_update ) then
       respond_to do |format|
         if @pcp_item.update( pcp_item_params )
@@ -319,6 +345,10 @@ class PcpItemsController < ApplicationController
     @pcp_item = @pcp_comment.pcp_item
     @pcp_subject = @pcp_item.pcp_subject
     @pcp_step = @pcp_subject.current_step
+    if @pcp_step.status_closed?
+      render_bad_logic t( 'pcp_items.msg.subj_closed')
+      return
+    end
     if user_has_permission?( :to_update ) then
       respond_to do |format|
         if @pcp_comment.update( pcp_comment_params )
@@ -341,8 +371,8 @@ class PcpItemsController < ApplicationController
   def destroy
     get_item
     @pcp_subject = @pcp_item.pcp_subject
-    if @pcp_subject.user_is_owner_or_deputy?( current_user.id, @pcp_item.pcp_step.acting_group_index )then
-      if @pcp_item.released? then
+    if @pcp_subject.user_is_owner_or_deputy?( current_user.id, @pcp_item.pcp_step.acting_group_index )
+      if @pcp_item.released?
         notice = 'pcp_items.msg.cannot_del'
       else  
         @pcp_item.destroy
@@ -366,8 +396,8 @@ class PcpItemsController < ApplicationController
   def destroy_comment
     get_comment
     @pcp_item = @pcp_comment.pcp_item
-    if @pcp_subject.user_is_owner_or_deputy?( current_user.id, @pcp_comment.pcp_step.acting_group_index )then
-      if @pcp_comment.published? then
+    if @pcp_subject.user_is_owner_or_deputy?( current_user.id, @pcp_comment.pcp_step.acting_group_index )
+      if @pcp_comment.published?
         notice = 'pcp_comments.msg.cannot_del'
       else
         @pcp_comment.transction do
@@ -433,9 +463,16 @@ class PcpItemsController < ApplicationController
           @pcp_comment_edit = pcp_comment_last
         end
 
-        # only if the item was created in the current step, there is
-        # no comment to be edited yet, we could allow to edit the item
-        # if the current group is acting
+        # only if 
+        # (1) the item was created in the current step,
+        # (2) subject closed, (this condition does not need to be checked as
+        #     this cannot happen: items can only be modified by commenting
+        #     group but a closed subject would be with presenting group)
+        # (3) item is not yet released (no need to check as condition (1)
+        #     would fail if item is released)
+        # (4) there is no comment to be edited yet,
+        # (5) the current group is acting
+        # we could allow to edit the item
 
         if @pcp_item.pcp_step == pcp_subject_step &&
            @pcp_comments_show.empty? &&

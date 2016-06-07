@@ -1,14 +1,14 @@
       <div class="form-group">
-        <%%= form.label :id, class: "col-sm-3 control-label" %>
+        <%%= form.label :id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <%%= display_value form.object.id %>
         </div>
       </div>
 <% attributes.each do |attribute| -%>
       <div class="form-group">
-        <%%= form.label :<%= attribute.name %>, class: "col-sm-3 control-label" %>
+        <%%= form.label :<%= attribute.name %>, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%%= form.text_field :<%= attribute.name %>, class: "form-control" %>
+          <%%= form.text_field :<%= attribute.name %>, class: 'form-control' %>
         </div>
       </div>
 <% end %>

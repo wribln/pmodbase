@@ -1,33 +1,33 @@
       <div class="form-group">
-        <%= form.label :document_status, class: "col-sm-3 control-label" %>
+        <%= form.label :document_status, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
           <%= display_value form.object.document_status %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :label, class: "col-sm-3 control-label" %>
+        <%= form.label :label, class: 'col-sm-3 control-label' %>
         <div class="col-sm-3">
           <%= display_value DsrStatusRecord::DSR_STATUS_RECORD_STATUS_LABELS[ form.object.document_status ] %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :document_progress, class: "col-sm-3 control-label" %>
+        <%= form.label :document_progress, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
-          <%= form.text_field :document_progress, class: "form-control" %>
+          <%= form.text_field :document_progress, class: 'form-control' %>
         </div>
         <p class="form-control-static">%</p>
       </div>
       <div class="form-group">
-        <%= form.label :prepare_progress, class: "col-sm-3 control-label" %>
+        <%= form.label :prepare_progress, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
-          <%= form.text_field :prepare_progress, class: "form-control" %>
+          <%= form.text_field :prepare_progress, class: 'form-control' %>
         </div>
         <p class="form-control-static">%</p>
       </div>
       <div class="form-group">
-        <%= form.label :approve_progress, class: "col-sm-3 control-label" %>
+        <%= form.label :approve_progress, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
-          <%= form.text_field :approve_progress, class: "form-control" %>
+          <%= form.text_field :approve_progress, class: 'form-control' %>
         </div>
         <p class="form-control-static">%</p>
       </div>

@@ -6,47 +6,47 @@
     <%= form_for @programme_activity do |f| %>
       <%= render partial: 'shared/notice' %>
       <div class="form-group">
-        <%= f.label :id, class: "col-sm-3 control-label" %>
+        <%= f.label :id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
-          <%= f.text_field :id, class: "form-control", readonly: true %>
+          <%= f.text_field :id, class: 'form-control', readonly: true %>
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :project_id, class: "col-sm-3 control-label" %>
+        <%= f.label :project_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= f.text_field :project_id, class: "form-control", readonly: true %>
+          <%= f.text_field :project_id, class: 'form-control', readonly: true %>
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :activity_id, class: "col-sm-3 control-label" %>
+        <%= f.label :activity_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= f.text_field :activity_id, class: "form-control", readonly: true %>
+          <%= f.text_field :activity_id, class: 'form-control', readonly: true %>
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :activity_label, class: "col-sm-3 control-label" %>
+        <%= f.label :activity_label, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
-          <%= f.text_field :activity_label, class: "form-control", readonly: true %>
+          <%= f.text_field :activity_label, class: 'form-control', readonly: true %>
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :start_date, class: "col-sm-3 control-label" %>
+        <%= f.label :start_date, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= f.text_field :start_date, class: "form-control", readonly: true %>
+          <%= f.text_field :start_date, class: 'form-control', readonly: true %>
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :finish_date, class: "col-sm-3 control-label" %>
+        <%= f.label :finish_date, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= f.text_field :finish_date, class: "form-control", readonly: true %>
+          <%= f.text_field :finish_date, class: 'form-control', readonly: true %>
         </div>
       </div>
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-2">
-          <%= link_to t( 'button_label.edit' ), edit_programme_activity_path( @programme_activity ), class: "btn btn-lg btn-block btn-default" %>
+          <%= link_to t( 'button_label.edit' ), edit_programme_activity_path( @programme_activity ), class: 'btn btn-lg btn-block btn-default' %>
         </div>
         <div class="col-sm-2">
-          <%= link_to t( 'button_label.goto_to_list' ), programme_activities_path, class: "btn btn-lg btn-block btn-default" %>
+          <%= link_to t( 'button_label.goto_to_list' ), programme_activities_path, class: 'btn btn-lg btn-block btn-default' %>
         </div>
       </div>
     <% end %>

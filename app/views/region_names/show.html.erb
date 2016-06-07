@@ -6,35 +6,35 @@
     <%= form_for @region_name do |rn| %>
       <%= render partial: 'shared/notice' %>
       <div class="form-group">
-        <%= rn.label :id, class: "col-sm-3 control-label" %>
+        <%= rn.label :id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
-          <%= rn.text_field :id, class: "form-control", readonly: true %>
+          <%= rn.text_field :id, class: 'form-control', readonly: true %>
         </div>
       </div>
       <div class="form-group">
-        <%= rn.label :country_name_id, class: "col-sm-3 control-label" %>
+        <%= rn.label :country_name_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <%= display_value rn.object.country_code %>
         </div>
       </div>
       <div class="form-group">
-        <%= rn.label :code, class: "col-sm-3 control-label" %>
+        <%= rn.label :code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= rn.text_field :code, class: "form-control",  readonly: true %>
+          <%= rn.text_field :code, class: 'form-control',  readonly: true %>
         </div>
       </div>
       <div class="form-group">
-        <%= rn.label :label, class: "col-sm-3 control-label" %>
+        <%= rn.label :label, class: 'col-sm-3 control-label' %>
         <div class="col-sm-5">
-          <%= rn.text_field :label, class: "form-control",  readonly: true %>
+          <%= rn.text_field :label, class: 'form-control',  readonly: true %>
         </div>
       </div>
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-2">
-          <%= link_to t( 'button_label.edit' ), edit_region_name_path( @region_name ), class: "btn btn-lg btn-block btn-default" %>
+          <%= link_to t( 'button_label.edit' ), edit_region_name_path( @region_name ), class: 'btn btn-lg btn-block btn-default' %>
         </div>
         <div class="col-sm-2">
-          <%= link_to t( 'button_label.goto_to_list' ), region_names_path, class: "btn btn-lg btn-block btn-default" %>
+          <%= link_to t( 'button_label.goto_to_list' ), region_names_path, class: 'btn btn-lg btn-block btn-default' %>
         </div>
       </div>
     <% end %>

@@ -1,48 +1,48 @@
       <div class="form-group">
-        <%= form.label :id, class: "col-sm-3 control-label" %>
+        <%= form.label :id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <%= display_value form.object.id %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :code, class: "col-sm-3 control-label" %>
+        <%= form.label :code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= form.text_field :code, class: "form-control", required: true, maxlength: MAX_LENGTH_OF_CODE %>
+          <%= form.text_field :code, class: 'form-control', required: true %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :label, class: "col-sm-3 control-label" %>
+        <%= form.label :label, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= form.text_field :label, class: "form-control", required: true, max_length: MAX_LENGTH_OF_LABEL %>
+          <%= form.text_field :label, class: 'form-control', required: true %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :active, class: "col-sm-3 control-label" %>
+        <%= form.label :active, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
           <%= form.check_box :active %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :master, class: "col-sm-3 control-label" %>
+        <%= form.label :master, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
           <%= form.check_box :master %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :standard, class: "col-sm-3 control-label" %>
+        <%= form.label :standard, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
           <%= form.check_box :standard %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :heading, class: "col-sm-3 control-label" %>
+        <%= form.label :heading, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
           <%= form.check_box :heading %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :note, class: "col-sm-3 control-label" %>
+        <%= form.label :note, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
-          <%= form.text_field :note, class: "form-control", max_length: MAX_LENGTH_OF_NOTE %>
+          <%= form.text_field :note, class: 'form-control' %>
         </div>
       </div>

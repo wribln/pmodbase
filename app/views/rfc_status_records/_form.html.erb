@@ -1,135 +1,135 @@
       <div class="form-group">
-        <%= form.label :id, class: "col-sm-3 control-label" %>
+        <%= form.label :id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <%= display_value form.object.id %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :rfc_type, class: "col-sm-3 control-label" %>
+        <%= form.label :rfc_type, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= form.text_field :rfc_type, class: "form-control", value: @workflow.workflow_label( @rfc_status_record.rfc_type ), disabled: true %>
+          <%= form.text_field :rfc_type, class: 'form-control', value: @workflow.workflow_label( @rfc_status_record.rfc_type ), disabled: true %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :title, class: "col-sm-3 control-label" %>
+        <%= form.label :title, class: 'col-sm-3 control-label' %>
         <div class="col-sm-9">
         <%- if @workflow.param_permitted?( :title ) then -%>
-          <%= form.text_field :title, class: "form-control" %>
+          <%= form.text_field :title, class: 'form-control' %>
         <%- else -%>
-          <%= form.text_field :title, class: "form-control", disabled: true %>
+          <%= form.text_field :title, class: 'form-control', disabled: true %>
         <%- end -%>
         </div>
       </div>
       <%# - - - subform with RfC Document Data - - - %>
       <%= form.fields_for @rfc_document do |doc_fields| -%>
         <div class="form-group">
-          <%= doc_fields.label :version, class: "col-sm-3 control-label" %>
+          <%= doc_fields.label :version, class: 'col-sm-3 control-label' %>
           <div class="col-sm-1">
-            <%= doc_fields.text_field :version, class: "form-control", disabled: true %>
+            <%= doc_fields.text_field :version, class: 'form-control', disabled: true %>
           </div>
         </div>
         <div class="form-group">
-          <%= doc_fields.label :question, class: "col-sm-3 control-label" %>
+          <%= doc_fields.label :question, class: 'col-sm-3 control-label' %>
           <div class="col-sm-9">
             <%- if @workflow.param_permitted?( :rfc_document, :question ) -%> 
-              <%= doc_fields.text_area :question, cols: DEFAULT_COLS_TEXTAREA, rows: DEFAULT_ROWS_TEXTAREA, class: "form-control" %>
+              <%= doc_fields.text_area :question, cols: DEFAULT_COLS_TEXTAREA, rows: DEFAULT_ROWS_TEXTAREA, class: 'form-control' %>
             <%- else -%>
-              <%= doc_fields.text_area :question, cols: DEFAULT_COLS_TEXTAREA, rows: DEFAULT_ROWS_TEXTAREA, class: "form-control", disabled: true %>
+              <%= doc_fields.text_area :question, cols: DEFAULT_COLS_TEXTAREA, rows: DEFAULT_ROWS_TEXTAREA, class: 'form-control', disabled: true %>
             <%- end -%>            
           </div>
         </div>
         <div class="form-group">
-          <%= doc_fields.label :answer, class: "col-sm-3 control-label" %>
+          <%= doc_fields.label :answer, class: 'col-sm-3 control-label' %>
           <div class="col-sm-9">
             <%- if @workflow.param_permitted?( :rfc_document, :answer ) -%> 
-              <%= doc_fields.text_area :answer, cols: DEFAULT_COLS_TEXTAREA, rows: ( DEFAULT_ROWS_TEXTAREA * 2 ), class: "form-control" %>
+              <%= doc_fields.text_area :answer, cols: DEFAULT_COLS_TEXTAREA, rows: ( DEFAULT_ROWS_TEXTAREA * 2 ), class: 'form-control' %>
             <%- else -%>
-              <%= doc_fields.text_area :answer, cols: DEFAULT_COLS_TEXTAREA, rows: ( DEFAULT_ROWS_TEXTAREA * 2 ), class: "form-control", disabled: true %>
+              <%= doc_fields.text_area :answer, cols: DEFAULT_COLS_TEXTAREA, rows: ( DEFAULT_ROWS_TEXTAREA * 2 ), class: 'form-control', disabled: true %>
             <%- end -%>            
           </div>
         </div>
         <div class="form-group">
-          <%= doc_fields.label :note, class: "col-sm-3 control-label" %>
+          <%= doc_fields.label :note, class: 'col-sm-3 control-label' %>
           <div class="col-sm-9">
             <%- if @workflow.param_permitted?( :rfc_document, :note ) -%> 
-              <%= doc_fields.text_area :note, cols: DEFAULT_COLS_TEXTAREA, rows: DEFAULT_ROWS_TEXTAREA, class: "form-control" %>
+              <%= doc_fields.text_area :note, cols: DEFAULT_COLS_TEXTAREA, rows: DEFAULT_ROWS_TEXTAREA, class: 'form-control' %>
             <%- else -%>
-              <%= doc_fields.text_area :note, cols: DEFAULT_COLS_TEXTAREA, rows: DEFAULT_ROWS_TEXTAREA, class: "form-control", disabled: true %>
+              <%= doc_fields.text_area :note, cols: DEFAULT_COLS_TEXTAREA, rows: DEFAULT_ROWS_TEXTAREA, class: 'form-control', disabled: true %>
             <%- end -%>            
           </div>
         </div>
       <%- end -%>
       <div class="form-group">
-        <%= form.label :asking_group_id, class: "col-sm-3 control-label" -%>
+        <%= form.label :asking_group_id, class: 'col-sm-3 control-label' -%>
         <div class="col-sm-2">
           <%- if @workflow.param_permitted?( :asking_group_id ) then %>
-            <%= form.select :asking_group_id, @author_groups, { prompt: t( '.g_prompt' )}, class: "form-control" %>
+            <%= form.select :asking_group_id, @author_groups, { prompt: t( '.g_prompt' )}, class: 'form-control' %>
           <%- else -%>
-            <%= form.text_field :asking_group_id, class: "form-control", value: form.object.asking_group_code, disabled: true %>
+            <%= form.text_field :asking_group_id, class: 'form-control', value: form.object.asking_group_code, disabled: true %>
           <%- end -%>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :answering_group_id, class: "col-sm-3 control-label" %>
+        <%= form.label :answering_group_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <%- if @workflow.param_permitted?( :answering_group_id ) then %>
-            <%= form.select :answering_group_id, @resp_groups, { prompt: t( '.g_prompt' )}, class: "form-control" %>
+            <%= form.select :answering_group_id, @resp_groups, { prompt: t( '.g_prompt' )}, class: 'form-control' %>
           <%- else -%>
-            <%= form.text_field :answering_group_id, class: "form-control", value: form.object.answering_group_code, disabled: true %>
+            <%= form.text_field :answering_group_id, class: 'form-control', value: form.object.answering_group_code, disabled: true %>
           <%- end -%>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :project_doc_id, class: "col-sm-3 control-label" %>
+        <%= form.label :project_doc_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
           <%- if @workflow.param_permitted?( :project_doc_id ) then %>
-            <%= form.text_field :project_doc_id, class: "form-control", maxlength: ProjectDocLog::MAX_LENGTH_OF_DOC_ID %>
+            <%= form.text_field :project_doc_id, class: 'form-control' %>
           <%- else -%>
-            <%= form.text_field :project_doc_id, class: "form-control", disabled: true %>
+            <%= form.text_field :project_doc_id, class: 'form-control', disabled: true %>
           <%- end -%>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :project_rms_id, class: "col-sm-3 control-label" %>
+        <%= form.label :project_rms_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
           <%- if @workflow.param_permitted?( :project_rms_id ) then %>
-            <%= form.text_field :project_rms_id, class: "form-control", maxlength: MAX_LENGTH_OF_RMS_ID %>
+            <%= form.text_field :project_rms_id, class: 'form-control' %>
           <%- else -%>
-            <%= form.text_field :project_rms_id, class: "form-control", disabled: true %>
+            <%= form.text_field :project_rms_id, class: 'form-control', disabled: true %>
           <%- end -%>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :asking_group_doc_id, class: "col-sm-3 control-label" %>
+        <%= form.label :asking_group_doc_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
           <%- if @workflow.param_permitted?( :asking_group_doc_id ) then %>
-            <%= form.text_field :asking_group_doc_id, class: "form-control", maxlength: MAX_LENGTH_OF_DOC_ID %>
+            <%= form.text_field :asking_group_doc_id, class: 'form-control' %>
           <%- else -%>
-            <%= form.text_field :asking_group_doc_id, class: "form-control", disabled: true %>
+            <%= form.text_field :asking_group_doc_id, class: 'form-control', disabled: true %>
           <%- end -%>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :answering_group_doc_id, class: "col-sm-3 control-label" %>
+        <%= form.label :answering_group_doc_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
           <%- if @workflow.param_permitted?( :answering_group_doc_id ) then %>
-            <%= form.text_field :answering_group_doc_id, class: "form-control", maxlength: MAX_LENGTH_OF_DOC_ID %>
+            <%= form.text_field :answering_group_doc_id, class: 'form-control' %>
           <%- else -%>
-            <%= form.text_field :answering_group_doc_id, class: "form-control", disabled: true %>
+            <%= form.text_field :answering_group_doc_id, class: 'form-control', disabled: true %>
           <%- end -%>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :current_status_task, class: "col-sm-3 control-label" %>
+        <%= form.label :current_status_task, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= form.text_field :current_status_task, class: "form-control", value: @workflow.status_task_label, disabled: true %>
+          <%= form.text_field :current_status_task, class: 'form-control', value: @workflow.status_task_label, disabled: true %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :next_status_task, class: "col-sm-3 control-label" %>
+        <%= form.label :next_status_task, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
           <%= select_tag :next_status_task,
             options_for_select( @workflow.next_status_task_labels_for_select, selected: 0 ), 
-            { class: "form-control" } %>
+            { class: 'form-control' } %>
         </div>
       </div>

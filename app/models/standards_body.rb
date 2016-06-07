@@ -21,11 +21,11 @@ class StandardsBody < ActiveRecord::Base
   end
 
   def code=( text )
-    write_attribute( :code, AppHelper.clean_up( text, MAX_LENGTH_OF_CODE ))
+    write_attribute( :code, AppHelper.clean_up( text ))
   end
 
   def description=( text )
-    write_attribute( :description, AppHelper.clean_up( text, MAX_LENGTH_OF_DESCRIPTION ))
+    write_attribute( :description, AppHelper.clean_up( text ))
   end
 
 end

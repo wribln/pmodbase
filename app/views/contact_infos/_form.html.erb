@@ -1,51 +1,51 @@
       <div class="form-group">
-        <%= form.label :id, class: "col-sm-3 control-label" %>
+        <%= form.label :id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <%= display_value form.object.id %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :person_id, class: "col-sm-3 control-label" %>
+        <%= form.label :person_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= form.text_field :person_id, class: "form-control", required: true %>
+          <%= form.text_field :person_id, class: 'form-control', required: true %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :info_type, class: "col-sm-3 control-label" %>
+        <%= form.label :info_type, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= form.text_field :info_type, class: "form-control", maxlength: MAX_LENGTH_OF_INFORMATION_TYPE, required: true %>
+          <%= form.text_field :info_type, class: 'form-control', required: true %>
         </div>
         <div class="col-sm-2">
           <p class="help-block" style="margin:0px"><%= t( 'contact_infos.info_type_help' )%></p>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :phone_no_fixed, class: "col-sm-3 control-label" %>
+        <%= form.label :phone_no_fixed, class: 'col-sm-3 control-label' %>
         <div class="col-sm-3">
-          <%= form.phone_field :phone_no_fixed, class: "form-control", maxlength: MAX_LENGTH_OF_PHONE_NUMBER %>
+          <%= form.phone_field :phone_no_fixed, class: 'form-control' %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :phone_no_mobile, class: "col-sm-3 control-label" %>
+        <%= form.label :phone_no_mobile, class: 'col-sm-3 control-label' %>
         <div class="col-sm-3">
-          <%= form.phone_field :phone_no_mobile, class: "form-control", maxlength: MAX_LENGTH_OF_PHONE_NUMBER %>
+          <%= form.phone_field :phone_no_mobile, class: 'form-control' %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :department, class: "col-sm-3 control-label" %>
+        <%= form.label :department, class: 'col-sm-3 control-label' %>
         <div class="col-sm-3">
-          <%= form.text_field :department, class: "form-control", maxlength: MAX_LENGTH_OF_DEPARTMENT %>
+          <%= form.text_field :department, class: 'form-control' %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :detail_location, class: "col-sm-3 control-label" %>
+        <%= form.label :detail_location, class: 'col-sm-3 control-label' %>
         <div class="col-sm-3">
-          <%= form.text_field :detail_location, class: "form-control", maxlength: MAX_LENGTH_OF_LOCATION_DETAIL %>
+          <%= form.text_field :detail_location, class: 'form-control' %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :address_id, class: "col-sm-3 control-label" %>
+        <%= form.label :address_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-3">
-          <%= form.select :address_id, @address_options, { include_blank: true }, { class: "form-control" }%>
+          <%= form.select :address_id, @address_options, { include_blank: true }, { class: 'form-control' }%>
         </div>
       </div>

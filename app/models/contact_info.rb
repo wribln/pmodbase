@@ -40,15 +40,15 @@ class ContactInfo < ActiveRecord::Base
   # any redundant blanks
 
   def info_type=( text )
-    write_attribute( :info_type, AppHelper.clean_up( text, MAX_LENGTH_OF_INFORMATION_TYPE ))
+    write_attribute( :info_type, AppHelper.clean_up( text ))
   end
 
   def detail_location=( text )
-    write_attribute( :detail_location, AppHelper.clean_up( text, MAX_LENGTH_OF_LOCATION_DETAIL ))
+    write_attribute( :detail_location, AppHelper.clean_up( text ))
   end
 
   def department=( text )
-    write_attribute( :department, AppHelper.clean_up( text, MAX_LENGTH_OF_DEPARTMENT ))
+    write_attribute( :department, AppHelper.clean_up( text ))
   end
   
   # provide address label

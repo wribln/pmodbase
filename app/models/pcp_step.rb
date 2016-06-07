@@ -9,7 +9,7 @@ class PcpStep < ActiveRecord::Base
   has_many   :pcp_items,    -> { readonly }, inverse_of: :pcp_step
   has_many   :pcp_comments, -> { readonly }, inverse_of: :pcp_step
 
-  validates :pcp_subject_id,
+  validates :pcp_subject,
     presence: true
 
   validates :step_no,
@@ -159,7 +159,7 @@ class PcpStep < ActiveRecord::Base
       0 # new
     else
       a = current_assmt
-      if( a == 1 or a == 4 )then
+      if( a == 1 || a == 4 )then
         2 # closed
       else
         1 # open
@@ -204,11 +204,11 @@ class PcpStep < ActiveRecord::Base
   # make sure no leading/trailing blanks are stored
 
   def subject_version=( text )
-    write_attribute( :subject_version, AppHelper.clean_up( text, MAX_LENGTH_OF_DOC_VERSION ))
+    write_attribute( :subject_version, AppHelper.clean_up( text ))
   end
 
   def report_version=( text )
-    write_attribute( :report_version, AppHelper.clean_up( text, MAX_LENGTH_OF_DOC_VERSION ))
+    write_attribute( :report_version, AppHelper.clean_up( text ))
   end
 
   # Regarding PCP subjects, I need to distinguish between the 'acting_group' -

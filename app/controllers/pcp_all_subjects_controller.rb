@@ -29,7 +29,16 @@ class PcpAllSubjectsController < ApplicationController
   end
 
   def stats
-    render plain: 'Not yet implemented.'
+    # all subjects by status
+    s1 = PcpStep.where.not( released_at: nil ).
+      select( :pcp_subject_id, :subject_status ).
+      select( 'MAX( step_no )' ).
+      group( :pcp_subject_id )
+    s2 = PcpSubject.select( :id, :pcp_category_id )
+    s3 = PcpCategory.select( :id, :label )
+    s = PcpSubject.select( :id, :pcp_category_id, "pcp_steps.*" ).joins( "(#{s1.to_sql}) ON pcp_subjects.id = pcp_steps.pcp_subject_id" )
+    render plain: s.inspect
+#    render plain: 'Not yet implemented.'
   end
 
   # redirect to PcpSubjectsController

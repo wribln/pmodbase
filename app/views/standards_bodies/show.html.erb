@@ -6,29 +6,29 @@
     <%= form_for @standards_body do |sb| %>
       <%= render partial: 'shared/notice' %>
       <div class="form-group">
-        <%= sb.label :id, class: "col-sm-3 control-label" %>
+        <%= sb.label :id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
-          <%= sb.text_field :id, class: "form-control", readonly: true %>
+          <%= sb.text_field :id, class: 'form-control', readonly: true %>
         </div>
       </div>
       <div class="form-group">
-        <%= sb.label :code, class: "col-sm-3 control-label" %>
+        <%= sb.label :code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= sb.text_field :code, class: "form-control",  readonly: true %>
+          <%= sb.text_field :code, class: 'form-control',  readonly: true %>
         </div>
       </div>
       <div class="form-group">
-        <%= sb.label :description, class: "col-sm-3 control-label" %>
+        <%= sb.label :description, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
-          <%= sb.text_field :description, class: "form-control",  readonly: true %>
+          <%= sb.text_field :description, class: 'form-control',  readonly: true %>
         </div>
       </div>
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-2">
-          <%= link_to t( 'button_label.edit' ), edit_standards_body_path( @standards_body ), class: "btn btn-lg btn-block btn-default" %>
+          <%= link_to t( 'button_label.edit' ), edit_standards_body_path( @standards_body ), class: 'btn btn-lg btn-block btn-default' %>
         </div>
         <div class="col-sm-2">
-          <%= link_to t( 'button_label.goto_to_list' ), standards_bodies_path, class: "btn btn-lg btn-block btn-default" %>
+          <%= link_to t( 'button_label.goto_to_list' ), standards_bodies_path, class: 'btn btn-lg btn-block btn-default' %>
         </div>
       </div>
     <% end %>

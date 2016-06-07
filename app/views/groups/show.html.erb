@@ -6,83 +6,83 @@
     <%= form_for @group do |g| %>
       <%= render partial: 'shared/notice' %>
       <div class="form-group">
-        <%= g.label :id, class: "col-sm-3 control-label" %>
+        <%= g.label :id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
-          <%= g.text_field :id, class: "form-control", readonly: true %>
+          <%= g.text_field :id, class: 'form-control', readonly: true %>
         </div>
       </div>
       <div class="form-group">
-        <%= g.label :code, class: "col-sm-3 control-label" %>
+        <%= g.label :code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= g.text_field :code, class: "form-control", readonly: true %>
+          <%= g.text_field :code, class: 'form-control', readonly: true %>
         </div>
       </div>
       <div class="form-group">
-        <%= g.label :label, class: "col-sm-3 control-label" %>
+        <%= g.label :label, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= g.text_field :label, class: "form-control", readonly: true %>
+          <%= g.text_field :label, class: 'form-control', readonly: true %>
         </div>
       </div>
       <div class="form-group">
-        <%= g.label :notes, class: "col-sm-3 control-label" %>
+        <%= g.label :notes, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= g.text_field :notes, class: "form-control", readonly: true %>
+          <%= g.text_field :notes, class: 'form-control', readonly: true %>
         </div>
       </div>
       <div class="form-group">
-        <%= g.label :seqno, class: "col-sm-3 control-label" %>
+        <%= g.label :seqno, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
-          <%= g.text_field :seqno, class: "form-control", readonly: true %>
+          <%= g.text_field :seqno, class: 'form-control', readonly: true %>
         </div>
       </div>
       <div class="form-group">
-        <%= g.label :group_category_id, class: "col-sm-3 control-label" %>
+        <%= g.label :group_category_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
           <%= display_value g.object.group_category.label %>
         </div>
       </div>
       <div class="form-group">
-        <%= g.label :sub_group_of_id, class: "col-sm-3 control-label" %>
+        <%= g.label :sub_group_of_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
           <%= display_value g.object.sub_group_of.try( :code_and_label )%>
         </div>
       </div>
       <div class="form-group">
-        <%= g.label :participating, class: "col-sm-3 control-label" %>
+        <%= g.label :participating, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
           <%= g.check_box :participating, disabled: true, readonly: true %>
         </div>
       </div>   
       <div class="form-group">
-        <%= g.label :s_sender_code, class: "col-sm-3 control-label" %>
+        <%= g.label :s_sender_code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
           <%= g.check_box :s_sender_code, disabled: true, readonly: true %>
         </div>
       </div>   
       <div class="form-group">
-        <%= g.label :s_receiver_code, class: "col-sm-3 control-label" %>
+        <%= g.label :s_receiver_code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
           <%= g.check_box :s_receiver_code, disabled: true, readonly: true %>
         </div>
       </div>   
       <div class="form-group">
-        <%= g.label :active, class: "col-sm-3 control-label" %>
+        <%= g.label :active, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
           <%= g.check_box :active, disabled: true, readonly: true %>
         </div>
       </div>   
       <div class="form-group">
-        <%= g.label :standard, class: "col-sm-3 control-label" %>
+        <%= g.label :standard, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
           <%= g.check_box :standard, disabled: true, readonly: true %>
         </div>
       </div>   
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-2">
-          <%= link_to t( 'button_label.edit' ), edit_group_path( @group ), class: "btn btn-lg btn-block btn-default" %>
+          <%= link_to t( 'button_label.edit' ), edit_group_path( @group ), class: 'btn btn-lg btn-block btn-default' %>
         </div>
         <div class="col-sm-2">
-          <%= link_to t( 'button_label.goto_to_list' ), groups_path, class: "btn btn-lg btn-block btn-default" %>
+          <%= link_to t( 'button_label.goto_to_list' ), groups_path, class: 'btn btn-lg btn-block btn-default' %>
         </div>
       </div>
     <% end %>

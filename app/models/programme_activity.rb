@@ -40,11 +40,11 @@ class ProgrammeActivity < ActiveRecord::Base
   end
 
   def project_id=( text )
-    write_attribute( :project_id, AppHelper.clean_up( text, MAX_LENGTH_OF_PROGRAMME_IDS ))
+    write_attribute( :project_id, AppHelper.clean_up( text ))
   end
 
   def activity_id=( text )
-    write_attribute( :activity_id, AppHelper.clean_up( text, MAX_LENGTH_OF_PROGRAMME_IDS ))
+    write_attribute( :activity_id, AppHelper.clean_up( text ))
   end
 
 end

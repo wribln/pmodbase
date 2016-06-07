@@ -103,6 +103,7 @@ class PcpSubjectsController < ApplicationController
       else
         @pcp_groups = get_groups_for_select
         @pcp_categories = permitted_categories
+        get_item_stats
         format.html { render :edit }
       end
     end

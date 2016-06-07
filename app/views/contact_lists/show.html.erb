@@ -6,27 +6,27 @@
     <%= form_for( @person, url: profile_path ) do |p| %>
       <%= render partial: 'shared/notice' %>
       <div class="form-group">
-        <%= p.label :id, class: "col-sm-3 control-label" %>
+        <%= p.label :id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= p.text_field :id, class: "form-control", readonly: true %>
+          <%= p.text_field :id, class: 'form-control', readonly: true %>
         </div>
       </div>
       <div class="form-group">
-        <%= p.label :formal_name, class: "col-sm-3 control-label" %>    
+        <%= p.label :formal_name, class: 'col-sm-3 control-label' %>    
         <div class="col-sm-4">
-          <%= p.text_field :formal_name, class: "form-control", readonly: true %>
+          <%= p.text_field :formal_name, class: 'form-control', readonly: true %>
         </div>
       </div>
       <div class="form-group">
-        <%= p.label :informal_name, class: "col-sm-3 control-label" %>
+        <%= p.label :informal_name, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= p.text_field :informal_name, class: "form-control", readonly: true %>
+          <%= p.text_field :informal_name, class: 'form-control', readonly: true %>
         </div>
       </div>
       <div class="form-group">
-        <%= p.label :email, class: "col-sm-3 control-label" %>
+        <%= p.label :email, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= p.email_field :email, class: "form-control", readonly: true %>
+          <%= p.email_field :email, class: 'form-control', readonly: true %>
         </div>
       </div>
       <%= render partial: 'people/contact_info_header' %>

@@ -6,43 +6,43 @@
     <%= form_for @pcp_subject do |f| %>
       <%= render partial: 'shared/notice' %>
       <div class="form-group">
-        <%= f.label :id, class: "col-sm-3 control-label" %>
+        <%= f.label :id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
           <%= display_value f.object.id %>
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :pcp_category_id, class: "col-sm-3 control-label" %>
+        <%= f.label :pcp_category_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
           <%= display_value f.object.pcp_category.label %>
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :title, class: "col-sm-3 control-label" %>
+        <%= f.label :title, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
           <%= display_value f.object.title %>
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :note, class: "col-sm-3 control-label" %>
+        <%= f.label :note, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
           <%= display_value f.object.note %>
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :project_doc_id, class: "col-sm-3 control-label" %>
+        <%= f.label :project_doc_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
           <%= display_value f.object.project_doc_id %>
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :p_group_id, class: "col-sm-3 control-label" %>
+        <%= f.label :p_group_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
           <%= display_value f.object.p_group.code_and_label %>
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :p_owner_id, class: "col-sm-3 control-label" %>
+        <%= f.label :p_owner_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
           <%= display_value f.object.p_owner_id %>
         </div>
@@ -51,7 +51,7 @@
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :p_deputy_id, class: "col-sm-3 control-label" %>
+        <%= f.label :p_deputy_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
           <%= display_value f.object.p_deputy_id %>
         </div>
@@ -60,13 +60,13 @@
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :c_group_id, class: "col-sm-3 control-label" %>
+        <%= f.label :c_group_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
           <%= display_value f.object.c_group.code_and_label %>
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :c_owner_id, class: "col-sm-3 control-label" %>
+        <%= f.label :c_owner_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
           <%= display_value f.object.c_owner_id %>
         </div>
@@ -75,7 +75,7 @@
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :c_deputy_id, class: "col-sm-3 control-label" %>
+        <%= f.label :c_deputy_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
           <%= display_value f.object.c_deputy_id %>
         </div>
@@ -84,20 +84,20 @@
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :report_doc_id, class: "col-sm-3 control-label" %>
+        <%= f.label :report_doc_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
           <%= display_value f.object.report_doc_id %>
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :subject_status, class: "col-sm-3 control-label" %>
+        <%= f.label :subject_status, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <%= display_value @pcp_curr_step.subject_status_label %>
         </div>
       </div>
       <%- if @pcp_curr_step && @pcp_curr_step.status_closed? then -%>
       <div class="form-group">
-        <%= f.label :archived, class: "col-sm-3 control-label" %>
+        <%= f.label :archived, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
           <%= f.check_box :archived, disabled: true, readonly: true %>
         </div>
@@ -106,41 +106,41 @@
       <!-- data on current step -->
       <%= f.fields_for :pcp_steps, @pcp_curr_step do |os| -%>
         <div class="form-group">
-          <%= os.label :step_no, t( 'pcp_subjects.show.cs_heading', label: os.object.step_label ), class: "col-sm-3 control-label" %>
+          <%= os.label :step_no, t( 'pcp_subjects.show.cs_heading', label: os.object.step_label ), class: 'col-sm-3 control-label' %>
           <div class="col-sm-4"><hr /></div>
         </div>
         <div class="form-group">
-          <%= os.label :subject_date, class: "col-sm-3 control-label" %>
+          <%= os.label :subject_date, class: 'col-sm-3 control-label' %>
           <div class="col-sm-2">
             <%= display_value os.object.subject_date %>
           </div>
         </div>
         <div class="form-group">
-          <%= os.label :subject_version, class: "col-sm-3 control-label" %>
+          <%= os.label :subject_version, class: 'col-sm-3 control-label' %>
           <div class="col-sm-1">
             <%= display_value os.object.subject_version %>
           </div>
         </div>
         <div class="form-group">
-          <%= os.label :report_version, class: "col-sm-3 control-label" %>
+          <%= os.label :report_version, class: 'col-sm-3 control-label' %>
           <div class="col-sm-1">
             <%= display_value os.object.report_version %>
           </div>
         </div>
         <div class="form-group">
-          <%= os.label :release_notice, class: "col-sm-3 control-label" %>
+          <%= os.label :release_notice, class: 'col-sm-3 control-label' %>
           <div class="col-sm-6">
             <%= display_value os.object.release_notice %>
           </div>
         </div>
         <div class="form-group">
-          <%= os.label :due_date, t( 'pcp_subjects.form.this_due_date', step: PcpStep.step_state_label( os.object.step_no )), class: "col-sm-3 control-label" %> 
+          <%= os.label :due_date, t( 'pcp_subjects.form.this_due_date', step: PcpStep.step_state_label( os.object.step_no )), class: 'col-sm-3 control-label' %> 
           <div class="col-sm-2">  
             <%= display_value db_formatted_d( @pcp_prev_step.due_date ) unless @pcp_prev_step.nil? %>
           </div>
         </div>
         <div class="form-group">
-          <%= os.label :prev_assmt, class: "col-sm-3 control-label" %>
+          <%= os.label :prev_assmt, class: 'col-sm-3 control-label' %>
           <div class="col-sm-4">
             <%= display_value PcpStep.assessment_label( os.object.prev_assmt) %>
           </div>
@@ -149,10 +149,10 @@
       <%- end -%>
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-2">
-          <%= link_to t( 'button_label.edit' ), edit_pcp_subject_path( @pcp_subject ), class: "btn btn-lg btn-block btn-default" %>
+          <%= link_to t( 'button_label.edit' ), edit_pcp_subject_path( @pcp_subject ), class: 'btn btn-lg btn-block btn-default' %>
         </div>
         <div class="col-sm-2">
-          <%= link_to t( 'button_label.goto_to_list' ), pcp_all_subjects_path, class: "btn btn-lg btn-block btn-default" %>
+          <%= link_to t( 'button_label.goto_to_list' ), pcp_all_subjects_path, class: 'btn btn-lg btn-block btn-default' %>
         </div>
       </div>
     <% end %>

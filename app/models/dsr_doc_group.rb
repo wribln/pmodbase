@@ -24,11 +24,11 @@ class DsrDocGroup < ActiveRecord::Base
   # any redundant blanks
 
   def code=( text )
-    write_attribute( :code, AppHelper.clean_up( text, MAX_LENGTH_OF_DESCRIPTION ))
+    write_attribute( :code, AppHelper.clean_up( text ))
   end
 
   def title=( text )
-    write_attribute( :title, AppHelper.clean_up( text, MAX_LENGTH_OF_DESCRIPTION ))
+    write_attribute( :title, AppHelper.clean_up( text ))
   end
 
   # retrieve group code to display in index/show

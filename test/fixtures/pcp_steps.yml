@@ -20,7 +20,7 @@ one_two:
   subject_date:
   note:             'during initial review'
   due_date:         2016-04-24
-  subject_status:   1
+  subject_status:   0
   prev_assmt:       2
   new_assmt:        2
   released_by:

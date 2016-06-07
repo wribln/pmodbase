@@ -22,15 +22,15 @@ class Address < ActiveRecord::Base
   # any redundant blanks
 
   def label=( text )
-    write_attribute( :label, AppHelper.clean_up( text, MAX_LENGTH_OF_LABEL ))
+    write_attribute( :label, AppHelper.clean_up( text ))
   end
 
   def street_address=( text )
-    write_attribute( :street_address, AppHelper.clean_up( text, MAX_LENGTH_OF_ADDRESS ))
+    write_attribute( :street_address, AppHelper.clean_up( text ))
   end
 
   def postal_address=( text )
-    write_attribute( :postal_address, AppHelper.clean_up( text, MAX_LENGTH_OF_ADDRESS ))
+    write_attribute( :postal_address, AppHelper.clean_up( text ))
   end
 
   # display short label with id suffix

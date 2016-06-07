@@ -1,43 +1,43 @@
       <div class="form-group">
-        <%= form.label :id, class: "col-sm-3 control-label" %>
+        <%= form.label :id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
           <%= display_value form.object.id %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :code, class: "col-sm-3 control-label" %>
+        <%= form.label :code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= form.text_field :code, class: "form-control", required: true, maxlength: MAX_LENGTH_OF_CODE %>
+          <%= form.text_field :code, class: 'form-control', required: true %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :curr_name, class: "col-sm-3 control-label" %>
+        <%= form.label :curr_name, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= form.text_field :curr_name, class: "form-control", maxlength: MAX_LENGTH_OF_LABEL %>
+          <%= form.text_field :curr_name, class: 'form-control' %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :transfer, class: "col-sm-3 control-label" %>
+        <%= form.label :transfer, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
           <%= form.check_box :transfer %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :alt_code, class: "col-sm-3 control-label" %>
+        <%= form.label :alt_code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= form.text_field :alt_code, class: "form-control", maxlength: MAX_LENGTH_OF_CODE %>
+          <%= form.text_field :alt_code, class: 'form-control' %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :prev_name, class: "col-sm-3 control-label" %>
+        <%= form.label :prev_name, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= form.text_field :prev_name, class: "form-control", maxlength: MAX_LENGTH_OF_LABEL %>
+          <%= form.text_field :prev_name, class: 'form-control' %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :note, class: "col-sm-3 control-label" %>
+        <%= form.label :note, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
-          <%= form.text_field :note, class: "form-control" %>
+          <%= form.text_field :note, class: 'form-control' %>
         </div>
       </div>
 

@@ -20,7 +20,7 @@ class WebLink < ActiveRecord::Base
   # any redundant blanks
 
   def label=( text )
-    write_attribute( :label, AppHelper.clean_up( text, MAX_LENGTH_OF_LABEL ))
+    write_attribute( :label, AppHelper.clean_up( text ))
   end
 
 end

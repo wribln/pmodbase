@@ -6,13 +6,13 @@
     <%= form_for @a_document_log do |f| %>
       <%= render partial: 'shared/notice' %>
       <div class="form-group">
-        <%= f.label :id, class: "col-sm-3 control-label" %>
+        <%= f.label :id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <%= display_value f.object.id %>
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :a1_code, class: "col-sm-3 control-label" %>
+        <%= f.label :a1_code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <%= display_value f.object.a1_code %>
         </div>
@@ -21,7 +21,7 @@
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :a2_code, class: "col-sm-3 control-label" %>
+        <%= f.label :a2_code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <%= display_value f.object.a2_code %>
         </div>
@@ -30,7 +30,7 @@
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :a3_code, class: "col-sm-3 control-label" %>
+        <%= f.label :a3_code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <%= display_value f.object.a3_code %>
         </div>
@@ -39,7 +39,7 @@
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :a4_code, class: "col-sm-3 control-label" %>
+        <%= f.label :a4_code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <%= display_value f.object.a4_code %>
         </div>
@@ -48,7 +48,7 @@
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :a5_code, class: "col-sm-3 control-label" %>
+        <%= f.label :a5_code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <%= display_value f.object.a5_code %>
         </div>
@@ -57,7 +57,7 @@
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :a6_code, class: "col-sm-3 control-label" %>
+        <%= f.label :a6_code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <%= display_value f.object.a6_code %>
         </div>
@@ -66,7 +66,7 @@
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :a7_code, class: "col-sm-3 control-label" %>
+        <%= f.label :a7_code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <%= display_value f.object.a7_code %>
         </div>
@@ -75,7 +75,7 @@
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :a8_code, class: "col-sm-3 control-label" %>
+        <%= f.label :a8_code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <%= display_value f.object.a8_code %>
         </div>
@@ -84,29 +84,29 @@
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :title, class: "col-sm-3 control-label" %>
+        <%= f.label :title, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
           <%= display_value f.object.title %>
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :doc_id, class: "col-sm-3 control-label" %>
+        <%= f.label :doc_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
           <%= display_value f.object.doc_id %>
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :user, class: "col-sm-3 control-label" %>
+        <%= f.label :user, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
           <%= display_value f.object.account.account_info %>
         </div>
       </div>
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-2">
-          <%= link_to t( 'button_label.edit' ), edit_a_document_log_path( @a_document_log ), class: "btn btn-lg btn-block btn-default" %>
+          <%= link_to t( 'button_label.edit' ), edit_a_document_log_path( @a_document_log ), class: 'btn btn-lg btn-block btn-default' %>
         </div>
         <div class="col-sm-2">
-          <%= link_to t( 'button_label.goto_to_list' ), a_document_logs_path, class: "btn btn-lg btn-block btn-default" %>
+          <%= link_to t( 'button_label.goto_to_list' ), a_document_logs_path, class: 'btn btn-lg btn-block btn-default' %>
         </div>
       </div>
     <% end %>

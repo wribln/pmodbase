@@ -73,7 +73,7 @@ class Holiday < ActiveRecord::Base
   # any redundant blanks
 
   def description=( text )
-    write_attribute( :description, AppHelper.clean_up( text, MAX_LENGTH_OF_DESCRIPTION ))
+    write_attribute( :description, AppHelper.clean_up( text ))
   end
 
   # helper functions

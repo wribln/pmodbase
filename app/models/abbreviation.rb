@@ -26,15 +26,15 @@ class Abbreviation < ActiveRecord::Base
   end
 
   def code=( text )
-    write_attribute( :code, AppHelper.clean_up( text, MAX_LENGTH_OF_CODE, '' ))
+    write_attribute( :code, AppHelper.clean_up( text ))
   end
 
   def sort_code=( text )
-    write_attribute( :sort_code, AppHelper.clean_up( text, MAX_LENGTH_OF_CODE, '' ))
+    write_attribute( :sort_code, AppHelper.clean_up( text ))
   end
 
   def description=( text )
-    write_attribute( :description, AppHelper.clean_up( text, MAX_LENGTH_OF_DESCRIPTION, '' ))
+    write_attribute( :description, AppHelper.clean_up( text ))
   end
 
   # use this to automatically create the sort code from the abbreviation:

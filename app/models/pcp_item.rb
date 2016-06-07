@@ -53,9 +53,7 @@ class PcpItem < ActiveRecord::Base
   scope :released, ->( s ){ where( pcp_subject: s ).joins( :pcp_step ).merge( PcpStep.released )}
   scope :released_until, ->( s, n ){ where( pcp_subject: s ).joins( :pcp_step ).merge( PcpStep.released_until( n ))}
 
-  # test whether item is released (needed for permissions):
-  # this is recognized by the release date not being set;
-  # another, equivalent condition should be pub_assmt not being nil
+  # test whether item is released (needed for permissions)
 
   def released?
     pub_assmt || pcp_step.released?

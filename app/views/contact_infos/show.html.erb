@@ -6,59 +6,59 @@
     <%= form_for @contact_info do |ci| %>
       <%= render partial: 'shared/notice' %>
       <div class="form-group">
-        <%= ci.label :id, class: "col-sm-3 control-label" %>
+        <%= ci.label :id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-3">
-          <%= ci.text_field :id, class: "form-control", readonly: true %>
+          <%= ci.text_field :id, class: 'form-control', readonly: true %>
         </div>
       </div>
       <div class="form-group">
-        <%= ci.label :person_id, class: "col-sm-3 control-label" %>
+        <%= ci.label :person_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= ci.text_field :person_id, class: "form-control", readonly: true %>
+          <%= ci.text_field :person_id, class: 'form-control', readonly: true %>
         </div>
       </div>
       <div class="form-group">
-        <%= ci.label :info_type, class: "col-sm-3 control-label" %>
+        <%= ci.label :info_type, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= ci.text_field :info_type, class: "form-control", readonly: true %>
+          <%= ci.text_field :info_type, class: 'form-control', readonly: true %>
         </div>
       </div>
       <div class="form-group">
-        <%= ci.label :phone_no_fixed, class: "col-sm-3 control-label" %>
+        <%= ci.label :phone_no_fixed, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= ci.phone_field :phone_no_fixed, class: "form-control", readonly: true %>
+          <%= ci.phone_field :phone_no_fixed, class: 'form-control', readonly: true %>
         </div>
       </div>
       <div class="form-group">
-        <%= ci.label :phone_no_mobile, class: "col-sm-3 control-label" %>
+        <%= ci.label :phone_no_mobile, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= ci.phone_field :phone_no_mobile, class: "form-control", readonly: true %>
+          <%= ci.phone_field :phone_no_mobile, class: 'form-control', readonly: true %>
         </div>
       </div>
       <div class="form-group">
-        <%= ci.label :department, class: "col-sm-3 control-label" %>
+        <%= ci.label :department, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= ci.text_field :department, class: "form-control", readonly: true %>
+          <%= ci.text_field :department, class: 'form-control', readonly: true %>
         </div>
       </div>
       <div class="form-group">
-        <%= ci.label :detail_location, class: "col-sm-3 control-label" %>
+        <%= ci.label :detail_location, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= ci.text_field :detail_location, class: "form-control", readonly: true %>
+          <%= ci.text_field :detail_location, class: 'form-control', readonly: true %>
         </div>
       </div>
       <div class="form-group">
-        <%= ci.label :address_id, class: "col-sm-3 control-label" %>
+        <%= ci.label :address_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= ci.text_field :address_id, class: "form-control", readonly: true %>
+          <%= ci.text_field :address_id, class: 'form-control', readonly: true %>
         </div>
       </div>
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-2">
-          <%= link_to t( 'button_label.edit' ), edit_contact_info_path(@contact_info), class: "btn btn-lg btn-block btn-default" %>
+          <%= link_to t( 'button_label.edit' ), edit_contact_info_path(@contact_info), class: 'btn btn-lg btn-block btn-default' %>
         </div>
         <div class="col-sm-2">
-          <%= link_to t( 'button_label.goto_to_list' ), contact_infos_path, class: "btn btn-lg btn-block btn-default" %>
+          <%= link_to t( 'button_label.goto_to_list' ), contact_infos_path, class: 'btn btn-lg btn-block btn-default' %>
         </div>
       </div>
     <% end %>

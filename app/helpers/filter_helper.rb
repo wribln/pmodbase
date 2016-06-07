@@ -118,7 +118,7 @@ module FilterHelper
   def filter_action_button
     content_tag( :div,
       submit_tag( t( 'button_label.filter'), name: nil, class: 'btn btn-default btn-sm', title: t( 'action_title.filter_and')),
-      class: "btn-group")
+      class: 'btn-group')
   end
 
 end

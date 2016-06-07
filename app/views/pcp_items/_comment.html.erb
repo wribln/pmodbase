@@ -1,29 +1,29 @@
       <div class="form-group">
-        <%= comment.label :author, class: "col-sm-3 control-label" %>
+        <%= comment.label :author, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= comment.text_field :author, class: "form-control", length:( MAX_LENGTH_OF_ACCOUNT_NAME + MAX_LENGTH_OF_PERSON_NAMES )%>
+          <%= comment.text_field :author, class: 'form-control' %>
         </div>
-        <%= comment.label :pcp_step, t( '.in_step' ), class: "col-sm-2 control-label" %>
+        <%= comment.label :pcp_step, t( '.in_step' ), class: 'col-sm-2 control-label' %>
         <div class="col-sm-2">
           <%= display_value comment.object.pcp_step.try :step_label %>
         </div>
       </div>
       <div class="form-group">
-        <%= comment.label :description, class: "col-sm-3 control-label" %>
+        <%= comment.label :description, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
-          <%= comment.text_area :description, cols: DEFAULT_COLS_TEXTAREA, rows: DEFAULT_ROWS_TEXTAREA, class: "form-control", required: true %>
+          <%= comment.text_area :description, cols: DEFAULT_COLS_TEXTAREA, rows: DEFAULT_ROWS_TEXTAREA, class: 'form-control', required: true %>
         </div>
       </div>
       <div class="form-group">
-        <%= comment.label :assessment, class: "col-sm-3 control-label" %>
+        <%= comment.label :assessment, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <%- if @pcp_step.in_commenting_group? then -%>
-            <%= comment.select :assessment, select_options( PcpItem::ASSESSMENT_LABELS ), { prompt: t( '.g_prompt' )}, { class: "form-control" }%>
+            <%= comment.select :assessment, select_options( PcpItem::ASSESSMENT_LABELS ), { prompt: t( '.g_prompt' )}, { class: 'form-control' }%>
           <%- else -%>
             <%= display_value PcpItem.assessment_label( comment.object.assessment ) %>
           <%- end -%>
         </div>
-        <%= comment.label :is_public, t( '.make_public' ), class: "col-sm-2 control-label" %>
+        <%= comment.label :is_public, t( '.make_public' ), class: 'col-sm-2 control-label' %>
         <div class="col-sm-1">
           <%- if permitted_to_publish? then -%>
             <%= comment.check_box :is_public %>

@@ -14,11 +14,11 @@ module AppHelper
     result = ''
     if text.class == String then
       result = text.strip.squeeze(' ')
-      if ( !max_chars.nil? ) and ( max_chars > 0 )
+      if max_chars && ( max_chars > 0 )
         result = result[ 0..( max_chars - 1 )]
       end
     end
-    if result.empty? or result.blank? then
+    if result.empty? || result.blank? then
       is_empty
     else
       result

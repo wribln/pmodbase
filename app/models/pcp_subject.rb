@@ -11,7 +11,7 @@ class PcpSubject < ActiveRecord::Base
   belongs_to :p_owner,  -> { readonly }, foreign_key: :p_owner_id, class_name: 'Account'
   belongs_to :c_deputy, -> { readonly }, foreign_key: :c_deputy_id, class_name: 'Account'
   belongs_to :p_deputy, -> { readonly }, foreign_key: :p_deputy_id, class_name: 'Account'
-  has_many   :pcp_steps,    -> { most_recent }, dependent: :destroy, validate: false, inverse_of: :pcp_subject
+  has_many   :pcp_steps,    -> { most_recent }, dependent: :destroy, autosave: true,  inverse_of: :pcp_subject
   has_many   :pcp_items,                        dependent: :destroy, validate: false, inverse_of: :pcp_subject
   has_many   :pcp_members,                      dependent: :destroy, validate: false, inverse_of: :pcp_subject
   has_many   :pcp_a_members, -> { where to_access: true }, class_name: 'PcpMember'
@@ -93,6 +93,10 @@ class PcpSubject < ActiveRecord::Base
     pcp_steps.most_recent.first
   end
 
+  def previous_step
+    pcp_steps.most_recent.second
+  end
+
   # providing the acting_group_index as parameter is more efficient than
   # referring to current_step.acting_group_index as the current_step is mostly
   # likely known/retrieved when this method is called
@@ -146,15 +150,15 @@ class PcpSubject < ActiveRecord::Base
   # fix assignments
 
   def title=( text )
-    write_attribute( :title, AppHelper.clean_up( text, MAX_LENGTH_OF_DESCRIPTION ))
+    write_attribute( :title, AppHelper.clean_up( text ))
   end
 
   def project_doc_id=( text )
-    write_attribute( :project_doc_id, AppHelper.clean_up( text, ProjectDocLog::MAX_LENGTH_OF_DOC_ID ))
+    write_attribute( :project_doc_id, AppHelper.clean_up( text ))
   end
 
   def report_doc_id=( text )
-    write_attribute( :report_doc_id, AppHelper.clean_up( text, ProjectDocLog::MAX_LENGTH_OF_DOC_ID ))
+    write_attribute( :report_doc_id, AppHelper.clean_up( text ))
   end
 
   # access control helper: ags is the acting_group_switch
@@ -233,7 +237,12 @@ class PcpSubject < ActiveRecord::Base
     return 1 if pcp_steps.count == 0
     # no PCP Items should be assigned in PCP Step 0
     return 2 if pcp_steps.most_recent.last.pcp_items.count > 0
-    # only closed PCP Subjects can be archived
+    # subject status must be 0 in steps 0 and 1
+    if pcp_steps.count == 1 then
+      return 3 if current_step.subject_status != 0
+    elsif pcp_steps.count == 2 then
+      return 4 if current_step.subject_status != 0
+    end
     return 0
   end
 

@@ -1,23 +1,23 @@
       <div class="form-group">
-        <%= form.label :id, class: "col-sm-3 control-label" %>
+        <%= form.label :id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
           <%= display_value form.object.id %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :code, class: "col-sm-3 control-label" %>
+        <%= form.label :code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= form.text_field :code, class: "form-control" %>
+          <%= form.text_field :code, class: 'form-control' %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :title, class: "col-sm-3 control-label" %>
+        <%= form.label :title, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= form.text_field :title, class: "form-control" %>
+          <%= form.text_field :title, class: 'form-control' %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :group_id, class: "col-sm-3 control-label" %>
+        <%= form.label :group_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <%= form.select :group_id, @dsr_groups, { prompt: t( '.g_prompt' )}, { class: 'form-control', required: true } %>
         </div>
