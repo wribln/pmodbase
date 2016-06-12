@@ -5,7 +5,7 @@ class CreateAccounts < ActiveRecord::Migration
       t.string      :password_digest
       t.boolean     :active,          null: false,  default: true,  index: :true
       t.boolean     :keep_base_open,  null: false,  default: false
-      t.belongs_to  :person,          null: false, index: :true, foreign_key: :true
+      t.belongs_to  :person,          null: false, index: :true
 
       t.timestamps null: false
     end
