@@ -12,5 +12,6 @@ class CreatePcpComments < ActiveRecord::Migration
 
       t.timestamps null: false
     end
-  end
+    add_index :pcp_comments, [ :pcp_item_id, :pcp_step_id ], name: 'pcp_comments_index'
+   end
 end

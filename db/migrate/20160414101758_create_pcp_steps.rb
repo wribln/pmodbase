@@ -20,5 +20,8 @@ class CreatePcpSteps < ActiveRecord::Migration
       t.timestamps null: false
     end
     add_index :pcp_steps, [ :pcp_subject_id, :step_no ], order: { pcp_subject_id: :asc, step_no: :desc }, unique: :true, name: 'pcp_steps_index'
+    # purely for the sake of concurrency and integrity:
+    # report version must be unique for any given PCP Subject
+    add_index :pcp_steps, [ :pcp_subject_id, :report_version], unique: :true, name: 'pcp_steps_report_versions'
   end
 end

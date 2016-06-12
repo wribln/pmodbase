@@ -37,10 +37,4 @@ class ReferenceTest < ActiveSupport::TestCase
     assert_includes ref.errors, :code
   end
 
-  test "get_select_collection" do
-    ref = references( :one )
-    ref.save
-    assert_equal Reference.get_select_collection, [[ '-none-', 0 ],[ 'REFONE', ref.id ]]
-  end
-
 end

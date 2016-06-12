@@ -29,17 +29,43 @@ class PcpAllSubjectsController < ApplicationController
   end
 
   def stats
-    # all subjects by status
-    s1 = PcpStep.where.not( released_at: nil ).
-      select( :pcp_subject_id, :subject_status ).
-      select( 'MAX( step_no )' ).
-      group( :pcp_subject_id )
-    s2 = PcpSubject.select( :id, :pcp_category_id )
-    s3 = PcpCategory.select( :id, :label )
-    s = PcpSubject.select( :id, :pcp_category_id, "pcp_steps.*" ).joins( "(#{s1.to_sql}) ON pcp_subjects.id = pcp_steps.pcp_subject_id" )
-    render plain: s.inspect
-#    render plain: 'Not yet implemented.'
-  end
+    # first see which groups can be viewed:
+    pg = current_user.permitted_groups( FEATURE_ID_ALL_PCP_SUBJECTS, :to_index )
+    case pg
+    when nil
+      grps = '1=0'
+      @pcp_sub_title = '.sub_title_0'
+    when ''
+      grps = '1=1'
+      @pcp_sub_title = '.sub_title_1'
+    else
+      grps = "p_group_id IN (#{ pg }) OR c_group_id IN (#{ pg })"
+      @pcp_sub_title = '.sub_title_0'
+    end
+
+    # now determine all subjects by status:
+    # s1a: last released PCP Step per PCP Subject
+    # s1b: retrieve PCP Subject and status using s1a
+    # s2: retrieve counts per PCP Category from PCP Subject using s1b
+    # use LEFT JOIN so I get all PCP Subjects without a release to be
+    # treated as 'new' (0)
+
+    s1a = PcpStep.where.not( released_at: nil ).select( "pcp_subject_id AS a_pcp_subject_id, MAX( step_no ) AS a_step_no" ).group( :pcp_subject_id ).to_sql
+    s1b = PcpStep.select( :pcp_subject_id, :subject_status ).joins( "INNER JOIN (#{ s1a }) ON \"pcp_subject_id\" = \"a_pcp_subject_id\" AND \"step_no\" = \"a_step_no\"").to_sql
+    s2 = PcpSubject.connection.select_rows( "SELECT pcp_category_id, subject_status, COUNT(*) FROM pcp_subjects LEFT JOIN (#{ s1b }) ON id = pcp_subject_id WHERE (#{ grps }) GROUP BY subject_status" )
+    @pcp_stats = PcpCategory.select( :id, :label ).order( :label ).pluck( :id, :label )
+
+    # now I have in s2 an array of the resulting records, and
+    # @pcp_stats an array of the subjects: create summary and detail records
+    
+    @pcp_totals = Array.new( 4, 0 )
+    @pcp_stats.map!{ |r| r.concat Array.new( 4, 0 )}
+    s2.each{ |c| @pcp_stats.assoc( c[ 0 ])[( c[ 1 ]|| 0 ) + 2 ] += c[ 2 ] }
+    @pcp_stats.each do |r|
+      r[ 5 ] = r[ 2..4 ].reduce(:+)
+      @pcp_totals.collect!.with_index{ |t,i| t + r[ i + 2 ]}
+    end
+ end
 
   # redirect to PcpSubjectsController
 

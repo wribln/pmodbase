@@ -8,13 +8,13 @@
       <div class="form-group">
         <%= a.label :id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= a.text_field :id, class: 'form-control', readonly: true %>
+          <%= display_value a.object.to_id %>
         </div>
       </div>
       <div class="form-group">
         <%= a.label :name, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= a.text_field :name, class: 'form-control', readonly: true %>
+          <%= display_value a.object.name %>
         </div>
       </div>
       <div class="form-group">
@@ -26,13 +26,13 @@
       <div class="form-group">
         <%= a.label :active, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
-          <%= a.check_box :active, disabled: true, readonly: true %>
+          <%= display_check_box a.object.active %>
         </div>
       </div>
       <div class="form-group">
         <%= a.label :keep_base_open, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
-          <%= a.check_box :keep_base_open, disabled: true, readonly: true %>
+          <%= display_check_box a.object.keep_base_open %>
         </div>
       </div>
       <!-- Heading for Permission4Group Records -->
@@ -65,23 +65,23 @@
           </div>
           <div class="col-sm-1">
             <%= p.label :to_index, class: 'hidden-md hidden-lg control-label' %>
-            <%= p.text_field :to_index, class: 'form-control', readonly: true %>
+            <%= display_value p.object.to_index %>
           </div>
           <div class="col-sm-1">
             <%= p.label :to_create, class: 'hidden-md hidden-lg control-label' %>
-            <%= p.text_field :to_create, class: 'form-control', readonly: true %>
+            <%= display_value p.object.to_create %>
           </div>
           <div class="col-sm-1">
             <%= p.label :to_read, class: 'hidden-md hidden-lg control-label' %>
-            <%= p.text_field :to_read, class: 'form-control', readonly: true %>
+            <%= display_value p.object.to_read %>
           </div>
           <div class="col-sm-1">
             <%= p.label :to_update, class: 'hidden-md hidden-lg control-label' %>
-            <%= p.text_field :to_update, class: 'form-control', readonly: true %>
+            <%= display_value p.object.to_update %>
           </div>
           <div class="col-sm-1">
             <%= p.label :to_delete, class: 'hidden-md hidden-lg control-label' %>
-            <%= p.text_field :to_delete, class: 'form-control', readonly: true %>
+            <%= display_value p.object.to_delete %>
           </div>
         </div>
       <% end %>
@@ -110,15 +110,15 @@
           </div>
           <div class="col-sm-1">
             <%= p.label :workflow_id, class: 'hidden-md hidden-lg control-label' %>
-            <%= p.text_field :workflow_id, class: 'form-control', readonly: true %>
+            <%= display_value p.object.workflow_id %>
           </div>
           <div class="col-sm-3">
             <%= p.label :label, class: 'hidden-md hidden-lg control-label' %>
-            <%= p.text_field :label, class: 'form-control', readonly: true %>
+            <%= display_value p.object.label %>
           </div>
           <div class="col-sm-3">
             <%= p.label :tasklist, class: 'hidden-md hidden-lg control-label' %>
-            <%= p.text_field :tasklist, class: 'form-control', readonly: true %>
+            <%= display_value p.object.tasklist %>
           </div>
         </div>
       <% end %>
@@ -131,7 +131,7 @@
           <%= link_to t( 'button_label.edit' ), edit_account_path(@account), class: 'btn btn-lg   btn-block btn-default' %>
         </div>
         <div class="col-sm-2">
-          <%= link_to t( 'button_label.goto_to_list' ), accounts_path, class: 'btn btn-lg btn-block btn-default' %>
+          <%= link_to t( 'button_label.go_to_index' ), accounts_path, class: 'btn btn-lg btn-block btn-default' %>
         </div>
       </div>
     <% end %>

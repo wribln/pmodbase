@@ -8,43 +8,43 @@
       <div class="form-group">
         <%= f.label :rfc_status_record_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= f.text_field :rfc_status_record_id, class: 'form-control', readonly: true %>
+          <%= display_value some_id( f.object.rfc_status_record_id )%>
         </div>
       </div>
       <div class="form-group">
         <%= f.label :version, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
-          <%= f.text_field :version, class: 'form-control', readonly: true %>
+          <%= display_value f.object.version %>
         </div>
       </div>
       <div class="form-group">
         <%= f.label :question, class: 'col-sm-3 control-label' %>
         <div class="col-sm-9">
-          <%= f.text_area :question, cols: DEFAULT_COLS_TEXTAREA, rows: DEFAULT_ROWS_TEXTAREA, class: 'form-control', readonly: true %>
+          <%= display_lines f.object.question %>
         </div>
       </div>
       <div class="form-group">
         <%= f.label :answer, class: 'col-sm-3 control-label' %>
         <div class="col-sm-9">
-          <%= f.text_area :answer, cols: DEFAULT_COLS_TEXTAREA, rows: ( DEFAULT_ROWS_TEXTAREA * 2 ), class: 'form-control', readonly: true %>
+          <%= display_lines f.object.answer %>
         </div>
       </div>
       <div class="form-group">
         <%= f.label :note, class: 'col-sm-3 control-label' %>
         <div class="col-sm-9">
-          <%= f.text_area :note, cols: DEFAULT_COLS_TEXTAREA, rows: DEFAULT_ROWS_TEXTAREA, class: 'form-control', readonly: true %>
+          <%= display_lines f.object.note %>
         </div>
       </div>
       <div class="form-group">
         <%= f.label :id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= f.text_field :id, class: 'form-control', readonly: true %>
+          <%= display_value f.object.to_id %>
         </div>
       </div>
       <div class="form-group">
         <%= f.label :account_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= f.text_field :account_id, class: 'form-control', readonly: true %>
+          <%= display_value f.object.account.name_with_id %>
         </div>
       </div>
       <div class="form-group">
@@ -64,7 +64,7 @@
           <%= link_to t( 'button_label.edit' ), edit_rfc_document_path( @rfc_document ), class: 'btn btn-lg btn-block btn-default' %>
         </div>
         <div class="col-sm-2">
-          <%= link_to t( 'button_label.goto_to_list' ), rfc_documents_path, class: 'btn btn-lg btn-block btn-default' %>
+          <%= link_to t( 'button_label.go_to_index' ), rfc_documents_path, class: 'btn btn-lg btn-block btn-default' %>
         </div>
       </div>
     <% end %>

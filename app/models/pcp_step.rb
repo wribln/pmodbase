@@ -20,8 +20,12 @@ class PcpStep < ActiveRecord::Base
   STEP_LABELS = PcpStep.human_attribute_name( :step_labels ).freeze
   STEP_STATES = PcpStep.human_attribute_name( :step_states ).freeze
 
-  validates :subject_version, :report_version,
+  validates :subject_version,
     length: { maximum: MAX_LENGTH_OF_DOC_VERSION }
+
+  validates :report_version,
+    length: { maximum: MAX_LENGTH_OF_DOC_VERSION },
+    uniqueness: { scope: :pcp_subject, message: I18n.t( 'pcp_steps.msg.dup_report_version' )}
 
   validates :note,
     length: { maximum: MAX_LENGTH_OF_NOTE }

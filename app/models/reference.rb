@@ -30,10 +30,4 @@ class Reference < ActiveRecord::Base
     write_attribute( :project_doc_id, AppHelper.clean_up( text ))
   end
 
-  # prepare a collection which includes an entry to be used for empty records
-
-  def self.get_select_collection
-    [[ I18n.t( 'general.none' ), 0 ]].concat( self.all.pluck( :code, :id ))
-  end
-
 end

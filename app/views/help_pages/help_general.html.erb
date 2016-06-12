@@ -34,5 +34,20 @@
       needs to be stored in a manner independent of the local time at the
       origin of the information. All time information will be stored and
       shown in UTC (Universal Time Coordinated).</p>
+    <h3>Unique Record Identifier</h3>
+      <p>Each and every record in the pmodbase has a unique record identifier.
+      This is a number generated automatically by the underlying database to
+      ensure that all records can be distinguished even though they may look
+      identical.</p>
+      <p>The name of this identifier is usually abbreviated as
+      <%= t( 'general.attributes.id')-%> -&nbsp;for example in headings;
+      a value of this identifier is shown in brackets, e.g. [42]. This way
+      it should be easily recognized by you.</p>
+      <p>When accessing record specific information, this identifier will be
+      used to designate the record to be used. Hence, you will find this
+      number in the URL. For example: '.../aaa/1' takes you to the details
+      page of the first abbreviation.</p>
+      <p>When reporting problems on a specific item in the database, the
+      best way to identify the item is by mentioning this identifier.</p>      
     <%= help_footer FEATURE_ID_HELP_PAGES %>
   </div> <!-- /container -->

@@ -1,7 +1,7 @@
       <div class="form-group">
         <%= form.label :id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-1">
-          <%= display_value form.object.id %>
+        <div class="col-sm-2">
+          <%= display_value form.object.to_id %>
         </div>
       </div>
       <%- if @workflow.permitted_to_show?( :title ) then -%>

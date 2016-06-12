@@ -86,6 +86,7 @@ class PcpItemTest < ActiveSupport::TestCase
     ps.title = 'foobar'
     ps.p_owner_id = accounts( :account_one ).id
     px = PcpStep.new
+    px.report_version = 't0'
     assert_difference( [ 'PcpSubject.count', 'PcpStep.count' ], 1 )do
       assert ps.save, ps.errors.messages
       px.pcp_subject_id = ps.id
@@ -101,7 +102,7 @@ class PcpItemTest < ActiveSupport::TestCase
     pi.pcp_step_id = px.id
     assert_not pi.valid? # cannot assign to step_no 0
 
-    px = PcpStep.new( pcp_subject: ps, step_no: 1 )
+    px = PcpStep.new( pcp_subject: ps, step_no: 1, report_version: 't1' )
     assert_difference( 'PcpStep.count', 1 )do
       assert px.save, px.errors.messages
     end
@@ -241,6 +242,7 @@ class PcpItemTest < ActiveSupport::TestCase
 
     ps_new = PcpStep.new( pcp_subject: ps.pcp_subject )
     ps_new.create_release_from( ps, cu )
+    ps_new.report_version = 't0'
     ps.set_release_data( cu )
     assert_difference( 'PcpStep.count' )do
       assert ps.save, ps.errors.inspect
@@ -365,6 +367,7 @@ class PcpItemTest < ActiveSupport::TestCase
     ps_new = PcpStep.new( pcp_subject: ps.pcp_subject )
     ps_new.create_release_from( ps, cu )
     ps.set_release_data( cu )
+    ps_new.report_version = 't1'
     assert_difference( 'PcpStep.count' )do
       assert ps.save, ps.errors.inspect
       assert ps_new.save, ps_new.errors.inspect

@@ -48,4 +48,10 @@ class PcpCategory < ActiveRecord::Base
     account.id == p_owner_id || account.id == p_deputy_id
   end
 
+  # provide labels with id suffix
+
+  def label_with_id
+    text_and_id( :label )
+  end  
+
 end

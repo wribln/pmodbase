@@ -8,7 +8,7 @@
       <div class="form-group">
         <%= fc.label :id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= display_value fc.object.id %>
+          <%= display_value fc.object.to_id %>
         </div>
       </div>
       <div class="form-group">
@@ -26,25 +26,25 @@
       <div class="form-group">
         <%= fc.label :active, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
-          <%= fc.check_box :active, disabled: true, readonly: true %>
+          <%= display_check_box fc.object.active %>
         </div>
       </div>
       <div class="form-group">
         <%= fc.label :master, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
-          <%= fc.check_box :master, disabled: true, readonly: true %>
+          <%= display_check_box fc.object.master %>
         </div>
       </div>
       <div class="form-group">
         <%= fc.label :standard, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
-          <%= fc.check_box :standard, disabled: true, readonly: true %>
+          <%= display_check_box fc.object.standard %>
         </div>
       </div>
       <div class="form-group">
         <%= fc.label :heading, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
-          <%= fc.check_box :heading, disabled: true, readonly: true %>
+          <%= display_check_box fc.object.heading %>
         </div>
       </div>
       <div class="form-group">
@@ -58,7 +58,7 @@
           <%= link_to t( 'button_label.edit' ), edit_function_code_path( @function_code ), class: 'btn btn-lg btn-block btn-default' %>
         </div>
         <div class="col-sm-2">
-          <%= link_to t( 'button_label.goto_to_list' ), function_codes_path, class: 'btn btn-lg btn-block btn-default' %>
+          <%= link_to t( 'button_label.go_to_index' ), function_codes_path, class: 'btn btn-lg btn-block btn-default' %>
         </div>
       </div>
     <% end %>

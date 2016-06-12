@@ -90,7 +90,7 @@ class PcpItemsController1Test < ActionController::TestCase
       current_controller = @controller
       @controller = PcpSubjectsController.new
       patch :update, id: @pcp_subject, 
-        pcp_subject: { pcp_steps_attributes: {  '0' => { id: @pcp_step.id, report_version: 'A', new_assmt: '2' }}}
+        pcp_subject: { pcp_steps_attributes: {  '0' => { id: @pcp_step.id, report_version: 'B', new_assmt: '2' }}}
       @pcp_subject = assigns( :pcp_subject )
       @pcp_step = assigns( :pcp_curr_step )
       @pcp_subject.reload

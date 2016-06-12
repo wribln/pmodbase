@@ -13,7 +13,7 @@
   :user ], STD_CSV_OPTIONS ) -%>
 <%- @a_document_logs.each do |adl| -%>
 <%= CSV.generate_line([
-  adl.id,
+  adl.to_id,
   adl.a1_code,
   adl.a2_code,
   adl.a3_code,

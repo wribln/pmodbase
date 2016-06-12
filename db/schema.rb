@@ -508,6 +508,7 @@ ActiveRecord::Schema.define(version: 20160511091429) do
     t.datetime "updated_at",                             null: false
   end
 
+  add_index "pcp_comments", ["pcp_item_id", "pcp_step_id"], name: "pcp_comments_index"
   add_index "pcp_comments", ["pcp_item_id"], name: "index_pcp_comments_on_pcp_item_id"
   add_index "pcp_comments", ["pcp_step_id"], name: "index_pcp_comments_on_pcp_step_id"
 

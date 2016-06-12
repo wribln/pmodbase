@@ -8,25 +8,25 @@
       <div class="form-group">
         <%= a.label :id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= a.text_field :id, class: 'form-control', readonly: true %>
+          <%= display_value a.object.to_id %>
         </div>
       </div>
       <div class="form-group">
         <%= a.label :label, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= a.text_field :label, class: 'form-control', readonly: true %>
+          <%= display_value a.object.label %>
         </div>
       </div>
       <div class="form-group">
         <%= a.label :street_address, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= a.text_area :street_address, cols: DEFAULT_COLS_TEXTAREA, rows: DEFAULT_ROWS_TEXTAREA, class: 'form-control', readonly: true %>
+          <%= display_lines a.object.street_address %>
         </div>
       </div>
       <div class="form-group">
         <%= a.label :postal_address, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= a.text_area :postal_address, cols: DEFAULT_COLS_TEXTAREA, rows: DEFAULT_ROWS_TEXTAREA, class: 'form-control', readonly: true %>
+          <%= display_lines a.object.postal_address %>
         </div>
       </div>
       <div class="form-group">
@@ -34,7 +34,7 @@
           <%= link_to t( 'button_label.edit' ), edit_address_path(@address), class: 'btn btn-lg btn-block btn-default' %>
         </div>
         <div class="col-sm-2">
-          <%= link_to t( 'button_label.goto_to_list' ), addresses_path, class: 'btn btn-lg btn-block btn-default' %>
+          <%= link_to t( 'button_label.go_to_index' ), addresses_path, class: 'btn btn-lg btn-block btn-default' %>
         </div>
       </div>
     <% end %>

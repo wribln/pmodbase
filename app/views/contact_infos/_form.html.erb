@@ -1,7 +1,7 @@
       <div class="form-group">
         <%= form.label :id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= display_value form.object.id %>
+          <%= display_value form.object.to_id %>
         </div>
       </div>
       <div class="form-group">
@@ -15,37 +15,37 @@
         <div class="col-sm-2">
           <%= form.text_field :info_type, class: 'form-control', required: true %>
         </div>
-        <div class="col-sm-2">
+        <div class="col-sm-3">
           <p class="help-block" style="margin:0px"><%= t( 'contact_infos.info_type_help' )%></p>
         </div>
       </div>
       <div class="form-group">
         <%= form.label :phone_no_fixed, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-3">
+        <div class="col-sm-4">
           <%= form.phone_field :phone_no_fixed, class: 'form-control' %>
         </div>
       </div>
       <div class="form-group">
         <%= form.label :phone_no_mobile, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-3">
+        <div class="col-sm-4">
           <%= form.phone_field :phone_no_mobile, class: 'form-control' %>
         </div>
       </div>
       <div class="form-group">
         <%= form.label :department, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-3">
+        <div class="col-sm-4">
           <%= form.text_field :department, class: 'form-control' %>
         </div>
       </div>
       <div class="form-group">
         <%= form.label :detail_location, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-3">
+        <div class="col-sm-4">
           <%= form.text_field :detail_location, class: 'form-control' %>
         </div>
       </div>
       <div class="form-group">
         <%= form.label :address_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-3">
+        <div class="col-sm-4">
           <%= form.select :address_id, @address_options, { include_blank: true }, { class: 'form-control' }%>
         </div>
       </div>

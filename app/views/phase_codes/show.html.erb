@@ -7,38 +7,38 @@
       <%= render partial: 'shared/notice' %>
       <div class="form-group">
         <%= pc.label :id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-1">
-          <%= pc.text_field :id, class: 'form-control', readonly: true %>
+        <div class="col-sm-2">
+          <%= display_value pc.object.to_id %>
         </div>
       </div>
       <div class="form-group">
         <%= pc.label :code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= pc.text_field :code, class: 'form-control', readonly: true %>
+          <%= display_value pc.object.code %>
         </div>
       </div>
       <div class="form-group">
         <%= pc.label :label, class: 'col-sm-3 control-label' %>
         <div class="col-sm-5">
-          <%= pc.text_field :label, class: 'form-control', readonly: true %>
+          <%= display_value pc.object.label %>
         </div>
       </div>
       <div class="form-group">
         <%= pc.label :acro, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= pc.text_field :acro, class: 'form-control', readonly: true %>
+          <%= display_value pc.object.acro %>
         </div>
       </div>
       <div class="form-group">
         <%= pc.label :siemens_phase_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= pc.text_field :siemens_phase_id, class: 'form-control', readonly: true %>
+          <%= display_value pc.object.siemens_phase_id %>
         </div>
       </div>
       <div class="form-group">
         <%= pc.label :level, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
-          <%= pc.text_field :level, class: 'form-control', readonly: true %>
+          <%= display_value pc.object.level %>
         </div>
       </div>
       <div class="form-group">
@@ -46,7 +46,7 @@
           <%= link_to t( 'button_label.edit' ), edit_phase_code_path( @phase_code ), class: 'btn btn-lg btn-block btn-default' %>
         </div>
         <div class="col-sm-2">
-          <%= link_to t( 'button_label.goto_to_list' ), phase_codes_path, class: 'btn btn-lg btn-block btn-default' %>
+          <%= link_to t( 'button_label.go_to_index' ), phase_codes_path, class: 'btn btn-lg btn-block btn-default' %>
         </div>
       </div>
     <% end %>

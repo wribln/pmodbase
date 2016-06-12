@@ -36,7 +36,7 @@
         <% @pcp_subjects.each do |ps| %>
           <%- if @pcp_category != ps.pcp_category then -%>
             <tr>
-              <td colspan="7"><strong><%= ps.pcp_category.label %></strong></td>
+              <td colspan="7"><strong><%= ps.pcp_category.label_with_id %></strong></td>
               <td class="hidden-print"></td>
             <tr>
             <%- @pcp_category = ps.pcp_category -%>

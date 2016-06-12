@@ -13,8 +13,6 @@ class Feature < ActiveRecord::Base
     uniqueness: true,
     format: { with: /\A\w+\z/, message: I18n.t( 'features.msg.bad_code' )}
 
-  validate :code_has_route
-
   validates :feature_category_id,
     presence: true
 
@@ -81,16 +79,6 @@ class Feature < ActiveRecord::Base
 
   def create_target
     self.class.create_target( code )
-  end
-
-  # make sure a route exists for this code - unless this feature is hidden;
-
-  def code_has_route
-    route = create_target
-    Rails.application.routes.recognize_path( route ) \
-      unless no_user_access? || no_direct_access?
-    rescue
-      errors.add( :base, "missing route: #{ route }")
   end
 
   # overwrite write accessors to ensure that text fields do not contain

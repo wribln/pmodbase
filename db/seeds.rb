@@ -58,7 +58,7 @@ Feature.new do |f|
   f.control_level = PeopleController.feature_control_level
   f.no_workflows = PeopleController.no_workflows
   f.feature_category_id = fc1.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_FEATURE_CATEGORIES
@@ -69,7 +69,7 @@ Feature.new do |f|
   f.control_level = FeatureCategoriesController.feature_control_level
   f.no_workflows = FeatureCategoriesController.no_workflows
   f.feature_category_id = fc1.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_FEATURE_ITEMS
@@ -80,7 +80,7 @@ Feature.new do |f|
   f.control_level = FeaturesController.feature_control_level
   f.no_workflows = FeaturesController.no_workflows
   f.feature_category_id = fc1.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_RESPONSIBILITIES
@@ -91,7 +91,7 @@ Feature.new do |f|
   f.control_level = ResponsibilitiesController.feature_control_level
   f.no_workflows = ResponsibilitiesController.no_workflows
   f.feature_category_id = fc1.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_GROUP_CATEGORIES
@@ -102,7 +102,7 @@ Feature.new do |f|
   f.control_level = GroupCategoriesController.feature_control_level
   f.no_workflows = GroupCategoriesController.no_workflows
   f.feature_category_id = fc1.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_CONTACT_INFOS
@@ -113,7 +113,7 @@ Feature.new do |f|
   f.control_level = ContactInfosController.feature_control_level
   f.no_workflows = ContactInfosController.no_workflows
   f.feature_category_id = fc1.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_ACCOUNTS_AND_PERMISSIONS
@@ -124,7 +124,7 @@ Feature.new do |f|
   f.control_level = AccountsController.feature_control_level
   f.no_workflows = AccountsController.no_workflows
   f.feature_category_id = fc1.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_WORKFLOW_PERMISSIONS
@@ -135,7 +135,7 @@ Feature.new do |f|
   f.control_level = WorkflowResponsibilitiesController.feature_control_level
   f.no_workflows = WorkflowResponsibilitiesController.no_workflows
   f.feature_category_id = fc1.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_DBSTATS
@@ -146,7 +146,7 @@ Feature.new do |f|
   f.control_level = StatisticsController.feature_control_level
   f.no_workflows = StatisticsController.no_workflows
   f.feature_category_id = fc1.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_DSR_SUBMISSIONS
@@ -157,7 +157,7 @@ Feature.new do |f|
   f.control_level = DsrSubmissionsController.feature_control_level
   f.no_workflows = DsrSubmissionsController.no_workflows
   f.feature_category_id = fc1.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_DB_CHANGE_REQUESTS
@@ -168,7 +168,7 @@ Feature.new do |f|
   f.control_level = DbChangeRequestsController.feature_control_level
   f.no_workflows = DbChangeRequestsController.no_workflows
   f.feature_category_id = fc1.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_HOME_PAGE
@@ -179,7 +179,7 @@ Feature.new do |f|
   f.control_level = HomeController.feature_control_level
   f.no_workflows = HomeController.no_workflows
   f.feature_category_id = fc1.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_BASE_PAGE
@@ -190,7 +190,7 @@ Feature.new do |f|
   f.control_level = BaseController.feature_control_level
   f.no_workflows = BaseController.no_workflows
   f.feature_category_id = fc1.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_HELP_PAGES
@@ -202,7 +202,7 @@ Feature.new do |f|
   f.control_level = HelpPagesController.feature_control_level
   f.no_workflows = HelpPagesController.no_workflows
   f.feature_category_id = fc1.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_PROFILE
@@ -213,7 +213,7 @@ Feature.new do |f|
   f.control_level = ProfilesController.feature_control_level
   f.no_workflows = ProfilesController.no_workflows
   f.feature_category_id = fc1.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_RFC_DOCUMENTS
@@ -224,7 +224,7 @@ Feature.new do |f|
   f.control_level = RfcDocumentsController.feature_control_level
   f.no_workflows = RfcDocumentsController.no_workflows
   f.feature_category_id = fc1.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_REGION_NAMES
@@ -235,7 +235,7 @@ Feature.new do |f|
   f.control_level = RegionNamesController.feature_control_level
   f.no_workflows = RegionNamesController.no_workflows
   f.feature_category_id = fc1.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_SIEMENS_PHASES
@@ -246,7 +246,7 @@ Feature.new do |f|
   f.control_level = SiemensPhasesController.feature_control_level
   f.no_workflows = SiemensPhasesController.no_workflows
   f.feature_category_id = fc1.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_ALL_TIA_LISTS
@@ -257,7 +257,7 @@ Feature.new do |f|
   f.control_level = AllTiaListsController.feature_control_level
   f.no_workflows = AllTiaListsController.no_workflows
   f.feature_category_id = fc1.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_OUR_TIA_ITEMS
@@ -268,7 +268,7 @@ Feature.new do |f|
   f.control_level = OurTiaItemsController.feature_control_level
   f.no_workflows = OurTiaItemsController.no_workflows
   f.feature_category_id = fc1.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_HASHTAGS
@@ -279,7 +279,7 @@ Feature.new do |f|
   f.control_level = HashtagsController.feature_control_level
   f.no_workflows = HashtagsController.no_workflows
   f.feature_category_id = fc1.id
-end.save 
+end.save! 
 
 # -  -  -  -  -  -  - Rosters
 
@@ -292,7 +292,7 @@ Feature.new do |f|
   f.control_level = ContactListsController.feature_control_level
   f.no_workflows = ContactListsController.no_workflows
   f.feature_category_id = fc2.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_ADDRESSES
@@ -303,7 +303,7 @@ Feature.new do |f|
   f.control_level = AddressesController.feature_control_level
   f.no_workflows = AddressesController.no_workflows
   f.feature_category_id = fc2.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_GROUPS
@@ -314,7 +314,7 @@ Feature.new do |f|
   f.control_level = GroupsController.feature_control_level
   f.no_workflows = GroupsController.no_workflows
   f.feature_category_id = fc2.id
-end.save
+end.save!
 
 # -  -  -  -  -  -  - General Information
 
@@ -327,7 +327,7 @@ Feature.new do |f|
   f.control_level = AbbrSearchController.feature_control_level
   f.no_workflows = AbbrSearchController.no_workflows
   f.feature_category_id = fc3.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_ABBREVIATIONS
@@ -338,7 +338,7 @@ Feature.new do |f|
   f.control_level = AbbreviationsController.feature_control_level
   f.no_workflows = AbbreviationsController.no_workflows
   f.feature_category_id = fc3.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_COUNTRY_NAMES
@@ -349,7 +349,7 @@ Feature.new do |f|
   f.control_level = CountryNamesController.feature_control_level
   f.no_workflows = CountryNamesController.no_workflows
   f.feature_category_id = fc3.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_STANDARDS_BODIES
@@ -360,7 +360,7 @@ Feature.new do |f|
   f.control_level = StandardsBodiesController.feature_control_level
   f.no_workflows = StandardsBodiesController.no_workflows
   f.feature_category_id = fc3.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_GLOSSARY
@@ -371,7 +371,7 @@ Feature.new do |f|
   f.control_level = GlossaryItemsController.feature_control_level
   f.no_workflows = GlossaryItemsController.no_workflows
   f.feature_category_id = fc3.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_REFERENCES
@@ -382,7 +382,7 @@ Feature.new do |f|
   f.control_level = ReferencesController.feature_control_level
   f.no_workflows = ReferencesController.no_workflows
   f.feature_category_id = fc3.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_HOLIDAYS
@@ -393,7 +393,7 @@ Feature.new do |f|
   f.control_level = HolidaysController.feature_control_level
   f.no_workflows = HolidaysController.no_workflows
   f.feature_category_id = fc3.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_UNIT_NAMES
@@ -404,7 +404,7 @@ Feature.new do |f|
   f.control_level = UnitNamesController.feature_control_level
   f.no_workflows = UnitNamesController.no_workflows
   f.feature_category_id = fc3.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_WEB_LINKS
@@ -415,7 +415,7 @@ Feature.new do |f|
   f.control_level = WebLinksController.feature_control_level
   f.no_workflows = WebLinksController.no_workflows
   f.feature_category_id = fc3.id
-end.save
+end.save!
 
 # -  -  -  -  -  -  - Status Registers  
 
@@ -428,7 +428,7 @@ Feature.new do |f|
   f.control_level = CsrStatusRecordsController.feature_control_level
   f.no_workflows = CsrStatusRecordsController.no_workflows
   f.feature_category_id = fc4.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_DSR_STATUS_RECORDS
@@ -439,7 +439,7 @@ Feature.new do |f|
   f.control_level = DsrStatusRecordsController.feature_control_level
   f.no_workflows = DsrStatusRecordsController.no_workflows
   f.feature_category_id = fc4.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_DSR_DOC_GROUPS
@@ -450,7 +450,7 @@ Feature.new do |f|
   f.control_level = DsrDocGroupsController.feature_control_level
   f.no_workflows = DsrDocGroupsController.no_workflows
   f.feature_category_id = fc4.id
-end.save  
+end.save!  
 
 Feature.new do |f|
   f.id = FEATURE_ID_DSR_PROGRESS_RATES
@@ -461,7 +461,7 @@ Feature.new do |f|
   f.control_level = DsrProgressRatesController.feature_control_level
   f.no_workflows = DsrProgressRatesController.no_workflows
   f.feature_category_id = fc4.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_SUBMISSION_GROUPS
@@ -472,7 +472,7 @@ Feature.new do |f|
   f.control_level = SubmissionGroupsController.feature_control_level
   f.no_workflows = SubmissionGroupsController.no_workflows
   f.feature_category_id = fc4.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_RFC_STATUS_RECORDS
@@ -483,7 +483,7 @@ Feature.new do |f|
   f.control_level = RfcStatusRecordsController.feature_control_level
   f.no_workflows = RfcStatusRecordsController.no_workflows
   f.feature_category_id = fc4.id
-end.save
+end.save!
 
 # -  -  -  -  -  -  - Collaboration Tools 
 
@@ -496,7 +496,7 @@ Feature.new do |f|
   f.control_level = MyTiaListsController.feature_control_level
   f.no_workflows = MyTiaListsController.no_workflows
   f.feature_category_id = fc5.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_MY_TIA_ITEMS
@@ -507,7 +507,7 @@ Feature.new do |f|
   f.control_level = MyTiaItemsController.feature_control_level
   f.no_workflows = MyTiaItemsController.no_workflows
   f.feature_category_id = fc5.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_PCP_CATEGORIES
@@ -518,7 +518,7 @@ Feature.new do |f|
   f.control_level = PcpCategoriesController.feature_control_level
   f.no_workflows = PcpCategoriesController.no_workflows
   f.feature_category_id = fc5.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_ALL_PCP_SUBJECTS
@@ -529,7 +529,7 @@ Feature.new do |f|
   f.control_level = PcpAllSubjectsController.feature_control_level
   f.no_workflows = PcpAllSubjectsController.no_workflows
   f.feature_category_id = fc5.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_MY_PCP_SUBJECTS
@@ -540,7 +540,7 @@ Feature.new do |f|
   f.control_level = PcpSubjectsController.feature_control_level
   f.no_workflows = PcpSubjectsController.no_workflows
   f.feature_category_id = fc5.id
-end.save
+end.save!
 
 # - - - - - - - - - - utilities
 
@@ -553,7 +553,7 @@ Feature.new do |f|
   f.control_level = FeatureResponsibilitiesController.feature_control_level
   f.no_workflows = FeatureResponsibilitiesController.no_workflows
   f.feature_category_id = fc6.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_ACTIVITIES
@@ -564,7 +564,7 @@ Feature.new do |f|
   f.control_level = ProgrammeActivitiesController.feature_control_level
   f.no_workflows = ProgrammeActivitiesController.no_workflows
   f.feature_category_id = fc6.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_MY_CHANGE_REQUESTS
@@ -575,7 +575,7 @@ Feature.new do |f|
   f.control_level = MyChangeRequestsController.feature_control_level
   f.no_workflows = MyChangeRequestsController.no_workflows
   f.feature_category_id = fc6.id
-end.save
+end.save!
 
 # - - - - - - - - - - codes
 
@@ -588,7 +588,7 @@ Feature.new do |f|
   f.control_level = SCodeSearchController.feature_control_level
   f.no_workflows = SCodeSearchController.no_workflows
   f.feature_category_id = fc7.id
-end.save
+end.save!
 
 #Feature.new do |f|
 #  f.id = FEATURE_ID_DC1_CODES
@@ -599,7 +599,7 @@ end.save
 #  f.control_level = Dc1CodesController.feature_control_level
 #  f.no_workflows = Dc1CodesController.no_workflows
 #  f.feature_category_id = fc7.id
-#end.save
+#end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_FUNCTION_CODES
@@ -610,7 +610,7 @@ Feature.new do |f|
   f.control_level = FunctionCodesController.feature_control_level
   f.no_workflows = FunctionCodesController.no_workflows
   f.feature_category_id = fc7.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_SERVICE_CODES
@@ -621,7 +621,7 @@ Feature.new do |f|
   f.control_level = ServiceCodesController.feature_control_level
   f.no_workflows = ServiceCodesController.no_workflows
   f.feature_category_id = fc7.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_PRODUCT_CODES
@@ -632,7 +632,7 @@ Feature.new do |f|
   f.control_level = ProductCodesController.feature_control_level
   f.no_workflows = ProductCodesController.no_workflows
   f.feature_category_id = fc7.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_LOCATION_CODES
@@ -643,7 +643,7 @@ Feature.new do |f|
   f.control_level = LocationCodesController.feature_control_level
   f.no_workflows = LocationCodesController.no_workflows
   f.feature_category_id = fc7.id
-end.save  
+end.save!  
 
 Feature.new do |f|
   f.id = FEATURE_ID_PHASE_CODES
@@ -654,7 +654,7 @@ Feature.new do |f|
   f.control_level = PhaseCodesController.feature_control_level
   f.no_workflows = PhaseCodesController.no_workflows
   f.feature_category_id = fc7.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_DCC_CODES
@@ -665,7 +665,7 @@ Feature.new do |f|
   f.control_level = DccCodesController.feature_control_level
   f.no_workflows = DccCodesController.no_workflows
   f.feature_category_id = fc7.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_S_DOCUMENT_LOG
@@ -676,7 +676,7 @@ Feature.new do |f|
   f.control_level = SDocumentLogsController.feature_control_level
   f.no_workflows = SDocumentLogsController.no_workflows
   f.feature_category_id = fc7.id
-end.save
+end.save!
 
 # - - - - - - - - - - network information
 
@@ -689,7 +689,7 @@ Feature.new do |f|
   f.control_level = NetworkLinesController.feature_control_level
   f.no_workflows = NetworkLinesController.no_workflows
   f.feature_category_id = fc9.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_NW_STATIONS
@@ -700,7 +700,7 @@ Feature.new do |f|
   f.control_level = NetworkStationsController.feature_control_level
   f.no_workflows = NetworkStationsController.no_workflows
   f.feature_category_id = fc9.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_NW_STOPS
@@ -711,7 +711,7 @@ Feature.new do |f|
   f.control_level = NetworkStopsController.feature_control_level
   f.no_workflows = NetworkStopsController.no_workflows
   f.feature_category_id = fc9.id
-end.save
+end.save!
 
 # - - - - - - - - - - alternative/ACONEX codes
 
@@ -724,7 +724,7 @@ Feature.new do |f|
   f.control_level = ACodeSearchController.feature_control_level
   f.no_workflows = ACodeSearchController.no_workflows
   f.feature_category_id = fc8.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_A1_CODE
@@ -735,7 +735,7 @@ Feature.new do |f|
   f.control_level = A1CodesController.feature_control_level
   f.no_workflows = A1CodesController.no_workflows
   f.feature_category_id = fc8.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_A2_CODE
@@ -746,7 +746,7 @@ Feature.new do |f|
   f.control_level = A2CodesController.feature_control_level
   f.no_workflows = A2CodesController.no_workflows
   f.feature_category_id = fc8.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_A3_CODE
@@ -757,7 +757,7 @@ Feature.new do |f|
   f.control_level = A3CodesController.feature_control_level
   f.no_workflows = A3CodesController.no_workflows
   f.feature_category_id = fc8.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_A4_CODE
@@ -768,7 +768,7 @@ Feature.new do |f|
   f.control_level = A4CodesController.feature_control_level
   f.no_workflows = A4CodesController.no_workflows
   f.feature_category_id = fc8.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_A5_CODE
@@ -779,7 +779,7 @@ Feature.new do |f|
   f.control_level = A5CodesController.feature_control_level
   f.no_workflows = A5CodesController.no_workflows
   f.feature_category_id = fc8.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_A6_CODE
@@ -790,7 +790,7 @@ Feature.new do |f|
   f.control_level = A6CodesController.feature_control_level
   f.no_workflows = A6CodesController.no_workflows
   f.feature_category_id = fc8.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_A7_CODE
@@ -801,7 +801,7 @@ Feature.new do |f|
   f.control_level = A7CodesController.feature_control_level
   f.no_workflows = A7CodesController.no_workflows
   f.feature_category_id = fc8.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_A8_CODE
@@ -812,7 +812,7 @@ Feature.new do |f|
   f.control_level = A8CodesController.feature_control_level
   f.no_workflows = A8CodesController.no_workflows
   f.feature_category_id = fc8.id
-end.save
+end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_A_DOCUMENT_LOG
@@ -823,7 +823,7 @@ Feature.new do |f|
   f.control_level = ADocumentLogsController.feature_control_level
   f.no_workflows = ADocumentLogsController.no_workflows
   f.feature_category_id = fc8.id
-end.save
+end.save!
 
 puts ">>> last feature added"
 puts ">>> no of features: #{ Feature.count }"
@@ -864,22 +864,22 @@ ci.save
 GroupCategory.new do |gc|
   gc.label = 'General Responsible Entities'
   gc.seqno = 10
-end.save
+end.save!
 
 GroupCategory.new do |gc|
   gc.label = 'Subsystems'
   gc.seqno = 20
-end.save
+end.save!
 
 GroupCategory.new do |gc|
   gc.label = 'Electrification Subsystems'
   gc.seqno = 30
-end.save
+end.save!
 
 GroupCategory.new do |gc|
   gc.label = 'Supplementary Correspondence Codes'
   gc.seqno = 80
-end.save
+end.save!
 
 gc = GroupCategory.new
 gc.label = 'Internal Administration'
@@ -955,7 +955,7 @@ Permission4Flow.new do |p|
   p.workflow_id = 0
   p.label = 'Administrator'
   p.tasklist = '0,1,2,3,4,5,6,7'
-end.save
+end.save!
 
 Permission4Flow.new do |p|
   p.feature_id = FEATURE_ID_RFC_STATUS_RECORDS
@@ -963,7 +963,7 @@ Permission4Flow.new do |p|
   p.workflow_id = 1
   p.label = 'Administrator'
   p.tasklist = '0,1,2,3,4,5,6,7,8,9'
-end.save
+end.save!
 
 Permission4Flow.new do |p|
   p.feature_id = FEATURE_ID_RFC_STATUS_RECORDS
@@ -971,7 +971,7 @@ Permission4Flow.new do |p|
   p.workflow_id = 2
   p.label = 'Administrator'
   p.tasklist = '0,1,2,3'
-end.save
+end.save!
 
 Permission4Flow.new do |p|
   p.feature_id = FEATURE_ID_DSR_STATUS_RECORDS
@@ -979,7 +979,7 @@ Permission4Flow.new do |p|
   p.workflow_id = 0
   p.label = 'Administrator'
   p.tasklist = '0,1,2,3,4,5,6,7,8,9,10'
-end.save
+end.save!
 
 # - - - - - - - - - - DSR Progress Rates - one record per state
 

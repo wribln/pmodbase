@@ -32,7 +32,7 @@ module ApplicationModel
   # this formats an internal .id
 
   def to_id
-    "[#{ self.id }]"
+    "[#{ self.id }]" unless id.nil?
   end
 
   def some_id( id )

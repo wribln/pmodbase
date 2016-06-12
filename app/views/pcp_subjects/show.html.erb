@@ -10,8 +10,8 @@
       <%= render partial: 'shared/notice' %>
       <div class="form-group">
         <%= f.label :id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-1">
-          <%= display_value f.object.id %>
+        <div class="col-sm-2">
+          <%= display_value f.object.to_id %>
         </div>
       </div>
       <div class="form-group">
@@ -102,7 +102,7 @@
       <div class="form-group">
         <%= f.label :archived, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
-          <%= f.check_box :archived, disabled: true, readonly: true %>
+          <%= display_check_box f.object.archived %>
         </div>
       </div>
       <%- else -%>
@@ -176,6 +176,7 @@
             </div>
             <%= render partial: 'stats' %>
           <%- end -%>
+          <%= render partial: 'status' %>
         <%- end -%>
       <%- end -%>
       <%- end -%>
@@ -198,7 +199,7 @@
           <%= link_to t( '.members_button' ), pcp_subject_pcp_members_path( @pcp_subject ), class: 'btn btn-lg btn-block btn-default' %>
         </div>
         <div class="col-sm-2">
-          <%= link_to t( 'button_label.goto_to_list' ), pcp_subjects_path, class: 'btn btn-lg btn-block btn-default' %>
+          <%= link_to t( 'button_label.go_to_index' ), pcp_subjects_path, class: 'btn btn-lg btn-block btn-default' %>
         </div>
       </div>
     <% end %>

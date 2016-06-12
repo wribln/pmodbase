@@ -1,12 +1,12 @@
       <div class="form-group">
         <%= form.label :id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= display_value form.object.id %>
+          <%= display_value form.object.to_id %>
         </div>
       </div>
       <div class="form-group">
         <%= form.label :dsr_status_record_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-1">
+        <div class="col-sm-2">
           <%= form.text_field :dsr_status_record_id, class: 'form-control', required: true %>
         </div>
       </div>

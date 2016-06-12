@@ -7,38 +7,38 @@
       <%= render partial: 'shared/notice' %>
       <div class="form-group">
         <%= f.label :id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-1">
-          <%= f.text_field :id, class: 'form-control', readonly: true %>
+        <div class="col-sm-2">
+          <%= display_value f.object.to_id %>
         </div>
       </div>
       <div class="form-group">
         <%= f.label :project_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= f.text_field :project_id, class: 'form-control', readonly: true %>
+          <%= display_value f.object.project_id %>
         </div>
       </div>
       <div class="form-group">
         <%= f.label :activity_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= f.text_field :activity_id, class: 'form-control', readonly: true %>
+          <%= display_value f.object.activity_id %>
         </div>
       </div>
       <div class="form-group">
         <%= f.label :activity_label, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
-          <%= f.text_field :activity_label, class: 'form-control', readonly: true %>
+          <%= display_value f.object.activity_label %>
         </div>
       </div>
       <div class="form-group">
         <%= f.label :start_date, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= f.text_field :start_date, class: 'form-control', readonly: true %>
+          <%= display_value db_formatted_d( f.object.start_date )%>
         </div>
       </div>
       <div class="form-group">
         <%= f.label :finish_date, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= f.text_field :finish_date, class: 'form-control', readonly: true %>
+          <%= display_value db_formatted_d( f.object.finish_date )%>
         </div>
       </div>
       <div class="form-group">
@@ -46,7 +46,7 @@
           <%= link_to t( 'button_label.edit' ), edit_programme_activity_path( @programme_activity ), class: 'btn btn-lg btn-block btn-default' %>
         </div>
         <div class="col-sm-2">
-          <%= link_to t( 'button_label.goto_to_list' ), programme_activities_path, class: 'btn btn-lg btn-block btn-default' %>
+          <%= link_to t( 'button_label.go_to_index' ), programme_activities_path, class: 'btn btn-lg btn-block btn-default' %>
         </div>
       </div>
     <% end %>

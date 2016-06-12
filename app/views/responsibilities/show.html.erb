@@ -7,8 +7,8 @@
       <%= render partial: 'shared/notice' %>
       <div class="form-group">
         <%= r.label :id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-1">
-          <%= r.text_field :id, class: 'form-control', readonly: true %>
+        <div class="col-sm-2">
+          <%= display_value r.object.to_id %>
         </div>
       </div>
       <div class="form-group">
@@ -20,13 +20,13 @@
       <div class="form-group">
         <%= r.label :seqno, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
-          <%= r.text_field :seqno, class: 'form-control', readonly: true %>
+          <%= display_value r.object.seqno %>
         </div>
       </div>
       <div class="form-group">
         <%= r.label :description, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= r.text_field :description, class: 'form-control', readonly: true %>
+          <%= display_value r.object.description %>
         </div>
       </div>
       <div class="form-group">
@@ -40,7 +40,7 @@
           <%= link_to t( 'button_label.edit' ), edit_responsibility_path(@responsibility), class: 'btn btn-lg btn-block btn-default' %>  
         </div>  
         <div class="col-sm-2">  
-          <%= link_to t( 'button_label.goto_to_list' ), responsibilities_path, class: 'btn btn-lg btn-block btn-default' %>  
+          <%= link_to t( 'button_label.go_to_index' ), responsibilities_path, class: 'btn btn-lg btn-block btn-default' %>  
         </div>  
       </div>
     <% end %>  

@@ -21,7 +21,7 @@ class PcpItemsController < ApplicationController
     @filter_fields = filter_params
     @pcp_step = @pcp_subject.current_step
     @pcp_group = @pcp_step.acting_group_index
-    @pcp_items = @pcp_subject.pcp_items
+    @pcp_items = @pcp_subject.pcp_items.includes( :pcp_step )
     # restrict view to released items unless current user is in current group
     @pcp_items = @pcp_items.released( @pcp_subject ) unless user_has_permission?( :to_access )
     @pcp_items = @pcp_items.filter( filter_params ).paginate( page: params[ :page ])
@@ -164,7 +164,8 @@ class PcpItemsController < ApplicationController
 
   def new_comment
     get_item
-    @pcp_step = @pcp_item.pcp_step
+    @pcp_subject = @pcp_item.pcp_subject
+    @pcp_step = @pcp_subject.current_step
     if @pcp_step.status_closed?
       render_bad_logic t( 'pcp_items.msg.subj_closed' )
       return
@@ -181,6 +182,7 @@ class PcpItemsController < ApplicationController
       c.pcp_step = @pcp_step
       c.assessment = @pcp_item.new_assmt
       c.is_public = false
+      c.description = t( 'pcp_items.msg.item_closed' ) if @pcp_item.closed?
     end
     @pcp_comments_show = @pcp_item.pcp_comments
   end

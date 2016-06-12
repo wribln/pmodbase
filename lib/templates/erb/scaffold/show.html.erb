@@ -8,7 +8,7 @@
       <div class="form-group">
         <%%= f.label :id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%%= display_value f.object.id %>
+          <%%= display_value f.object.to_id %>
         </div>
       </div>
 <% attributes.each do |attribute| -%>
@@ -16,7 +16,6 @@
         <%%= f.label :<%= attribute.name %>, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
           <%%= display_value f.object.<%= attribute.name %> %>
-          <#%= f.text_field :<%= attribute.name %>, class: 'form-control', readonly: true %>
         </div>
       </div>
 <% end -%>
@@ -25,7 +24,7 @@
           <%%= link_to t( 'button_label.edit' ), edit_<%= singular_table_name %>_path( @<%= singular_table_name %> ), class: 'btn btn-lg btn-block btn-default' %>
         </div>
         <div class="col-sm-2">
-          <%%= link_to t( 'button_label.goto_to_list' ), <%= plural_table_name %>_path, class: 'btn btn-lg btn-block btn-default' %>
+          <%%= link_to t( 'button_label.go_to_index' ), <%= plural_table_name %>_path, class: 'btn btn-lg btn-block btn-default' %>
         </div>
       </div>
     <%% end %>

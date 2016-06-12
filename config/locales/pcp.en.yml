@@ -74,6 +74,9 @@ en:
         archived:       'Archived'
         subject_status: 'Subject Status'
         short_title:    'PCP Subject'
+      pcp_subject/pcp_steps:
+        report_version: :activerecord.attributes.pcp_step.report_version
+        step_no:        :activerecord.attributes.pcp_step.step_no
 
       pcp_step:
         id:             :general.attributes.id
@@ -195,6 +198,7 @@ en:
       nop_not_yet:    'Cannot show you this PCP Item as it is not yet released.'
       nop_to_view:    'This PCP Item is not yet released.'
       wrong_group:    'is bad: Only Commenting Group may add PCP Items.'
+      item_closed:    'WARNING: You are commenting on an item which is already resolved.'
 
   pcp_members:
     title:            'PCP Participants'
@@ -226,7 +230,11 @@ en:
     show:
       form_title:     'Show PCP Subject Details'
     stats:
-      form_title:     'Statistics on PCP Subjects'
+      form_title:     'Status of PCP Subjects by Category'
+      sub_title_0:    'permitted groups, as of: %{stats_date}'
+      sub_title_1:    'all groups, as of: %{stats_date}'
+      total_col:      'Total'
+      total_row:      'Grand Total'
 
   pcp_subjects:
     title:            'My PCP Subjects'
@@ -239,6 +247,9 @@ en:
     stats:
       stats:          'Assessment Statistics'
       stats_tag:      '(Total = Minor / Major / Resolved)'
+    status:
+      status:         'Status of Items'
+      status_tag:     '(Total = Open / New / Answered / Closed)'
     edit:
       form_title:     'Edit PCP Subject'
     new:
@@ -298,6 +309,7 @@ en:
   pcp_steps:
     msg:
       dup_step:       'has already been used.'
+      dup_report_version: 'has already been used.'
       bad_subject:    :general.non_existing
       bad_assessment: 'cannot be set for initial step.'
       no_reqd_input:  'must be set in order to Release this step.'

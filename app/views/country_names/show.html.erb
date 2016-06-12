@@ -7,20 +7,20 @@
       <%= render partial: 'shared/notice' %>
       <div class="form-group">
         <%= cn.label :id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-1">
-          <%= cn.text_field :id, class: 'form-control', readonly: true %>
+        <div class="col-sm-2">
+          <%= display_value cn.object.to_id %>
         </div>
       </div>
       <div class="form-group">
         <%= cn.label :code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= cn.text_field :code, class: 'form-control',  readonly: true %>
+          <%= display_value cn.object.code %>
         </div>
       </div>
       <div class="form-group">
         <%= cn.label :label, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
-          <%= cn.text_field :label, class: 'form-control',  readonly: true %>
+          <%= display_value cn.object.label %>
         </div>
       </div>
       <div class="form-group">
@@ -28,7 +28,7 @@
           <%= link_to t( 'button_label.edit' ), edit_country_name_path( @country_name ), class: 'btn btn-lg btn-block btn-default' %>
         </div>
         <div class="col-sm-2">
-          <%= link_to t( 'button_label.goto_to_list' ), country_names_path, class: 'btn btn-lg btn-block btn-default' %>
+          <%= link_to t( 'button_label.go_to_index' ), country_names_path, class: 'btn btn-lg btn-block btn-default' %>
         </div>
       </div>
     <% end %>

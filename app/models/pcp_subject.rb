@@ -213,7 +213,8 @@ class PcpSubject < ActiveRecord::Base
   end
 
   # this returns a nice title for the subject, for example to be used in reports
-  # or as header for the related PCP Items
+  # or as header for the related PCP Items (Note: this is NOT related to the
+  # :subject_title in the PCP Steps records!)
 
   def subject_title
     self.title || self.project_doc_id || self.to_id

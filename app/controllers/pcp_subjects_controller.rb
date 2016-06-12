@@ -5,9 +5,9 @@
 
 class PcpSubjectsController < ApplicationController
 
-  before_action :set_pcp_subject,  only: [ :show, :edit, :info_history, :update, :destroy, :update_release, :show_release ]
-  before_action :set_valid_params, only: [ :edit, :new, :update, :create ]
-  before_action :get_item_stats, only: [ :edit, :show, :update_release ]
+  before_action :set_pcp_subject,   only: [ :show, :edit, :info_history, :update, :destroy, :update_release, :show_release ]
+  before_action :set_valid_params,  only: [ :edit, :new, :update, :create ]
+  before_action :get_item_stats,    only: [ :show, :edit, :update_release ]
 
   initialize_feature FEATURE_ID_MY_PCP_SUBJECTS, FEATURE_ACCESS_SOME, FEATURE_CONTROL_CUG
 
@@ -23,6 +23,7 @@ class PcpSubjectsController < ApplicationController
 
   def show
     render_no_permission unless permission_to_view?
+    get_item_status
   end
 
   # GET /pcs/1/info - history
@@ -129,21 +130,11 @@ class PcpSubjectsController < ApplicationController
     # i.e. (1) item is closed, or
     #      (2) item is new for this step and without comments, or
     #      (3) item has at least one comment public for this step
-    open_pi = 0
-    @pcp_subject.pcp_items.each do |pi|
-      next if pi.closed?
-      pcs = pi.pcp_comments
-      if pcs.empty? then
-        next if pi.pcp_step == @pcp_curr_step
-      else
-        next if pcs.last.pcp_step == @pcp_curr_step && pcs.is_public.count > 0
-      end
-      open_pi += 1
-    end
-    if open_pi > 0 then
+    get_item_status
+    if @pcp_item_status.first > 0 then
       # ignore release request
       set_final_breadcrumb( :show )
-      flash.now[ :notice ] = I18n.t( 'pcp_subjects.msg.rel_not_ok', count: open_pi )
+      flash.now[ :notice ] = I18n.t( 'pcp_subjects.msg.rel_not_ok', count: @pcp_item_status.first )
       respond_to do |format|
         format.html { render :show }
       end
@@ -278,6 +269,46 @@ class PcpSubjectsController < ApplicationController
 
     def get_groups_for_select
       Group.active_only.participants_only.collect{ |g| [ g.code_and_label, g.id ]}
+    end
+
+    # determine item status - returns array with counts:
+    # [0] - open items
+    # [1] - new items
+    # [2] - answered items
+    # [3] - closed items
+    # [4] - total items
+
+    def get_item_status
+      @pcp_item_status = Array.new( 5, 0 )
+      @pcp_subject.pcp_items.each do |pi|
+        @pcp_item_status[ 4 ] += 1
+        if pi.closed? then
+          @pcp_item_status[ 3 ] += 1
+          next
+        end
+        if pi.pcp_step == @pcp_curr_step then
+          @pcp_item_status[ 1 ] += 1
+          next
+        end
+        pcs = pi.pcp_comments.for_step( @pcp_curr_step )
+        if pcs.empty? then
+          # this would be counted either as new item (when in commenting group)
+          # or as open item (in presenting group)
+        else
+          f = false
+          pcs.each do |c|
+            if c.is_public then
+              f = true
+              break
+            end
+          end
+          if f then
+            @pcp_item_status[ 2 ] += 1
+            next
+          end
+        end
+        @pcp_item_status[ 0 ] += 1
+      end
     end
 
 end

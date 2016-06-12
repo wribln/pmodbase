@@ -20,13 +20,13 @@
       <div class="form-group">
         <%= f.label :description, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
-          <%= f.text_area :description, cols: DEFAULT_COLS_TEXTAREA, rows: DEFAULT_ROWS_TEXTAREA, class: 'form-control', readonly: true %>
+          <%= display_lines f.object.description %>
         </div>
       </div>
       <div class="form-group">
         <%= f.label :comment, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
-          <%= f.text_area :comment, cols: DEFAULT_COLS_TEXTAREA, rows: DEFAULT_ROWS_TEXTAREA, class: 'form-control', readonly: true %>
+          <%= display_lines f.object.comment %>
         </div>
       </div>
       <div class="form-group">
@@ -56,7 +56,7 @@
       <div class="form-group">
         <%= f.label :archived, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
-          <%= f.check_box :archived, disabled: true, readonly: true %>
+          <%= display_check_box f.object.archived %>
         </div>
       </div>
       <div class="form-group">
@@ -67,7 +67,7 @@
           <%= link_to t( 'button_label.history' ), my_tia_item_info_path( @tia_item ), class: 'btn btn-lg btn-block btn-default', target: target_window %>
         </div>
         <div class="col-sm-2">
-          <%= link_to t( 'button_label.goto_to_list' ), my_tia_items_path( @tia_list ), class: 'btn btn-lg btn-block btn-default' %>
+          <%= link_to t( 'button_label.go_to_index' ), my_tia_items_path( @tia_list ), class: 'btn btn-lg btn-block btn-default' %>
         </div>
       </div>
     <% end %>

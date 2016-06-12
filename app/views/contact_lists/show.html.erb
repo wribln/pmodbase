@@ -8,25 +8,25 @@
       <div class="form-group">
         <%= p.label :id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= p.text_field :id, class: 'form-control', readonly: true %>
+          <%= display_value p.object.to_id %>
         </div>
       </div>
       <div class="form-group">
         <%= p.label :formal_name, class: 'col-sm-3 control-label' %>    
         <div class="col-sm-4">
-          <%= p.text_field :formal_name, class: 'form-control', readonly: true %>
+          <%= display_value p.object.formal_name %>
         </div>
       </div>
       <div class="form-group">
         <%= p.label :informal_name, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= p.text_field :informal_name, class: 'form-control', readonly: true %>
+          <%= display_value p.object.informal_name %>
         </div>
       </div>
       <div class="form-group">
         <%= p.label :email, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= p.email_field :email, class: 'form-control', readonly: true %>
+          <%= display_value p.object.email %>
         </div>
       </div>
       <%= render partial: 'people/contact_info_header' %>

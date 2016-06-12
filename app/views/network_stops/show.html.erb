@@ -8,43 +8,43 @@
       <div class="form-group">
         <%= f.label :id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= display_value f.object.id %>
+          <%= display_value f.object.to_id %>
         </div>
       </div>
       <div class="form-group">
         <%= f.label :network_station_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= f.text_field :network_station_id, class: 'form-control', readonly: true %>
+          <%= display_value f.object.network_station_id %>
         </div>
       </div>
       <div class="form-group">
         <%= f.label :network_line_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= f.text_field :network_line_id, class: 'form-control', readonly: true %>
+          <%= display_value f.object.network_line_id %>
         </div>
       </div>
       <div class="form-group">
         <%= f.label :stop_no, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
-          <%= f.text_field :stop_no, class: 'form-control', readonly: true %>
+          <%= display_value f.object.stop_no %>
         </div>
       </div>
       <div class="form-group">
         <%= f.label :code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= f.text_field :code, class: 'form-control', readonly: true %>
+          <%= display_value f.object.code %>
         </div>
       </div>
       <div class="form-group">
         <%= f.label :location_code_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= f.text_field :location_code_id, class: 'form-control', readonly: true %>
+          <%= display_value f.object.location_code_id %>
         </div>
       </div>
       <div class="form-group">
         <%= f.label :note, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-6">
-          <%= f.text_field :note, class: 'form-control', readonly: true %>
+        <div class="col-sm-4">
+          <%= display_value f.object.note %>
         </div>
       </div>
       <div class="form-group">
@@ -52,7 +52,7 @@
           <%= link_to t( 'button_label.edit' ), edit_network_stop_path( @network_stop ), class: 'btn btn-lg btn-block btn-default' %>
         </div>
         <div class="col-sm-2">
-          <%= link_to t( 'button_label.goto_to_list' ), network_stops_path, class: 'btn btn-lg btn-block btn-default' %>
+          <%= link_to t( 'button_label.go_to_index' ), network_stops_path, class: 'btn btn-lg btn-block btn-default' %>
         </div>
       </div>
     <% end %>

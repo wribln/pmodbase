@@ -7,8 +7,8 @@
       <%= render partial: 'shared/notice' %>
       <div class="form-group">
         <%= f.label :id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-1">
-          <%= display_value f.object.id %>
+        <div class="col-sm-2">
+          <%= display_value f.object.to_id %>
         </div>
       </div>
       <div class="form-group">
@@ -19,14 +19,46 @@
       </div>
       <div class="form-group">
         <%= f.label :p_group_id, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-6">
+          <%= display_value f.object.p_group.code_and_label %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :p_owner_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= display_value f.object.p_group.code %>
+          <%= link_to_contact_list( f.object.p_owner, :button )%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :p_deputy_id, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-2">
+          <%- if f.object.p_deputy_id.nil? -%>
+            <%= display_value nil %>
+          <%- else -%>
+            <%= link_to_contact_list( f.object.p_deputy, :button )%>
+          <%- end -%>
         </div>
       </div>
       <div class="form-group">
         <%= f.label :c_group_id, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-6">
+          <%= display_value f.object.c_group.code_and_label %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :c_owner_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= display_value f.object.c_group.code %>
+          <%= link_to_contact_list( f.object.c_owner, :button )%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :c_deputy_id, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-2">
+          <%- if f.object.c_deputy_id.nil? -%>
+            <%= display_value nil %>
+          <%- else -%>
+            <%= link_to_contact_list( f.object.c_deputy, :button )%>
+          <%- end -%>
         </div>
       </div>
       <div class="form-group">
@@ -34,7 +66,7 @@
           <%= link_to t( 'button_label.edit' ), edit_pcp_category_path( @pcp_category ), class: 'btn btn-lg btn-block btn-default' %>
         </div>
         <div class="col-sm-2">
-          <%= link_to t( 'button_label.goto_to_list' ), pcp_categories_path, class: 'btn btn-lg btn-block btn-default' %>
+          <%= link_to t( 'button_label.go_to_index' ), pcp_categories_path, class: 'btn btn-lg btn-block btn-default' %>
         </div>
       </div>
     <% end %>

@@ -2,7 +2,7 @@
         <%= form.label :id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <%- if action_name == 'edit' then -%>
-            <%= display_value form.object.id %>
+            <%= display_value form.object.to_id %>
           <%- else -%>        
             <%= form.text_field :id, class: 'form-control', required: true %>
           <%- end -%>

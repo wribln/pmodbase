@@ -7,32 +7,32 @@
       <%= render partial: 'shared/notice' %>
       <div class="form-group">
         <%= g.label :id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-1">
-          <%= g.text_field :id, class: 'form-control', readonly: true %>
+        <div class="col-sm-2">
+          <%= display_value g.object.to_id %>
         </div>
       </div>
       <div class="form-group">
         <%= g.label :code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= g.text_field :code, class: 'form-control', readonly: true %>
+          <%= display_value g.object.code %>
         </div>
       </div>
       <div class="form-group">
         <%= g.label :label, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= g.text_field :label, class: 'form-control', readonly: true %>
+          <%= display_value g.object.label %>
         </div>
       </div>
       <div class="form-group">
         <%= g.label :notes, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= g.text_field :notes, class: 'form-control', readonly: true %>
+          <%= display_value g.object.notes %>
         </div>
       </div>
       <div class="form-group">
         <%= g.label :seqno, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
-          <%= g.text_field :seqno, class: 'form-control', readonly: true %>
+          <%= display_value g.object.seqno %>
         </div>
       </div>
       <div class="form-group">
@@ -50,31 +50,31 @@
       <div class="form-group">
         <%= g.label :participating, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
-          <%= g.check_box :participating, disabled: true, readonly: true %>
+          <%= display_check_box g.object.participating %>
         </div>
       </div>   
       <div class="form-group">
         <%= g.label :s_sender_code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
-          <%= g.check_box :s_sender_code, disabled: true, readonly: true %>
+          <%= display_check_box g.object.s_sender_code %>
         </div>
       </div>   
       <div class="form-group">
         <%= g.label :s_receiver_code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
-          <%= g.check_box :s_receiver_code, disabled: true, readonly: true %>
+          <%= display_check_box g.object.s_receiver_code %>
         </div>
       </div>   
       <div class="form-group">
         <%= g.label :active, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
-          <%= g.check_box :active, disabled: true, readonly: true %>
+          <%= display_check_box g.object.active %>
         </div>
       </div>   
       <div class="form-group">
         <%= g.label :standard, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
-          <%= g.check_box :standard, disabled: true, readonly: true %>
+          <%= display_check_box g.object.standard %>
         </div>
       </div>   
       <div class="form-group">
@@ -82,7 +82,7 @@
           <%= link_to t( 'button_label.edit' ), edit_group_path( @group ), class: 'btn btn-lg btn-block btn-default' %>
         </div>
         <div class="col-sm-2">
-          <%= link_to t( 'button_label.goto_to_list' ), groups_path, class: 'btn btn-lg btn-block btn-default' %>
+          <%= link_to t( 'button_label.go_to_index' ), groups_path, class: 'btn btn-lg btn-block btn-default' %>
         </div>
       </div>
     <% end %>

@@ -84,17 +84,21 @@ class GlossaryItemsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
 
     def glossary_item_params
-      params.require( :glossary_item ).permit( :term, :code, :description )
+      params.require( :glossary_item ).permit( :term, :code, :description, :reference_id )
     end
 
     def filter_params
       params.slice( :ff_id, :ff_term, :ff_code, :ff_desc, :ff_ref ).clean_up
-    end      
+    end
 
-    # define collections for use in views
+    # prepare collection for list boxes: 
+    # for the filter, I need one with handcrafted -none- value so
+    # I can use it for filterning items without reference ...
 
     def set_selections
-      @references = Reference.get_select_collection
+      @references = Array.new
+      @references.concat( [[ t( 'general.none' ), '0' ]]) if action_name == 'index'
+      @references.concat( Reference.all.pluck( :code, :id ))
     end
 
 end

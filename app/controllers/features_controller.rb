@@ -76,7 +76,8 @@ class FeaturesController < ApplicationController
     def feature_params
       if action_name == 'create' then
         params.require( :feature ).permit( :label, :seqno, :feature_category_id,
-                                           :code, :access_level, :control_level )
+                                           :code, :access_level, :control_level,
+                                           :id, :no_workflows )
       else
         params.require( :feature ).permit( :label, :seqno, :feature_category_id )
       end
