@@ -1,0 +1,82 @@
+<% help_title 'Why use PCP?' %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">Some good reasons why you should use the Present-Comment-Process (PCP) in your project:</p>
+    <ul>
+      <li>PCP is based on experience in previous projects and contains 'best practise'.</li>
+      <li>It is ready to use: If you have a pmodbase web-site set up, you can use the PCP right away.</li>
+      <li>The process is documented in online help pages: Simple steps are explained in 'How-to' pages,
+        a general overview is available as well as detailed information for each screen and dialogue.</li>
+      <li>You can access and update information from anywhere and anytime where internet is available,
+        on notebooks, tablets, even on your mobile phone without additional software.</li>
+      <li>There is no need to save previous records: the pmodbase system keeps track of the status
+        and creates up-to-date statistics.</li>
+      <li>The process logic is implemented to make your work easier and less prone to errors, it 
+        will thus save you time and improve the quality of your work.</li>
+      <li>Clear separation of responsibilities makes the process transparent and safe.</li>
+      <li>Use the PCP for documents, drawings, hand-over of sites - any time where one group or person
+        needs approval for a work result from another group or person involved in the project.</li>
+      <li>Review and approval results are produced as documents ready to submit to the document management
+        system.</li>
+      <li>You do not need any project-specific worksheets or forms - all relevant information is collected
+        in the pmodbase system.</li>
+      <li>Use PCP for internal quality reviews, reviews between subsystems and consortium partners, 
+        and with external partners (consultants, clients).</li>
+    </ul>
+    <p class="lead">What could be a reason NOT to use the PCP?</p>
+    <ul>
+      <li>Your partner does not want or is not permitted to use PCP in pmodbase, or insists that you use
+        his templates or forms:<br/>
+        IF you are the ONLY person involved in this process, it might be simpler to use the conventional
+        methods (office tool spreadsheets, documents, forms, templates).<br/>
+        HOWEVER, if there are more people involved on your side in this process, or if you simply want
+        to keep track of all steps in this process, you can always copy his contributions (comments or
+        responses) into the pmodbase system. Depending on the amount of comments, this would be an easy
+        job which can even be delegated to some other person (see
+        <%= link_to_help 'pcp_how_to_01', 'How to ... copy comments by others (not using pmodbase)' %>, or
+        <%= link_to_help 'pcp_how_to_02', 'How to ... copy responses by others (not using pmodbase)' %>).
+        The advantages you have are then all of the above, specifically being able to involve others
+        in the process and having a detailed track of all issues, comments and responses.</li>
+      <li>Your partner does not follow the process rules:<br/>
+      Using any kind of business process requires that certain rules are followed. If participants
+      in a business process do not adhere to these rules, that process cannot work.<br/>
+      The PCP implements and enforces the following, reasonable rules:
+        <ul>
+          <li><em>The subject to be reviewed is always the same.</em><br/>
+          For example, in a document or drawing review, the document to be reviewed must always
+          have the same identification (document code or drawing number); surely the revision
+          or version number may or will change but not the code or number which unambiguously
+          identifies the document or drawing.</li>
+          <li><em>The document in which comments and responses are collected and passed on 
+          to the other party always has the same document code.</em><br/>
+          This code is named here
+          <%= help_term PcpSubject.human_attribute_name( :report_doc_id )-%>: For each comment
+          -&nbsp;response cycle (called <%= help_term 'PCP Step' -%>),
+          this document will be re-issued with the same document code and a new revision id.</li>
+          <li><em>Only the commenting party may add and close comments again.</em><br/>
+          The idea here is that the presenting party presents the work results and the
+          commenting party makes observations (describes issues or makes comments).
+          The presenting party may respond to these observations/issues/comments
+          but is not permitted to declare an observation/issue/comment to be resolved.
+          Only the party which has created the observation/issue/comment is allowed to confirm
+          that the problem is solved.<br/>
+          The presenting party may only respond to any observation/issue/comment.</li>
+          <li><em>Every observation/issue/comment must be commented on.</em><br/>
+          This means that the presenting party must respond to each and every open
+          observation/issue/comment. The commenting party must also comment on
+          all observations/issues/comments having a response by the presenting party,
+          this could be a final comment which includes the closing of the issue, or
+          another comment which requires an additional response by the presenting party.</li>
+        </ul>
+      <li>You are in the middle of a review.<br/>
+        It might not be worth it to spend time to accurately reconstruct the process status
+        for a specific document or drawing. Maybe you should spend the time to resolve any
+        remaining issues?<br/>
+        On the other hand: If it is important to retrace the history of the events leading
+        to the current situation, it could be worthwhile to enter all relevant data into
+        the pmodbase.</li>
+      </li>
+    </ul>
+    <%= help_footer FEATURE_ID_HELP_PAGES %>
+  </div> <!-- /container -->

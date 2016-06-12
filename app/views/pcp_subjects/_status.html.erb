@@ -1,0 +1,8 @@
+        <div class="form-group">
+          <label class="col-sm-3 control-label"><%= t( '.status' )%></label>
+            <p class="form-control-static col-sm-2">
+              <%= "#{ @pcp_item_status[ 4 ] } = #{ @pcp_item_status.take( 4 ).join(' / ')}" %></p>
+            <p class="form-control-static col-sm-4">
+              <%= t ( '.status_tag' )%></p>
+            </p>
+        </div>
