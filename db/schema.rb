@@ -151,6 +151,9 @@ ActiveRecord::Schema.define(version: 20160511091429) do
     t.datetime "updated_at",                                 null: false
   end
 
+  add_index "accounts", ["active"], name: "index_accounts_on_active"
+  add_index "accounts", ["person_id"], name: "index_accounts_on_person_id"
+
   create_table "addresses", force: :cascade do |t|
     t.string   "label",          limit: 50,  null: false
     t.string   "street_address", limit: 255
@@ -206,17 +209,20 @@ ActiveRecord::Schema.define(version: 20160511091429) do
   add_index "csr_status_records", ["correspondence_type"], name: "index_csr_status_records_on_correspondence_type"
 
   create_table "db_change_requests", force: :cascade do |t|
-    t.integer  "requesting_account_id"
-    t.integer  "responsible_account_id"
+    t.integer  "requesting_account_id_id"
+    t.integer  "responsible_account_id_id"
     t.integer  "feature_id"
-    t.string   "detail",                 limit: 50
-    t.string   "action",                 limit: 10
-    t.integer  "status",                            default: 0
+    t.string   "detail",                    limit: 50
+    t.string   "action",                    limit: 10
+    t.integer  "status",                               default: 0
     t.string   "uri"
     t.text     "request_text"
-    t.datetime "created_at",                                    null: false
-    t.datetime "updated_at",                                    null: false
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
   end
+
+  add_index "db_change_requests", ["requesting_account_id_id"], name: "index_db_change_requests_on_requesting_account_id_id"
+  add_index "db_change_requests", ["responsible_account_id_id"], name: "index_db_change_requests_on_responsible_account_id_id"
 
   create_table "dcc_codes", force: :cascade do |t|
     t.string   "code",       limit: 10,                 null: false
@@ -344,6 +350,8 @@ ActiveRecord::Schema.define(version: 20160511091429) do
     t.datetime "created_at",                                 null: false
     t.datetime "updated_at",                                 null: false
   end
+
+  add_index "features", ["feature_category_id"], name: "index_features_on_feature_category_id"
 
   create_table "function_codes", force: :cascade do |t|
     t.string   "code",       limit: 10,                 null: false
@@ -565,6 +573,7 @@ ActiveRecord::Schema.define(version: 20160511091429) do
     t.datetime "updated_at",                              null: false
   end
 
+  add_index "pcp_steps", ["pcp_subject_id", "report_version"], name: "pcp_steps_report_versions", unique: true
   add_index "pcp_steps", ["pcp_subject_id", "step_no"], name: "pcp_steps_index", unique: true
   add_index "pcp_steps", ["pcp_subject_id"], name: "index_pcp_steps_on_pcp_subject_id"
 
@@ -603,6 +612,8 @@ ActiveRecord::Schema.define(version: 20160511091429) do
     t.datetime "updated_at",                               null: false
   end
 
+  add_index "people", ["involved"], name: "index_people_on_involved"
+
   create_table "permission4_flows", force: :cascade do |t|
     t.integer  "account_id",  null: false
     t.integer  "feature_id",  null: false
@@ -613,7 +624,9 @@ ActiveRecord::Schema.define(version: 20160511091429) do
     t.datetime "updated_at",  null: false
   end
 
+  add_index "permission4_flows", ["account_id"], name: "index_permission4_flows_on_account_id"
   add_index "permission4_flows", ["feature_id", "workflow_id", "account_id"], name: "rfc_index", unique: true
+  add_index "permission4_flows", ["feature_id"], name: "index_permission4_flows_on_feature_id"
 
   create_table "permission4_groups", force: :cascade do |t|
     t.integer  "account_id",             null: false
@@ -639,6 +652,8 @@ ActiveRecord::Schema.define(version: 20160511091429) do
     t.datetime "created_at",                              null: false
     t.datetime "updated_at",                              null: false
   end
+
+  add_index "phase_codes", ["siemens_phase_id"], name: "index_phase_codes_on_siemens_phase_id"
 
   create_table "product_codes", force: :cascade do |t|
     t.string   "code",       limit: 10,                 null: false
@@ -705,6 +720,7 @@ ActiveRecord::Schema.define(version: 20160511091429) do
   end
 
   add_index "rfc_documents", ["rfc_status_record_id", "version"], name: "main_key", unique: true
+  add_index "rfc_documents", ["rfc_status_record_id"], name: "index_rfc_documents_on_rfc_status_record_id"
 
   create_table "rfc_status_records", force: :cascade do |t|
     t.integer  "rfc_type",                           default: 0, null: false

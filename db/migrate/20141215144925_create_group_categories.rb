@@ -6,9 +6,6 @@ class CreateGroupCategories < ActiveRecord::Migration
 
       t.timestamps null: false
     end
-    add_index :group_categories,
-    	[ :seqno, :label ],
-    	name: :group_categories_key2,
-    	order: { seqno: :asc, label: :asc }
+    add_index :group_categories, [ :seqno, :label ], name: :group_categories_key2, order: { seqno: :asc, label: :asc }
   end
 end

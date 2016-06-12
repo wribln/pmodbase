@@ -16,7 +16,7 @@ class CreateDsrStatusRecords < ActiveRecord::Migration
       t.integer     :quantity_b,      default: 0
       t.decimal     :weight,				  default: 1.0
       t.decimal     :weight_b,        default: 0.0
-      t.belongs_to  :dsr_doc_group,          index: true
+      t.belongs_to  :dsr_doc_group,          index: true, foreign_key: :true
       t.belongs_to  :submission_group,       index: true
       t.belongs_to  :submission_group_b,     index: true
       t.belongs_to  :prep_activity,          index: true
@@ -48,5 +48,12 @@ class CreateDsrStatusRecords < ActiveRecord::Migration
 
       t.timestamps null: false
     end
+    add_foreign_key :dsr_status_records, :groups, column: :sender_group_id
+    add_foreign_key :dsr_status_records, :groups, column: :sender_group_b_id
+    add_foreign_key :dsr_status_records, :groups, column: :receiver_group_id
+    add_foreign_key :dsr_status_records, :submission_groups, column: :submission_group_id
+    add_foreign_key :dsr_status_records, :submission_groups, column: :submission_group_b_id
+    add_foreign_key :dsr_status_records, :activities, column: :prep_activity_id
+    add_foreign_key :dsr_status_records, :activities, column: :subm_activity_id
   end
 end

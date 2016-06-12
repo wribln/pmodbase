@@ -1,7 +1,7 @@
 class CreateRfcDocuments < ActiveRecord::Migration
   def change
     create_table :rfc_documents do |t|
-      t.belongs_to  :rfc_status_record, null: false
+      t.belongs_to  :rfc_status_record, null: false, foreign_key: :true, index: :true
       t.integer     :version, default: 0,  null: false
       t.text        :question
       t.text        :answer

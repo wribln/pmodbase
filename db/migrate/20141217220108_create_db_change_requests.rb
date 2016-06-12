@@ -1,8 +1,8 @@
 class CreateDbChangeRequests < ActiveRecord::Migration
   def change
     create_table :db_change_requests do |t|
-      t.integer :requesting_account_id
-      t.integer :responsible_account_id
+      t.belongs_to :requesting_account_id,  index: :true
+      t.belongs_to :responsible_account_id, index: :true
       t.integer :feature_id
       t.string  :detail, limit: MAX_LENGTH_OF_LABEL
       t.string  :action, limit: MAX_LENGTH_OF_CODE 
@@ -12,5 +12,7 @@ class CreateDbChangeRequests < ActiveRecord::Migration
 
       t.timestamps null: false
     end
+    add_foreign_key :db_change_requests, :accounts, column: :requesting_account_id
+    add_foreign_key :db_change_requests, :accounts, column: :responsible_account_id
   end
 end

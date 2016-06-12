@@ -1,8 +1,8 @@
 class CreateSDocumentLogs < ActiveRecord::Migration
   def change
     create_table :s_document_logs do |t|
-      t.belongs_to :group,        null: false
-      t.belongs_to :account,      null: false 
+      t.belongs_to :group,        null: false, foreign_key: :true
+      t.belongs_to :account,      null: false, foreign_key: :true
       t.string :receiver_group,   limit: MAX_LENGTH_OF_CODE
       t.string :function_code,    limit: MAX_LENGTH_OF_CODE
       t.string :service_code,     limit: MAX_LENGTH_OF_CODE
