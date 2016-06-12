@@ -9,7 +9,7 @@
       raise "missing translation for: #{key}"
     end
   else
-    SITE_ID = ActiveRecord::Base.connection_config[ :database ].upper
+    SITE_ID = ActiveRecord::Base.connection_config[ :database ].upcase
   end
 
   # number of columns on the base page used to list the tables to which the user
