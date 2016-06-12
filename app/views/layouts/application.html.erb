@@ -10,9 +10,7 @@
   	<%= csrf_meta_tags %>
 	</head>
 	<body>
-
 		<%= yield %>
-
     <%# display notice on index pages as alert %>
     <%- if params[:action] == 'index' && !flash.empty? -%>
       <script type="text/javascript">

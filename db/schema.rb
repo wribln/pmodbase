@@ -209,20 +209,20 @@ ActiveRecord::Schema.define(version: 20160511091429) do
   add_index "csr_status_records", ["correspondence_type"], name: "index_csr_status_records_on_correspondence_type"
 
   create_table "db_change_requests", force: :cascade do |t|
-    t.integer  "requesting_account_id_id"
-    t.integer  "responsible_account_id_id"
+    t.integer  "requesting_account_id"
+    t.integer  "responsible_account_id"
     t.integer  "feature_id"
-    t.string   "detail",                    limit: 50
-    t.string   "action",                    limit: 10
-    t.integer  "status",                               default: 0
+    t.string   "detail",                 limit: 50
+    t.string   "action",                 limit: 10
+    t.integer  "status",                            default: 0
     t.string   "uri"
     t.text     "request_text"
-    t.datetime "created_at",                                       null: false
-    t.datetime "updated_at",                                       null: false
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
   end
 
-  add_index "db_change_requests", ["requesting_account_id_id"], name: "index_db_change_requests_on_requesting_account_id_id"
-  add_index "db_change_requests", ["responsible_account_id_id"], name: "index_db_change_requests_on_responsible_account_id_id"
+  add_index "db_change_requests", ["requesting_account_id"], name: "index_db_change_requests_on_requesting_account_id"
+  add_index "db_change_requests", ["responsible_account_id"], name: "index_db_change_requests_on_responsible_account_id"
 
   create_table "dcc_codes", force: :cascade do |t|
     t.string   "code",       limit: 10,                 null: false

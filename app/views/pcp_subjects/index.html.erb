@@ -26,7 +26,7 @@
           <td><%= filter_action_button -%></td>
         </tr>
       <% if @pcp_subjects.length.zero? %>
-        <%= render partial: 'shared/index_empty_row', locals:{ columns: 7, with_link: true }%>
+        <%= render partial: 'shared/index_empty_row', locals:{ columns: 6, with_link: true }%>
       <% else %>
         <% @pcp_subjects.each do |ps| %>
           <%- if @pcp_category != ps.pcp_category then -%>

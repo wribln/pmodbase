@@ -51,8 +51,8 @@ class PcpAllSubjectsController < ApplicationController
     # treated as 'new' (0)
 
     s1a = PcpStep.where.not( released_at: nil ).select( "pcp_subject_id AS a_pcp_subject_id, MAX( step_no ) AS a_step_no" ).group( :pcp_subject_id ).to_sql
-    s1b = PcpStep.select( :pcp_subject_id, :subject_status ).joins( "INNER JOIN (#{ s1a }) ON \"pcp_subject_id\" = \"a_pcp_subject_id\" AND \"step_no\" = \"a_step_no\"").to_sql
-    s2 = PcpSubject.connection.select_rows( "SELECT pcp_category_id, subject_status, COUNT(*) FROM pcp_subjects LEFT JOIN (#{ s1b }) ON id = pcp_subject_id WHERE (#{ grps }) GROUP BY subject_status" )
+    s1b = PcpStep.select( :pcp_subject_id, :subject_status ).joins( "INNER JOIN (#{ s1a }) s1a ON \"pcp_subject_id\" = \"a_pcp_subject_id\" AND \"step_no\" = \"a_step_no\"").to_sql
+    s2 = PcpSubject.connection.select_rows( "SELECT pcp_category_id, subject_status, COUNT(*) FROM pcp_subjects LEFT JOIN (#{ s1b }) s1b ON id = pcp_subject_id WHERE (#{ grps }) GROUP BY subject_status" )
     @pcp_stats = PcpCategory.select( :id, :label ).order( :label ).pluck( :id, :label )
 
     # now I have in s2 an array of the resulting records, and
