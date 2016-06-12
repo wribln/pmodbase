@@ -53,7 +53,7 @@ class CreateDsrStatusRecords < ActiveRecord::Migration
     add_foreign_key :dsr_status_records, :groups, column: :receiver_group_id
     add_foreign_key :dsr_status_records, :submission_groups, column: :submission_group_id
     add_foreign_key :dsr_status_records, :submission_groups, column: :submission_group_b_id
-    add_foreign_key :dsr_status_records, :activities, column: :prep_activity_id
-    add_foreign_key :dsr_status_records, :activities, column: :subm_activity_id
+    add_foreign_key :dsr_status_records, :programme_activities, column: :prep_activity_id
+    add_foreign_key :dsr_status_records, :programme_activities, column: :subm_activity_id
   end
 end
