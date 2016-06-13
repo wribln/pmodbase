@@ -1,0 +1,80 @@
+<% help_title 'PCP How to 01' %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header 'PCP - ' + t( 'pcp_help.pcp_how_to_01' ) %>
+    <p class="lead">You have a list of text items (observations, issues, comments) and your task is to
+    add these text items as initial review comments into the pmodbase database.</p>
+    <ul>
+      <li>The list of text items should have the following information per item:<br/>
+      <ul><li>A <em>reference</em>: for a document should contain a page number, a chapter number,
+        a table or figure reference: Some clue where exactly the observation, issue is
+        located.</li>
+        <li>The <em>description</em> is the main text: an observation, an issue, or only a comment.</li>
+        <li>An <em>assessment</em> of the severity of this item: Is this a major or a minor problem?</li>
+      </ul>
+      <li>Then you need an acccount for the pmodbase application.</li>
+      <li>After you haved signed on to the system, you should find a button labelled
+      <%= link_to Feature.find( FEATURE_ID_MY_PCP_SUBJECTS ).label, pcp_subjects_path, target: '_blank' -%> (or use the previous link).</li>
+      <li>Clicking on this button will lead you to a web page containing all PCP Subjects
+      to which you have access to.</li>
+      <li>This list should contain the PCP Subject (a document or another subject for review) for
+      which you should enter the initial review comments. If you cannot find your PCP Subject
+      there, you will need to speak to your manager, or the person you are working for: Ask
+      him or her to give you access to the respective PCP Subject.</li>
+      <li>For the purpose of adding initial review comments to this document, the entry of
+      this PCP Subject should show a <%= help_term t( 'pcp_subjects.index.status_subj' )-%> of 
+      <%= help_term PcpStep.subject_status_label( 0 )-%>, and the
+      <%= help_term t( 'pcp_subjects.index.status_step' )-%> should be 
+      <%= help_term PcpStep::STEP_LABELS[ 1 ]-%>. If this is not the case, speak to your
+      manager, or the person you are working for: The PCP Subject you are asked to add
+      initial comments for is not in the correct state.</li>
+      <li>Now go to the list of items (which is most empty as you will be creating it):
+        The quick way is to click on the link under <%= help_term PcpStep.subject_status_label( 0 )-%>
+        (column <%= help_term t( 'pcp_subjects.index.status_subj' )-%>); but you may also
+        choose to click on the
+        [Q] button on the right-hand side of the row, this will lead you to the details
+        page of your PCP Subject: There you find on the buttom of the page a button
+        labelled <%= t( 'pcp_subjects.show.items_button' )-%>.</li>
+      <li>Now you should see a table without any entries (the PCP Subject here is 'COM Document 
+        No 1 for Review:)':<br/>
+      <%= image_tag 'pcp_how_to_01a.png', alt: 'PCP Steps without items', class: 'img-responsive' -%>
+      </li>
+      <li>Now it is time to add the first item of your list: Click the [+] button in the right-most
+        column: A new window opens where you can enter the information for the first item:<br/>
+      <%= image_tag 'pcp_how_to_01b.png', alt: 'First PCP Item', class: 'img-responsive' -%></li>
+      <li>As you are making the input for someone else, you should input his name or initials
+        into the <%= help_term PcpItem.human_attribute_name( :author )-%> field.</li>
+      <li>Select the initial assessment of this item in the field
+        <%= help_term PcpItem.human_attribute_name( :assessment )-%>.</li>
+      <li>Add the reference information into the field
+        <%= help_term PcpItem.human_attribute_name( :reference )-%>.</li>
+      <li>Finally, copy the text of the observation, comment, or issue into the field labelled
+        <%= help_term PcpItem.human_attribute_name( :description )-%>.</li>
+      <li>Click <%= help_term t( 'helpers.submit.create' )-%> to add this item to the
+        list of observations, comments, issues for the PCP Subject:<br/>
+        <%= image_tag 'pcp_how_to_01c.png', alt: 'New PCP Item added', class: 'img-responsive' -%></li>
+      <li>You should note the <%= help_term PcpItem.human_attribute_name( :seqno )-%>
+        of this PCP Item in your list as this number now is the unique identifier of the item
+        (within the given PCP Subject).</li>
+      <li>If you need to make corrections, or add anything, click the
+        <%= help_term t( 'button_label.edit')-%> button which will present you again with
+        a form allowing you to make changes to this item.</li>
+      <li>To add more items, click the <%= help_term t( 'pcp_items.show.add_item' )-%> button,
+        or go back to the list of items via the <%= help_term t( 'button_label.go_to_index' )-%>
+        button, and use any [+] button there to add another item:<br/>
+        <%= image_tag 'pcp_how_to_01d.png', alt: 'New PCP Item added', class: 'img-responsive' -%></li>
+      <li>On the List of Items for your PCP Subject, you can also view details on any previously
+        entered item (using the button [Q] on the respective line); or go directly into the
+        edit mode for this item (using the button [/]).</li>
+      <li>If -&nbsp;for any reason&nbsp;- an item needs to be deleted, you need to speak to the
+        owner of the PCP Subject you are working on: Only the owner or his deputy is permitted
+        to remove items from this list.</li>
+      <li>When you are done adding all items, you need to inform the owner of the PCP Subject:
+        only he or his deputy is permitted to release the PCP Subject for the next step.</li>
+      <li>Finally, if will find more information on the forms regarding PCP Items on
+        <%= link_to_help :pcp_items, 'here' %>, or via the <%= t( 'button_label.help' )-%> link
+        on the bottom of the All Items list for this PCP Subject.</li>
+
+    </ul>
+    <%= help_footer FEATURE_ID_HELP_PAGES %>
+  </div> <!-- /container -->

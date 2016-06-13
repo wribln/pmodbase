@@ -1,0 +1,43 @@
+<% help_title 'PCP How to 13' %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header 'PCP - ' + t( 'pcp_help.pcp_how_to_13' ) %>
+    <p class="lead">You have a document ready for review, what do you need to do in order to
+    release this document for an Initial Review within the Present-Comment-Process (PCP)?</p>
+    <p>It must be noted here that a formal release between project parties is considered 
+      to be the responsibility of the project's document management group: They need to prepare
+      certain release papers, get them signed by the respective managers, add all this
+      information into the project's document management system and forward the paperwork to
+      the commenting party.</p>
+    <p>The release of PCP Subjects here is somewhat similar in nature but is a rather
+      technical activity: The release of a PCP Subject (for example a document or drawing)
+      supports the above formal release process as we will see later. But the important
+      difference is that such a technical release of a PCP Subject transfers the access and
+      responsibility for a PCP Subject from one project party to another. This means in
+      fact that the releasing party cannot any longer make changes to the observations,
+      issues, comments, or responses: It is now the turn of the other party to make comments.</p> 
+    <ul>
+      <li>I assume for the following that you are the owner or the author of that document (or
+        drawing) - called PCP Subject from now on. Furthermore, you have already added your document
+        as PCP Subject into the pmodbase database. This help text now explains in detail which steps you need to take in order to present your document to the commenting party, i.e. how you perform the
+        initial technical release of your PCP Subject.</li>
+      <li>You need to have the following information ready:<br/>
+        <ul>
+          <li>The version or revision code or number of your document or drawing.</li>
+          <li>The initial version or revision code to be used for the release document
+            (which will be created automatically by the pmodbase application): This is
+            often 'A', '0', or '1' - depending on your project's document management system.</li>
+          <li>Any additional information to be included in the release document, e.g.
+            release notes, due date for the return of comments.</li>
+          </ul></li>
+      <li>After you haved signed on to the pmodbase application, you should find a button labelled
+      <%= link_to Feature.find( FEATURE_ID_MY_PCP_SUBJECTS ).label, pcp_subjects_path,
+        target: '_blank' -%> (or use the previous link).</li>
+      <li>Clicking on this button will lead you to all PCP Subjects to which you have access to,
+        for example:<br/>
+      <%= image_tag 'pcp_how_to_13a.png', alt: 'List of My PCP Subjects', class: 'img-responsive' -%></li>
+      <li>Select the PCP Subject you want to release and click on the [Q] button on the right column
+        of that row... ... ...</li>
+    </ul>
+    <%= help_footer FEATURE_ID_HELP_PAGES %>
+  </div> <!-- /container -->

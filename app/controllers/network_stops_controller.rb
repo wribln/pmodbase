@@ -6,7 +6,7 @@ class NetworkStopsController < ApplicationController
   # GET /nsos
 
   def index
-    @network_stops = NetworkStop.all.order( :network_line_id, :stop_no)
+    @network_stops = NetworkStop.all.order( :network_line_id, :stop_no).paginate( page: params[ :page ])
   end
 
   # GET /nsos/1

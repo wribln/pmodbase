@@ -1,0 +1,66 @@
+<% help_title 'PCP How to 03' %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header 'PCP - ' + t( 'pcp_help.pcp_how_to_03' ) %>
+    <p class="lead">You have a document (or drawing) which you want to be reviewed using
+    the Present-Comment-Process (PCP) in the pmodbase application.</p>
+    <p>I assume for the following that you are the owner or the author of that document (or
+      drawing). This help text explains in detail which steps you need to take in order to
+      add the document (or drawing) into the pmodbase database to be ready for a Present-Comment-Process (PCP) within the pmodbase application.</p>
+    <ul>
+      <li>In the following, the document (or drawing) to be reviewed will be named 'PCP Subject'
+        from hereon: A PCP Subject is either a document, a drawing, or any other item undergoing
+        the Present-Comment-Process.</li> 
+      <li>In order to perform the review, you need the following information on your PCP Subject:<br/>
+        <ul>
+          <li>Surely, your document or drawing has a <%= help_term 'Title'-%>.</li>
+          <li>Your document or drawing also has a unique document code for the document management
+            system being used in your project. This document code will be referred to as the
+            <%= help_term PcpSubject.human_attribute_name( :project_doc_id )-%>.<br/>
+            If more than one document management system is used in your project, use the code
+            being used by both you and your commenting counterpart: This ensures that both of
+            you will have access to the actual version of the document or drawing to be reviewed.</li>
+          <li>Furthermore, we need a document code for the release documents being created during
+            the course of the PCP. This document code will be referred to as the
+            <%= help_term PcpSubject.human_attribute_name( :report_doc_id )-%>.</li>
+        </ul></li>
+      <li>The next important decision is the attribution of your PCP Subject to a
+        specific PCP Category: When the PCP is set up, various PCP Categories should be defined,
+        one of which should be used for the PCP of your PCP Subject. The definition
+        of PCP Categories is a separate task (for more information, see the help on the
+        <%= link_to_help :pcp_general, t( 'pcp_help.pcp_general')-%>, 
+        <%= link_to_help :pcp_categories, PcpCategory.model_name.human -%> and
+        <%= link_to_help :pcp_how_to_11, t( 'pcp_help.pcp_how_to_11') -%>).<br/>
+        Although we can later change the PCP Category of your PCP Subject, things will be easier
+        if you correctly assign the PCP Category right at the beginning.</li>
+      <li>In order to add your PCP Subject into the pmodbase database, you will need an account
+        for your project and the permission to add and modify PCP Subjects for your project group.</li>
+      <li>After you haved signed on to the system, you should find a button labelled
+      <%= link_to Feature.find( FEATURE_ID_ALL_PCP_SUBJECTS ).label, pcp_all_subjects_path,
+        target: '_blank' -%> (or use the previous link).</li>
+      <li>Clicking on this button will lead you to a web page containing all existing PCP Subjects
+      of your group, ordered by PCP Categories:<br/>
+      <%= image_tag 'pcp_how_to_03a.png', alt: 'PCP Steps without items', class: 'img-responsive' -%></li>
+      <li>Now you are ready to add your new PCP Subject: A click on any [+] button will lead you to a new
+        screen requesting input of information about your PCP Subject to be reviewed:<br/>
+        <%= image_tag 'pcp_how_to_03b.png', alt: 'New PCP Subject', class: 'img-responsive' -%></li>
+      <li>Select a PCP Category, and fill in all other fields as applicable.</li>
+      <li>The document codes -&nbsp;for both the document and the release report&nbsp;- must NOT include
+        the version or release information: This information is added later as this will change
+        while the PCP Subject is being reviewed.</li>
+      <li>Click <%= help_term t( 'helpers.submit.create' )-%> to add your PCP Subject to the
+        system. The page shown now contains the information you just entered plus some more:
+        Depending on the settings for the PCP Category you have chosen, a default deputy) for
+        the presenting group (i.e. your group) as well as for the commenting group was added.
+        You will see that you are still the owner of the PCP Subject.</li>
+      <li>Further below, you find the <%= help_term t( 'pcp_subjects.index.status_subj' )-%>
+        of your PCP Subject to be <%= help_term PcpStep.subject_status_label( 0 )-%>.</li>
+      <li>Below that, information regarding the current process step is listed: The
+        <%= help_term t( 'pcp_subjects.index.status_step' )-%> is 
+        <%= help_term PcpStep::STEP_LABELS[ 0 ]-%> which means that you PCP Subject still
+        needs to be released to start the next step. See <%= link_to_help :pcp_how_to_13,
+        t( 'pcp_help.pcp_how_to_13' )-%> for more information on how to perform this
+        next step.</li>
+      </ul>
+    <%= help_footer FEATURE_ID_HELP_PAGES %>
+  </div> <!-- /container -->

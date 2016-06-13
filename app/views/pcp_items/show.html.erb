@@ -31,6 +31,9 @@
       </div>
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-2">
+          <%= link_to t( '.add_item' ), new_pcp_subject_pcp_item_path( @pcp_subject ), class: 'btn btn-lg btn-block btn-default' %>
+        </div>
+        <div class="col-sm-2">
           <%= link_to t( '.add_comment' ), new_pcp_comment_path( @pcp_item ), class: 'btn btn-lg btn-block btn-default' %>
         </div>
         <div class="col-sm-2">

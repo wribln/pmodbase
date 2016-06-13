@@ -6,8 +6,7 @@
       project topic, or work flow.</p>
     <p>The following topics currently available:</p>
     <ul>
-      <div class="row">
-      <div class="col-sm-4">
+      <div class="row"><div class="col-sm-4">
       <li><%= link_to_help :a_code_search, 'Alternate EDMS Coding System, Global Search' -%></li>
       <li><%= link_to_help :a_coding_system, 'Alternate EDMS Coding System' -%></li>
       <li><%= link_to_help :a_document_logs, 'Alternate EDMS Document Log (ADL)' -%></li>
@@ -34,7 +33,6 @@
       <li><%= link_to_help :feature_access_control, 'Features, Access Control' -%></li>
       <li><%= link_to_help :feature_categories, 'Features, Categories' -%></li>
       <li><%= link_to_help :feature_responsibilities, 'Features, Responsibilities' -%></li>
-      </div><div class="col-sm-4">
       <li><%= link_to_help :filter, 'Filter Functionality' -%></li>
       <li><%= link_to_help :function_codes, FunctionCode.model_name.human -%></li>
       <li><%= link_to_help :group_categories, 'Groups, Categories' -%></li>
@@ -42,6 +40,7 @@
       <li><%= link_to_help :glossary_items, GlossaryItem.model_name.human -%></li>
       <li>Help Functionality (this page)</li>
       <li><%= link_to_help :hashtags, Hashtag.model_name.human -%></li>
+      </div><div class="col-sm-4">
       <li><%= link_to_help :help_general, 'Help on General Functionality' -%></li>
       <li><%= link_to_help :holidays, Holiday.model_name.human -%></li>
       <li><%= link_to_help :home, 'Home Page, Application Overview' -%></li>
@@ -51,20 +50,36 @@
       <li><%= link_to_help :network_stations, 'Network - Stations' -%></li>
       <li><%= link_to_help :network_stops, 'Network - Stops' -%></li>
       <li><%= link_to_help :pcp_general, 'PCP - The Present-Comment Process' -%></li>
-      <li><%= link_to_help :pcp_why, 'PCP - Why use PCP?' -%></li>
-      <li><%= link_to_help :pcp_how_01, 'PCP - How ... ' -%></li>
+      <li><%= link_to_help :pcp_why, 'PCP - ' + t( 'pcp_help.pcp_why' )-%></li>
+      <li>PCP - Help on how to ...<br/><small>
+      <%= link_to_help :pcp_how_to_03, t( 'pcp_help.pcp_how_to_03' )-%><br/>
+      <%= link_to_help :pcp_how_to_04, t( 'pcp_help.pcp_how_to_04' )-%><br/>
+      <%= link_to_help :pcp_how_to_05, t( 'pcp_help.pcp_how_to_05' )-%><br/>
+      <%= link_to_help :pcp_how_to_06, t( 'pcp_help.pcp_how_to_06' )-%><br/>
+      <%= link_to_help :pcp_how_to_07, t( 'pcp_help.pcp_how_to_07' )-%><br/>
+      <%= link_to_help :pcp_how_to_08, t( 'pcp_help.pcp_how_to_08' )-%><br/>
+      <%= link_to_help :pcp_how_to_09, t( 'pcp_help.pcp_how_to_09' )-%><br/>
+      <%= link_to_help :pcp_how_to_10, t( 'pcp_help.pcp_how_to_10' )-%><br/>
+      <%= link_to_help :pcp_how_to_01, t( 'pcp_help.pcp_how_to_01' )-%><br/>
+      <%= link_to_help :pcp_how_to_12, t( 'pcp_help.pcp_how_to_12' )-%><br/>
+      <%= link_to_help :pcp_how_to_02, t( 'pcp_help.pcp_how_to_02' )-%><br/>
+      <%= link_to_help :pcp_how_to_11, t( 'pcp_help.pcp_how_to_11' )-%><br/>
+      <%= link_to_help :pcp_how_to_13, t( 'pcp_help.pcp_how_to_13' )-%><br/>
+      <%= link_to_help :pcp_how_to_14, t( 'pcp_help.pcp_how_to_14' )-%><br/>
+      <%= link_to_help :pcp_how_to_15, t( 'pcp_help.pcp_how_to_15' )-%>
+      </small></li>
       <li><%= link_to_help :pcp_categories, 'PCP Categories' -%></li>
       <li><%= link_to_help :pcp_items, 'PCP Items' -%></li>
       <li><%= link_to_help :pcp_members, 'PCP Participants' -%></li>
       <li><%= link_to_help :pcp_subjects, 'PCP Subjects' -%></li>
       <li><%= link_to_help :pcp_all_subjects, 'PCP All Subjects' -%></li>
+      </div><div class="col-sm-4">
       <li><%= link_to_help :people, 'Personal Information, General' -%></li>
       <li><%= link_to_help :profile, 'Personal Information, Own Profile' -%></li>
       <li><%= link_to_help :phase_codes, PhaseCode.model_name.human -%></li>
       <li><%= link_to_help :product_codes, ProductCode.model_name.human -%></li>
       <li><%= link_to_help :programme_activities, ProgrammeActivity.model_name.human -%></li>
       <li><%= link_to_help :references, Reference.model_name.human -%></li>
-      </div><div class="col-sm-4">
       <li><%= link_to_help :region_names, RegionName.model_name.human -%></li>
       <li><%= link_to_help :responsibilities, Responsibility.model_name.human -%></li>
       <li><%= link_to_help :rfc_documents, 'RfC Documents' -%></li>

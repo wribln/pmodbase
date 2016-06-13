@@ -4,7 +4,7 @@
     <%= help_header %>
     <p class="lead">Observations, comments and responses on issues or observations to be resolved.</p>
     <p>For general information on the PCP, see
-      <%= link_to_help :pcp_general, 'PCP - The Present-Comment Process' -%>.</p>
+      <%= link_to_help :pcp_general, t( 'pcp_help.pcp_general')-%>.</p>
     <h3>Introduction</h3>
     <p>A single PCP Item normally describes an observation found during a review cycle which needs 
       clarification or resolution. PCP Items can only be added by the Commenting Group;
@@ -62,6 +62,8 @@
       is clear, are only visible to the group responsible for the current PCP Step.<br/>
       For any release, at least one comment on the current PCP Step must have this flag set.</li>
     </ul>
+    <h3><%= t( 'pcp_items.show.add_item' )-%></h3>
+      <p>is a short-cut to add additional items for this PCP Subject.</p>
     <h3><%= t( 'button_label.next')%></h3>
       <p>A click on this button advances to the next possible PCP Item. This makes it easier
         for the user to advance step-by-step through all PCP Items.</p> 

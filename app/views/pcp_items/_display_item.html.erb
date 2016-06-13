@@ -10,13 +10,13 @@
           </div>
         </div>
         <div class="form-group">
-          <%= f.label :assessment, class: 'col-sm-3 control-label' %>
-          <div class="col-sm-2">
-            <%= display_value PcpItem.assessment_label( display_item.assessment ) %>
-          </div>
-          <%= f.label :author, class: 'col-sm-2 control-label' %>
+          <%= f.label :author, class: 'col-sm-3 control-label' %>
           <div class="col-sm-2">
             <%= display_value display_item.author %>
+          </div>
+          <%= f.label :assessment, class: 'col-sm-2 control-label' %>
+          <div class="col-sm-2">
+            <%= display_value PcpItem.assessment_label( display_item.assessment ) %>
           </div>
         </div>
         <div class="form-group">

@@ -106,6 +106,27 @@ en:
         subject_title:  :activerecord.attributes.pcp_subject.title
         project_doc_id: :activerecord.attributes.pcp_subject.project_doc_id
 
+  # this is included here to ensure that topics are always cited identically
+
+  pcp_help:
+    pcp_general:      'PCP - The Present-Comment Process'
+    pcp_why:          'Why use the PCP in pmodbase?'
+    pcp_how_to_01:    'How to ... copy initial comments by others (not using pmodbase)'
+    pcp_how_to_12:    'How to ... copy new comments by others (not using pmodbase)'
+    pcp_how_to_02:    'How to ... copy responses by others (not using pmodbase)'
+    pcp_how_to_03:    'How to ... set up a document for a review'
+    pcp_how_to_04:    'How to ... prepare a site hand-over (from others)'
+    pcp_how_to_05:    'How to ... prepare a site take-over (by you)'
+    pcp_how_to_06:    'How to ... make document review comments'
+    pcp_how_to_07:    'How to ... respond to review comments'
+    pcp_how_to_08:    'How to ... organize a review for several reviewers'
+    pcp_how_to_09:    'How to ... collect responses from several persons'
+    pcp_how_to_10:    'How to ... use the PCP for internal reviews'
+    pcp_how_to_11:    'How to ... configure the PCP feature for your project'
+    pcp_how_to_13:    'How to ... release a PCP Subject for the Initial Review Step'
+    pcp_how_to_14:    'How to ... release a PCP Subject for the next Review Step'
+    pcp_how_to_15:    'How to ... release a PCP Subject for the next Response Step'
+
   pcp_categories:
     title:            'PCP Categories'
     form:
@@ -163,6 +184,7 @@ en:
       form_title:     'Edit Comment on PCP Subject '
     show:
       form_title:     'Show Item Details for PCP Subject '
+      add_item:       'Add Item'
       add_comment:    'Add Comment'
       publish:        'Publish'
     show_item:
