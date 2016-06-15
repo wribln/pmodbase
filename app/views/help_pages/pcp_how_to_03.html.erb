@@ -3,14 +3,14 @@
     <%= helpcrumbs %>
     <%= help_header 'PCP - ' + t( 'pcp_help.pcp_how_to_03' ) %>
     <p class="lead">You have a document (or drawing) which you want to be reviewed using
-    the Present-Comment-Process (PCP) in the pmodbase application.</p>
+    the Present-Comment Process (PCP) in the pmodbase application.</p>
     <p>I assume for the following that you are the owner or the author of that document (or
       drawing). This help text explains in detail which steps you need to take in order to
-      add the document (or drawing) into the pmodbase database to be ready for a Present-Comment-Process (PCP) within the pmodbase application.</p>
+      add the document (or drawing) into the pmodbase database to be ready for a Present-Comment Process (PCP) within the pmodbase application.</p>
     <ul>
       <li>In the following, the document (or drawing) to be reviewed will be named 'PCP Subject'
         from hereon: A PCP Subject is either a document, a drawing, or any other item undergoing
-        the Present-Comment-Process.</li> 
+        the Present-Comment Process.</li> 
       <li>In order to perform the review, you need the following information on your PCP Subject:<br/>
         <ul>
           <li>Surely, your document or drawing has a <%= help_term 'Title'-%>.</li>
@@ -40,13 +40,14 @@
         target: '_blank' -%> (or use the previous link).</li>
       <li>Clicking on this button will lead you to a web page containing all existing PCP Subjects
       of your group, ordered by PCP Categories:<br/>
-      <%= image_tag 'pcp_how_to_03a.png', alt: 'PCP Steps without items', class: 'img-responsive' -%></li>
-      <li>Now you are ready to add your new PCP Subject: A click on any [+] button will lead you to a new
-        screen requesting input of information about your PCP Subject to be reviewed:<br/>
+      <%= image_tag 'pcp_how_to_03a.png', alt: 'List of All PCP Subjects', class: 'img-responsive' -%></li>
+      <li>Now you are ready to add your new PCP Subject: A click on any [+] button in the right-most
+      column will lead you to a new form requesting input of information about your PCP Subject to be
+      reviewed:<br/>
         <%= image_tag 'pcp_how_to_03b.png', alt: 'New PCP Subject', class: 'img-responsive' -%></li>
       <li>Select a PCP Category, and fill in all other fields as applicable.</li>
       <li>The document codes -&nbsp;for both the document and the release report&nbsp;- must NOT include
-        the version or release information: This information is added later as this will change
+        the version or release information: This information is added later as these will change
         while the PCP Subject is being reviewed.</li>
       <li>Click <%= help_term t( 'helpers.submit.create' )-%> to add your PCP Subject to the
         system. The page shown now contains the information you just entered plus some more:

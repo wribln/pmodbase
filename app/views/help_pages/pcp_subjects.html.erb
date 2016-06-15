@@ -34,13 +34,19 @@
         statistics on the PCP Subjects within a specific PCP Category, or to filter PCP
         Subjects.</li>
       <li>The <%= help_param PcpSubject.human_attribute_name( :project_doc_id )-%> should
-        be used to enter the complete document EDMS code for the document under review - 
+        be used to enter the complete document DMS code for the document under review - 
         without the version code: This will be entered further below in the <a href='#pcp_step'>PCP Step
         section</a>.<br/>
         If you enter just a number (unsigned integer) here, the tool will automatically
         retrieve the complete code and the title of the document from the project's document
         log having this sequence number. The title of the document will then be used as
-        <%= help_term PcpSubject.human_attribute_name( :title )-%> for the PCP Subject.</li>
+        <%= help_term PcpSubject.human_attribute_name( :title )-%> for the PCP Subject.<br/>
+        The presenting party can change this DMS code whenever it is the currently active
+        group. If you want to use this field for an DMS code of a site-acceptance
+        checklist (when using the PCP for hand-over/take-over processes), feel free
+        to do so: Only remember that the version or revision code
+        (<%= help_term PcpStep.human_attribute_name( :subject_version )-%>
+        is appended to this string for the release report.</li>
       <li><%= help_param PcpSubject.human_attribute_name( :p_group_id )-%> is the 
         project group presenting the PCP Subject for review and comment. For documents
         and drawings, this would be the project group which prepared the document or
@@ -51,7 +57,11 @@
         for the PCP Subject. Both, the 
         <%= help_term PcpSubject.human_attribute_name( :p_owner_id )-%> and the
         <%= help_param PcpSubject.human_attribute_name( :p_deputy_id )-%>, are
-        authorized to release a PCP Subject to the next process step.</li>
+        authorized to release a PCP Subject to the next process step. The 
+        <%= help_term PcpSubject.human_attribute_name( :p_group_id )-%> must be
+        a member of the <%= help_term PcpSubject.human_attribute_name( :p_group_id )-%>
+        whereas the <%= help_term PcpSubject.human_attribute_name( :p_deputy_id )-%>
+        may belong to any project group.</li>
       <li><%= help_param PcpSubject.human_attribute_name( :c_group_id )-%> is the
         project group invited to review and comment on the presented PCP Subject.
         For documents and drawings, this would be the project group reviewing and
@@ -62,7 +72,12 @@
         for the PCP Subject. Both, the  
         <%= help_term PcpSubject.human_attribute_name( :c_owner_id )-%> and the
         <%= help_param PcpSubject.human_attribute_name( :c_deputy_id )-%>, are
-        authorized to release a PCP Subject to the next process step.</li>
+        authorized to release a PCP Subject to the next process step. The 
+        <%= help_term PcpSubject.human_attribute_name( :c_group_id )-%> must be
+        a member of the <%= help_term PcpSubject.human_attribute_name( :c_group_id )-%>
+        whereas the <%= help_term PcpSubject.human_attribute_name( :c_deputy_id )-%>
+        may belong to any project group.
+        </li>
       <li><%= help_param PcpSubject.human_attribute_name( :report_doc_id )%> is a field
         to hold the project's document code for the release report. This document code
         will be amended with a version retrieved from the
@@ -173,6 +188,21 @@
       step is listed first, the initial release step is listed last.</p>
     <p>The <%= help_term PcpSubject.human_attribute_name( :report_doc_id )%> attribute has
       a link to the respective release document.</p>
+    <h3>Responsibilities</h3>
+    <p>When creating a new PCP Subject, the initial owner of the PCP Subject is the creating
+     account, <%= help_term PcpSubject.human_attribute_name( :p_group_id )-%>,  
+     <%= help_term PcpSubject.human_attribute_name( :p_deputy_id )-%>,  
+     <%= help_term PcpSubject.human_attribute_name( :c_group_id )-%>,  
+     <%= help_term PcpSubject.human_attribute_name( :c_owner_id )-%>, and  
+     <%= help_term PcpSubject.human_attribute_name( :c_deputy_id )-%> will be taken from
+     the selected PCP Category.<br/>
+     You can always change these responsibilities for your respective party (presenting or
+     commenting) but any owner or deputy must have access to the specified group.<br/>
+     It is also possible set any values to the defaults defined in the selected PCP Category
+     by simply selecting <%= help_term t( 'pcp_subjects.form.c_prompt' )%> from the group
+     selection and clearing any field (owner and/or deputy) which should be set to the
+     corresponding value of the given PCP Category. The owner/deputy settings in the resulting
+     configuration must also have access to the default group from the PCP Category.</p>
     <h3>Further Notes</h3>
     <p>At this time, no need was seen to implement a 'withdrawn' status in order to allow
       PCP Subjects to be removed from this process before they reach a terminal, closing

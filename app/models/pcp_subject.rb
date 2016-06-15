@@ -3,6 +3,7 @@ class PcpSubject < ActiveRecord::Base
   include ApplicationModel
   include Filterable
   include PcpSubjectAccess
+  include AccountCheck
 
   belongs_to :pcp_category, -> { readonly }, inverse_of: :pcp_subjects
   belongs_to :c_group,  -> { readonly }, foreign_key: :c_group_id, class_name: 'Group'
@@ -11,6 +12,7 @@ class PcpSubject < ActiveRecord::Base
   belongs_to :p_owner,  -> { readonly }, foreign_key: :p_owner_id, class_name: 'Account'
   belongs_to :c_deputy, -> { readonly }, foreign_key: :c_deputy_id, class_name: 'Account'
   belongs_to :p_deputy, -> { readonly }, foreign_key: :p_deputy_id, class_name: 'Account'
+  belongs_to :s_owner,  -> { readonly }, foreign_key: :s_owner_id, class_name: 'Account'
   has_many   :pcp_steps,    -> { most_recent }, dependent: :destroy, autosave: true,  inverse_of: :pcp_subject
   has_many   :pcp_items,                        dependent: :destroy, validate: false, inverse_of: :pcp_subject
   has_many   :pcp_members,                      dependent: :destroy, validate: false, inverse_of: :pcp_subject
@@ -18,13 +20,15 @@ class PcpSubject < ActiveRecord::Base
 
   accepts_nested_attributes_for :pcp_steps
 
-  before_validation :set_defaults_from_pcp_categories, on: :create
+  before_validation :set_defaults_from_pcp_category, on: :create
+  before_validation :set_defaults_from_pcp_category_group, on: :update
   after_validation :set_title_and_doc_ids
 
   validates :pcp_category_id,
     presence: true
 
-  validates :c_group_id, :c_owner_id, :p_group_id, :p_owner_id,
+  validates :c_group_id, :c_owner_id,
+            :p_group_id, :p_owner_id,
     presence: true,
     on: :update
 
@@ -39,10 +43,12 @@ class PcpSubject < ActiveRecord::Base
 
   validate :pcp_category_exists
 
-  validate { given_account_has_access( :c_owner_id,  :c_group_id )}
-  validate { given_account_has_access( :c_deputy_id, :c_group_id )}
-  validate { given_account_has_access( :p_owner_id,  :p_group_id )}
-  validate { given_account_has_access( :p_deputy_id, :p_group_id )}
+  validate{ given_account_has_access( :c_owner_id,  :c_group_id )}
+  validate{ given_account_has_access( :p_owner_id,  :p_group_id )}
+
+  validate{ given_account_exists( :c_deputy_id )}
+  validate{ given_account_exists( :p_deputy_id )}
+  validate{ given_account_exists( :s_owner_id  )}
 
   validate :archived_and_status
 
@@ -51,12 +57,12 @@ class PcpSubject < ActiveRecord::Base
   scope :all_active, ->{ where( archived: false ).order( pcp_category_id: :asc, id: :desc )}
 
   # all permitted are those PCP Subjects where the given account is either
-  # owner, deputy or a member of the PCP Group; this is used by the index 
-  # action in the PcpSubjectsController
+  # owner, deputy, subject owner, or a member of the PCP Group; this is used
+  # by the index action in the PcpSubjectsController
 
   scope :all_permitted, ->( acnt ){ 
     eager_load( :pcp_a_members ).
-    where( 'p_owner_id = :param OR c_owner_id = :param OR p_deputy_id = :param OR c_deputy_id = :param OR account_id = :param', param: acnt )}
+    where( 'p_owner_id = :param OR c_owner_id = :param OR p_deputy_id = :param OR c_deputy_id = :param OR s_owner_id = :param OR account_id = :param', param: acnt )}
 
   scope :ff_id,   -> ( id   ){ where id: id }
   scope :ff_titl, -> ( titl ){ where( 'title LIKE :param OR project_doc_id LIKE :param', param: "%#{ titl }%" )}
@@ -117,8 +123,10 @@ class PcpSubject < ActiveRecord::Base
 
   def viewing_group_map( id, access = :to_access )
     r = 0
-    r =     1 if ( id == p_owner_id )||( id == p_deputy_id ) || pcp_members.presenting_member( id ).try( access )
-    r = r | 2 if ( id == c_owner_id )||( id == c_deputy_id ) || pcp_members.commenting_member( id ).try( access )
+    r =     1 if ( id == p_owner_id )||( id == p_deputy_id ) || ( id == s_owner_id ) ||
+                pcp_members.presenting_member( id ).try( access )
+    r = r | 2 if ( id == c_owner_id )||( id == c_deputy_id ) || 
+                pcp_members.commenting_member( id ).try( access )
     return r
   end
 
@@ -172,12 +180,13 @@ class PcpSubject < ActiveRecord::Base
   end
 
   # user must have access to group of associated PCP Category in order
-  # to create PCP Subjects (possible only in PcpMySubjectsController)
+  # to create PCP Subjects (possible only in PcpSubjectsController) or
+  # if he is the deputy of the presenting group in the selected PCP Category
 
   def permitted_to_create?( account )
-    if pcp_category_id.nil? then
+    if pcp_category_id.nil?
       false
-    else
+    else pcp_category.p_deputy_id == account.id || 
       account.permission_to_access( FEATURE_ID_MY_PCP_SUBJECTS, :to_create, pcp_category.p_group_id )
     end
   end
@@ -250,18 +259,38 @@ class PcpSubject < ActiveRecord::Base
   protected
     
     # when creating a new PCP Subject, we should take the default values from the
-    # PCP Category, except for the creator of that PCP Subject which should be
-    # assigned as p_owner_id in the respective controller
+    # PCP Category; the creator of the PCP Subject should become the new owner
+    # of the PCP Subject unless it is already defined as deputy.
 
-    def set_defaults_from_pcp_categories
+    def set_defaults_from_pcp_category
       oc = self.pcp_category
       if oc
         set_default!( :c_group_id, oc.c_group_id )
         set_default!( :p_group_id, oc.p_group_id )
         set_default!( :c_owner_id, oc.c_owner_id )
+        set_default!( :p_owner_id, oc.p_owner_id )
         set_default!( :c_deputy_id, oc.c_deputy_id )
         set_default!( :p_deputy_id, oc.p_deputy_id )
       end
     end
+
+    # when during an update the group is left blank, the original data from the
+    # PCP Category should be used for any non-existing attributes:
+
+    def set_defaults_from_pcp_category_group
+      oc = self.pcp_category
+      if oc 
+        if self.p_group_id.blank?
+          set_default!( :p_group_id, oc.p_group_id )
+          set_default!( :p_owner_id, oc.p_owner_id )
+          set_default!( :p_deputy_id, oc.p_deputy_id )
+        end
+        if self.c_group_id.blank?
+          set_default!( :c_group_id, oc.c_group_id )
+          set_default!( :c_owner_id, oc.c_owner_id )
+          set_default!( :c_deputy_id, oc.c_deputy_id )
+        end
+      end
+    end          
 
 end

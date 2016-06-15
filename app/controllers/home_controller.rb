@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  initialize_feature FEATURE_ID_HOME_PAGE, FEATURE_ACCESS_ALL
+  initialize_feature FEATURE_ID_HOME_PAGE, FEATURE_ACCESS_ALL + FEATURE_ACCESS_NBP
 
   # index: initial view, shows homepage for sign-on
 

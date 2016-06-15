@@ -31,9 +31,10 @@ class PcpSubjectsController1Test < ActionController::TestCase
 
     assert_no_difference([ 'PcpSubject.count', 'PcpStep.count' ])do
       patch :update, id: @new_pcp_subject, 
-        pcp_subject: { p_owner_id: @account_id,
+        pcp_subject: {
         pcp_steps_attributes: {  '0' => { id: @new_pcp_step.id, subject_version: '0' }}}
     end
+    assert_response :success
     @new_pcp_subject = assigns( :pcp_subject )
     @new_pcp_step = @new_pcp_subject.pcp_steps.first
 

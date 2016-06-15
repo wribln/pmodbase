@@ -12,7 +12,7 @@ class PcpSubjectsController2Test < ActionController::TestCase
 
   test 'should get index' do
     get :index
-    check_for_cr
+    assert_response :success
   end
 
   test 'should get new' do

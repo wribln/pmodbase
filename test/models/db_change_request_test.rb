@@ -118,7 +118,7 @@ class DbChangeRequestTest < ActiveSupport::TestCase
   test 'stats' do
     assert_equal 2, DbChangeRequest.count
     assert_equal 2, DbChangeRequest.where( status: 0 ).count
-    assert_equal [['Database Change Requests', 'Total', 2], ['new', 2]], DbChangeRequest.get_stats
+    assert_equal [['pmodbase Change Requests', 'Total', 2], ['new', 2]], DbChangeRequest.get_stats
   end
 
   test 'all scopes' do

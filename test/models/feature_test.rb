@@ -103,7 +103,7 @@ class FeatureTest < ActiveSupport::TestCase
     f.access_level = -1
     assert_not f.valid?, 'access_level -1 is not acceptable'
     assert_includes f.errors, :access_level
-    max_access_level = 46
+    max_access_level = ApplicationController::FEATURE_ACCESS_MAX
     (0..max_access_level).each do |l|
         f.access_level = l
         assert f.valid?, "access_level #{l} is acceptable"

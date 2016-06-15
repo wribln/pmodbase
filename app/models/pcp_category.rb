@@ -1,5 +1,6 @@
 class PcpCategory < ActiveRecord::Base
   include ApplicationModel
+  include AccountCheck
   include PcpSubjectAccess
   include GroupCheck
 
@@ -23,29 +24,24 @@ class PcpCategory < ActiveRecord::Base
   end
   
   validate{ given_account_has_access( :c_owner_id,  :c_group_id )}
-  validate{ given_account_has_access( :c_deputy_id, :c_group_id )}
   validate{ given_account_has_access( :p_owner_id,  :p_group_id )}
-  validate{ given_account_has_access( :p_deputy_id, :p_group_id )}
 
-  # see Group.permitted_groups: Create scope which selects all PCP Categories containing
-  # the given group ids:
+  validate{ given_account_exists( :c_deputy_id )}
+  validate{ given_account_exists( :p_deputy_id )}
 
-  def self.permitted_groups( pg )
+  # return a scope to select all PCP Categories for which the current user has
+  # permission to create subjects for: i.e. she either belongs to the presenting
+  # group or is deputy for the presenting group.
+
+  def self.permitted_to_create_subject( pg, account )
     case pg
     when nil
-      none
+      where( p_deputy_id: account.id )
     when ''
       all
     else
-      where( 'p_group_id IN ( :param ) OR c_group_id IN ( :param )', param: pg )
+      where( 'p_group_id IN ( ? ) OR p_deputy_id = ?', pg, account.id )
     end
-  end
-
-  # check if the current account is permitted to create a PCP Subject for this
-  # PCP Category: It must be the owner or deputy of that PCP Category. 
-
-  def permitted_to_create_subject?( account )
-    account.id == p_owner_id || account.id == p_deputy_id
   end
 
   # provide labels with id suffix

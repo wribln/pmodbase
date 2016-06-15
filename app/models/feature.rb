@@ -128,7 +128,7 @@ class Feature < ActiveRecord::Base
 
   def access_level_label
     case access_level
-    when ApplicationController::FEATURE_ACCESS_NONE, ApplicationController::FEATURE_ACCESS_NDA
+    when ApplicationController::FEATURE_ACCESS_NONE, ApplicationController::FEATURE_ACCESS_NBP
        FEATURE_ACCESS_LEVELS[ 0 ]
     when ApplicationController::FEATURE_ACCESS_SOME
        FEATURE_ACCESS_LEVELS[ 1 ]

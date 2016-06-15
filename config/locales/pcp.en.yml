@@ -25,6 +25,7 @@ en:
         c_deputy_id:    'Deputy (Commenting Group)'
         p_deputy_id:    'Deputy (Presenting Group)'
         label:          'Category Label'
+        description:    'Description'
 
       pcp_comment:
         id:             :general.attributes.id
@@ -71,6 +72,7 @@ en:
         p_owner_id:     'Owner (Presenting Group)'
         c_deputy_id:    'Deputy (Commenting Group)'
         p_deputy_id:    'Deputy (Presenting Group)'
+        s_owner_id:     'Subject Owner'
         archived:       'Archived'
         subject_status: 'Subject Status'
         short_title:    'PCP Subject'
@@ -115,8 +117,8 @@ en:
     pcp_how_to_12:    'How to ... copy new comments by others (not using pmodbase)'
     pcp_how_to_02:    'How to ... copy responses by others (not using pmodbase)'
     pcp_how_to_03:    'How to ... set up a document for a review'
-    pcp_how_to_04:    'How to ... prepare a site hand-over (from others)'
-    pcp_how_to_05:    'How to ... prepare a site take-over (by you)'
+    pcp_how_to_04:    'How to ... prepare a site hand-over (from you to others)'
+    pcp_how_to_05:    'How to ... prepare a site take-over (by you from others)'
     pcp_how_to_06:    'How to ... make document review comments'
     pcp_how_to_07:    'How to ... respond to review comments'
     pcp_how_to_08:    'How to ... organize a review for several reviewers'
@@ -126,6 +128,7 @@ en:
     pcp_how_to_13:    'How to ... release a PCP Subject for the Initial Review Step'
     pcp_how_to_14:    'How to ... release a PCP Subject for the next Review Step'
     pcp_how_to_15:    'How to ... release a PCP Subject for the next Response Step'
+    pcp_how_to_16:    'How to ... document site observations'
 
   pcp_categories:
     title:            'PCP Categories'
@@ -140,6 +143,7 @@ en:
       group_short:    'Code'
       owner_short:    'Owner'
       deputy_short:   'Deputy'
+      label_desc:     'Category Label/Description'
     show:
       form_title:     'Show PCP Category'
     msg:
@@ -148,7 +152,7 @@ en:
       edit_ok:        'PCP category successfully updated.'
       delete_ok:      'PCP category successfully deleted'
       no_access:      'has no permission to modify PCP Subjects for his group'
-      bad_account:    :general.non_existing
+      bad_account_id: :general.non_existing
 
   pcp_comments:
     msg:
@@ -262,6 +266,7 @@ en:
     title:            'My PCP Subjects'
     form:
       g_prompt:       :general.select_prompt
+      c_prompt:       'Use PCP Category Default'
       cs_heading:     'Current Step: %{label}'
       prev_version:   'previously:'
       this_due_date:  'This %{step} Due Date'
@@ -321,6 +326,7 @@ en:
       no_access:      'has no permission to modify this PCP Subject for his group.'
       bad_category:   :general.non_existing
       bad_status:     'can only be set on closed subjects.'
+      bad_account_id: :general.non_existing
       no_permissn:    'You have no permission to modify this PCP Subject at this time.'
       rel_not_ok:
         one:          'Cannot release PCP Subject: 1 open Item has no (public) comment.'   

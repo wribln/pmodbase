@@ -3,7 +3,9 @@ class BaseControllerAccessTest < ActionController::TestCase
   tests BaseController
 
   test "check class_attributes"  do
-    validate_feature_class_attributes FEATURE_ID_BASE_PAGE, ApplicationController::FEATURE_ACCESS_USER
+    validate_feature_class_attributes FEATURE_ID_BASE_PAGE, 
+      ApplicationController::FEATURE_ACCESS_USER +
+      ApplicationController::FEATURE_ACCESS_NBP
   end
 
  test "index is permitted with specific entries" do

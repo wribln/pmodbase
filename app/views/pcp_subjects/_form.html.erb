@@ -50,7 +50,7 @@
         <%= form.label :p_group_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
           <%- if @valid_subject_params.include? :p_group_id then -%>
-            <%= form.select :p_group_id, @pcp_groups, { prompt: t( '.g_prompt' )},{ class: 'form-control', required: true }%>
+            <%= form.select :p_group_id, @pcp_groups, { include_blank: t( '.c_prompt' )},{ class: 'form-control' }%>
           <%- else -%>
             <%= display_value form.object.p_group.try( :code_and_label) %>
           <%- end -%>
@@ -60,7 +60,7 @@
         <%= form.label :p_owner_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
           <%- if @valid_subject_params.include? :p_owner_id then -%>
-            <%= form.text_field :p_owner_id, class: 'form-control', required: true %>
+            <%= form.text_field :p_owner_id, class: 'form-control' %>
         </div>
         <div class="col-sm-2">
             <%= link_to t( 'general.accounts_link' ), account_list_path, class: 'btn btn-sm btn-block btn-default', target: '_blank' %>
@@ -83,7 +83,7 @@
         <%= form.label :c_group_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
           <%- if @valid_subject_params.include? :c_group_id then -%>
-            <%= form.select :c_group_id, @pcp_groups, { prompt: t( '.g_prompt' )},{ class: 'form-control', required: true }%>
+            <%= form.select :c_group_id, @pcp_groups, { include_blank: t( '.c_prompt' )},{ class: 'form-control' }%>
           <%- else -%>
             <%= display_value form.object.c_group.try( :code_and_label )%>
           <%- end -%>
@@ -93,7 +93,7 @@
         <%= form.label :c_owner_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
           <%- if @valid_subject_params.include? :c_owner_id then -%>
-          <%= form.text_field :c_owner_id, class: 'form-control', required: true %>
+          <%= form.text_field :c_owner_id, class: 'form-control' %>
         </div>
         <div class="col-sm-2">
             <%= link_to t( 'general.accounts_link' ), account_list_path, class: 'btn btn-sm btn-block btn-default', target: '_blank' %>
@@ -112,6 +112,19 @@
           <%- end -%>
         </div>
       </div>
+      <%# do not show subject owner if current user is not in the presenting group %>
+      <%- if PcpSubject.same_group?( 0, @pcp_viewing_group ) -%>
+      <div class="form-group">
+        <%= form.label :s_owner_id, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-1">
+          <%- if @valid_subject_params.include? :s_owner_id then -%>
+            <%= form.text_field :s_owner_id, class: 'form-control' %>
+          <%- else -%>
+            <%= display_value form.object.c_deputy_id %>
+          <%- end -%>
+        </div>
+      </div>
+      <%- end -%>
       <%- end -%>
       <div class="form-group">
         <%= form.label :report_doc_id, class: 'col-sm-3 control-label' %>

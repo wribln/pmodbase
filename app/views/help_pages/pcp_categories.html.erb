@@ -27,22 +27,32 @@
         individual PCP Category.</li>
       <li><%= help_param PcpCategory.human_attribute_name( :label ) -%> is the name of the PCP Category.
         The link here will lead to all PCP Subjects within this PCP Category.</li>
-      <li><%= help_param PcpCategory.human_attribute_name( :c_group_id ) -%> is the project group
-        providing comments and observations on the PCP Subjects in this PCP Category.</li>
       <li><%= help_param PcpCategory.human_attribute_name( :p_group_id ) -%> is the project group
         presenting the PCP Subjects to be reviewed and commented on. This is group also provides the
         responses to any observations and comments.</li>
+      <li><%= help_param PcpCategory.human_attribute_name( :p_owner_id )-%> is the principal contact
+        of the PCP for the <%= help_term PcpCategory.human_attribute_name( :p_group_id )-%>. This
+        user (account) has the permission to add PCP Subjects to this PCP Category.</li>
+      <li><%= help_param PcpCategory.human_attribute_name( :p_deputy_id )-%> can be used to define a
+        default deputy for the <%= help_term PcpCategory.human_attribute_name( :p_owner_id )-%>.
+        Note: This account is not required to be a member of the
+        <%= help_term PcpCategory.human_attribute_name( :p_group_id )-%>! You can choose any
+        existing account from any project group to act as deputy or proxy for this PCP Category.</li>
+      <li><%= help_param PcpCategory.human_attribute_name( :c_group_id ) -%> is the project group
+        providing comments and observations on the PCP Subjects in this PCP Category.</li>
       <li><%= help_param PcpCategory.human_attribute_name( :c_owner_id )-%> is the default owner for
         the <%= help_term PcpCategory.human_attribute_name( :c_group_id )-%> for any new PCP Subjects
         in this PCP Category. This parameter is required to ensure that there is always an owner defined
         for any PCP Subject.</li>
-      <li><%= help_param PcpCategory.human_attribute_name( :p_owner_id )-%> is the principal contact
-        of the PCP for the <%= help_term PcpCategory.human_attribute_name( :p_group_id )-%>. This
-        user (account) has the permission to add PCP Subjects to this PCP Category.</li>
       <li><%= help_param PcpCategory.human_attribute_name( :c_deputy_id )-%> can be used to define a
-        default deputy for the <%= help_term PcpCategory.human_attribute_name( :c_owner_id )-%>.
-      <li><%= help_param PcpCategory.human_attribute_name( :p_deputy_id )-%> can be used to define a
-        default deputy for the <%= help_term PcpCategory.human_attribute_name( :p_owner_id )-%>.
+        default deputy or proxy for the <%= help_term PcpCategory.human_attribute_name( :c_owner_id )-%>.
+        Note: This account is not required to be a member of the
+        <%= help_term PcpCategory.human_attribute_name( :c_group_id )-%>! You can choose any
+        existing account from any project group to act as deputy or proxy for this PCP Category.</li>
+      <li>The <%= help_param PcpCategory.human_attribute_name( :description )-%> can be used to
+        add some comments on this specific category, possibly some handling notes or references
+        to more details on the process as agreed with the project partners involved in this type
+        of PCP.</li> 
     </ul>
     <h3>Permissions and Access</h3>
     <p>All users may view the information on each PCP Category. Only users with the specific

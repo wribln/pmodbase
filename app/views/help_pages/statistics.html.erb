@@ -2,34 +2,11 @@
 <div class="container">
     <%= helpcrumbs %>
     <%= help_header %>
-  <p class="lead">This shows some counts of all records in the PMO database.</p>
-  <p>The PMO database stores all information in a records of various types,
-    roughly corresponding to the various features implemented (not all may
-    be shown in this list):</p>
-  <ul>
-    <li><%= help_param Abbreviation.model_name.human -%></li>
-    <li><%= help_param Account.model_name.human -%></li>
-    <li><%= help_param Address.model_name.human -%></li>
-    <li><%= help_param ContactInfo.model_name.human -%></li>
-    <li><%= help_param CountryName.model_name.human -%></li>
-    <li><%= help_param DbChangeRequest.model_name.human -%></li>
-    <li><%= help_param Feature.model_name.human -%></li>
-    <li><%= help_param FeatureCategory.model_name.human -%></li>
-    <li><%= help_param GlossaryItem.model_name.human -%></li>
-    <li><%= help_param Group.model_name.human -%></li>
-    <li><%= help_param GroupCategory.model_name.human -%></li>
-    <li><%= help_param Permission4Group.model_name.human -%></li>
-    <li><%= help_param Person.model_name.human -%></li>
-    <li><%= help_param PhaseCode.model_name.human -%></li>
-    <li><%= help_param Responsibility.model_name.human -%></li>
-    <li><%= help_param RfcDocument.model_name.human -%></li>
-    <li><%= help_param RfcStatusRecord.model_name.human -%></li>
-    <li><%= help_param SiemensPhase.model_name.human -%></li>
-    <li><%= help_param StandardsBody.model_name.human -%></li>
-    <li><%= help_param SubmissionGroup.model_name.human -%></li>
-  </ul>
+  <p class="lead">This shows some counts of selected records in the PMO database.</p>
+  <p>The pmodbase application stores all information in a records of various types,
+    roughly corresponding to the various features implemented.</p>
   <p>The number shown as 'Total' represents the total number of records of the
-    given type in the database. Any sub-categories are labeled as such and
+    given type in the pmodbase database. Any sub-categories are labeled as such and
     contain the respective number of records in that sub-category.</p>
   <%= help_footer FEATURE_ID_DBSTATS %>
 </div>

@@ -25,7 +25,7 @@ class PcpCategoriesController0Test < ActionController::TestCase
 
   test 'should create pcp_category' do
     assert_difference( 'PcpCategory.count' ) do
-      post :create, pcp_category: { label: @pcp_category.label,
+      post :create, pcp_category: { label: @pcp_category.label, description: @pcp_category.description,
         c_group_id: @pcp_category.c_group_id, p_group_id: @pcp_category.p_group_id,
         c_owner_id: @pcp_category.c_owner_id, p_owner_id: @pcp_category.p_owner_id }
     end
@@ -44,6 +44,7 @@ class PcpCategoriesController0Test < ActionController::TestCase
 
   test 'should update pcp_category' do
     patch :update, id: @pcp_category, pcp_category: { label: @pcp_category.label,
+      description: @pcp_category.description,
       c_group_id: @pcp_category.c_group_id, p_group_id: @pcp_category.p_group_id }
     assert_redirected_to pcp_category_path( assigns( :pcp_category ))
   end

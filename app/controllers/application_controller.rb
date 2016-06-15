@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
   #               xxx1xx/04 - access read permitted
   #               xx1xxx/08 - access created/update/delete
   #               x1xxxx/10 - no restrictions
-  #               1xxxxx/20 - hidden feature
+  #               1xxxxx/20 - hidden feature (no access from base page)
 
   FEATURE_ACCESS_NONE =   0x00   # no access at all / feature disabled
   FEATURE_ACCESS_SOME =   0x01   # user must have specific permission
@@ -34,8 +34,8 @@ class ApplicationController < ActionController::Base
   FEATURE_ACCESS_VIEW =   0x06   # user must exist to access index and details
   FEATURE_ACCESS_USER =   0x0E   # user must exist to access feature
   FEATURE_ACCESS_ALL =    0x10   # no access restrictions
-  FEATURE_ACCESS_NDA =    0x20   # hidden feature, not directly accessible
-  FEATURE_ACCESS_MAX =    0x2E   # maximum value for validations
+  FEATURE_ACCESS_NBP =    0x20   # hidden feature, not access from base page
+  FEATURE_ACCESS_MAX =    0x3E   # maximum value for validations
 
   # Define a feature control level that documents which controls
   # are implemented in addition to the feature access levels:
@@ -184,7 +184,7 @@ class ApplicationController < ActionController::Base
   end
 
   def self.no_direct_access?( level )
-    level.nil? || ( level == FEATURE_ACCESS_NONE ) || ( level & FEATURE_ACCESS_NDA ) != 0
+    level.nil? || ( level == FEATURE_ACCESS_NONE ) || ( level & FEATURE_ACCESS_NBP ) != 0
   end
 
   private

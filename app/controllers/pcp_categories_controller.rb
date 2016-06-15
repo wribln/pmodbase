@@ -73,7 +73,7 @@ class PcpCategoriesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
 
     def pcp_category_params
-      params.require( :pcp_category ).permit( :label,
+      params.require( :pcp_category ).permit( :label, :description,
         :p_group_id, :p_owner_id, :p_deputy_id,
         :c_group_id, :c_owner_id, :c_deputy_id )
     end

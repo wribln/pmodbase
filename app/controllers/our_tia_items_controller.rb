@@ -3,7 +3,7 @@
 class OurTiaItemsController < ApplicationController
   include ControllerMethods
 
-  initialize_feature FEATURE_ID_OUR_TIA_ITEMS, FEATURE_ACCESS_USER + FEATURE_ACCESS_NDA, FEATURE_CONTROL_CUG
+  initialize_feature FEATURE_ID_OUR_TIA_ITEMS, FEATURE_ACCESS_USER + FEATURE_ACCESS_NBP, FEATURE_CONTROL_CUG
 
   before_action :set_tia_list, only: [ :index, :create, :new ]
   before_action :set_tia_item, only: [ :show, :info, :edit, :update, :destroy ]

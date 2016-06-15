@@ -5,7 +5,7 @@ class PcpItemsController < ApplicationController
   # released steps and related public comments; only viewing group may see
   # non-public items.
 
-  initialize_feature FEATURE_ID_PCP_ITEMS, FEATURE_ACCESS_USER + FEATURE_ACCESS_NDA, FEATURE_CONTROL_CUG
+  initialize_feature FEATURE_ID_PCP_ITEMS, FEATURE_ACCESS_USER + FEATURE_ACCESS_NBP, FEATURE_CONTROL_CUG
 
   # GET /pcs/:pcp_subject_id/pci
   #

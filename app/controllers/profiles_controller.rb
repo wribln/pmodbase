@@ -1,5 +1,5 @@
 class ProfilesController < ApplicationController
-  initialize_feature FEATURE_ID_PROFILE, FEATURE_ACCESS_USER
+  initialize_feature FEATURE_ID_PROFILE, FEATURE_ACCESS_USER + FEATURE_ACCESS_NBP
   before_action :set_profile, only: [ :show, :edit, :update ]
   before_action :set_address_options, only: [ :edit, :update ]
 

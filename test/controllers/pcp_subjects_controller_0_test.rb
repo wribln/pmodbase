@@ -9,7 +9,8 @@ class PcpSubjectsController0Test < ActionController::TestCase
 
   test 'check class attributes' do
     validate_feature_class_attributes FEATURE_ID_MY_PCP_SUBJECTS, 
-      ApplicationController::FEATURE_ACCESS_SOME,
+      ApplicationController::FEATURE_ACCESS_SOME +
+      ApplicationController::FEATURE_ACCESS_NBP,
       ApplicationController::FEATURE_CONTROL_CUG
   end
 

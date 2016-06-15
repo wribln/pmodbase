@@ -62,7 +62,7 @@ class PcpSubjectTest < ActiveSupport::TestCase
     assert_equal ps.c_group_id, oc.c_group_id
     assert_equal ps.p_group_id, oc.p_group_id
     assert_equal ps.c_owner_id, oc.c_owner_id
-    assert_nil ps.p_owner_id
+    assert_equal ps.p_owner_id, oc.p_owner_id
     assert_equal ps.c_deputy_id, oc.c_deputy_id
     assert_equal ps.p_deputy_id, oc.p_deputy_id
   end
@@ -105,7 +105,45 @@ class PcpSubjectTest < ActiveSupport::TestCase
     refute ps.valid?, ps.errors.messages
   end
 
-  test 'o_owner must have access to respective group' do
+  test 'permit to set p defaults from PCP Category' do
+    ps = pcp_subjects( :two )
+    assert_equal ps.p_group_id, groups( :group_one ).id
+    assert_equal ps.p_owner_id, accounts( :account_one ).id
+    ps.p_group_id = nil
+    # should just set group and leave owner alone
+    assert ps.valid?
+    assert_equal ps.p_group_id, groups( :group_two ).id
+    assert_equal ps.p_owner_id, accounts( :account_one ).id
+    ps.p_group_id = nil
+    ps.p_owner_id = nil
+    assert ps.valid?
+    # should set group and account
+    assert_equal ps.p_group_id, groups( :group_two ).id
+    assert_equal ps.p_owner_id, accounts( :account_two ).id
+  end
+
+  test 'permit to set c defaults from PCP Category' do
+    ps = pcp_subjects( :two )
+    assert_equal ps.c_group_id, groups( :group_two ).id
+    assert_equal ps.c_owner_id, accounts( :account_two ).id
+    ps.c_group_id = nil
+    # should just set group and leave owner alone ...
+    # but this fails as account_two does not have access
+    # to group_one
+    refute ps.valid?
+    assert_includes ps.errors, :c_owner_id
+    assert_equal ps.c_group_id, groups( :group_one ).id
+    assert_equal ps.c_owner_id, accounts( :account_two ).id
+    # try again
+    ps.c_group_id = nil
+    ps.c_owner_id = nil
+    assert ps.valid?
+    # should set group and account
+    assert_equal ps.c_group_id, groups( :group_one ).id
+    assert_equal ps.c_owner_id, accounts( :account_one ).id
+  end
+
+  test 'c_owner must have access to respective group' do
     ps = pcp_subjects( :one )
     ps.c_owner_id = accounts( :account_wop ).id
     refute ps.valid?
@@ -153,22 +191,24 @@ class PcpSubjectTest < ActiveSupport::TestCase
     assert ps.valid?
   end
 
-  test 'c_deputy - if given - must have access to respective group' do
+  test 'c_deputy - if given - must exist' do
     ps = pcp_subjects( :one )
     ps.c_deputy_id = nil
     assert ps.valid?
     ps.c_deputy_id = accounts( :account_wop ).id
+    accounts( :account_wop ).destroy
     refute ps.valid?
     assert_includes ps.errors, :c_deputy_id
     ps.c_deputy_id = accounts( :account_one ).id
     assert ps.valid?
   end
 
-  test 'p_deputy - if given - must have access to respective group' do
+  test 'p_deputy - if given - must exist' do
     ps = pcp_subjects( :one )
     ps.p_deputy_id = nil
     assert ps.valid?
     ps.p_deputy_id = accounts( :account_wop ).id
+    accounts( :account_wop ).destroy
     refute ps.valid?
     assert_includes ps.errors, :p_deputy_id
     ps.p_deputy_id = accounts( :account_one ).id

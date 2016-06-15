@@ -9,7 +9,7 @@ class PcpSubjectsController < ApplicationController
   before_action :set_valid_params,  only: [ :edit, :new, :update, :create ]
   before_action :get_item_stats,    only: [ :show, :edit, :update_release ]
 
-  initialize_feature FEATURE_ID_MY_PCP_SUBJECTS, FEATURE_ACCESS_SOME, FEATURE_CONTROL_CUG
+  initialize_feature FEATURE_ID_MY_PCP_SUBJECTS, FEATURE_ACCESS_INDEX + FEATURE_ACCESS_NBP, FEATURE_CONTROL_CUG
 
 # GET /ors
 
@@ -74,7 +74,7 @@ class PcpSubjectsController < ApplicationController
       render_no_permission
       return
     end
-    @pcp_subject.p_owner_id = current_user.id
+    @pcp_subject.s_owner = current_user
     @pcp_curr_step = @pcp_subject.pcp_steps.build( step_no: 0, prev_assmt: 0 )
     # this works due to the AutosaveAssocation
     respond_to do |format|
@@ -221,12 +221,17 @@ class PcpSubjectsController < ApplicationController
         @valid_subject_params = [ :pcp_category_id, :title, :note, :project_doc_id, :report_doc_id ]
       else
         if @pcp_curr_step.in_presenting_group? then
-          if @pcp_curr_step.status_closed? then
+          if @pcp_subject.user_is_owner_or_deputy?( current_user, 0 )
+            if @pcp_curr_step.status_closed? then
+              @valid_step_params = []
+              @valid_subject_params = [ :archived ]
+            else
+              @valid_step_params = [ :id, :subject_version, :note, :subject_date, :due_date, :report_version, :release_notice ]
+              @valid_subject_params = [ :pcp_category_id, :title, :note, :project_doc_id, :report_doc_id, :p_group_id, :p_owner_id, :p_deputy_id, :s_owner_id ]
+            end
+          elsif @pcp_subject.s_owner_id == current_user.id && @pcp_step.step_no == 0
             @valid_step_params = []
-            @valid_subject_params = [ :archived ]
-          else
-            @valid_step_params = [ :id, :subject_version, :note, :subject_date, :due_date, :report_version, :release_notice ]
-            @valid_subject_params = [ :pcp_category_id, :title, :note, :project_doc_id, :report_doc_id, :p_group_id, :p_owner_id, :p_deputy_id ]
+            @valid_subject_params = [ :pcp_category_id, :title, :note, :project_doc_id, :report_doc_id ]
           end
         else
           @valid_step_params = [ :id, :note, :due_date, :new_assmt, :report_version, :release_notice ]
@@ -235,13 +240,11 @@ class PcpSubjectsController < ApplicationController
       end
     end
 
-    # retrieve those PCP Categories for which the current user may create PCP Subjects
-    # for, i.e. she must have :to_create permission for the current controller and 
-    # the PCP Category must have either c_group_id or p_group_id set for these groups.
+    # retrieve those PCP Categories for which the current user may create PCP Subjects for:
 
     def permitted_categories
       pg = current_user.permitted_groups( FEATURE_ID_MY_PCP_SUBJECTS, :to_create )
-      PcpCategory.permitted_groups( pg ).collect{ |c| [ c.label, c.id ]}
+      PcpCategory.permitted_to_create_subject( pg, current_user ).collect{ |c| [ c.label, c.id ]}
     end
 
     # all both owners, deputies and all members of this subject may view information

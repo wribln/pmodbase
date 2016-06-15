@@ -494,6 +494,7 @@ ActiveRecord::Schema.define(version: 20160511091429) do
     t.integer  "c_deputy_id"
     t.integer  "p_deputy_id"
     t.string   "label",       null: false
+    t.text     "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
@@ -585,6 +586,7 @@ ActiveRecord::Schema.define(version: 20160511091429) do
     t.integer  "c_deputy_id"
     t.integer  "p_owner_id",                                  null: false
     t.integer  "p_deputy_id"
+    t.integer  "s_owner_id"
     t.string   "title",           limit: 128
     t.string   "note",            limit: 50
     t.string   "project_doc_id",  limit: 100
@@ -602,6 +604,7 @@ ActiveRecord::Schema.define(version: 20160511091429) do
   add_index "pcp_subjects", ["p_group_id"], name: "index_pcp_subjects_on_p_group_id"
   add_index "pcp_subjects", ["p_owner_id"], name: "index_pcp_subjects_on_p_owner_id"
   add_index "pcp_subjects", ["pcp_category_id"], name: "index_pcp_subjects_on_pcp_category_id"
+  add_index "pcp_subjects", ["s_owner_id"], name: "index_pcp_subjects_on_s_owner_id"
 
   create_table "people", force: :cascade do |t|
     t.string   "formal_name",   limit: 70,  default: "",   null: false

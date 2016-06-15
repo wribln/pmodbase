@@ -9,7 +9,9 @@ class ProfilesControllerTest < ActionController::TestCase
   end
 
   test "check class_attributes"  do
-    validate_feature_class_attributes FEATURE_ID_PROFILE, ApplicationController::FEATURE_ACCESS_USER
+    validate_feature_class_attributes FEATURE_ID_PROFILE, 
+      ApplicationController::FEATURE_ACCESS_USER +
+      ApplicationController::FEATURE_ACCESS_NBP
   end
 
   test "should show profile" do

@@ -3,11 +3,11 @@
     <%= helpcrumbs %>
     <%= help_header 'PCP - ' + t( 'pcp_help.pcp_how_to_13' ) %>
     <p class="lead">You have a document ready for review, what do you need to do in order to
-    release this document for an Initial Review within the Present-Comment-Process (PCP)?</p>
+    release this document for an Initial Review within the Present-Comment Process (PCP)?</p>
     <p>It must be noted here that a formal release between project parties is considered 
       to be the responsibility of the project's document management group: They need to prepare
       certain release papers, get them signed by the respective managers, add all this
-      information into the project's document management system and forward the paperwork to
+      information into the project's document management system (DMS) and forward the paperwork to
       the commenting party.</p>
     <p>The release of PCP Subjects here is somewhat similar in nature but is a rather
       technical activity: The release of a PCP Subject (for example a document or drawing)
@@ -26,7 +26,7 @@
           <li>The version or revision code or number of your document or drawing.</li>
           <li>The initial version or revision code to be used for the release document
             (which will be created automatically by the pmodbase application): This is
-            often 'A', '0', or '1' - depending on your project's document management system.</li>
+            often 'A', '0', or '1' - depending on your project's DMS.</li>
           <li>Any additional information to be included in the release document, e.g.
             release notes, due date for the return of comments.</li>
           </ul></li>
@@ -37,7 +37,56 @@
         for example:<br/>
       <%= image_tag 'pcp_how_to_13a.png', alt: 'List of My PCP Subjects', class: 'img-responsive' -%></li>
       <li>Select the PCP Subject you want to release and click on the [Q] button on the right column
-        of that row... ... ...</li>
+        of that row. This will open up a form with all information about the current status of your
+        PCP Subject:</li>
+      <div class="row">
+      <div class="col-sm-6">
+        <p><br/>On the top of this form, you find the attributes of the PCP Subject: Title,
+        Document Codes, Owner and Deputy Groups and Accounts, and the current Status.</p>
+        <p>Below that, you see the information about the current step, i.e. the Initial Release. These
+        fields are currently empty and you need to provide the necessary information before the PCP
+        subject can be formally released for the next step in the process.</p>
+        <p>Click the <%= help_term t( 'button_label.edit' )-%> button to open the form for editing.</p>
+        <p>Some fields in the upper part of the form can be modified at this time others cannot be
+        changed here: For example, the commenting party, owner and deputy of this process there
+        can only be changed by someone in that party.</p>
+        <p>The first field in the lower part of this form,
+        <%= help_param PcpStep.human_attribute_name( :subject_date )-%>, is not
+        required for the review of documents although you can enter the document's creation date
+        here for information (if given, it should correspond to the date on the document itself.</p>
+        <p><%= help_param PcpStep.human_attribute_name( :subject_version )-%> is a required field for
+        this step: Enter here the version or release code / number for the document being released. 
+        This is most likely the initial code 'A' or '0' depending on the DMS you are using in your
+        project. This code must correspond to the (normally) last part of your document's code.</p>
+        <p><%= help_param PcpStep.human_attribute_name( :report_version )-%> is also a required
+        field: Enter here the initial version or release code for the release document to be
+        created for this release. Again, this is often 'A' or '0' depending on the document
+        management system you are using.</p>
+        <p><%= help_param PcpStep.human_attribute_name( :note )-%> is a field for information
+        which will only be shown to the releasing (the presenting) group. For the initial release,
+        you probably do not need to add anything there.</p>
+        <p><%= help_param PcpStep.human_attribute_name( :release_note )-%> can be used to add
+        information for the release document being created.</p>
+        <p><%= help_param t( 'pcp_subjects.form.next_due_date', step: PcpStep.step_state_label( 1 ))-%>
+        can be used to set a date when the review comments are expected to be returned.</p>  
+        <p>Once you have completed the form, click <%= help_term t( 'helpers.submit.update')-%>:
+        This will again show you the details of your PCP Subject and the current step data.</p>
+        <p>In order to perform the technical release, click the
+        <%= help_term t( 'button_label.release' )-%> button now. This will open a new window
+        with the release document and an extra message telling you that the PCP Subject is
+        now released and that you should print the following screen.</p>
+      </div>
+      <div class="col-sm-6">
+        <%= image_tag 'pcp_how_to_13b.png', alt: 'Details on PCP Subject', class: 'img-responsive' -%>
+      </div>
+      </div>
+      <%= image_tag 'pcp_how_to_13d.png', alt: 'Release PCP Subject', class: 'img-responsive' -%>
+      <li>Click on the <%= help_term t( 'button_label.print' )%> link on top of the page and
+      use you browser's print feature to create a printed (or PDF) version of this page. Save this
+      release document and ensure that it is added to your DMS (either by
+      yourself or by your document management group).</li>
     </ul>
+    <p>This completes the release of this PCP Subject. Now it is the commenting group's turn to
+    add comments, observations, issues and make an assessment of the document.</p>
     <%= help_footer FEATURE_ID_HELP_PAGES %>
   </div> <!-- /container -->

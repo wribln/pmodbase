@@ -13,6 +13,7 @@
       <li><%= link_to_help :pcp_how_to_04, t( 'pcp_help.pcp_how_to_04' )%></li>
       <li><%= link_to_help :pcp_how_to_05, t( 'pcp_help.pcp_how_to_05' )%></li>
       <li><%= link_to_help :pcp_how_to_06, t( 'pcp_help.pcp_how_to_06' )%></li>
+      <li><%= link_to_help :pcp_how_to_16, t( 'pcp_help.pcp_how_to_16' )%></li>
       <li><%= link_to_help :pcp_how_to_07, t( 'pcp_help.pcp_how_to_07' )%></li>
       <li><%= link_to_help :pcp_how_to_08, t( 'pcp_help.pcp_how_to_08' )%></li>
       <li><%= link_to_help :pcp_how_to_09, t( 'pcp_help.pcp_how_to_09' )%></li>
@@ -26,7 +27,7 @@
       <li><%= link_to_help :pcp_how_to_15, t( 'pcp_help.pcp_how_to_15' )%></li>
     </ul>
     <h3>Overview</h3>
-    <p>The Present-Comment Process (PCP) is represented using the following model:</p>
+    <p>The following model represents the Present-Comment Process (PCP):</p>
     <%= image_tag 'pcp_drawing.png', alt: 'Schematic Drawing of the PCP', class: 'img-responsive' -%>
     <ul>
       <li><%= help_param 'PCP Categories' -%> reflect an agreement between two project parties to
@@ -41,10 +42,14 @@
         list for a specific site.</li>
       <li>While in the Present-Comment Process, a PCP Subject will be handled by either the
         <%= help_term 'Presenting Group'-%>, or by the <%= help_term 'Commenting Group'-%>.
-        The handing-over from <%= help_param 'PCP Group'-%> to the
-        other is a 'Release'. Initially, the Presenting Group will release the PCP Subject to
-        the Commenting Group. The Commenting Group will then report their observations and
-        an overall assessment of the PCP Subject.<br/>
+        The handing-over from one <%= help_param 'PCP Group'-%> to the
+        other is called <%= help_param 'Release'-%> (in the PCP context this is sometimes
+        described as 'technical release' to distinguish this action from a 'formal release'
+        which involves the formal exchange of documents between project entities and is thus
+        often performed by the document management group).<br/>
+        Initially, the Presenting
+        Group will release the PCP Subject to the Commenting Group. The Commenting Group will
+        then report their observations and  an overall assessment of the PCP Subject.<br/>
         In the next step, the Commenting Group will release the PCP Subject (back) to the
         Presenting Group. The Presenting Group can now respond to the observations by 
         commenting on each and every observation. Once this step is completed, the PCP Subject
@@ -54,8 +59,8 @@
         step would be the <%= help_term PcpStep::STEP_LABELS[ 0 ]-%>, the second 
         <%= help_term PcpStep::STEP_LABELS[ 1 ]-%>, the third
         <%= help_term PcpStep::STEP_LABELS[ 2 ]-%>, and so on.<br/>
-        The transition from one PCP Step to the next PCP Step is performed by a formal
-        <%= help_param 'Release' -%> by the currently acting PCP Group. This action includes the
+        The transition from one PCP Step to the next PCP Step is performed as the 
+        technical release by the currently acting PCP Group. This action includes the
         preparation of a 'Release' document containing the current status of the PCP Subject
         and includes all current (and public) observations and comments.</li>
       <li>Observations and comments on a PCP Subject are collected on a <%= help_param 'PCP Item'-%>
@@ -87,18 +92,17 @@
     <%= help_term PcpCategory.human_attribute_name( :p_deputy_id )-%>, and as 
     <%= help_term PcpCategory.human_attribute_name( :c_owner_id )-%> and
     <%= help_term PcpCategory.human_attribute_name( :c_deputy_id )-%> respectively).</p>
-    <p>In order to create PCP Subjects of a given PCP Category, a user must have permission to create
-      and update PCP Subjects for the <%= help_term PcpCategory.human_attribute_name( :p_group_id )-%>. You can later change the group assignment only if you have also the permission to create and
-      update PCP Subjects for the new project group.</p>
+    <p>In order to create PCP Subjects of a given PCP Category, a user must have permission to
+      create PCP Subjects for the <%= help_term PcpCategory.human_attribute_name( :p_group_id )-%>,
+      or the user must be defined as <%= help_term PcpCategory.human_attribute_name( :p_deputy_id )-%>
+      for this PCP Category.
     <p>If, for example, a PCP Category is set up for the review of systems documents, the
       <%= help_term PcpCategory.human_attribute_name( :p_group_id )-%> could be set to a general
       project group (such as 'SYS' - for 'Systems Engineering'). Without further permissions, only
       users in the 'SYS' group would be permitted to add PCP Subjects for this PCP Category. If
       other system groups should be allowed to add PCP Subjects for this PCP Category, they would
       require the permission to create PCP Subjects for the 'SYS' group in addition to the
-      permission to add and modify PCP Subjects for their own group. In any case, the 
-      <%= help_term PcpSubject.human_attribute_name( :p_owner_id )-%> would be set to the creator
-      of the new PCP Subject.</p>
+      permission to add and modify PCP Subjects for their own group.</p>
     <p>Users which are responsible for administering PCP Categories need the add and edit
     access rights for the feature
     <%= help_term Feature.find_by_id( FEATURE_ID_PCP_CATEGORIES ).label_with_id-%>.</p>
@@ -117,11 +121,6 @@
       This access can be restricted to specific groups such that this user will only
       see those PCP Subjects in which the specific group is either the Presenting Group
       or the Commenting Group.</p>
-    <p>A user must have the add and edit access permissions for the feature
-      <%= help_term Feature.find_by_id( FEATURE_ID_PCP_CATEGORIES ).label_with_id-%> 
-      and the <%= help_term PcpCategory.human_attribute_name( :p_group_id )-%> in order
-      to create new PCP Subjects. She can later change this group if she also has these
-      access permissions for the new group.</p>
     <p>Other users have only access to those PCP Subjects and any details thereof if they
       have the respective permissions for either the Presenting or the Commenting Group.</p>
     <h3>Roles for PCP Items</h3>

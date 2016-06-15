@@ -86,6 +86,18 @@
           <p class="form-control-static"><%= link_to_contact_list f.object.c_deputy %></p>
         </div>
       </div>
+      <%# do not show subject owner if current user is not in the presenting group %>
+      <%- if PcpSubject.same_group?( 0, @pcp_viewing_group ) -%>
+      <div class="form-group">
+        <%= f.label :s_owner_id, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-1">
+          <%= display_value f.object.s_owner_id %>
+        </div>
+        <div class="col-sm-4">
+          <p class="form-control-static"><%= link_to_contact_list f.object.s_owner %></p>
+        </div>
+      </div>
+      <%- end -%>
       <div class="form-group">
         <%= f.label :report_doc_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">

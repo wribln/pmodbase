@@ -51,14 +51,14 @@ en:
   activerecord:
 
     models:
-      a1_code:            'Alternate EDMS Code - Project (A1)'
-      a2_code:            'Alternate EDMS Code - Stage (A2)'
-      a3_code:            'Alternate EDMS Code - Discipline/System (A3)'
-      a4_code:            'Alternate EDMS Code - Sub-Discipline/-System (A4)'
-      a5_code:            'Alternate EDMS Code - Activity (A5)'
-      a6_code:            'Alternate EDMS Code - Location (A6)'
-      a7_code:            'Alternate EDMS Code - Document Type (A7)'
-      a8_code:            'Alternate EDMS Code - Originator (A8)'
+      a1_code:            'Alternate Code - Project (A1)'
+      a2_code:            'Alternate Code - Stage (A2)'
+      a3_code:            'Alternate Code - Discipline/System (A3)'
+      a4_code:            'Alternate Code - Sub-Discipline/-System (A4)'
+      a5_code:            'Alternate Code - Activity (A5)'
+      a6_code:            'Alternate Code - Location (A6)'
+      a7_code:            'Alternate Code - Document Type (A7)'
+      a8_code:            'Alternate Code - Originator (A8)'
       a_document_log:     'Alternate Document Log (ADL)'
       abbreviation:       'Abbreviations'
       account:            'User Accounts'
@@ -66,7 +66,7 @@ en:
       contact_info:       'Contact Information Records'
       country_name:       'Country Names and Codes'
       csr_status_record:  'Correspondence Status Register (CSR)'
-      db_change_request:  'Database Change Requests'
+      db_change_request:  'pmodbase Change Requests'
       dcc_code:           'Document Classification Codes'
       dsr_status_record:  'Document Status Register (DSR)'
       dsr_doc_group:      'DSR Document Groups'
@@ -861,11 +861,11 @@ en:
       form_title:  :a_code_modules.show_title
 
   a_document_logs:
-    title:            'Alternate EDMS Document Log (ADL)'
+    title:            'Alternate Document Log (ADL)'
     form:
       g_prompt:       :general.select_prompt
     index:
-      form_title:     'List of Alternate EDMS Documents'
+      form_title:     'List of Alternate DMS Documents'
     show:
       form_title:     'Show Document Attributes'
     edit:
@@ -1025,7 +1025,7 @@ en:
       bad_types:      'reply correspondence is same type as this: '
 
   db_change_requests:
-    title:            'All Database Change Requests'
+    title:            'All pmodbase Change Requests'
     req_text_prompt:  'Please provide as many details as you can. Thank you.'
 
     new:
@@ -1245,7 +1245,7 @@ en:
       bad_resp_date:  '+ Offset in Days must be on or after Actual Submission Date.'
 
   my_change_requests:
-    title:            'My Database Change Requests'
+    title:            'My pmodbase Change Requests'
     new:
       form_title:     'Add New Change Request'
       flash:
@@ -1865,13 +1865,13 @@ en:
       delete_ok:    'Standards Body Record was successfully removed.'
 
   statistics:
-    title:          'Database Statistics'
+    title:          'pmodbase Database Statistics'
     description:    'Description'
     category:       'Category'
     count:          'Count'
 
     index:
-      form_title:   'Global Database Statistics'
+      form_title:   'Global pmodbase Database Statistics'
 
   submission_groups:
     title:          'DSR Submission Groups'

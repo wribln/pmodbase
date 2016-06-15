@@ -1,0 +1,83 @@
+<% help_title 'PCP How to 04' %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header 'PCP - ' + t( 'pcp_help.pcp_how_to_04' ) %>
+    <p class="lead">Congratulations! You have a site ready to be taken over by others. The
+    take-over/hand-over process shall be performed using the Present-Comment Process (PCP)
+    within the PCP Feature of the pmodbase application.</p>
+    <p>In this process, you are the presenting party (you present the site to the other
+    party). The other party will review your site and may have some comments on the
+    conditions which need to be rectified before the take-over can be formally completed.</p>
+    <p>Within the PCP terminology, the 'PCP Subject' is the specific site
+    as per the take-over/hand-over date and time. You will 'release' the site to the other
+    party. The other party then will collect observations and comment on site conditions.
+    These observations and comments should be collected within the PCP Feature and released
+    back to you so you can take the necessary actions to remedy any problems.</p>
+    <p>This procedure is very similar to a review process of documents -&nbsp;except that
+    the PCP Subject is the site rather than a document or drawing.</p>
+    <p>Follow the steps below to prepare the PCP for a site take-over by others.</p>
+    <ul>
+    <li>In order to perform the hand-over, you need the following information on the site
+    (i.e. called the 'PCP Subject' from now on)<br/>
+      <ul>
+        <li>A short, specific description of the site to be handed over. This text will
+        be used as title for the PCP Subject.</li>
+        <li>We also need a document code for the release documents being
+        created during the course of the PCP. This document code will be referred to as the
+        <%= help_term PcpSubject.human_attribute_name( :report_doc_id )-%>. These release
+        documents show (a) when you 'release' (i.e. hand-over) the site to the other
+        project group, and (b) when the comments on the site conditions, or -&nbsp;hopefully&nbsp-
+        the approval of the site by the other project group are returned in response to your
+        'release'.</li>
+        </ul></li>
+      <li>The next important decision is the attribution of your PCP Subject to a
+        specific PCP Category: When the PCP is set up, various PCP Categories should be defined,
+        one of which should be used for the PCP of your PCP Subject. The definition
+        of PCP Categories is a separate task (for more information, see the help on the
+        <%= link_to_help :pcp_general, t( 'pcp_help.pcp_general')-%>, 
+        <%= link_to_help :pcp_categories, PcpCategory.model_name.human -%> and
+        <%= link_to_help :pcp_how_to_11, t( 'pcp_help.pcp_how_to_11') -%>).<br/>
+        Although we can later change the PCP Category of your PCP Subject, things will be easier
+        if you correctly assign the PCP Category right at the beginning.</li>
+      <li>In order to add your PCP Subject into the pmodbase database, you will need an account
+        for your project and the permission to add and modify PCP Subjects for your project group.</li>
+      <li>After you haved signed on to the system, you should find a button labelled
+      <%= link_to Feature.find( FEATURE_ID_ALL_PCP_SUBJECTS ).label, pcp_all_subjects_path,
+        target: '_blank' -%> (or use the previous link).</li>
+      <li>Clicking on this button will lead you to a web page containing all existing PCP Subjects
+      of your group, ordered by PCP Categories:<br/>
+      <%= image_tag 'pcp_how_to_03a.png', alt: 'PCP Steps without items', class: 'img-responsive' -%></li>
+      <li>Now you are ready to add your new PCP Subject: A click on any [+] button will lead you to a new
+        screen requesting input of information about your PCP Subject to be reviewed:<br/>
+        <%= image_tag 'pcp_how_to_04b.png', alt: 'New PCP Subject', class: 'img-responsive' -%></li>
+      <li>Select a PCP Category, and fill in all other fields as applicable.</li>
+      <li>The document code for the release report must NOT include
+        the version or release information: This information is added later as it will change
+        while the PCP Subject is being reviewed.</li>
+      <li>If you choose to use the <%= help_term PcpSubject.human_attribute_name( :project_doc_id )-%>
+        for a hand-over check-list, you should also use the document code without
+        the version or release code; this code should be added later in the respective step
+        form fields when the step is released.</li>
+      <li>Click <%= help_term t( 'helpers.submit.create' )-%> to add your PCP Subject to the
+        system. The page shown now contains the information you just entered plus some more:
+        Depending on the settings for the PCP Category you have chosen, a default deputy) for
+        the presenting group (i.e. your group) as well as for the commenting group was added.
+        You will see that you are still the owner of the PCP Subject.</li>
+      <li>Further below, you find the <%= help_term t( 'pcp_subjects.index.status_subj' )-%>
+        of your PCP Subject to be <%= help_term PcpStep.subject_status_label( 0 )-%>.</li>
+      <li>Below that, information regarding the current process step is listed: The
+        <%= help_term t( 'pcp_subjects.index.status_step' )-%> is 
+        <%= help_term PcpStep::STEP_LABELS[ 0 ]-%> which means that you PCP Subject still
+        needs to be released to complete the hand-over and to start the next step (collecting
+        observations and notes on the site conditions). See
+        <%= link_to_help :pcp_how_to_13, t( 'pcp_help.pcp_how_to_13' )-%>
+        for more information on how to perform this next step.</li>
+      <li>Once the PCP Subject is technically released, the other party is now able to add
+      comments and report an overall assessment on the site handed over. If the other
+      party can add their comments online (e.g. on a smartphone or a tablet computer),
+      you could receive their comments and their assessment right away within the pmodbase
+      application... See the <%= link_to_help :pcp_how_to_16, t('pcp_help.pcp_how_to_16' )-%>
+      for an introduction on how this could be done.</li>
+    </ul>
+    <%= help_footer FEATURE_ID_HELP_PAGES %>
+  </div> <!-- /container -->

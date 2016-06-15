@@ -11,7 +11,7 @@ fc7.seqno = 2
 fc7.save
 
 fc8 = FeatureCategory.new
-fc8.label = 'EDMS Codes'
+fc8.label = 'Alternate Codes'
 fc8.seqno = 3
 fc8.save
 

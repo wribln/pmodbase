@@ -8,6 +8,7 @@ class CreatePcpSubjects < ActiveRecord::Migration
       t.belongs_to  :c_deputy,                    index: true
       t.belongs_to  :p_owner,       null: false,  index: true
       t.belongs_to  :p_deputy,                    index: true
+      t.belongs_to  :s_owner,                     index: true
       t.string      :title,           limit: MAX_LENGTH_OF_TITLE
       t.string      :note,            limit: MAX_LENGTH_OF_NOTE
       t.string      :project_doc_id,  limit: MAX_LENGTH_OF_DOC_ID
@@ -23,5 +24,6 @@ class CreatePcpSubjects < ActiveRecord::Migration
     add_foreign_key :pcp_subjects, :accounts, column: :p_owner_id
     add_foreign_key :pcp_subjects, :accounts, column: :c_deputy_id
     add_foreign_key :pcp_subjects, :accounts, column: :p_deputy_id
+    add_foreign_key :pcp_subjects, :accounts, column: :s_owner_id
   end
 end

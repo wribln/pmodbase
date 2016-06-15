@@ -19,7 +19,7 @@ module PcpSubjectAccess
     return if a_id.nil?
     a = Account.where( id: a_id )
     if a.empty? then
-      errors.add( account_id, I18n.t( "#{ self.class.table_name }.msg.bad_account" ))
+      errors.add( account_id, I18n.t( "#{ self.class.table_name }.msg.bad_account_id" ))
       return # no need to look for errors any further...
     else
       a = a.first

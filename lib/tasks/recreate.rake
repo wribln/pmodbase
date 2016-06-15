@@ -35,8 +35,12 @@ task :recreate => :environment do
   puts '>>> db:seed:glossary completed.'
 
   Rake::Task['import'].reenable
+  Rake::Task['import'].invoke('db/std_csv/pmdb_abbreviations.csv','Abbreviation')
+  puts '>>> import pmdb abbreviations completed.'
+
+  Rake::Task['import'].reenable
   Rake::Task['import'].invoke('db/std_csv/abbreviations.csv','Abbreviation')
-  puts '>>> import abbreviations completed.'
+  puts '>>> import other abbreviations completed.'
 
   Rake::Task['import'].reenable
   Rake::Task['import'].invoke('db/std_csv/standards_bodies.csv','StandardsBody')

@@ -3,7 +3,7 @@
 # located under /views/help_pages
 
 class HelpPagesController < ApplicationController
-  initialize_feature FEATURE_ID_HELP_PAGES, FEATURE_ACCESS_ALL
+  initialize_feature FEATURE_ID_HELP_PAGES, FEATURE_ACCESS_ALL + FEATURE_ACCESS_NBP
 
   def show
     show_help_on params[ :title ]

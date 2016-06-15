@@ -6,7 +6,7 @@
       involved in the project.</p>
     <p>An individual person is the key entity in a project. Each person 
       belongs to - normally only one - <%= link_to_help( :group, 'Project Group' ) %>.
-      Within that Project Group, a person has certain responsibilities or 
+      Within that project group, a person has certain responsibilities or 
       functions. These are described in the <%= link_to_help( 'Responsibility' ) %>
       record.</p>
     <p>Each person maintains her or his
@@ -34,27 +34,26 @@
         official e-mail address to be used for communication on project
         matters. This would normally be the company e-mail address, and not
         the private e-mail address of the person. The e-mail address must be
-        unique within the PMO database as this e-mail address is used to
-        ensure that each person is entered only once into the PMO database.</li>
+        unique within the pmodbase application as this e-mail address is used to
+        ensure that each person is entered only once into the system.</li>
   	  <li><%= help_param Person.human_attribute_name( :involved ) -%> is
         simply a flag which indicates whether the person is currently still
         active in the project.</li>
     </ul>
     <p>Further contact information, such as phone numbers, department code,
       address information, etc. is collected in separate records. Each person
-      with an <%= link_to_help( "Account" ) %> has access to the above data
-      and the related contact information records and is thus able to keep
-      them up-to-date.</p>
-    <p>A Personal Data record is normally not removed from the PMO
+      with an account has access to his own data and the related contact information
+      and is thus able to keep them up-to-date.</p>
+    <p>A Personal Data record is normally not removed from the pmodbase
       database, it can only be set to "not involved".</p>
-    <p>Only registered persons can have an account in the PMO database.</p>
-    <p>Group Managers have the permission to add new persons to the PMO
-      database: If a new responsibility is defined for a new person, that
-      person will be added to the PMO database at that time. If the same
+    <p>Only registered persons can have an account in the pmodbase application.</p>
+    <p>Group managers have the permission to add new persons to the pmodbase
+      application: If a new responsibility is defined for a new person, that
+      person will be added to the pmodbase application at that time. If the same
       person has several responsibilities within the project, only one record
-      with personal data is used but several Responsibility records - one for
+      with personal data is used but several responsibility records - one for
       each topic - will be created. Also, if a person works for, or is member
-      of, more than one Project Group, the various Responsibility records
-      shall refer to the same Personal Data record.</p>
+      of, more than one project group, the various responsibility records
+      shall refer to the same personal data record.</p>
   <%= help_footer FEATURE_ID_PEOPLE %>
 </div> <!-- /container -->

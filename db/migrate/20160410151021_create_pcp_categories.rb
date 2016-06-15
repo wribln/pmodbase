@@ -8,6 +8,7 @@ class CreatePcpCategories < ActiveRecord::Migration
       t.belongs_to  :c_deputy,              index: true
       t.belongs_to  :p_deputy,              index: true
       t.string      :label,   null: false, length: MAX_LENGTH_OF_LABEL
+      t.text        :description
 
       t.timestamps null: false
     end

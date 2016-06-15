@@ -1,0 +1,16 @@
+code;description;sort_code
+ADL;Alternate Document Log;adl
+ASCII;American Standard Code for Information Interchange;ascii
+CSR;Correspondence Status Register;csr
+DCC;Document kind Class Code;dcc
+DMS;Document Management System;dms
+DSR;Document Status Register;dsr
+FAC;Feature Access Control;fac
+PCP;Present-Comment Process;pcp
+PMO;Project Management Office;pmo
+RfC;Request for Clarification;rfc
+RSR;RfC Status Register;rsr
+SDL;Siemens Document Log;sdl
+SDO;Standards Developing Organization;sdo
+SSO;Standards Setting Organization;sso
+TIA;Tasks - Issues - Action Items (as a feature);tia

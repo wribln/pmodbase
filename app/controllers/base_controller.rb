@@ -5,7 +5,7 @@
 # and other, general items.
 
 class BaseController < ApplicationController
-  initialize_feature FEATURE_ID_BASE_PAGE, FEATURE_ACCESS_USER  
+  initialize_feature FEATURE_ID_BASE_PAGE, FEATURE_ACCESS_USER + FEATURE_ACCESS_NBP
 
   # present the base page
 
