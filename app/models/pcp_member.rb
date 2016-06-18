@@ -24,8 +24,8 @@ class PcpMember < ActiveRecord::Base
 
   scope :presenting_group, -> { where( pcp_group: 0 )}
   scope :commenting_group, -> { where( pcp_group: 1 )}
-  scope :presenting_member, ->( m ){ presenting_group.where( id: m )}
-  scope :commenting_member, ->( m ){ commenting_group.where( id: m )}
+  scope :presenting_member, ->( m ){ presenting_group.where( account_id: m )}
+  scope :commenting_member, ->( m ){ commenting_group.where( account_id: m )}
 
   # pcp subject must exist - just for safety
 

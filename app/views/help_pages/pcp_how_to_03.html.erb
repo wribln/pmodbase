@@ -31,16 +31,20 @@
         <%= link_to_help :pcp_general, t( 'pcp_help.pcp_general')-%>, 
         <%= link_to_help :pcp_categories, PcpCategory.model_name.human -%> and
         <%= link_to_help :pcp_how_to_11, t( 'pcp_help.pcp_how_to_11') -%>).<br/>
-        Although we can later change the PCP Category of your PCP Subject, things will be easier
-        if you correctly assign the PCP Category right at the beginning.</li>
+        Although the PCP Category of your PCP Subject can be changed later (by the 
+        <%= help_term PcpSubject.human_attribute_name( :p_owner_id )%> or by the
+        <%= help_term PcpSubject.human_attribute_name( :p_deputy_id )%> of the PCP Subject),
+        things will be easier if you correctly assign the PCP Category right at the beginning.</li>
       <li>In order to add your PCP Subject into the pmodbase database, you will need an account
-        for your project and the permission to add and modify PCP Subjects for your project group.</li>
-      <li>After you haved signed on to the system, you should find a button labelled
-      <%= link_to Feature.find( FEATURE_ID_ALL_PCP_SUBJECTS ).label, pcp_all_subjects_path,
+        for your project and the permission to add and modify PCP Subjects for your project group
+        (specifically for the feature
+        <%= help_term Feature.find( FEATURE_ID_MY_PCP_SUBJECTS ).label_with_id%>).</li>
+      <li>After you haved signed on to the system, you should then find a button labelled
+      <%= link_to Feature.find( FEATURE_ID_MY_PCP_SUBJECTS ).label, pcp_all_subjects_path,
         target: '_blank' -%> (or use the previous link).</li>
-      <li>Clicking on this button will lead you to a web page containing all existing PCP Subjects
-      of your group, ordered by PCP Categories:<br/>
-      <%= image_tag 'pcp_how_to_03a.png', alt: 'List of All PCP Subjects', class: 'img-responsive' -%></li>
+      <li>Clicking on this button will lead you directly to a web page containing all PCP
+        Subjects for which you have some responsibility:<br/>
+      <%= image_tag 'pcp_how_to_03a.png', alt: 'List of My PCP Subjects', class: 'img-responsive' -%></li>
       <li>Now you are ready to add your new PCP Subject: A click on any [+] button in the right-most
       column will lead you to a new form requesting input of information about your PCP Subject to be
       reviewed:<br/>

@@ -63,6 +63,25 @@ class PcpMemberTest < ActiveSupport::TestCase
 
     pm = pcp_subjects( :two ).pcp_members.commenting_group
     assert_equal 1, pm.length
+
+    pm = pcp_subjects( :two ).pcp_members.presenting_member( accounts( :account_one ).id )
+    assert_equal 1, pm.length
+
+    pm = pcp_subjects( :two ).pcp_members.presenting_member( accounts( :account_two ).id )
+    assert_equal 0, pm.length
+
+    pm = pcp_subjects( :two ).pcp_members.presenting_member( accounts( :account_wop ).id )
+    assert_equal 0, pm.length
+
+    pm = pcp_subjects( :two ).pcp_members.commenting_member( accounts( :account_one ).id )
+    assert_equal 0, pm.length
+
+    pm = pcp_subjects( :two ).pcp_members.commenting_member( accounts( :account_two ).id )
+    assert_equal 0, pm.length
+
+    pm = pcp_subjects( :two ).pcp_members.commenting_member( accounts( :account_wop ).id )
+    assert_equal 1, pm.length
+
   end
 
   test 'update requires access' do

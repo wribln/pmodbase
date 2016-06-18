@@ -10,8 +10,22 @@ class PcpMembersController2Test < ActionController::TestCase
   setup do
     @pcp_member = pcp_members( :one )
     @pcp_subject = pcp_subjects( :two )
-    @account = accounts( :account_one )
+    @account = accounts( :account_three )
     session[ :current_user_id ] = @account.id
+    pg1 = Permission4Group.new(
+      account_id: @account.id,
+      group_id: @pcp_subject.p_group_id,
+      feature_id: FEATURE_ID_PCP_MEMBERS,
+      to_index: 1, to_create: 1, to_read: 1, to_update: 1, to_delete: 1 )
+    assert pg1.save
+    pg2 = Permission4Group.new(
+      account_id: @account.id,
+      group_id: @pcp_subject.p_group_id,
+      feature_id: FEATURE_ID_MY_PCP_SUBJECTS,
+      to_index: 1, to_create: 1, to_read: 1, to_update: 1, to_delete: 1 )
+    assert pg2.save
+    @pcp_subject.p_owner_id = @account.id
+    assert @pcp_subject.save, @pcp_subject.errors.inspect
   end
 
   test 'should get index' do

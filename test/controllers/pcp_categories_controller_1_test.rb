@@ -11,9 +11,7 @@ class PcpCategoriesController1Test < ActionController::TestCase
 
   test 'should get index' do
     get :index
-    assert_template :index
-    assert_response :success
-    assert_not_nil assigns( :pcp_categories )
+    check_for_cr
   end
 
   test 'should get new' do
@@ -32,8 +30,7 @@ class PcpCategoriesController1Test < ActionController::TestCase
 
   test 'should show pcp_category' do
     get :show, id: @pcp_category
-    assert_template :show
-    assert_response :success
+    check_for_cr
   end
 
   test 'should get edit' do

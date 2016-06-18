@@ -258,34 +258,44 @@ class PcpSubjectTest < ActiveSupport::TestCase
 
   test 'user access - p_group/owner == c_group/owner' do
     ps = pcp_subjects( :one )
-    c1 = accounts( :account_one ).id
-    c2 = accounts( :account_two ).id
+    c1 = accounts( :account_one )
+    c2 = accounts( :account_two )
     assert ps.user_is_owner_or_deputy?( c1, 0 )
     assert ps.user_is_owner_or_deputy?( c1, 1 )
     refute ps.user_is_owner_or_deputy?( c2, 0 )
     refute ps.user_is_owner_or_deputy?( c2, 1 )
-    ps.p_deputy_id = c2
+    ps.p_deputy = c2
     assert ps.user_is_owner_or_deputy?( c1, 0 )
     assert ps.user_is_owner_or_deputy?( c1, 1 )
     assert ps.user_is_owner_or_deputy?( c2, 0 )
     refute ps.user_is_owner_or_deputy?( c2, 1 )
-    ps.p_deputy_id = nil
-    ps.c_deputy_id = c2
+    ps.p_deputy = nil
+    ps.c_deputy = c2
     assert ps.user_is_owner_or_deputy?( c1, 0 )
     assert ps.user_is_owner_or_deputy?( c1, 1 )
     refute ps.user_is_owner_or_deputy?( c2, 0 )
     assert ps.user_is_owner_or_deputy?( c2, 1 )
-    ps.c_owner_id = nil
+    ps.c_owner = nil
     assert ps.user_is_owner_or_deputy?( c1, 0 )
     refute ps.user_is_owner_or_deputy?( c1, 1 )
     refute ps.user_is_owner_or_deputy?( c2, 0 )
     assert ps.user_is_owner_or_deputy?( c2, 1 )
-    ps.c_owner_id = c2
-    ps.c_deputy_id = nil
+    ps.c_owner = c2
+    ps.c_deputy = nil
     assert ps.user_is_owner_or_deputy?( c1, 0 )
     refute ps.user_is_owner_or_deputy?( c1, 1 )
     refute ps.user_is_owner_or_deputy?( c2, 0 )
     assert ps.user_is_owner_or_deputy?( c2, 1 )
+  end
+
+  test 'user access - user is creator' do
+    ps = pcp_subjects( :one )
+    assert ps.s_owner_id.nil?
+    refute ps.user_is_creator?( nil )
+    ps.s_owner = accounts( :account_one )
+    refute ps.user_is_creator?( nil )
+    refute ps.user_is_creator?( accounts( :account_two ))
+    assert ps.user_is_creator?( accounts( :account_one ))
   end
 
   test 'acting and viewing group' do
@@ -296,8 +306,8 @@ class PcpSubjectTest < ActiveSupport::TestCase
 
     assert_equal ps.p_owner_id, ps.c_owner_id
     assert_equal 1, ps.current_steps[ 0 ].acting_group_index
-    pvgi = ps.viewing_group_map( ps.p_owner_id )
-    cvgi = ps.viewing_group_map( ps.c_owner_id )
+    pvgi = ps.viewing_group_map( ps.p_owner )
+    cvgi = ps.viewing_group_map( ps.c_owner )
     assert_equal 3, pvgi
     assert_equal 3, cvgi
 
@@ -310,8 +320,8 @@ class PcpSubjectTest < ActiveSupport::TestCase
 
     ps.c_owner_id = accounts( :account_two ).id
     refute_equal ps.p_owner_id, ps.c_owner_id
-    cvgi = ps.viewing_group_map( ps.c_owner_id )
-    pvgi = ps.viewing_group_map( ps.p_owner_id )
+    cvgi = ps.viewing_group_map( ps.c_owner )
+    pvgi = ps.viewing_group_map( ps.p_owner )
     assert_equal 1, pvgi
     assert_equal 2, cvgi
 
@@ -322,11 +332,60 @@ class PcpSubjectTest < ActiveSupport::TestCase
 
     # test for account outside of both groups
 
-    xvgi = ps.viewing_group_map( accounts( :account_wop ).id )
+    xvgi = ps.viewing_group_map( accounts( :account_wop ))
     assert_equal 0, xvgi
     refute PcpSubject.same_group?( 1, xvgi )
     refute PcpSubject.same_group?( 0, xvgi )
 
+  end
+
+  test 'special access test' do
+    ps = PcpSubject.new
+    assert_equal 0, ps.viewing_group_map( accounts( :account_one  ))
+    assert_equal 0, ps.viewing_group_map( accounts( :account_two  ))
+    assert_equal 0, ps.viewing_group_map( accounts( :account_three))
+    assert_equal 0, ps.viewing_group_map( accounts( :account_wop  ))
+    ps.s_owner_id = accounts( :account_wop ).id
+    assert_equal 0, ps.viewing_group_map( accounts( :account_one  ))
+    assert_equal 0, ps.viewing_group_map( accounts( :account_two  ))
+    assert_equal 0, ps.viewing_group_map( accounts( :account_three))
+    assert_equal 1, ps.viewing_group_map( accounts( :account_wop  ))
+    ps.c_deputy_id = ps.s_owner_id
+    assert_equal 0, ps.viewing_group_map( accounts( :account_one  ))
+    assert_equal 0, ps.viewing_group_map( accounts( :account_two  ))
+    assert_equal 0, ps.viewing_group_map( accounts( :account_three))
+    assert_equal 3, ps.viewing_group_map( accounts( :account_wop  ))
+  end
+
+  test 'viewing group map' do
+    ps = pcp_subjects( :two )
+    assert_equal ps.pcp_members.where( pcp_group: 0 ).first.account, accounts( :account_one )
+    assert_equal ps.pcp_members.where( pcp_group: 1 ).first.account, accounts( :account_wop )
+    assert_equal ps.p_owner, accounts( :account_one )
+    assert_equal ps.c_owner, accounts( :account_two ) 
+    ps.s_owner = accounts( :account_three )
+    assert_equal 1, ps.viewing_group_map( accounts( :account_one ))
+    assert_equal 2, ps.viewing_group_map( accounts( :account_two ))
+    assert_equal 1, ps.viewing_group_map( accounts( :account_three ))
+    assert_equal 2, ps.viewing_group_map( accounts( :account_wop ))
+    ps.p_deputy = accounts( :account_three )
+    assert_equal 1, ps.viewing_group_map( accounts( :account_three ))
+    ps.c_deputy = accounts( :account_three )
+    assert_equal 3, ps.viewing_group_map( accounts( :account_three ))
+    ps.p_deputy = nil
+    assert_equal 3, ps.viewing_group_map( accounts( :account_three ))
+    ps.s_owner = nil
+    assert_equal 2, ps.viewing_group_map( accounts( :account_three ))
+    ps.c_deputy = nil
+    assert_equal 0, ps.viewing_group_map( accounts( :account_three ))
+
+    assert_difference( 'PcpMember.count', -2 )do
+      ps.pcp_members.destroy_all
+    end
+    assert_equal 1, ps.viewing_group_map( accounts( :account_one ))
+    assert_equal 2, ps.viewing_group_map( accounts( :account_two ))
+    assert_equal 0, ps.viewing_group_map( accounts( :account_three ))
+    assert_equal 0, ps.viewing_group_map( accounts( :account_wop ))
   end
 
   test 'all scopes' do

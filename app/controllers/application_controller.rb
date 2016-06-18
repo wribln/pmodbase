@@ -49,6 +49,7 @@ class ApplicationController < ActionController::Base
   FEATURE_CONTROL_WF =    2   # access control on workflow level
   FEATURE_CONTROL_GRPWF = 3   # access control on group and workflow level
   FEATURE_CONTROL_CUG =   4   # access for closed user group
+  FEATURE_CONTROL_CUGRP = 5   # access control on group level + closed users group
 
   # Provide an attribute which tells us how many workflows are implemented
   # by this controller (used by FeaturesController, AccountsController )
@@ -163,18 +164,18 @@ class ApplicationController < ActionController::Base
   # Do we need to check for group-specific permissions?
 
   def self.access_by_group?( level )
-    !level.nil? && ( level & FEATURE_CONTROL_GRP ) != 0
+    level && ( level & FEATURE_CONTROL_GRP ) != 0
   end
 
   # Does the given level allow access to the index? Make it a little bit safer
   # by checking for nil (which should not be necessary)
 
   def self.access_to_index?( level )
-    !level.nil? && ( level & ( FEATURE_ACCESS_INDEX | FEATURE_ACCESS_READ | FEATURE_ACCESS_ALL ) != 0 )
+    level && ( level & ( FEATURE_ACCESS_INDEX | FEATURE_ACCESS_READ | FEATURE_ACCESS_ALL ) != 0 )
   end
 
   def self.access_to_view?( level )
-    !level.nil? && ( level & ( FEATURE_ACCESS_READ | FEATURE_ACCESS_ALL ) != 0 )
+    level && ( level & ( FEATURE_ACCESS_READ | FEATURE_ACCESS_ALL ) != 0 )
   end
 
   # Does the given level allows no access at all?

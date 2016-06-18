@@ -183,7 +183,7 @@ class ApplicationRoutesTest < ActionController::TestCase
 
   test 'special routes: PCS PcpSubjects' do
     check_routing( 'get', '/pcs/1/release' , 'pcp_subjects', 'update_release', id: '1' )
-    check_routing( 'get', '/pcs/1/info'    , 'pcp_subjects', 'info_history',   id: '1' )
+    check_routing( 'get', '/pcs/1/history' , 'pcp_subjects', 'show_history',   id: '1' )
     check_routing( 'get', '/pcs/1/reldoc/1', 'pcp_subjects', 'show_release',   id: '1', step_no: '1' )
   end
 

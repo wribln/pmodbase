@@ -1,7 +1,7 @@
 require 'test_helper'
 class FeatureTest < ActiveSupport::TestCase
 
-  test "ensure defaults" do
+  test 'ensure defaults' do
     f = Feature.new
     assert_nil f.code
     assert_nil f.feature_category_id
@@ -10,94 +10,94 @@ class FeatureTest < ActiveSupport::TestCase
     assert_equal 0, f.access_level
   end
 
-  test "required attributes" do
+  test 'required attributes' do
     f = features( :feature_one )
     assert f.valid?
   end
 
-  test "required attribute code" do
+  test 'required attribute code' do
     f = features( :feature_one )
     f.code = nil 
     assert_not f.valid?
   end
 
-  test "required attribute feature_category_id" do
+  test 'required attribute feature_category_id' do
     f = features( :feature_one )
     f.feature_category_id = nil
     assert_not f.valid?
   end
 
-  test "required attribute seqno" do
+  test 'required attribute seqno' do
     f = features( :feature_one )
     f.code = nil
     assert_not f.valid?
   end
 
-  test "required attribute access_level" do
+  test 'required attribute access_level' do
     f = features( :feature_one )
     f.access_level = nil
     assert_not f.valid?
   end
 
-  test "label with id" do
+  test 'label with id' do
     f = Feature.new
-    assert_equal "", f.label_with_id
-    f.label = "123"
-    assert_equal "123", f.label_with_id
+    assert_equal '', f.label_with_id
+    f.label = '123'
+    assert_equal '123', f.label_with_id
     f = features( :feature_one )
     assert_equal text_with_id( f.label, f.id ), f.label_with_id
   end
 
-  test "format of code" do
+  test 'format of code' do
     f = features( :feature_one )
-    f.code = "?"
+    f.code = '?'
     assert_not f.valid?
     assert_includes f.errors, :code
-    f.code = "/"
+    f.code = '/'
     assert_not f.valid?
     assert_includes f.errors, :code
-    f.code = "\\"
+    f.code = '\\'
     assert_not f.valid?
     assert_includes f.errors, :code
-    f.code = "A-Z"
+    f.code = 'A-Z'
     assert_not f.valid?
     assert_includes f.errors, :code
-    f.code = "(0)"
+    f.code = '(0)'
     assert_not f.valid?
     assert_includes f.errors, :code
-    f.code = "[1]"    
+    f.code = '[1]'    
     assert_not f.valid?
     assert_includes f.errors, :code
-    f.code = "A"
+    f.code = 'A'
     assert f.valid?
-    f.code = "0"
+    f.code = '0'
     assert f.valid?
-    f.code = "_"
+    f.code = '_'
     assert f.valid?
   end
 
-  test "uniqueness of code" do
+  test 'uniqueness of code' do
     f = features( :feature_one )
     f.id = nil
     assert_not f.valid?
     assert_includes f.errors, :code
   end
 
-  test "feature category must exist - non given" do
+  test 'feature category must exist - non given' do
     f = features( :feature_one )
     f.feature_category_id = nil
-    assert_not f.valid?, "must be specified"
+    assert_not f.valid?, 'must be specified'
     assert_includes f.errors, :feature_category_id
   end
 
-  test "feature category must exist - non-existing" do
+  test 'feature category must exist - non-existing' do
     f = features( :feature_one )
     f.feature_category_id = 0
     assert_not f.valid?
     assert_includes f.errors, :feature_category_id
   end
 
-  test "access_level range" do
+  test 'access_level range' do
     f = features( :feature_one )
     f.code = 'SGP' # need some valid routing here
     f.access_level = -1
@@ -113,14 +113,14 @@ class FeatureTest < ActiveSupport::TestCase
     assert_includes f.errors, :access_level
   end
 
-  test "feature category with id" do
+  test 'feature category with id' do
     f = features( :feature_one )
     c = feature_categories( :feature_category_one )
     f.feature_category_id = c.id
     assert_equal text_with_id( c.label, c.id ), f.feature_category_with_id
   end
 
-  test "access level methods" do
+  test 'access level methods' do
     f = Feature.new
     f.access_level = nil
     assert f.no_user_access?
@@ -179,7 +179,7 @@ class FeatureTest < ActiveSupport::TestCase
     assert f.access_to_view?
   end
 
-  test "control level methods" do
+  test 'control level methods and labels' do
     f = Feature.new
     f.control_level = nil
     assert_not f.access_by_group?
@@ -193,6 +193,11 @@ class FeatureTest < ActiveSupport::TestCase
     assert f.access_by_group?
     f.control_level = 4
     assert_not f.access_by_group?
+    f.control_level = 5
+    assert f.access_by_group?
+
+    fl = Feature::FEATURE_CONTROL_LEVELS
+    assert_equal ( 5 + 1 ), fl.count
   end
 
 end

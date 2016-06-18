@@ -1,15 +1,16 @@
 # This controller handles all PCP Subjects assigned to a specific person,
 # either as owner or deputy (for the Presenting or the Commenting Group),
-# or as member of the PCP Subject. Users need access to this feature in
-# order to be able to access any action therein.
+# as creator of the PCP Subject, or as a PCP Participant for this PCP
+# subject. All users have access to the index of their PCP Subjects but
+# they need explicit permission for the task they are to perform.
 
 class PcpSubjectsController < ApplicationController
 
-  before_action :set_pcp_subject,   only: [ :show, :edit, :info_history, :update, :destroy, :update_release, :show_release ]
+  before_action :set_pcp_subject,   only: [ :show, :edit, :show_history, :update, :destroy, :update_release, :show_release ]
   before_action :set_valid_params,  only: [ :edit, :new, :update, :create ]
   before_action :get_item_stats,    only: [ :show, :edit, :update_release ]
 
-  initialize_feature FEATURE_ID_MY_PCP_SUBJECTS, FEATURE_ACCESS_INDEX + FEATURE_ACCESS_NBP, FEATURE_CONTROL_CUG
+  initialize_feature FEATURE_ID_MY_PCP_SUBJECTS, FEATURE_ACCESS_INDEX, FEATURE_CONTROL_CUGRP
 
 # GET /ors
 
@@ -28,7 +29,7 @@ class PcpSubjectsController < ApplicationController
 
   # GET /pcs/1/info - history
 
-  def info_history
+  def show_history
     render_no_permission unless permission_to_view?
   end
 
@@ -53,6 +54,7 @@ class PcpSubjectsController < ApplicationController
   def new
     @pcp_subject = PcpSubject.new
     @pcp_categories = permitted_categories
+    @pcp_viewing_group_map = 1
   end
 
   # GET /pcs/1/edit
@@ -82,6 +84,7 @@ class PcpSubjectsController < ApplicationController
         format.html { redirect_to @pcp_subject, notice: I18n.t( 'pcp_subjects.msg.new_ok' )}
       else
         @pcp_categories = permitted_categories
+        @pcp_viewing_group_map = 1
         format.html { render :new }
       end
     end
@@ -122,7 +125,7 @@ class PcpSubjectsController < ApplicationController
       return
     end
     # current user must be owner or deputy for the acting group
-    unless @pcp_subject.user_is_owner_or_deputy?( current_user.id, @pcp_curr_step.acting_group_index )
+    unless @pcp_subject.user_is_owner_or_deputy?( current_user, @pcp_curr_step.acting_group_index )
       render_bad_logic t( 'pcp_subjects.msg.nop_release' )
       return
     end 
@@ -180,7 +183,7 @@ class PcpSubjectsController < ApplicationController
   # DELETE /pcs/1
 
   def destroy
-    unless @pcp_subject.permitted_to_access?( current_user, :to_delete )
+    unless @pcp_subject.permitted_to_access?( current_user, FEATURE_ID_MY_PCP_SUBJECTS, :to_delete )
       render_no_permission
       return
     end
@@ -199,7 +202,7 @@ class PcpSubjectsController < ApplicationController
       most_recent_steps = @pcp_subject.current_steps
       @pcp_curr_step = most_recent_steps[ 0 ]
       @pcp_prev_step = most_recent_steps[ 1 ] 
-      @pcp_viewing_group = @pcp_subject.viewing_group_map( current_user.id, [ 'edit', 'update' ].include?( action_name ) ? :to_modify : :to_access )
+      @pcp_viewing_group_map = @pcp_subject.viewing_group_map( current_user, [ 'edit', 'update' ].include?( action_name ) ? :to_modify : :to_access )
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -229,9 +232,9 @@ class PcpSubjectsController < ApplicationController
               @valid_step_params = [ :id, :subject_version, :note, :subject_date, :due_date, :report_version, :release_notice ]
               @valid_subject_params = [ :pcp_category_id, :title, :note, :project_doc_id, :report_doc_id, :p_group_id, :p_owner_id, :p_deputy_id, :s_owner_id ]
             end
-          elsif @pcp_subject.s_owner_id == current_user.id && @pcp_step.step_no == 0
+          elsif @pcp_subject.user_is_creator?( current_user ) && @pcp_curr_step.step_no == 0
             @valid_step_params = []
-            @valid_subject_params = [ :pcp_category_id, :title, :note, :project_doc_id, :report_doc_id ]
+            @valid_subject_params = [ :title, :note, :project_doc_id, :report_doc_id ]
           end
         else
           @valid_step_params = [ :id, :note, :due_date, :new_assmt, :report_version, :release_notice ]
@@ -251,13 +254,15 @@ class PcpSubjectsController < ApplicationController
     # about this PCP Subject:
 
     def permission_to_view?
-      @pcp_viewing_group > 0
+      @pcp_viewing_group_map != 0
     end
 
     # check if current user has permission to modify PCP Subject or PCP Step now
 
     def permission_to_modify?
-      PcpSubject.same_group?( @pcp_curr_step.acting_group_index, @pcp_viewing_group )
+      PcpSubject.same_group?( @pcp_curr_step.acting_group_index, @pcp_viewing_group_map ) &&
+      ( @pcp_subject.user_is_owner_or_deputy?( current_user, @pcp_curr_step.acting_group_index ) ||
+        @pcp_subject.user_is_creator?( current_user ) && @pcp_curr_step.step_no == 0 )
     end
 
     # prepare set of statistics for display in forms, i.e. no of items and 

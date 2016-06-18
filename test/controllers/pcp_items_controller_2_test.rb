@@ -170,7 +170,7 @@ class PcpItemsController2Test < ActionController::TestCase
     assert_no_difference( 'PcpItem.count' )do
       delete :destroy, id: @pcp_item
     end
-    assert @pcp_subject.user_is_owner_or_deputy?( @account_p.id, @pcp_item.pcp_step.acting_group_index )
+    assert @pcp_subject.user_is_owner_or_deputy?( @account_p, @pcp_item.pcp_step.acting_group_index )
     refute_nil assigns( :pcp_subject )
     refute_nil assigns( :pcp_item )
     assert_redirected_to pcp_subject_pcp_items_path( @pcp_subject )

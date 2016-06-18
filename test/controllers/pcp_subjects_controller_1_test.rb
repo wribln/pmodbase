@@ -4,8 +4,9 @@ class PcpSubjectsController1Test < ActionController::TestCase
 
   setup do
     @pcp_subject = pcp_subjects( :one )
-    @account_id = accounts( :account_one ).id
-    session[ :current_user_id ] = @account_id
+    @account_s = accounts( :account_one )
+    @account_p = accounts( :account_two )
+    session[ :current_user_id ] = @account_s.id
   end
 
   [ '1', '4' ].each do |final_assessment|
@@ -26,6 +27,9 @@ class PcpSubjectsController1Test < ActionController::TestCase
     @new_pcp_step = @new_pcp_subject.pcp_steps.first
     assert_equal 0, @new_pcp_step.step_no
     assert_redirected_to pcp_subject_path( @new_pcp_subject )
+    assert @new_pcp_subject.user_is_creator?( @account_s )
+    refute @new_pcp_subject.user_is_owner_or_deputy?( @account_s, 0 )
+    assert @new_pcp_subject.user_is_owner_or_deputy?( @account_p, 0 )
 
     # update for release to commenting party - try without report_version
 
@@ -34,13 +38,17 @@ class PcpSubjectsController1Test < ActionController::TestCase
         pcp_subject: {
         pcp_steps_attributes: {  '0' => { id: @new_pcp_step.id, subject_version: '0' }}}
     end
-    assert_response :success
     @new_pcp_subject = assigns( :pcp_subject )
+    assert_redirected_to pcp_subject_path( @new_pcp_subject )
     @new_pcp_step = @new_pcp_subject.pcp_steps.first
+
+    # for the next actions, I need the owner of the subject
+
+    switch_to_user( @account_p )
 
     # attempt release: must fail with missing report version
 
-    assert @new_pcp_subject.user_is_owner_or_deputy?( @account_id, @new_pcp_step.acting_group_index )
+    assert @new_pcp_subject.user_is_owner_or_deputy?( @account_p, @new_pcp_step.acting_group_index )
     assert_equal 2, @new_pcp_step.release_type, @new_pcp_step.errors.messages
     assert_no_difference( 'PcpStep.count' )do
       get :update_release, id: @new_pcp_subject
@@ -51,20 +59,21 @@ class PcpSubjectsController1Test < ActionController::TestCase
 
     # update for release to commenting part - provide report_version
 
-    assert @new_pcp_subject.user_is_owner_or_deputy?( @account, @new_pcp_step.acting_group_index )
+    assert @new_pcp_subject.user_is_owner_or_deputy?( @account_p, @new_pcp_step.acting_group_index )
     assert_no_difference([ 'PcpSubject.count', 'PcpStep.count' ])do
       patch :update, id: @new_pcp_subject, 
-        pcp_subject: { p_owner_id: @account_id,
-        pcp_steps_attributes: {  '0' => { id: @new_pcp_step.id, report_version: 'A' }}}
+        pcp_subject: { p_owner: @account,
+        pcp_steps_attributes: {  '0' => { id: @new_pcp_step.id, subject_version: '0', report_version: 'A' }}}
     end
     @new_pcp_subject = assigns( :pcp_subject )
     @new_pcp_step = @new_pcp_subject.pcp_steps.first
     assert_equal 0, @new_pcp_step.step_no
     assert_equal 'A', @new_pcp_step.report_version
+    assert_equal '0', @new_pcp_step.subject_version
 
     # perform first release: presenting to commenting party
 
-    assert @new_pcp_subject.user_is_owner_or_deputy?( @account_id, @new_pcp_step.acting_group_index )
+    assert @new_pcp_subject.user_is_owner_or_deputy?( @account_p, @new_pcp_step.acting_group_index )
     assert_equal 0, @new_pcp_step.release_type, @new_pcp_step.errors.messages
     assert_difference( 'PcpStep.count', 1 )do
       get :update_release, id: @new_pcp_subject
@@ -75,18 +84,22 @@ class PcpSubjectsController1Test < ActionController::TestCase
 
     # update for release to presenting party
 
+    switch_to_user( @account_s )
+
+    assert @new_pcp_subject.user_is_owner_or_deputy?( @account_s, @new_pcp_step.acting_group_index )
     assert_no_difference([ 'PcpSubject.count', 'PcpStep.count' ])do
       patch :update, id: @new_pcp_subject, 
-        pcp_subject: { c_owner_id: @account_id,
+        pcp_subject: {
         pcp_steps_attributes: {  '0' => { id: @new_pcp_step.id, report_version: 'B', new_assmt: 2 }}}
     end
     @new_pcp_subject = assigns( :pcp_subject )
+    assert_redirected_to pcp_subject_path( @new_pcp_subject )
     @new_pcp_step = @new_pcp_subject.pcp_steps.first
     assert_equal 1, @new_pcp_step.step_no
 
     # perform second release: commenting to presenting party
 
-    assert @new_pcp_subject.user_is_owner_or_deputy?( @account_id, @new_pcp_step.acting_group_index )
+    assert @new_pcp_subject.user_is_owner_or_deputy?( @account_s, @new_pcp_step.acting_group_index )
     assert_equal 0, @new_pcp_step.release_type, @new_pcp_step.errors.messages
     assert_difference( 'PcpStep.count', 1 )do
       get :update_release, id: @new_pcp_subject
@@ -97,12 +110,15 @@ class PcpSubjectsController1Test < ActionController::TestCase
 
     # update for release to commenting party
 
+    switch_to_user( @account_p )
+
     assert_no_difference([ 'PcpSubject.count', 'PcpStep.count' ])do
       patch :update, id: @new_pcp_subject, 
         pcp_subject: { 
         pcp_steps_attributes: {  '0' => { id: @new_pcp_step.id, report_version: 'C', subject_version: 'B' }}}
     end
     @new_pcp_subject = assigns( :pcp_subject )
+    assert_redirected_to pcp_subject_path( @new_pcp_subject )
     @new_pcp_step = @new_pcp_subject.pcp_steps.first
     assert_equal 2, @new_pcp_step.step_no
 
@@ -117,6 +133,8 @@ class PcpSubjectsController1Test < ActionController::TestCase
     assert_equal 3, @new_pcp_step.step_no
 
     # update for approval to presenting party
+
+    switch_to_user( @account_s )
 
     assert_no_difference([ 'PcpSubject.count', 'PcpStep.count' ])do
       patch :update, id: @new_pcp_subject, 

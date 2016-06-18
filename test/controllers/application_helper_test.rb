@@ -5,9 +5,8 @@ require 'test_helper'
 class ApplicationHelperTest < ActionView::TestCase
 
   test 'breadcrumbs' do
-
     # problem: controller is 'test' and 'test' has no path ...:-(
-    # puts breadcrumbs 
+    # puts breadcrumbs ???
   end
 
 end

@@ -9,7 +9,8 @@ class PcpCategoriesController0Test < ActionController::TestCase
 
   test 'check class attributes' do
     validate_feature_class_attributes FEATURE_ID_PCP_CATEGORIES, 
-      ApplicationController::FEATURE_ACCESS_VIEW
+      ApplicationController::FEATURE_ACCESS_SOME,
+      ApplicationController::FEATURE_CONTROL_GRP
   end
 
   test 'should get index' do

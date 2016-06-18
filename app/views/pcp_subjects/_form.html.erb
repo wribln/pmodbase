@@ -79,6 +79,19 @@
           <%- end -%>
         </div>
       </div>
+      <%# do not show subject owner if current user is not in the presenting group %>
+      <%- if PcpSubject.same_group?( 0, @pcp_viewing_group_map ) -%>
+      <div class="form-group">
+        <%= form.label :s_owner_id, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-1">
+          <%- if @valid_subject_params.include? :s_owner_id then -%>
+            <%= form.text_field :s_owner_id, class: 'form-control' %>
+          <%- else -%>
+            <%= display_value form.object.s_owner_id %>
+          <%- end -%>
+        </div>
+      </div>
+      <%- end -%>
       <div class="form-group">
         <%= form.label :c_group_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
@@ -112,19 +125,6 @@
           <%- end -%>
         </div>
       </div>
-      <%# do not show subject owner if current user is not in the presenting group %>
-      <%- if PcpSubject.same_group?( 0, @pcp_viewing_group ) -%>
-      <div class="form-group">
-        <%= form.label :s_owner_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-1">
-          <%- if @valid_subject_params.include? :s_owner_id then -%>
-            <%= form.text_field :s_owner_id, class: 'form-control' %>
-          <%- else -%>
-            <%= display_value form.object.c_deputy_id %>
-          <%- end -%>
-        </div>
-      </div>
-      <%- end -%>
       <%- end -%>
       <div class="form-group">
         <%= form.label :report_doc_id, class: 'col-sm-3 control-label' %>
@@ -157,12 +157,12 @@
       <%= form.fields_for :pcp_steps, @pcp_curr_step do |os| -%>
         <div class="form-group">
           <%= os.label :step_no, t( '.cs_heading', label: os.object.step_label ), class: 'col-sm-3 control-label' %>
-          <div class="col-sm-4"><hr /></div>
+          <div class="col-sm-6"><hr /></div>
         </div>
         <div class="form-group">
           <%= os.label :subject_date, class: 'col-sm-3 control-label' %>
           <div class="col-sm-2">
-            <%- if os.object.in_presenting_group? then -%>
+            <%- if @valid_step_params.include? :subject_date then -%>
               <div class="input-group date" data-provide="datepicker">
                 <%= os.text_field :subject_date, class: 'form-control' %>
                 <span class="input-group-addon">:::</span>
@@ -174,7 +174,7 @@
         </div>
         <div class="form-group">
           <%= os.label :subject_version, class: 'col-sm-3 control-label' %>
-          <%- if os.object.in_presenting_group? then -%>
+          <%- if @valid_step_params.include? :subject_version -%>
             <div class="col-sm-1">
               <%= os.text_field :subject_version, class: 'form-control' %>
             </div>
@@ -191,7 +191,11 @@
         <div class="form-group">
           <%= os.label :report_version, class: 'col-sm-3 control-label' %>
           <div class="col-sm-1">
-            <%= os.text_field :report_version, class: 'form-control' %>
+            <%- if @valid_step_params.include? :report_version -%>
+              <%= os.text_field :report_version, class: 'form-control' %>
+            <%- else -%>
+              <%= display_value os.object.report_version -%>
+            <%- end -%>       
           </div>
           <%- unless @pcp_prev_step.nil? -%>
             <div class="col-sm-1"><p class="form-control-static"><%= t( '.prev_version' )%></p></div>
@@ -201,13 +205,21 @@
         <div class="form-group">
           <%= os.label :note, class: 'col-sm-3 control-label' %>
           <div class="col-sm-4">
-            <%= os.text_field :note, class: 'form-control' %>
+            <%- if @valid_step_params.include? :note -%>
+              <%= os.text_field :note, class: 'form-control' %>
+            <%- else -%>
+              <%= display_value os.object.note %>
+            <%- end -%>
           </div>
         </div>
         <div class="form-group">
           <%= os.label :release_notice, class: 'col-sm-3 control-label' %>
           <div class="col-sm-6">
-            <%= os.text_field :release_notice, class: 'form-control' %>
+            <%- if @valid_step_params.include? :release_notice -%>
+              <%= os.text_field :release_notice, class: 'form-control' %>
+            <%- else -%>
+              <%= display_value os.object.release_notice %>
+            <%- end -%> 
           </div>
         </div>
         <%# show current step due date (from previous step) only for steps > 0 %>
@@ -222,10 +234,14 @@
         <div class="form-group">
           <%= os.label :due_date, t( '.next_due_date', step: PcpStep.step_state_label( os.object.step_no + 1 )), class: 'col-sm-3 control-label' %>
           <div class="col-sm-2">
-            <div class="input-group date" data-provide="datepicker">
-              <%= os.text_field :due_date, class: 'form-control' %>
-              <span class="input-group-addon">:::</span>
-            </div>
+            <%- if @valid_step_params.include? :due_date -%>
+              <div class="input-group date" data-provide="datepicker">
+                <%= os.text_field :due_date, class: 'form-control' %>
+                <span class="input-group-addon">:::</span>
+              </div>
+            <%- else -%>
+              <%= display_value db_formatted_d( os.object.due_date )%>
+            <%- end -%>
           </div>
         </div>
         <%- if os.object.step_no > 0 then %>
@@ -239,7 +255,11 @@
             <div class="form-group">
               <%= os.label :new_assmt, class: 'col-sm-3 control-label' %>
               <div class="col-sm-4">
+                <%- if @valid_step_params.include? :new_assmt -%>
                   <%= os.select :new_assmt, select_options( PcpStep::ASSESSMENT_LABELS ), { prompt: t( '.g_prompt' ) }, { class: 'form-control' }%>
+                <%- else -%>
+                  <%= display_value PcpStep.assessment_label( os.object.new_assmt) %>
+                <%- end %>
               </div>
             </div>
             <%= render partial: 'stats' %>

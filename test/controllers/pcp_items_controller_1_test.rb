@@ -64,8 +64,7 @@ class PcpItemsController1Test < ActionController::TestCase
     # let the commenter do his job:
 
     @controller.reset_4_test
-    @controller.delete_user
-    session[ :current_user_id ] = @account_c.id
+    switch_to_user( @account_c )
 
     assert_difference( 'PcpItem.count', 1 )do
       post :create, pcp_item: {
@@ -121,8 +120,7 @@ class PcpItemsController1Test < ActionController::TestCase
     assert_equal 1, @pcp_subject.current_step.subject_status
 
     @controller.reset_4_test
-    @controller.delete_user
-    session[ :current_user_id ] = @account_p.id
+    switch_to_user( @account_p )
 
     # back at the presenter: add response to item
 
@@ -211,8 +209,7 @@ class PcpItemsController1Test < ActionController::TestCase
     assert_equal 1, @pcp_subject.current_step.subject_status
 
     @controller.reset_4_test
-    @controller.delete_user
-    session[ :current_user_id ] = @account_c.id
+    switch_to_user( @account_c )
 
     # let commenter close item and subject
 

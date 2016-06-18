@@ -1,0 +1,138 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="table-responsive col-sm-9">
+    <table class="table table-striped table-bordered table-condensed">
+      <caption><%= t( '.status', at: db_formatted_dt( @pcp_subject.updated_at ))%></caption>
+      <thead style="display: none"><tr><th class="col-sm-3"></th><th class="col-sm-4"></th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="col-sm-3"><%= PcpSubject.human_attribute_name( :id )%></td>
+          <td class="col-sm-6"><%= @pcp_subject.to_id %></td>
+        </tr>
+        <tr>
+          <td><%= PcpSubject.human_attribute_name( :pcp_category_id )%></td>
+          <td><%= @pcp_subject.pcp_category.label %></td>
+        </tr>
+        <tr>
+          <td><%= PcpSubject.human_attribute_name( :title )%></td>
+          <td><%= @pcp_subject.title %></td>
+        </tr>
+        <tr>
+          <td><%= PcpSubject.human_attribute_name( :note )%></td>
+          <td><%= @pcp_subject.note %></td>
+        </tr>
+        <tr>
+          <td><%= PcpSubject.human_attribute_name( :project_doc_id )%></td>
+          <td><%= @pcp_subject.project_doc_id %></td>
+        </tr>
+        <tr>
+          <td><%= PcpSubject.human_attribute_name( :p_group_id )%></td>
+          <td><%= @pcp_subject.p_group.code_and_label %></td>
+        </tr>
+        <tr>
+          <td><%= PcpSubject.human_attribute_name( :p_owner_id )%></td>
+          <td><%= link_to_contact_list @pcp_subject.p_owner %></td>
+        </tr>
+        <tr>
+          <td><%= PcpSubject.human_attribute_name( :p_deputy_id )%></td>
+          <td><%= link_to_contact_list @pcp_subject.p_deputy %></td>
+        </tr>
+        <tr>
+          <td><%= PcpSubject.human_attribute_name( :c_group_id )%></td>
+          <td><%= @pcp_subject.p_group.code_and_label %></td>
+        </tr>
+        <tr>
+          <td><%= PcpSubject.human_attribute_name( :c_owner_id )%></td>
+          <td><%= link_to_contact_list @pcp_subject.p_owner %></td>
+        </tr>
+        <tr>
+          <td><%= PcpSubject.human_attribute_name( :c_deputy_id )%></td>
+          <td><%= link_to_contact_list @pcp_subject.p_deputy %></td>
+        </tr>
+        <%- if PcpSubject.same_group?( 0, @pcp_viewing_group_map )-%>
+        <tr>
+          <td><%= PcpSubject.human_attribute_name( :s_owner_id )%></td>
+          <td><%= link_to_contact_list @pcp_subject.s_owner %></td>
+        </tr>
+        <%- end -%>
+        <tr>
+          <td><%= PcpSubject.human_attribute_name( :report_doc_id )%></td>
+          <td><%= @pcp_subject.report_doc_id %></td>
+        </tr>
+        <tr>
+          <td><%= PcpStep.human_attribute_name( :subject_status )%></td>
+          <td><%= @pcp_curr_step.subject_status_label %>
+        <tr>
+          <td><%= PcpSubject.human_attribute_name( :archived )%></td>
+          <td><%= display_boolean @pcp_subject.archived, :yesno %></td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- data on steps -->
+    <%- @pcp_subject.pcp_steps.each do |ps| -%>
+    <table class="table table-striped table-bordered table-condensed">
+      <caption><%= t( '.step_heading', label: ps.step_label, id: ps.step_no )%></caption>
+      <thead style="display: none"><tr><th class="col-sm-3"></th><th class="col-sm-4"></th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="col-sm-3"><%= PcpStep.human_attribute_name( :subject_title )%></td>
+          <td class="col-sm-6"><%= ps.subject_title %></td>
+        </tr>
+        <tr>
+          <td><%= PcpStep.human_attribute_name( :subject_date )%></td>
+          <td><%= db_formatted_d( ps.subject_date )%></td>
+        </tr>
+        <tr>
+          <td><%= PcpStep.human_attribute_name( :project_doc_id )%></td>
+          <td><%= ps.project_doc_id %></td>
+        </tr>
+        <tr>
+          <td><%= PcpStep.human_attribute_name( :subject_version )%></td>
+          <td><%= ps.subject_version %></td>
+        </tr>
+        <%- if PcpSubject.same_group?( ps.acting_group_index, @pcp_viewing_group_map )-%>
+          <tr>
+            <td><%= PcpStep.human_attribute_name( :note )%></td>
+            <td><%= ps.note %></td>
+          </tr>
+          <tr>
+            <td><%= PcpStep.human_attribute_name( :due_date )%></td>
+            <td><%= db_formatted_d( ps.due_date )%></td>
+          </tr>
+        <%- end -%>
+        <tr>
+          <td><%= PcpStep.human_attribute_name( :release_notice )%></td>
+          <td><%= ps.release_notice %></td>
+        <tr>
+          <td><%= PcpStep.human_attribute_name( :new_assmt )%></td>
+          <td><%= PcpStep.assessment_label( ps.new_assmt )%></td>
+        </tr>
+        <tr>
+          <td><%= PcpStep.human_attribute_name( :prev_assmt )%></td>
+          <td><%= PcpStep.assessment_label( ps.prev_assmt )%></td>
+        </tr>
+        <tr>
+          <td><%= PcpStep.human_attribute_name( :subject_status )%></td>
+          <td><%= ps.subject_status_label %></td>
+        </tr>
+        <%- unless ps.released_at.nil? -%>
+        <tr>
+          <td><%= PcpStep.human_attribute_name( :released_by )%></td>
+          <td><%= ps.released_by %></td>
+        </tr>
+        <tr>
+          <td><%= PcpStep.human_attribute_name( :released_at )%></td>
+          <td><%= db_formatted_dt( ps.released_at )%></td>
+        </tr>
+        <tr>
+          <td><%= PcpSubject.human_attribute_name( :report_doc_id )%></td>
+          <td><%= link_to ProjectDocLog.combine_doc_id_and_version( @pcp_subject.report_doc_id, ps.report_version ), pcp_release_doc_path( id: @pcp_subject.id, step_no: ps.step_no )%></td>
+        </tr>
+        <%- end -%>
+      </tbody>
+    </table>
+    <%- end -%>
+  </div>
+</div>

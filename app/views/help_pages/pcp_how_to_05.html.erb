@@ -5,15 +5,32 @@
     <p class="lead">You are about to take over a site from another project group and would like
       to use the Present-Comment Process (PCP) Feature of the pmodbase application.</p>
     <p>This help page assumes that the other party is not using pmodbase and but you would
-    like to collect your observations in pmodbase and trace their resolution until any
-    issues or problems on the site are resolved.</p>
+      like to collect your observations in pmodbase and trace their resolution until any
+      issues or problems on the site are resolved.</p>
     <p>In this case, the other project group would be the Presenting Group, and you the
-    Commenting Group in the PCP. The procedure is very similar to the one explained in
-    <%= link_to_help :pcp_how_to_04, t( 'pcp_help.pcp_how_to_04' )-%>: You need to
-    create a PCP Subject for the site and then release it; in this case not to another
-    group but to your own group.</p>
+      Commenting Group in the PCP. The procedure is very similar to the one explained in
+      <%= link_to_help :pcp_how_to_04, t( 'pcp_help.pcp_how_to_04' )-%>: You need to
+      create a PCP Subject for the site and then release it; in this case not to another
+      group but to your own group.</p>
     <p>The difference is that you will act on behalf of the other project group during
-    the initial preparation of the PCP. This means that during creation of the PCP Subject
-    you need to define your own group as 
+      the initial preparation of the PCP. The principal procedure is as follows:</p>
+    <ul>
+      <li>Prepare a proxy PCP Category with the commenting group also being the
+      presenting group, and yourself as owner for both the commenting and the
+      presenting group, for example like this:<br/>
+      <%= image_tag 'pcp_how_to_05a.png', alt: 'Proxy PCP Category', class: 'img-responsive' -%></li>
+      <li>Create a PCP Subject using the proxy PCP Category (here: [2]).</li>
+      <li>Release the PCP Subject to the commenting party (i.e. to yourself).</li>
+      <li>Enter your observations, issues, comments as applicable.</li>
+      <li>Release the PCP Subject to the presenting party.</li>
+      <li>Before making any other changes, change the PCP Category to the original PCP Category ([1]) so the other party has access to it: Change the PCP Category to [1] and clear the fields 
+      <%= help_term PcpSubject.human_attribute_name( :p_group_id )%> (by selecting
+      <%= help_term t( 'pcp_subjects.form.c_prompt' )%>), as well as
+      <%= help_term PcpSubject.human_attribute_name( :p_owner_id )%>, and
+      <%= help_term PcpSubject.human_attribute_name( :p_deputy_id )%> such that the defaults 
+      from the selected PCP Category are inserted when you save the changes.</li>
+      <li>Now you do not have any access to this PCP Subject anymore as it is in the
+      PCP Step <%= help_term PcpStep::STEP_LABELS[ 2 ]%>, and it is now the turn of the other,
+      the presenting project group, to prepare responses on your observations.</li>
     <%= help_footer FEATURE_ID_HELP_PAGES %>
   </div> <!-- /container -->

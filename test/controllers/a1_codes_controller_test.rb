@@ -1,4 +1,3 @@
-require 'test_helper'
 class A1CodesControllerTest < ActionController::TestCase
 
   setup do

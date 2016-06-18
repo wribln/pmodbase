@@ -2,7 +2,7 @@ class PcpCategoriesController < ApplicationController
   before_action :set_pcp_category, only: [ :show, :edit, :update, :destroy ]
   before_action :set_selections, only: [ :edit, :update, :new ]
 
-  initialize_feature FEATURE_ID_PCP_CATEGORIES, FEATURE_ACCESS_VIEW
+  initialize_feature FEATURE_ID_PCP_CATEGORIES, FEATURE_ACCESS_SOME, FEATURE_CONTROL_GRP
 
   # GET /orc
 

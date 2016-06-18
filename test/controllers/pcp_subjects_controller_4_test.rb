@@ -1,5 +1,5 @@
 require 'test_helper'
-class PcpSubjectsControllerTest < ActionController::TestCase
+class PcpSubjectsController4Test < ActionController::TestCase
   tests PcpSubjectsController
 
   # make sure only the commenting party can change the assessment
@@ -56,7 +56,7 @@ class PcpSubjectsControllerTest < ActionController::TestCase
     refute_nil @pcp_subject
     refute_nil assigns( :pcp_curr_step )
     refute_nil assigns( :pcp_prev_step )
-    assert_equal 1, assigns( :pcp_viewing_group )
+    assert_equal 1, assigns( :pcp_viewing_group_map )
 
     @pcp_subject.reload
     @pcp_step.reload
@@ -75,7 +75,7 @@ class PcpSubjectsControllerTest < ActionController::TestCase
     refute_nil @pcp_subject
     refute_nil assigns( :pcp_curr_step )
     refute_nil assigns( :pcp_prev_step )
-    assert_equal 1, assigns( :pcp_viewing_group )
+    assert_equal 1, assigns( :pcp_viewing_group_map )
 
     @pcp_subject.reload
     @pcp_step.reload

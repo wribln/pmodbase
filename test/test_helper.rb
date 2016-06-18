@@ -41,4 +41,9 @@ class ActiveSupport::TestCase
     assert_template 'my_change_requests/new'
   end
 
+  def switch_to_user( user )
+    @controller.delete_user
+    session[ :current_user_id ] = user
+  end    
+
 end

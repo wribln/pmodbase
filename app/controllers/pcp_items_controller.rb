@@ -99,7 +99,7 @@ class PcpItemsController < ApplicationController
       return
     end
     determine_group_map( :to_update )
-    unless @pcp_subject.user_is_owner_or_deputy?( current_user.id, @pcp_group_map )
+    unless @pcp_subject.user_is_owner_or_deputy?( current_user, @pcp_group_map )
       render_no_permission
       return
     end
@@ -373,7 +373,7 @@ class PcpItemsController < ApplicationController
   def destroy
     get_item
     @pcp_subject = @pcp_item.pcp_subject
-    if @pcp_subject.user_is_owner_or_deputy?( current_user.id, @pcp_item.pcp_step.acting_group_index )
+    if @pcp_subject.user_is_owner_or_deputy?( current_user, @pcp_item.pcp_step.acting_group_index )
       if @pcp_item.released?
         notice = 'pcp_items.msg.cannot_del'
       else  
@@ -398,7 +398,7 @@ class PcpItemsController < ApplicationController
   def destroy_comment
     get_comment
     @pcp_item = @pcp_comment.pcp_item
-    if @pcp_subject.user_is_owner_or_deputy?( current_user.id, @pcp_comment.pcp_step.acting_group_index )
+    if @pcp_subject.user_is_owner_or_deputy?( current_user, @pcp_comment.pcp_step.acting_group_index )
       if @pcp_comment.published?
         notice = 'pcp_comments.msg.cannot_del'
       else
@@ -419,7 +419,7 @@ class PcpItemsController < ApplicationController
   # define a helper_method to see if user is permitted to modify public flag
 
   def permitted_to_publish?
-    @pcp_subject.user_is_owner_or_deputy?( current_user.id, @pcp_subject.current_step.acting_group_index )
+    @pcp_subject.user_is_owner_or_deputy?( current_user, @pcp_subject.current_step.acting_group_index )
   end
   helper_method :permitted_to_publish?
 
@@ -492,18 +492,22 @@ class PcpItemsController < ApplicationController
     # to assume that the result in @pcp_access is valid throughout the action!
 
     def user_has_permission?( access_type )
+      Rails.logger.debug ">>>>> initial permission: #{@pcp_permission}"
       if @pcp_permission.nil? then
         determine_group_map( access_type )
         @pcp_group_act = @pcp_step.acting_group_index
         @pcp_permission = PcpSubject.same_group?( @pcp_group_act, @pcp_group_map )
-      end
+      end 
+      Rails.logger.debug ">>>>> user_has_permission: #{@pcp_permission}\n" <<
+                         ">>>>> acting group index:  #{@pcp_group_act}\n" <<
+                         ">>>>> group map:           #{@pcp_group_map}" 
       @pcp_permission
     end
 
     # just a helper 
 
     def determine_group_map( access_type = :to_access )
-      @pcp_group_map ||= @pcp_subject.viewing_group_map( current_user.id, access_type )
+      @pcp_group_map ||= @pcp_subject.viewing_group_map( current_user, access_type )
     end
 
     # checks if a user is permitted to view a PCP Item:

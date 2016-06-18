@@ -33,7 +33,7 @@ class PcpSubjectsController2Test < ActionController::TestCase
   end
 
   test 'should get history' do
-    get :info_history, id: @pcp_subject
+    get :show_history, id: @pcp_subject
     check_for_cr
   end
 

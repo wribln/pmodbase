@@ -9,9 +9,8 @@ class PcpSubjectsController0Test < ActionController::TestCase
 
   test 'check class attributes' do
     validate_feature_class_attributes FEATURE_ID_MY_PCP_SUBJECTS, 
-      ApplicationController::FEATURE_ACCESS_SOME +
-      ApplicationController::FEATURE_ACCESS_NBP,
-      ApplicationController::FEATURE_CONTROL_CUG
+      ApplicationController::FEATURE_ACCESS_INDEX,
+      ApplicationController::FEATURE_CONTROL_CUGRP
   end
 
   test 'should get index' do
@@ -48,16 +47,16 @@ class PcpSubjectsController0Test < ActionController::TestCase
     refute_nil ps
     refute_nil cs
     refute_nil assigns( :pcp_prev_step )
-    refute_nil assigns( :pcp_viewing_group )
+    refute_nil assigns( :pcp_viewing_group_map )
     assert_redirected_to pcp_release_doc_path( id: ps.id, step_no: cs.step_no )
   end
 
   test 'should get history' do
-    get :info_history, id: @pcp_subject
+    get :show_history, id: @pcp_subject
     refute_nil assigns( :pcp_subject )
     refute_nil assigns( :pcp_curr_step )
     refute_nil assigns( :pcp_prev_step )
-    refute_nil assigns( :pcp_viewing_group )
+    refute_nil assigns( :pcp_viewing_group_map )
     assert_response :success
   end
 
@@ -95,7 +94,7 @@ class PcpSubjectsController0Test < ActionController::TestCase
     refute_nil assigns( :pcp_subject )
     refute_nil assigns( :pcp_curr_step )
     refute_nil assigns( :pcp_prev_step )
-    refute_nil assigns( :pcp_viewing_group )
+    refute_nil assigns( :pcp_viewing_group_map )
     assert_response :success
   end
 
@@ -104,7 +103,7 @@ class PcpSubjectsController0Test < ActionController::TestCase
     refute_nil assigns( :pcp_curr_step )
     refute_nil assigns( :pcp_subject )
     refute_nil assigns( :pcp_prev_step )
-    refute_nil assigns( :pcp_viewing_group )
+    refute_nil assigns( :pcp_viewing_group_map )
     assert_response :success
   end
 
@@ -118,7 +117,7 @@ class PcpSubjectsController0Test < ActionController::TestCase
     refute_nil assigns( :pcp_curr_step )
     refute_nil assigns( :pcp_subject )
     refute_nil assigns( :pcp_prev_step )
-    refute_nil assigns( :pcp_viewing_group )
+    refute_nil assigns( :pcp_viewing_group_map )
     assert_redirected_to pcp_subject_path( assigns( :pcp_subject ))
   end
 
@@ -133,7 +132,7 @@ class PcpSubjectsController0Test < ActionController::TestCase
     @pcp_step.reload
     @pcp_subject.reload
     refute_nil assigns( :pcp_prev_step )
-    refute_nil assigns( :pcp_viewing_group )
+    refute_nil assigns( :pcp_viewing_group_map )
     assert_equal @pcp_step, pcp_steps( :one_two )
     assert_equal 1, @pcp_step.new_assmt
     assert_redirected_to pcp_subject_path( assigns( :pcp_subject ))

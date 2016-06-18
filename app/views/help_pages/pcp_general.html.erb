@@ -81,55 +81,60 @@
         users administered by the owner or the deputy of the PCP Subject - each for her 
         respective group.</li>
     </ul>
-    <h3>Roles for PCP Categories</h3>
+    <h3>Roles in PCP Categories</h3>
     <p>The PCP Categories are administered by one or more persons with specific access rights. PCP
     Categories are created based on a specific agreement (explicit or implicit by the project
     environment) between two Project Groups. Hence, changes to any attributes would be a change
     to that agreement.</p>
     <p>Each party is expected to name a representative and a deputy. These two persons would be entered
-    as Owner and Deputy for their respective PCP Groups (PCP Category attributes
+    as owner and deputy for their respective PCP Groups (PCP Category attributes
     <%= help_term PcpCategory.human_attribute_name( :p_owner_id )-%> and
     <%= help_term PcpCategory.human_attribute_name( :p_deputy_id )-%>, and as 
     <%= help_term PcpCategory.human_attribute_name( :c_owner_id )-%> and
     <%= help_term PcpCategory.human_attribute_name( :c_deputy_id )-%> respectively).</p>
-    <p>In order to create PCP Subjects of a given PCP Category, a user must have permission to
-      create PCP Subjects for the <%= help_term PcpCategory.human_attribute_name( :p_group_id )-%>,
-      or the user must be defined as <%= help_term PcpCategory.human_attribute_name( :p_deputy_id )-%>
-      for this PCP Category.
-    <p>If, for example, a PCP Category is set up for the review of systems documents, the
-      <%= help_term PcpCategory.human_attribute_name( :p_group_id )-%> could be set to a general
-      project group (such as 'SYS' - for 'Systems Engineering'). Without further permissions, only
-      users in the 'SYS' group would be permitted to add PCP Subjects for this PCP Category. If
-      other system groups should be allowed to add PCP Subjects for this PCP Category, they would
-      require the permission to create PCP Subjects for the 'SYS' group in addition to the
-      permission to add and modify PCP Subjects for their own group.</p>
-    <p>Users which are responsible for administering PCP Categories need the add and edit
-    access rights for the feature
-    <%= help_term Feature.find_by_id( FEATURE_ID_PCP_CATEGORIES ).label_with_id-%>.</p>
-    <p>All other users can view PCP Category information and details.</p>
+    <p>Access to information on PCP Categories must be explicitly granted (feature
+    <%= help_term Feature.find_by_id( FEATURE_ID_PCP_CATEGORIES ).label_with_id-%>).</p>
     <h3>Roles for PCP Subjects</h3>
     <p>Each PCP Subject has at least two owners, optionally also a deputy:
       <%= help_term PcpSubject.human_attribute_name( :p_owner_id )-%> and
       <%= help_term PcpSubject.human_attribute_name( :p_deputy_id )-%>, and 
       <%= help_term PcpSubject.human_attribute_name( :c_owner_id )-%> and
-      <%= help_term PcpSubject.human_attribute_name( :c_deputy_id )-%> respectively.</p>
-    <p>An owner (or her deputy) must have edit access permissions for the feature
-      <%= help_term Feature.find_by_id( FEATURE_ID_MY_PCP_SUBJECTS ).label_with_id-%> in order
-      to be able to view and/or modify PCP Subject attributes and to perform a Release.</p>
-    <p>Any user who needs to view all PCP Subjects needs to have access permissions for
-      the feature <%= help_term Feature.find_by_id( FEATURE_ID_ALL_PCP_SUBJECTS ).label_with_id-%>.
-      This access can be restricted to specific groups such that this user will only
-      see those PCP Subjects in which the specific group is either the Presenting Group
-      or the Commenting Group.</p>
-    <p>Other users have only access to those PCP Subjects and any details thereof if they
-      have the respective permissions for either the Presenting or the Commenting Group.</p>
+      <%= help_term PcpSubject.human_attribute_name( :c_deputy_id )-%> respectively.
+      These roles are defined initially be the defaults as defined by the respective PCP Category.</p>
+    <p>Each <%= help_term 'Owner'%> and each <%= help_term 'Deputy'%> has the right to edit attributes of the PCP Subject and to perform the technical release for his respective group (presenting or
+    commenting).</p>
+    <p>The <%= help_term 'Owner'%> must have access permissions for his respective group
+      as defined by the attributes 
+      <%= help_term PcpSubject.human_attribute_name( :p_group_id )-%> and the
+      <%= help_term PcpSubject.human_attribute_name( :c_group_id )-%> respectively.</p>
+    <p>For each <%= help_term 'Deputy'%>, this condition is not tested such that any user
+      can be appointed as 'Deputy' as long as he has access to this feature
+      (<%= help_term Feature.find_by_id( FEATURE_ID_MY_PCP_SUBJECTS ).label_with_id-%>).</p> 
+    <p>In addition to Owners and Deputies, the creator of a PCP Subject (i.e. the user who
+      initially created the PCP Subject record) will be (a) permitted to modify PCP Subject
+      attributes before the first release, and will be (b) treated as a PCP Participant, i.e.
+      he can add responses to any PCP Items. The reason for this special role is that most
+      likely the responsible person for a specific PCP Subject (a document, drawing, or a
+      site) will often be responsible to respond to any observations by the commenting
+      party, too.</p>
+    <p>All PCP Subject Owners and Deputies need the respective permissions for the
+      feature <%= help_term Feature.find_by_id( FEATURE_ID_MY_PCP_SUBJECTS ).label_with_id-%>.
+      The entry point for this feature provides a user with a list of all PCP Subjects where
+      he is either the group owner, the group deputy, or the subject creator, or a specified
+      PCP Participant (see below).</p>
+    <p>The feature <%= help_term Feature.find_by_id( FEATURE_ID_ALL_PCP_SUBJECTS ).label_with_id-%>
+      is an entry point to all PCP Subjects of a given project group (i.e. where the permission
+      is given to view records of a group which can be either the presenting or the commenting
+      group. This feature is provided for users who need to see all items on a project group
+      basis rather than the basis of any responsibility for specific PCP Subjects.</p>
     <h3>Roles for PCP Items</h3>
-      <p>An owner or deputy may also assign other users as <%= help_param 'PCP Participants'-%>
-        of the Present-Comment Process for her PCP Subject. These users are then eligable to add
-        and edit observations and/or comments.</p>
-      <p>PCP Participants of the Commenting Group may make create observations
-        (PCP Items), or add comments to existing PCP Items;
-        PCP Participants of the Presenting Group may comment on PCP Items.</p>
+      <p>An Owner or Deputy may also assign other users as <%= help_param 'PCP Participants'-%>
+        of the Present-Comment Process for his PCP Subject. These users are then eligable to add
+        and edit observations and/or comments (like the Owner, his Deputy, or the creator of 
+        the PCP Subject.</p>
+      <p>PCP Participants of the Commenting Group may make create observations (PCP Items),
+        or add comments to existing PCP Items; PCP Participants of the Presenting Group may
+        comment on PCP Items.</p>
       <p>All observations and comments are created non-public/internal and can be viewed only by the
         respective PCP Participants for this PCP Subject. Only a PCP Subject owner or deputy (for his group) can make flag a comment as public or create a public comment. Once a PCP
         Step is released, the comments marked as public can be viewed by anyone.</p>

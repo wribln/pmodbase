@@ -19,7 +19,7 @@ class PcpAllSubjectsController < ApplicationController
   def index
     @filter_fields = filter_params
     @filter_groups = permitted_groups_list( :to_index )
-    @pcp_subjects = PcpSubject.filter( @filter_fields ).all_active.permitted_groups( current_user, :to_index ).paginate( page: params[ :page ])
+    @pcp_subjects = PcpSubject.filter( @filter_fields ).all_active.permitted_groups( current_user, FEATURE_ID_ALL_PCP_SUBJECTS, :to_index ).paginate( page: params[ :page ])
   end
 
   def show

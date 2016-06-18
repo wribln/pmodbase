@@ -29,7 +29,7 @@ task :recreate => :environment do
   Rake::Task['db:seed:groups'].invoke
   puts '>>> db:seed:groups completed'
 
-  # exit!
+  exit!
 
   Rake::Task['db:seed:glossary'].invoke
   puts '>>> db:seed:glossary completed.'

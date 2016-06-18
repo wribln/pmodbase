@@ -43,8 +43,9 @@ class PcpSubject < ActiveRecord::Base
 
   validate :pcp_category_exists
 
-  validate{ given_account_has_access( :c_owner_id,  :c_group_id )}
-  validate{ given_account_has_access( :p_owner_id,  :p_group_id )}
+  validate{ given_account_has_access( :c_owner_id, :c_group_id )}
+  validate{ given_account_has_access( :p_owner_id, :p_group_id )}
+#  validate{ given_account_has_access( :s_owner_id, :p_group_id )}, on: :create
 
   validate{ given_account_exists( :c_deputy_id )}
   validate{ given_account_exists( :p_deputy_id )}
@@ -121,12 +122,16 @@ class PcpSubject < ActiveRecord::Base
   # 2 - commenting group
   # 3 - both presenting and commenting group
 
-  def viewing_group_map( id, access = :to_access )
+  def viewing_group_map( user, access = :to_access )
+    return 0 if user.nil?
     r = 0
-    r =     1 if ( id == p_owner_id )||( id == p_deputy_id ) || ( id == s_owner_id ) ||
-                pcp_members.presenting_member( id ).try( access )
-    r = r | 2 if ( id == c_owner_id )||( id == c_deputy_id ) || 
-                pcp_members.commenting_member( id ).try( access )
+    r =     1 if ( user.id == p_owner_id  )||
+                 ( user.id == p_deputy_id )||
+                 ( user.id == s_owner_id  )||
+                pcp_members.presenting_member( user.id ).first.try( access )
+    r = r | 2 if ( user.id == c_owner_id  )||
+                 ( user.id == c_deputy_id )||
+                pcp_members.commenting_member( user.id ).first.try( access )
     return r
   end
 
@@ -171,30 +176,34 @@ class PcpSubject < ActiveRecord::Base
 
   # access control helper: ags is the acting_group_switch
 
-  def user_is_owner_or_deputy?( id, ags )
+  def user_is_owner_or_deputy?( user, ags )
+    return false if user.nil?
     if ags == 0
-      ( id == p_owner_id )||( id == p_deputy_id )
+      ( user.id == p_owner_id )||( user.id == p_deputy_id )
     else
-      ( id == c_owner_id )||( id == c_deputy_id )
+      ( user.id == c_owner_id )||( user.id == c_deputy_id )
     end
+  end
+
+  def user_is_creator?( user )
+    return false if user.nil?
+    s_owner_id == user.id
   end
 
   # user must have access to group of associated PCP Category in order
   # to create PCP Subjects (possible only in PcpSubjectsController) or
   # if he is the deputy of the presenting group in the selected PCP Category
 
-  def permitted_to_create?( account )
-    if pcp_category_id.nil?
-      false
-    else pcp_category.p_deputy_id == account.id || 
-      account.permission_to_access( FEATURE_ID_MY_PCP_SUBJECTS, :to_create, pcp_category.p_group_id )
-    end
+  def permitted_to_create?( account, feature = FEATURE_ID_MY_PCP_SUBJECTS )
+    return false if pcp_category_id.nil?
+    pcp_category.p_deputy_id == account.id || 
+      account.permission_to_access( feature, :to_create, pcp_category.p_group_id )
   end
 
   # general permission to access PCP Subjects in PcpAllSubjectsController
 
-  def permitted_to_access?( account, action = :to_read )
-    pg = account.permitted_groups( FEATURE_ID_ALL_PCP_SUBJECTS, action )
+  def permitted_to_access?( account, feature = FEATURE_ID_MY_PCP_SUBJECTS, action = :to_read )
+    pg = account.permitted_groups( feature, action )
     case pg
     when nil
       false
@@ -209,8 +218,8 @@ class PcpSubject < ActiveRecord::Base
   # this is patterned after Group.permitted_groups but considers here two
   # attributes ... to be used in queries
 
-  def self.permitted_groups( account, action )
-    pg = account.permitted_groups( FEATURE_ID_ALL_PCP_SUBJECTS, action )
+  def self.permitted_groups( account, feature, action )
+    pg = account.permitted_groups( feature, action )
     case pg
     when nil
       none

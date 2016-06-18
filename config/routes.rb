@@ -57,7 +57,7 @@ Rails.application.routes.draw do
   end
   # additional routes for pcp_my_subjects
   get 'pcs/:id/release', to: 'pcp_subjects#update_release', as: 'pcp_subject_release', format: false
-  get 'pcs/:id/info', to: 'pcp_subjects#info_history', as: 'pcp_subject_history', format: false
+  get 'pcs/:id/history', to: 'pcp_subjects#show_history', as: 'pcp_subject_history', format: false
   get 'pcs/:id/reldoc/:step_no', to: 'pcp_subjects#show_release', as: 'pcp_release_doc', format: false
   # additional routes for pcp_items
   get 'pci/:id/next', to: 'pcp_items#show_next', as: 'pcp_item_next', format: false
