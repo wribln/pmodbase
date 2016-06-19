@@ -45,16 +45,16 @@
         The handing-over from one <%= help_param 'PCP Group'-%> to the
         other is called <%= help_param 'Release'-%> (in the PCP context this is sometimes
         described as 'technical release' to distinguish this action from a 'formal release'
-        which involves the formal exchange of documents between project entities and is thus
-        often performed by the document management group).<br/>
+        which involves the formal exchange of documents between project entities, often
+        performed by the document management group.<br/>
         Initially, the Presenting
         Group will release the PCP Subject to the Commenting Group. The Commenting Group will
-        then report their observations and  an overall assessment of the PCP Subject.<br/>
+        then report its observations and  an overall assessment of the PCP Subject.<br/>
         In the next step, the Commenting Group will release the PCP Subject (back) to the
         Presenting Group. The Presenting Group can now respond to the observations by 
         commenting on each and every observation. Once this step is completed, the PCP Subject
         is released again to the Commenting Group. With documents or drawings, this step 
-        normally involves the submission of a new revision of the document or drawing.</li>
+        often involves the submission of a new revision of the document or drawing.</li>
       <li>Each of the above steps is named <%= help_param 'PCP Step'-%>. The first
         step would be the <%= help_term PcpStep::STEP_LABELS[ 0 ]-%>, the second 
         <%= help_term PcpStep::STEP_LABELS[ 1 ]-%>, the third
@@ -62,7 +62,7 @@
         The transition from one PCP Step to the next PCP Step is performed as the 
         technical release by the currently acting PCP Group. This action includes the
         preparation of a 'Release' document containing the current status of the PCP Subject
-        and includes all current (and public) observations and comments.</li>
+        including all current (and public) observations and comments.</li>
       <li>Observations and comments on a PCP Subject are collected on a <%= help_param 'PCP Item'-%>
         basis: Each single observation is added to a PCP Subject as an individual PCP Item with a
         reference to the specific location of the issue (e.g. chapter, page, area). An initial
@@ -82,7 +82,7 @@
         respective group.</li>
     </ul>
     <h3>Roles in PCP Categories</h3>
-    <p>The PCP Categories are administered by one or more persons with specific access rights. PCP
+    <p>The PCP Categories are managed by one or more persons having specific access rights. PCP
     Categories are created based on a specific agreement (explicit or implicit by the project
     environment) between two Project Groups. Hence, changes to any attributes would be a change
     to that agreement.</p>
@@ -144,17 +144,5 @@
         of the currently responsible group (owner, deputy and any other user). This
         ensures that the current work-status is restricted to those actually working on
         the PCP Subject.</p>
-    <h3>Track Review Status of Groups</h3>
-      <p>When several project groups should review a PCP Subject and you want to trace
-        their statements, specifically if they have any comments at all, you could use the
-        following procedure:</p>
-      <p>When the PCP Subject is released to you, add one PCP Item per Group with a text
-        'Review Statement by &lt;group code&gt;'. This PCP Item must then be commented by
-        each group. The comment could be 'Reviewed - no further comment' and its
-        assessment set to <%= help_term PcpItem::ASSESSMENT_LABELS[ 2 ]-%>, or the
-        description of the PCP Item should be replaced by an observation or issue with
-        the respective assessment.</p>
-      <p>This way, you have recorded that each group has contributed to the review process
-        and that a group having no comments is also documented.</p>
     <%= help_footer FEATURE_ID_HELP_PAGES %>
   </div> <!-- /container -->

@@ -2,7 +2,30 @@
   <div class="container">
     <%= helpcrumbs %>
     <%= help_header 'PCP - ' + t( 'pcp_help.pcp_how_to_08' ) %>
-    <p class="lead">...</p>
-    <p>...</p> 
+    <p class="lead">Here shines the power of the PCP: Collecting Observations / Review 
+    Comments from several Persons at the same time</p>
+    <p>The classical example for this scenario is a review of a single document or drawing by
+    various persons which might be affected by this document or drawing. Here, the PCP Subject
+    is the document or drawing, the people who should review it, would be PCP Members.</p>
+    <p>You as the owner of the given PCP Subject for the reviewing group need to do the following:</p>
+    <ul>
+      <li>All reviewers need to have permission to use the feature 
+        <%= help_term Feature.find_by_id( FEATURE_ID_MY_PCP_SUBJECTS ).label_with_id-%>.</li>
+      <li>You - as the owner (or deputy) of the PCP Subject - must make these reviewers to PCP
+        Participants of this PCP Subject: Open the PCP Subject and view the details of the
+        PCP Subjects; on this screen, you find a button
+        <%= help_term t( 'pcp_subjects.show.members_button' )%>.</li>
+      <li>A click on this button leads you to the form where you can add PCP Participants to
+        the given PCP Subject. Each PCP Participant should be allowed to update the PCP Items
+        for the commenting group, such that they can add and edit items during the review steps.</li>
+      <li>Then, you could add one PCP Item for each of the PCP Participants: This item could
+        read 'Review Statement by Group XYZ'. This PCP Item must then be 
+        commented by the respective group representative: The comment could be 'Reviewed -
+        no further comment' and its assessment set to <%= help_term PcpItem::ASSESSMENT_LABELS[ 2 ]-%>, 
+        or the description could be replaced by a 'real' observation or issue with its respective
+        assessment.</li>
+      <li>This way, you have recorded that each group has contributed to the review process
+        and also that a group has no comments.</li>
+    </ul>
     <%= help_footer FEATURE_ID_HELP_PAGES %>
   </div> <!-- /container -->

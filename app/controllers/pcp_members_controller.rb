@@ -1,7 +1,7 @@
 class PcpMembersController < ApplicationController
   include ControllerMethods
 
-  initialize_feature FEATURE_ID_PCP_MEMBERS, FEATURE_ACCESS_SOME + FEATURE_ACCESS_NBP, FEATURE_CONTROL_CUG
+  initialize_feature FEATURE_ID_PCP_MEMBERS, FEATURE_ACCESS_USER + FEATURE_ACCESS_NBP, FEATURE_CONTROL_CUG
 
   before_action :set_pcp_member_and_subject, only: [ :show, :edit, :update, :destroy ]
   before_action :set_pcp_subject, only: [ :index, :new, :create ]
