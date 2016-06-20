@@ -2,7 +2,91 @@
   <div class="container">
     <%= helpcrumbs %>
     <%= help_header 'PCP - ' + t( 'pcp_help.pcp_how_to_06' ) %>
-    <p class="lead">...</p>
-    <p>...</p> 
-    <%= help_footer FEATURE_ID_HELP_PAGES %>
+    <p class="lead">OK, so you have a document or drawing and someone told you to use
+    	the PCP in the pmodbase application to make your review comments. What do you do now?</p>
+    <ul>
+    <li>First of all, I assume that you have an account for your project's pmodbase application.</li>
+    <li>Using this account, please sign on to the pmodbase application.</li>
+    <li>On the base page, you will find a button labelled
+      <%= help_term Feature.find( FEATURE_ID_MY_PCP_SUBJECTS ).label-%>.</li>
+    <li>A click on this button leads you to a list of the PCP Subjects, i.e. documents or
+    	drawings to be reviewed by you (or which you are somehow involved in):<br/>
+      <%= image_tag 'pcp_how_to_03a.png', alt: 'List of My PCP Subjects', class: 'img-responsive' -%></li>
+    <li>When you have located the document you should review, simply click on the link under
+      the <%= help_term t( 'pcp_subjects.index.status_subj' )-%> of your PCP Subject: This will
+      take you directly to the index page of the currently existing review comments for this
+      document. For the following example, I assume that there were none yet:<br/>
+      <%= image_tag 'pcp_how_to_06b.png', alt: 'List of PCP Items', class: 'img-responsive' -%></li>
+    <li>Now you are ready to add any comments: Click the [+] button in the right-most column. This
+    	will open a form in which you enter your observations, comments, remarks:</li>
+    <div class="row">
+    <div class="col-sm-6">
+    <li>The <%= help_param PcpItem.human_attribute_name( :seqno )-%> is a unique number created for
+      each of your observations, comments, issues, notes - called <%= help_term 'PCP Item'-%> from
+      now on. This number is computed automatically by the system and cannot be modified. If PCP
+      Items are removed, this number does not change so it can be used as unique identifier.</li>
+      <li>The <%= help_param PcpItem.human_attribute_name( :pcp_step_id )-%> for which this
+        PCP Item was created is shown for information as <%= help_term t( 'pcp_items.pcp_step' )%>.</li>
+      <li>The <%= help_param PcpItem.human_attribute_name( :author )-%> is preset to your account.
+      	You can change this information to any other text, possibly your initials or your name - if
+      	you want.</li>
+      <li><%= help_param PcpItem.human_attribute_name( :assessment )-%> is the evaluation of
+      the current PCP Item by you in regard to the severity of the issue.<br/>
+      The possible values are:
+      <ul>
+        <li>Use <%= help_term PcpItem::ASSESSMENT_LABELS[ 0 ]-%> for issues with minimal
+        impact such as clarifications, questions, spelling or obvious drawing errors, obviously
+        wrong labels, etc. If a document or drawing contains only issues of this class, it
+        could be categorized as <%= help_term PcpStep::ASSESSMENT_LABELS[ 2 ]-%>.</li>
+        <li><%= help_term  PcpItem::ASSESSMENT_LABELS[ 1 ]-%> are those issues requiring rework
+          on the PCP Subject before it can be approved. Any PCP Item with this assessment normally
+          leads to an overall PCP Subject assessment of <%= help_term PcpStep::ASSESSMENT_LABELS[ 3 ]-%>.
+          </li>
+        <li><%= help_term PcpItem::ASSESSMENT_LABELS[ 2 ]-%> indicates that the issue
+          is resolved and the PCP Item can be considered as closed, i.e. no further comments
+          are required or possible. When all PCP Items of a PCP Subject have this status, then this 
+          PCP Subject can be set to <%= help_term PcpStep::ASSESSMENT_LABELS[ 1 ]-%>.</li>
+      </ul>
+      </li>
+      <li><%= help_param PcpItem.human_attribute_name( :reference )-%> is a text field which should
+        describe more precisely the location of the issue within the PCP Subject. For documents,
+        this would be a chapter or a page number, for drawings, you could use some coordinates.
+        This information is both for the person responsible to correct the problem as well as for
+        you to remember where you saw this problem when you want to check if it is really solved.</li>
+      <li><%= help_param PcpItem.human_attribute_name( :description )-%> holds all details
+        on the observation.</li>
+      </div>
+    	<div class="col-sm-6">
+    	<br/>
+      <%= image_tag 'pcp_how_to_06c.png', alt: 'Empty Add PCP Item form', class: 'img-responsive' -%>
+      <br/>
+      <%= image_tag 'pcp_how_to_06f.png', alt: 'A PCP Item', class: 'img-responsive' -%>
+     	</div>
+     	</div>
+     	<li>When you click the button <%= help_term t( 'helpers.submit.create')-%>, your comments are
+     		saved to the pmodbase database. The resulting screen is shown above.</li>
+     	<li>At this point, you have the following options:<br/>
+     	<ul>
+     		<li><%= help_term t( 'button_label.edit' )-%> opens the form for editing again so you can
+     		make changes to your PCP Item.</li>
+     		<li><%= help_term t( 'button_label.next' )-%> will take you to the next item (if there are
+     		none yet, you will be informed by a message).</li>
+     		<li><%= help_term t( 'button_label.go_to_index' )-%> brings you back to the listing of all
+     		observations, comments, issues, etc. on this specific PCP Subject - whether made by you or
+     		someone else.</li>
+     		<li><%= help_term t( 'pcp_items.show.add_item' )-%> opens a new form to let you create
+     		another PCP Item.</li>
+     		<li><%= help_term t( 'pcp_items.show.add_comment' )-%> opens a form to input a comment 
+     		to the above shown
+     		PCP Item. If you add a comment here, this has the following effects: The original item is
+     		'frozen' and cannot be modified anymore. The new comment, however, can be made 'private'
+     		or 'non-public': Only you and members of the commenting group will see this comment, it will
+     		not be published in a release. This allows you to make notes for other reviewers or 
+     		private comments to be remembered for the next review.</li>
+				<li><%= help_term t( 'pcp_items.show.publish' )-%> is used on comments to change the
+				'private'/'non-public' flag to 'public' which indicates that this comment should appear on
+				the release document and can be viewed by any person once the PCP Subject is released.</li>
+			</ul>
+     </ul> 
+	  <%= help_footer FEATURE_ID_HELP_PAGES %>
   </div> <!-- /container -->

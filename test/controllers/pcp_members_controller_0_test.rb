@@ -9,6 +9,12 @@ class PcpMembersController0Test < ActionController::TestCase
     session[ :current_user_id ] = @account.id
   end
 
+  test 'check class attributes' do
+    validate_feature_class_attributes FEATURE_ID_PCP_MEMBERS, 
+      ApplicationController::FEATURE_ACCESS_USER + ApplicationController::FEATURE_ACCESS_NBP,
+      ApplicationController::FEATURE_CONTROL_CUG
+  end
+
   test 'should get index' do
     get :index, pcp_subject_id: @pcp_subject
     assert_response :success

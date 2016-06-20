@@ -40,8 +40,7 @@
         (specifically for the feature
         <%= help_term Feature.find( FEATURE_ID_MY_PCP_SUBJECTS ).label_with_id%>).</li>
       <li>After you haved signed on to the system, you should then find a button labelled
-      <%= link_to Feature.find( FEATURE_ID_MY_PCP_SUBJECTS ).label, pcp_all_subjects_path,
-        target: '_blank' -%> (or use the previous link).</li>
+      <%= help_term Feature.find( FEATURE_ID_MY_PCP_SUBJECTS ).label-%>.</li>
       <li>Clicking on this button will lead you directly to a web page containing all PCP
         Subjects for which you have some responsibility:<br/>
       <%= image_tag 'pcp_how_to_03a.png', alt: 'List of My PCP Subjects', class: 'img-responsive' -%></li>

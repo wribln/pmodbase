@@ -59,6 +59,7 @@
     </tbody>
   </table>
   <%- if @pcp_items.count > 0 then -%>
+    <%- curr_step_no = @pcp_curr_step.step_no -%>
     <h1 class="page-break"><%= t( '.sub_heading' )%></h1>
     <table class="with-lines">
       <thead>
@@ -79,6 +80,7 @@
             <td class="with-lines"><%= pi.author %></td>
           </tr>
           <%- pi.pcp_comments.is_public.each do |pc|-%>
+            <%- next if pc.pcp_step.step_no > curr_step_no -%>
             <tr>
               <td class="with-lines small right">&nbsp;</td>
               <td class="with-lines small">&nbsp;</td>

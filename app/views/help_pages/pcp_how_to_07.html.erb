@@ -2,7 +2,55 @@
   <div class="container">
     <%= helpcrumbs %>
     <%= help_header 'PCP - ' + t( 'pcp_help.pcp_how_to_07' ) %>
-    <p class="lead">...</p>
-    <p>...</p> 
+    <p class="lead">Your document or drawing was reviewed and someone provided the comments in
+    the pmodbase system. How can you respond to each and every comment within the pmodbase
+    application?</p>
+    <ul>
+    	<li>I will assume that you have an account for your project's pmodbase application and the
+    		required permissions to use the Present-Comment Process feature.</li>
+    	<li>Use this account to sign on the pmodbase application.</li>
+    	<li>On the base page, you will find a button labelled 
+    		<%= help_term Feature.find( FEATURE_ID_MY_PCP_SUBJECTS ).label-%>.</li>
+    	<li>A click on this button will lead you directly to all documents, drawings, or other
+    		subjects in which you are involved in (these are named 'PCP Subjects' here):<br/>
+      	<%= image_tag 'pcp_how_to_07a.png', alt: 'List of My PCP Subjects', class: 'img-responsive'-%>
+      	</li>
+      <li>Now simply click on the link under the
+      	<%= help_term t( 'pcp_subjects.index.status_subj' )-%> of your PCP Subject: Another page
+      	will now show you all comments for that document:<br/>
+      	<%= image_tag 'pcp_how_to_07b.png', alt: 'List of My PCP Items', class: 'img-responsive'-%>
+      	</li>
+      <li>In order to respond to each and every PCP Item, start with the first item in the list
+      and click [Q] in the right-most column. This opens a form with containing details on the
+      first comment:<br/>
+    	<%= image_tag 'pcp_how_to_07c.png', alt: 'Show Comment on First PCP Item', class: 'img-responsive'-%>
+    	</li>
+    	<li>Now click <%= help_term t( 'pcp_items.show.add_comment' )-%> to append your response as
+    	comment to the initial observation:<br/>
+    	<%= image_tag 'pcp_how_to_07d.png', alt: 'Edit Comment on First PCP Item', class: 'img-responsive'-%>
+    	</li>
+    	<li>You may notice that you cannot change the item's assessment: You can suggest a different
+    	status but only the commenting group can actually change the assessment.</li>
+    	<li>You can modify your response as long as this is the last and final comment for this PCP
+    	Item: Use the <%= help_term t( 'button_label.edit')-%> button to edit the Item. Or you can
+    	add an additional response comment to this item.</li>
+    	<li>Note the <%= help_term t( 'pcp_items.comment.make_public' )-%> checkbox: If this is clear,
+    	nobody outside your (presenting) group will see this comment; if the checkbox is marked, this
+    	comment will be included in the release report and will become visible to all users of this
+    	PCP. This feature allows you to insert group-internal comments and public comments.</li>
+    	<li>Use the <%= help_term t( 'button_label.next' )-%> button to go to the next item to be add your
+    	response to.</li>
+    	<li>The link under the title of your PCP Subject leads you to the details page of your current
+    	PCP Subject. On the bottom of this page you find a summary of your items and their status:
+    	<%= help_term t( 'pcp_subjects.status.status')-%> ... <%= t( 'pcp_subjects.status.status_tag')-%>.
+    	<br/>
+    	<em>Open</em> are all items which have no public response yet.<br/>
+    	<em>Answered</em> are all items with a public response.<br/>
+    	All other counts (<em>New</em> and <em>Closed</em>) will be '0' as only the commenting group
+    	in the PCP will be permitted to add new PCP Items and to close PCP Items.</li>
+      <li>Finally, please remember that your responses will not be available to the commenting group
+      in the PCP until you have responded to all (open) PCP Items <strong>and</strong> the owner
+      of the PCP Subject has released this PCP Step.</li>
+    </ul>
     <%= help_footer FEATURE_ID_HELP_PAGES %>
   </div> <!-- /container -->

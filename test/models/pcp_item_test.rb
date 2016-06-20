@@ -156,7 +156,7 @@ class PcpItemTest < ActiveSupport::TestCase
 
   test 'get released items' do
     s = pcp_subjects( :one )
-    pr = PcpItem.released( s )
+    pr = s.pcp_items.released
     assert_equal 0, pr.count
     pr.each do |p|
       refute p.released?
@@ -172,7 +172,7 @@ class PcpItemTest < ActiveSupport::TestCase
     end
     s.reload
     assert_equal 0, s.valid_subject?
-    pr = PcpItem.released( s )
+    pr = s.pcp_items.released
     assert_equal 3, pr.count
     pr.each do |p|
       assert p.released?
@@ -184,7 +184,7 @@ class PcpItemTest < ActiveSupport::TestCase
     pn.author = 'me'
     pn.description = 'foobar'
     assert pn.save, pn.errors.inspect
-    pr = PcpItem.released( s )
+    pr = s.pcp_items.released
     assert_equal 4, pr.count
     pr.each do |p|
       assert p.released?

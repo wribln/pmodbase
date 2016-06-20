@@ -42,7 +42,9 @@ class PcpSubjectsController < ApplicationController
     end
     @pcp_curr_step = @pcp_subject.pcp_steps.released.where( step_no: params[ :step_no ]).first
     if @pcp_curr_step then
-      @pcp_items = PcpItem.released_until( @pcp_subject, @pcp_curr_step.step_no ).includes( :pcp_comments, :pcp_step )
+      # note: the result below may still contain comments for later steps!
+      # you need to filter them in the view - OR make a more restrictive query
+      @pcp_items = @pcp_subject.pcp_items.released_until( @pcp_curr_step.step_no ).includes( :pcp_comments, :pcp_step )
       render :reldoc, layout: 'plain_print'
     else
       render_no_resource

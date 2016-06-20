@@ -15,11 +15,6 @@
         created for each PCP Item of the given PCP Subject. This number is computed
         automatically by the system and cannot be modified. If PCP Items are removed,
         this number does not change so it can be used as unique identifier.</li>
-      <li><%= help_param PcpItem.human_attribute_name( :reference )-%> is a text field
-        to be used to describe the location of the problem. In documents, this would be
-        a chapter or a page number.</li>
-      <li><%= help_param PcpItem.human_attribute_name( :description )-%> holds details
-        on the observation.</li>
       <li>The <%= help_param PcpItem.human_attribute_name( :pcp_step_id )-%> for which this
         PCP Item was created is shown
         for information as <%= help_term t( 'pcp_items.pcp_step' )%>.</li>
@@ -46,6 +41,11 @@
           PCP Subject can be set to <%= help_term PcpStep::ASSESSMENT_LABELS[ 1 ]-%>.</li>
       </ul>
       </li>
+      <li><%= help_param PcpItem.human_attribute_name( :reference )-%> is a text field
+        to be used to describe the location of the problem. In documents, this would be
+        a chapter or a page number.</li>
+      <li><%= help_param PcpItem.human_attribute_name( :description )-%> holds details
+        on the observation.</li>
       <li><%= help_param PcpItem.human_attribute_name( :pub_assmt )-%> shows the current
         published status of this item. It will be replaced by the 
         <%= help_term PcpItem.human_attribute_name( :new_assmt )-%> once the current

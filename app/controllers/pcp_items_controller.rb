@@ -23,7 +23,8 @@ class PcpItemsController < ApplicationController
     @pcp_group = @pcp_step.acting_group_index
     @pcp_items = @pcp_subject.pcp_items.includes( :pcp_step )
     # restrict view to released items unless current user is in current group
-    @pcp_items = @pcp_items.released( @pcp_subject ) unless user_has_permission?( :to_access )
+    #@pcp_items = @pcp_items.released( @pcp_subject ) unless user_has_permission?( :to_access )
+    @pcp_items = @pcp_items.released unless user_has_permission?( :to_access )
     @pcp_items = @pcp_items.filter( filter_params ).paginate( page: params[ :page ])
   end
 
@@ -492,15 +493,11 @@ class PcpItemsController < ApplicationController
     # to assume that the result in @pcp_access is valid throughout the action!
 
     def user_has_permission?( access_type )
-      Rails.logger.debug ">>>>> initial permission: #{@pcp_permission}"
       if @pcp_permission.nil? then
         determine_group_map( access_type )
         @pcp_group_act = @pcp_step.acting_group_index
         @pcp_permission = PcpSubject.same_group?( @pcp_group_act, @pcp_group_map )
       end 
-      Rails.logger.debug ">>>>> user_has_permission: #{@pcp_permission}\n" <<
-                         ">>>>> acting group index:  #{@pcp_group_act}\n" <<
-                         ">>>>> group map:           #{@pcp_group_map}" 
       @pcp_permission
     end
 
