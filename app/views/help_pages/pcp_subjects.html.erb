@@ -40,7 +40,9 @@
         If you enter just a number (unsigned integer) here, the tool will automatically
         retrieve the complete code and the title of the document from the project's document
         log having this sequence number. The title of the document will then be used as
-        <%= help_term PcpSubject.human_attribute_name( :title )-%> for the PCP Subject.<br/>
+        <%= help_term PcpSubject.human_attribute_name( :title )-%> for the PCP Subject. Note: If
+        this document DMS code there includes a version, you need to (manually) remove this
+        version suffix as the version is added later again by this feature!<br/>
         The presenting party can change this DMS code whenever it is the currently active
         group. If you want to use this field for an DMS code of a site-acceptance
         checklist (when using the PCP for hand-over/take-over processes), feel free
