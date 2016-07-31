@@ -1,0 +1,161 @@
+en:
+
+  activerecord:
+
+    models:
+      cfr_file_type:     'CFR File Types'
+      cfr_location_type: 'CFR Storage Locations'
+      cfr_location:      'CFR Locations'
+      cfr_record:        'CFR Records'
+      cfr_relationship:  'CFR Relationships'
+
+    attributes:
+
+      cfr_file_type:
+        id:               :general.attributes.id
+        extensions:       'List of Extensions'
+        label:            'Label'
+        unknown_type:     'unknown CFR File Type'
+
+      cfr_location_type:
+        id:               :general.attributes.id
+        label:            'Label'
+        note:             'Note'
+        location_type:    'File System'
+        location_types:   [ 'Windows File', 'Internet' ]
+        concat_char:      'Concatenation String'
+        project_dms:      'Project DMS?'
+        path_prefix:      'Path Prefix'
+
+      cfr_location:
+        id:               :general.attributes.id
+        file_name:        'File Name'
+        cfr_record_id:    'CFR Record ID'
+        doc_code:         'Document Code'
+        doc_version:      'Document Code Version'
+        cfr_location_type_id: 'Storage Location'
+        uri:              'Full Path'
+
+      cfr_record:
+        id:               :general.attributes.id
+        title:            'Title'
+        note:             'Notes'
+        group_id:         :general.attributes.group_id
+        main_location_id: 'Main Storage Location'
+        extension:        'File Extension'
+        cfr_file_type_id: 'File Type'
+        conf_level:       'Confidentiality Level'
+        conf_levels:      [ 'unrestricted', 'restricted', 'confidential', 'strictly confidential' ]
+        hash_function:    'Hash Function'
+        hash_functions:   [ 'MD5', 'SHA-256' ]
+        hash_value:       'Hash Value'
+        doc_date:         'Document Date'
+        doc_version:      'Document Version / Release'
+        doc_owner:        'Author / Owner'
+
+      cfr_relationship:
+        id:               :general.attributes.id
+        rs_groups:        [ 'sequential', 'hierarchical', 'other' ]
+        rs_group:         'Relationship Group'
+        label:            'Label'
+        reverse_rs_id:    'Reverse Relationship'
+        leading:          'Leading'
+      cfr_relationship/reverse_rs:
+        label:            'Label'
+
+  cfr_file_types:
+    title:                'CFR File Types'
+    edit:
+      form_title:         'Edit CFR File Type'
+    new:
+      form_title:         'Add CFR File Type'
+    index:
+      form_title:         'List of All CFR File Types'
+    show:
+      form_title:         'Show CFR File Type'
+    msg:
+      create_ok:          'CFR File Type successfully created.'
+      update_ok:          'CFR File Type successfully updated.'
+      delete_ok:          'CFR File Type successfully deleted.'
+      bad_format:         'must be a comma-separated list.'
+      dup_ext:            'contains %{dup} already defined for CFR File Type [%{id}].'
+
+  cfr_records:
+    title:                'Central File Repository (CFR)'
+    form:
+      l_heading:          'File Storage Locations'
+      main_location:      'Main Location?'
+      add_label:          'Add Storage Location'
+    index:
+      form_title:         'Index of Central File Repository (CFR)'
+      title_filename:     'Title / File Name'
+      type_location:      'File Type / Main Storage Location'
+    show:
+      form_title:         'Show Details of CFR Record'
+    edit:
+      form_title:         'Edit Details of CFR Record'
+    new:
+      form_title:         'Create CFR Record'
+    msg:
+      create_ok:          'CFR Record successfully created.'
+      update_ok:          'CFR Record successfully updated.'
+      delete_ok:          'CFR Record successfully deleted.'
+      hash_wo_fct:        'invalid without specified Hash Function.'
+      hash_bad_length:    'has wrong length for given Hash Function'
+      unknown_fct:        'unknown'
+      bad_group_id:       :general.non_existing
+      bad_loc_id:         :general.non_existing
+      bad_ft_id:          :general.non_existing
+      hex_only:           'must consist of hexadecimal characters only'
+      defaults_set:       'Defaults set but CFR Record not yet saved!'
+      bad_main_loc:       'does not reference back to this CFR Record!'
+
+  cfr_locations:
+    msg:
+      bad_loc_type:       :general.non_existing
+      bad_cfr_rec:        :general.non_existing
+
+  cfr_location_types:
+    title:                'Storage Locations'
+    edit:
+      form_title:         'Edit Storage Location'
+    new:
+      form_title:         'Add Storage Location'
+    index:
+      form_title:         'List All Storage Locations'
+    show:
+      form_title:         'Show CFR Storage Location'
+    msg:
+      only_one_pdms:      'Only one Storage Location can be the Project DMS.'
+      bad_path:           'syntax does not correspond to given File System.'
+      create_ok:          'Storage Location successfully created.'
+      update_ok:          'Storage Location successfully updated.'
+      delete_ok:          'Storage Location successfully deleted.'
+
+  cfr_relationships:
+    title:                'CFR Relations'
+    edit:
+      form_title:         'Edit CFR Relation'
+    new:
+      form_title:         'Create CFR Relation'
+      reverse_rs\label:   'test'
+    index:
+      form_title:         'List of All CFR Relations'
+      leading:            'Leading Relationship'
+      reverse:            'Reverse Relationship'
+    show:
+      form_title:         'Show CFR Relation'
+      leading_label:      'Leading Relationship Label'
+      reverse_label:      'Reverse Relationship Label'
+    form:
+      leading_label:      'Leading Relationship Label'
+      reverse_label:      'Reverse Relationship Label'
+    msg:
+      create_ok:          'CFR Relationship successfully created.'
+      update_ok:          'CFR Relationship successfully updated.'
+      delete_ok:          'CFR Relationship successfully deleted.'
+      bad_reverse:        'Reverse Relationship does not exist.'
+      wrong_reverse:      'Reverse Relationship does not point back to this record.'
+      bad_rs_group:       'Reverse Relationship belongs to different Group.'
+      bad_leading:        'Only one of the Relationships can be a Leading.'
+

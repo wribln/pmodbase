@@ -3,8 +3,14 @@ module ApplicationModel
 
   # set variable to a default value
 
-  def set_default!( var_name, var_value )
+  def set_nil_default( var_name, var_value )
     if self.has_attribute?( var_name ) && ( read_attribute( var_name ).nil? )
+      write_attribute( var_name, var_value )
+    end
+  end
+
+  def set_blank_default( var_name, var_value )
+    if self.has_attribute?( var_name ) && ( read_attribute( var_name ).blank? )
       write_attribute( var_name, var_value )
     end
   end

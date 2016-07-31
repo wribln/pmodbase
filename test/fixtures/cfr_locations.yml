@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  cfr_record:         two
+  cfr_location_type:  one
+  file_name:          'high.pdf'
+  doc_code:           'WAY-UP-HI'
+  doc_version:        '0'
+  uri:                'file:///X:\somewhere\over\the\rainbow\way\up\high.pdf'

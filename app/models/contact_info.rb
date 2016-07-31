@@ -60,10 +60,10 @@ class ContactInfo < ActiveRecord::Base
   # set default values
 
   def set_defaults
-    set_default!( :detail_location, '' )
-    set_default!( :department,      '' )
-    set_default!( :phone_no_fixed,  '' )
-    set_default!( :phone_no_mobile, '' ) 
+    set_nil_default( :detail_location, '' )
+    set_nil_default( :department,      '' )
+    set_nil_default( :phone_no_fixed,  '' )
+    set_nil_default( :phone_no_mobile, '' ) 
   end
 
 end

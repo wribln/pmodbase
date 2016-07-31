@@ -274,12 +274,12 @@ class PcpSubject < ActiveRecord::Base
     def set_defaults_from_pcp_category
       oc = self.pcp_category
       if oc
-        set_default!( :c_group_id, oc.c_group_id )
-        set_default!( :p_group_id, oc.p_group_id )
-        set_default!( :c_owner_id, oc.c_owner_id )
-        set_default!( :p_owner_id, oc.p_owner_id )
-        set_default!( :c_deputy_id, oc.c_deputy_id )
-        set_default!( :p_deputy_id, oc.p_deputy_id )
+        set_nil_default( :c_group_id, oc.c_group_id )
+        set_nil_default( :p_group_id, oc.p_group_id )
+        set_nil_default( :c_owner_id, oc.c_owner_id )
+        set_nil_default( :p_owner_id, oc.p_owner_id )
+        set_nil_default( :c_deputy_id, oc.c_deputy_id )
+        set_nil_default( :p_deputy_id, oc.p_deputy_id )
       end
     end
 
@@ -290,14 +290,14 @@ class PcpSubject < ActiveRecord::Base
       oc = self.pcp_category
       if oc 
         if self.p_group_id.blank?
-          set_default!( :p_group_id, oc.p_group_id )
-          set_default!( :p_owner_id, oc.p_owner_id )
-          set_default!( :p_deputy_id, oc.p_deputy_id )
+          set_nil_default( :p_group_id, oc.p_group_id )
+          set_nil_default( :p_owner_id, oc.p_owner_id )
+          set_nil_default( :p_deputy_id, oc.p_deputy_id )
         end
         if self.c_group_id.blank?
-          set_default!( :c_group_id, oc.c_group_id )
-          set_default!( :c_owner_id, oc.c_owner_id )
-          set_default!( :c_deputy_id, oc.c_deputy_id )
+          set_nil_default( :c_group_id, oc.c_group_id )
+          set_nil_default( :c_owner_id, oc.c_owner_id )
+          set_nil_default( :c_deputy_id, oc.c_deputy_id )
         end
       end
     end          

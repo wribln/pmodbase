@@ -1,0 +1,17 @@
+one:
+  title:        'just a title'
+  conf_level:   0
+
+two:
+  title:        'full sample'
+  conf_level:   3
+  note:         'some notes'
+  group:         group_one
+  doc_version:  'Rev. A-0'
+  doc_date:     'December 2020'
+  doc_owner:    'me'
+  extension:    'pdf'
+  hash_value:   '1234567890123456789012345678901234567890123456789012345678901234'
+  hash_function: 1
+  cfr_file_type: two
+  main_location: one

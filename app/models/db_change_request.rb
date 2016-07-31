@@ -40,7 +40,7 @@ class DbChangeRequest < ActiveRecord::Base
     inclusion: { in: 0..( DBCR_STATUS_LABELS.size - 1 )}
 
   validates :uri,
-    length: { maximum: MAX_LENGTH_OF_URI }
+    length: { maximum: MAX_LENGTH_OF_STRING }
 
   validates :request_text,
     presence: true
@@ -75,7 +75,7 @@ class DbChangeRequest < ActiveRecord::Base
   # overwrite write accessors to ensure that text field is filled to max possible
 
   def uri=( text )
-    write_attribute( :uri, AppHelper.fix_string( text, MAX_LENGTH_OF_URI ))
+    write_attribute( :uri, AppHelper.fix_string( text, MAX_LENGTH_OF_STRING ))
   end
 
   # extend statistics

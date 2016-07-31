@@ -13,9 +13,11 @@ class HomeController < ApplicationController
   def signon
     user = Account.find_by_name( params[ :acc_name ].strip )
     if user && user.authenticate( params[ :password ].strip )
+      return_to = session[ :return_to ] || base_url
+      reset_session
       session[ :current_user_id ] = user.id
       session[ :keep_base_open  ] = user.keep_base_open
-      redirect_to base_url
+      redirect_to return_to
     else
       flash[ :alert ] = t( 'home.signon.error' )
       redirect_to home_url
@@ -26,7 +28,6 @@ class HomeController < ApplicationController
 
   def signoff
     delete_user
-    #session[ :current_user_id ] = nil
     redirect_to home_url
   end
 

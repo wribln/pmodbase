@@ -1,0 +1,19 @@
+<% help_title "Help on #{ CfrFileType.model_name.human }" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">Administer the various file types used in the Central File Register (CFR)</p>
+    <p>This table is used only to provide labels for the various file types. File types are
+      recognized by the file's extension. The label is used in the display of CFR records
+      for information and to enable searching through files in the CFR by type of file (regardsless
+      of the specific extension).</p>
+    <ul>
+      <li><%= help_param CfrFileType.human_attribute_name( :label )-%> is the label for the
+        given file extension.</li>
+      <li><%= help_param CfrFileType.human_attribute_name( :extensions ) -%> is a comma-separated
+        list of file extensions to be associated with the above label. Note: This feature
+        does not perform extensive syntax checking on the string being input; it expects a list
+        of strings separated by a comma, blanks will be removed.</li>
+    </ul>
+    <%= help_footer FEATURE_ID_CFR_FILE_TYPES %>
+  </div> <!-- /container -->

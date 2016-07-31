@@ -1,0 +1,71 @@
+<div class="form-set" <% if( cfr_location.object._destroy || cfr_location.index == 'template' )%>style="display:none"<% end %>>
+  <div class="form-group">
+  <%- unless action_type == :new %>
+    <%- if action_type == :show -%>
+      <%= label_tag :main_location_id, t('cfr_records.form.main_location'), class: 'col-sm-3 control-label' %>
+      <div class="col-sm-1">
+        <%= radio_button_tag :main_location, cfr_location.object.id, disabled: true -%>
+      </div>
+    <%- else -%>
+      <div class="col-sm-1">
+        <%= cfr_location.hidden_field :_destroy %>
+        <%= link_to '-', '#', class: 'btn btn-warning btn-default btn-block del-subform-button' %>
+      </div>
+      <%= label_tag :main_location_id, t('cfr_records.form.main_location'), class: 'col-sm-2 control-label' %>
+      <div class="col-sm-1">
+        <%= radio_button_tag :main_location, cfr_location.object.id -%>
+      </div>
+    <%- end -%>
+  <%- end -%>
+  </div>
+  <div class="form-group">
+    <%= cfr_location.label :cfr_location_type_id, class: 'col-sm-3 control-label' %>
+    <div class="col-sm-4">
+    <%- if action_type == :show -%>
+      <%= display_value cfr_location.object.cfr_location_type.try( :location_type_label )%>
+    <%- else -%>
+      <%= 'drop-down list with location types' %>
+    <%- end -%>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= cfr_location.label :file_name, class: 'col-sm-3 control-label' %>
+    <div class="col-sm-4">
+    <%- if action_type == :show -%>
+      <%= display_value cfr_location.object.file_name %>
+    <%- else -%>
+      <%= cfr_location.text_field :file_name, class: 'form-control' %>
+    <%- end -%>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= cfr_location.label :doc_code, class: 'col-sm-3 control-label' %>
+    <div class="col-sm-6">
+    <%- if action_type == :show -%>
+      <%= display_value cfr_location.object.doc_code %>
+    <%- else -%>
+      <%= cfr_location.text_field :doc_code, class: 'form-control' %>
+    <%- end -%>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= cfr_location.label :doc_version, class: 'col-sm-3 control-label' %>
+    <div class="col-sm-1">
+    <%- if action_type == :show -%>
+      <%= display_value cfr_location.object.doc_version %>
+    <%- else -%>
+      <%= cfr_location.text_field :doc_version, class: 'form-control' %>
+    <%- end -%>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= cfr_location.label :uri, class: 'col-sm-3 control-label' %>
+    <div class="col-sm-9">
+    <%- if action_type == :show -%>
+      <%= display_lines cfr_location.object.uri, cols: DEFAULT_COLS_TEXTAREA, rows: DEFAULT_ROWS_TEXTAREA %>
+    <%- else -%>
+      <%= cfr_location.text_area :uri, cols: DEFAULT_COLS_TEXTAREA, rows: DEFAULT_ROWS_TEXTAREA, class: 'form-control' %>
+    <%- end -%>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,60 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="form-horizontal" role="form">
+    <%= form_for @cfr_location_type do |f| %>
+      <%= render partial: 'shared/notice' %>
+      <div class="form-group">
+        <%= f.label :id, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-2">
+          <%= display_value f.object.to_id %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :label, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-4">
+          <%= display_value f.object.label %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :location_type, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-2">
+          <%= display_value f.object.location_type_label %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :path_prefix, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-9">
+          <%= display_value f.object.path_prefix %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :concat_char, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-1">
+          <%= display_value f.object.concat_char %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :project_dms, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-2">
+          <%= display_check_box f.object.project_dms %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :note, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-4">
+          <%= display_value f.object.note %>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-2">
+          <%= link_to t( 'button_label.edit' ), edit_cfr_location_type_path( @cfr_location_type ), class: 'btn btn-lg btn-block btn-default' %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to t( 'button_label.go_to_index' ), cfr_location_types_path, class: 'btn btn-lg btn-block btn-default' %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

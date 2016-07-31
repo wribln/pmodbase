@@ -10,7 +10,7 @@ class SDocumentLog < ActiveRecord::Base
 
   before_save do
     self.doc_id = create_siemens_doc_id
-    self.set_default!( :author_date, Date.today )
+    self.set_nil_default( :author_date, Date.today )
   end
 
   validates :group_id,

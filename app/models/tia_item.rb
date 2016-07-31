@@ -100,7 +100,7 @@ class TiaItem < ActiveRecord::Base
     # ensure that archived is either true or false
 
     def set_defaults
-      set_default!( :archived, false )
+      set_nil_default( :archived, false )
     end
 
 end

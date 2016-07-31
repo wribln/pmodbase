@@ -8,7 +8,7 @@ class ADocumentLog < ActiveRecord::Base
 
   before_save do
     self.doc_id = create_alt_doc_id
-    self.set_default!( :author_date, Date.today )
+    self.set_default_for_blank( :author_date, Date.today )
   end
 
   validates :a1_code, :a2_code, :a3_code, :a4_code, :a5_code, :a6_code, :a7_code, :a8_code,

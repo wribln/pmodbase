@@ -32,6 +32,8 @@
 
   # maximum length of ...
 
+  MAX_LENGTH_OF_STRING = 255
+
   MAX_LENGTH_OF_ACCOUNT_NAME = 20
   MAX_LENGTH_OF_ACCOUNT_INFO = 127    # string to hold account and person name
   MAX_LENGTH_OF_ADDRESS = 255
@@ -48,14 +50,17 @@
   MAX_LENGTH_OF_DOC_ID_A = 50         # for Alternative document codes
   MAX_LENGTH_OF_DOC_ID_S = 100        # for Siemens document codes
   MAX_LENGTH_OF_DOC_ID = 100          # for either Siemens or Alternative document code
+  MAX_LENGTH_OF_DOC_DATE = 20         # for date information on documents
   MAX_LENGTH_OF_DOC_VERSION = 10      # length of string for version information
 
 	MAX_LENGTH_OF_LABEL = 50
   MAX_LENGTH_OF_NOTE = 50
 	MAX_LENGTH_OF_CODE = 10
+  MAX_LENGTH_OF_EXTENSION = 10
 	MAX_LENGTH_OF_DESCRIPTION = 255
   MAX_LENGTH_OF_TITLE = 128
-  MAX_LENGTH_OF_URI = 255
+  MAX_LENGTH_OF_HASH = 64             # SH-256
+  MAX_LENGTH_OF_URI = 2048            # this seems to be a good as any
 	
 	DEFAULT_ROWS_TEXTAREA = 5
 	DEFAULT_COLS_TEXTAREA = 50
@@ -148,5 +153,11 @@
   FEATURE_ID_ALL_PCP_SUBJECTS = 70
   FEATURE_ID_PCP_MEMBERS = 71
   FEATURE_ID_PCP_ITEMS = 72
+  FEATURE_ID_CFR_RECORDS = 73
+  FEATURE_ID_CFR_RELATIONS = 74
+  FEATURE_ID_CFR_RELATIONSHIPS = 75
+  FEATURE_ID_CFR_LOCATIONS = 76
+  FEATURE_ID_CFR_LOCATION_TYPES = 77
+  FEATURE_ID_CFR_FILE_TYPES = 78
 
-  FEATURE_ID_MAX_PLUS_ONE = 73 # update this when inserting new features!
+  FEATURE_ID_MAX_PLUS_ONE = 79 # update this when inserting new features!

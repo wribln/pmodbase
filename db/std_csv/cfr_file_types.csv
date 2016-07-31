@@ -1,0 +1,15 @@
+label;extensions
+Data File (XML);xml
+Document (other);odt,rtf
+Document (Word);doc,docm,docx
+Document Template (Word);dot,dotm,dotx
+Drawing (Visio);vsd
+Drawing (AutoCAD);dwg,dxf,dxb,dwf,shp
+Drawing (MicroStation);dgn
+E-Mail (Microsoft);msg
+File Archive (ZIP);zip
+Image;gif,jpeg,jpg,png,tif,tiff
+Plain Text File;txt
+Portable Document Format (PDF);pdf
+Spreadsheet (Excel);xls,xlsm,xlsx
+Spreadsheet Template (Excel);xlt

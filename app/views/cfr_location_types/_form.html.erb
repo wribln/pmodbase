@@ -1,0 +1,43 @@
+      <div class="form-group">
+        <%= form.label :id, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-2">
+          <%= display_value form.object.to_id %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :label, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-4">
+          <%= form.text_field :label, class: 'form-control', required: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :location_type, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-2">
+          <%= form.select :location_type, select_options( CfrLocationType::LOCATION_TYPE_LABELS ), {}, { class: 'form-control' }%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :path_prefix, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-9">
+          <%= form.text_field :path_prefix, class: 'form-control' %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :concat_char, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-1">
+          <%= form.text_field :concat_char, class: 'form-control' %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :project_dms, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-2">
+          <%= form.check_box :project_dms %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :note, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-4">
+          <%= form.text_field :note, class: 'form-control' %>
+        </div>
+      </div>
+

@@ -1,0 +1,150 @@
+<% help_title "Help on #{ CfrRecord.model_name.human }" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">Manage each and every file and their relations within the Central File Registry (CFR)</p>
+    <h3>Purpose</h3>
+    <p>The CFR - Central File Registry - is the collection of information on documents and files. Its
+      purpose is to provide documentation on each and every file used in the project's life. This
+      is actually a task which should be covered by the project's document management system (DMS).
+      However, it appears in reality that many files are created outside of the project's DMS and
+      there is no way to keep track when, where and which file was used for which purpose.</p>
+    <p>The CFR provides means to keep track of individual files, their attributes, their location in
+      a DMS, on a server or elsewhere - even in a paper storage facility. The CFR will not store
+      any files itself but you can use it to keep track where the file is located, what relation it 
+      has to other files, and more.</p>
+    <p>Another purpose of the CFR is to minimize the input of redundant information on documents and
+      files: If a file is referred to in one pmodbase feature, the information in the CFR can be
+      used to provide that information.</p>
+    <p>Since it is possible to store the path of the file in the CFR, a hyperlink to that file can be
+      provided which will lead you directly to the file in that storage system - provided you have
+      sufficient access permissions.</p>
+    <h3>Basic Information</h3>
+    <p>Since the terms 'document' and 'file' are often used interchangeably, the following 
+      definitions are important to understand:
+      <ul>
+        <li>A <%= help_term 'Document' -%> is a written, drawn, presented or recorded representation
+          of thoughts (according to Wikipedia). Files on a computer could thus be considered as
+          electronic Documents. However, when a document is published, it may be created from a set
+          of files which in their entirety would be presented as a single document.</li>
+        <li>Hence, a <%= help_term 'File' -%> can be a complete document (for example, a drawing or
+        a letter), but a Document may technically consist of various files (header page, text, one
+        or more appendices, pictures, drawings, etc.).</li>
+        <li>Finally, the same Document may be represented by a source file (for example, a text
+        document created by a wordprocessor software) and by a printer-ready formatted file - often
+        a PDF-file. This would be the situation where a Document exists in more than format.</li>
+        <li>Even more complex is the situation where a Document consists in several versions (or
+        revisions): Each version is a Document itself but all versions relate to the same Document.</li>
+      </ul>
+      The CFR manages information/attributes of Files as the smallest unit of information. But the CFR allows you to keep track of the relationship between files such that you can easily traces which
+      files belong to a Document, or which files represent different versions of a document. You can
+      even use the CFR to group files (just like folders on a computer): Just create a CFR entry
+      (called <%= help_term 'CFR Record'-%>) with no actual file associated to it;
+      then create a relation from all files in this 'folder' to this CFR Record.</p>
+    <p>Although many attributes of a File can be collected in the CFR, there is are no required
+      attributes - not even a filename: Only a unique identifier (ID) will be created for you for 
+      each and every File in the CFR.</p>
+    <p>This allows you to add as little or as much information as you like about your file. The
+      catch is: The more you tell the CFR about your file, the easier it will be to find it again
+      among all the files in the CFR.</p>
+    <h3>CFR Record Attributes</h3>
+    <p>As mentioned above, a CFR entry is called <%= help_term 'CFR Record'-%>. A CFR Record
+      can be used to describe a file, a folder, a document (consisting of several files, or 
+      several versions of the document), an email message, etc. All attributes are optional, 
+      some attributes will be set automatically if possible:</p>
+    <ul>
+      <li>The <%= help_param CfrRecord.human_attribute_name( :title ) -%> should describe the
+      File, folder or document. It would be a good choice to use the actual title of the
+      document for this attribute. In case of emails, you could use the subject of the email here.
+      If no title is given but the electronic file's path, the tool can try to extra the name of
+      the file from the path and used this as 
+      <%= help_term CfrRecord.human_attribute_name( :title ) -%>.</li>
+      <li>Use the <%= help_param CfrRecord.human_attribute_name( :note )-%> field for any 
+      additional information about the file or the document. For emails, you could indicate the
+      sender and receivers. You could also define hashtags to mark specific topics. Please note,
+      that the maximum number of characters is limited here (currently:
+      <%= MAX_LENGTH_OF_DESCRIPTION -%>) for performance reasons.</li>
+      <li>The <%= help_param CfrRecord.human_attribute_name( :conf_level )-%> should be used to
+      note any restriction on the visibility of the file: Depending on the access level of the
+      user, information on files with a higher restriction might be blocked from being viewed. For
+      more information on the access to the information in the CFR, see <a href="#access">below</a>.</li>
+      <li>If the attribute <%= help_param CfrRecord.human_attribute_name( :group_id )-%> is given,
+      access to records will be restricted to users with specific access rights for this group.</li>
+      <li>The attribute <%= help_param CfrRecord.human_attribute_name( :doc_version )-%> can be used
+      to show the version or release string as shown on the cover of the document.</li>
+      <li>Likewise, the attribute <%= help_param CfrRecord.human_attribute_name( :doc_date )-%> should
+      be used to show the (release) date of the document as shown on the cover sheet.</li>
+      <li><%= help_param CfrRecord.human_attribute_name( :doc_owner )-%> will be set to the user who
+      created the CFR Record unless another string is specified. This attribute should enable the
+      reader to refer to the person responsible for that file or document which could be the 
+      original author (as shown on the cover sheet), the owner, or any other person which can be
+      contacted about this file or document.</li>
+      <li><%= help_param CfrRecord.human_attribute_name( :cfr_location_id )-%> determines the default
+      storage location of the document (if more than one is given): The link to this storage location
+      will be used as hyperlink for the file.</li>
+      <li>The <%= help_param CfrRecord.human_attribute_name( :extension )-%> helps to identify
+      the type of the file: By default, this information is part of the file name and will be derived
+      from there. If this is not possible, you can manually set this information using the
+      attribute <%= help_term CfrRecord.human_attribute_name( :cfr_file_type_id )-%>.</li>
+      <li>The attribute <%= help_param CfrRecord.human_attribute_name( :cfr_file_type_id )-%>
+      shows what type of file this is. This information is normally automatically retrieved from the
+      attribute <%= help_term CfrRecord.human_attribute_name( :extension )-%>. Both
+      attributes should match or correspond but for searching/filterning only the attribute
+      <%= help_term CfrRecord.human_attribute_name( :cfr_file_type_id )-%> is used.</li>
+      <li>The attribute <%= help_term CfrRecord.human_attribute_name( :hash_value )-%> can be used
+      to store the result of a <%= help_term CfrRecord.human_attribute_name( :hash_function )-%> for
+      the given file: This enables you to verify that the file contents has not changed, or if two
+      files are identical - even if they have a different name.</li>
+    </ul>
+    <p>The next set up attributes can be set for each storage location where this file is located, i.e.
+      you specify here where you keep a copy of this file. If you only have a single copy, enter the
+      attributes once for location of the file. If the file is kept in two locations, for example, in
+      the project's DMS and on a server, you can add both locations here for the file:</p>
+    <ul>
+      <li>Select a <%= help_param CfrLocation.human_attribute_name( :cfr_location_type_id )-%> from
+      the set of <%= help_term CfrLocationType.model_name.human -%> where the given file is located.</li>
+      <li>If the location refers to a file servers or a drive on your computer, select a file from
+      via <%= help_param CfrLocation.human_attribute_name( :file_name )-%>. The other attribute
+      <%= help_term CfrLocation.human_attribute_name( :uri )-%> will be derived from this 
+      information and the file name (including the extension) will be saved in this field.</li>
+      <li>If the location refers to a document management system, use the attribute
+      <%= help_param CfrLocation.human_attribute_name( :doc_code )-%> to document the file's
+      location but omit the version suffix as this needs to be treated separately:</li>
+      <li>The attribute <%= help_param CfrLocation.human_attribute_name( :doc_version )-%> shall
+      hold the version suffix of the document code: Thus, document code and version suffix can be
+      accessed separately from other features.</li>
+      <li><%= help_param CfrLocation.human_attribute_name( :uri )-%> shall hold the complete
+      network URI to the given file or document, such that a hyperlink to that document can be
+      created for the browser. For files on a file system, a complete path is needed here: 
+      The tool will automatically fix the path so it becomes a well-formatted network URI.<br/>
+      Network URIs must start with 'http://', 'https://', ftp://' or 'file://'. A local path on
+      a Windows system must start with a drive character 'A'..'Z' followed by a colon. A local
+      path on a Unix system must start with a single '/'.</li>
+    </ul>
+    <h3>Usage</h3>
+    <p>When searching through the CFR, a search for a string in the 
+      <%= help_term I18n.t('cfr_records.index.title_filename')%> filter field will also search through: 
+      <%= help_term CfrRecord.human_attribute_name( :title )-%>,
+      <%= help_term CfrRecord.human_attribute_name( :note )-%>, 
+      <%= help_term CfrLocation.human_attribute_name( :file_name )-%>, and the
+      <%= help_term CfrLocation.human_attribute_name( :doc_code )-%>.
+    </p>
+    <h3 id="access">Access</h3>
+    <p>All users (with an account) will have access to the index view of the CFR and to all
+    Records with unrestricted access 
+    (<%= help_term CfrRecord.human_attribute_name( :conf_level )-%>&nbsp;=&nbsp;0) and no
+    project group assignment.</p>
+    <p>CFR Records with an assigned <%= help_term CfrRecord.human_attribute_name( :group_id )-%>
+    are restricted to users with permission to access records for this group. These users will
+    see all CFR Records in the index (regardsless of the 
+    <%= help_term CfrRecord.human_attribute_name( :conf_level )-%>.</p>
+    <p>The access level per user and action will determine which  
+    <%= help_term CfrRecord.human_attribute_name( :conf_level )-%> this user can access: A user
+    with update access level 3 may modify CFR Records with
+    <%= help_term CfrRecord.human_attribute_name( :conf_level )-%>&nbsp;=&nbsp;3 and lower
+    for the given project group.</p>
+    <h3>Order</h3>
+    <p>When listing CFR Records in the index view, the records are shown in reverse order of the
+    ID, i.e. most recently created records are shown first.</p>
+    <%= help_footer FEATURE_ID_CFR_RECORDS %>
+  </div> <!-- /container -->

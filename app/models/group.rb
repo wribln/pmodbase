@@ -9,6 +9,7 @@ class Group < ActiveRecord::Base
   has_many    :permission4_groups
   has_many    :pcp_categories
   has_many    :pcp_subjects
+  has_many    :cfr_records
   has_many    :sub_groups,   class_name: 'Group', foreign_key: 'sub_group_of_id'
   belongs_to  :sub_group_of, class_name: 'Group'
 
@@ -117,7 +118,8 @@ class Group < ActiveRecord::Base
   def check_destroyable
     if self.responsibilities.empty? &&
        self.permission4_groups.empty? &&
-       self.sub_groups.empty? then
+       self.sub_groups.empty? &&
+       self.cfr_records.empty? then
       true
     else
       errors.add( :base, I18n.t( 'groups.msg.in_use' ))

@@ -1,0 +1,43 @@
+<% help_title "Help on #{ CfrRelationship.model_name.human }" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">CFR Relations describe the relationship between two files</p>
+    <p>A CFR Relation is always defined as pair of relationships between two files A and B: the first
+    (the 'leading' relationship) describes the relationship between A and B (e.g. 'A is main document of
+    B'), the other (the 'reverse' relationship) describes the relationship between B and A
+    ('B is attachment of A'). Thus, any relation between two files can be documented within the
+    Central File Register (CFR).</p>
+    <p>The distinction between 'leading' and 'reverse' was chosen to be able to display a prereferred
+      relationship: The 'leading' relationship will be chosen over the 'reverse' relationship when
+      showing the relation of two files.</p>
+    <p>The administration of the CFR Relations is implemented such that always the related pair of
+      relationsships is shown with the leading relationship being the first. However, only a single
+      relationship can be modified at any time.</p>
+    <p>The following relationship attributes are managed:</p>
+    <ul>
+      <li><%= help_param CfrRelationship.human_attribute_name( :rs_group )-%> is used to group
+      the various relations in the drop-down listboxes:<br/>
+      <ul>
+        <li><%= help_param CfrRelationship::CFR_RS_GROUP_LABELS[ 0 ]-%> are those relationships
+          describing a sequence of the files or documents, the first (leading) occuring before the
+          second. For example, a question would come before the answer.</li>
+        <li><%= help_param CfrRelationship::CFR_RS_GROUP_LABELS[ 1 ]-%> are relationships where
+          the leading file or document is a collector (folder, cover, list) of several other
+          documents (files, drawings, etc.). The main document must not necessarily be a real file,
+          it can be thought of as a folder.</li>
+        <li><%= help_param CfrRelationship::CFR_RS_GROUP_LABELS[ 2 ]-%> is the category to
+          collect all relationships which do not fit into either of the above categories.</li>
+      </ul>
+      <li><%= help_param CfrRelationship.human_attribute_name( :label )-%> is the description
+        of the relationship: This string should always be specified in a format such that a
+        sentence 'A
+        &lt;<%= help_term CfrRelationship.human_attribute_name( :label )-%>&gt; B'
+        could be created. For example, 'is folder of' or 'is file in folder'.</li>
+    </ul>
+    <p>Note: If you ever dare to consider deleting a CFR Relationship, be aware that all CFR
+      Relations between two files using this relationship or the reverse relationship will be
+      deleted at the same time! That is, the files will remain but the relation between these
+      files will be gone. I therefore strongly suggest not to delete any CFR Relationships.</p> 
+    <%= help_footer FEATURE_ID_CFR_RELATIONSHIPS %>
+  </div> <!-- /container -->

@@ -1,0 +1,74 @@
+      <div class="form-group">
+        <%= form.label :id, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-2">
+          <%= display_value form.object.to_id %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :title, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-6">
+          <%= form.text_field :title, class: 'form-control' %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :note, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-6">
+          <%= form.text_field :note, class: 'form-control' %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :group_id, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-2">
+            <%= form.select :group_id, @cfr_groups, { include_blank: true },{ class: 'form-control' }%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :conf_level, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-2">
+          <%= form.select :conf_level, select_options( CfrRecord::CONF_LEVEL_LABELS ), {}, { class: 'form-control' }%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :doc_version, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-2">
+          <%= form.text_field :doc_version, class: 'form-control' %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :doc_date, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-2">
+          <%= form.text_field :doc_date, class: 'form-control' %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :doc_owner, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-4">
+          <%= form.text_field :doc_owner, class: 'form-control' %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :extension, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-1">
+          <%= form.text_field :extension, class: 'form-control' %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :cfr_file_type_id, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-3">
+          <%= form.select :cfr_file_type_id, @cfr_file_types, { include_blank: true },{ class: 'form-control' }%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :hash_function, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-2">
+          <%= form.select :hash_function, select_options( CfrRecord::HASH_FUNCTION_LABELS ), { include_blank: true },{ class: 'form-control' }%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :hash_value, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-6">
+          <%= form.text_field :hash_value, class: 'form-control' %>
+        </div>
+      </div>
+
+

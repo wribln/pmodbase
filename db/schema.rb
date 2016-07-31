@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160511091429) do
+ActiveRecord::Schema.define(version: 20160722124320) do
 
   create_table "a1_codes", force: :cascade do |t|
     t.string   "code",                      null: false
@@ -164,6 +164,68 @@ ActiveRecord::Schema.define(version: 20160511091429) do
 
   add_index "addresses", ["label"], name: "index_addresses_on_label"
 
+  create_table "cfr_file_types", force: :cascade do |t|
+    t.string   "label",      limit: 50
+    t.string   "extensions", limit: 50, null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  create_table "cfr_location_types", force: :cascade do |t|
+    t.string   "label",         limit: 50,                  null: false
+    t.integer  "location_type",             default: 0,     null: false
+    t.string   "path_prefix",   limit: 255
+    t.string   "concat_char",   limit: 10
+    t.boolean  "project_dms",               default: false
+    t.string   "note",          limit: 50
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
+  end
+
+  create_table "cfr_locations", force: :cascade do |t|
+    t.integer  "cfr_record_id"
+    t.integer  "cfr_location_type_id"
+    t.string   "file_name",            limit: 255
+    t.string   "doc_code",             limit: 100
+    t.string   "doc_version",          limit: 10
+    t.text     "uri",                  limit: 2048
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+  end
+
+  add_index "cfr_locations", ["cfr_location_type_id"], name: "index_cfr_locations_on_cfr_location_type_id"
+  add_index "cfr_locations", ["cfr_record_id"], name: "index_cfr_locations_on_cfr_record_id"
+
+  create_table "cfr_records", force: :cascade do |t|
+    t.string   "title",            limit: 128
+    t.string   "note",             limit: 255
+    t.integer  "group_id"
+    t.integer  "conf_level",                   default: 1
+    t.string   "doc_version",      limit: 10
+    t.string   "doc_date",         limit: 20
+    t.string   "doc_owner",        limit: 127
+    t.string   "extension",        limit: 10
+    t.integer  "cfr_file_type_id"
+    t.string   "hash_value",       limit: 64
+    t.integer  "hash_function"
+    t.integer  "main_location_id"
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+  end
+
+  add_index "cfr_records", ["cfr_file_type_id"], name: "index_cfr_records_on_cfr_file_type_id"
+  add_index "cfr_records", ["group_id"], name: "index_cfr_records_on_group_id"
+  add_index "cfr_records", ["id"], name: "default_order"
+
+  create_table "cfr_relationships", force: :cascade do |t|
+    t.integer  "rs_group",                 default: 2
+    t.string   "label",         limit: 50
+    t.integer  "reverse_rs_id"
+    t.boolean  "leading",                  default: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+  end
+
   create_table "contact_infos", force: :cascade do |t|
     t.string   "info_type",       limit: 10,              null: false
     t.string   "phone_no_fixed",  limit: 26, default: "", null: false
@@ -214,11 +276,11 @@ ActiveRecord::Schema.define(version: 20160511091429) do
     t.integer  "feature_id"
     t.string   "detail",                 limit: 50
     t.string   "action",                 limit: 10
-    t.integer  "status",                            default: 0
-    t.string   "uri"
+    t.integer  "status",                             default: 0
+    t.string   "uri",                    limit: 255
     t.text     "request_text"
-    t.datetime "created_at",                                    null: false
-    t.datetime "updated_at",                                    null: false
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
   end
 
   add_index "db_change_requests", ["requesting_account_id"], name: "index_db_change_requests_on_requesting_account_id"

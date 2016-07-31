@@ -730,6 +730,7 @@ en:
     comment:      'Comment'
     create:       'Create'
     destroy:      'Delete'
+    defaults:     'Defaults'
     filter:       'Filter'
     index:        'Index'
     print:        'Print'

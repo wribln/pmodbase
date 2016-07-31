@@ -1,0 +1,25 @@
+      <div class="form-group">
+        <%= form.label :id, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-2">
+          <%= display_value form.object.to_id %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :rs_group, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-2">
+          <%= form.select :rs_group, select_options( CfrRelationship::CFR_RS_GROUP_LABELS ), { prompt: true }, { class: 'form-control', required: true } %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label 'labels[0]', t( '.leading_label' ), class: 'col-sm-3 control-label' %>
+        <div class="col-sm-4">
+          <%= form.text_field :labels, value: @labels[0], multiple: true, required: true, class: 'form-control' %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label 'labels[1]', t( '.reverse_label' ), class: 'col-sm-3 control-label' %>
+        <div class="col-sm-4">
+          <%= form.text_field :labels, value: @labels[1], multiple: true, required: true, class: 'form-control' %>
+        </div>
+      </div>
+

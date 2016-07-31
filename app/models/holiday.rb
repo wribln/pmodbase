@@ -51,7 +51,7 @@ class Holiday < ActiveRecord::Base
 
     return false unless date_from?
 
-    set_default!( :date_until, date_from )
+    set_nil_default( :date_until, date_from )
 
     if date_until < date_from
       errors.add( :date_until, I18n.t( 'holidays.msg.bad_period' ))

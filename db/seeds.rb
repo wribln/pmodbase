@@ -26,7 +26,7 @@ fc3.seqno = 5
 fc3.save
 
 fc4 = FeatureCategory.new
-fc4.label = 'Status Registers'
+fc4.label = 'Registers'
 fc4.seqno = 6
 fc4.save
 
@@ -279,7 +279,40 @@ Feature.new do |f|
   f.control_level = HashtagsController.feature_control_level
   f.no_workflows = HashtagsController.no_workflows
   f.feature_category_id = fc1.id
-end.save! 
+end.save!
+
+Feature.new do |f|
+  f.id = FEATURE_ID_CFR_RELATIONSHIPS
+  f.label = I18n.t( 'cfr_relationships.title' )
+  f.code = 'CFS'
+  f.seqno = 52
+  f.access_level = CfrRelationshipsController.feature_access_level
+  f.control_level = CfrRelationshipsController.feature_control_level
+  f.no_workflows = CfrRelationshipsController.no_workflows
+  f.feature_category_id = fc1.id
+end.save!
+
+Feature.new do |f|
+  f.id = FEATURE_ID_CFR_FILE_TYPES
+  f.label = I18n.t( 'cfr_file_types.title' )
+  f.code = 'CFT'
+  f.seqno = 51
+  f.access_level = CfrFileTypesController.feature_access_level
+  f.control_level = CfrFileTypesController.feature_control_level
+  f.no_workflows = CfrFileTypesController.no_workflows
+  f.feature_category_id = fc1.id
+end.save!
+
+Feature.new do |f|
+  f.id = FEATURE_ID_CFR_LOCATION_TYPES
+  f.label = I18n.t( 'cfr_location_types.title' )
+  f.code = 'CFU'
+  f.seqno = 53
+  f.access_level = CfrLocationTypesController.feature_access_level
+  f.control_level = CfrLocationTypesController.feature_control_level
+  f.no_workflows = CfrLocationTypesController.no_workflows
+  f.feature_category_id = fc1.id
+end.save!
 
 # -  -  -  -  -  -  - Rosters
 
@@ -417,7 +450,7 @@ Feature.new do |f|
   f.feature_category_id = fc3.id
 end.save!
 
-# -  -  -  -  -  -  - Status Registers  
+# -  -  -  -  -  -  - Registers  
 
 Feature.new do |f|
   f.id = FEATURE_ID_CSR_STATUS_RECORDS
@@ -431,10 +464,21 @@ Feature.new do |f|
 end.save!
 
 Feature.new do |f|
+  f.id = FEATURE_ID_CFR_RECORDS
+  f.label = I18n.t( 'cfr_records.title' )
+  f.code = 'CFR'
+  f.seqno = 2
+  f.access_level = CfrRecordsController.feature_access_level
+  f.control_level = CfrRecordsController.feature_control_level
+  f.no_workflows = CfrRecordsController.no_workflows
+  f.feature_category_id = fc4.id
+end.save! 
+
+Feature.new do |f|
   f.id = FEATURE_ID_DSR_STATUS_RECORDS
   f.label = I18n.t('dsr_status_records.title')
   f.code = 'DSR'
-  f.seqno = 2
+  f.seqno = 3
   f.access_level = DsrStatusRecordsController.feature_access_level
   f.control_level = DsrStatusRecordsController.feature_control_level
   f.no_workflows = DsrStatusRecordsController.no_workflows
@@ -445,7 +489,7 @@ Feature.new do |f|
   f.id = FEATURE_ID_DSR_DOC_GROUPS
   f.label = I18n.t('dsr_doc_groups.title')
   f.code = 'DDG'
-  f.seqno = 3
+  f.seqno = 4
   f.access_level = DsrDocGroupsController.feature_access_level
   f.control_level = DsrDocGroupsController.feature_control_level
   f.no_workflows = DsrDocGroupsController.no_workflows
@@ -456,7 +500,7 @@ Feature.new do |f|
   f.id = FEATURE_ID_DSR_PROGRESS_RATES
   f.label = I18n.t( 'dsr_progress_rates.title' )
   f.code = 'DPR'
-  f.seqno = 4
+  f.seqno = 5
   f.access_level = DsrProgressRatesController.feature_access_level
   f.control_level = DsrProgressRatesController.feature_control_level
   f.no_workflows = DsrProgressRatesController.no_workflows
@@ -467,7 +511,7 @@ Feature.new do |f|
   f.id = FEATURE_ID_SUBMISSION_GROUPS
   f.label = I18n.t('submission_groups.title')
   f.code = 'SGP'
-  f.seqno = 4
+  f.seqno = 6
   f.access_level = SubmissionGroupsController.feature_access_level
   f.control_level = SubmissionGroupsController.feature_control_level
   f.no_workflows = SubmissionGroupsController.no_workflows
@@ -478,7 +522,7 @@ Feature.new do |f|
   f.id = FEATURE_ID_RFC_STATUS_RECORDS
   f.label = I18n.t('rfc_status_records.title')
   f.code = 'RSR'
-  f.seqno = 5
+  f.seqno = 7
   f.access_level = RfcStatusRecordsController.feature_access_level
   f.control_level = RfcStatusRecordsController.feature_control_level
   f.no_workflows = RfcStatusRecordsController.no_workflows
@@ -945,6 +989,11 @@ end
 p = Permission4Group.find_by( feature_id: FEATURE_ID_DSR_STATUS_RECORDS, account_id: a1.id )
 p.to_read = 4
 p.to_update = 4
+p.save
+
+# full acdess for CFR
+p = Permission4Group.find_by( feature_id: FEATURE_ID_CFR_RECORDS, account_id: a1.id )
+p.to_index = p.to_read = p.to_update = p.to_delete = CfrRecord::CONF_LEVEL_LABELS.size
 p.save
 
 # - - - - - - - - - - permissions for workflows

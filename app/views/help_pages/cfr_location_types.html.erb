@@ -1,0 +1,41 @@
+<% help_title "Help on #{ CfrLocationType.model_name.human }" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">Administer the locations of files in the Central File Register (CFR)</p>
+    <p>This table contains all common characteristics of file locations:</p>
+    <ul>
+      <li><%= help_param CfrLocationType.human_attribute_name( :label ) -%> describes the location,
+        for example: 'File Server' or 'Sharepoint' or 'Project DMS'.</li>
+      <li><%= help_param CfrLocationType.human_attribute_name( :location_type )-%> indicates what
+        format of file names or path names to expect (to support correct error diagnostics). When
+        specifying<br/>
+        <%= help_term CfrLocationType.human_attribute_name( :location_types )[ 0 ]-%>, a Windows
+        file name or path is expected in the format
+        '&lt;drive letter&gt;:\&lt;path&gt;\&lt;file name&gt;.&lt;extension&gt;'<br/>
+        <%= help_term CfrLocationType.human_attribute_name( :location_types )[ 1 ]-%>, an Internet
+        URI path is expected with a prefix of 'http://', 'https://', 'ftp://', or 'file:///'</li>
+      <li><%= help_param CfrLocationType.human_attribute_name( :path_prefix )-%> is the prefix for
+        all files at this location. If this prefix is specified, it serves the following purposes:
+        <ul>
+          <li>to check whether the file's path contains this prefix and if thus the file's path corresponds with this location;</li>
+          <li>to complete a file's path if only a partial path is given;</li>
+          <li>to determine a file's location based on the file's path.</li>
+        </ul>
+        It should be clear that the prefix must be unique in the database, i.e. no two file location
+        records may have an identical
+        <%= help_term CfrLocationType.human_attribute_name( :path_prefix )-%>.</li>
+      <li><%= help_param CfrLocationType.human_attribute_name( :concat_char )-%> will be used to
+        concatenate a document code with the document version string for files in this location.
+        For example, if the document code is 'PID(SND)RCV=XYZ_TD12345678', the document
+        version is 'A-0', and the <%= help_term CfrLocationType.human_attribute_name( :concat_char )-%>
+        is '_', then the complete document code for the given file would be
+        'PID(SND)RCV=XYZ_TD12345678_A-0'.</li>
+      <li><%= help_param CfrLocationType.human_attribute_name( :project_dms )-%> is a flag which
+        determines whether this location refers to the main project's document management system.
+        Only one CFR Storage Location can have this attribute set to true.</li>
+      <li><%= help_param CfrLocationType.human_attribute_name( :note )-%> can be used to make
+        any remarks regarding this storage location.</li>
+    </ul>
+    <%= help_footer FEATURE_ID_CFR_LOCATION_TYPES %>
+  </div> <!-- /container -->

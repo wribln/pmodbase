@@ -180,8 +180,8 @@ class DsrStatusRecord < ActiveRecord::Base
   # set default values
 
   def set_defaults
-    set_default!( :quantity, 1 )
-    set_default!( :weight, 1.0 )  
+    set_nil_default( :quantity, 1 )
+    set_nil_default( :weight, 1.0 )  
   end
 
   # make sure the given submission package record exists

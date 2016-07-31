@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id:        12345
+  rs_group:  0
+  label:     Test 1 Group 0
+  reverse_rs_id: 67890
+  leading:   true
+
+two:
+  id:        67890
+  rs_group:  0
+  label:     Test 1 Group 0
+  reverse_rs_id: 12345
+  leading:   false

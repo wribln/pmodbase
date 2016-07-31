@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  label:        'Location 1'
+  path_prefix:  'X:\somewhere\over\the\rainbow'
+  location_type: 0
+  concat_char:  '-'
+  project_dms:  true
+  note:         'this is it!'
+
+two:
+  label:        'Location 2'
+  location_type: 1
+  path_prefix:  'http://www.google.com?abc=1&xyz=2'
+  concat_char:  '_'
+  project_dms:  false
+  note:         'nothing to note'

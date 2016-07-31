@@ -60,7 +60,11 @@ class ApplicationRoutesTest < ActionController::TestCase
     %w( MTI MyTiaItems ),
     %w( MCR MyChangeRequests ),
     %w( UNC UnitNames ),
-    %w( WLK WebLinks )
+    %w( WLK WebLinks ),
+    %w( CFS CfrRelationships ),
+    %w( CFR CfrRecords ),
+    %w( CFU CfrLocationTypes ),
+    %w( CFT CfrFileTypes )
     ]
 
   @my_resources.each do |r|

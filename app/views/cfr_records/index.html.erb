@@ -1,0 +1,49 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="table-responsive">
+    <%= form_tag({},{ method: :get }) do %>
+    <%= will_paginate @cfr_records %>
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th class="col-sm-1"><%= label_tag :ff_id,   CfrRecord.human_attribute_name( :id ), class: 'control_label' %></th>
+          <th class="col-sm-3"><%= label_tag :ff_text, t( '.title_filename' ), class: 'control_label' %></th>
+          <th class="col-sm-3"><%= label_tag :ff_type, t( '.type_location'  ), class: 'control_label' %></th>
+          <th class="col-sm-1"><%= CfrRecord.human_attribute_name( :doc_version )%></th>
+          <th class="col-sm-2"><%= CfrRecord.human_attribute_name( :doc_date )%></th>
+          <th class="col-sm-1"><%= label_tag :ff_grp, CfrRecord.human_attribute_name( :group_id ), class: 'control_label' %></th>
+          <th class="col-sm-1 hidden-print"><%= filter_action_title_header %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr <%= filter_row( @filter_fields ) -%>>
+          <td><%= filter_field @filter_fields, :ff_id, :id -%></td>
+          <td><%= filter_field @filter_fields, :ff_text, :sw -%></td>
+          <td colspan="2"><%= filter_select_from_array @filter_fields, :ff_type, @cfr_file_types -%></td>
+          <td>&nbsp;</td>
+          <td><%= filter_select_from_array @filter_fields, :ff_grp, @filter_groups -%></td>
+          <td><%= filter_action_button -%></td>
+        </tr>
+      <% if @cfr_records.length.zero? %>
+        <%= render partial: 'shared/index_empty_row', locals:{ columns: 6, with_link: true }%>
+      <% else %>
+        <% @cfr_records.each do |cfr| %>
+          <tr>
+            <td><%= cfr.to_id %></td>
+            <td><%= cfr.title %></td>
+            <td><%= cfr.file_type_label %></td>
+            <td><%= cfr.doc_version %></td>
+            <td><%= cfr.doc_date %></td>
+            <td><%= cfr.group_code unless cfr.group_id.nil? %></td>
+            <td><%= render partial: 'shared/actions', object: cfr %></td>
+          </tr>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+    <%- end -%>
+    <%= render partial: 'shared/footer' %>
+  </div>
+</div>

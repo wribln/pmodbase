@@ -10,10 +10,10 @@
       <!-- Contact Info -->
       <%= p.fields_for :contact_infos, p.object.contact_infos.order( :info_type ) do |ci| %>
         <%= render partial: 'contact_info', locals: { contact_info: ci, action_type: :edit } %>
-      <% end %>
-      <%= p.fields_for :contact_infos, @person.contact_infos.new, { child_index: "template" } do |ci| %>
+      <%- end -%>
+      <%= p.fields_for :contact_infos, @person.contact_infos.new, { child_index: 'template' } do |ci| %>
         <%= render partial: 'contact_info', locals: { contact_info: ci, action_type: :edit } %>
-      <% end %>
+      <%- end -%>
       <!-- button to add another contact info record -->
       <div class="form-group">
         <div class="col-sm-1">

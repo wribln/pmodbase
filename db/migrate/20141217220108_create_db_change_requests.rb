@@ -7,7 +7,7 @@ class CreateDbChangeRequests < ActiveRecord::Migration
       t.string  :detail, limit: MAX_LENGTH_OF_LABEL
       t.string  :action, limit: MAX_LENGTH_OF_CODE 
       t.integer :status, default: 0
-      t.string  :uri
+      t.string  :uri,    limit: MAX_LENGTH_OF_STRING
       t.text    :request_text
 
       t.timestamps null: false

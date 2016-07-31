@@ -19,6 +19,10 @@ Rails.application.routes.draw do
   resources :accounts, path: 'anp', format: false
   resources :addresses, path: 'adt', format: false
     get 'cdl/info', to: 'contact_lists#info', as: 'account_list', format: false
+  resources :cfr_relationships, path: 'cfs', format: false
+  resources :cfr_file_types, path: 'cft', format: false
+  resources :cfr_location_types, path: 'cfu', format: false
+  resources :cfr_records, path: 'cfr', format: false
   resources :contact_lists, path: 'cdl', format: false, only: [ :index, :show ]
   resources :contact_infos, path: 'cci', format: false
   resources :country_names, path: 'cnc', format: false

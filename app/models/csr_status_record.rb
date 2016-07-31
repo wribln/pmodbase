@@ -87,8 +87,8 @@ class CsrStatusRecord < ActiveRecord::Base
   # set defaults
 
   def set_defaults
-    set_default!( :status, 0 )
-    set_default!( :correspondence_date, Date.today )
+    set_nil_default( :status, 0 )
+    set_nil_default( :correspondence_date, Date.today )
   end
 
   # helper for easier reading of code...

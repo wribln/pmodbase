@@ -107,6 +107,7 @@ class ApplicationController < ActionController::Base
     # no feature_access_level or level none:
 
     if ApplicationController.no_user_access?( self.feature_access_level )
+      session[ :return_to ] = nil
       render_no_access
       return
     end
@@ -115,9 +116,11 @@ class ApplicationController < ActionController::Base
 
     return if ( self.feature_access_level & FEATURE_ACCESS_ALL != 0 )
        
-    # for the next levels, we need an existing user: 
+    # for the next levels, we need an existing user:
+    # in case of time-out, allow user to return here
 
     if current_user.nil?
+      session[ :return_to ] = request.url
       render_no_access
       return
     end
@@ -206,6 +209,7 @@ class ApplicationController < ActionController::Base
 
   def delete_user
     @_current_user = session[ :current_user_id ] = nil
+    reset_session
   end
   public :delete_user
 

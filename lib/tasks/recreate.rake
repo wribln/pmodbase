@@ -29,6 +29,13 @@ task :recreate => :environment do
   Rake::Task['db:seed:groups'].invoke
   puts '>>> db:seed:groups completed'
 
+  Rake::Task['db:seed:cfr_relations'].invoke
+  puts '>>> db:seed:cfr_relations completed'
+
+  Rake::Task['import'].reenable
+  Rake::Task['import'].invoke('db/std_csv/cfr_file_types.csv','CfrFileType')
+  puts '>>> import cfr file types completed.'
+
   exit!
 
   Rake::Task['db:seed:glossary'].invoke
