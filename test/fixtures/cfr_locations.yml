@@ -3,6 +3,7 @@
 one:
   cfr_record:         two
   cfr_location_type:  one
+  is_main_location:   true
   file_name:          'high.pdf'
   doc_code:           'WAY-UP-HI'
   doc_version:        '0'

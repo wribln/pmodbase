@@ -9,7 +9,7 @@ class CfrRecordsController < ApplicationController
   def index
     @filter_fields = filter_params
     @filter_groups = permitted_groups( :to_index )
-    @cfr_records = CfrRecord.filter( @filter_fields ).all_permitted( current_user ).includes( :cfr_locations, :cfr_file_type ).paginate( page: params[ :page ])
+    @cfr_records = CfrRecord.filter( @filter_fields ).all_permitted( current_user ).includes( :cfr_locations ).paginate( page: params[ :page ])
   end
 
   # GET /cfr
@@ -41,6 +41,7 @@ class CfrRecordsController < ApplicationController
       if params[ :commit ] == I18n.t( 'button_label.defaults' ) then
         set_defaults
       elsif @cfr_record.save then
+        @cfr_record.update_attribute( :main_location_id, @cfr_record.cfr_locations.first.try( :id ))
         format.html { redirect_to @cfr_record, notice: I18n.t( 'cfr_records.msg.create_ok' )}
         next
       end
@@ -86,10 +87,10 @@ class CfrRecordsController < ApplicationController
       @cfr_record.set_blank_default( :doc_owner, current_user.account_info )
       ml = @cfr_record.main_location || @cfr_record.cfr_locations.first
       @cfr_record.cfr_locations.each { | l | l.set_defaults }
-      @cfr_record.set_blank_default( :extension, CfrLocationType.get_extension( ml.file_name ))
+      fn = ml.try( :file_name ) # cannot assume that ml is set / valid
+      @cfr_record.set_blank_default( :extension, CfrLocationType.get_extension( fn ))
       @cfr_record.set_blank_default( :cfr_file_type_id, CfrFileType.get_file_type( @cfr_record.extension ).try( :id ))
-      @cfr_record.set_blank_default( :title, CfrLocationType.get_file_name( ml.file_name, @cfr_record.extension ))
-      @cfr_record.valid?
+      @cfr_record.set_blank_default( :title, CfrLocationType.get_file_name( fn, @cfr_record.extension ))
       flash.notice = I18n.t( 'cfr_records.msg.defaults_set' )
       flash.discard
     end

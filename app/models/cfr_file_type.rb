@@ -4,7 +4,7 @@ class CfrFileType < ActiveRecord::Base
 
   has_many :cfr_records, inverse_of: :cfr_file_types
 
-  validates :extensions,
+  validates :extensions, # keep it downcase internally !!!
     presence: true,
     length: { maximum: MAX_LENGTH_OF_NOTE },
     format: { with: /\A(\w+)(,\w+)*\z/, message: I18n.t( 'cfr_file_types.msg.bad_format' )}
@@ -46,10 +46,10 @@ class CfrFileType < ActiveRecord::Base
     end
   end
 
-  # remove all white space from string
+  # remove all white space from string and make it lowercase
 
   def extensions=( text )
-    write_attribute( :extensions, text.gsub( /\s+/,'' ))
+    write_attribute( :extensions, text.gsub( /\s+/,'' ).downcase)
   end
 
   # remove leading and trailing blanks

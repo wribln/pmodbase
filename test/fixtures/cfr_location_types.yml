@@ -2,7 +2,7 @@
 
 one:
   label:        'Location 1'
-  path_prefix:  'X:\somewhere\over\the\rainbow'
+  path_prefix:  'X:\somewhere\over\the\rainbow\'
   location_type: 0
   concat_char:  '-'
   project_dms:  true
@@ -15,3 +15,11 @@ two:
   concat_char:  '_'
   project_dms:  false
   note:         'nothing to note'
+
+three:
+  label:        'Location 3'
+  location_type: 2
+  path_prefix:  '/home/wr/Projects/pmdb'
+  concat_char:  '/'
+  project_dms:  false
+  note:         'for testing on Linux'

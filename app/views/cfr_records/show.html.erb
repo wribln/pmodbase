@@ -85,7 +85,7 @@
       </div>
       <% else %>
         <%= f.fields_for :cfr_locations, f.object.cfr_locations do |l| %>
-          <%= render partial: 'location', locals: { cfr_location: l, action_type: :show } %>
+          <%= render partial: 'location', locals: { cfr_record: f, cfr_location: l, action_type: :show } %>
         <% end %>
       <% end %>
       <%= render partial: 'locations_footer' %>

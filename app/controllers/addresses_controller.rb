@@ -43,7 +43,7 @@ class AddressesController < ApplicationController
 
   def update
     respond_to do |format|
-      if @address.update(address_params)
+      if @address.update( address_params )
         format.html { redirect_to @address, notice: t( 'addresses.msg.edit_ok' )}
       else
         format.html { render :edit }

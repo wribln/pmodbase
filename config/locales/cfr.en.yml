@@ -22,7 +22,7 @@ en:
         label:            'Label'
         note:             'Note'
         location_type:    'File System'
-        location_types:   [ 'Windows File', 'Internet' ]
+        location_types:   [ 'Windows File', 'Internet', 'Unix File' ]
         concat_char:      'Concatenation String'
         project_dms:      'Project DMS?'
         path_prefix:      'Path Prefix'
@@ -108,7 +108,7 @@ en:
       bad_ft_id:          :general.non_existing
       hex_only:           'must consist of hexadecimal characters only'
       defaults_set:       'Defaults set but CFR Record not yet saved!'
-      bad_main_loc:       'does not reference back to this CFR Record!'
+      bad_main_loc:       'backward reference not valid.'
 
   cfr_locations:
     msg:

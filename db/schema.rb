@@ -185,12 +185,13 @@ ActiveRecord::Schema.define(version: 20160722124320) do
   create_table "cfr_locations", force: :cascade do |t|
     t.integer  "cfr_record_id"
     t.integer  "cfr_location_type_id"
+    t.boolean  "is_main_location",                  default: false, null: false
     t.string   "file_name",            limit: 255
     t.string   "doc_code",             limit: 100
     t.string   "doc_version",          limit: 10
     t.text     "uri",                  limit: 2048
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
   end
 
   add_index "cfr_locations", ["cfr_location_type_id"], name: "index_cfr_locations_on_cfr_location_type_id"

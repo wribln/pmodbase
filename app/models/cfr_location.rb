@@ -25,6 +25,31 @@ class CfrLocation < ActiveRecord::Base
 
   validate :given_location_type_exists
   validate :given_cfr_record_exists
+  validate :one_main_location_only
+
+  # this is only to help cfr_record to determine which location is the main location
+  # see comments there
+
+  validates :is_main_location,
+    inclusion: { in: [ true, false ]}
+
+  # make sure we have no leading and trainling whitespaces
+
+  def uri=( s )
+    write_attribute( :uri, AppHelper.clean_up( s ))
+  end
+
+  def file_name=( s )
+    write_attribute( :file_name, AppHelper.clean_up( s ))
+  end
+
+  def doc_code=( s )
+    write_attribute( :doc_code, AppHelper.clean_up( s ))
+  end
+
+  def doc_version=( s )
+    write_attribute( :doc_version, AppHelper.clean_up( s ))
+  end
 
   # check if cfr_location_type record exists
 
@@ -51,10 +76,16 @@ class CfrLocation < ActiveRecord::Base
       if cfr_location_type.blank? then
          self.cfr_location_type = CfrLocationType.find_location_type( uri )
       end
-      if self.file_name.blank? && self.cfr_location_type then
+      if file_name.blank? && cfr_location_type then
         self.file_name = cfr_location_type.extract_file_name( uri )
       end
     end
+  end
+
+  # prepare hyperlink for display
+
+  def get_hyperlink
+    /\A(http?:|file:|ftp:)/i =~ uri ? uri : 'file://' + uri unless uri.blank?
   end
 
 end

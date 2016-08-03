@@ -4,7 +4,7 @@
     <%- if action_type == :show -%>
       <%= label_tag :main_location_id, t('cfr_records.form.main_location'), class: 'col-sm-3 control-label' %>
       <div class="col-sm-1">
-        <%= radio_button_tag :main_location, cfr_location.object.id, disabled: true -%>
+        <%= cfr_record.radio_button :main_location_id, cfr_location.object.id, disabled: true -%>
       </div>
     <%- else -%>
       <div class="col-sm-1">
@@ -13,7 +13,7 @@
       </div>
       <%= label_tag :main_location_id, t('cfr_records.form.main_location'), class: 'col-sm-2 control-label' %>
       <div class="col-sm-1">
-        <%= radio_button_tag :main_location, cfr_location.object.id -%>
+        <%= cfr_record.radio_button :main_location_id, cfr_location.object.id -%>
       </div>
     <%- end -%>
   <%- end -%>
@@ -24,7 +24,7 @@
     <%- if action_type == :show -%>
       <%= display_value cfr_location.object.cfr_location_type.try( :location_type_label )%>
     <%- else -%>
-      <%= 'drop-down list with location types' %>
+      <%= cfr_location.select :cfr_location_type_id, CfrLocationType.all.collect{ |lt| [ lt.label, lt.id ]}, { include_blank: true }, { class: 'form-control' }%>
     <%- end -%>
     </div>
   </div>

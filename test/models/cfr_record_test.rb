@@ -160,5 +160,12 @@ class CfrRecordTest < ActiveSupport::TestCase
     assert cfr.valid?, cfr.errors.messages
   end
 
+  test 'link to file' do
+    cfr = cfr_records( :one )
+    assert_nil cfr.link_to_file
+    cfr = cfr_records( :two )
+    assert_equal 'file:///X:\somewhere\over\the\rainbow\way\up\high.pdf', cfr.link_to_file
+  end
+
 
 end

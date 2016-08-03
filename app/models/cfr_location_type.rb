@@ -48,6 +48,8 @@ class CfrLocationType < ActiveRecord::Base
       /\A[a-z]:\\([^\\\/?|><:*"]+\\)*[^\\\/?|><:*"]*\z/i
     when 1 # URI
       /\A(http?|ftp|file):\/\/.+\z/i
+    when 2 # unix drive
+      /\A\/([^\/?*|><]+\/)*[^\/?*|><]*\z/
     end
     errors.add( :path_prefix, I18n.t( 'cfr_location_types.msg.bad_path' ))\
       unless r =~ path_prefix
@@ -61,7 +63,9 @@ class CfrLocationType < ActiveRecord::Base
     when 0 # windows drive
       /([^\\\/?|><:*"]+)\z/i
     when 1 # internet, only files
-      /\A(?:file:\/\/(?:[^\\\/]+[\\\/])*)([^\\\/?|><:*"]+)\z/i  
+      /\A(?:file:\/\/(?:[^\\\/]+[\\\/])*)([^\\\/?|><:*"]+)\z/
+    when 2 # unix drive
+      /([^\/?*|><]+)\z/
     else
       return nil
     end
@@ -75,7 +79,15 @@ class CfrLocationType < ActiveRecord::Base
     return false if path.blank?
     return false if path_prefix.nil?
     return false if path_prefix.length >= path.length
-    path[ 0..path_prefix.length - 1 ] == path_prefix
+    case location_type
+    when 0 # windows drive: ignore case of drive letter
+      path[ 0 ].casecmp( path_prefix[ 0 ]) &&
+      path[ 1, path_prefix.length - 1 ] == path_prefix[ 1, path_prefix.length - 1 ]
+    when 1,2 # internet, case-sensitive compare
+      path[ 0, path_prefix.length ] == path_prefix
+    else
+      false
+    end
   end
 
   # find the best match for a given path within all records, returns

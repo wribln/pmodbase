@@ -2,7 +2,7 @@ require 'test_helper'
 class CfrRecordsControllerTest < ActionController::TestCase
 
   setup do
-    @cfr_record = cfr_records(:one)
+    @cfr_record = cfr_records( :one )
     @account = accounts( :account_one )
     session[ :current_user_id ] = accounts( :account_one ).id
   end
@@ -21,13 +21,38 @@ class CfrRecordsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test 'should set defaults for new record' do
+  test 'should set defaults: doc_owner' do
     assert_no_difference( 'CfrRecord.count' ) do
       post :create, commit: I18n.t( 'button_label.defaults' ), cfr_record: { doc_owner: '' }
     end
     assert_response :success
     r = assigns( :cfr_record )
     assert_equal r.doc_owner, @account.account_info
+  end
+
+  test 'should set defaults: extension' do
+    assert_no_difference( 'CfrRecord.count' ) do
+      post :create, commit: I18n.t( 'button_label.defaults' ), cfr_record: {
+        extension: '',
+        cfr_locations_attributes: [ file_name: 'test.pdf' ]}
+    end
+    assert_response :success
+    r = assigns( :cfr_record )
+    assert_equal r.extension, 'pdf'
+  end
+
+  test 'should set defaults' do
+    assert_no_difference( 'CfrRecord.count' ) do
+      post :create, commit: I18n.t( 'button_label.defaults' ), cfr_record: {
+        cfr_locations_attributes: [ '0',  uri: 'X:\somewhere\over\the\rainbow\test.pdf' ]}
+    end
+    assert_response :success
+    r = assigns( :cfr_record )
+    assert_equal @account.account_info, r.doc_owner
+    assert_equal 'pdf', r.extension
+    assert_equal 'test', r.title
+    assert_equal 'test.pdf', r.cfr_locations.first.file_name
+    assert_equal cfr_location_types( :one ).id, r.cfr_locations.first.cfr_location_type.id
   end
 
   test 'should create cfr_record' do
@@ -48,7 +73,13 @@ class CfrRecordsControllerTest < ActionController::TestCase
   end
 
   test 'should update cfr_record' do
-    patch :update, id: @cfr_record, cfr_record: { doc_date: @cfr_record.doc_date, doc_version: @cfr_record.doc_version, group_id: @cfr_record.group_id, main_location_id: @cfr_record.main_location_id, note: @cfr_record.note, title: @cfr_record.title }
+    patch :update, id: @cfr_record, cfr_record: { 
+      doc_date: @cfr_record.doc_date,
+      doc_version: @cfr_record.doc_version,
+      group_id: @cfr_record.group_id,
+      main_location_id: @cfr_record.main_location_id,
+      note: @cfr_record.note, 
+      title: @cfr_record.title }
     assert_redirected_to cfr_record_path( assigns( :cfr_record ))
   end
 

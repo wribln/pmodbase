@@ -100,9 +100,8 @@ class CfrRecord < ActiveRecord::Base
   def given_main_location_ok
     return if errors.include?( :main_location_id )
     return unless main_location_id.present?
-    Rails.logger.debug ">>> main_location_id: '#{ main_location_id }'"
     errors.add( :main_location_id, I18n.t( 'cfr_records.msg.bad_main_loc' )) \
-      unless main_location.cfr_record == self
+      unless main_location.cfr_record == self && main_location.is_main_location
   end
 
   # prepare condition to restrict access to permitted groups for this user
@@ -168,6 +167,13 @@ class CfrRecord < ActiveRecord::Base
 
   def file_type_label
     cfr_file_type_id.nil? ? '' : self.cfr_file_type.label
+  end
+
+  # provide a link form the main location to the file
+
+  def link_to_file
+    return nil unless main_location.present?
+    main_location.get_hyperlink
   end
 
 end

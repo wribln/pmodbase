@@ -23,6 +23,17 @@ class CfrLocationTypeTest < ActiveSupport::TestCase
     assert lt.valid?, lt.errors.messages
   end
 
+  test 'fixture 3' do
+    lt = cfr_location_types( :three )
+    refute lt.label.blank?
+    refute lt.path_prefix.empty?
+    refute lt.concat_char.empty?
+    refute lt.note.empty?
+    refute lt.project_dms
+    assert_equal 2, lt.location_type
+    assert lt.valid?, lt.errors.messages
+  end
+
   test 'defaults' do
     lt = CfrLocationType.new
     assert_nil lt.label
@@ -61,11 +72,19 @@ class CfrLocationTypeTest < ActiveSupport::TestCase
     assert_nil CfrLocationType.find_location_type( '   ' )
     assert_nil CfrLocationType.find_location_type( 'X:\somewhere\over\the.ext' )
     assert_nil CfrLocationType.find_location_type( 'X:\somewhere\over\the\rainbow' )
-    assert_nil CfrLocationType.find_location_type( 'X:\Somewhere\over\the\rainbow.ext' )
-    assert_equal CfrLocationType.find_location_type( 'X:\somewhere\over\the\rainbow.ext' ), cfr_location_types( :one )
+    assert_nil CfrLocationType.find_location_type( 'X:\somewhere\over\the\rainbow.ext' )
+    assert_nil CfrLocationType.find_location_type( 'X:\Somewhere\over\the\rainbow\file.ext' )
+    assert_equal CfrLocationType.find_location_type( 'X:\somewhere\over\the\rainbow\file.ext' ), cfr_location_types( :one )
+    assert_equal CfrLocationType.find_location_type( 'x:\somewhere\over\the\rainbow\file.ext' ), cfr_location_types( :one )
+    
     assert_nil CfrLocationType.find_location_type( 'http://www.google.com' )
     assert_nil CfrLocationType.find_location_type( 'http://www.google.com?abc=1&xyz=2' )
     assert_equal CfrLocationType.find_location_type( 'http://www.google.com?abc=1&xyz=2&test' ), cfr_location_types( :two )
+
+    assert_nil CfrLocationType.find_location_type( '/' )
+    assert_nil CfrLocationType.find_location_type( '/home/wr/Projects' )
+    assert_nil CfrLocationType.find_location_type( '/home/wr/Projects/pmdb' )
+    assert_equal CfrLocationType.find_location_type( '/home/wr/Projects/pmdb/pmodbase' ), cfr_location_types( :three )
   end
 
   test 'retrieve file name incl. extension' do
@@ -74,6 +93,7 @@ class CfrLocationTypeTest < ActiveSupport::TestCase
     assert_equal 'the.ext', lt.extract_file_name( 'X:\somewhere\over\the\rainbox\the.ext' )
     assert_equal 'the.ext', lt.extract_file_name( 'X:\the.ext' )
     assert_equal 'the.ext', lt.extract_file_name( 'the.ext' )
+
     lt = cfr_location_types( :two ) # internet
     assert_nil lt.extract_file_name( 'X:\somewhere\over\the.ext' )
     assert_nil lt.extract_file_name( 'X:\somewhere\over\the\rainbox\the.ext' )
@@ -86,6 +106,10 @@ class CfrLocationTypeTest < ActiveSupport::TestCase
     assert_equal 'the.ext', lt.extract_file_name( 'file://X:\the.ext' )
     assert_equal 'the.ext', lt.extract_file_name( 'file://the.ext' )
     assert_equal 'ocean', lt.extract_file_name( 'file://down.under/in/the/dark/and/deep/ocean' )
+    #
+    lt = cfr_location_types( :three ) # unix
+    assert_equal 'the.ext', lt.extract_file_name( '/home/wr/Projects/pmdb/the.ext' )
+    assert_nil lt.extract_file_name( '/home/wr/Projects/pmdb/the/' )
   end
 
   test 'retrieve file extension' do
@@ -93,7 +117,6 @@ class CfrLocationTypeTest < ActiveSupport::TestCase
     assert_equal 'ext', CfrLocationType.get_extension( 'X:\somewhere\over\the\rainbox.ext' )
     assert_equal 'ext', CfrLocationType.get_extension( 'X:\somewhere\over\the\r.a.i.n.b.o.x.ext' )
   end
-
 
   test 'check for same location' do
     lt = cfr_location_types( :one )
@@ -104,6 +127,7 @@ class CfrLocationTypeTest < ActiveSupport::TestCase
     assert lt.same_location?( 'X:\somewhere\over\the\rainbow\test.ext' )
     assert lt.same_location?( 'X:\somewhere\over\the\rainbow\Test.ext' )
     refute lt.same_location?( 'X:\Somewhere\over\the\rainbow\test.ext' )
+    assert lt.same_location?( 'x:\somewhere\over\the\rainbow\test.ext' )
   end
 
   test 'validate path prefix syntax - windows' do
@@ -198,6 +222,38 @@ class CfrLocationTypeTest < ActiveSupport::TestCase
     lt.path_prefix = 'http://test.pmodbase.cfl?format=xls'
     assert lt.valid?
     
+  end
+
+   test 'validate path prefix syntax - unix' do
+    lt = cfr_location_types( :one )
+    lt.location_type = 2
+
+    lt.path_prefix = nil
+    assert lt.valid?
+
+    lt.path_prefix = '/'
+    assert lt.valid?
+
+    lt.path_prefix = '/home'
+    assert lt.valid?
+
+    lt.path_prefix = '/home?'
+    refute lt.valid?
+    assert_includes lt.errors, :path_prefix
+
+    lt.path_prefix = '/home*'
+    refute lt.valid?
+    assert_includes lt.errors, :path_prefix
+
+    lt.path_prefix = '/home/*.*'
+    refute lt.valid?
+    assert_includes lt.errors, :path_prefix
+
+    lt.path_prefix = '/home/test.doc'
+    assert lt.valid?, lt.errors.messages
+
+    lt.path_prefix = '/home/temp/test.doc'
+    assert lt.valid?
   end
 
   test 'complete code helper' do

@@ -21,7 +21,8 @@
         <tr <%= filter_row( @filter_fields ) -%>>
           <td><%= filter_field @filter_fields, :ff_id, :id -%></td>
           <td><%= filter_field @filter_fields, :ff_text, :sw -%></td>
-          <td colspan="2"><%= filter_select_from_array @filter_fields, :ff_type, @cfr_file_types -%></td>
+          <td><%= filter_select_from_array @filter_fields, :ff_type, @cfr_file_types -%></td>
+          <td>&nbsp;</td>
           <td>&nbsp;</td>
           <td><%= filter_select_from_array @filter_fields, :ff_grp, @filter_groups -%></td>
           <td><%= filter_action_button -%></td>
@@ -32,7 +33,7 @@
         <% @cfr_records.each do |cfr| %>
           <tr>
             <td><%= cfr.to_id %></td>
-            <td><%= cfr.title %></td>
+            <td><%= link_to_if cfr.main_location.present?, cfr.title, cfr.link_to_file %></td>
             <td><%= cfr.file_type_label %></td>
             <td><%= cfr.doc_version %></td>
             <td><%= cfr.doc_date %></td>

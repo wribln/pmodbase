@@ -4,8 +4,17 @@
   <%= form_title %>
   <div class="form-horizontal" role="form">
     <%= form_for @cfr_record do |f| %>
+      <%= render partial: 'shared/notice' %>
       <%= render partial: 'shared/errors', object: @cfr_record.errors %>
       <%= render partial: 'form', object: f %>
+      <%= render partial: 'locations_header' %>
+      <!-- CFR Locations -->
+      <%= f.fields_for :cfr_locations, @cfr_record.cfr_locations do |l| -%>
+        <%= render partial: 'location', locals: { cfr_record: f, cfr_location: l, action_type: :edit } %>
+      <%- end -%>
+      <%= f.fields_for :cfr_locations, @cfr_record.cfr_locations.new, { child_index: 'template' } do |l| %>
+        <%= render partial: 'location', locals: { cfr_record: f, cfr_location: l, action_type: :edit }%>
+      <% end %>
       <!-- button to add another contact info record -->
       <div class="form-group">
         <div class="col-sm-1">
@@ -13,6 +22,7 @@
         </div>
         <label class="col-sm-4"><%= t( 'cfr_records.form.add_label' )%></label>
       </div>
+      <%= render partial: 'locations_footer' %>
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-2">
           <%= f.submit t( 'button_label.defaults' ), class: 'btn btn-lg btn-block btn-default' %>
