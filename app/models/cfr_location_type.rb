@@ -47,7 +47,7 @@ class CfrLocationType < ActiveRecord::Base
     when 0 # windows drive
       /\A[a-z]:\\([^\\\/?|><:*"]+\\)*[^\\\/?|><:*"]*\z/i
     when 1 # URI
-      /\A(http?|ftp|file):\/\/.+\z/i
+      /\A(https?|ftp|file):\/\/.+\z/i
     when 2 # unix drive
       /\A\/([^\/?*|><]+\/)*[^\/?*|><]*\z/
     end

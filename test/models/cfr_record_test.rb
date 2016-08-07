@@ -167,5 +167,58 @@ class CfrRecordTest < ActiveSupport::TestCase
     assert_equal 'file:///X:\somewhere\over\the\rainbow\way\up\high.pdf', cfr.link_to_file
   end
 
+  test 'reject if location empty' do
+    cfr = CfrRecord.new({ title: 'test', cfr_locations_attributes: 
+      [{ uri: '', doc_version: '', doc_code: '', file_name: '', is_main_location: true }]})
+    assert_equal 0, cfr.cfr_locations.length
+    cfr = CfrRecord.new({ title: 'test', cfr_locations_attributes: [{ is_main_location: true }]})
+    assert_equal 0, cfr.cfr_locations.length
+    cfr = CfrRecord.new({ title: 'test', cfr_locations_attributes: [{ uri:         'x' }]})
+    assert_equal 1, cfr.cfr_locations.length
+    cfr = CfrRecord.new({ title: 'test', cfr_locations_attributes: [{ doc_version: 'x' }]})
+    assert_equal 1, cfr.cfr_locations.length
+    cfr = CfrRecord.new({ title: 'test', cfr_locations_attributes: [{ doc_code:    'x' }]})
+    assert_equal 1, cfr.cfr_locations.length
+    cfr = CfrRecord.new({ title: 'test', cfr_locations_attributes: [{ file_name:   'x' }]})
+    assert_equal 1, cfr.cfr_locations.length
+  end
+
+  test 'update main location' do
+    cfr = cfr_records( :one )
+    l1 = CfrLocation.new({ cfr_record: cfr, uri: 'test 1', is_main_location: false })
+    assert l1.save, l1.errors.messages
+
+    assert_nil cfr.main_location_id
+    cfr.update_main_location
+    cfr.reload
+    assert_nil cfr.main_location_id
+
+    l1.is_main_location = true
+    assert l1.save
+    cfr.reload
+    assert cfr.valid?
+
+    assert_nil cfr.main_location_id
+    cfr.update_main_location
+    cfr.reload
+    assert_equal l1.id, cfr.main_location_id
+
+    l2 = CfrLocation.new({ cfr_record: cfr, uri: 'test 2', is_main_location: true })
+    assert l2.save, l2.errors.messages
+    refute cfr.valid? # because we have two main locations
+    assert_includes cfr.errors, :base
+
+    l1.is_main_location = false
+    l1.save
+    cfr.reload
+    refute cfr.valid? # because main_location_id points to wrong, non-main record
+    assert_includes cfr.errors, :main_location_id
+
+    cfr.update_main_location
+    cfr.reload
+    assert_equal l2.id, cfr.main_location_id
+    assert cfr.valid?
+  end
+
 
 end

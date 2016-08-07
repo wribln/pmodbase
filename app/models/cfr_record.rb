@@ -1,3 +1,4 @@
+require './lib/assets/app_helper.rb'
 class CfrRecord < ActiveRecord::Base
   include ApplicationModel
   include Filterable
@@ -8,7 +9,8 @@ class CfrRecord < ActiveRecord::Base
   belongs_to :cfr_file_type, -> { readonly }
   belongs_to :main_location, foreign_key: 'main_location_id', class_name: 'CfrLocation', inverse_of: :cfr_record
   has_many   :cfr_locations, inverse_of: :cfr_record
-  accepts_nested_attributes_for :cfr_locations, allow_destroy: true, reject_if: :location_empty
+  has_many   :main_locations, -> { where( is_main_location: true )}, class_name: 'CfrLocation'
+  accepts_nested_attributes_for :cfr_locations, allow_destroy: true, reject_if: :location_empty?
 
   CONF_LEVEL_LABELS = CfrRecord.human_attribute_name( :conf_levels ).freeze
 
@@ -52,10 +54,6 @@ class CfrRecord < ActiveRecord::Base
 
   validate :hash_function_and_value
 
-  validates :main_location_id,
-    allow_nil: true,
-    numericality: { only_integer: true, greater_than: 0, message: I18n.t( 'cfr_records.msg.bad_loc_id' )}
-
   validate :given_main_location_ok
 
   validates :note,
@@ -67,6 +65,8 @@ class CfrRecord < ActiveRecord::Base
   validates :title,
     presence: true,
     length: { maximum: MAX_LENGTH_OF_TITLE }
+
+  validate :all_main_locations
 
   # all permitted: all groups for this account, check for conf_level must be done on a
   # group by group basis within views
@@ -82,17 +82,15 @@ class CfrRecord < ActiveRecord::Base
   scope :ff_grp, ->  ( g ){ where group_id: g }
 
   # check if cfr_location is empty - except when we are creating a new record
-  # return true if record should be rejected and destroyed
+  # return true if record should be rejected and destroyed. Important note:
+  # this method is only called when creating a new CfrRecord from a hash; it
+  # it NOT called for saves!
 
-  def location_empty( attributes )
-    if new_record? then
-      return false
-    else
-      attributes[ :uri ].blank? &&
-      attributes[ :file_name   ].blank? &&
-      attributes[ :doc_code    ].blank? &&
-      attributes[ :doc_version ].blank?
-    end
+  def location_empty?( attr )
+    attr[ 'uri'         ].blank? &&
+    attr[ 'file_name'   ].blank? &&
+    attr[ 'doc_code'    ].blank? &&
+    attr[ 'doc_version' ].blank?
   end
 
   # test if main location points back to this cfr record
@@ -101,8 +99,30 @@ class CfrRecord < ActiveRecord::Base
     return if errors.include?( :main_location_id )
     return unless main_location_id.present?
     errors.add( :main_location_id, I18n.t( 'cfr_records.msg.bad_main_loc' )) \
-      unless main_location.cfr_record == self && main_location.is_main_location
+      unless main_location && main_location.cfr_record == self && main_location.is_main_location
   end
+
+  # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+  # I added these after the design of the data structure because
+  # it was quite difficult to set the main_location in view and
+  # controller without complex Javascript fiddling: I added a
+  # is_main_location flag in each CfrLocation record so I could
+  # determine after saving the CfrRecord and all associated Cfr-
+  # Locations which of the CfrLocations would be the main
+  # location. Note: I think it is more efficient to have a direct
+  # link to the main location rather than shooting a query each
+  # time I need it.
+
+  def update_main_location
+    update_attribute( :main_location, self.main_locations.try( :first ))
+  end
+
+  def all_main_locations
+    errors.add( :base, I18n.t( 'cfr_records.msg.too_many_mains' )) \
+      if cfr_locations.find_all{ |x| x[ :is_main_location ] && !x.marked_for_destruction? }.length > 1
+  end
+
+  # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
 
   # prepare condition to restrict access to permitted groups for this user
   # this is patterned after Group.permitted_groups but considers here two
@@ -172,8 +192,7 @@ class CfrRecord < ActiveRecord::Base
   # provide a link form the main location to the file
 
   def link_to_file
-    return nil unless main_location.present?
-    main_location.get_hyperlink
+    main_location.present? ? main_location.get_hyperlink : nil
   end
 
 end

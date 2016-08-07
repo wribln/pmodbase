@@ -1,5 +1,5 @@
-# This function causes the bootstrap way of showing errors by inserting
-# 'has-error' into the 'form-group' div
+# This function implements the bootstrap way of showing errors by inserting
+# 'has-error' into the 'form-group' class of the respective div's
 
 $ ->
   $('.field_with_errors').closest('div.form-group').addClass('has-error')
@@ -24,3 +24,12 @@ $ ->
   $.fn.datepicker.defaults.clearBtn=true
   $.fn.datepicker.defaults.autoclose=true
   $.fn.datepicker.defaults.showOnFocus=false
+
+# implement a radio-button behaviour for check-boxes
+
+$ ->
+  $('.as-radio-button').change ->
+    if $(@).is(':checked') # now checked:
+      c = $(@)
+      $('.as-radio-button').each ->
+        unless c.is $(@) then $(@).prop('checked',false)

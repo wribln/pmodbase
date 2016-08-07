@@ -15,9 +15,9 @@
 
 $ ->
   $('.del-subform-button').click ->
-    if confirm("Are you sure that you want to remove this item?")
-      $(this).prevAll('input[type="hidden"]').val(true)
-      $(this).closest('div.form-set').hide()
+    if confirm 'Are you sure that you want to remove this item?'
+      $(@).prevAll('input[type="hidden"]').val(true)
+      $(@).closest('div.form-set').hide()
 
 $ ->
   $('.add-subform-button').click ->

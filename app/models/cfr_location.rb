@@ -1,3 +1,4 @@
+require './lib/assets/app_helper.rb'
 class CfrLocation < ActiveRecord::Base
 
   belongs_to :cfr_record, inverse_of: :cfr_locations
@@ -25,7 +26,6 @@ class CfrLocation < ActiveRecord::Base
 
   validate :given_location_type_exists
   validate :given_cfr_record_exists
-  validate :one_main_location_only
 
   # this is only to help cfr_record to determine which location is the main location
   # see comments there
@@ -65,7 +65,7 @@ class CfrLocation < ActiveRecord::Base
   def given_cfr_record_exists
     if cfr_record_id.present?
       errors.add( :cfr_record_id, I18n.t( 'cfr_locations.msg.bad_cfr_rec' )) \
-        unless CfrLocationType.exists?( cfr_record_id )
+        unless CfrRecord.exists?( cfr_record_id )
     end
   end
 
@@ -85,7 +85,7 @@ class CfrLocation < ActiveRecord::Base
   # prepare hyperlink for display
 
   def get_hyperlink
-    /\A(http?:|file:|ftp:)/i =~ uri ? uri : 'file://' + uri unless uri.blank?
+    /\A(https?|file|ftp):\/\//i =~ uri ? uri : 'file://' + uri unless uri.blank?
   end
 
 end

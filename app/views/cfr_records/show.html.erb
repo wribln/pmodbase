@@ -1,93 +1,94 @@
 <%- page_title %>
 <div class="container">
   <%= breadcrumbs %>
-  <%= form_title %>
+  <%= form_title_w( @cfr_record.to_id ) %>
   <div class="form-horizontal" role="form">
     <%= form_for @cfr_record do |f| %>
       <%= render partial: 'shared/notice' %>
-      <div class="form-group">
-        <%= f.label :id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-2">
-          <%= display_value f.object.to_id %>
+      <div class="form-group p-group">
+        <p class="col-sm-3 p-label"><%= CfrRecord.human_attribute_name( :title ) %></p>
+        <p class="col-sm-6"><%= l = @cfr_record.link_to_file; link_to_unless l.nil?, @cfr_record.title, l %></p>
+      </div>
+      <%- unless @cfr_record.note.blank? -%>
+        <div class="form-group p-group">
+          <p class="col-sm-3 p-label"><%= CfrRecord.human_attribute_name( :note ) %></p>
+          <p class="col-sm-6"><%= @cfr_record.note %></p>
         </div>
+      <%- end -%>
+      <%- unless @cfr_record.group_id.nil? %>
+      <div class="form-group p-group">
+        <p class="col-sm-3 p-label"><%= CfrRecord.human_attribute_name( :group_id ) %></p>
+        <p class="col-sm-2"><%= @cfr_record.group_code unless @cfr_record.group_id.nil? %></p>
       </div>
-      <div class="form-group">
-        <%= f.label :title, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-6">
-          <%= display_value f.object.title %>
+      <%- end -%>
+      <div class="form-group p-group">
+        <p class="col-sm-3 p-label"><%= CfrRecord.human_attribute_name( :conf_level ) %></p>
+        <p class="col-sm-3"><%= CfrRecord::CONF_LEVEL_LABELS[ f.object.conf_level ] %></p>
+      </div>
+      <%- unless @cfr_record.doc_version.blank? && @cfr_record.doc_date.blank? %>
+        <div class="form-group p-group">
+          <p class="col-sm-3 p-label"><%= t( '.version_date' ) %></p>
+          <p class="col-sm-3"><%= @cfr_record.doc_version %></p>
+          <p class="col-sm-3"><%= @cfr_record.doc_date %></p>
         </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :note, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-6">
-          <%= display_value f.object.note %>
+      <%- end -%>
+      <%- unless @cfr_record.doc_owner.blank? %>
+        <div class="form-group p-group">
+          <p class="col-sm-3 p-label"><%= CfrRecord.human_attribute_name( :doc_owner ) %></p>
+          <p class="col-sm-6"><%= @cfr_record.doc_owner %></p>
         </div>
+      <%- end -%>
+      <%- unless @cfr_record.extension.blank? && @cfr_record.cfr_file_type_id.nil? -%>
+      <div class="form-group p-group">
+        <p class="col-sm-3 p-label"><%= t( '.ext_labels' ) %></p>
+        <p class="col-sm-3"><%= @cfr_record.file_type_label %></p>
+        <p class="col-sm-3">(.<%= @cfr_record.extension %>)</p>
       </div>
+      <%- end -%>
+      <%- unless @cfr_record.hash_function.blank? && @cfr_record.hash_value.blank? %>
+      <div class="form-group p-group">
+        <p class="col-sm-3 p-label"><%= t( '.hash_label' )%></p>
+        <p class="col-sm-3"><%= @cfr_record.hash_function_label %></p>
+        <p class="col-sm-6"><%= @cfr_record.hash_value %></p>
+      </div>
+      <%- end -%>
+      <!-- Divider Line -->
       <div class="form-group">
-        <%= f.label :group_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-2">
-          <%= display_value f.object.group_code %>
+        <hr style="margin:4px"/>  
+      </div>
+      <!-- Location Info -->
+      <% if @cfr_record.cfr_locations.empty? %>
+        <div class="form-group">
+          <div class="col-sm-offset-3 col-sm-4"><%= t( '.no_locations' ) %></div>
         </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :conf_level, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-2">
-          <%= display_value CfrRecord::CONF_LEVEL_LABELS[ f.object.conf_level ] %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :doc_version, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-2">
-          <%= display_value f.object.doc_version %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :doc_date, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-2">
-          <%= display_value f.object.doc_date %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :doc_owner, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-4">
-          <%= display_value f.object.doc_owner %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :extension, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-1">
-          <%= display_value f.object.extension %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :cfr_file_type_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-3">
-          <%= display_value f.object.file_type_label %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :hash_function, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-2">
-          <%= display_value f.object.hash_function_label %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :hash_value, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-6">
-          <%= display_value f.object.hash_value %>
-        </div>
-      </div>
-      <%= render partial: 'locations_header', locals: { action_type: :show } %>
-      <!-- Contact Info -->
-      <% if f.object.cfr_locations.empty? %>
-      <div class="form-group">
-        <div class="col-sm-offset-3 col-sm-4"><%= t( 'action_title.empty_row' ) %></div>
-      </div>
       <% else %>
+        <%- n = 0 -%>
         <%= f.fields_for :cfr_locations, f.object.cfr_locations do |l| %>
-          <%= render partial: 'location', locals: { cfr_record: f, cfr_location: l, action_type: :show } %>
-        <% end %>
-      <% end %>
+          <%- n = n + 1 -%>
+          <div class="form-group p-group">
+            <p class="col-sm-3 p-label"><%= t( l.object.is_main_location ? '.main_location' : '.othr_location' ) + " (#{ n })"%></p>
+            <p class="col-sm-6"><%= l.object.cfr_location_type.try( :location_type_label )%></p>
+          </div>
+          <%- unless l.object.doc_code.blank? && l.object.doc_version.blank? %>
+            <div class="form-group p-group">
+              <p class="col-sm-3 p-label"><%= t( '.doc_code_ver' )%></p>
+              <p class="col-sm-6"><%= l.object.cfr_location_type.try( :complete_code, l.object.doc_code, l.object.doc_version ) %></p>
+            </div>
+          <%- end -%>
+          <%- unless l.object.file_name.blank? %>
+            <div class="form-group p-group">
+              <p class="col-sm-3 p-label"><%= CfrLocation.human_attribute_name( :file_name )%></p>
+              <p class="col-sm-6"><%= l.object.file_name %></p>
+            </div>
+          <%- end -%>
+          <%- unless l.object.uri.blank? %>
+            <div class="form-group p-group">
+              <p class="col-sm-3 p-label"><%= CfrLocation.human_attribute_name( :uri )%></p>
+              <p class="col-sm-9"><%= l.object.uri %></p>
+            </div>
+          <%- end -%>
+        <%- end -%>
+      <%- end -%>
       <%= render partial: 'locations_footer' %>
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-2">

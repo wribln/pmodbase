@@ -96,6 +96,10 @@ class ApplicationRoutesTest < ActionController::TestCase
     end
   end
 
+  test 'special routes: cfr_records' do
+    check_routing( 'get', '/cfr/1/view', 'cfr_records', 'show_view', id: '1' )
+  end
+
   test 'special routes: tia_items' do
     [ %w( mti my_tia_items ), %w( oti our_tia_items )].each do |r|
       check_routing( 'get', "/#{ r[ 0 ]}/1/info", r[ 1 ], 'info', id: '1' )

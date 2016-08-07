@@ -2,18 +2,18 @@
   <div class="form-group">
   <%- unless action_type == :new %>
     <%- if action_type == :show -%>
-      <%= label_tag :main_location_id, t('cfr_records.form.main_location'), class: 'col-sm-3 control-label' %>
+      <%= cfr_location.label :is_main_location, class: 'col-sm-3 control-label' %>
       <div class="col-sm-1">
-        <%= cfr_record.radio_button :main_location_id, cfr_location.object.id, disabled: true -%>
+        <%= display_check_box cfr_location.object.is_main_location -%>
       </div>
     <%- else -%>
       <div class="col-sm-1">
         <%= cfr_location.hidden_field :_destroy %>
         <%= link_to '-', '#', class: 'btn btn-warning btn-default btn-block del-subform-button' %>
       </div>
-      <%= label_tag :main_location_id, t('cfr_records.form.main_location'), class: 'col-sm-2 control-label' %>
+      <%= cfr_location.label :is_main_location, class: 'col-sm-2 control-label' %>
       <div class="col-sm-1">
-        <%= cfr_record.radio_button :main_location_id, cfr_location.object.id -%>
+        <%= cfr_location.check_box :is_main_location, class: 'as-radio-button' -%>
       </div>
     <%- end -%>
   <%- end -%>
