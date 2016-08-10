@@ -1,9 +1,16 @@
 require 'test_helper'
 class CfrRelationshipTest < ActiveSupport::TestCase
 
-  test 'check fixtures' do
-    t1 = cfr_relationships( :one )
-    assert t1.valid?
+  test 'check fixtures one' do
+    t1 = cfr_relationships( :one_one )
+    assert t1.valid?, t1.errors.messages
+    t2 = t1.reverse_rs
+    assert t2.valid?
+  end
+
+  test 'check fixtures two' do
+    t1 = cfr_relationships( :two_one )
+    assert t1.valid?, t1.errors.messages
     t2 = t1.reverse_rs
     assert t2.valid?
   end
@@ -17,8 +24,8 @@ class CfrRelationshipTest < ActiveSupport::TestCase
   end
 
   test 'relationship constraints' do
-    t1 = cfr_relationships( :one )
-    t2 = cfr_relationships( :two )
+    t1 = cfr_relationships( :one_one )
+    t2 = cfr_relationships( :one_two )
 
     # try with nil
 

@@ -7,6 +7,7 @@ en:
       cfr_location_type: 'CFR Storage Locations'
       cfr_location:      'CFR Locations'
       cfr_record:        'CFR Records'
+      cfr_relation:      'CFR Relations'
       cfr_relationship:  'CFR Relationships'
 
     attributes:
@@ -54,6 +55,12 @@ en:
         doc_version:      'Document Version / Release'
         doc_owner:        'Author / Owner'
 
+      cfr_relation:
+        id:               :general.attributes.id
+        src_record_id:    'Source CFR Record'
+        dst_record_id:    'Related CFR Record'
+        cfr_relationship_id: 'Type of Relationship'
+
       cfr_relationship:
         id:               :general.attributes.id
         rs_groups:        [ 'sequential', 'hierarchical', 'other' ]
@@ -82,21 +89,25 @@ en:
       dup_ext:            'contains %{dup} already defined for CFR File Type [%{id}].'
 
   cfr_records:
-    title:                'Central File Repository (CFR)'
+    title:                'Central File Register (CFR)'
     form:
       l_heading:          'File Storage Locations'
+      r_heading:          'File Relations'
       main_location:      'Main Location?'
-      add_label:          'Add Storage Location'
+      l_add_label:        'Add Storage Location'
+      r_add_label:        'Add Relation'
+    relation:
+      relations:          'This CFR Record %{id}'
+      dst_record_title:   'Title'
     index:
-      form_title:         'Index of Central File Repository (CFR)'
-      title_filename:     'Title / File Name'
+      form_title:         'Index of the Central File Register (CFR)'
       type_location:      'File Type / Main Storage Location'
-    show_view:
+    show_all:
       form_title:         'Show Details of CFR Record'
       no_locations:       'No Storage Locations.'
       no_relations:       'No Relations.'
     show:
-      form_title:         'Show Details of CFR Record '
+      form_title:         'Show Information for CFR Record '
       hash_label:         'Hash Function and Value'
       ext_labels:         'File Type and Extension'
       version_date:       'Document Version and Date'
@@ -105,6 +116,7 @@ en:
       doc_code_ver:       'Document Code and Version'
       no_locations:       'No Storage Locations.'
       no_relations:       'No Relations.'
+      relations:          'This CFR Record %{id}'
     edit:
       form_title:         'Edit Details of CFR Record'
     new:
@@ -146,13 +158,17 @@ en:
       update_ok:          'Storage Location successfully updated.'
       delete_ok:          'Storage Location successfully deleted.'
 
+  cfr_relations:
+    msg:
+      no_self_ref:        'Reference to oneself is not allowed.'
+      same_ref:           'Such a relationship already exists.'
+
   cfr_relationships:
     title:                'CFR Relations'
     edit:
       form_title:         'Edit CFR Relation'
     new:
       form_title:         'Create CFR Relation'
-      reverse_rs\label:   'test' # <<<<<<<<<<<<<<<<<<<<<<
     index:
       form_title:         'List of All CFR Relations'
       leading:            'Leading Relationship'

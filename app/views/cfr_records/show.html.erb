@@ -7,7 +7,7 @@
       <%= render partial: 'shared/notice' %>
       <div class="form-group p-group">
         <p class="col-sm-3 p-label"><%= CfrRecord.human_attribute_name( :title ) %></p>
-        <p class="col-sm-6"><%= l = @cfr_record.link_to_file; link_to_unless l.nil?, @cfr_record.title, l %></p>
+        <p class="col-sm-6"><%= @cfr_record.title %></p>
       </div>
       <%- unless @cfr_record.note.blank? -%>
         <div class="form-group p-group">
@@ -84,15 +84,41 @@
           <%- unless l.object.uri.blank? %>
             <div class="form-group p-group">
               <p class="col-sm-3 p-label"><%= CfrLocation.human_attribute_name( :uri )%></p>
-              <p class="col-sm-9"><%= l.object.uri %></p>
+              <p class="col-sm-9"><%= a = l.object.get_hyperlink; link_to_if a, l.object.uri %></p>
             </div>
           <%- end -%>
         <%- end -%>
       <%- end -%>
-      <%= render partial: 'locations_footer' %>
+      <!-- Divider Line -->
+      <div class="form-group">
+        <hr style="margin:4px"/>  
+      </div>
+      <!-- Relation Info -->
+      <%- if @all_relations.empty? -%>
+        <div class="form-group">
+          <div class="col-sm-offset-3 col-sm-4"><%= t( '.no_relations' ) %></div>
+        </div>
+      <%- else -%>
+        <%- n = 0 -%>
+        <%= f.fields_for :src_relations, @all_relations do |r| %>
+          <%- n = n + 1 -%>
+          <div class="form-group p-group">
+          <%- if n == 1 -%>
+            <p class="col-sm-3 p-label"><%= t( '.relations', id: @cfr_record.to_id )-%></p>
+            <p class="col-sm-9"><%= display_relationship( r.object, @cfr_record )%></p>
+          <%- else -%>
+            <p class="col-sm-offset-3 col-sm-9"><%= display_relationship( r.object, @cfr_record )%></p>
+          <%- end -%>
+          </div>
+        <%- end -%>
+      <%- end -%>
+      <%= render partial: 'relations_footer' %>
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-2">
           <%= link_to t( 'button_label.edit' ), edit_cfr_record_path( @cfr_record ), class: 'btn btn-lg btn-block btn-default' %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to t( 'button_label.all' ), cfr_record_details_path( @cfr_record ), class: 'btn btn-lg btn-block btn-default' %>
         </div>
         <div class="col-sm-2">
           <%= link_to t( 'button_label.go_to_index' ), cfr_records_path, class: 'btn btn-lg btn-block btn-default' %>

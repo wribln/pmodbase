@@ -42,7 +42,13 @@ class CfrLocationTest < ActiveSupport::TestCase
     l.cfr_location_type = nil
     l.file_name = nil
     l.set_defaults
-    assert_nil l.file_name
+    assert_equal 'test.pdf', l.file_name
+
+    l.uri = 'https://www.siemens.com/sharepoint/file%20name%20with%20blanks.ext'
+    l.cfr_location_type = nil
+    l.file_name = nil
+    l.set_defaults
+    assert_equal 'file name with blanks.ext', l.file_name
   end
 
   test 'bad file_type error' do

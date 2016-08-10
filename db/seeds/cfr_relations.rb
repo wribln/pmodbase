@@ -11,7 +11,7 @@ def create_pair( rg, l1, l2 )
   t1.update_attribute( :reverse_rs_id, t2.id )
 end
 
-create_pair( 0, 'is predecssor of', 'is successor of' )
+create_pair( 0, 'is predecessor of', 'is successor of' )
 create_pair( 0, 'is request for', 'is reply to' )
 create_pair( 0, 'is question for', 'is answer to' )
 create_pair( 0, 'replaces', 'is replaced by' )

@@ -1,0 +1,39 @@
+<div class="form-group form-group-sm form-set" <% if( cfr_relation.object._destroy || cfr_relation.index == 'template' )%>style="display:none"<% end %>>
+  <%- if action_type == :show -%>
+    <div class="col-sm-1"></div>
+    <div class="col-sm-2">
+    <%- if setup -%>
+      <%= cfr_relation.label :cfr_relationship_id, t( '.relations', id: @cfr_record.to_id ), class: 'control-label' %>
+    <%- else -%>
+      <%= cfr_relation.label :cfr_relationship_id, t( '.relations', id: @cfr_record.to_id ), class: 'hidden-md hidden-lg control-label' %>
+    <%- end -%>
+    </div>
+    <div class="col-sm-3">
+      <%= display_value cfr_relation.object.get_label( @cfr_record ) -%>
+    </div>
+    <div class="col-sm-2">
+      <%= cfr_relation.label :dst_record_id, class: 'hidden-md hidden-lg control-label' %>
+      <%= display_value cfr_relation.object.get_destination( @cfr_record ).to_id %>
+    </div>
+    <div class="col-sm-4">
+      <%= cfr_record.label :title, class: 'hidden-md hidden-lg control-label' %>
+      <p class="form-control-static"><%= cfr_relation.object.get_destination( @cfr_record ).title %></p>
+    </div>
+  <%- else -%>
+    <div class="col-sm-1">
+      <%= cfr_relation.hidden_field :_destroy %>
+      <%= link_to '-', '#', class: 'btn btn-warning btn-default btn-block del-subform-button' %>
+    </div>
+    <div class="col-sm-2">
+      <%= cfr_relation.label :cfr_relationship_id, t( '.relations', id: @cfr_record.to_id ), class: 'control-label' %>
+    </div>
+    <div class="col-sm-3">
+      <%= cfr_relation.grouped_collection_select :cfr_relationship_id, CfrRelationship.all, :rs_group, :rs_group_label, :id, :label,
+        { include_blank: true }, { class: 'form-control' } -%>
+    </div>
+    <div class="col-sm-2">
+      <%= cfr_relation.label :dst_record_id, class: 'hidden-md hidden-lg control-label' %>
+      <%= cfr_relation.text_field :dst_record_id, class: 'form-control' %>
+    </div>
+  <%- end -%>
+</div>

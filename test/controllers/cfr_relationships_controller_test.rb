@@ -3,7 +3,7 @@ require 'test_helper'
 class CfrRelationshipsControllerTest < ActionController::TestCase
 
   setup do
-    @cfr_relationship = cfr_relationships( :one )
+    @cfr_relationship = cfr_relationships( :one_one )
     @account = accounts( :account_one )
     session[ :current_user_id ] = accounts( :account_one ).id
   end

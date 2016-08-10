@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   resources :cfr_relationships, path: 'cfs', format: false
   resources :cfr_file_types, path: 'cft', format: false
   resources :cfr_location_types, path: 'cfu', format: false
-  get 'cfr/:id/view', to: 'cfr_records#show_view', as: 'cfr_record_view', format: false
+  get 'cfr/:id/all', to: 'cfr_records#show_all', as: 'cfr_record_details', format: false
   resources :cfr_records, path: 'cfr', format: false
   resources :contact_lists, path: 'cdl', format: false, only: [ :index, :show ]
   resources :contact_infos, path: 'cci', format: false

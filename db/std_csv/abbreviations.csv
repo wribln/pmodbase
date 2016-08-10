@@ -132,6 +132,7 @@ EC;Earthing Cable;ec
 EC;European Commission;ec
 ECA;Export Credit Agency;eca
 ECC;Export Credit Coverage;ecc
+ECC;Emergency Control Center;ecc
 ECS;Emergency Call System;ecs
 EDMS;Electronic Document Management System;edms
 EDP;Emergency Driving Position;edp
@@ -226,6 +227,7 @@ HWTC;Hazardous Waste Treatment Centre;hwtc
 Hz;Hertz;hz
 IAF;International Accreditation Forum;iaf
 IBDAS;In-Building Distributed Antenna System;ibdas
+ICC;Integrated Control Center;icc
 ICD;Interface Control Document;icd
 ICT;Information & Communication Technology;ict
 ID;Identification;id

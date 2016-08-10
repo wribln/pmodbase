@@ -1,7 +1,8 @@
 class CfrRecordsController < ApplicationController
 
   initialize_feature FEATURE_ID_CFR_RECORDS, FEATURE_ACCESS_INDEX, FEATURE_CONTROL_GRP 
-  before_action :set_cfr_record, only: [ :show, :show_view, :edit, :update, :destroy ]
+  before_action :set_cfr_record, only: [ :show, :show_all, :edit, :update, :destroy ]
+  before_action :set_all_relations, only: [ :show, :show_all, :edit ]
   before_action :set_file_types, only: [ :index, :edit, :new, :update ]
 
   # GET /cfr
@@ -9,12 +10,12 @@ class CfrRecordsController < ApplicationController
   def index
     @filter_fields = filter_params
     @filter_groups = permitted_groups( :to_index )
-    @cfr_records = CfrRecord.filter( @filter_fields ).all_permitted( current_user ).includes( :cfr_locations ).paginate( page: params[ :page ])
+    @cfr_records = CfrRecord.includes( main_location: [ :cfr_location_type ]).filter( @filter_fields ).all_permitted( current_user ).paginate( page: params[ :page ])
   end
 
-  # GET /cfr/id/view
+  # GET /cfr/id/details
 
-  def show_view
+  def show_all
     render_no_permission unless has_access?( :to_read )
   end
 
@@ -53,7 +54,7 @@ class CfrRecordsController < ApplicationController
         if params[ :commit ] == I18n.t( 'button_label.defaults' ) then
           set_defaults
         elsif @cfr_record.save then
-          @cfr_record.update_main_location
+          @cfr_record.update_main_location # no harm if separate transaction
           format.html { redirect_to @cfr_record, notice: I18n.t( 'cfr_records.msg.create_ok' )}
           next
         end
@@ -77,6 +78,7 @@ class CfrRecordsController < ApplicationController
         if params[ :commit ] == I18n.t( 'button_label.defaults' ) then
           set_defaults
         elsif @cfr_record.save then
+          @cfr_record.update_main_location # no harm if separate transaction
           format.html { redirect_to @cfr_record, notice: I18n.t( 'cfr_records.msg.update_ok' )}
           next
         end
@@ -108,7 +110,14 @@ class CfrRecordsController < ApplicationController
 
     def set_defaults
       @cfr_record.set_blank_default( :doc_owner, current_user.account_info )
+      # if there is only one location, make it main location if an uri is given
+      # otherwise, we don't need the main location ...
       ml = @cfr_record.cfr_locations.find{ |l| l.is_main_location }
+      if ml.nil? && @cfr_record.cfr_locations.length == 1 && @cfr_record.cfr_locations.first.uri.present? then
+        ml = @cfr_record.cfr_locations.first
+        ml.is_main_location = true
+        @cfr_record.main_location = ml
+      end
       @cfr_record.cfr_locations.each { | l | l.set_defaults }
       fn = ml.try( :file_name ) # cannot assume that ml is set / valid
       @cfr_record.set_blank_default( :extension, CfrLocationType.get_extension( fn ))
@@ -130,6 +139,10 @@ class CfrRecordsController < ApplicationController
 
     def set_file_types
       @cfr_file_types = CfrFileType.all.collect{ |ft| [ ft.label, ft.id ]}
+    end
+
+    def set_all_relations
+      @all_relations = @cfr_record.all_relations
     end
 
     # Never trust parameters from the scary internet, only allow the white list through

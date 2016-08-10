@@ -1,9 +1,10 @@
 require './lib/assets/app_helper.rb'
+require 'cgi'
 class CfrLocation < ActiveRecord::Base
 
   belongs_to :cfr_record, inverse_of: :cfr_locations
   belongs_to :cfr_record, inverse_of: :main_location
-  belongs_to :cfr_location_type
+  belongs_to :cfr_location_type, -> { readonly }
 
   validates :file_name,
     allow_nil: true,
@@ -76,8 +77,9 @@ class CfrLocation < ActiveRecord::Base
       if cfr_location_type.blank? then
          self.cfr_location_type = CfrLocationType.find_location_type( uri )
       end
-      if file_name.blank? && cfr_location_type then
-        self.file_name = cfr_location_type.extract_file_name( uri )
+      if file_name.blank? then
+        self.file_name = CfrLocationType.extract_file_name( uri )
+        self.file_name = CGI.unescape( self.file_name ) if /%\h\h/.match( self.file_name )
       end
     end
   end

@@ -29,6 +29,7 @@ class CfrRecordsController0Test < ActionController::TestCase
     assert_response :success
     r = assigns( :cfr_record )
     assert_equal r.doc_owner, @account.account_info
+    assert_empty r.errors
   end
 
   test 'should set defaults: extension' do
@@ -40,6 +41,7 @@ class CfrRecordsController0Test < ActionController::TestCase
     assert_response :success
     r = assigns( :cfr_record )
     assert_equal 'pdf', r.extension
+    assert_empty r.errors
   end
 
   test 'should set defaults' do
@@ -49,6 +51,7 @@ class CfrRecordsController0Test < ActionController::TestCase
     end
     assert_response :success
     r = assigns( :cfr_record )
+    assert_empty r.errors
     assert_equal @account.account_info, r.doc_owner
     assert_equal 'pdf', r.extension
     assert_equal 'test', r.title
@@ -60,12 +63,23 @@ class CfrRecordsController0Test < ActionController::TestCase
     assert_difference('CfrRecord.count') do
       post :create, cfr_record: { doc_date: @cfr_record.doc_date, doc_version: @cfr_record.doc_version, group_id: @cfr_record.group_id, main_location_id: @cfr_record.main_location_id, note: @cfr_record.note, title: @cfr_record.title }
     end
-    assert_redirected_to cfr_record_path( assigns( :cfr_record ))
+    r = assigns( :cfr_record )
+    assert_redirected_to cfr_record_path( r )
+    assert_empty r.errors
   end
 
   test 'should show cfr_record' do
     get :show, id: @cfr_record
     assert_response :success
+    r = assigns( :cfr_record )
+    assert_empty r.errors
+  end
+
+  test 'should show details of cfr_record' do
+    get :show_all, id: @cfr_record
+    assert_response :success
+    r = assigns( :cfr_record )
+    assert_empty r.errors
   end
 
   test 'should get edit' do
@@ -81,7 +95,9 @@ class CfrRecordsController0Test < ActionController::TestCase
       main_location_id: @cfr_record.main_location_id,
       note: @cfr_record.note, 
       title: @cfr_record.title }
-    assert_redirected_to cfr_record_path( assigns( :cfr_record ))
+    r = assigns( :cfr_record )
+    assert_redirected_to cfr_record_path( r )
+    assert_empty r.errors
   end
 
   test 'should update defaults' do
@@ -90,13 +106,14 @@ class CfrRecordsController0Test < ActionController::TestCase
     r = assigns( :cfr_record )
     assert_equal r.doc_owner, @account.account_info
     assert_equal cfr_file_types( :two ).id, r.cfr_file_type_id
+    assert_empty r.errors
   end
 
   test 'should destroy cfr_record' do
     assert_difference('CfrRecord.count', -1) do
       delete :destroy, id: @cfr_record
     end
-
     assert_redirected_to cfr_records_path
   end
+
 end

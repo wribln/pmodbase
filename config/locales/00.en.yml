@@ -725,6 +725,7 @@ en:
   button_label:
     add:          'Add'
     show:         'Show'
+    all:          'Details'
     edit:         'Edit'
     update:       'Update'
     comment:      'Comment'

@@ -1,15 +1,29 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  id:        12345
+one_one:
+  id:        11000
   rs_group:  0
-  label:     Test 1 Group 0
-  reverse_rs_id: 67890
+  label:     Relationship 1 Leading
+  reverse_rs_id: 12000
   leading:   true
 
-two:
-  id:        67890
+one_two:
+  id:        12000
   rs_group:  0
-  label:     Test 1 Group 0
-  reverse_rs_id: 12345
+  label:     Relationship 1 Reverse
+  reverse_rs_id: 11000
+  leading:   false
+
+two_one:
+  id:        21000
+  rs_group:  1
+  label:     Relationship 2 Leading
+  reverse_rs_id: 22000
+  leading:   true
+
+two_two:
+  id:        22000
+  rs_group:  1
+  label:     Relationship 2 Reverse
+  reverse_rs_id: 21000
   leading:   false

@@ -55,21 +55,25 @@ class CfrLocationType < ActiveRecord::Base
       unless r =~ path_prefix
   end
 
-  # retrieve file name and extension from given path
+  # retrieve file name and extension from given path:
+  # originally, this was dependent on the location_type but
+  # for the time being, this can be a class method (saves
+  # access to the database to retrieve location_type).
 
-  def extract_file_name( path )
+  def self.extract_file_name( path )
     return if path.blank?
-    r = case location_type
-    when 0 # windows drive
-      /([^\\\/?|><:*"]+)\z/i
-    when 1 # internet, only files
-      /\A(?:file:\/\/(?:[^\\\/]+[\\\/])*)([^\\\/?|><:*"]+)\z/
-    when 2 # unix drive
-      /([^\/?*|><]+)\z/
-    else
-      return nil
-    end
-    r.match( path ){ |m| m[ 1 ]}
+    #r = case location_type
+    #when 0 # windows drive
+    #  /([^\\\/?|><:*"]+)\z/i
+    #when 1 # internet
+    #  /\A(?:(?:https?|file):\/\/(?:[^\\\/]+[\\\/])*)([^\\\/?|><:*"]+)\z/
+    #when 2 # unix drive
+    #  /([^\/?*|><]+)\z/
+    #else
+    #  return nil
+    #end
+    #r.match( path ){ |m| m[ 1 ]}
+    /[^\\\/]+(\.[^\\\/\.]+)?\z/.match( path ){ |m| m[ 0 ]}
   end
 
   # compare given file path with current path prefix and return true if
@@ -109,7 +113,7 @@ class CfrLocationType < ActiveRecord::Base
   # attempt to determine extension from file name
 
   def self.get_extension( file_name )
-    /\.([^.\\\/:*?"<>|]+)\z/.match( file_name ){ |m| m[ 1 ]}
+    /[^\\\/]+\.([^\\\/\.]+)\z/.match( file_name ){ |m| m[ 1 ]}
   end
 
   # give me only the file name without extension
@@ -119,9 +123,11 @@ class CfrLocationType < ActiveRecord::Base
   end
 
   # combine doc code and a doc version strings using concat_char
+  # returns empty string if both doc_code and doc_version are not
+  # available
 
   def complete_code( doc_code, doc_version )
-    doc_code + concat_char + doc_version
+    ( doc_code.blank? && doc_version.blank? ) ? '' : doc_code.to_s + concat_char.to_s + doc_version.to_s
   end
 
   # remove leading and trailing blanks

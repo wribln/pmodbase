@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160722124320) do
+ActiveRecord::Schema.define(version: 20160809114810) do
 
   create_table "a1_codes", force: :cascade do |t|
     t.string   "code",                      null: false
@@ -217,6 +217,18 @@ ActiveRecord::Schema.define(version: 20160722124320) do
   add_index "cfr_records", ["cfr_file_type_id"], name: "index_cfr_records_on_cfr_file_type_id"
   add_index "cfr_records", ["group_id"], name: "index_cfr_records_on_group_id"
   add_index "cfr_records", ["id"], name: "default_order"
+
+  create_table "cfr_relations", force: :cascade do |t|
+    t.integer  "src_record_id"
+    t.integer  "dst_record_id"
+    t.integer  "cfr_relationship_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  add_index "cfr_relations", ["cfr_relationship_id"], name: "index_cfr_relations_on_cfr_relationship_id"
+  add_index "cfr_relations", ["dst_record_id"], name: "index_cfr_relations_on_dst_record_id"
+  add_index "cfr_relations", ["src_record_id"], name: "index_cfr_relations_on_src_record_id"
 
   create_table "cfr_relationships", force: :cascade do |t|
     t.integer  "rs_group",                 default: 2

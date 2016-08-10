@@ -2,13 +2,15 @@
   <div class="container">
     <%= helpcrumbs %>
     <%= help_header %>
-    <p class="lead">Manage each and every file and their relations within the Central File Registry (CFR)</p>
+    <p class="lead">Manage each and every file and their relations within the Central File Register (CFR)</p>
     <h3>Purpose</h3>
-    <p>The CFR - Central File Registry - is the collection of information on documents and files. Its
+    <p>The CFR - Central File Register - is the collection of information on documents and files. Its
       purpose is to provide documentation on each and every file used in the project's life. This
       is actually a task which should be covered by the project's document management system (DMS).
       However, it appears in reality that many files are created outside of the project's DMS and
-      there is no way to keep track when, where and which file was used for which purpose.</p>
+      there is no way to keep track when, where and which file was used for which purpose. Or files
+      are created before the project's DMS is set up and we need to manage information on those
+      files before they can be added to the DMS.</p>
     <p>The CFR provides means to keep track of individual files, their attributes, their location in
       a DMS, on a server or elsewhere - even in a paper storage facility. The CFR will not store
       any files itself but you can use it to keep track where the file is located, what relation it 
@@ -19,6 +21,10 @@
     <p>Since it is possible to store the path of the file in the CFR, a hyperlink to that file can be
       provided which will lead you directly to the file in that storage system - provided you have
       sufficient access permissions.</p>
+    <p>A major feature of the CFR is the ability to manage various relationships among files: You
+      can define a folder - member relationship, predecessor - successor relationship, and many more
+      - you can even define your own special relationships. The CFR will remember these relations
+      and enables you to trace through these relations.</p>  
     <h3>Basic Information</h3>
     <p>Since the terms 'document' and 'file' are often used interchangeably, the following 
       definitions are important to understand:
@@ -79,7 +85,7 @@
       reader to refer to the person responsible for that file or document which could be the 
       original author (as shown on the cover sheet), the owner, or any other person which can be
       contacted about this file or document.</li>
-      <li><%= help_param CfrRecord.human_attribute_name( :cfr_location_id )-%> determines the default
+      <li><%= help_param CfrRecord.human_attribute_name( :main_location_id )-%> determines the default
       storage location of the document (if more than one is given): The link to this storage location
       will be used as hyperlink for the file.</li>
       <li>The <%= help_param CfrRecord.human_attribute_name( :extension )-%> helps to identify
@@ -115,18 +121,43 @@
       accessed separately from other features.</li>
       <li><%= help_param CfrLocation.human_attribute_name( :uri )-%> shall hold the complete
       network URI to the given file or document, such that a hyperlink to that document can be
-      created for the browser. For files on a file system, a complete path is needed here: 
-      The tool will automatically fix the path so it becomes a well-formatted network URI.<br/>
-      Network URIs must start with 'http://', 'https://', ftp://' or 'file://'. A local path on
-      a Windows system must start with a drive character 'A'..'Z' followed by a colon. A local
-      path on a Unix system must start with a single '/'.</li>
+      created for the browser. For files on a file system, a complete path can be provided: 
+      The tool will automatically prefix the path with 'file://'. Please note that this is not
+      meant to be a fool-proof method to access files - there are just too many different
+      browsers and file system specifics to be considered; however, in the general case, this
+      should work.</li>
     </ul>
-    <h3>Usage</h3>
+    <h3>Defaults</h3>
+      <p>Use the <%= help_param t( 'button_label.defaults' )%> button to set various fields
+      to defaults, specifically when providing a
+      <%= help_term CfrLocation.human_attribute_name( :uri )-%> for a single location:</p>
+      <ul>
+      <li><%= help_term CfrRecord.human_attribute_name( :doc_owner )-%> is set to the current user's
+      name.</li>
+      <li><%= help_term CfrLocation.human_attribute_name( :file_name )-%></li>
+      <li><%= help_term CfrRecord.human_attribute_name( :extension )-%> and the corresponding 
+      <%= help_term CfrRecord.human_attribute_name( :cfr_file_type_id )-%></li>
+      <li><%= help_term CfrRecord.human_attribute_name( :title )-%> will be set to the 
+      <%= help_term CfrLocation.human_attribute_name( :file_name )-%> without the extension.</li>
+      <li><%= help_term CfrLocation.human_attribute_name( :is_main_location )-%> will be marked.</li>
+      </ul>
+      <p>Only empty attributes will be set to a default. Nothing will be saved to the database,
+      so you can change any defaults if they do not apply.</p>
+    <h3>Views</h3>
+    <p>There are two types of views available: The standard view is named
+      <%= help_param t( 'button_label.show' )%> and shows only those attributes with actual
+      values; the other view is named
+      <%= help_param t( 'button_label.all' )%> and shows all available attributes in a form
+      similar to the <%= help_term t( 'button_label.edit' )%> form. From each view, you can
+      switch to the other type of view using the respective button. When cancelling an edit/update 
+      function, the view shown will be the <%= help_term t( 'button_label.all' )-%> view.</p>
+    <p>When listing CFR Records in the index view, the records are shown in reverse order of the
+      ID, i.e. most recently created records are shown first.</p>
+    <h3>Filtering</h3>
     <p>When searching through the CFR, a search for a string in the 
-      <%= help_term I18n.t('cfr_records.index.title_filename')%> filter field will also search through: 
+      <%= help_term CfrRecord.human_attribute_name( :title )-%> filter field will search through: 
       <%= help_term CfrRecord.human_attribute_name( :title )-%>,
-      <%= help_term CfrRecord.human_attribute_name( :note )-%>, 
-      <%= help_term CfrLocation.human_attribute_name( :file_name )-%>, and the
+      <%= help_term CfrRecord.human_attribute_name( :note )-%>, and the
       <%= help_term CfrLocation.human_attribute_name( :doc_code )-%>.
     </p>
     <h3 id="access">Access</h3>
@@ -143,8 +174,5 @@
     with update access level 3 may modify CFR Records with
     <%= help_term CfrRecord.human_attribute_name( :conf_level )-%>&nbsp;=&nbsp;3 and lower
     for the given project group.</p>
-    <h3>Order</h3>
-    <p>When listing CFR Records in the index view, the records are shown in reverse order of the
-    ID, i.e. most recently created records are shown first.</p>
     <%= help_footer FEATURE_ID_CFR_RECORDS %>
   </div> <!-- /container -->

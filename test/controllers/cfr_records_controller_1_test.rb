@@ -60,6 +60,11 @@ class CfrRecordsController1Test < ActionController::TestCase
     assert_response :unauthorized
   end
 
+  test 'should show details of cfr_record' do
+    get :show_all, id: @cfr_record
+    assert_response :unauthorized
+  end
+
   test 'should get edit' do
     get :edit, id: @cfr_record
     assert_response :unauthorized

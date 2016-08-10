@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  src_record:        :one
+  dst_record:        :two
+  cfr_relationship_id:  11000
+
+two:
+  src_record:        :two
+  dst_record:        :one
+  cfr_relationship_id:  21000

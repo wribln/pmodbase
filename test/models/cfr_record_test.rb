@@ -148,15 +148,16 @@ class CfrRecordTest < ActiveSupport::TestCase
     assert cfr.valid?
 
     cfr.main_location_id = 0
-    refute cfr.valid?
+    cfr.given_main_location_ok
     assert_includes cfr.errors, :main_location_id
 
     cfr.main_location_id = cfr_locations( :one ).id
-    refute cfr.valid?
+    cfr.given_main_location_ok
     assert_includes cfr.errors, :main_location_id
 
     cfr = cfr_records( :two )
     cfr.main_location_id = cfr_locations( :one ).id
+    cfr.given_main_location_ok
     assert cfr.valid?, cfr.errors.messages
   end
 
@@ -211,7 +212,8 @@ class CfrRecordTest < ActiveSupport::TestCase
     l1.is_main_location = false
     l1.save
     cfr.reload
-    refute cfr.valid? # because main_location_id points to wrong, non-main record
+    cfr.given_main_location_ok
+    # because main_location_id points to wrong, non-main record
     assert_includes cfr.errors, :main_location_id
 
     cfr.update_main_location

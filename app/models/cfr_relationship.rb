@@ -51,6 +51,11 @@ class CfrRelationship < ActiveRecord::Base
     CFR_RS_GROUP_LABELS[ rs_group ] unless rs_group.nil?
   end
 
+  # prepare data structure for select options
+
+  def self.grouped_options
+  end
+
   private
     def delete_reverse_rs
       reverse_rs.delete

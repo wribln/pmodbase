@@ -97,7 +97,7 @@ class ApplicationRoutesTest < ActionController::TestCase
   end
 
   test 'special routes: cfr_records' do
-    check_routing( 'get', '/cfr/1/view', 'cfr_records', 'show_view', id: '1' )
+    check_routing( 'get', '/cfr/1/all', 'cfr_records', 'show_all', id: '1' )
   end
 
   test 'special routes: tia_items' do

@@ -15,14 +15,14 @@
       <%= f.fields_for :cfr_locations, @cfr_record.cfr_locations.new, { child_index: 'template' } do |l| %>
         <%= render partial: 'location', locals: { cfr_record: f, cfr_location: l, action_type: :edit }%>
       <% end %>
-      <!-- button to add another contact info record -->
+      <!-- button to add another location record -->
       <div class="form-group">
         <div class="col-sm-1">
           <%= link_to '+', '#', class: 'btn btn-info btn-default btn-block add-subform-button' %>
         </div>
-        <label class="col-sm-4"><%= t( 'cfr_records.form.add_label' )%></label>
+        <label class="col-sm-4"><%= t( 'cfr_records.form.l_add_label' )%></label>
       </div>
-      <%= render partial: 'locations_footer' %>
+      <%= render partial: 'relations_footer' %>
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-2">
           <%= f.submit t( 'button_label.defaults' ), class: 'btn btn-lg btn-block btn-default' %>
@@ -31,7 +31,7 @@
           <%= f.submit class: 'btn btn-lg btn-block btn-primary' %>
         </div>
         <div class="col-sm-2">
-          <%= link_to t( 'button_label.cancel_to_show' ), @cfr_record, class: 'btn btn-lg btn-block btn-default' %>
+          <%= link_to t( 'button_label.cancel_to_show' ), cfr_record_details_path( @cfr_record ), class: 'btn btn-lg btn-block btn-default' %>
         </div>
       <div>
     <% end %>

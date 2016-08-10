@@ -88,34 +88,35 @@ class CfrLocationTypeTest < ActiveSupport::TestCase
   end
 
   test 'retrieve file name incl. extension' do
-    lt = cfr_location_types( :one ) # windows
-    assert_equal 'the.ext', lt.extract_file_name( 'X:\somewhere\over\the.ext' )
-    assert_equal 'the.ext', lt.extract_file_name( 'X:\somewhere\over\the\rainbox\the.ext' )
-    assert_equal 'the.ext', lt.extract_file_name( 'X:\the.ext' )
-    assert_equal 'the.ext', lt.extract_file_name( 'the.ext' )
-
-    lt = cfr_location_types( :two ) # internet
-    assert_nil lt.extract_file_name( 'X:\somewhere\over\the.ext' )
-    assert_nil lt.extract_file_name( 'X:\somewhere\over\the\rainbox\the.ext' )
-    assert_nil lt.extract_file_name( 'X:\the.ext' )
-    assert_nil lt.extract_file_name( 'the.ext' )
-    assert_nil lt.extract_file_name( 'google.com' )
+    assert_equal 'the.ext', CfrLocationType.extract_file_name( 'X:\somewhere\over\the.ext' )
+    assert_equal 'the.ext', CfrLocationType.extract_file_name( 'X:\somewhere\over\the\rainbox\the.ext' )
+    assert_equal 'the.ext', CfrLocationType.extract_file_name( 'X:\the.ext' )
+    assert_equal 'the.ext', CfrLocationType.extract_file_name( 'the.ext' )
+    assert_equal '.secret', CfrLocationType.extract_file_name( '.secret' )
+    assert_equal '.secret.txt', CfrLocationType.extract_file_name( '.secret.txt' )
     #
-    assert_equal 'the.ext', lt.extract_file_name( 'file://X:\somewhere\over\the.ext' )
-    assert_equal 'the.ext', lt.extract_file_name( 'file://X:\somewhere\over\the\rainbox\the.ext' )
-    assert_equal 'the.ext', lt.extract_file_name( 'file://X:\the.ext' )
-    assert_equal 'the.ext', lt.extract_file_name( 'file://the.ext' )
-    assert_equal 'ocean', lt.extract_file_name( 'file://down.under/in/the/dark/and/deep/ocean' )
+    assert_equal 'the.ext', CfrLocationType.extract_file_name( 'file://X:\somewhere\over\the.ext' )
+    assert_equal 'the.ext', CfrLocationType.extract_file_name( 'file://X:\somewhere\over\the\rainbox\the.ext' )
+    assert_equal 'the.ext', CfrLocationType.extract_file_name( 'http://X:\somewhere\over\the\rainbox\the.ext' )
+    assert_equal 'the.ext', CfrLocationType.extract_file_name( 'file://X:\the.ext' )
+    assert_equal 'the.ext', CfrLocationType.extract_file_name( 'file://the.ext' )
+    assert_equal 'ocean', CfrLocationType.extract_file_name( 'file://down.under/in/the/dark/and/deep/ocean' )
     #
-    lt = cfr_location_types( :three ) # unix
-    assert_equal 'the.ext', lt.extract_file_name( '/home/wr/Projects/pmdb/the.ext' )
-    assert_nil lt.extract_file_name( '/home/wr/Projects/pmdb/the/' )
+    assert_equal 'the.ext', CfrLocationType.extract_file_name( '/home/wr/Projects/pmdb/the.ext' )
+    assert_nil CfrLocationType.extract_file_name( '/home/wr/Projects/pmdb/the/' )
+    assert_nil CfrLocationType.extract_file_name( nil )
+    assert_nil CfrLocationType.extract_file_name( '' )
   end
 
   test 'retrieve file extension' do
     assert_nil CfrLocationType.get_extension( 'X:\somewhere\over\the\rainbox' )
     assert_equal 'ext', CfrLocationType.get_extension( 'X:\somewhere\over\the\rainbox.ext' )
     assert_equal 'ext', CfrLocationType.get_extension( 'X:\somewhere\over\the\r.a.i.n.b.o.x.ext' )
+    assert_equal 'ext', CfrLocationType.get_extension( '/home/user/documents/general/test.ext' )
+    assert_equal 'ext', CfrLocationType.get_extension( 'https://server.com/path/file%20with%20blanks.ext' )
+    assert_equal 'ext', CfrLocationType.get_extension( '.secret.ext' )
+    assert_nil CfrLocationType.get_extension( nil )
+    assert_nil CfrLocationType.get_extension( '' )
   end
 
   test 'check for same location' do
@@ -259,6 +260,15 @@ class CfrLocationTypeTest < ActiveSupport::TestCase
   test 'complete code helper' do
     assert_equal 'A-0', cfr_location_types( :one ).complete_code( 'A', '0')
     assert_equal 'A_0', cfr_location_types( :two ).complete_code( 'A', '0')
+
+    assert_equal '-0', cfr_location_types( :one ).complete_code( nil, '0')
+    assert_equal '-0', cfr_location_types( :one ).complete_code( '', '0')
+    assert_equal 'A-', cfr_location_types( :one ).complete_code( 'A', nil )
+    assert_equal 'A-', cfr_location_types( :one ).complete_code( 'A', '' )
+    assert_equal '', cfr_location_types( :one ).complete_code( '', '' )
+    assert_equal '', cfr_location_types( :one ).complete_code( nil, '' )
+    assert_equal '', cfr_location_types( :one ).complete_code( '', nil )
+    assert_equal '', cfr_location_types( :one ).complete_code( nil, nil )
   end
 
 end

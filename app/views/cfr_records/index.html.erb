@@ -9,7 +9,7 @@
       <thead>
         <tr>
           <th class="col-sm-1"><%= label_tag :ff_id,   CfrRecord.human_attribute_name( :id ), class: 'control_label' %></th>
-          <th class="col-sm-3"><%= label_tag :ff_text, t( '.title_filename' ), class: 'control_label' %></th>
+          <th class="col-sm-3"><%= label_tag :ff_text, CfrRecord.human_attribute_name( :title ), class: 'control_label' %></th>
           <th class="col-sm-3"><%= label_tag :ff_type, t( '.type_location'  ), class: 'control_label' %></th>
           <th class="col-sm-1"><%= CfrRecord.human_attribute_name( :doc_version )%></th>
           <th class="col-sm-2"><%= CfrRecord.human_attribute_name( :doc_date )%></th>
@@ -33,7 +33,7 @@
         <% @cfr_records.each do |cfr| %>
           <tr>
             <td><%= cfr.to_id %></td>
-            <td><%= link_to_if cfr.main_location.present?, cfr.title, cfr.link_to_file %></td>
+            <td><%= a = cfr.link_to_file; link_to_if a, cfr.title, a %></td>
             <td><%= cfr.file_type_label %></td>
             <td><%= cfr.doc_version %></td>
             <td><%= cfr.doc_date %></td>

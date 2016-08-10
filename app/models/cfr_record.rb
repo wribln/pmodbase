@@ -8,9 +8,13 @@ class CfrRecord < ActiveRecord::Base
   belongs_to :group,         -> { readonly }
   belongs_to :cfr_file_type, -> { readonly }
   belongs_to :main_location, foreign_key: 'main_location_id', class_name: 'CfrLocation', inverse_of: :cfr_record
+  has_many   :src_relations, foreign_key: 'src_record_id', class_name: 'CfrRelation', inverse_of: :src_record
+  has_many   :dst_relations, foreign_key: 'dst_record_id', class_name: 'CfrRelation', inverse_of: :dst_record
   has_many   :cfr_locations, inverse_of: :cfr_record
   has_many   :main_locations, -> { where( is_main_location: true )}, class_name: 'CfrLocation'
   accepts_nested_attributes_for :cfr_locations, allow_destroy: true, reject_if: :location_empty?
+  accepts_nested_attributes_for :src_relations, allow_destroy: true, reject_if: :all_blank
+  accepts_nested_attributes_for :dst_relations, allow_destroy: true, reject_if: :all_blank
 
   CONF_LEVEL_LABELS = CfrRecord.human_attribute_name( :conf_levels ).freeze
 
@@ -54,7 +58,7 @@ class CfrRecord < ActiveRecord::Base
 
   validate :hash_function_and_value
 
-  validate :given_main_location_ok
+  #validate :given_main_location_ok
 
   validates :note,
     length: { maximum: MAX_LENGTH_OF_DESCRIPTION }
@@ -77,9 +81,17 @@ class CfrRecord < ActiveRecord::Base
   # filter scopes
 
   scope :ff_id, ->   ( i ){ where id: i }
-  scope :ff_text, -> ( t ){ where( 'title LIKE :param OR note LIKE :param', param: "%#{ t }%" )}
+  scope :ff_text, -> ( t ){ 
+    joins( 'LEFT JOIN cfr_locations ON cfr_records.id = cfr_locations.cfr_record_id' ).
+    where( 'title LIKE :param OR note LIKE :param OR cfr_locations.doc_code LIKE :param', param: "%#{ t }%" )}
   scope :ff_type, -> ( t ){ where cfr_file_type_id: t }
   scope :ff_grp, ->  ( g ){ where group_id: g }
+
+  # get all relations
+
+  def all_relations
+    CfrRelation.where( 'src_record_id = :id OR dst_record_id = :id', id: "#{ self.id }").includes( :cfr_relationship )
+  end
 
   # check if cfr_location is empty - except when we are creating a new record
   # return true if record should be rejected and destroyed. Important note:
@@ -91,15 +103,6 @@ class CfrRecord < ActiveRecord::Base
     attr[ 'file_name'   ].blank? &&
     attr[ 'doc_code'    ].blank? &&
     attr[ 'doc_version' ].blank?
-  end
-
-  # test if main location points back to this cfr record
-
-  def given_main_location_ok
-    return if errors.include?( :main_location_id )
-    return unless main_location_id.present?
-    errors.add( :main_location_id, I18n.t( 'cfr_records.msg.bad_main_loc' )) \
-      unless main_location && main_location.cfr_record == self && main_location.is_main_location
   end
 
   # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
@@ -120,6 +123,16 @@ class CfrRecord < ActiveRecord::Base
   def all_main_locations
     errors.add( :base, I18n.t( 'cfr_records.msg.too_many_mains' )) \
       if cfr_locations.find_all{ |x| x[ :is_main_location ] && !x.marked_for_destruction? }.length > 1
+  end
+
+  # the following validation method CANNOT be called during the 
+  # normal validation as the main_location is only known after 
+  # all cfr_locations are saved and update_main_location is done.
+  # however, this may be used for any sanity checks:
+
+  def given_main_location_ok
+    errors.add( :main_location_id, I18n.t( 'cfr_records.msg.bad_main_loc' )) \
+      unless main_location && main_location.cfr_record == self && main_location.is_main_location
   end
 
   # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 

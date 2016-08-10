@@ -8,11 +8,26 @@
       <%= render partial: 'shared/errors', object: @cfr_record.errors %>
       <%= render partial: 'form', object: f %>
       <%= render partial: 'locations_header' %>
-      <!-- CFR Locations -->
+      <!-- Locations -->
       <%= f.fields_for :cfr_locations, @cfr_record.cfr_locations do |l| -%>
         <%= render partial: 'location', locals: { cfr_location: l, action_type: :new } %>
       <%- end -%>
-      <%= render partial: 'locations_footer' %>
+      <%= render partial: 'relations_header' %>
+      <!-- Relations -->
+      <%= f.fields_for :src_relations, @cfr_record.src_relations do |r| -%>
+        <%= render partial: 'relation', locals: { cfr_relation: r, action_type: :new } %>
+      <%- end -%>
+      <%= f.fields_for :src_relations, @cfr_record.src_relations.new, { child_index: 'template' } do |r| %>
+        <%= render partial: 'relation', locals: { cfr_relation: r, action_type: :edit }%>
+      <% end %>
+      <!-- button to add another relation record -->
+      <div class="form-group">
+        <div class="col-sm-1">
+          <%= link_to '+', '#', class: 'btn btn-info btn-default btn-block add-subform-button' %>
+        </div>
+        <label class="col-sm-4"><%= t( 'cfr_records.form.r_add_label' )%></label>
+      </div>
+      <%= render partial: 'relations_footer' %>
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-2">
           <%= f.submit t( 'button_label.defaults' ), class: 'btn btn-lg btn-block btn-default' %>
