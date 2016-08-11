@@ -67,8 +67,8 @@ class CfrRelationTest < ActiveSupport::TestCase
 
   test 'get label' do
     r = cfr_relations( :one )
-    assert_equal 'Relationship 1 Leading', r.get_label( r.src_record_id )
-    assert_equal 'Relationship 1 Reverse', r.get_label( r.dst_record_id )
+    assert_equal 'Relationship 1 Leading', r.get_label( r.src_record )
+    assert_equal 'Relationship 1 Reverse', r.get_label( r.dst_record )
   end
 
 end

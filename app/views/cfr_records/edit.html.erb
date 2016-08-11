@@ -5,10 +5,10 @@
   <div class="form-horizontal" role="form">
     <%= form_for @cfr_record do |f| %>
       <%= render partial: 'shared/notice' %>
-      <%= render partial: 'shared/errors', object: @cfr_record.errors %>
+      <%= render partial: 'shared/errors', object: @cfr_record.errors %><%= @cfr_record.errors.messages %>
       <%= render partial: 'form', object: f %>
       <%= render partial: 'locations_header' %>
-      <!-- CFR Locations -->
+      <!-- Locations -->
       <%= f.fields_for :cfr_locations, @cfr_record.cfr_locations do |l| -%>
         <%= render partial: 'location', locals: { cfr_record: f, cfr_location: l, action_type: :edit } %>
       <%- end -%>
@@ -22,6 +22,24 @@
         </div>
         <label class="col-sm-4"><%= t( 'cfr_records.form.l_add_label' )%></label>
       </div>
+      <!-- Relations -->
+      <%= render partial: 'relations_header' %>
+      <%= f.fields_for :src_relations, @cfr_record.src_relations do |r| -%>
+        <%= render partial: 'relation', locals: { cfr_relation: r, action_type: :edit } %>
+      <%- end -%>
+      <%= f.fields_for :dst_relations, @cfr_record.dst_relations do |r| -%>
+        <%= render partial: 'relation', locals: { cfr_relation: r, action_type: :edit } %>
+      <%- end -%>
+      <%= f.fields_for :src_relations, @cfr_record.src_relations.new, { child_index: 'template' } do |r| %>
+        <%= render partial: 'relation', locals: { cfr_relation: r, action_type: :edit }%>
+      <%- end -%>
+      <div class="form-group">
+        <div class="col-sm-1">
+          <%= link_to '+', '#', class: 'btn btn-info btn-default btn-block add-subform-button' %>
+        </div>
+        <label class="col-sm-4"><%= t( 'cfr_records.form.r_add_label' )%></label>
+      </div>
+
       <%= render partial: 'relations_footer' %>
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-2">

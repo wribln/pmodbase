@@ -1,6 +1,6 @@
 <div class="form-group form-group-sm form-set" <% if( cfr_relation.object._destroy || cfr_relation.index == 'template' )%>style="display:none"<% end %>>
   <%- if action_type == :show -%>
-    <div class="col-sm-1"></div>
+	<div class="col-sm-1"></div>
     <div class="col-sm-2">
     <%- if setup -%>
       <%= cfr_relation.label :cfr_relationship_id, t( '.relations', id: @cfr_record.to_id ), class: 'control-label' %>
@@ -24,12 +24,13 @@
       <%= cfr_relation.hidden_field :_destroy %>
       <%= link_to '-', '#', class: 'btn btn-warning btn-default btn-block del-subform-button' %>
     </div>
-    <div class="col-sm-2">
+   	<div class="col-sm-2">
       <%= cfr_relation.label :cfr_relationship_id, t( '.relations', id: @cfr_record.to_id ), class: 'control-label' %>
     </div>
     <div class="col-sm-3">
-      <%= cfr_relation.grouped_collection_select :cfr_relationship_id, CfrRelationship.all, :rs_group, :rs_group_label, :id, :label,
-        { include_blank: true }, { class: 'form-control' } -%>
+      <%= cfr_relation.select :cfr_relationship_id, grouped_options_for_select(
+        CfrRelationship.get_option_list, cfr_relation.object.cfr_relationship_id ),
+        { prompt: t( '.g_prompt' )}, { class: 'form-control' } -%>
     </div>
     <div class="col-sm-2">
       <%= cfr_relation.label :dst_record_id, class: 'hidden-md hidden-lg control-label' %>

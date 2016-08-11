@@ -8,9 +8,9 @@ class CfrRecord < ActiveRecord::Base
   belongs_to :group,         -> { readonly }
   belongs_to :cfr_file_type, -> { readonly }
   belongs_to :main_location, foreign_key: 'main_location_id', class_name: 'CfrLocation', inverse_of: :cfr_record
-  has_many   :src_relations, foreign_key: 'src_record_id', class_name: 'CfrRelation', inverse_of: :src_record
-  has_many   :dst_relations, foreign_key: 'dst_record_id', class_name: 'CfrRelation', inverse_of: :dst_record
-  has_many   :cfr_locations, inverse_of: :cfr_record
+  has_many   :src_relations, dependent: :destroy, foreign_key: 'src_record_id', class_name: 'CfrRelation', inverse_of: :src_record
+  has_many   :dst_relations, dependent: :destroy, foreign_key: 'dst_record_id', class_name: 'CfrRelation', inverse_of: :dst_record
+  has_many   :cfr_locations, dependent: :destroy, inverse_of: :cfr_record
   has_many   :main_locations, -> { where( is_main_location: true )}, class_name: 'CfrLocation'
   accepts_nested_attributes_for :cfr_locations, allow_destroy: true, reject_if: :location_empty?
   accepts_nested_attributes_for :src_relations, allow_destroy: true, reject_if: :all_blank

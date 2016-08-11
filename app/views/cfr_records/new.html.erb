@@ -12,15 +12,14 @@
       <%= f.fields_for :cfr_locations, @cfr_record.cfr_locations do |l| -%>
         <%= render partial: 'location', locals: { cfr_location: l, action_type: :new } %>
       <%- end -%>
-      <%= render partial: 'relations_header' %>
       <!-- Relations -->
+      <%= render partial: 'relations_header' %>
       <%= f.fields_for :src_relations, @cfr_record.src_relations do |r| -%>
         <%= render partial: 'relation', locals: { cfr_relation: r, action_type: :new } %>
       <%- end -%>
       <%= f.fields_for :src_relations, @cfr_record.src_relations.new, { child_index: 'template' } do |r| %>
-        <%= render partial: 'relation', locals: { cfr_relation: r, action_type: :edit }%>
-      <% end %>
-      <!-- button to add another relation record -->
+        <%= render partial: 'relation', locals: { cfr_relation: r, action_type: :new }%>
+      <%- end -%>
       <div class="form-group">
         <div class="col-sm-1">
           <%= link_to '+', '#', class: 'btn btn-info btn-default btn-block add-subform-button' %>

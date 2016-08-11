@@ -48,6 +48,7 @@ class CfrRecordsController < ApplicationController
   # POST /cfr
 
   def create
+    params[ :cfr_record ][ :src_relations_attributes ].try( :delete, 'template' )
     @cfr_record = CfrRecord.new( cfr_record_params )
     if has_access?( :to_create )
       respond_to do |format|
@@ -73,6 +74,7 @@ class CfrRecordsController < ApplicationController
     if has_access?( :to_update )
       respond_to do |format|
         params[ :cfr_record ][ :cfr_locations_attributes ].try( :delete, 'template' )
+        params[ :cfr_record ][ :src_relations_attributes ].try( :delete, 'template' )
         cfr_params = cfr_record_params
         @cfr_record.assign_attributes( cfr_params ) unless cfr_params.empty?
         if params[ :commit ] == I18n.t( 'button_label.defaults' ) then
@@ -151,8 +153,9 @@ class CfrRecordsController < ApplicationController
       params.require( :cfr_record ).permit( 
         :title, :note, :group_id, :conf_level, :doc_version, :doc_date, :doc_owner,
         :extension, :cfr_file_type_id, :hash_value, :hash_function,
-        cfr_locations_attributes: [ :id, :_destroy,
-          :cfr_location_type_id, :file_name, :doc_code, :doc_version, :uri, :is_main_location ])
+        cfr_locations_attributes: [ :id, :_destroy, :cfr_location_type_id, :file_name, :doc_code, :doc_version, :uri, :is_main_location ],
+        src_relations_attributes: [ :id, :_destroy, :dst_record_id, :cfr_relationship_id ],
+        dst_relations_attributes: [ :id, :_destroy, :src_record_id, :cfr_relationship_id ])
     end
 
     def filter_params
