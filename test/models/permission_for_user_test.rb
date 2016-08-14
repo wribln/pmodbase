@@ -4,7 +4,7 @@ class PermissionForUserTest < ActiveSupport::TestCase
   # check fixture configuration
 
   setup do
-    @a = accounts( :account_wop )
+    @a = accounts( :wop )
   end
 
   # test robustness

@@ -7,8 +7,8 @@ class PcpSubjectsController4Test < ActionController::TestCase
   setup do 
     @pcp_subject = pcp_subjects( :two )
     @pcp_step = @pcp_subject.current_step
-    @account_p = accounts( :account_one )
-    @account_c = accounts( :account_two )
+    @account_p = accounts( :one )
+    @account_c = accounts( :two )
     session[ :current_user_id ] = @account_p.id
     assert @pcp_subject.pcp_members.destroy_all
   end

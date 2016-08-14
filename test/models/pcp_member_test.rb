@@ -4,7 +4,7 @@ class PcpMemberTest < ActiveSupport::TestCase
   test 'fixture 1' do 
     pm = pcp_members( :one )
     assert_equal pm.pcp_subject_id, pcp_subjects( :two ).id
-    assert_equal pm.account_id, accounts( :account_one ).id
+    assert_equal pm.account_id, accounts( :one ).id
     assert_equal pm.pcp_group, 0
     assert pm.to_access
     assert pm.to_update
@@ -14,7 +14,7 @@ class PcpMemberTest < ActiveSupport::TestCase
   test 'fixture 2' do 
     pm = pcp_members( :two )
     assert_equal pm.pcp_subject_id, pcp_subjects( :two ).id
-    assert_equal pm.account_id, accounts( :account_wop ).id
+    assert_equal pm.account_id, accounts( :wop ).id
     assert_equal pm.pcp_group, 1
     assert pm.to_access
     assert pm.to_update
@@ -44,7 +44,7 @@ class PcpMemberTest < ActiveSupport::TestCase
 
   test 'account must exist 2' do
     pm = pcp_members( :two )
-    assert accounts( :account_wop ).destroy
+    assert accounts( :wop ).destroy
     refute pm.valid?
     assert_includes pm.errors, :account_id
   end
@@ -64,22 +64,22 @@ class PcpMemberTest < ActiveSupport::TestCase
     pm = pcp_subjects( :two ).pcp_members.commenting_group
     assert_equal 1, pm.length
 
-    pm = pcp_subjects( :two ).pcp_members.presenting_member( accounts( :account_one ).id )
+    pm = pcp_subjects( :two ).pcp_members.presenting_member( accounts( :one ).id )
     assert_equal 1, pm.length
 
-    pm = pcp_subjects( :two ).pcp_members.presenting_member( accounts( :account_two ).id )
+    pm = pcp_subjects( :two ).pcp_members.presenting_member( accounts( :two ).id )
     assert_equal 0, pm.length
 
-    pm = pcp_subjects( :two ).pcp_members.presenting_member( accounts( :account_wop ).id )
+    pm = pcp_subjects( :two ).pcp_members.presenting_member( accounts( :wop ).id )
     assert_equal 0, pm.length
 
-    pm = pcp_subjects( :two ).pcp_members.commenting_member( accounts( :account_one ).id )
+    pm = pcp_subjects( :two ).pcp_members.commenting_member( accounts( :one ).id )
     assert_equal 0, pm.length
 
-    pm = pcp_subjects( :two ).pcp_members.commenting_member( accounts( :account_two ).id )
+    pm = pcp_subjects( :two ).pcp_members.commenting_member( accounts( :two ).id )
     assert_equal 0, pm.length
 
-    pm = pcp_subjects( :two ).pcp_members.commenting_member( accounts( :account_wop ).id )
+    pm = pcp_subjects( :two ).pcp_members.commenting_member( accounts( :wop ).id )
     assert_equal 1, pm.length
 
   end

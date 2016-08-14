@@ -3,7 +3,7 @@ class MyChangeRequestsControllerTest < ActionController::TestCase
   
   setup do
     @dbcr1 = db_change_requests( :dbcr_one )
-    session[:current_user_id] = accounts( :account_one ).id
+    session[:current_user_id] = accounts( :one ).id
   end
 
   test "check class_attributes"  do
@@ -24,7 +24,7 @@ class MyChangeRequestsControllerTest < ActionController::TestCase
   test "should create db_change_request" do
     assert_difference( 'DbChangeRequest.count' ) do
       post :create, db_change_request: { 
-          requesting_account_id: accounts( :account_one ).id,
+          requesting_account_id: accounts( :one ).id,
           action: @dbcr1.action,
           feature_id: @dbcr1.feature_id,
           detail: @dbcr1.detail,
@@ -46,7 +46,7 @@ class MyChangeRequestsControllerTest < ActionController::TestCase
 
   test "should update db_change_request" do
     patch :update, id: @dbcr1, db_change_request: {
-          requesting_account_id: accounts(:account_one).id,
+          requesting_account_id: accounts(:one).id,
           action: @dbcr1.action,
           feature_id: @dbcr1.feature_id,
           detail: @dbcr1.detail,

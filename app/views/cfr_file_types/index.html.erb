@@ -20,7 +20,7 @@
           <tr>
             <td><%= t.to_id %></td>
             <td><%= t.label %></td>
-            <td><%= t.extensions.gsub( ',',', ' )%></td>
+            <td><%= t.extensions.try( :gsub, ',', ', ' )%></td>
             <td><%= render partial: 'shared/actions', object: t %></td>
           </tr>
         <% end %>

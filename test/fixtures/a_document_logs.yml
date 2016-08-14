@@ -8,5 +8,5 @@ one:
   a7_code:      'ABC'
   a8_code:      'ABC'
   title:        'Test Document'
-  account:      account_one
+  account:      one
   doc_id:       ABC-123-ABC-DEF-ABC-ABC-ABC-ABC-<%= ActiveRecord::FixtureSet.identify(:one)%>

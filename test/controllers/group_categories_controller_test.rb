@@ -1,10 +1,9 @@
 require 'test_helper'
-
 class GroupCategoriesControllerTest < ActionController::TestCase
 
   setup do
     @group_category = group_categories( :group_category_one )
-    session[ :current_user_id ] = accounts( :account_one ).id
+    session[ :current_user_id ] = accounts( :one ).id
   end
 
   test 'check class_attributes'  do

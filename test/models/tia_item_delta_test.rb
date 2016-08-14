@@ -118,8 +118,8 @@ class TiaItemDeltaTest < ActiveSupport::TestCase
     assert_equal tf.comment, d.comment
     assert d.valid?
 
-    assert_equal tt.account_id, accounts( :account_one ).id
-    tt.account_id = accounts( :account_two ).id
+    assert_equal tt.account_id, accounts( :one ).id
+    tt.account_id = accounts( :two ).id
     d.collect_delta_information( tf, tt )
     assert_equal 3, d.delta_count
     assert d.account_id_changed?

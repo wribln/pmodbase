@@ -2,8 +2,8 @@ require 'test_helper'
 class CsrStatusRecordsControllerTest < ActionController::TestCase
 
   setup do
-    @account = accounts( :account_one )
-    session[ :current_user_id ] = accounts( :account_one ).id
+    @account = accounts( :one )
+    session[ :current_user_id ] = accounts( :one ).id
     @csr_status_record = csr_status_records( :csr_one )
   end
 

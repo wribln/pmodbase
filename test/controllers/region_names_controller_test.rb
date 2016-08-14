@@ -2,8 +2,8 @@ require 'test_helper'
 class RegionNamesControllerTest < ActionController::TestCase
 
   setup do
-    @account = accounts( :account_one )
-    session[ :current_user_id ] = accounts( :account_one ).id
+    @account = accounts( :one )
+    session[ :current_user_id ] = accounts( :one ).id
     @region_name = region_names( :mvp )
   end
 

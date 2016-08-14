@@ -2,14 +2,14 @@
 
 one:
   pcp_subject:  two
-  account:      account_one
+  account:      one
   pcp_group:    0
   to_access:    true
   to_update:    true
 
 two:
   pcp_subject:  two 
-  account:      account_wop 
+  account:      wop 
   pcp_group:    1
   to_access:    true
   to_update:    true

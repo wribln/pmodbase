@@ -10,5 +10,5 @@ one:
   revision_code:    '0'
   author_date:      2016-03-03
   title:            'Test Document'
-  account:          account_one
+  account:          one
   doc_id:           TEST(ONE)TWO=ABC$ABC-ABC+1.ST.01%PM200&ABC_20160303_TDD<%= ActiveRecord::FixtureSet.identify(:one)%>_0

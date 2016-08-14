@@ -2,8 +2,8 @@ require 'test_helper'
 class HolidaysControllerTest < ActionController::TestCase
 
   setup do
-    @account = accounts( :account_one )
-    session[ :current_user_id ] = accounts( :account_one ).id
+    @account = accounts( :one )
+    session[ :current_user_id ] = accounts( :one ).id
     @holiday = holidays( :hdk )
   end
 

@@ -1,7 +1,6 @@
 class Account < ActiveRecord::Base
   include ApplicationModel
   include Filterable
-  include PersonCheck
   
   belongs_to :person, -> { readonly }, inverse_of: :accounts
   has_many :requesting_account, class_name: 'DbChangeRequest'
@@ -34,10 +33,8 @@ class Account < ActiveRecord::Base
     length: { maximum: MAX_LENGTH_OF_PASSWORD },
     if: lambda { |user| new_record? || !user.password.to_s.empty? }
 
-  validates :person_id,
+  validates :person,
     presence: true
-
-  validate :given_person_exists
 
   scope :ff_id,         -> ( id         ){ where id: id }
   scope :ff_name,       -> ( name       ){ where( 'name LIKE ?', "%#{ name }%" )}

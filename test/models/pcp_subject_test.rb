@@ -70,8 +70,8 @@ class PcpSubjectTest < ActiveSupport::TestCase
   test 'check required attributes' do
     ps = PcpSubject.new
     ps.pcp_category_id = pcp_categories( :one ).id
-    ps.c_owner_id = accounts( :account_one ).id
-    ps.p_owner_id = accounts( :account_one ).id
+    ps.c_owner_id = accounts( :one ).id
+    ps.p_owner_id = accounts( :one ).id
     ps.c_group_id = groups( :group_one ).id
     ps.p_group_id = groups( :group_one ).id
     assert ps.valid?, ps.errors.messages
@@ -108,24 +108,24 @@ class PcpSubjectTest < ActiveSupport::TestCase
   test 'permit to set p defaults from PCP Category' do
     ps = pcp_subjects( :two )
     assert_equal ps.p_group_id, groups( :group_one ).id
-    assert_equal ps.p_owner_id, accounts( :account_one ).id
+    assert_equal ps.p_owner_id, accounts( :one ).id
     ps.p_group_id = nil
     # should just set group and leave owner alone
     assert ps.valid?
     assert_equal ps.p_group_id, groups( :group_two ).id
-    assert_equal ps.p_owner_id, accounts( :account_one ).id
+    assert_equal ps.p_owner_id, accounts( :one ).id
     ps.p_group_id = nil
     ps.p_owner_id = nil
     assert ps.valid?
     # should set group and account
     assert_equal ps.p_group_id, groups( :group_two ).id
-    assert_equal ps.p_owner_id, accounts( :account_two ).id
+    assert_equal ps.p_owner_id, accounts( :two ).id
   end
 
   test 'permit to set c defaults from PCP Category' do
     ps = pcp_subjects( :two )
     assert_equal ps.c_group_id, groups( :group_two ).id
-    assert_equal ps.c_owner_id, accounts( :account_two ).id
+    assert_equal ps.c_owner_id, accounts( :two ).id
     ps.c_group_id = nil
     # should just set group and leave owner alone ...
     # but this fails as account_two does not have access
@@ -133,35 +133,35 @@ class PcpSubjectTest < ActiveSupport::TestCase
     refute ps.valid?
     assert_includes ps.errors, :c_owner_id
     assert_equal ps.c_group_id, groups( :group_one ).id
-    assert_equal ps.c_owner_id, accounts( :account_two ).id
+    assert_equal ps.c_owner_id, accounts( :two ).id
     # try again
     ps.c_group_id = nil
     ps.c_owner_id = nil
     assert ps.valid?
     # should set group and account
     assert_equal ps.c_group_id, groups( :group_one ).id
-    assert_equal ps.c_owner_id, accounts( :account_one ).id
+    assert_equal ps.c_owner_id, accounts( :one ).id
   end
 
   test 'c_owner must have access to respective group' do
     ps = pcp_subjects( :one )
-    ps.c_owner_id = accounts( :account_wop ).id
+    ps.c_owner_id = accounts( :wop ).id
     refute ps.valid?
     assert_includes ps.errors, :c_owner_id
     ps.c_owner_id = nil
     refute ps.valid?
     assert_includes ps.errors, :c_owner_id
-    ps.c_owner_id = accounts( :account_one ).id    
+    ps.c_owner_id = accounts( :one ).id    
     assert ps.valid?
   end
 
-  # same test but with specific group ( :account_one has access
-  # to all groups, :account_two only for group_two )
+  # same test but with specific group ( :one has access
+  # to all groups, :two only for group_two )
 
   test 'c_owner must have access to specified group' do
     ps = pcp_subjects( :one )
     assert_equal groups( :group_one ).id, ps.c_group_id
-    ps.c_owner_id = accounts( :account_two ).id
+    ps.c_owner_id = accounts( :two ).id
     refute ps.valid?#
     ps.c_group_id = groups( :group_two ).id
     assert ps.valid?
@@ -169,23 +169,23 @@ class PcpSubjectTest < ActiveSupport::TestCase
 
   test 'p_owner must have access to respective group' do
     ps = pcp_subjects( :one )
-    ps.p_owner_id = accounts( :account_wop ).id
+    ps.p_owner_id = accounts( :wop ).id
     refute ps.valid?
     assert_includes ps.errors, :p_owner_id
     ps.p_owner_id = nil
     refute ps.valid?
     assert_includes ps.errors, :p_owner_id
-    ps.p_owner_id = accounts( :account_one ).id    
+    ps.p_owner_id = accounts( :one ).id    
     assert ps.valid?
   end
 
-  # same test but with specific group ( :account_one has access
-  # to all groups, :account_two only for group_two )
+  # same test but with specific group ( :one has access
+  # to all groups, :two only for group_two )
 
   test 'p_owner must have access to specified group' do
     ps = pcp_subjects( :one )
     assert_equal groups( :group_one ).id, ps.p_group_id
-    ps.p_owner_id = accounts( :account_two ).id
+    ps.p_owner_id = accounts( :two ).id
     refute ps.valid?#
     ps.p_group_id = groups( :group_two ).id
     assert ps.valid?
@@ -195,11 +195,11 @@ class PcpSubjectTest < ActiveSupport::TestCase
     ps = pcp_subjects( :one )
     ps.c_deputy_id = nil
     assert ps.valid?
-    ps.c_deputy_id = accounts( :account_wop ).id
-    accounts( :account_wop ).destroy
+    ps.c_deputy_id = accounts( :wop ).id
+    accounts( :wop ).destroy
     refute ps.valid?
     assert_includes ps.errors, :c_deputy_id
-    ps.c_deputy_id = accounts( :account_one ).id
+    ps.c_deputy_id = accounts( :one ).id
     assert ps.valid?
   end
 
@@ -207,11 +207,11 @@ class PcpSubjectTest < ActiveSupport::TestCase
     ps = pcp_subjects( :one )
     ps.p_deputy_id = nil
     assert ps.valid?
-    ps.p_deputy_id = accounts( :account_wop ).id
-    accounts( :account_wop ).destroy
+    ps.p_deputy_id = accounts( :wop ).id
+    accounts( :wop ).destroy
     refute ps.valid?
     assert_includes ps.errors, :p_deputy_id
-    ps.p_deputy_id = accounts( :account_one ).id
+    ps.p_deputy_id = accounts( :one ).id
     assert ps.valid?
   end
 
@@ -258,8 +258,8 @@ class PcpSubjectTest < ActiveSupport::TestCase
 
   test 'user access - p_group/owner == c_group/owner' do
     ps = pcp_subjects( :one )
-    c1 = accounts( :account_one )
-    c2 = accounts( :account_two )
+    c1 = accounts( :one )
+    c2 = accounts( :two )
     assert ps.user_is_owner_or_deputy?( c1, 0 )
     assert ps.user_is_owner_or_deputy?( c1, 1 )
     refute ps.user_is_owner_or_deputy?( c2, 0 )
@@ -292,10 +292,10 @@ class PcpSubjectTest < ActiveSupport::TestCase
     ps = pcp_subjects( :one )
     assert ps.s_owner_id.nil?
     refute ps.user_is_creator?( nil )
-    ps.s_owner = accounts( :account_one )
+    ps.s_owner = accounts( :one )
     refute ps.user_is_creator?( nil )
-    refute ps.user_is_creator?( accounts( :account_two ))
-    assert ps.user_is_creator?( accounts( :account_one ))
+    refute ps.user_is_creator?( accounts( :two ))
+    assert ps.user_is_creator?( accounts( :one ))
   end
 
   test 'acting and viewing group' do
@@ -318,7 +318,7 @@ class PcpSubjectTest < ActiveSupport::TestCase
 
     # now try different accounts
 
-    ps.c_owner_id = accounts( :account_two ).id
+    ps.c_owner_id = accounts( :two ).id
     refute_equal ps.p_owner_id, ps.c_owner_id
     cvgi = ps.viewing_group_map( ps.c_owner )
     pvgi = ps.viewing_group_map( ps.p_owner )
@@ -332,7 +332,7 @@ class PcpSubjectTest < ActiveSupport::TestCase
 
     # test for account outside of both groups
 
-    xvgi = ps.viewing_group_map( accounts( :account_wop ))
+    xvgi = ps.viewing_group_map( accounts( :wop ))
     assert_equal 0, xvgi
     refute PcpSubject.same_group?( 1, xvgi )
     refute PcpSubject.same_group?( 0, xvgi )
@@ -341,51 +341,51 @@ class PcpSubjectTest < ActiveSupport::TestCase
 
   test 'special access test' do
     ps = PcpSubject.new
-    assert_equal 0, ps.viewing_group_map( accounts( :account_one  ))
-    assert_equal 0, ps.viewing_group_map( accounts( :account_two  ))
-    assert_equal 0, ps.viewing_group_map( accounts( :account_three))
-    assert_equal 0, ps.viewing_group_map( accounts( :account_wop  ))
-    ps.s_owner_id = accounts( :account_wop ).id
-    assert_equal 0, ps.viewing_group_map( accounts( :account_one  ))
-    assert_equal 0, ps.viewing_group_map( accounts( :account_two  ))
-    assert_equal 0, ps.viewing_group_map( accounts( :account_three))
-    assert_equal 1, ps.viewing_group_map( accounts( :account_wop  ))
+    assert_equal 0, ps.viewing_group_map( accounts( :one  ))
+    assert_equal 0, ps.viewing_group_map( accounts( :two  ))
+    assert_equal 0, ps.viewing_group_map( accounts( :three))
+    assert_equal 0, ps.viewing_group_map( accounts( :wop  ))
+    ps.s_owner_id = accounts( :wop ).id
+    assert_equal 0, ps.viewing_group_map( accounts( :one  ))
+    assert_equal 0, ps.viewing_group_map( accounts( :two  ))
+    assert_equal 0, ps.viewing_group_map( accounts( :three))
+    assert_equal 1, ps.viewing_group_map( accounts( :wop  ))
     ps.c_deputy_id = ps.s_owner_id
-    assert_equal 0, ps.viewing_group_map( accounts( :account_one  ))
-    assert_equal 0, ps.viewing_group_map( accounts( :account_two  ))
-    assert_equal 0, ps.viewing_group_map( accounts( :account_three))
-    assert_equal 3, ps.viewing_group_map( accounts( :account_wop  ))
+    assert_equal 0, ps.viewing_group_map( accounts( :one  ))
+    assert_equal 0, ps.viewing_group_map( accounts( :two  ))
+    assert_equal 0, ps.viewing_group_map( accounts( :three))
+    assert_equal 3, ps.viewing_group_map( accounts( :wop  ))
   end
 
   test 'viewing group map' do
     ps = pcp_subjects( :two )
-    assert_equal ps.pcp_members.where( pcp_group: 0 ).first.account, accounts( :account_one )
-    assert_equal ps.pcp_members.where( pcp_group: 1 ).first.account, accounts( :account_wop )
-    assert_equal ps.p_owner, accounts( :account_one )
-    assert_equal ps.c_owner, accounts( :account_two ) 
-    ps.s_owner = accounts( :account_three )
-    assert_equal 1, ps.viewing_group_map( accounts( :account_one ))
-    assert_equal 2, ps.viewing_group_map( accounts( :account_two ))
-    assert_equal 1, ps.viewing_group_map( accounts( :account_three ))
-    assert_equal 2, ps.viewing_group_map( accounts( :account_wop ))
-    ps.p_deputy = accounts( :account_three )
-    assert_equal 1, ps.viewing_group_map( accounts( :account_three ))
-    ps.c_deputy = accounts( :account_three )
-    assert_equal 3, ps.viewing_group_map( accounts( :account_three ))
+    assert_equal ps.pcp_members.where( pcp_group: 0 ).first.account, accounts( :one )
+    assert_equal ps.pcp_members.where( pcp_group: 1 ).first.account, accounts( :wop )
+    assert_equal ps.p_owner, accounts( :one )
+    assert_equal ps.c_owner, accounts( :two ) 
+    ps.s_owner = accounts( :three )
+    assert_equal 1, ps.viewing_group_map( accounts( :one ))
+    assert_equal 2, ps.viewing_group_map( accounts( :two ))
+    assert_equal 1, ps.viewing_group_map( accounts( :three ))
+    assert_equal 2, ps.viewing_group_map( accounts( :wop ))
+    ps.p_deputy = accounts( :three )
+    assert_equal 1, ps.viewing_group_map( accounts( :three ))
+    ps.c_deputy = accounts( :three )
+    assert_equal 3, ps.viewing_group_map( accounts( :three ))
     ps.p_deputy = nil
-    assert_equal 3, ps.viewing_group_map( accounts( :account_three ))
+    assert_equal 3, ps.viewing_group_map( accounts( :three ))
     ps.s_owner = nil
-    assert_equal 2, ps.viewing_group_map( accounts( :account_three ))
+    assert_equal 2, ps.viewing_group_map( accounts( :three ))
     ps.c_deputy = nil
-    assert_equal 0, ps.viewing_group_map( accounts( :account_three ))
+    assert_equal 0, ps.viewing_group_map( accounts( :three ))
 
     assert_difference( 'PcpMember.count', -2 )do
       ps.pcp_members.destroy_all
     end
-    assert_equal 1, ps.viewing_group_map( accounts( :account_one ))
-    assert_equal 2, ps.viewing_group_map( accounts( :account_two ))
-    assert_equal 0, ps.viewing_group_map( accounts( :account_three ))
-    assert_equal 0, ps.viewing_group_map( accounts( :account_wop ))
+    assert_equal 1, ps.viewing_group_map( accounts( :one ))
+    assert_equal 2, ps.viewing_group_map( accounts( :two ))
+    assert_equal 0, ps.viewing_group_map( accounts( :three ))
+    assert_equal 0, ps.viewing_group_map( accounts( :wop ))
   end
 
   test 'all scopes' do
@@ -425,14 +425,14 @@ class PcpSubjectTest < ActiveSupport::TestCase
     as = PcpSubject.ff_note( 'foobar' )
     assert_equal 0, as.length
 
-    as = PcpSubject.all_permitted( accounts( :account_one ).id )
+    as = PcpSubject.all_permitted( accounts( :one ).id )
     assert_equal 2, as.length
 
-    as = PcpSubject.all_permitted( accounts( :account_two ).id )
+    as = PcpSubject.all_permitted( accounts( :two ).id )
     assert_equal 1, as.length
     assert_equal as[ 0 ].id, pcp_subjects( :two ).id
 
-    as = PcpSubject.all_permitted( accounts( :account_wop ).id )
+    as = PcpSubject.all_permitted( accounts( :wop ).id )
     assert_equal 1, as.length
     assert_equal as[ 0 ].id, pcp_subjects( :two ).id
 

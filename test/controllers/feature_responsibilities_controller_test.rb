@@ -2,8 +2,8 @@ require 'test_helper'
 class FeatureResponsibilitiesControllerTest < ActionController::TestCase
 
   setup do
-    @account = accounts( :account_one )
-    session[ :current_user_id ] = accounts( :account_one ).id
+    @account = accounts( :one )
+    session[ :current_user_id ] = accounts( :one ).id
   end
 
   test "check class_attributes"  do

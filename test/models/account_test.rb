@@ -2,12 +2,12 @@ require 'test_helper'
 class AccountTest < ActiveSupport::TestCase
 
   test 'class method user user' do
-    [ :account_one, :account_wop, :account_two, :account_three ].each do |aa|
+    [ :one, :wop, :two, :three ].each do |aa|
       a = accounts( aa )
       refute_nil a.person_id
       assert_equal a.user_name, Account.user_name( a.id )
     end
-    a = accounts( :account_one )
+    a = accounts( :one )
     a.person_id = people( :person_two ).id
     assert a.save, a.errors.inspect
     assert_equal a.user_name, Account.user_name( a.id )
@@ -26,10 +26,11 @@ class AccountTest < ActiveSupport::TestCase
   test 'given person must exist' do
     a = Account.new
     a.person_id = nil
-    assert_not a.valid?
-    assert_includes a.errors, :person_id
-    assert_not a.valid?
-    assert_includes a.errors, :person_id
+    refute a.valid?
+    assert_includes a.errors, :person
+    a.person_id = -1
+    refute a.valid?
+    assert_includes a.errors, :person
   end
 
   test 'new account must have name and password: 0. both nil' do
@@ -83,7 +84,7 @@ class AccountTest < ActiveSupport::TestCase
   end
 
   test 'account name must be unique' do
-    a = accounts( :account_one )
+    a = accounts( :one )
     b = Account.new
     b.person_id = a.person_id
     b.name = a.name
@@ -97,7 +98,7 @@ class AccountTest < ActiveSupport::TestCase
     assert_equal '', a.name_with_id
     a.name = 'test'
     assert_equal 'test', a.name_with_id
-    a = accounts( :account_one )
+    a = accounts( :one )
     assert_equal text_with_id( a.name, a.id ), a.name_with_id
     a.name = nil
     assert_equal "[#{ a.id }]", a.name_with_id
@@ -106,7 +107,7 @@ class AccountTest < ActiveSupport::TestCase
   end
 
   test 'permitted groups' do
-    a = accounts( :account_one )
+    a = accounts( :one )
     p = permission4_groups( :permission4_group_1 )
     # we should have full access
     assert_equal p.account.id, a.id
@@ -223,13 +224,13 @@ class AccountTest < ActiveSupport::TestCase
   end
 
   test 'account_info' do
-    as = accounts( :account_one )
+    as = accounts( :one )
     assert_equal "One (Master [#{ as.id }])", as.account_info
-    as = accounts( :account_wop )
+    as = accounts( :wop )
     assert_equal "One (Account without permissions [#{ as.id }])", as.account_info
-    as = accounts( :account_two )
+    as = accounts( :two )
     assert_equal "One (Account for testing [#{ as.id }])", as.account_info
-    as = accounts( :account_three )
+    as = accounts( :three )
     assert_equal "One (Another Test Account [#{ as.id }])", as.account_info
   end
 

@@ -10,7 +10,7 @@ class PcpMembersController3Test < ActionController::TestCase
   setup do
     @pcp_member = pcp_members( :two )
     @pcp_subject = pcp_subjects( :two )
-    @account = accounts( :account_three )
+    @account = accounts( :three )
     session[ :current_user_id ] = @account.id
     pg1 = Permission4Group.new(
       account_id: @account.id,
@@ -44,7 +44,7 @@ class PcpMembersController3Test < ActionController::TestCase
   test 'should create pcp_member' do
     assert_difference( 'PcpMember.count' ) do
       post :create, pcp_member: {
-        account_id: accounts( :account_one ),
+        account_id: accounts( :one ),
         to_access: true },
         pcp_subject_id: @pcp_subject.id
     end

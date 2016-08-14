@@ -4,13 +4,13 @@ class DsrStatusRecordsController3Test < ActionController::TestCase
 
   setup do
     # set maximum permission
-    @account = accounts( :account_one )
+    @account = accounts( :one )
     pg = @account.permission4_groups.where( feature_id: FEATURE_ID_DSR_STATUS_RECORDS )
     pg[ 0 ].to_read = 3
     pg[ 0 ].to_update = 3
     pg[ 0 ].to_create = 3
     pg[ 0 ].save
-    session[ :current_user_id ] = accounts( :account_one ).id
+    session[ :current_user_id ] = accounts( :one ).id
     @dsr_status_record = dsr_status_records( :dsr_rec_two )
   end
 
@@ -104,7 +104,7 @@ class DsrStatusRecordsController3Test < ActionController::TestCase
   # has the respective permission(s) for the task/status and the group!
 
   test 'document update not permitted for this user' do
-    session[ :current_user_id ] = accounts( :account_wop ).id
+    session[ :current_user_id ] = accounts( :wop ).id
     patch :update, id: @dsr_status_record,
       dsr_status_record: { current_status: @dsr_status_record.current_status },
       next_status_task: 0
@@ -112,7 +112,7 @@ class DsrStatusRecordsController3Test < ActionController::TestCase
   end
 
   test 'document update not permitted for this user''s group' do
-    session[ :current_user_id ] = accounts( :account_two )
+    session[ :current_user_id ] = accounts( :two )
     patch :update, id: @dsr_status_record,
       dsr_status_record: { current_status: @dsr_status_record.current_status },
       next_status_task: 0

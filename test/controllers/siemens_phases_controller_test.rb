@@ -3,7 +3,7 @@ class SiemensPhasesControllerTest < ActionController::TestCase
 
   setup do
     @person = people( :person_one )
-    session[ :current_user_id ] = accounts( :account_one ).id
+    session[ :current_user_id ] = accounts( :one ).id
     @siemens_phase = siemens_phases( :pm200 )
   end
 

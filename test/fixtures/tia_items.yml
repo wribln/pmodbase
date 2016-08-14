@@ -1,6 +1,6 @@
 tia_item_one:
   tia_list: tia_list_one
-  account:  account_one
+  account:  one
   seqno :   1
   description: 'first action item'
   comment:  'some comment'

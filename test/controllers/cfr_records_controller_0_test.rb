@@ -4,8 +4,8 @@ class CfrRecordsController0Test < ActionController::TestCase
 
   setup do
     @cfr_record = cfr_records( :one )
-    @account = accounts( :account_one )
-    session[ :current_user_id ] = accounts( :account_one ).id
+    @account = accounts( :one )
+    session[ :current_user_id ] = accounts( :one ).id
   end
 
   test 'should get index' do

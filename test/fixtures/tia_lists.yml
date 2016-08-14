@@ -3,12 +3,12 @@
 tia_list_one:
   code:     'TIA'
   label:    'Tasks - Issues - Action Items'
-  owner_account:  account_one
-  deputy_account: account_wop
+  owner_account:  one
+  deputy_account: wop
 
 tia_list_two:
   code:     'TEST'
   label:    'dummy for testing'
-  owner_account: account_wop
+  owner_account: wop
   
 

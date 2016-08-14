@@ -4,7 +4,7 @@ class OurTiaItemsControllerTest < ActionController::TestCase
   setup do
     @tia_item = tia_items( :tia_item_one )
     @tia_list = @tia_item.tia_list
-    @account = accounts( :account_one )
+    @account = accounts( :one )
     session[ :current_user_id ] = @account.id
   end
 

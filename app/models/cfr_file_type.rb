@@ -4,17 +4,22 @@ class CfrFileType < ActiveRecord::Base
 
   has_many :cfr_records, inverse_of: :cfr_file_types
 
-  validates :extensions, # keep it downcase internally !!!
+  # externally, show a list of lower-case extensions "ext1[,ext2,ext3,...]"
+  # internally, hold the list with leading and trailing comma to aid correct searching
+
+  attr_accessor :extensions
+
+  validates :extensions_internal,
     presence: true,
     length: { maximum: MAX_LENGTH_OF_NOTE },
-    format: { with: /\A(\w+)(,\w+)*\z/, message: I18n.t( 'cfr_file_types.msg.bad_format' )}
+    format: { with: /\A(,\w+)+,\z/, message: I18n.t( 'cfr_file_types.msg.bad_format' )}
 
   validates :label,
     length: { maximum: MAX_LENGTH_OF_LABEL }
 
   validate :uniqueness_of_extension
 
-  scope :find_by_extension, ->( ext ){ where "extensions LIKE \"%#{ ext }%\"" }
+  scope :find_by_extension, ->( ext ){ where "extensions_internal LIKE \"%,#{ ext },%\"" }
 
   # ensure that an extension is not assigned twice; this appears expensive
   # but since file type records are not modified often, I thought it's worth it
@@ -46,10 +51,16 @@ class CfrFileType < ActiveRecord::Base
     end
   end
 
-  # remove all white space from string and make it lowercase
+  # remove all white space from string, make it lowercase, and add leading and trailing comma
 
   def extensions=( text )
-    write_attribute( :extensions, text.gsub( /\s+/,'' ).downcase)
+    text ? write_attribute( :extensions_internal, ',' + text.gsub( /\s+/,'' ).downcase + ',' ) : nil
+  end
+
+  # somehow a getter method for views
+
+  def extensions
+    read_attribute( :extensions_internal ).try( :slice, 1..-2 )
   end
 
   # remove leading and trailing blanks

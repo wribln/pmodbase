@@ -3,7 +3,7 @@ class FunctionCodesControllerTest < ActionController::TestCase
 
   setup do
     @function_code = function_codes( :one )
-    session[ :current_user_id ] = accounts( :account_one ).id
+    session[ :current_user_id ] = accounts( :one ).id
   end
 
   test 'should get index' do

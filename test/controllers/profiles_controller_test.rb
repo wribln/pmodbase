@@ -1,11 +1,9 @@
-
 require 'test_helper'
-
 class ProfilesControllerTest < ActionController::TestCase
 
   setup do
     @p = people(:person_one)
-    session[:current_user_id] = accounts(:account_one).id
+    session[:current_user_id] = accounts(:one).id
   end
 
   test "check class_attributes"  do

@@ -3,7 +3,7 @@ class ProgrammeActivitiesControllerTest < ActionController::TestCase
 
   setup do
     @programme_activity = programme_activities( :ppa_one )
-    session[ :current_user_id ] = accounts( :account_one ).id
+    session[ :current_user_id ] = accounts( :one ).id
   end
 
   test "check class_attributes"  do

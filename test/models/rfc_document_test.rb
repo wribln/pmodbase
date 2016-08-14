@@ -5,7 +5,7 @@ class RfcDocumentTest < ActiveSupport::TestCase
     rd = rfc_documents( :one )
     assert_equal rfc_status_records( :rfc_one ).id,rd.rfc_status_record_id
     assert_equal 0,rd.version
-    assert_equal accounts( :account_wop ).id,rd.account_id
+    assert_equal accounts( :wop ).id,rd.account_id
   end
 
   test "all required parameters" do

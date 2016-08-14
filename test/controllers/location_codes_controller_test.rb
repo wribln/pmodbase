@@ -3,7 +3,7 @@ class LocationCodesControllerTest < ActionController::TestCase
 
   setup do
     @location_code = location_codes( :two )
-    session[ :current_user_id ] = accounts( :account_one ).id
+    session[ :current_user_id ] = accounts( :one ).id
   end
 
   test "should get index" do

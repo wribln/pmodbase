@@ -4,8 +4,8 @@ class PcpSubjectsController1Test < ActionController::TestCase
 
   setup do
     @pcp_subject = pcp_subjects( :one )
-    @account_s = accounts( :account_one )
-    @account_p = accounts( :account_two )
+    @account_s = accounts( :one )
+    @account_p = accounts( :two )
     session[ :current_user_id ] = @account_s.id
   end
 

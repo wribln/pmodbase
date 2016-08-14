@@ -7,7 +7,7 @@ class PcpMembersController1Test < ActionController::TestCase
   setup do
     @pcp_member = pcp_members( :one )
     @pcp_subject = @pcp_member.pcp_subject
-    @account = accounts( :account_three )
+    @account = accounts( :three )
     session[ :current_user_id ] = @account.id
   end
 
@@ -24,7 +24,7 @@ class PcpMembersController1Test < ActionController::TestCase
   test 'should create pcp_member' do
     assert_no_difference( 'PcpMember.count' ) do
       post :create, pcp_member: {
-        account_id: accounts( :account_three ),
+        account_id: accounts( :three ),
         pcp_group: 0,
         to_access: true },
         pcp_subject_id: @pcp_subject.id

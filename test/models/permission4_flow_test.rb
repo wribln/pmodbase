@@ -43,22 +43,22 @@ class Permission4FlowTest < ActiveSupport::TestCase
     p = permission4_flows( :rsr )
     p.feature_id = nil
     assert_not p.valid?
-    assert_includes p.errors, :feature_id
+    assert_includes p.errors, :feature
 
     p.feature_id = FEATURE_ID_MAX_PLUS_ONE
     assert_not p.valid?
-    assert_includes p.errors, :feature_id
+    assert_includes p.errors, :feature
   end
 
   test 'given account must exist' do
     p = permission4_flows( :rsr )
     p.account_id = nil
     assert_not p.valid?
-    assert_includes p.errors, :account_id
+    assert_includes p.errors, :account
 
     p.account_id = 0
     assert_not p.valid?
-    assert_includes p.errors, :account_id
+    assert_includes p.errors, :account
   end
 
   test 'task list contents' do

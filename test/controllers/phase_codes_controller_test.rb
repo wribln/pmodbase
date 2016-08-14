@@ -3,7 +3,7 @@ class PhaseCodesControllerTest < ActionController::TestCase
 
   setup do
     @person = people( :person_one )
-    session[ :current_user_id ] = accounts( :account_one ).id
+    session[ :current_user_id ] = accounts( :one ).id
     
     @phase_code_test = phase_codes( :prl )
   end

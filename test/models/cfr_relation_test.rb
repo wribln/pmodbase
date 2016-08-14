@@ -71,4 +71,34 @@ class CfrRelationTest < ActiveSupport::TestCase
     assert_equal 'Relationship 1 Reverse', r.get_label( r.dst_record )
   end
 
+  test 'src and dst must exist' do
+    r = cfr_relations( :one )
+    r.src_record_id = nil
+    refute r.valid?
+    assert_includes r.errors, :src_record
+
+    r.src_record_id = accounts( :wop ).id
+    refute r.valid?
+    assert_includes r.errors, :src_record
+
+    r.dst_record_id, r.src_record_id = r.src_record_id, r.dst_record_id
+    refute r.valid?
+    assert_includes r.errors, :dst_record
+
+    r.dst_record_id = nil
+    refute r.valid?
+    assert_includes r.errors, :dst_record
+  end
+
+  test 'cfr_relationship must exist' do
+    r = cfr_relations( :one )
+    r.cfr_relationship_id = nil
+    refute r.valid?
+    assert_includes r.errors, :cfr_relationship
+
+    r.cfr_relationship_id = accounts( :wop ).id
+    refute r.valid?
+    assert_includes r.errors, :cfr_relationship
+  end
+
 end

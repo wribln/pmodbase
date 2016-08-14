@@ -1,5 +1,4 @@
 require 'test_helper'
-
 class TiaMemberTest < ActiveSupport::TestCase
 
   test "fixture usefulness" do
@@ -10,9 +9,9 @@ class TiaMemberTest < ActiveSupport::TestCase
     assert_not_nil t1.account_id
     assert_not_nil t2.account_id
     assert_not_nil t3.account_id
-    assert_equal t1.account_id, accounts( :account_one ).id
-    assert_equal t2.account_id, accounts( :account_two ).id
-    assert_equal t3.account_id, accounts( :account_three ).id
+    assert_equal t1.account_id, accounts( :one ).id
+    assert_equal t2.account_id, accounts( :two ).id
+    assert_equal t3.account_id, accounts( :three ).id
     assert_not_nil t1.tia_list_id
     assert_not_nil t2.tia_list_id
     assert_not_nil t3.tia_list_id
@@ -35,7 +34,7 @@ class TiaMemberTest < ActiveSupport::TestCase
 
     # try to add the owner as member
 
-    ax = accounts( :account_wop ).id
+    ax = accounts( :wop ).id
     assert tx.tia_list.user_is_owner_or_deputy?( ax )
     tx.account_id = ax
     assert_not tx.valid?
@@ -46,7 +45,7 @@ class TiaMemberTest < ActiveSupport::TestCase
     tx.account_id = nil
     assert_not tx.valid?
     assert_includes tx.errors, :account_id
-    tx.account_id = accounts( :account_three ).id
+    tx.account_id = accounts( :three ).id
     assert tx.valid?
 
     # try to set tia_list_id to nil

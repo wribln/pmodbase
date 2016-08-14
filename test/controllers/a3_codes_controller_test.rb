@@ -3,7 +3,7 @@ class A3CodesControllerTest < ActionController::TestCase
 
   setup do
     @a3_code = a3_codes(:one)
-    session[ :current_user_id ] = accounts( :account_one ).id
+    session[ :current_user_id ] = accounts( :one ).id
   end
 
   test "check class_attributes"  do

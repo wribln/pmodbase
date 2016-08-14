@@ -3,8 +3,8 @@ class CfrFileTypesControllerTest < ActionController::TestCase
 
   setup do
     @cfr_file_type = cfr_file_types(:one)
-    @account = accounts( :account_one )
-    session[ :current_user_id ] = accounts( :account_one ).id
+    @account = accounts( :one )
+    session[ :current_user_id ] = accounts( :one ).id
   end
 
   test 'should get index' do

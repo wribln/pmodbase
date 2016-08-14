@@ -1,7 +1,7 @@
 one:
-  extensions: 'xlm,xls,xlt'
+  extensions_internal: ',xlm,xls,xlt,'
   label:      'Extensible Markup Language'
 
 two:
-  extensions: 'pdf'
+  extensions_internal: ',pdf,'
   label:      'Portable Document Format'

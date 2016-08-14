@@ -26,7 +26,6 @@ class CfrLocation < ActiveRecord::Base
     presence: true
 
   validate :given_location_type_exists
-  validate :given_cfr_record_exists
 
   # this is only to help cfr_record to determine which location is the main location
   # see comments there
@@ -56,17 +55,8 @@ class CfrLocation < ActiveRecord::Base
 
   def given_location_type_exists
     if cfr_location_type_id.present?
-      errors.add( :cfr_location_type_id, I18n.t( 'cfr_locations.msg.bad_loc_type' )) \
+      errors.add( :cfr_location_type, :blank ) \
         unless CfrLocationType.exists?( cfr_location_type_id )
-    end
-  end
-
-  # check if cfr_record exists
-
-  def given_cfr_record_exists
-    if cfr_record_id.present?
-      errors.add( :cfr_record_id, I18n.t( 'cfr_locations.msg.bad_cfr_rec' )) \
-        unless CfrRecord.exists?( cfr_record_id )
     end
   end
 

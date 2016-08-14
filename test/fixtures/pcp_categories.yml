@@ -2,6 +2,6 @@ one:
   c_group: group_one
   p_group: group_two
   label:  'group_one / group_two'
-  c_owner: account_one
-  p_owner: account_two
+  c_owner: one
+  p_owner: two
   description: 'just some text - not too long but long enough ...'

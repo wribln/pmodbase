@@ -3,8 +3,8 @@ class CfrRecordsController2Test < ActionController::TestCase
   tests CfrRecordsController
 
   setup do
-    @account = accounts( :account_one )
-    session[ :current_user_id ] = accounts( :account_one ).id
+    @account = accounts( :one )
+    session[ :current_user_id ] = accounts( :one ).id
   end
 
   test 'should set defaults: doc_owner' do

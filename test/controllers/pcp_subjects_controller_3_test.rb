@@ -15,7 +15,7 @@ class PcpSubjectsController3Test < ActionController::TestCase
 
   setup do 
     @pcp_category = pcp_categories( :one )
-    @account = accounts( :account_wop )
+    @account = accounts( :wop )
     session[ :current_user_id ] = @account.id
   end
 

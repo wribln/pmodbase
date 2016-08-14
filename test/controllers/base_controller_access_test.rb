@@ -9,8 +9,8 @@ class BaseControllerAccessTest < ActionController::TestCase
   end
 
  test "index is permitted with specific entries" do
-    @account = accounts( :account_wop )
-    session[ :current_user_id ] = accounts( :account_wop ).id
+    @account = accounts( :wop )
+    session[ :current_user_id ] = accounts( :wop ).id
     get :index
     assert_response :success
     assert_select 'title', 'TEST: Base Page'

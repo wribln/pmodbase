@@ -4,7 +4,7 @@ class PcpCategoriesController0Test < ActionController::TestCase
 
   setup do
     @pcp_category = pcp_categories(:one)
-    session[ :current_user_id ] = accounts( :account_one ).id
+    session[ :current_user_id ] = accounts( :one ).id
   end
 
   test 'check class attributes' do

@@ -3,7 +3,7 @@ class DbChangeRequestsControllerTest < ActionController::TestCase
 
   setup do
     @dbcr1 = db_change_requests( :dbcr_one )
-    session[ :current_user_id ] = accounts( :account_one ).id
+    session[ :current_user_id ] = accounts( :one ).id
   end
 
   test "check class_attributes"  do
@@ -13,7 +13,7 @@ class DbChangeRequestsControllerTest < ActionController::TestCase
   test "verify fixtures" do
     assert_not_nil @dbcr1.id
     assert_not_nil @dbcr1.requesting_account_id
-    assert_equal accounts( :account_one ).id, @dbcr1.requesting_account_id 
+    assert_equal accounts( :one ).id, @dbcr1.requesting_account_id 
     assert_nil @dbcr1.responsible_account_id
     assert_nil @dbcr1.detail
     assert_equal 'test1', @dbcr1.action
@@ -35,7 +35,7 @@ class DbChangeRequestsControllerTest < ActionController::TestCase
   test "should create db_change_request" do
     assert_difference( 'DbChangeRequest.count' ) do
       post :create, db_change_request: {
-        requesting_account_id: accounts( :account_one ).id, 
+        requesting_account_id: accounts( :one ).id, 
         status: 0,
         request_text: 'This is a request!' }
     end
@@ -55,7 +55,7 @@ class DbChangeRequestsControllerTest < ActionController::TestCase
 
   test "should update db_change_request" do
     patch :update, id: @dbcr1, db_change_request: { 
-      requesting_account_id: accounts( :account_one ).id,
+      requesting_account_id: accounts( :one ).id,
       status: 0,
       request_text: 'Yet another request.' }
     assert_redirected_to db_change_request_path( assigns ( :dbcr ))

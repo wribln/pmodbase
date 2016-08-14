@@ -24,8 +24,8 @@ class PcpCategoryTest < ActiveSupport::TestCase
     pc.c_group_id = groups( :group_one ).id
     pc.p_group_id = groups( :group_two ).id
     pc.label = "test 1 2 3"
-    pc.c_owner_id = accounts( :account_one ).id
-    pc.p_owner_id = accounts( :account_two ).id
+    pc.c_owner_id = accounts( :one ).id
+    pc.p_owner_id = accounts( :two ).id
     assert pc.valid?
   end
 
@@ -45,7 +45,7 @@ class PcpCategoryTest < ActiveSupport::TestCase
   test 'account 1 must exist' do
     pc = pcp_categories( :one )
     assert pc.valid?
-    assert accounts( :account_one ).destroy
+    assert accounts( :one ).destroy
     refute pc.valid?
     assert_includes pc.errors, :c_owner_id
   end
@@ -53,30 +53,30 @@ class PcpCategoryTest < ActiveSupport::TestCase
   test 'account 2 must exist' do
     pc = pcp_categories( :one )
     assert pc.valid?
-    assert accounts( :account_two ).destroy
+    assert accounts( :two ).destroy
     refute pc.valid?
     assert_includes pc.errors, :p_owner_id
   end
 
   test 'c_owner must have access to respective group' do
     pc = pcp_categories( :one )
-    pc.c_owner_id = accounts( :account_wop ).id
+    pc.c_owner_id = accounts( :wop ).id
     refute pc.valid?
     assert_includes pc.errors, :c_owner_id
     pc.c_owner_id = nil
     refute pc.valid?
     assert_includes pc.errors, :c_owner_id
-    pc.c_owner_id = accounts( :account_one ).id    
+    pc.c_owner_id = accounts( :one ).id    
     assert pc.valid?
   end
 
-  # same test but with specific group ( :account_one has access
-  # to all groups, :account_two only for group_two )
+  # same test but with specific group ( :one has access
+  # to all groups, :two only for group_two )
 
   test 'c_owner must have access to specified group' do
     pc = pcp_categories( :one )
     assert_equal groups( :group_one ).id, pc.c_group_id
-    pc.c_owner_id = accounts( :account_two ).id
+    pc.c_owner_id = accounts( :two ).id
     refute pc.valid?#
     pc.c_group_id = groups( :group_two ).id
     assert pc.valid?
@@ -84,23 +84,23 @@ class PcpCategoryTest < ActiveSupport::TestCase
 
   test 'p_owner must have access to respective group' do
     pc = pcp_categories( :one )
-    pc.p_owner_id = accounts( :account_wop ).id
+    pc.p_owner_id = accounts( :wop ).id
     refute pc.valid?
     assert_includes pc.errors, :p_owner_id
     pc.p_owner_id = nil
     refute pc.valid?
     assert_includes pc.errors, :p_owner_id
-    pc.p_owner_id = accounts( :account_one ).id    
+    pc.p_owner_id = accounts( :one ).id    
     assert pc.valid?
   end
 
-  # same test but with specific group ( :account_one has access
-  # to all groups, :account_two only for group_two )
+  # same test but with specific group ( :one has access
+  # to all groups, :two only for group_two )
 
   test 'p_owner must have access to specified group' do
     pc = pcp_categories( :one )
     pc.p_group_id = groups( :group_one )
-    pc.p_owner_id = accounts( :account_two ).id
+    pc.p_owner_id = accounts( :two ).id
     refute pc.valid?
     pc.p_group_id = groups( :group_two ).id
     assert pc.valid?
@@ -110,11 +110,11 @@ class PcpCategoryTest < ActiveSupport::TestCase
     pc = pcp_categories( :one )
     pc.c_deputy_id = nil
     assert pc.valid?
-    pc.c_deputy_id = accounts( :account_wop ).id
-    accounts( :account_wop ).destroy
+    pc.c_deputy_id = accounts( :wop ).id
+    accounts( :wop ).destroy
     refute pc.valid?
     assert_includes pc.errors, :c_deputy_id
-    pc.c_deputy_id = accounts( :account_one ).id
+    pc.c_deputy_id = accounts( :one ).id
     assert pc.valid?
   end
 
@@ -122,20 +122,20 @@ class PcpCategoryTest < ActiveSupport::TestCase
     pc = pcp_categories( :one )
     pc.p_deputy_id = nil
     assert pc.valid?
-    pc.p_deputy_id = accounts( :account_wop ).id
-    accounts( :account_wop ).destroy
+    pc.p_deputy_id = accounts( :wop ).id
+    accounts( :wop ).destroy
     refute pc.valid?
     assert_includes pc.errors, :p_deputy_id
-    pc.p_deputy_id = accounts( :account_one ).id
+    pc.p_deputy_id = accounts( :one ).id
     assert pc.valid?
   end
 
   test 'permitted to create subject' do
     g1 = groups( :group_one ).id
     g2 = groups( :group_two ).id
-    a0 = accounts( :account_wop )
-    a1 = accounts( :account_one )
-    a2 = accounts( :account_two )
+    a0 = accounts( :wop )
+    a1 = accounts( :one )
+    a2 = accounts( :two )
 
     assert_equal 0, PcpCategory.permitted_to_create_subject( nil, a0 ).count
     assert_equal 1, PcpCategory.permitted_to_create_subject( '',  a0 ).count
@@ -156,7 +156,7 @@ class PcpCategoryTest < ActiveSupport::TestCase
     assert_equal 1, PcpCategory.permitted_to_create_subject( [g1,g2], a2 ).count
 
     pc = pcp_categories( :one )
-    pc.p_deputy_id = accounts( :account_two ).id
+    pc.p_deputy_id = accounts( :two ).id
     assert pc.save
 
     assert_equal 1, PcpCategory.permitted_to_create_subject( nil, a2 ).count

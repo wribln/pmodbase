@@ -1,5 +1,4 @@
 require 'test_helper'
-
 class DbChangeRequestTest < ActiveSupport::TestCase
 
   test 'default settings' do
@@ -45,7 +44,7 @@ class DbChangeRequestTest < ActiveSupport::TestCase
 
   test 'requestor with id' do
     dbcr = DbChangeRequest.new
-    a = accounts( :account_one )
+    a = accounts( :one )
     dbcr.requesting_account_id = a.id
     p = Person.find( a.person_id )
     assert_equal text_with_id( p.name, p.id ), dbcr.requestor_with_id
@@ -57,7 +56,7 @@ class DbChangeRequestTest < ActiveSupport::TestCase
 
   test 'responsible with id' do
     dbcr = DbChangeRequest.new
-    a = accounts( :account_one )
+    a = accounts( :one )
     dbcr.responsible_account_id = a.id
     p = Person.find( a.person_id )
     assert_equal text_with_id( p.name, p.id ), dbcr.responsible_with_id
@@ -122,10 +121,10 @@ class DbChangeRequestTest < ActiveSupport::TestCase
   end
 
   test 'all scopes' do
-    as = DbChangeRequest.for_user( accounts( :account_one ).id )
+    as = DbChangeRequest.for_user( accounts( :one ).id )
     assert_equal 1, as.length
 
-    as = DbChangeRequest.for_user( accounts( :account_wop ).id )
+    as = DbChangeRequest.for_user( accounts( :wop ).id )
     assert_equal 1, as.length
 
     as = DbChangeRequest.for_user( 0 )

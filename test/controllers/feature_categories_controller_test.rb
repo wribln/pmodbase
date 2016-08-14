@@ -3,7 +3,7 @@ class FeatureCategoriesControllerTest < ActionController::TestCase
   
   setup do
     @feature_category = feature_categories( :feature_category_one )
-    session[ :current_user_id ] = accounts( :account_one ).id
+    session[ :current_user_id ] = accounts( :one ).id
   end
 
   test "check class_attributes"  do

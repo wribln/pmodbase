@@ -15,6 +15,7 @@ en:
       cfr_file_type:
         id:               :general.attributes.id
         extensions:       'List of Extensions'
+        extensions_external: :activerecord.attributes.cfr_file_type.extensions
         label:            'Label'
         unknown_type:     'unknown CFR File Type'
 
@@ -34,6 +35,7 @@ en:
         cfr_record_id:    'CFR Record ID'
         doc_code:         'Document Code'
         doc_version:      'Document Code Version'
+        cfr_location_type:    'Storage Location'
         cfr_location_type_id: 'Storage Location'
         uri:              'Full Path'
         is_main_location: 'Main Location?'
@@ -75,6 +77,23 @@ en:
         leading:          'Leading'
       cfr_relationship/reverse_rs:
         label:            'Label'
+
+    errors:
+      models:
+        cfr_location:
+          attributes:
+            cfr_record:
+              blank:          'must refer to an existing CFR Record.'
+            cfr_location_type:
+              blank:          'must refer to an existing CFR Location Type Record.'
+        cfr_relation:
+          attributes:
+            src_record:
+              blank:          :activerecord.errors.models.cfr_location.attributes.cfr_record.blank
+            dst_record:
+              blank:          :activerecord.errors.models.cfr_location.attributes.cfr_record.blank
+            cfr_relationship:
+              blank:          'must refer to an existing CFR Relationship Record.'
 
   cfr_file_types:
     title:                'CFR File Types'
@@ -141,11 +160,6 @@ en:
       defaults_set:       'Defaults set but CFR Record not yet saved!'
       bad_main_loc:       'backward reference not valid.'
       too_many_mains:     'Only one location can be marked as main location.'
-
-  cfr_locations:
-    msg:
-      bad_loc_type:       :general.non_existing
-      bad_cfr_rec:        :general.non_existing
 
   cfr_location_types:
     title:                'Storage Locations'

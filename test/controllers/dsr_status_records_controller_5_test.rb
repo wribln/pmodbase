@@ -6,13 +6,13 @@ class DsrStatusRecordsController5Test < ActionController::TestCase
 
   setup do
     # set maximum permission
-    @account = accounts( :account_one )
+    @account = accounts( :one )
     pg = @account.permission4_groups.where( feature_id: FEATURE_ID_DSR_STATUS_RECORDS )
     pg[ 0 ].to_read = 1
     pg[ 0 ].to_update = 1
     pg[ 0 ].to_create = 1
     pg[ 0 ].save
-    session[ :current_user_id ] = accounts( :account_one ).id
+    session[ :current_user_id ] = accounts( :one ).id
     @dsr_status_record = dsr_status_records( :dsr_rec_one )
   end
 

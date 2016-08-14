@@ -3,7 +3,7 @@ class ServiceCodesControllerTest < ActionController::TestCase
 
   setup do
     @service_code = service_codes( :one )
-    session[ :current_user_id ] = accounts( :account_one ).id
+    session[ :current_user_id ] = accounts( :one ).id
   end
 
   test 'should get index' do

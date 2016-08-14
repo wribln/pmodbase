@@ -165,10 +165,10 @@ ActiveRecord::Schema.define(version: 20160809114810) do
   add_index "addresses", ["label"], name: "index_addresses_on_label"
 
   create_table "cfr_file_types", force: :cascade do |t|
-    t.string   "label",      limit: 50
-    t.string   "extensions", limit: 50, null: false
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.string   "label",               limit: 50
+    t.string   "extensions_internal", limit: 50, null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
   end
 
   create_table "cfr_location_types", force: :cascade do |t|

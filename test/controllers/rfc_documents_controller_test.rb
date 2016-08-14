@@ -2,8 +2,8 @@ require 'test_helper'
 class RfcDocumentsControllerTest < ActionController::TestCase
 
   setup do
-    @account = accounts( :account_one )
-    session[ :current_user_id ] = accounts( :account_one ).id
+    @account = accounts( :one )
+    session[ :current_user_id ] = accounts( :one ).id
     @rfc_document = rfc_documents( :one )
   end
 
@@ -32,7 +32,7 @@ class RfcDocumentsControllerTest < ActionController::TestCase
         question: 'and a question' }
     end
     assert_redirected_to rfc_document_path( assigns( :rfc_document ))
-    assert_equal accounts( :account_one ).id,assigns( :rfc_document ).account_id
+    assert_equal accounts( :one ).id,assigns( :rfc_document ).account_id
   end
 
   test "should show rfc_document" do

@@ -3,7 +3,7 @@ class ReferencesControllerTest < ActionController::TestCase
 
   setup do
     @reference = references( :one )
-    session[ :current_user_id ] = accounts( :account_one ).id   
+    session[ :current_user_id ] = accounts( :one ).id   
   end
 
   test "check class_attributes"  do

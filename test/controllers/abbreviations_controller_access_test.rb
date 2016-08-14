@@ -1,5 +1,3 @@
-# test FEATURE_ACCESS_INDEX control - the controller is just a sample
-
 require 'test_helper'
 class AbbreviationsControllerAccessTest < ActionController::TestCase
   tests AbbreviationsController
@@ -11,8 +9,8 @@ class AbbreviationsControllerAccessTest < ActionController::TestCase
   # index
 
   test "index is permitted for all valid accounts" do
-    @account = accounts( :account_wop )
-    session[ :current_user_id ] = accounts( :account_wop ).id
+    @account = accounts( :wop )
+    session[ :current_user_id ] = accounts( :wop ).id
     get :index
     assert_response :success
     assert_select 'h2', I18n.t( 'abbreviations.index.form_title' )
@@ -28,8 +26,8 @@ class AbbreviationsControllerAccessTest < ActionController::TestCase
   # show
 
   test "show is permitted" do
-    @account = accounts( :account_wop )
-    session[ :current_user_id ] = accounts( :account_wop ).id
+    @account = accounts( :wop )
+    session[ :current_user_id ] = accounts( :wop ).id
     get :show, id: abbreviations( :sag )
     assert_response :success
   end
@@ -44,8 +42,8 @@ class AbbreviationsControllerAccessTest < ActionController::TestCase
   # edit
 
   test "edit is not permitted but results in cr form" do
-    @account = accounts( :account_wop )
-    session[ :current_user_id ] = accounts( :account_wop ).id
+    @account = accounts( :wop )
+    session[ :current_user_id ] = accounts( :wop ).id
     get :edit, id: abbreviations( :sag )
     check_for_cr
   end
@@ -60,8 +58,8 @@ class AbbreviationsControllerAccessTest < ActionController::TestCase
   # new
 
   test "new is not permitted but results in cr form" do
-    @account = accounts( :account_wop )
-    session[ :current_user_id ] = accounts( :account_wop ).id
+    @account = accounts( :wop )
+    session[ :current_user_id ] = accounts( :wop ).id
     assert_difference( 'Abbreviation.count', 0 ) { get :new }
     check_for_cr
   end
@@ -76,8 +74,8 @@ class AbbreviationsControllerAccessTest < ActionController::TestCase
   # update
 
   test "update is not permitted but results in cr form" do
-    @account = accounts( :account_wop )
-    session[ :current_user_id ] = accounts( :account_wop ).id
+    @account = accounts( :wop )
+    session[ :current_user_id ] = accounts( :wop ).id
     patch :update, id: abbreviations( :sag )
     check_for_cr
   end
@@ -92,8 +90,8 @@ class AbbreviationsControllerAccessTest < ActionController::TestCase
   # create
 
   test "create is not permitted but results in cr form" do
-    @account = accounts( :account_wop )
-    session[ :current_user_id ] = accounts( :account_wop ).id
+    @account = accounts( :wop )
+    session[ :current_user_id ] = accounts( :wop ).id
     assert_difference( 'Abbreviation.count', 0 ) { post :create }
     check_for_cr
   end
@@ -108,8 +106,8 @@ class AbbreviationsControllerAccessTest < ActionController::TestCase
   # delete
 
   test "delete is not permitted but results in cr form" do
-    @account = accounts( :account_wop )
-    session[ :current_user_id ] = accounts( :account_wop ).id
+    @account = accounts( :wop )
+    session[ :current_user_id ] = accounts( :wop ).id
     assert_difference( 'Abbreviation.count', 0 ) { delete :destroy, id: abbreviations( :sag )}
     check_for_cr
   end

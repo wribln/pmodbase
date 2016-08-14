@@ -1,12 +1,12 @@
 rsr:
-  account:      account_one
+  account:      one
   feature_id:   31
   workflow_id:  0
   label:        'a role'
   tasklist:     '0,1,3,5'
 
 dsr:
-  account:      account_one
+  account:      one
   feature_id:   39
   workflow_id:  0
   label:        'another role'

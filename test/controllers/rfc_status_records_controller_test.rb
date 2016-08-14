@@ -2,7 +2,7 @@ require 'test_helper'
 class RfcStatusRecordsControllerTest < ActionController::TestCase
 
   setup do
-    @account = accounts( :account_one )
+    @account = accounts( :one )
     session[ :current_user_id ] = @account.id
     @rfc_status_record = rfc_status_records( :rfc_one )
   end

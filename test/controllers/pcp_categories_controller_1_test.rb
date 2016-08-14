@@ -6,7 +6,7 @@ class PcpCategoriesController1Test < ActionController::TestCase
 
   setup do
     @pcp_category = pcp_categories(:one)
-    session[ :current_user_id ] = accounts( :account_wop ).id
+    session[ :current_user_id ] = accounts( :wop ).id
   end
 
   test 'should get index' do

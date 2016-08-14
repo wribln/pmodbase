@@ -21,22 +21,20 @@ class Permission4GroupTest < ActiveSupport::TestCase
     p = permission4_groups( :permission4_group_0 )
     p.feature_id = nil
     assert_not p.valid?
-    assert_includes p.errors, :feature_id
-
+    assert_includes p.errors, :feature
     p.feature_id = FEATURE_ID_MAX_PLUS_ONE
     assert_not p.valid?
-    assert_includes p.errors, :feature_id
+    assert_includes p.errors, :feature
   end
 
   test 'given account must exist' do
     p = permission4_groups( :permission4_group_0 )
     p.account_id = nil
     assert_not p.valid?
-    assert_includes p.errors, :account_id
-
+    assert_includes p.errors, :account
     p.account_id = 0
     assert_not p.valid?
-    assert_includes p.errors, :account_id
+    assert_includes p.errors, :account
   end
 
   test 'given group must be 0 or must exist' do
@@ -65,24 +63,38 @@ class Permission4GroupTest < ActiveSupport::TestCase
   end
 
   test 'check minimum_permissions?' do
-    assert_equal @p0.errors[ :base ].length, 0
+    assert_equal 0, @p0.errors[ :base ].length
     @p0.minimum_permissions
-    assert_equal @p0.errors[ :base ].length, 1
+    assert_equal 1, @p0.errors[ :base ].length
     @p0.errors.clear
     @p0.to_index = 1
-    assert_equal @p0.errors[ :base ].length, 0
+    assert_equal 0, @p0.errors[ :base ].length
   end
 
-  test 'interdependencies: to_update requires to_read access permission' do
+  test 'interdependencies: to_update and to_create require same to_read access permission level' do
     @p0.group_id = 0
     @p0.feature_id = features( :feature_1 ).id
-    @p0.account_id = accounts( :account_wop ).id
-    @p0.to_update = 1
-    @p0.minimum_permissions
-    assert_equal @p0.errors[ :base ].length, 0
-    assert_not @p0.valid?
-    @p0.to_read = 1
+    @p0.account_id = accounts( :wop ).id
+    @p0.to_index = 1
+
     assert @p0.valid?
+
+    @p0.to_update = 1
+    refute @p0.valid?
+    assert_equal 1, @p0.errors[ :to_read ].length
+
+    @p0.to_update = 0
+    @p0.to_create = 1
+    refute @p0.valid?
+    assert_equal 1, @p0.errors[ :to_read ].length
+
+    @p0.to_update = 1
+    refute @p0.valid?
+    assert_equal 1, @p0.errors[ :to_read ].length
+
+    @p0.to_create = 1
+    @p0.to_read = 1
+    assert @p0.valid?, @p0.errors.messages
   end
 
   test 'method group_code' do

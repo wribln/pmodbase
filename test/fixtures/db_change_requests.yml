@@ -1,7 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 dbcr_one:
-  req_account: account_one
+  req_account: one
   resp_account:
   feature_id:
   detail:
@@ -11,7 +11,7 @@ dbcr_one:
   request_text: 'Text for first change request'
 
 dbcr_two:
-  req_account: account_wop
+  req_account: wop
   resp_account:
   feature_id:
   detail:

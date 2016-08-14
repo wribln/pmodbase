@@ -2,8 +2,8 @@ require 'test_helper'
 class DsrDocGroupsControllerTest < ActionController::TestCase
 
   setup do
-    @account = accounts( :account_one )
-    session[ :current_user_id ] = accounts( :account_one ).id
+    @account = accounts( :one )
+    session[ :current_user_id ] = accounts( :one ).id
     @dsr_doc_group = dsr_doc_groups( :dsr_group_one )
   end
 

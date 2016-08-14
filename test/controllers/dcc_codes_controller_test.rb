@@ -3,7 +3,7 @@ class DccCodesControllerTest < ActionController::TestCase
 
   setup do
     @dcc_code = dcc_codes( :one )
-    session[ :current_user_id ] = accounts( :account_one ).id
+    session[ :current_user_id ] = accounts( :one ).id
   end
 
   test 'should get index' do

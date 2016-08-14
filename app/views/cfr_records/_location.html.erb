@@ -16,6 +16,8 @@
         <%= cfr_location.check_box :is_main_location, class: 'as-radio-button' -%>
       </div>
     <%- end -%>
+  <%- else -%>
+    <%= cfr_location.hidden_field :is_main_location %>
   <%- end -%>
   </div>
   <div class="form-group">

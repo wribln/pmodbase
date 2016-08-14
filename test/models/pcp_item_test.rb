@@ -84,7 +84,7 @@ class PcpItemTest < ActiveSupport::TestCase
     ps = PcpSubject.new
     ps.pcp_category_id = pcp_subjects( :one ).pcp_category_id
     ps.title = 'foobar'
-    ps.p_owner_id = accounts( :account_one ).id
+    ps.p_owner_id = accounts( :one ).id
     px = PcpStep.new
     px.report_version = 't0'
     assert_difference( [ 'PcpSubject.count', 'PcpStep.count' ], 1 )do
@@ -192,7 +192,7 @@ class PcpItemTest < ActiveSupport::TestCase
   end
 
   test 'assessments' do
-    cu = accounts( :account_one )
+    cu = accounts( :one )
     # create new item, for second step, use default assessment 0
     ps = pcp_steps( :one_two )
     pi = nil

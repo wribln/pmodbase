@@ -1,21 +1,15 @@
 class Permission4Flow < ActiveRecord::Base
   include ApplicationModel
-  include AccountCheck
-  include FeatureCheck
   include Filterable
 
   belongs_to :account
   belongs_to :feature, -> { readonly }, inverse_of: :permission4_flows
 
-  validates :feature_id,
+  validates :feature,
     presence: true
 
-  validate :given_feature_exists
-
-  validates :account_id,
+  validates :account,
     presence: true
-
-  validate :given_account_exists
 
   validates :workflow_id,
     presence: true,

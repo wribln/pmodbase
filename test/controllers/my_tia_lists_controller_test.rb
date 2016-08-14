@@ -3,8 +3,8 @@ class MyTiaListsControllerTest < ActionController::TestCase
 
   setup do
     @tia_list = tia_lists( :tia_list_one )
-    @account = accounts( :account_one )
-    session[ :current_user_id ] = accounts( :account_one ).id
+    @account = accounts( :one )
+    session[ :current_user_id ] = accounts( :one ).id
   end
 
   test 'check class attributes' do
@@ -46,7 +46,7 @@ class MyTiaListsControllerTest < ActionController::TestCase
   end
 
   test 'attempt to assign bad owner and deputy nil' do
-    a2 = accounts( :account_two )
+    a2 = accounts( :two )
     assert_no_difference 'TiaList.count' do
       post :create, tia_list: { code: @tia_list.code + '+', label: @tia_list.label, owner_account_id: a2.id }
     end

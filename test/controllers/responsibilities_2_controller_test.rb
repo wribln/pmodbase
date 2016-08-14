@@ -6,7 +6,7 @@ class ResponsibilitiesController2Test < ActionController::TestCase
 
   setup do
     @responsibility = responsibilities( :one )
-    @a = accounts( :account_wop )
+    @a = accounts( :wop )
     session[ :current_user_id ] = @a.id
     @request.env["HTTP_REFERER"] = 'http://test.host/index'
   end

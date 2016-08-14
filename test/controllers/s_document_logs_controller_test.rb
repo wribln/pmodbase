@@ -3,7 +3,7 @@ class SDocumentLogsControllerTest < ActionController::TestCase
 
   setup do
     @s_document_log = s_document_logs( :one )
-    session[ :current_user_id ] = accounts( :account_one ).id
+    session[ :current_user_id ] = accounts( :one ).id
   end
 
   test 'should get index' do

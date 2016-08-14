@@ -1,7 +1,6 @@
 class Permission4Group < ActiveRecord::Base
   include ApplicationModel
   include AccountCheck
-  include FeatureCheck
   include GroupCheck
   include Filterable
    
@@ -9,21 +8,12 @@ class Permission4Group < ActiveRecord::Base
   belongs_to :feature,  -> { readonly }, inverse_of: :permission4_groups
   belongs_to :group,    -> { readonly }, inverse_of: :permission4_groups
   
-  validates :feature_id,
+  validates :feature,
     presence: true
 
-  validate :given_feature_exists
-
-  # the following validations should not be necessary as a permission
-  # is always created with an account - however, it is included to
-  # ensure database consistency at minimal cost (check occurs only
-  # when permission record is modified)
-
-  validates :account_id,
+  validates :account,
     presence: true
   
-  validate :given_account_exists
-
   validates :group_id,
     numericality: { only_integer: true, greater_than_or_equal_to: 0, message: I18n.t( 'permission4_groups.msg.bad_group_id' )}
 
@@ -68,12 +58,12 @@ class Permission4Group < ActiveRecord::Base
     end
   end
 
-  # to_update requires at least the same access level of to_read
+  # to_update/to_create requires at least the same access level of to_read
+  # otherwise a subsequent show would cause an permission error
 
   def permission_dependencies
-    if( to_read < to_update )
-      errors.add( :base, I18n.t( 'permission4_groups.msg.upd_req_read' ))
-    end
+    errors.add( :to_read, I18n.t( 'permission4_groups.msg.insuf_read_lvl' )) \
+      if to_read < to_update || to_read < to_create
   end
 
   # TODO: if would be possible to add additional sanity checks but this could 

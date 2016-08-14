@@ -7,8 +7,8 @@ class AbbrSearchControllerAccessTest < ActionController::TestCase
   end
 
   test "should get index" do
-    @account = accounts( :account_wop )
-    session[ :current_user_id ] = accounts( :account_wop ).id
+    @account = accounts( :wop )
+    session[ :current_user_id ] = accounts( :wop ).id
     get :index
     assert_response :success
   end

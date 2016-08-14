@@ -51,11 +51,15 @@ class CfrLocationTest < ActiveSupport::TestCase
     assert_equal 'file name with blanks.ext', l.file_name
   end
 
-  test 'bad file_type error' do
+  test 'bad cfr_location_type error' do
     l = cfr_locations( :one )
     l.cfr_location_type_id = 0
     refute l.valid?
-    assert_includes l.errors, :cfr_location_type_id
+    assert_includes l.errors, :cfr_location_type
+
+    l.cfr_location_type_id = accounts( :wop ).id
+    refute l.valid?
+    assert_includes l.errors, :cfr_location_type
   end
 
   test 'bad cfr_record error' do
@@ -79,6 +83,13 @@ class CfrLocationTest < ActiveSupport::TestCase
     assert_equal l.uri, l.get_hyperlink
     l.uri = 'https://www.workspace.siemens.com/content/00000169/s/Forms/AllItems.asp'
     assert_equal l.uri, l.get_hyperlink
+  end
+
+  test 'given location must exist' do
+    l = cfr_locations( :one )
+    l.cfr_record_id = accounts( :wop ).id
+    refute l.valid?
+    assert_includes l.errors, :cfr_record
   end
 
 end

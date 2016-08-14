@@ -1,5 +1,3 @@
-# test FEATURE_ACCESS_SOME control - the controller is just a sample
-
 require 'test_helper'
 class AccountsControllerAccessTest < ActionController::TestCase
   tests AccountsController
@@ -11,8 +9,8 @@ class AccountsControllerAccessTest < ActionController::TestCase
   # index
 
   test "index is not permitted but results in cr form" do
-    @account = accounts( :account_wop )
-    session[ :current_user_id ] = accounts( :account_wop ).id
+    @account = accounts( :wop )
+    session[ :current_user_id ] = accounts( :wop ).id
     get :index
     check_for_cr
   end
@@ -27,40 +25,40 @@ class AccountsControllerAccessTest < ActionController::TestCase
   # show
 
   test "show is not permitted but results in cr form" do
-    @account = accounts( :account_wop )
-    session[ :current_user_id ] = accounts( :account_wop ).id
-    get :show, id: accounts( :account_three )
+    @account = accounts( :wop )
+    session[ :current_user_id ] = accounts( :wop ).id
+    get :show, id: accounts( :three )
     check_for_cr
   end
 
   test "should not get show" do
     @account = nil
     session[ :current_user_id ] = nil
-    get :edit, id: accounts( :account_three )
+    get :edit, id: accounts( :three )
     assert_response :unauthorized
   end
 
   # edit
 
   test "edit is not permitted but results in cr form" do
-    @account = accounts( :account_wop )
-    session[ :current_user_id ] = accounts( :account_wop ).id
-    get :edit, id: accounts( :account_three )
+    @account = accounts( :wop )
+    session[ :current_user_id ] = accounts( :wop ).id
+    get :edit, id: accounts( :three )
     check_for_cr
   end
 
   test "should not get edit" do
     @account = nil
     session[ :current_user_id ] = nil
-    get :edit, id: accounts( :account_three )
+    get :edit, id: accounts( :three )
     assert_response :unauthorized
   end
 
   # new
 
   test "new is not permitted but results in cr form" do
-    @account = accounts( :account_wop )
-    session[ :current_user_id ] = accounts( :account_wop ).id
+    @account = accounts( :wop )
+    session[ :current_user_id ] = accounts( :wop ).id
     assert_difference( 'Account.count', 0 ) { get :new }
     check_for_cr
   end
@@ -75,24 +73,24 @@ class AccountsControllerAccessTest < ActionController::TestCase
   # update
 
   test "update is not permitted but results in cr form" do
-    @account = accounts( :account_wop )
-    session[ :current_user_id ] = accounts( :account_wop ).id
-    patch :update, id: accounts( :account_three )
+    @account = accounts( :wop )
+    session[ :current_user_id ] = accounts( :wop ).id
+    patch :update, id: accounts( :three )
     check_for_cr
   end
 
   test "update is  not permitted" do
     @account = nil
     session[ :current_user_id ] = nil
-    patch :update, id: accounts( :account_three )
+    patch :update, id: accounts( :three )
     assert_response :unauthorized
   end
 
   # create
 
   test "create is not permitted but results in cr form" do
-    @account = accounts( :account_wop )
-    session[ :current_user_id ] = accounts( :account_wop ).id
+    @account = accounts( :wop )
+    session[ :current_user_id ] = accounts( :wop ).id
     assert_difference( 'Account.count', 0 ) { post :create }
     check_for_cr
   end
@@ -107,16 +105,16 @@ class AccountsControllerAccessTest < ActionController::TestCase
   # delete
 
   test "delete is not permitted but results in cr form" do
-    @account = accounts( :account_wop )
-    session[ :current_user_id ] = accounts( :account_wop ).id
-    assert_difference( 'Abbreviation.count', 0 ) { delete :destroy, id: accounts( :account_three )}
+    @account = accounts( :wop )
+    session[ :current_user_id ] = accounts( :wop ).id
+    assert_difference( 'Abbreviation.count', 0 ) { delete :destroy, id: accounts( :three )}
     check_for_cr
   end
 
   test "delete is not permitted" do
     @account = nil
     session[ :current_user_id ] = nil
-    assert_difference( 'Abbreviation.count', 0 ) { delete :destroy, id: accounts( :account_three )}
+    assert_difference( 'Abbreviation.count', 0 ) { delete :destroy, id: accounts( :three )}
     assert_response :unauthorized
   end
 

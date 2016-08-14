@@ -1,10 +1,11 @@
 require 'test_helper'
 class ResponsibilitiesController1Test < ActionController::TestCase
+
   tests ResponsibilitiesController
 
   setup do
     @responsibility = responsibilities( :one )
-    @a = accounts( :account_one )
+    @a = accounts( :one )
     session[ :current_user_id ] = @a.id
     @request.env["HTTP_REFERER"] = 'http://test.host/index'
   end

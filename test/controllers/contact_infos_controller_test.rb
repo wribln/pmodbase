@@ -1,11 +1,10 @@
 require 'test_helper'
-
 class ContactInfosControllerTest < ActionController::TestCase
 
   setup do
     @contact_info = contact_infos(:one)
     @person = people( :person_two )
-    session[ :current_user_id ] = accounts( :account_one ).id
+    session[ :current_user_id ] = accounts( :one ).id
   end
 
   test "check class_attributes"  do

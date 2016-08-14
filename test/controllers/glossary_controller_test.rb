@@ -2,7 +2,7 @@ require 'test_helper'
 class GlossaryItemsControllerTest < ActionController::TestCase
 
   setup do
-    session[ :current_user_id ] = accounts( :account_one ).id
+    session[ :current_user_id ] = accounts( :one ).id
     @glossary_item = glossary_items( :one )
   end
 

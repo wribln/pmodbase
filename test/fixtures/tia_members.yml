@@ -1,17 +1,17 @@
 one:
-  account:   account_one
+  account:   one
   tia_list:  tia_list_two
   to_access: true
   to_update: false
 
 two:
-  account:   account_two
+  account:   two
   tia_list:  tia_list_two
   to_access: true
   to_update: true
 
 three:
-  account:   account_three
+  account:   three
   tia_list:  tia_list_one
   to_access: false
   to_update: true

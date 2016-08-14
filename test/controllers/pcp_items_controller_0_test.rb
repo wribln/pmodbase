@@ -5,7 +5,7 @@ class PcpItemsController0Test < ActionController::TestCase
   setup do
     @pcp_item = pcp_items( :three )
     @pcp_subject = @pcp_item.pcp_subject
-    @account = accounts( :account_one )
+    @account = accounts( :one )
     session[ :current_user_id ] = @account.id
   end
 

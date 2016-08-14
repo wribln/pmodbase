@@ -2,8 +2,8 @@ require 'test_helper'
 class DsrProgressRatesControllerTest < ActionController::TestCase
 
   setup do
-    @account = accounts( :account_one )
-    session[ :current_user_id ] = accounts( :account_one ).id
+    @account = accounts( :one )
+    session[ :current_user_id ] = accounts( :one ).id
     @dsr_progress_rate = dsr_progress_rates( :p00 )
   end
 

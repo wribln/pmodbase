@@ -3,8 +3,8 @@ class StandardsBodiesControllerTest < ActionController::TestCase
 
   setup do
     @standards_body = standards_bodies( :din )
-    @account = accounts( :account_one )
-    session[ :current_user_id ] = accounts( :account_one ).id
+    @account = accounts( :one )
+    session[ :current_user_id ] = accounts( :one ).id
   end
 
   test "check class_attributes"  do

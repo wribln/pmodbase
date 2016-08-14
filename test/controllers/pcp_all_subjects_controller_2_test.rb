@@ -6,7 +6,7 @@ class PcpAllSubjectsController2Test < ActionController::TestCase
 
   setup do
     @pcp_subject = pcp_subjects( :one )
-    @account_id = accounts( :account_wop ).id
+    @account_id = accounts( :wop ).id
     session[ :current_user_id ] = @account_id
   end
 

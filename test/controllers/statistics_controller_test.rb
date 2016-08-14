@@ -2,7 +2,7 @@ require 'test_helper'
 class StatisticsControllerTest < ActionController::TestCase
 
   setup do
-    session[ :current_user_id ] = accounts( :account_one ).id
+    session[ :current_user_id ] = accounts( :one ).id
   end
 
   test "check class_attributes"  do

@@ -45,7 +45,7 @@ class TiaListTest < ActiveSupport::TestCase
   end
 
   test "given account must exist" do
-    a1 = accounts( :account_two )
+    a1 = accounts( :two )
     id1 = a1.id
     assert_difference( 'Account.count', -1 ) do
       assert a1.delete
@@ -65,7 +65,7 @@ class TiaListTest < ActiveSupport::TestCase
 
   test "owner or deputy?" do
     t = TiaList.new
-    a = accounts( :account_wop ).id
+    a = accounts( :wop ).id
 
     assert_not t.user_is_owner_or_deputy?( a )
     t.owner_account_id = a
@@ -79,13 +79,13 @@ class TiaListTest < ActiveSupport::TestCase
   test "accounts_for_select 1" do
     t = tia_lists( :tia_list_one )
     a = t.accounts_for_select
-    assert_equal a, a | [ accounts( :account_three ).id, accounts( :account_one ).id, accounts( :account_wop ).id ]
+    assert_equal a, a | [ accounts( :three ).id, accounts( :one ).id, accounts( :wop ).id ]
   end
 
   test "accounts_for_select 2" do
     t = tia_lists( :tia_list_two )
     a = t.accounts_for_select
-    assert_equal a, a | [ accounts( :account_one ).id, accounts( :account_two ).id, accounts( :account_wop ).id, ]
+    assert_equal a, a | [ accounts( :one ).id, accounts( :two ).id, accounts( :wop ).id, ]
   end
 
 end

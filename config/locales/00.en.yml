@@ -668,6 +668,19 @@ en:
         hyperlink:      'Hyperlink'
         seqno:          'Sequence Number'
 
+    errors:
+      models:
+        permission4_group:
+          attributes:
+            account:
+              blank:          'must refer to an existing account.'
+        permission4_flow:
+          attributes:
+            account:
+              blank:          'must refer to an existing account.'
+            feature:
+              blank:          'must refer to an existing feature'
+
   validators:
     date_field:
       bad_syntax:   "= %{bad_date} is incomplete, field must be specified with year, month, and day"
@@ -1552,7 +1565,7 @@ en:
       bad_group_id:     'must be 0 (all) or group must exist.'
       bad_account_id:   :general.non_existing
       none_given:       'at least one permission level must be > 0.'
-      upd_req_read:     'update permission level must be less or equal to read permission level.'
+      insuf_read_lvl:   'must be at same or higher than create and update permission level.'
       group_inactive:   'must be active.'
 
   permission4_flows:
@@ -1562,10 +1575,8 @@ en:
     workflow_id:    'Workflow'
     add_label:      'Add another workflow permissions record'
     msg:  
-      bad_feature_id: :general.non_existing
       bad_tasklist:   'List of permitted tasks is ill-formatted.'
       bad_workflow:   'value is out of range.'
-      bad_account_id: :general.non_existing
 
   phase_codes:
     title:          'Phase Codes'

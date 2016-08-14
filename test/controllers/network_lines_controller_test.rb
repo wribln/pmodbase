@@ -3,7 +3,7 @@ class NetworkLinesControllerTest < ActionController::TestCase
 
   setup do
     @network_line = network_lines( :one )
-    session[ :current_user_id ] = accounts( :account_one ).id
+    session[ :current_user_id ] = accounts( :one ).id
   end
 
   test "check class attributes" do

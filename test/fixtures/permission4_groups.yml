@@ -1,9 +1,9 @@
-# create one persmission record per feature for account_one
+# create one persmission record per feature for account :one
 
 <% FEATURE_ID_MAX_PLUS_ONE.times do |p| %>
 
 permission4_group_<%= p %>:
-  account: account_one
+  account: one
   feature_id: <%= p %>
   group_id: 0
   to_index:  1
@@ -17,7 +17,7 @@ permission4_group_<%= p %>:
 # FEATURE_ID_MY_PCP_SUBJECTS
 
 permission4_group_f01:
-  account:     account_two
+  account:     two
   feature_id:  69
   group:       group_two
   to_index: 1

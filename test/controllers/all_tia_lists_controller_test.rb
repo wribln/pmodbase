@@ -3,8 +3,8 @@ class AllTiaListsControllerTest < ActionController::TestCase
 
   setup do
     @tia_list = tia_lists( :tia_list_one )
-    @account = accounts( :account_one )
-    session[ :current_user_id ] = accounts( :account_one ).id
+    @account = accounts( :one )
+    session[ :current_user_id ] = accounts( :one ).id
   end
 
   test "check class attributes" do
