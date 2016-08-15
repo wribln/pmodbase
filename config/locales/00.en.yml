@@ -188,7 +188,7 @@ en:
         a8_code:        'Originator (A8)'
         doc_id:         'Document Code'
         title:          'Title'
-        account_id:     'Account'
+        account:        'Account'
         user:           'Created by'
 
       abbreviation:
@@ -594,7 +594,7 @@ en:
 
       s_document_log:
         id:             :general.attributes.id
-        group_id:       'Sender Group'
+        group:          'Sender Group'
         receiver_group: 'Receiver Group'
         function_code:  'Function Code'
         service_code:   'Service Code'
@@ -606,7 +606,7 @@ en:
         author_date:    'Author Date'
         doc_id:         'Document Code'
         title:          'Title'
-        account_id:     'Account'
+        account:        'Account'
         user:           'Created by'
 
       siemens_phase:
@@ -670,6 +670,10 @@ en:
 
     errors:
       models:
+        a_document_log:
+          attributes:
+            account:
+              blank:          'must refer to an existing account.'
         permission4_group:
           attributes:
             account:
@@ -680,6 +684,12 @@ en:
               blank:          'must refer to an existing account.'
             feature:
               blank:          'must refer to an existing feature'
+        s_document_log:
+          attributes:
+            account:
+              blank:          'must refer to an existing account.'
+            group:  
+              blank:          'must refer to an existing project group.'
 
   validators:
     date_field:

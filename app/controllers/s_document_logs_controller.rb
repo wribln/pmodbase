@@ -27,8 +27,7 @@ class SDocumentLogsController < ApplicationController
   # GET /sdl/new
 
   def new
-    @s_document_log = SDocumentLog.new
-    @s_document_log.account = current_user
+    @s_document_log = SDocumentLog.new( account: current_user )
     set_selections( :to_create )
   end
 

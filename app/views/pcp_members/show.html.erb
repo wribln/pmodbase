@@ -6,9 +6,9 @@
     <%= form_for @pcp_member do |f| %>
       <%= render partial: 'shared/notice' %>
       <div class="form-group">
-        <%= f.label :account, class: 'col-sm-3 control-label' %>
+        <%= f.label :account_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
-          <%= display_value f.object.account_id %>
+          <%= display_value f.object.account.to_id %>
         </div>
         <div class="col-sm-4">
           <p class="form-control-static"><%= link_to_contact_list f.object.account %></p>

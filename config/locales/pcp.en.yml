@@ -52,7 +52,8 @@ en:
 
       pcp_member:
         id:             :general.attributes.id
-        pcp_subject_id: 'PCP Subject'
+        pcp_subject:    'PCP Subject'
+        account:        'Account'
         account_id:     'Account'
         pcp_group:      'PCP Group'
         pcp_groups:     ['Presenting Group','Commenting Group']
@@ -107,6 +108,16 @@ en:
         released_at:    'Released at'
         subject_title:  :activerecord.attributes.pcp_subject.title
         project_doc_id: :activerecord.attributes.pcp_subject.project_doc_id
+
+    errors:
+      models:
+        pcp_member:
+          attributes:
+            account:
+              blank:          'must refer to an existing account.'
+            pcp_subject:
+              blank:          'must refer to an existing PCP Subject.'
+
 
   # this is included here to ensure that topics are always cited identically
 
@@ -241,8 +252,6 @@ en:
       new_ok:         'PCP Participant successfully created.'
       edit_ok:        'PCP Participant successfully updated.'
       delete_ok:      'PCP Participant successfully deleted.'
-      bad_subject_id: :general.non_existing
-      bad_account_id: :general.non_existing
       dup_account_id: 'is already a Participant for this PCP Subject.'
       access_req:     'must be set if ''Can Update'' is set.'
 

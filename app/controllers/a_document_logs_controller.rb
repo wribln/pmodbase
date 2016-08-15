@@ -27,8 +27,7 @@ class ADocumentLogsController < ApplicationController
   # GET /adl/new
 
   def new
-    @a_document_log = ADocumentLog.new
-    @a_document_log.account = current_user
+    @a_document_log = ADocumentLog.new( account: current_user )
   end
 
   # GET /adls/1/edit
@@ -40,7 +39,7 @@ class ADocumentLogsController < ApplicationController
 
   def create
     @a_document_log = ADocumentLog.new( a_document_log_params )
-    @a_document_log.account_id = current_user.id
+    @a_document_log.account = current_user
     respond_to do |format|
       if @a_document_log.save
         @a_document_log.update_attribute( :doc_id, '' )

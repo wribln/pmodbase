@@ -1,15 +1,16 @@
 class PcpMember < ActiveRecord::Base
-  include AccountCheck
 
   belongs_to :pcp_subject,  -> { readonly }, inverse_of: :pcp_members
   belongs_to :account,      -> { readonly }, inverse_of: :pcp_members
 
-  validates :pcp_subject_id,
+  validates :pcp_subject,
     presence: true
 
   validates :account_id,
     uniqueness: { scope: [ :pcp_subject_id, :pcp_group ],
-      message: I18n.t( 'pcp_members.msg.dup_account_id' )},
+      message: I18n.t( 'pcp_members.msg.dup_account_id' )}
+
+  validates :account,      
     presence: true
 
   PCP_GROUP_LABELS = PcpMember.human_attribute_name( :pcp_groups ).freeze
@@ -18,21 +19,13 @@ class PcpMember < ActiveRecord::Base
     presence: true,
     inclusion: { in: (0..1) }
 
-  validate :given_account_exists
-  validate :given_subject_exists
+#  validate :given_subject_exists
   validate :update_requires_access
 
   scope :presenting_group, -> { where( pcp_group: 0 )}
   scope :commenting_group, -> { where( pcp_group: 1 )}
   scope :presenting_member, ->( m ){ presenting_group.where( account_id: m )}
   scope :commenting_member, ->( m ){ commenting_group.where( account_id: m )}
-
-  # pcp subject must exist - just for safety
-
-  def given_subject_exists
-    errors.add( :pcp_subject_id, I18n.t( 'pcp_members.msg.bad_subject_id' )) \
-      unless PcpSubject.exists?( pcp_subject_id )
-  end
 
   # if to_update is set, to_access must also be set: this could be done
   # by default but I cannot assume that this was the user's intention

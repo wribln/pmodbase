@@ -2,7 +2,6 @@ require './lib/assets/app_helper.rb'
 class ADocumentLog < ActiveRecord::Base
   include ApplicationModel
   include Filterable
-  include AccountCheck
 
   belongs_to :account, -> { readonly }
 
@@ -21,7 +20,9 @@ class ADocumentLog < ActiveRecord::Base
   validates :title,
     length: { maximum: MAX_LENGTH_OF_TITLE }
 
-  validate :given_account_exists
+  validates :account,
+    presence: true
+
   validate :all_codes_valid
 
   scope :reverse, -> { order( id: :desc )}

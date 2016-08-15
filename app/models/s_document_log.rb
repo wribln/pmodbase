@@ -2,8 +2,6 @@ require './lib/assets/app_helper.rb'
 class SDocumentLog < ActiveRecord::Base
   include ApplicationModel
   include Filterable
-  include AccountCheck
-  include GroupCheck
 
   belongs_to :account, -> { readonly }
   belongs_to :group,   -> { readonly }
@@ -13,7 +11,7 @@ class SDocumentLog < ActiveRecord::Base
     self.set_nil_default( :author_date, Date.today )
   end
 
-  validates :group_id,
+  validates :group, :account,
     presence: true
 
   validates :receiver_group,
@@ -35,8 +33,6 @@ class SDocumentLog < ActiveRecord::Base
   validates :doc_id,
     length: { maximum: MAX_LENGTH_OF_DOC_ID_S }
 
-  validate :given_account_exists
-  validate :given_group_exists
   validate :at_least_one_given
   validate :all_codes_valid
 

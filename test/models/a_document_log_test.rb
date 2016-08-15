@@ -201,7 +201,8 @@ class ADocumentLogTest < ActiveSupport::TestCase
     assert_includes adl.errors, :a8_code
 
     adl.a8_code = 'ABC'
-    assert adl.valid?
+    adl.account = accounts( :wop )
+    assert adl.valid?, adl.errors.messages
 
   end
 
