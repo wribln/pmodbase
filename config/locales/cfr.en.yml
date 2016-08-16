@@ -33,10 +33,11 @@ en:
         id:               :general.attributes.id
         file_name:        'File Name'
         cfr_record_id:    'CFR Record ID'
+        cfr_record:       :activerecord.attributes.cfr_location.cfr_record_id
         doc_code:         'Document Code'
         doc_version:      'Document Code Version'
-        cfr_location_type:    'Storage Location'
         cfr_location_type_id: 'Storage Location'
+        cfr_location_type:    :activerecord.attributes.cfr_location.cfr_location_type_id
         uri:              'Full Path'
         is_main_location: 'Main Location?'
 
@@ -45,9 +46,12 @@ en:
         title:            'Title'
         note:             'Notes'
         group_id:         :general.attributes.group_id
+        group:            :general.attributes.group_id
         main_location_id: 'Main Storage Location'
+        main_location:    :activerecord.attributes.cfr_record.main_location_id
         extension:        'File Extension'
         cfr_file_type_id: 'File Type'
+        cfr_file_type:    :activerecord.attributes.cfr_record.cfr_file_type_id
         conf_level:       'Confidentiality Level'
         conf_levels:      [ 'unrestricted', 'restricted', 'confidential', 'strictly confidential' ]
         hash_function:    'Hash Function'
@@ -86,6 +90,12 @@ en:
               blank:          'must refer to an existing CFR Record.'
             cfr_location_type:
               blank:          'must refer to an existing CFR Location Type Record.'
+        cfr_record:
+          attributes:
+            main_location:
+              blank:          'must refer to an existing CFR Location.'
+            cfr_file_type:
+              blank:          'must refer to an existing CFR File Type.'
         cfr_relation:
           attributes:
             src_record:
@@ -153,9 +163,6 @@ en:
       hash_wo_fct:        'invalid without specified Hash Function.'
       hash_bad_length:    'has wrong length for given Hash Function'
       unknown_fct:        'unknown'
-      bad_group_id:       :general.non_existing
-      bad_loc_id:         :general.non_existing
-      bad_ft_id:          :general.non_existing
       hex_only:           'must consist of hexadecimal characters only'
       defaults_set:       'Defaults set but CFR Record not yet saved!'
       bad_main_loc:       'backward reference not valid.'

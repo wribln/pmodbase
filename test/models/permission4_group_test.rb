@@ -42,14 +42,14 @@ class Permission4GroupTest < ActiveSupport::TestCase
     assert p.valid?, p.errors.messages
     p.group_id = nil
     refute p.valid?
-    assert_includes p.errors, :group_id
+    assert_includes p.errors, :group
 
     p.group_id = 0
     assert p.valid?, p.errors.messages
 
     p.group_id = -1
     refute p.valid?
-    assert_includes p.errors, :group_id
+    assert_includes p.errors, :group
   end
 
   test 'given group must be active' do

@@ -2,8 +2,8 @@ class Permission4Flow < ActiveRecord::Base
   include ApplicationModel
   include Filterable
 
-  belongs_to :account
-  belongs_to :feature, -> { readonly }, inverse_of: :permission4_flows
+  belongs_to :account, -> { readonly }
+  belongs_to :feature, -> { readonly }
 
   validates :feature,
     presence: true

@@ -136,9 +136,9 @@ class CfrRecordTest < ActiveSupport::TestCase
 
     cfr.cfr_file_type_id = 0
     refute cfr.valid?
-    assert_includes cfr.errors, :cfr_file_type_id
+    assert_includes cfr.errors, :cfr_file_type
 
-    cfr.cfr_file_type_id = cfr_file_types( :two ).id
+    cfr.cfr_file_type = cfr_file_types( :two )
     assert cfr.valid?
   end
 
@@ -149,11 +149,11 @@ class CfrRecordTest < ActiveSupport::TestCase
 
     cfr.main_location_id = 0
     cfr.given_main_location_ok
-    assert_includes cfr.errors, :main_location_id
+    assert_includes cfr.errors, :main_location
 
     cfr.main_location_id = cfr_locations( :one ).id
     cfr.given_main_location_ok
-    assert_includes cfr.errors, :main_location_id
+    assert_includes cfr.errors, :main_location
 
     cfr = cfr_records( :two )
     cfr.main_location_id = cfr_locations( :one ).id
@@ -214,7 +214,7 @@ class CfrRecordTest < ActiveSupport::TestCase
     cfr.reload
     cfr.given_main_location_ok
     # because main_location_id points to wrong, non-main record
-    assert_includes cfr.errors, :main_location_id
+    assert_includes cfr.errors, :main_location
 
     cfr.update_main_location
     cfr.reload

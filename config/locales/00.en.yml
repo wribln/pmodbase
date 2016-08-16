@@ -28,6 +28,8 @@ en:
       id:             '[ID]'
       project_doc_id: 'Project DMS ID'
       group_id:       'Project Group'
+      account_id:     'Account'
+      feature_id:     'Feature'
 
   time:
     formats:
@@ -188,7 +190,8 @@ en:
         a8_code:        'Originator (A8)'
         doc_id:         'Document Code'
         title:          'Title'
-        account:        'Account'
+        account_id:     'Account'
+        account:        :activerecord.attributes.a_document_log.account_id
         user:           'Created by'
 
       abbreviation:
@@ -208,9 +211,10 @@ en:
       account/permission4_groups:
         base:           'Group Permissions'
         id:             :general.attributes.id
-        feature_id:     'Feature'
+        feature_id:     :general.attributes.feature_id
         group_id:       :general.attributes.group_id
-        account_id:     'Account'
+        account_id:     :general.attributes.account_id
+        account:        :general.attributes.account_id
         to_index:       'Index'
         to_create:      'Add'
         to_read:        'Show'
@@ -505,17 +509,22 @@ en:
 
       permission4_flow:
         id:             :general.attributes.id
-        feature_id:     'Feature'
-        account_id:     'Account'
+        feature_id:     :general.attributes.feature_id
+        feature:        :general.attributes.feature_id
+        account_id:     :general.attributes.account_id
+        account:        :general.attributes.account_id
         workflow_id:    'Workflow'
         label:          'Role'
         tasklist:       'Permitted Tasks'
 
       permission4_group:
         id:             :general.attributes.id
-        feature_id:     'Feature'
+        feature_id:     :general.attributes.feature_id
+        feature:        :general.attributes.feature_id
         group_id:       :general.attributes.group_id
-        account_id:     'Account'
+        group:          :general.attributes.group_id
+        account_id:     :general.attributes.account_id
+        account:        :general.attributes.account_id
         to_index:       'Index'
         to_create:      'Add'
         to_read:        'Show'
@@ -594,7 +603,8 @@ en:
 
       s_document_log:
         id:             :general.attributes.id
-        group:          'Sender Group'
+        group_id:       'Sender Group'
+        group:          :activerecord.attributes.s_document_log.group_id
         receiver_group: 'Receiver Group'
         function_code:  'Function Code'
         service_code:   'Service Code'
@@ -606,7 +616,8 @@ en:
         author_date:    'Author Date'
         doc_id:         'Document Code'
         title:          'Title'
-        account:        'Account'
+        account_id:     'Account'
+        account:        :activerecord.attributes.s_document_log.account_id
         user:           'Created by'
 
       siemens_phase:
@@ -669,27 +680,13 @@ en:
         seqno:          'Sequence Number'
 
     errors:
-      models:
-        a_document_log:
-          attributes:
-            account:
-              blank:          'must refer to an existing account.'
-        permission4_group:
-          attributes:
-            account:
-              blank:          'must refer to an existing account.'
-        permission4_flow:
-          attributes:
-            account:
-              blank:          'must refer to an existing account.'
-            feature:
-              blank:          'must refer to an existing feature'
-        s_document_log:
-          attributes:
-            account:
-              blank:          'must refer to an existing account.'
-            group:  
-              blank:          'must refer to an existing project group.'
+      attributes:
+        account:
+          blank:        'must refer to an existing account.'
+        feature:
+          blank:        'must refer to an existing feature.'
+        group:
+          blank:        'must refer to an existing Project Group.'
 
   validators:
     date_field:
@@ -1571,9 +1568,6 @@ en:
     add_label:      'Add another group permissions record'
 
     msg:
-      bad_feature_id:   :general.non_existing
-      bad_group_id:     'must be 0 (all) or group must exist.'
-      bad_account_id:   :general.non_existing
       none_given:       'at least one permission level must be > 0.'
       insuf_read_lvl:   'must be at same or higher than create and update permission level.'
       group_inactive:   'must be active.'

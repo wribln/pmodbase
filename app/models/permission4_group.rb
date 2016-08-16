@@ -1,12 +1,10 @@
 class Permission4Group < ActiveRecord::Base
   include ApplicationModel
-  include AccountCheck
-  include GroupCheck
   include Filterable
    
-  belongs_to :account,  -> { readonly }, inverse_of: :permission4_groups
-  belongs_to :feature,  -> { readonly }, inverse_of: :permission4_groups
-  belongs_to :group,    -> { readonly }, inverse_of: :permission4_groups
+  belongs_to :account,  -> { readonly }
+  belongs_to :feature,  -> { readonly }
+  belongs_to :group,    -> { readonly }
   
   validates :feature,
     presence: true
@@ -14,10 +12,9 @@ class Permission4Group < ActiveRecord::Base
   validates :account,
     presence: true
   
-  validates :group_id,
-    numericality: { only_integer: true, greater_than_or_equal_to: 0, message: I18n.t( 'permission4_groups.msg.bad_group_id' )}
+  validates :group,
+    presence: true, if: Proc.new{ |me| me.group_id != 0 }
 
-  validate :given_group_exists_or_is_zero
   validate :given_group_is_active
 
   validates :to_index,

@@ -2,8 +2,6 @@ require './lib/assets/app_helper.rb'
 class CfrRecord < ActiveRecord::Base
   include ApplicationModel
   include Filterable
-  include GroupCheck
-  include CfrFileTypeCheck
 
   belongs_to :group,         -> { readonly }
   belongs_to :cfr_file_type, -> { readonly }
@@ -34,17 +32,11 @@ class CfrRecord < ActiveRecord::Base
   validates :extension,
     length: { maximum: MAX_LENGTH_OF_EXTENSION }
 
-  validates :cfr_file_type_id,
-    allow_nil: true,
-    numericality: { only_integer: true, greater_then: 0, message: I18n.t( 'cfr_records.msg.bad_ft_id' )}
+  validates :cfr_file_type,
+    presence: true, if: Proc.new{ |me| me.cfr_file_type_id.present? }
 
-  validate :given_file_type_exists    
-
-  validates :group_id,
-    allow_nil: true,
-    numericality: { only_integer: true, greater_than: 0, message: I18n.t( 'cfr_records.msg.bad_group_id' )}
-
-  validate :given_group_exists
+  validates :group,
+    presence: true, if: Proc.new{ |me| me.group_id.present? }
 
   HASH_FUNCTION_LABELS = CfrRecord.human_attribute_name( :hash_functions ).freeze
 
@@ -131,7 +123,7 @@ class CfrRecord < ActiveRecord::Base
   # however, this may be used for any sanity checks:
 
   def given_main_location_ok
-    errors.add( :main_location_id, I18n.t( 'cfr_records.msg.bad_main_loc' )) \
+    errors.add( :main_location, :blank ) \
       unless main_location && main_location.cfr_record == self && main_location.is_main_location
   end
 
@@ -199,7 +191,7 @@ class CfrRecord < ActiveRecord::Base
   end
 
   def file_type_label
-    cfr_file_type_id.nil? ? '' : self.cfr_file_type.label
+    cfr_file_type_id.nil? ? '' : cfr_file_type.label
   end
 
   # provide a link form the main location to the file
