@@ -1,7 +1,7 @@
 require "./lib/assets/app_helper.rb"
 class DbChangeRequest < ActiveRecord::Base
   include ApplicationModel
-  include FeatureCheck
+  include ActiveModelErrorsAdd
 
   belongs_to :req_account,  -> { readonly }, foreign_key: 'requesting_account_id',  class_name: 'Account'
   belongs_to :resp_account, -> { readonly }, foreign_key: 'responsible_account_id', class_name: 'Account'
@@ -9,17 +9,14 @@ class DbChangeRequest < ActiveRecord::Base
 
   # required, with existing account
 
-  validates :requesting_account_id,
+  validates :req_account,
     presence: true
 
-  validate { given_account_exists( :requesting_account_id  )}
-  validate { given_account_exists( :responsible_account_id )}
+  validates :resp_account,
+    presence: true, if: Proc.new{ |me| me.responsible_account_id.present? }
 
-  validates :feature_id,
-    allow_nil: true,
-    numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-
-  validate :given_feature_exists
+  validates :feature,
+    presence: true, if: Proc.new{ |me| me.feature_id.present? }
 
   validates :detail,
     length: { maximum: MAX_LENGTH_OF_LABEL } 

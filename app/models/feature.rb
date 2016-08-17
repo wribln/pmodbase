@@ -1,7 +1,7 @@
 require './lib/assets/app_helper.rb'
 class Feature < ActiveRecord::Base
   include ApplicationModel
-  include FeatureCategoryCheck
+  include ActiveModelErrorsAdd
   
   belongs_to :feature_category, -> { readonly }, inverse_of: :features
   has_many   :permission4_groups, -> { readonly }, inverse_of: :features
@@ -13,10 +13,8 @@ class Feature < ActiveRecord::Base
     uniqueness: true,
     format: { with: /\A\w+\z/, message: I18n.t( 'features.msg.bad_code' )}
 
-  validates :feature_category_id,
+  validates :feature_category,
     presence: true
-
-  validate :given_feature_category_exists
 
   validates :label,
     length: { maximum: MAX_LENGTH_OF_LABEL }

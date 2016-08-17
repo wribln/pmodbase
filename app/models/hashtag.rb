@@ -1,8 +1,9 @@
 require './lib/assets/app_helper.rb'
 class Hashtag < ActiveRecord::Base
   include ApplicationModel
-  include FeatureCheck
+  include ActiveModelErrorsAdd
   include Filterable
+
   before_save { self.sort_code = code.split( '_', 2 ).first }
 
   HASHTAG_SYNTAX = /\A#[A-Za-z][A-Za-z0-9\_]*\z/.freeze
@@ -24,10 +25,8 @@ class Hashtag < ActiveRecord::Base
     presence: true,
     numericality: { only_integer: true }
 
-  validates :feature_id,
+  validates :feature,
     presence: true
-
-  validate :given_feature_exists
 
   default_scope { order( feature_id: :asc, sort_code: :asc, seqno: :asc )}
   scope :ff_code,     -> ( c ){ where( 'code LIKE ?', "#{ c }%" )}

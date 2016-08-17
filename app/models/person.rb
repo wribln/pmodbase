@@ -1,6 +1,7 @@
 require './lib/assets/app_helper.rb'
 class Person < ActiveRecord::Base
   include ApplicationModel
+  include ActiveModelErrorsAdd
   
   has_many :accounts, dependent: :destroy
   has_many :contact_infos, dependent: :destroy
@@ -30,7 +31,7 @@ class Person < ActiveRecord::Base
 
   def check_names
     if formal_name.empty? and informal_name.empty?
-      errors[:base] << I18n.t('people.msg.one_name_at_least')
+      errors.add( :base, I18n.t( 'people.msg.one_name_at_least' ))
     end
   end
 

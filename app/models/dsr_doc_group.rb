@@ -1,7 +1,7 @@
 require './lib/assets/app_helper.rb'
 class DsrDocGroup < ActiveRecord::Base
   include ApplicationModel
-  include GroupCheck
+  include ActiveModelErrorsAdd
 
   belongs_to :group
 
@@ -15,10 +15,8 @@ class DsrDocGroup < ActiveRecord::Base
     presence: true,
     length: { maximum: MAX_LENGTH_OF_TITLE }
 
-  validates :group_id,
+  validates :group,
     presence: true
-
-  validate :given_group_exists
 
   # overwrite write accessors to ensure that text fields do not contain
   # any redundant blanks

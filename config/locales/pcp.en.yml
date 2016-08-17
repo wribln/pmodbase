@@ -52,8 +52,7 @@ en:
 
       pcp_member:
         id:             :general.attributes.id
-        pcp_subject:    'PCP Subject'
-        account:        'Account'
+        pcp_subject_id: 'PCP Subject'
         account_id:     'Account'
         pcp_group:      'PCP Group'
         pcp_groups:     ['Presenting Group','Commenting Group']
@@ -108,16 +107,6 @@ en:
         released_at:    'Released at'
         subject_title:  :activerecord.attributes.pcp_subject.title
         project_doc_id: :activerecord.attributes.pcp_subject.project_doc_id
-
-    errors:
-      models:
-        pcp_member:
-          attributes:
-            account:
-              blank:          'must refer to an existing account.'
-            pcp_subject:
-              blank:          'must refer to an existing PCP Subject.'
-
 
   # this is included here to ensure that topics are always cited identically
 

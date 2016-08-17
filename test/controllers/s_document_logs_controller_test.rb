@@ -29,7 +29,7 @@ class SDocumentLogsControllerTest < ActionController::TestCase
       post :create, s_document_log: { group_id: nil }
     end
     sdl = assigns( :s_document_log )
-    assert_includes sdl.errors, :group
+    assert_includes sdl.errors, :group_id
     assert_includes sdl.errors, :dcc_code
     assert_includes sdl.errors, :base
     assert_response :success

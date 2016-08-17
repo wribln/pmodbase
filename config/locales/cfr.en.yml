@@ -33,11 +33,9 @@ en:
         id:               :general.attributes.id
         file_name:        'File Name'
         cfr_record_id:    'CFR Record ID'
-        cfr_record:       :activerecord.attributes.cfr_location.cfr_record_id
         doc_code:         'Document Code'
         doc_version:      'Document Code Version'
         cfr_location_type_id: 'Storage Location'
-        cfr_location_type:    :activerecord.attributes.cfr_location.cfr_location_type_id
         uri:              'Full Path'
         is_main_location: 'Main Location?'
 
@@ -46,12 +44,9 @@ en:
         title:            'Title'
         note:             'Notes'
         group_id:         :general.attributes.group_id
-        group:            :general.attributes.group_id
         main_location_id: 'Main Storage Location'
-        main_location:    :activerecord.attributes.cfr_record.main_location_id
         extension:        'File Extension'
         cfr_file_type_id: 'File Type'
-        cfr_file_type:    :activerecord.attributes.cfr_record.cfr_file_type_id
         conf_level:       'Confidentiality Level'
         conf_levels:      [ 'unrestricted', 'restricted', 'confidential', 'strictly confidential' ]
         hash_function:    'Hash Function'
@@ -81,29 +76,6 @@ en:
         leading:          'Leading'
       cfr_relationship/reverse_rs:
         label:            'Label'
-
-    errors:
-      models:
-        cfr_location:
-          attributes:
-            cfr_record:
-              blank:          'must refer to an existing CFR Record.'
-            cfr_location_type:
-              blank:          'must refer to an existing CFR Location Type Record.'
-        cfr_record:
-          attributes:
-            main_location:
-              blank:          'must refer to an existing CFR Location.'
-            cfr_file_type:
-              blank:          'must refer to an existing CFR File Type.'
-        cfr_relation:
-          attributes:
-            src_record:
-              blank:          :activerecord.errors.models.cfr_location.attributes.cfr_record.blank
-            dst_record:
-              blank:          :activerecord.errors.models.cfr_location.attributes.cfr_record.blank
-            cfr_relationship:
-              blank:          'must refer to an existing CFR Relationship Record.'
 
   cfr_file_types:
     title:                'CFR File Types'

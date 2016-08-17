@@ -1,8 +1,7 @@
 require './lib/assets/app_helper.rb'
 class RfcDocument < ActiveRecord::Base
   include ApplicationModel
-  include RfcStatusRecordCheck
-  include AccountCheck
+  include ActiveModelErrorsAdd
   include Filterable
 
   belongs_to :rfc_status_record, -> { readonly }, inverse_of: :rfc_documents
@@ -10,19 +9,13 @@ class RfcDocument < ActiveRecord::Base
 
   # there must always be an associated RfC Status Record
 
-  validates :rfc_status_record_id,
-    presence: true,
-    numericality: { only_integer: true, greater_than: 0 }
-
-  validate :given_rfc_status_record_exists
+  validates :rfc_status_record,
+    presence: true
 
   # there must always be the account which made this change
 
-  validates :account_id,
-    presence: true,
-    numericality: { only_integer: true, greater_than: 0 }
-
-  validate :given_account_exists
+  validates :account,
+    presence: true
 
   validates :version,
     presence: true,

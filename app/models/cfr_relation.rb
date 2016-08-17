@@ -1,4 +1,5 @@
 class CfrRelation < ActiveRecord::Base
+  include ActiveModelErrorsAdd
 
   belongs_to :src_record, class_name: 'CfrRecord', inverse_of: :src_relations
   belongs_to :dst_record, class_name: 'CfrRecord', inverse_of: :dst_relations
@@ -14,7 +15,7 @@ class CfrRelation < ActiveRecord::Base
   # not have a relation with itself
 
   def src_dst_different
-    return if errors.include?( :src_record ) || errors.include?( :dst_record )
+    return if errors.include?( :src_record_id ) || errors.include?( :dst_record_id )
     errors.add( :base, I18n.t( 'cfr_relations.msg.no_self_ref' )) \
       unless src_record != dst_record
   end

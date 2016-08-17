@@ -14,7 +14,7 @@ class ResponsibilityTest < ActiveSupport::TestCase
   test "given person must exist or be 0" do
     r = responsibilities( :one )
     r.person_id = nil
-    assert_not r.valid?, "person must not be nil"
+    assert_not r.valid?, 'person must not be nil'
     assert_includes r.errors, :person_id
 
     r.person_id = 0

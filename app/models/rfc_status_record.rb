@@ -1,7 +1,7 @@
 require './lib/assets/app_helper.rb'
 class RfcStatusRecord < ActiveRecord::Base
   include ApplicationModel
-  include GroupCheck
+  include ActiveModelErrorsAdd
   include Filterable
 
   belongs_to :asking_group,    -> { readonly }, foreign_key: 'asking_group_id',    class_name: 'Group'
@@ -19,17 +19,11 @@ class RfcStatusRecord < ActiveRecord::Base
     numericality: { only_integer: true },
     inclusion: { in: 0..2 }
 
-  validates :asking_group_id,
-    allow_nil: true,
-    numericality: { only_integer: true, greater_than: 0 }
+  validates :asking_group,
+    presence: true, if: Proc.new{ |me| me.asking_group_id.present? }
 
-  validate { given_group_exists( :asking_group_id )}
-
-  validates :answering_group_id,
-    allow_nil: true,
-    numericality: { only_integer: true, greater_than: 0 }
-
-  validate { given_group_exists( :answering_group_id )}
+  validates :answering_group,
+    presence: true, if: Proc.new{ |me| me.answering_group_id.present? }
 
   validates :title,
     allow_blank: true,

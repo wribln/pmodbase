@@ -21,45 +21,45 @@ class CfrRelationTest < ActiveSupport::TestCase
     r = CfrRelation.new
 
     refute r.valid?
-    assert_includes r.errors, :src_record
-    assert_includes r.errors, :dst_record
+    assert_includes r.errors, :src_record_id
+    assert_includes r.errors, :dst_record_id
     refute_includes r.errors, :base
-    assert_includes r.errors, :cfr_relationship
+    assert_includes r.errors, :cfr_relationship_id
 
     r.src_record = cfr_records( :one )
     refute r.valid?
-    refute_includes r.errors, :src_record
-    assert_includes r.errors, :dst_record
+    refute_includes r.errors, :src_record_id
+    assert_includes r.errors, :dst_record_id
     refute_includes r.errors, :base
-    assert_includes r.errors, :cfr_relationship
+    assert_includes r.errors, :cfr_relationship_id
 
     r.dst_record = cfr_records( :one )
     refute r.valid?
-    refute_includes r.errors, :src_record
-    refute_includes r.errors, :dst_record
+    refute_includes r.errors, :src_record_id
+    refute_includes r.errors, :dst_record_id
     assert_includes r.errors, :base
-    assert_includes r.errors, :cfr_relationship
+    assert_includes r.errors, :cfr_relationship_id
 
     r.cfr_relationship = cfr_relationships( :one_two )
     refute r.valid?
-    refute_includes r.errors, :src_record
-    refute_includes r.errors, :dst_record
+    refute_includes r.errors, :src_record_id
+    refute_includes r.errors, :dst_record_id
     assert_includes r.errors, :base
-    refute_includes r.errors, :cfr_relationship
+    refute_includes r.errors, :cfr_relationship_id
 
     r.dst_record = cfr_records( :two )
     refute r.valid?
-    refute_includes r.errors, :src_record
-    refute_includes r.errors, :dst_record
+    refute_includes r.errors, :src_record_id
+    refute_includes r.errors, :dst_record_id
     assert_includes r.errors, :base
-    refute_includes r.errors, :cfr_relationship
+    refute_includes r.errors, :cfr_relationship_id
 
     r.cfr_relationship = cfr_relationships( :two_one )
     refute r.valid?
-    refute_includes r.errors, :src_record
-    refute_includes r.errors, :dst_record
+    refute_includes r.errors, :src_record_id
+    refute_includes r.errors, :dst_record_id
     assert_includes r.errors, :base
-    refute_includes r.errors, :cfr_relationship
+    refute_includes r.errors, :cfr_relationship_id
 
     r.create_src_record( title: 'test' )
     assert r.valid?
@@ -75,30 +75,30 @@ class CfrRelationTest < ActiveSupport::TestCase
     r = cfr_relations( :one )
     r.src_record_id = nil
     refute r.valid?
-    assert_includes r.errors, :src_record
+    assert_includes r.errors, :src_record_id
 
     r.src_record_id = accounts( :wop ).id
     refute r.valid?
-    assert_includes r.errors, :src_record
+    assert_includes r.errors, :src_record_id
 
     r.dst_record_id, r.src_record_id = r.src_record_id, r.dst_record_id
     refute r.valid?
-    assert_includes r.errors, :dst_record
+    assert_includes r.errors, :dst_record_id
 
     r.dst_record_id = nil
     refute r.valid?
-    assert_includes r.errors, :dst_record
+    assert_includes r.errors, :dst_record_id
   end
 
   test 'cfr_relationship must exist' do
     r = cfr_relations( :one )
     r.cfr_relationship_id = nil
     refute r.valid?
-    assert_includes r.errors, :cfr_relationship
+    assert_includes r.errors, :cfr_relationship_id
 
     r.cfr_relationship_id = accounts( :wop ).id
     refute r.valid?
-    assert_includes r.errors, :cfr_relationship
+    assert_includes r.errors, :cfr_relationship_id
   end
 
 end

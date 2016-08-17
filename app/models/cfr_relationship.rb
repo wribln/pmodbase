@@ -54,8 +54,8 @@ class CfrRelationship < ActiveRecord::Base
   # prepare list of grouped options for select
 
   def self.get_option_list
-#    [[ 'Group 1', [[ 'Detail 1.1', 1 ],[ 'Detail 1.2', 2 ]]],
-#     [ 'Group 2', [[ 'Detail 2.1', 3 ],[ 'Detail 2.2', 4 ]]]]
+#    { 'Group 1': [[ 'Detail 1.1', 1 ],[ 'Detail 1.2', 2 ]],
+#      'Group 2': [[ 'Detail 2.1', 3 ],[ 'Detail 2.2', 4 ]]}
     {}.tap { |h| [ 
       self.all.order( :rs_group ).chunk{ |r| r.rs_group }.each{ |g,i| h[ CFR_RS_GROUP_LABELS[ g ]] =
      i.map{ |i| [i.label,i.id] }}]}

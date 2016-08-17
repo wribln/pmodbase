@@ -1,8 +1,8 @@
 require './lib/assets/app_helper.rb'
 class CsrStatusRecord < ActiveRecord::Base
   include ApplicationModel
+  include ActiveModelErrorsAdd
   include Filterable
-  include GroupCheck
 
   belongs_to :sender_group,   -> { readonly }, foreign_key: 'sender_group_id',        class_name: 'Group'
   belongs_to :receiver_group, -> { readonly }, foreign_key: 'receiver_group_id',      class_name: 'Group'
@@ -42,12 +42,14 @@ class CsrStatusRecord < ActiveRecord::Base
   validates :project_doc_id,
     length: { maximum: ProjectDocLog::MAX_LENGTH_OF_DOC_ID }
 
-  validate { given_group_exists( :receiver_group_id )}
+  validates :receiver_group,
+    presence: true, if: Proc.new{ |me| me.receiver_group_id.present? }
 
   validates :sender_doc_id,
     length: { maximum: MAX_LENGTH_OF_DOC_ID }
 
-  validate { given_group_exists( :sender_group_id   )}
+  validates :sender_group,
+    presence: true, if: Proc.new{ |me| me.sender_group_id.present? }
 
   validates :sender_reference,
     length: { maximum: MAX_LENGTH_OF_DOC_ID }

@@ -1,9 +1,8 @@
 require './lib/assets/app_helper.rb'
 class DsrStatusRecord < ActiveRecord::Base
   include ApplicationModel
+  include ActiveModelErrorsAdd
   include Filterable
-  include GroupCheck
-  include ProgrammeActivityCheck
 
   belongs_to :dsr_progress_rate,  -> { readonly }, foreign_key: :document_status,   primary_key: :document_status, class_name: :DsrProgressRate
   belongs_to :dsr_progress_rate_b,-> { readonly }, foreign_key: :document_status_b, primary_key: :document_status, class_name: :DsrProgressRate  
@@ -48,7 +47,9 @@ class DsrStatusRecord < ActiveRecord::Base
     inclusion: { in: 0..10 }
 
   validate :dsr_doc_group_exists
-  validate :dsr_current_submission_exists
+
+  validates :dsr_current_submission,
+    presence: true, if: Proc.new{ |me| dsr_current_submission_id.present? }
 
   DSR_STATUS_RECORD_STATUS_LABELS = DsrStatusRecord.human_attribute_name( :document_states ).freeze
 
@@ -60,8 +61,11 @@ class DsrStatusRecord < ActiveRecord::Base
   validates :estm_completion, :estm_prep_start, :estm_submission, :next_submission,
     date_field: { presence: false }
 
-  validate { given_programme_activity_exists( :prep_activity_id )}
-  validate { given_programme_activity_exists( :subm_activity_id )}
+  validates :prep_activity,
+    presence: true, if: Proc.new{ |me| me.prep_activity_id.present? }  
+
+  validates :subm_activity,
+    presence: true, if: Proc.new{ |me| me.subm_activity_id.present? }  
 
   validates :quantity, :quantity_b,
     presence: true,
@@ -75,16 +79,18 @@ class DsrStatusRecord < ActiveRecord::Base
     allow_blank: true,
     length: { maximum: ProjectDocLog::MAX_LENGTH_OF_DOC_ID }
 
-  validate { given_group_exists( :receiver_group_id )}
+  validates :receiver_group,
+    presence: true, if: Proc.new{ |me| me.receiver_group_id.present? }
 
   validates :receiver_doc_id,
     allow_blank: true,
     length: { maximum: MAX_LENGTH_OF_DOC_ID }
 
-  validates :sender_group_id,
+  validates :sender_group,
     presence: true
 
-  validate { given_group_exists( :sender_group_id )}
+  validates :sender_group_b,
+    presence: true, if: Proc.new{ |me| me.sender_group_b_id.present? }
 
   validates :sender_doc_id,
     allow_blank: true,
@@ -104,8 +110,12 @@ class DsrStatusRecord < ActiveRecord::Base
     numericality: { only_integer: true },
     inclusion: {  in: 0..( DSR_SUB_FREQUENCY_LABELS.size - 1 )}
 
-  validate :submission_groups_exist
-  
+  validates :submission_group,
+    presence: true, if: Proc.new{ |me| me.submission_group_id.present? }
+
+  validates :submission_group_b,
+    presence: true, if: Proc.new{ |me| me.submission_group_b_id.present? }
+
   validates :title,
     presence: true,
     length: { maximum: MAX_LENGTH_OF_TITLE }
@@ -184,35 +194,12 @@ class DsrStatusRecord < ActiveRecord::Base
     set_nil_default( :weight, 1.0 )  
   end
 
-  # make sure the given submission package record exists
-
-  def submission_groups_exist
-    if submission_group_id.present?
-      errors.add( :submission_group_id, I18n.t( 'dsr_status_records.msg.bad_sgp_item' )) \
-        unless SubmissionGroup.exists?( submission_group_id )
-    end
-    if submission_group_b_id.present?
-      errors.add( :submission_group_b_id, I18n.t( 'dsr_status_records.msg.bad_sgp_item' )) \
-        unless SubmissionGroup.exists?( submission_group_b_id )
-    end
-  end
-
-  # make sure the document group exists AND the responsible groups
-  # are identical
+  # make sure the document group exists AND the responsible groups are identical
 
   def dsr_doc_group_exists
     if dsr_doc_group_id.present?
       errors.add( :dsr_doc_group_id, I18n.t( 'dsr_status_records.msg.bad_group_id' )) \
         unless DsrDocGroup.where( id: dsr_doc_group_id, group: sender_group_id ).exists?
-    end
-  end
-
-  # make sure the referred to submission record exists
-
-  def dsr_current_submission_exists
-    if dsr_current_submission_id.present?
-      errors.add( :dsr_current_submission_id, I18n.t( 'dsr_status_records.msg.bad_sub_rec' )) \
-        unless DsrSubmission.exists?( dsr_current_submission_id )
     end
   end
 

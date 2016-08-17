@@ -157,7 +157,7 @@ class HolidayTest < ActiveSupport::TestCase
     h = holidays( :hdk )
     h.country_name_id = nil
     assert_not h.valid?
-    assert_includes h.errors, :country_name
+    assert_includes h.errors, :country_name_id
   end
 
   test "not required parameter: region_name_id" do
@@ -183,11 +183,11 @@ class HolidayTest < ActiveSupport::TestCase
     h = holidays( :hdk )
     h.country_name_id = nil
     assert_not h.valid?
-    assert_includes h.errors, :country_name
+    assert_includes h.errors, :country_name_id
 
     h.country_name_id = 0
     assert_not h.valid?
-    assert_includes h.errors, :country_name
+    assert_includes h.errors, :country_name_id
   end
 
   test "region reference must exist" do

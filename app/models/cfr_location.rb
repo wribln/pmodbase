@@ -1,6 +1,7 @@
 require './lib/assets/app_helper.rb'
 require 'cgi'
 class CfrLocation < ActiveRecord::Base
+  include ActiveModelErrorsAdd
 
   belongs_to :cfr_record, inverse_of: :cfr_locations
   belongs_to :cfr_record, inverse_of: :main_location
@@ -25,7 +26,8 @@ class CfrLocation < ActiveRecord::Base
   validates :cfr_record,
     presence: true
 
-  validate :given_location_type_exists
+  validates :cfr_location_type,
+    presence: true, if: Proc.new{ |me| me.cfr_location_type_id.present? }
 
   # this is only to help cfr_record to determine which location is the main location
   # see comments there
@@ -49,15 +51,6 @@ class CfrLocation < ActiveRecord::Base
 
   def doc_version=( s )
     write_attribute( :doc_version, AppHelper.clean_up( s ))
-  end
-
-  # check if cfr_location_type record exists
-
-  def given_location_type_exists
-    if cfr_location_type_id.present?
-      errors.add( :cfr_location_type, :blank ) \
-        unless CfrLocationType.exists?( cfr_location_type_id )
-    end
   end
 
   # attempt to determine default values from given attributes

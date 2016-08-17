@@ -68,4 +68,17 @@ class CfrRelationshipTest < ActiveSupport::TestCase
 
   end
 
+  test 'get_option_list' do
+    ol = CfrRelationship.get_option_list
+    assert ol.key? 'sequential'
+    assert ol.key? 'hierarchical'
+    refute ol.key? 'other'
+    assert_equal 2, ol[ 'sequential' ].count
+    assert_equal 2, ol[ 'hierarchical' ].count
+    assert ol[ 'sequential'   ][ 0 ].eql? [ cfr_relationships( :one_one ).label, cfr_relationships( :one_one ).id ]
+    assert ol[ 'sequential'   ][ 1 ].eql? [ cfr_relationships( :one_two ).label, cfr_relationships( :one_two ).id ]
+    assert ol[ 'hierarchical' ][ 0 ].eql? [ cfr_relationships( :two_one ).label, cfr_relationships( :two_one ).id ]
+    assert ol[ 'hierarchical' ][ 1 ].eql? [ cfr_relationships( :two_two ).label, cfr_relationships( :two_two ).id ]
+  end
+
 end

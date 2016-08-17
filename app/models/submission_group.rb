@@ -1,7 +1,6 @@
 require "./lib/assets/app_helper.rb"
 class SubmissionGroup < ActiveRecord::Base
   include ApplicationModel
-  include ProgrammeActivityCheck
 
   has_many :dsr_documents, inverse_of: :submission_group
 

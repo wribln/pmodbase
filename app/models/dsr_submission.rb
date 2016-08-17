@@ -1,6 +1,7 @@
 require './lib/assets/app_helper.rb'
 class DsrSubmission < ActiveRecord::Base
   include ApplicationModel
+  include ActiveModelErrorsAdd
   include Filterable
 
   before_save :compute_xpcd_response
@@ -19,7 +20,7 @@ class DsrSubmission < ActiveRecord::Base
 
   attr_accessor :xpcd_response_delta
 
-  validates :dsr_status_record_id,
+  validates :dsr_status_record,
     presence: true
 
   validates :submission_no,
@@ -44,15 +45,7 @@ class DsrSubmission < ActiveRecord::Base
     numericality: { only_integer: true },
     inclusion: { in: 0..( DSR_RESPONSE_STATUS_LABELS.size - 1 )}
 
-  validate :given_dsr_status_record_exists
   validate :response_dates_after_submission
-
-  # make sure related record exists
-
-  def given_dsr_status_record_exists
-    errors.add( :dsr_status_record_id, I18n.t( 'dsr_submissions.msg.bad_dsr_id')) \
-      unless DsrStatusRecord.exists?( dsr_status_record_id )
-  end
 
   # make sure (computed) response dates are after the submission date
 

@@ -89,7 +89,7 @@ class PcpStepTest < ActiveSupport::TestCase
     ps = pcp_steps( :one_one )
     ps.pcp_subject_id = nil 
     refute ps.valid?
-    assert_includes ps.errors, :pcp_subject
+    assert_includes ps.errors, :pcp_subject_id
   end
 
   test 'prev/new assessment not possible in step 0' do

@@ -17,7 +17,7 @@ class DsrStatusRecord2Test < ActiveSupport::TestCase
 
     SubmissionGroup.destroy( dd.submission_group_id )
     refute dd.valid?
-    assert_includes dd.errors, :submission_group_id
+    assert_includes dd.errors, :submission_group_b_id
   end
 
   [ :prep_activity_id, :subm_activity_id ].each do |pa|
@@ -38,8 +38,7 @@ class DsrStatusRecord2Test < ActiveSupport::TestCase
         ProgrammeActivity.destroy( dd.send( pa ))
         dd.send :update_plan_dates
   
-        refute dd.valid?
-        assert_includes dd.errors, pa
+        assert dd.valid?, dd.errors.messages
     end
   end
 

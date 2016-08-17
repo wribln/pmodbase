@@ -1,8 +1,8 @@
 require "./lib/assets/app_helper.rb"
 class GlossaryItem < ActiveRecord::Base
   include ApplicationModel
+  include ActiveModelErrorsAdd
   include Filterable
-  include ReferenceCheck
 
   belongs_to :reference, -> { readonly }, inverse_of: :glossary_items
 
@@ -13,7 +13,8 @@ class GlossaryItem < ActiveRecord::Base
   validates :code,
     length: { maximum: MAX_LENGTH_OF_CODE }
 
-  validate :given_reference_exists
+  validates :reference,
+    presence: true, if: Proc.new{ |me| me.reference_id.present? }
 
   default_scope { order( term: :asc )}
   scope :as_abbr, ->  ( a ){ where( 'code LIKE ?', "#{ a }%" )}

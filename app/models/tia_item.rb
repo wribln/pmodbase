@@ -1,7 +1,6 @@
 class TiaItem < ActiveRecord::Base
   include ApplicationModel
-  include AccountCheck
-  include TiaListCheck
+  include ActiveModelErrorsAdd
   include Filterable
    
   belongs_to :tia_list,     -> { readonly }, inverse_of: :tia_items
@@ -32,12 +31,11 @@ class TiaItem < ActiveRecord::Base
   validates :status,
     inclusion: { in: 0..( TIA_ITEM_STATUS_LABELS.size - 1 )}
 
-  validate :given_account_exists
+  validates :account,
+    presence: true, if: Proc.new{ |me| me.account_id.present? }
 
-  validates :tia_list_id,
+  validates :tia_list,
     presence: true
-
-  validate :given_tia_list_exists
 
   validates :due_date,
     date_field: { presence: false }

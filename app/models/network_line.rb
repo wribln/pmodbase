@@ -1,7 +1,7 @@
 require './lib/assets/app_helper.rb'
 class NetworkLine < ActiveRecord::Base
   include ApplicationModel
-  include LocationCodeCheck
+  include ActiveModelErrorsAdd
   include Filterable
   
   belongs_to :location_code, -> { readonly }, inverse_of: :network_lines
@@ -24,7 +24,8 @@ class NetworkLine < ActiveRecord::Base
     presence: true,
     numericality: { only_integer: true }
 
-  validate :given_location_code_exists
+  validates :location_code,
+    presence: true, if: Proc.new{ |me| me.location_code_id.present? }
 
   # scopes
 

@@ -17,16 +17,16 @@ class SDocumentLogTest < ActiveSupport::TestCase
     sdl = SDocumentLog.new
     refute sdl.valid?
     assert_includes sdl.errors, :dcc_code
-    assert_includes sdl.errors, :group
-    assert_includes sdl.errors, :account
+    assert_includes sdl.errors, :group_id
+    assert_includes sdl.errors, :account_id
 
     sdl.account_id = -1
     refute sdl.valid?
-    assert_includes sdl.errors, :account
+    assert_includes sdl.errors, :account_id
 
     sdl.account = accounts( :wop )
     refute sdl.valid?
-    refute_includes sdl.errors, :account
+    refute_includes sdl.errors, :account_id
 
     sdl.dcc_code ="&ABC"
     sdl.group = s_document_logs( :one ).group

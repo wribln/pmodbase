@@ -1,8 +1,6 @@
 class PcpCategory < ActiveRecord::Base
   include ApplicationModel
-  include AccountCheck
   include PcpSubjectAccess
-  include GroupCheck
 
   belongs_to :c_group,  -> { readonly }, foreign_key: :c_group_id, class_name: Group
   belongs_to :p_group,  -> { readonly }, foreign_key: :p_group_id, class_name: Group
@@ -16,18 +14,26 @@ class PcpCategory < ActiveRecord::Base
     presence: true,
     length: { maximum: MAX_LENGTH_OF_LABEL }
 
-  validates :c_group_id, :p_group_id, :c_owner_id, :p_owner_id,
-    presence: true
+  validates :c_group,
+    presence: true, if: Proc.new{ |me| me.c_group_id.present? }
 
-  validates_each :c_group_id, :p_group_id do |r,a,v|
-    r.given_group_exists( a )
-  end
-  
+  validates :p_group,
+    presence: true, if: Proc.new{ |me| me.p_group_id.present? }
+
+  validates :c_owner,
+    presence: true, if: Proc.new{ |me| me.c_owner_id.present? }
+
+  validates :p_owner,
+    presence: true, if: Proc.new{ |me| me.p_owner_id.present? }
+
+  validates :c_deputy,
+    presence: true, if: Proc.new{ |me| me.c_deputy_id.present? }
+
+  validates :p_deputy,
+    presence: true, if: Proc.new{ |me| me.p_deputy_id.present? }
+
   validate{ given_account_has_access( :c_owner_id,  :c_group_id )}
   validate{ given_account_has_access( :p_owner_id,  :p_group_id )}
-
-  validate{ given_account_exists( :c_deputy_id )}
-  validate{ given_account_exists( :p_deputy_id )}
 
   # return a scope to select all PCP Categories for which the current user has
   # permission to create subjects for: i.e. she either belongs to the presenting

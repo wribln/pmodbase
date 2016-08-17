@@ -1,9 +1,9 @@
 require 'core_ext/string'
 class PcpSubject < ActiveRecord::Base
   include ApplicationModel
-  include Filterable
+  include ActiveModelErrorsAdd
   include PcpSubjectAccess
-  include AccountCheck
+  include Filterable
 
   belongs_to :pcp_category, -> { readonly }, inverse_of: :pcp_subjects
   belongs_to :c_group,  -> { readonly }, foreign_key: :c_group_id, class_name: 'Group'
@@ -24,13 +24,29 @@ class PcpSubject < ActiveRecord::Base
   before_validation :set_defaults_from_pcp_category_group, on: :update
   after_validation :set_title_and_doc_ids
 
-  validates :pcp_category_id,
+  validates :pcp_category,
     presence: true
 
-  validates :c_group_id, :c_owner_id,
-            :p_group_id, :p_owner_id,
-    presence: true,
-    on: :update
+  validates :c_group,
+    presence: true, if: Proc.new{ |me| me.c_group_id.present? }
+
+  validates :p_group,
+    presence: true, if: Proc.new{ |me| me.p_group_id.present? }
+
+  validates :c_owner,
+    presence: true, if: Proc.new{ |me| me.c_owner_id.present? }
+
+  validates :p_owner,
+    presence: true, if: Proc.new{ |me| me.p_owner_id.present? }
+
+  validates :c_deputy,
+    presence: true, if: Proc.new{ |me| me.c_deputy_id.present? }
+
+  validates :p_deputy,
+    presence: true, if: Proc.new{ |me| me.p_deputy_id.present? }
+
+  validates :s_owner,
+    presence: true, if: Proc.new{ |me| me.s_owner_id.present? }
 
   validates :title,
     length: { maximum: MAX_LENGTH_OF_TITLE }
@@ -41,15 +57,9 @@ class PcpSubject < ActiveRecord::Base
   validates :project_doc_id, :report_doc_id,
     length: { maximum: ProjectDocLog::MAX_LENGTH_OF_DOC_ID }
 
-  validate :pcp_category_exists
-
   validate{ given_account_has_access( :c_owner_id, :c_group_id )}
   validate{ given_account_has_access( :p_owner_id, :p_group_id )}
 #  validate{ given_account_has_access( :s_owner_id, :p_group_id )}, on: :create
-
-  validate{ given_account_exists( :c_deputy_id )}
-  validate{ given_account_exists( :p_deputy_id )}
-  validate{ given_account_exists( :s_owner_id  )}
 
   validate :archived_and_status
 
@@ -78,15 +88,6 @@ class PcpSubject < ActiveRecord::Base
     if archived then
       errors.add( :archived, I18n.t( 'pcp_subjects.msg.bad_status' )) \
         unless current_steps[ 0 ].status_closed?
-    end
-  end
-
-  # ensure that the selected/given pcp_category really exists
-
-  def pcp_category_exists
-    unless pcp_category_id.nil? then
-      errors.add( :pcp_category_id, I18n.t( 'pcp_subjects.msg.bad_category' )) \
-        unless PcpCategory.exists?( pcp_category_id )
     end
   end
 

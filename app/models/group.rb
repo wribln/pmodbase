@@ -1,8 +1,8 @@
 require './lib/assets/app_helper.rb'
 class Group < ActiveRecord::Base
   include ApplicationModel
+  include ActiveModelErrorsAdd
   include Filterable
-  include GroupCategoryCheck
   
   belongs_to  :group_category, -> { readonly }, inverse_of: :groups
   has_many    :responsibilities
@@ -20,10 +20,8 @@ class Group < ActiveRecord::Base
     presence: true,
     length: { maximum: MAX_LENGTH_OF_CODE }
 
-  validates :group_category_id,
+  validates :group_category,
     presence: true
-
-  validate :given_group_category_exists
 
   validates :label,
     presence: true,

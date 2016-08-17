@@ -3,7 +3,7 @@
 dbcr_one:
   req_account: one
   resp_account:
-  feature_id:
+  feature:
   detail:
   action: 'test1'
   status: 0
@@ -13,7 +13,7 @@ dbcr_one:
 dbcr_two:
   req_account: wop
   resp_account:
-  feature_id:
+  feature:
   detail:
   action: 'test2'
   status: 0

@@ -22,7 +22,7 @@ class CfrLocationTest < ActiveSupport::TestCase
     assert_nil l.uri
     refute l.is_main_location
     refute l.valid?
-    assert_includes l.errors, :cfr_record
+    assert_includes l.errors, :cfr_record_id
     l.cfr_record_id = cfr_records( :two ).id 
     assert l.valid?
   end
@@ -55,18 +55,18 @@ class CfrLocationTest < ActiveSupport::TestCase
     l = cfr_locations( :one )
     l.cfr_location_type_id = 0
     refute l.valid?
-    assert_includes l.errors, :cfr_location_type
+    assert_includes l.errors, :cfr_location_type_id
 
     l.cfr_location_type_id = accounts( :wop ).id
     refute l.valid?
-    assert_includes l.errors, :cfr_location_type
+    assert_includes l.errors, :cfr_location_type_id
   end
 
   test 'bad cfr_record error' do
     l = cfr_locations( :one )
     l.cfr_record_id = 0
     refute l.valid?
-    assert_includes l.errors, :cfr_record
+    assert_includes l.errors, :cfr_record_id
   end
 
   test 'get hyperlink' do
@@ -89,7 +89,7 @@ class CfrLocationTest < ActiveSupport::TestCase
     l = cfr_locations( :one )
     l.cfr_record_id = accounts( :wop ).id
     refute l.valid?
-    assert_includes l.errors, :cfr_record
+    assert_includes l.errors, :cfr_record_id
   end
 
 end

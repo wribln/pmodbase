@@ -1,6 +1,7 @@
 require './lib/assets/app_helper.rb'
 class ADocumentLog < ActiveRecord::Base
   include ApplicationModel
+  include ActiveModelErrorsAdd
   include Filterable
 
   belongs_to :account, -> { readonly }

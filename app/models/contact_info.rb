@@ -1,19 +1,17 @@
 require './lib/assets/app_helper.rb'
 class ContactInfo < ActiveRecord::Base
   include ApplicationModel
-  include PersonCheck
-  include AddressCheck
+  include ActiveModelErrorsAdd
 
   belongs_to :person, inverse_of: :contact_infos
   belongs_to :address
   before_save :set_defaults
 
-  validates :person_id,
+  validates :person,
     presence: true
- 
-  validate :given_person_exists
 
-  validate :given_address_exists
+  validates :address,
+    presence: true, if: Proc.new{ |me| me.address_id.present? } 
 
   validates :info_type,
     presence: true,

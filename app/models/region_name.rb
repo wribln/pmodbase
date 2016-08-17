@@ -1,16 +1,14 @@
 require "./lib/assets/app_helper.rb"
 class RegionName < ActiveRecord::Base
   include ApplicationModel
-  include CountryNameCheck
+  include ActiveModelErrorsAdd
   include Filterable
 
   belongs_to :country_name, -> { readonly }, inverse_of: :region_names
   has_many   :holidays, dependent: :destroy, inverse_of: :region_name
 
-  validates :country_name_id,
+  validates :country_name,
     presence: true
-
-  validate :given_country_name_exists
 
   validates :code,
     length: { maximum: MAX_LENGTH_OF_CODE },

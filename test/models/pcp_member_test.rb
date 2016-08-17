@@ -25,28 +25,28 @@ class PcpMemberTest < ActiveSupport::TestCase
     pm = pcp_members( :one )
     pm.pcp_subject_id = 0
     refute pm.valid?
-    assert_includes pm.errors, :pcp_subject
+    assert_includes pm.errors, :pcp_subject_id
   end
 
   test 'pcp subject must exist 2' do
     pm = pcp_members( :one )
     assert pcp_subjects( :two ).destroy
     refute pm.valid?
-    assert_includes pm.errors, :pcp_subject
+    assert_includes pm.errors, :pcp_subject_id
   end
 
   test 'account must exist 1' do
     pm = pcp_members( :two )
     pm.account_id = 0
     refute pm.valid?
-    assert_includes pm.errors, :account
+    assert_includes pm.errors, :account_id
   end
 
   test 'account must exist 2' do
     pm = pcp_members( :two )
     assert accounts( :wop ).destroy
     refute pm.valid?
-    assert_includes pm.errors, :account
+    assert_includes pm.errors, :account_id
   end
 
   test 'group labels' do

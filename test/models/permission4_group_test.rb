@@ -21,20 +21,20 @@ class Permission4GroupTest < ActiveSupport::TestCase
     p = permission4_groups( :permission4_group_0 )
     p.feature_id = nil
     assert_not p.valid?
-    assert_includes p.errors, :feature
+    assert_includes p.errors, :feature_id
     p.feature_id = FEATURE_ID_MAX_PLUS_ONE
     assert_not p.valid?
-    assert_includes p.errors, :feature
+    assert_includes p.errors, :feature_id
   end
 
   test 'given account must exist' do
     p = permission4_groups( :permission4_group_0 )
     p.account_id = nil
     assert_not p.valid?
-    assert_includes p.errors, :account
+    assert_includes p.errors, :account_id
     p.account_id = 0
     assert_not p.valid?
-    assert_includes p.errors, :account
+    assert_includes p.errors, :account_id
   end
 
   test 'given group must be 0 or must exist' do
@@ -42,14 +42,14 @@ class Permission4GroupTest < ActiveSupport::TestCase
     assert p.valid?, p.errors.messages
     p.group_id = nil
     refute p.valid?
-    assert_includes p.errors, :group
+    assert_includes p.errors, :group_id
 
     p.group_id = 0
     assert p.valid?, p.errors.messages
 
     p.group_id = -1
     refute p.valid?
-    assert_includes p.errors, :group
+    assert_includes p.errors, :group_id
   end
 
   test 'given group must be active' do

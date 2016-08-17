@@ -5,8 +5,6 @@
 
 class Holiday < ActiveRecord::Base
   include ApplicationModel
-  include CountryNameCheck
-  include RegionNameCheck
   include Filterable
 
   belongs_to :country_name, -> { readonly }, inverse_of: :holidays
@@ -30,8 +28,6 @@ class Holiday < ActiveRecord::Base
     numericality: { only_integer: true },
     inclusion: { in: 0..100 }
 
-  validate :given_country_name_exists
-  validate :given_region_name_exists
   validate :date_combination_valid
 
   default_scope { order( date_from: :asc, country_name_id: :asc )}

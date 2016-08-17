@@ -50,6 +50,10 @@ en:
     description:    'Description'
     mapping:        'Mapping'
 
+  errors:
+    messages:
+      blank_assoc:  'must be one of the existing %{assoc}.'
+
   activerecord:
 
     models:
@@ -191,7 +195,6 @@ en:
         doc_id:         'Document Code'
         title:          'Title'
         account_id:     'Account'
-        account:        :activerecord.attributes.a_document_log.account_id
         user:           'Created by'
 
       abbreviation:
@@ -604,7 +607,6 @@ en:
       s_document_log:
         id:             :general.attributes.id
         group_id:       'Sender Group'
-        group:          :activerecord.attributes.s_document_log.group_id
         receiver_group: 'Receiver Group'
         function_code:  'Function Code'
         service_code:   'Service Code'
@@ -617,7 +619,6 @@ en:
         doc_id:         'Document Code'
         title:          'Title'
         account_id:     'Account'
-        account:        :activerecord.attributes.s_document_log.account_id
         user:           'Created by'
 
       siemens_phase:
@@ -678,15 +679,6 @@ en:
         label:          'Title'
         hyperlink:      'Hyperlink'
         seqno:          'Sequence Number'
-
-    errors:
-      attributes:
-        account:
-          blank:        'must refer to an existing account.'
-        feature:
-          blank:        'must refer to an existing feature.'
-        group:
-          blank:        'must refer to an existing Project Group.'
 
   validators:
     date_field:
@@ -938,8 +930,6 @@ en:
       form_title:   'Show Details of Account'
 
     msg:
-      bad_person_id:  :general.non_existing
-      bad_group_id:   :general.non_existing
       bad_syntax:     'syntax rules violated - see help for required format.'
       new_ok:         'Account was successfully created, add permission records now.'
       edit_ok:        'Account and/or permissions were successfully updated.'
@@ -975,8 +965,6 @@ en:
       form_title:     'Show Contact Information'
 
     msg:
-      bad_person_id:  :general.non_existing
-      bad_address_id: :general.non_existing
       no_dup_types:   'must be different.'
       new_ok:         'Contact Information was successfully created.'
       edit_ok:        'Contact Information was successfully updated.'
@@ -1041,7 +1029,6 @@ en:
       new_ok:         'Correspondence Status Record successfully added.'
       edit_ok:        'Correspondence Status Record successfully updated.'
       delete_ok:      'Correspondence Status Record successfully deleted.'
-      bad_csr_item:   'Referenced CSR Item does not exist.'
       bad_group_id:   :general.non_existing
       bad_csr_id:     'refers to own record which is not permitted.'
       bad_types:      'reply correspondence is same type as this: '
@@ -1063,8 +1050,6 @@ en:
       new_ok:         'Change request was successfully created.'
       edit_ok:        'Change request was successfully updated.'
       delete_ok:      'Change request was successfully deleted.'
-      bad_feature_id: :general.non_existing
-      bad_account_id: :general.non_existing
 
   dcc_codes:
     title:            'Document Classification Codes (DCCs)'
@@ -1098,7 +1083,6 @@ en:
       delete_ok:      'DSR Document Group was successfully deleted.'
       new_ok:         'DSR Document Group was successfully created.'
       you_no_edit:    'You have no permission to update this DSR Document Group.'
-      bad_group_id:   :general.non_existing
 
   dsr_progress_rates:
     title:            'DSR Progress Rates'
@@ -1192,10 +1176,6 @@ en:
       no_edit_now:    'Nothing can be updated at this stage.'
       you_no_edit:    'You have no permission to update this document.'
       you_no_new:     'You have no permission to create a document.'      
-      bad_sgp_item:   :general.non_existing
-      bad_group_id:   'does not exist or belongs to another Project Group.'
-      bad_activity:   :general.non_existing
-      bad_sub_rec:    :general.non_existing
       bad_frequency:  'only ''single'' Submission Frequencies permitted for the next task.'
       bad_purpose:    'setting does not consider submission.'
       bad_state:      'must be for information only to close workflow.'
@@ -1262,7 +1242,6 @@ en:
       edit_ok:        'DSR Submission Record was successfully updated.'
       new_ok:         'DSR Submission Record was successfully created.'
       delete_ok:      'DSR Submission Record was successfully destroyed.'
-      bad_dsr_id:     'does not refer to a valid DSR Status Record.'
       not_unique:     '/ Submission No combination already exists.'
       bad_resp_date:  '+ Offset in Days must be on or after Actual Submission Date.'
 
@@ -1415,7 +1394,6 @@ en:
       edit_ok:          'Hashtag was successfully updated.'
       delete_ok:        'Hashtag was successfully destroyed.'
       uniq_per_feature: 'must be unique for this feature.'
-      bad_feature_id:   'is not a valid feature'
       bad_code_syntax:  'syntax is invalid'
 
   holidays:
@@ -1434,8 +1412,6 @@ en:
       new_ok:         'Holiday period was successfully created.'
       edit_ok:        'Holiday period was successfully updated.'
       delete_ok:      'Holiday period was successfully removed.'
-      bad_region_id:  :general.non_existing
-      bad_country_id: :general.non_existing
       bad_period:     'must be after start of period'
       bad_years:      'must be in the same year as start of period'
 
@@ -1487,7 +1463,6 @@ en:
       new_ok:         'Line was successfully created.'
       edit_ok:        'Line was successfully updated.'
       delete_ok:      'Line was successfully removed.'
-      bad_loc_code:   :general.non_existing
 
   network_stations:
     title:            'Network Stations'
@@ -1532,8 +1507,6 @@ en:
       new_ok:         'Network Stop successfully added.'
       edit_ok:        'Network Stop successfully updated.'
       delete_ok:      'Network Stop successfully deleted.'
-      bad_nw_line:    'bad reference to line.'
-      bad_nw_stn:     'bad reference to station.'
       bad_no_stops:   'Cannot have more than one stop on non-transfer stations.'
 
   people:
@@ -1676,7 +1649,6 @@ en:
       edit_ok:      'Region Information was successfully updated.'
       delete_ok:    'Region Information was successfully deleted.'
       dup_name:     'must be unique within a country.'
-      bad_country_id: :general.non_existing
 
   responsibilities:
     title:          'Responsibilities'
@@ -1693,8 +1665,6 @@ en:
       form_title:   'Show Responsibility'
 
     msg:
-      bad_group_id: :general.non_existing
-      bad_person_id: :general.non_existing
       new_ok:       'Responsibility was successfully created.'
       edit_ok:      'Responsibility was successfully updated.'
       delete_ok:    'Responsibility was successfully removed.'
@@ -1735,7 +1705,6 @@ en:
       new_ok:       'RfC was successfully created.'
       edit_ok:      'RfC was successfully updated.'
       delete_ok:    'RfC was successfully removed.'
-      bad_group_id: :general.non_existing
       no_edit_now:  'Nothing can be updated at this stage.'
       you_no_edit:  'You have no permission to update this RfC.'
       you_no_new:   'You have no permission to create an RfC of this type.'      
@@ -1907,14 +1876,11 @@ en:
 
   tia_members:
     msg:
-      bad_feature_id: :general.non_existing
-      bad_account_id: :general.non_existing
       dup_account_id: 'is already a member in this list.'
       own_account_id: 'is already Owner or Deputy for this list.'
 
   tia_items:
     msg:
-      bad_account_id: :general.non_existing
       bad_archive:    'cannot be set on open items.'
       bad_seqno:      'must be unique within this Task/Issue/Action Item List.'
       new_ok:         'Item successfully added.'
@@ -1961,7 +1927,6 @@ en:
     add_label:          'Add additional participants'
     action:             'Action'
     msg:
-      bad_tia_list_id:  'given Task/Issue/Action Item List does not exist.'
       new_ok:       'Task/Issue/Action Item List successfully added.'
       edit_ok:      'Task/Issue/Action Item List successfully modified.'
       delete_ok:    'Task/Issue/Action Item List successfully removed.'

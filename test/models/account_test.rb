@@ -27,10 +27,10 @@ class AccountTest < ActiveSupport::TestCase
     a = Account.new
     a.person_id = nil
     refute a.valid?
-    assert_includes a.errors, :person
+    assert_includes a.errors, :person_id
     a.person_id = -1
     refute a.valid?
-    assert_includes a.errors, :person
+    assert_includes a.errors, :person_id
   end
 
   test 'new account must have name and password: 0. both nil' do

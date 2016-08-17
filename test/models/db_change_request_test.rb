@@ -75,21 +75,21 @@ class DbChangeRequestTest < ActiveSupport::TestCase
 
   test 'required attributes (requesting account id)' do
     dbcr = db_change_requests( :dbcr_one )
-    assert dbcr.valid?
+    assert dbcr.valid?, dbcr.errors.messages
     
     dbcr.requesting_account_id = nil
-    assert_not dbcr.valid?
+    assert_not dbcr.valid?, dbcr.errors.messages
     assert_includes dbcr.errors, :requesting_account_id
 
     dbcr.requesting_account_id = 0
-    assert_not dbcr.valid?
+    assert_not dbcr.valid?, dbcr.errors.messages
     assert_includes dbcr.errors, :requesting_account_id
   end
 
   test 'optional attribute valid (responsible_account_id)' do
     dbcr = db_change_requests( :dbcr_one )
     dbcr.responsible_account_id = nil
-    assert dbcr.valid?
+    assert dbcr.valid?, dbcr.errors.messages
 
     dbcr.responsible_account_id = 0
     assert_not dbcr.valid?
@@ -101,7 +101,7 @@ class DbChangeRequestTest < ActiveSupport::TestCase
 
   test 'required attributes (request text)' do
     dbcr = db_change_requests( :dbcr_one )
-    assert dbcr.valid?
+    assert dbcr.valid?, dbcr.errors.messages
     dbcr.request_text = nil
     assert_not dbcr.valid?
     dbcr.request_text = ''

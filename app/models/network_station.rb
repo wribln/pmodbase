@@ -1,7 +1,6 @@
 require './lib/assets/app_helper.rb'
 class NetworkStation < ActiveRecord::Base
   include ApplicationModel
-  include LocationCodeCheck
   include Filterable
 
   has_many :network_stops, inverse_of: :network_station
