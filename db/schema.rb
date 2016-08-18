@@ -778,10 +778,10 @@ ActiveRecord::Schema.define(version: 20160809114810) do
   add_index "region_names", ["country_name_id", "code"], name: "cr_index", unique: true
 
   create_table "responsibilities", force: :cascade do |t|
-    t.string   "description", limit: 255, default: "", null: false
+    t.string   "description", limit: 255,              null: false
     t.integer  "seqno",                   default: 99
     t.integer  "group_id",                             null: false
-    t.integer  "person_id",               default: 0,  null: false
+    t.integer  "person_id"
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
   end

@@ -18,20 +18,7 @@ class Address < ActiveRecord::Base
   scope :ff_label,    -> ( label    ){ where( 'label LIKE ?', "%#{ label }%" )}
   scope :ff_address,  -> ( address  ){ where( 'street_address LIKE :param OR postal_address LIKE :param', param: "%#{ address }%" )}
 
-  # overwrite write accessors to ensure that text fields do not contain
-  # any redundant blanks
-
-  def label=( text )
-    write_attribute( :label, AppHelper.clean_up( text ))
-  end
-
-  def street_address=( text )
-    write_attribute( :street_address, AppHelper.clean_up( text ))
-  end
-
-  def postal_address=( text )
-    write_attribute( :postal_address, AppHelper.clean_up( text ))
-  end
+  set_trimmed :label, :street_address, :postal_address
 
   # display short label with id suffix
 

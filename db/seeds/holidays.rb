@@ -72,11 +72,10 @@ CSV.foreach(File.join(Rails.root, 'db', 'std_csv', 'holidays.csv' ),
     puts ">>> bad row #{ row_no} not added"
     puts
   end
-
+  print '.'
 end
-
+puts
 puts "Seed holidays completed:"
 puts "#{ good_rows } rows added"
 puts "#{ ignored } rows ignored (work < 0)"
 puts "#{ bad_rows } rows skipped due to errors."
-puts

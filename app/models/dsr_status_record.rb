@@ -128,6 +128,8 @@ class DsrStatusRecord < ActiveRecord::Base
   validate :sub_purpose_submission_dates_combination
   validate :programme_activities_combination
 
+  set_trimmed :title, :sender_doc_id, :receiver_doc_id, :project_doc_id
+
   # helper functions (interface to ordered sets)
 
   def single_submission_frequency?
@@ -248,24 +250,6 @@ class DsrStatusRecord < ActiveRecord::Base
   end
 
   public
-
-  # fix assignments
-
-  def title=( text )
-    write_attribute( :title, AppHelper.clean_up( text ))
-  end
-
-  def sender_doc_id=( text )
-    write_attribute( :sender_doc_id, AppHelper.clean_up( text ))
-  end
-
-  def receiver_doc_id=( text )
-    write_attribute( :receiver_doc_id, AppHelper.clean_up( text ))
-  end
-
-  def project_doc_id=( text )
-    write_attribute( :project_doc_id, AppHelper.clean_up( text ))
-  end
 
   # logic checks: all conditions met?
 

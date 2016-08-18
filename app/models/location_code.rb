@@ -41,6 +41,8 @@ class LocationCode < ActiveRecord::Base
   validates :note,
     length: { maximum: MAX_LENGTH_OF_NOTE }
 
+  set_trimmed :code, :label
+
   default_scope { order( code: :asc )}
   scope :as_code, -> ( c ){ where( 'code  LIKE ?',  has_code_prefix( c ) ? "#{ c }%" : "#{ code_prefix }#{ c }%" )}
   scope :as_desc, -> ( l ){ where( 'label LIKE ?', "%#{ l }%" )}
@@ -56,17 +58,6 @@ class LocationCode < ActiveRecord::Base
  
   def self.has_code_prefix( c )
     c && c[ 0 ] == @code_prefix
-  end
-
-  # overwrite write accessors to ensure that text fields do not contain
-  # any redundant blanks 
-
-  def code=( text )
-    write_attribute( :code, AppHelper.clean_up( text ))
-  end
-
-  def label=( text )
-    write_attribute( :label, AppHelper.clean_up( text ))
   end
 
   # note: use '#{ self.class.table_name }' instead of 'code_modules' if you want

@@ -23,6 +23,8 @@ class TiaList < ActiveRecord::Base
   validate{ given_account_exists( :owner_account_id  )}
   validate{ given_account_exists( :deputy_account_id )}
 
+  set_trimmed :code, :label
+
   # use this scope for own lists
 
   scope :for_user, -> ( id ){ where 'owner_account_id = :param OR deputy_account_id = :param', param: id }
@@ -40,16 +42,6 @@ class TiaList < ActiveRecord::Base
 
   def item_code( seqno )
     "#{ code }-#{ seqno }#{ '-' if code.nil? }" unless seqno.nil?
-  end
-
-  # make sure there are no leading or trailing blanks in the strings
-
-  def code=( text )
-    write_attribute( :code, AppHelper.clean_up( text ))
-  end
-
-  def label=( text )
-    write_attribute( :label, AppHelper.clean_up( text ))
   end
 
   def next_seqno_for_item

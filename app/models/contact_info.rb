@@ -34,21 +34,8 @@ class ContactInfo < ActiveRecord::Base
     allow_blank: true,
     length: { maximum: MAX_LENGTH_OF_PHONE_NUMBER }
 
-  # overwrite write accessors to ensure that text fields do not contain
-  # any redundant blanks
+  set_trimmed :info_type, :detail_location, :department
 
-  def info_type=( text )
-    write_attribute( :info_type, AppHelper.clean_up( text ))
-  end
-
-  def detail_location=( text )
-    write_attribute( :detail_location, AppHelper.clean_up( text ))
-  end
-
-  def department=( text )
-    write_attribute( :department, AppHelper.clean_up( text ))
-  end
-  
   # provide address label
 
   def address_label

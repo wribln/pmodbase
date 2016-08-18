@@ -1,6 +1,7 @@
 require './lib/assets/app_helper.rb'
 require 'cgi'
 class CfrLocation < ActiveRecord::Base
+  include ApplicationModel
   include ActiveModelErrorsAdd
 
   belongs_to :cfr_record, inverse_of: :cfr_locations
@@ -35,23 +36,7 @@ class CfrLocation < ActiveRecord::Base
   validates :is_main_location,
     inclusion: { in: [ true, false ]}
 
-  # make sure we have no leading and trainling whitespaces
-
-  def uri=( s )
-    write_attribute( :uri, AppHelper.clean_up( s ))
-  end
-
-  def file_name=( s )
-    write_attribute( :file_name, AppHelper.clean_up( s ))
-  end
-
-  def doc_code=( s )
-    write_attribute( :doc_code, AppHelper.clean_up( s ))
-  end
-
-  def doc_version=( s )
-    write_attribute( :doc_version, AppHelper.clean_up( s ))
-  end
+  set_trimmed :uri, :file_name, :doc_code, :doc_version
 
   # attempt to determine default values from given attributes
 

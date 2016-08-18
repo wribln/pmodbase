@@ -25,17 +25,7 @@ class Abbreviation < ActiveRecord::Base
     alias :ff_desc :as_desc
   end
 
-  def code=( text )
-    write_attribute( :code, AppHelper.clean_up( text ))
-  end
-
-  def sort_code=( text )
-    write_attribute( :sort_code, AppHelper.clean_up( text ))
-  end
-
-  def description=( text )
-    write_attribute( :description, AppHelper.clean_up( text ))
-  end
+  set_trimmed :code, :sort_code, :description
 
   # use this to automatically create the sort code from the abbreviation:
   # remove punctuation characters and map all uppercase characters to lowercase;

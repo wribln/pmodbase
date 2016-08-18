@@ -55,6 +55,8 @@ class RfcStatusRecord < ActiveRecord::Base
     numericality: { only_integer: true },
     inclusion: { in: 0..9 }
 
+  set_trimmed :project_doc_id, :project_rms_id, :asking_group_doc_id, :answering_group_doc_id
+
   scope :ff_id,   -> ( id   ){ where id:              id   }
   scope :ff_type, -> ( type ){ where rfc_type:        type }
   scope :ff_agrp, -> ( agrp ){ where asking_group:    agrp }
@@ -70,25 +72,6 @@ class RfcStatusRecord < ActiveRecord::Base
 
   def answering_group_code
     ( answering_group.try :code_with_id ) || some_id( answering_group_id )
-  end
-
-  # overwrite write accessors to ensure that text fields do not contain
-  # any redundant blanks
-
-  def project_doc_id=( text )
-    write_attribute( :project_doc_id, AppHelper.clean_up( text ))
-  end
-
-  def project_rms_id=( text )
-    write_attribute( :project_rms_id, AppHelper.clean_up( text ))
-  end
-
-  def asking_group_doc_id=( text )
-    write_attribute( :asking_group_doc_id, AppHelper.clean_up( text ))
-  end
-
-  def answering_group_doc_id=( text )
-    write_attribute( :answering_group_doc_id, AppHelper.clean_up( text ))
   end
 
 end

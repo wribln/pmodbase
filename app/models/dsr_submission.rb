@@ -47,6 +47,14 @@ class DsrSubmission < ActiveRecord::Base
 
   validate :response_dates_after_submission
 
+  set_trimmed :sender_doc_id_version,
+              :receiver_doc_id_version, 
+              :project_doc_id_version,
+              :submission_receiver_doc_id,
+              :submission_project_doc_id,
+              :response_sender_doc_id, 
+              :response_project_doc_id
+
   # make sure (computed) response dates are after the submission date
 
   def response_dates_after_submission
@@ -87,36 +95,6 @@ class DsrSubmission < ActiveRecord::Base
 
   def response_status_label
     DSR_RESPONSE_STATUS_LABELS[ response_status ] unless response_status.nil?
-  end
-
-  # fix assignments
-
-  def sender_doc_id_version=( text )
-    write_attribute( :sender_doc_id_version, AppHelper.clean_up( text ))
-  end
-
-  def receiver_doc_id_version=( text )
-    write_attribute( :receiver_doc_id_version, AppHelper.clean_up( text ))
-  end
-
-  def project_doc_id_version=( text )
-    write_attribute( :project_doc_id_version, AppHelper.clean_up( text ))
-  end    
-
-  def submission_receiver_doc_id=( text )
-    write_attribute( :submission_receiver_doc_id, AppHelper.clean_up( text ))
-  end
-
-  def submission_project_doc_id=( text )
-    write_attribute( :submission_project_doc_id, AppHelper.clean_up( text ))
-  end
-
-  def response_sender_doc_id=( text )
-    write_attribute( :response_sender_doc_id, AppHelper.clean_up( text ))
-  end
-
-  def response_project_doc_id=( text )
-    write_attribute( :response_project_doc_id, AppHelper.clean_up( text ))
   end
 
 end

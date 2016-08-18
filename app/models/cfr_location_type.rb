@@ -28,6 +28,8 @@ class CfrLocationType < ActiveRecord::Base
 
   validate :one_project_dms_only
 
+  set_trimmed :concat_char, :label, :note, :path_prefix
+
   # make sure there is only one record with project_dms true
 
   def one_project_dms_only
@@ -128,24 +130,6 @@ class CfrLocationType < ActiveRecord::Base
 
   def complete_code( doc_code, doc_version )
     ( doc_code.blank? && doc_version.blank? ) ? '' : doc_code.to_s + concat_char.to_s + doc_version.to_s
-  end
-
-  # remove leading and trailing blanks
-
-  def concat_char=( text )
-    write_attribute( :concat_char, AppHelper.clean_up( text ))
-  end
-
-  def label=( text )
-    write_attribute( :label, AppHelper.clean_up( text ))
-  end
-
-  def note=( text )
-    write_attribute( :note, AppHelper.clean_up( text ))
-  end
-
-  def path_prefix=( text )
-    write_attribute( :path_prefix, AppHelper.clean_up( text ))
   end
 
   # provide label for location type

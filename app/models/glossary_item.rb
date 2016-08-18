@@ -25,13 +25,7 @@ class GlossaryItem < ActiveRecord::Base
   scope :ff_desc, ->  ( d ){ where( 'description LIKE ?', "%#{ d }%" )}
   scope :ff_ref,  ->  ( r ){ where( r == '0' ? 'reference_id IS NULL' : 'reference_id = ?', r )}
 
-  def term=( text )
-    write_attribute( :term, AppHelper.clean_up( text ))
-  end
-
-  def code=( text )
-    write_attribute( :code, AppHelper.clean_up( text ))
-  end
+  set_trimmed :term, :code
 
   def reference_with_id
     assoc_text_and_id( :reference, :code )

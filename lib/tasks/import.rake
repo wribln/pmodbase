@@ -33,8 +33,9 @@ task :import, [ :filename, :model, :col_sep ] => :environment do |tasks, args|
     else
       puts ">>> Line #{ lines_processed } errors: #{ r.errors.full_messages }"
     end
+    print '.'
   end
-  
+  puts
   puts "Number of lines processed: #{ lines_processed }"
   puts "Number of records added:   #{ records_added }"
   puts "Final number of records:   #{ Module.const_get( args[ :model ]).count }" 

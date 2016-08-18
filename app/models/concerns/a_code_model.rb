@@ -13,22 +13,13 @@ module ACodeModel
 
     validate :only_one_master
 
+    set_trimmed :code, :label
+
     scope :std_order,   -> { order( code: :asc, master: :desc )}
     scope :active_only, -> { where active: true }
     scope :as_code, -> ( c ){ where( 'code  LIKE ?',  "#{ c }%" )}
     scope :as_desc, -> ( l ){ where( 'label LIKE ?', "%#{ l }%" )}
 
-  end
-
-  # overwrite write accessors to ensure that text fields do not contain
-  # any redundant blanks 
-
-  def code=( text )
-    write_attribute( :code, AppHelper.clean_up( text ))
-  end
-
-  def label=( text )
-    write_attribute( :label, AppHelper.clean_up( text ))
   end
 
   # note: use '#{ self.class.table_name }' instead of 'code_modules' if you want

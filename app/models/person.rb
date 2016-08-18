@@ -27,23 +27,14 @@ class Person < ActiveRecord::Base
     allow_blank: true,
     uniqueness: true
 
+  set_trimmed :formal_name, :informal_name
+
   # at least one of the two names must be given
 
   def check_names
     if formal_name.empty? and informal_name.empty?
       errors.add( :base, I18n.t( 'people.msg.one_name_at_least' ))
     end
-  end
-
-  # overwrite write accessors to ensure that text fields do not contain
-  # any redundant blanks
-
-  def formal_name=( text )
-    write_attribute( :formal_name, AppHelper.clean_up( text ))
-  end
-
-  def informal_name=( text )
-    write_attribute( :informal_name, AppHelper.clean_up( text ))
   end
 
   # return (in)formal name unless it is empty, then return the other name

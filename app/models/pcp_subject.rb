@@ -27,17 +27,9 @@ class PcpSubject < ActiveRecord::Base
   validates :pcp_category,
     presence: true
 
-  validates :c_group,
-    presence: true, if: Proc.new{ |me| me.c_group_id.present? }
-
-  validates :p_group,
-    presence: true, if: Proc.new{ |me| me.p_group_id.present? }
-
-  validates :c_owner,
-    presence: true, if: Proc.new{ |me| me.c_owner_id.present? }
-
-  validates :p_owner,
-    presence: true, if: Proc.new{ |me| me.p_owner_id.present? }
+  validates :c_group, :p_group,
+            :c_owner, :p_owner,
+    presence: true, on: :update
 
   validates :c_deputy,
     presence: true, if: Proc.new{ |me| me.c_deputy_id.present? }
@@ -62,6 +54,8 @@ class PcpSubject < ActiveRecord::Base
 #  validate{ given_account_has_access( :s_owner_id, :p_group_id )}, on: :create
 
   validate :archived_and_status
+
+  set_trimmed :title, :project_doc_id, :report_doc_id
 
   # all_active is used by controller - make sure it matches an index
 
@@ -160,20 +154,6 @@ class PcpSubject < ActiveRecord::Base
       end
     end
   end 
-
-  # fix assignments
-
-  def title=( text )
-    write_attribute( :title, AppHelper.clean_up( text ))
-  end
-
-  def project_doc_id=( text )
-    write_attribute( :project_doc_id, AppHelper.clean_up( text ))
-  end
-
-  def report_doc_id=( text )
-    write_attribute( :report_doc_id, AppHelper.clean_up( text ))
-  end
 
   # access control helper: ags is the acting_group_switch
 

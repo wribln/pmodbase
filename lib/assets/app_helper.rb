@@ -18,11 +18,7 @@ module AppHelper
         result = result[ 0..( max_chars - 1 )]
       end
     end
-    if result.empty? || result.blank? then
-      is_empty
-    else
-      result
-    end
+    result.blank? ? is_empty : result
   end
   module_function :clean_up
 

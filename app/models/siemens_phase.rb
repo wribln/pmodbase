@@ -17,20 +17,7 @@ class SiemensPhase < ActiveRecord::Base
   validates :label_m,
     length: { maximum: MAX_LENGTH_OF_LABEL }
 
-  # overwrite write accessors to ensure that text fields do not contain
-  # any redundant blanks 
-
-  def code=( text )
-    write_attribute( :code, AppHelper.clean_up( text ))
-  end
-
-  def label_p=( text )
-    write_attribute( :label_p, AppHelper.clean_up( text ))
-  end
-
-  def label_m=( text )
-    write_attribute( :label_m, AppHelper.clean_up( text ))
-  end
+  set_trimmed :code, :label_p, :label_m
 
   def code_and_label
     '' << try( :code ) << ' - ' << try( :label_p )

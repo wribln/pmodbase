@@ -44,6 +44,8 @@ class DbChangeRequest < ActiveRecord::Base
 
   scope :for_user, -> ( id ){ where requesting_account_id: id }
 
+  set_trimmed :uri
+
   def status_label_with_id
     some_text_and_id( DBCR_STATUS_LABELS[ self.status ], self.status ) unless self.status.nil?
   end
@@ -67,12 +69,6 @@ class DbChangeRequest < ActiveRecord::Base
       errors.add( name, I18n.t( 'db_change_requests.msg.bad_account_id' )) \
         unless Account.exists?( send( name ))
     end
-  end
-
-  # overwrite write accessors to ensure that text field is filled to max possible
-
-  def uri=( text )
-    write_attribute( :uri, AppHelper.fix_string( text, MAX_LENGTH_OF_STRING ))
   end
 
   # extend statistics

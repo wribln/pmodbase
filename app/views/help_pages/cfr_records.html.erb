@@ -59,6 +59,10 @@
       several versions of the document), an email message, etc. All attributes are optional, 
       some attributes will be set automatically if possible:</p>
     <ul>
+      <li>The <%= help_param CfrRecord.human_attribute_name :id %> identifies each and evey file,
+      i.e. more specifically, each <%= CfrRecord.model_name.human.singularize %>. This number
+      is unique and is automatically assigned by the system. You need this number - for example -
+      to specify the relationship to other files.</li>
       <li>The <%= help_param CfrRecord.human_attribute_name( :title ) -%> should describe the
       File, folder or document. It would be a good choice to use the actual title of the
       document for this attribute. In case of emails, you could use the subject of the email here.
@@ -127,6 +131,17 @@
       browsers and file system specifics to be considered; however, in the general case, this
       should work.</li>
     </ul>
+    <p>Finally, you can document any relation between two files: Use the <strong>[+]</strong> 
+      (Add) button to create a new relationship record. The select control provides you with
+      all defined relationships (see
+      <%= link_to_help :cfr_relationships, CfrRelationship.model_name.human %> for more information).
+      You then need to specify which file (identified by the
+      <%= help_term CfrRecord.human_attribute_name :id %>) this relationship refers to. When
+      showing the record details, this relationship is displayed using the title of the file with
+      the <%= help_term CfrRecord.human_attribute_name :id %> appended for your information.</p>
+    <p>The <strong>[-]</strong> button can be used to remove the respective
+      <%= help_term CfrLocation.model_name.human.singularize %> or 
+      <%= help_term CfrRelationship.model_name.human.singularize %>.
     <h3>Defaults</h3>
       <p>Use the <%= help_param t( 'button_label.defaults' )%> button to set various fields
       to defaults, specifically when providing a

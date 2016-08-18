@@ -1,4 +1,5 @@
 class PcpMember < ActiveRecord::Base
+  include ApplicationModel
 
   belongs_to :pcp_subject,  -> { readonly }, inverse_of: :pcp_members
   belongs_to :account,      -> { readonly }, inverse_of: :pcp_members

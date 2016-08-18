@@ -4,6 +4,7 @@
 # is needed to recreate any release report)
 
 class PcpStep < ActiveRecord::Base
+  include ApplicationModel
 
   belongs_to :pcp_subject,  -> { readonly }, inverse_of: :pcp_steps
   has_many   :pcp_items,    -> { readonly }, inverse_of: :pcp_step
@@ -67,6 +68,8 @@ class PcpStep < ActiveRecord::Base
   validate :pcp_subject_must_exist
   validate :check_assessment_in_step
 
+  set_trimmed :subject_version, :report_version
+  
   # default scope for access through PCP Subjects
 
   scope :most_recent, -> { order( step_no: :desc )}
@@ -203,16 +206,6 @@ class PcpStep < ActiveRecord::Base
 
   def self.step_state_label( step )
     STEP_STATES[ step & 1 ]
-  end
-
-  # make sure no leading/trailing blanks are stored
-
-  def subject_version=( text )
-    write_attribute( :subject_version, AppHelper.clean_up( text ))
-  end
-
-  def report_version=( text )
-    write_attribute( :report_version, AppHelper.clean_up( text ))
   end
 
   # Regarding PCP subjects, I need to distinguish between the 'acting_group' -

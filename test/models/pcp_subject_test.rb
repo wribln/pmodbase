@@ -89,20 +89,26 @@ class PcpSubjectTest < ActiveSupport::TestCase
 
   test 'pcp_category must be valid' do
     ps = pcp_subjects( :one )
+
     ps.pcp_category_id = nil 
     refute ps.valid?
     assert_includes ps.errors, :pcp_category_id
+
     ps.pcp_category_id = 0
     refute ps.valid?
     assert_includes ps.errors, :pcp_category_id
+
     ps.pcp_category_id = pcp_categories( :one ).id 
     assert ps.valid?
+
     oc = pcp_categories( :one ).dup 
     oc.save
     ps.pcp_category_id = oc.id
-    assert ps.valid?
+    assert ps.save
+
     oc.destroy
-    refute ps.valid?, ps.errors.messages
+    assert_raises( ActiveRecord::RecordNotFound ){ ps.reload }
+    refute ps.valid?, ps.inspect
   end
 
   test 'permit to set p defaults from PCP Category' do

@@ -19,6 +19,8 @@ class RegionName < ActiveRecord::Base
     length: { maximum: MAX_LENGTH_OF_LABEL },
     presence: true
 
+  set_trimmed :code, :label
+
   default_scope { order( :country_name_id, :code )}
   scope :as_abbr,    -> ( a ){ where( 'code  LIKE ?',  "#{ a }%" )}
   scope :as_desc,    -> ( d ){ where( 'label LIKE ?', "%#{ d }%" )}
@@ -27,17 +29,6 @@ class RegionName < ActiveRecord::Base
   class << self;
     alias :ff_code  :as_abbr
     alias :ff_label :as_desc
-  end
-
-  # overwrite write accessors to ensure that text fields do not contain
-  # any redundant blanks
-
-  def code=( text )
-    write_attribute( :code, AppHelper.clean_up( text ))
-  end
-
-  def label=( text )
-    write_attribute( :label, AppHelper.clean_up( text ))
   end
 
   # provide labels with id

@@ -32,6 +32,8 @@ class PhaseCode < ActiveRecord::Base
     presence: true,
     numericality: { only_integer: true }
 
+  set_trimmed :code, :acro, :label
+
   default_scope { order( acro: :asc )}
   scope :as_code, -> ( a ){ 
       where( 'code LIKE ? ESCAPE \'+\'',
@@ -79,21 +81,6 @@ class PhaseCode < ActiveRecord::Base
       errors.add( :siemens_phase_id, I18n.t( 'phase_codes.msg.bad_s_phase' )) \
         unless SiemensPhase.exists?( siemens_phase_id )
     end
-  end
-
-  # overwrite write accessors to ensure that text fields do not contain
-  # any redundant blanks 
-
-  def code=( text )
-    write_attribute( :code, AppHelper.clean_up( text ))
-  end
-
-  def acro=( text )
-    write_attribute( :acro, AppHelper.clean_up( text ))
-  end
-
-  def label=( text )
-    write_attribute( :label, AppHelper.clean_up( text ))
   end
 
   # return a combination of code and label for dropdown list boxes (select in HTML)

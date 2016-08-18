@@ -14,13 +14,8 @@ class WebLink < ActiveRecord::Base
 		presence: true,
 		numericality: { only_integer: true }
 
+  set_trimmed :label
+
 	default_scope { order( seqno: :asc, label: :asc )}
-
-  # overwrite write accessor to ensure that [label] does not contain
-  # any redundant blanks
-
-  def label=( text )
-    write_attribute( :label, AppHelper.clean_up( text ))
-  end
 
 end

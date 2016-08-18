@@ -10,10 +10,13 @@ class NetworkStop < ActiveRecord::Base
     numericality: { only_integer: true }
 
   validates :network_line,
-    presence: true, if: Proc.new{ |me| me.network_line_id.present? }
+    presence: true
 
   validates :network_station,
     presence: true, if: Proc.new{ |me| me.network_station_id.present? }
+
+  validates :location_code,
+    presence: true, if: Proc.new{ |me| me.location_code_id.present? }
 
   validates :code,
     length: { maximum: MAX_LENGTH_OF_CODE }

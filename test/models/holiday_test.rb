@@ -193,7 +193,7 @@ class HolidayTest < ActiveSupport::TestCase
   test "region reference must exist" do
     h =  holidays( :hdk )
     h.region_name_id = 0
-    assert_not h.valid?
+    refute h.valid?
     assert_includes h.errors, :region_name_id
   end
 

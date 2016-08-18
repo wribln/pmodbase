@@ -37,6 +37,8 @@ class Group < ActiveRecord::Base
   validate :sub_group_reference
   validate :inactive_group_not_used
 
+  set_trimmed :code, :label, :notes
+
   default_scope { order( code: :asc )}
   scope :participants_only, -> { where( participating: true)}
   scope :active_only, ->    { where( active: true )}
@@ -61,21 +63,6 @@ class Group < ActiveRecord::Base
     else
       where( id: pg )
     end
-  end
-
-  # overwrite write accessors to ensure that text fields do not contain
-  # any redundant blanks 
-
-  def code=( text )
-    write_attribute( :code, AppHelper.clean_up( text ))
-  end
-
-  def label=( text )
-    write_attribute( :label, AppHelper.clean_up( text ))
-  end
-
-  def notes=( text )
-    write_attribute( :notes, AppHelper.clean_up( text ))
   end
 
   def label_with_id

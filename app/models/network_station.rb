@@ -24,6 +24,8 @@ class NetworkStation < ActiveRecord::Base
 
   validate :transfer_stop_relation
 
+  set_trimmed :code, :alt_code, :curr_name, :prev_name
+
   scope :ff_code,   ->( c ){ where( 'code LIKE ? or alt_code LIKE ?', "#{ c }%", "%#{ c }%" )}
   scope :ff_xfer,   ->( f ){ where  transfer:( f == '0' )}
   scope :ff_note,   ->( t ){ where( 'note LIKE ?', "%#{ t }%" )}
@@ -44,25 +46,6 @@ class NetworkStation < ActiveRecord::Base
     if self.network_stops.count > 1 && not( self.transfer )then
       errors.add( :transfer, I18n.t( 'network_stations.msg.xfer_check' )) \
     end
-  end
-
-  # overwrite write accessors to ensure that text fields do not contain
-  # any redundant blanks 
-
-  def code=( text )
-    write_attribute( :code, AppHelper.clean_up( text ))
-  end
-
-  def alt_code=( text )
-    write_attribute( :alt_code, AppHelper.clean_up( text ))
-  end
-
-  def curr_name=( text )
-    write_attribute( :curr_name, AppHelper.clean_up( text ))
-  end
-
-  def prev_name=( text )
-    write_attribute( :prev_name, AppHelper.clean_up( text ))
   end
 
 end

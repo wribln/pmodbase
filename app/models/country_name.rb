@@ -24,13 +24,6 @@ class CountryName < ActiveRecord::Base
     alias :ff_label :as_desc
   end
 
-
-  def code=( text )
-    write_attribute( :code, AppHelper.clean_up( text ))
-  end
-
-  def label=( text )
-    write_attribute( :label, AppHelper.clean_up( text ))
-  end
+  set_trimmed :code, :label
 
 end

@@ -418,7 +418,7 @@ en:
         access_levels:  ['none','user-defined','general-index','general-view','general','all']
         control_levels: ['-','+g','+wf','+g+wf','+cug','+g+cug']
         no_workflows:   'No of Workflows'
-        feature_category_id: 'Feature Category ID'
+        feature_category_id: 'Feature Category'
 
       feature_category:
         id:             :general.attributes.id
@@ -1032,6 +1032,7 @@ en:
       bad_group_id:   :general.non_existing
       bad_csr_id:     'refers to own record which is not permitted.'
       bad_types:      'reply correspondence is same type as this: '
+      bad_csr_item:   'refers to own record which is not permitted.'
 
   db_change_requests:
     title:            'All pmodbase Change Requests'
@@ -1189,6 +1190,7 @@ en:
       add_created:    'Add from Group Document: Submission Frequency, Quantity and Weight were adjusted!'
       bad_resp_sts:   'Next Status / Task must correspond to Submission Response Status.'
       baseline_done:  'Baseline data successfully saved.'
+      bad_group_id:   'does not exist or belongs to another Project Group.'
 
     workflows:
       w00:

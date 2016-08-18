@@ -147,7 +147,6 @@ en:
     show:
       form_title:     'Show PCP Category'
     msg:
-      bad_group_id:   :general.non_existing
       new_ok:         'PCP category successfully created.'
       edit_ok:        'PCP category successfully updated.'
       delete_ok:      'PCP category successfully deleted'
@@ -322,7 +321,6 @@ en:
       delete_ok:      'PCP Subject successfully deleted.'
       release_ok:     'PCP Subject released for next step.\nPrint and submit this report.'
       no_access:      'has no permission to modify this PCP Subject for his group.'
-      bad_category:   :general.non_existing
       bad_status:     'can only be set on closed subjects.'
       bad_account_id: :general.non_existing
       no_permissn:    'You have no permission to modify this PCP Subject at this time.'

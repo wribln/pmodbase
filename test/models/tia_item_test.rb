@@ -96,19 +96,21 @@ class TiaItemTest < ActiveSupport::TestCase
 
   test 'account if given must exist' do
     tx = tia_items( :tia_item_one )
-    assert_not_nil tx.account_id
+    refute_nil tx.account_id
     assert tx.valid?
     Account.find( tx.account_id ).destroy
-    assert_not tx.valid?
+    tx.reload # to avoid using the data in the cache
+    refute tx.valid?
     assert_includes tx.errors, :account_id
   end
 
   test 'tia list must exist' do
     tx = tia_items( :tia_item_one )
-    assert_not_nil tx.tia_list_id
+    refute_nil tx.tia_list_id
     assert tx.valid?
     TiaList.find( tx.tia_list_id ).destroy
-    assert_not tx.valid?
+    assert_raises( ActiveRecord::RecordNotFound ){ tx.reload }
+    refute tx.valid?
     assert_includes tx.errors, :tia_list_id
   end
 
@@ -127,11 +129,11 @@ class TiaItemTest < ActiveSupport::TestCase
     assert_includes tx.errors, :archived
 
     tx.status = 2
-    assert_not tx.status_open?
+    refute tx.status_open?
     assert tx.valid?
 
     tx.status = 3
-    assert_not tx.status_open?
+    refute tx.status_open?
     assert tx.valid?
   end
 

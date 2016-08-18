@@ -79,9 +79,9 @@ CSV.foreach(File.join(Rails.root, 'db', 'projects', 'dmr', 'network_stops.csv' )
     puts ">>> bad row #{ row_no} not added"
     puts
   end
-
+  print '.'
 end
-
+puts
 puts "Seed location_codes.csv completed:"
 puts "#{ good_rows } rows added"
 puts "#{ bad_rows } rows skipped due to errors."

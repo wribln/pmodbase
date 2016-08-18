@@ -11,6 +11,8 @@ class StandardsBody < ActiveRecord::Base
     length: { maximum: MAX_LENGTH_OF_DESCRIPTION },
     presence: true
 
+  set_trimmed :code, :description
+
   default_scope { order( code: :asc )}
   scope :as_abbr, ->  ( a ){ where( 'code LIKE ?', "#{ a }%" )}
   scope :as_desc, ->  ( d ){ where( 'description LIKE ?', "%#{ d }%" )}
@@ -18,14 +20,6 @@ class StandardsBody < ActiveRecord::Base
   class << self;
     alias :ff_abbr :as_abbr
     alias :ff_desc :as_desc
-  end
-
-  def code=( text )
-    write_attribute( :code, AppHelper.clean_up( text ))
-  end
-
-  def description=( text )
-    write_attribute( :description, AppHelper.clean_up( text ))
   end
 
 end

@@ -15,6 +15,8 @@ class ProgrammeActivity < ActiveRecord::Base
   validates :finish_date,
     date_field: { presence: false }
 
+  set_trimmed :project_id, :activity_id
+
   # make sure that both dates are set
 
   def start_and_finish_dates
@@ -37,14 +39,6 @@ class ProgrammeActivity < ActiveRecord::Base
 
   def label_with_id
     text_and_id( :activity_label )
-  end
-
-  def project_id=( text )
-    write_attribute( :project_id, AppHelper.clean_up( text ))
-  end
-
-  def activity_id=( text )
-    write_attribute( :activity_id, AppHelper.clean_up( text ))
   end
 
 end

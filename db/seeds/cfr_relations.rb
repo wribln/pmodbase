@@ -9,6 +9,7 @@ def create_pair( rg, l1, l2 )
   t2.label = l2
   t1.save
   t1.update_attribute( :reverse_rs_id, t2.id )
+  print '.'
 end
 
 create_pair( 0, 'is predecessor of', 'is successor of' )
@@ -28,3 +29,5 @@ create_pair( 1, 'references', 'is referenced by' )
 
 create_pair( 2, 'is released by', 'is release document for' )
 create_pair( 2, 'is differently formatted than', 'has different format than' )
+
+puts

@@ -18,16 +18,7 @@ class DsrDocGroup < ActiveRecord::Base
   validates :group,
     presence: true
 
-  # overwrite write accessors to ensure that text fields do not contain
-  # any redundant blanks
-
-  def code=( text )
-    write_attribute( :code, AppHelper.clean_up( text ))
-  end
-
-  def title=( text )
-    write_attribute( :title, AppHelper.clean_up( text ))
-  end
+  set_trimmed :code, :title
 
   # retrieve group code to display in index/show
 

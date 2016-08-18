@@ -18,7 +18,7 @@ class Responsibility < ActiveRecord::Base
   # person_id can be 0 ("N.N."), or must exist
 
   validates :person,
-    presence: true, if: Proc.new{ |me| me.person_id != 0 }
+    presence: true, if: Proc.new{ |me| me.person_id.present? }
 
   # The module only checks here if the given group exists but it should
   # also be an active participant: This is somewhat controlled by the
@@ -34,11 +34,6 @@ class Responsibility < ActiveRecord::Base
   scope :ff_name,   -> ( name   ){ where( '( people.formal_name LIKE ? ) OR ( people.informal_name LIKE ? )', "%#{ name }%", "%#{ name }%" ).references( :people )}
   scope :ff_dept,   -> ( dept   ){ where( 'contact_infos.department like ?', "#{ dept }%" ).references( :contact_infos )}
 
-  # overwrite write accessors to ensure that text fields do not contain
-  # any redundant blanks
-
-  def description=( text )
-    write_attribute( :description, AppHelper.clean_up( text ))
-  end
+  set_trimmed :description
 
 end

@@ -19,6 +19,9 @@ class Holiday < ActiveRecord::Base
   validates :country_name,
     presence: true
 
+  validates :region_name,
+    presence: true, if: Proc.new{ |me| me.region_name_id.present? }
+
   validates :description,
     presence: true,
     length: { maximum: MAX_LENGTH_OF_DESCRIPTION }
@@ -29,6 +32,8 @@ class Holiday < ActiveRecord::Base
     inclusion: { in: 0..100 }
 
   validate :date_combination_valid
+
+  set_trimmed :description
 
   default_scope { order( date_from: :asc, country_name_id: :asc )}
   scope :ff_id,       -> ( i ){ where id: i }
@@ -63,13 +68,6 @@ class Holiday < ActiveRecord::Base
 
     write_attribute( :year_period, date_from.year )
     return true
-  end
-
-  # overwrite write accessors to ensure that text fields do not contain
-  # any redundant blanks
-
-  def description=( text )
-    write_attribute( :description, AppHelper.clean_up( text ))
   end
 
   # helper functions

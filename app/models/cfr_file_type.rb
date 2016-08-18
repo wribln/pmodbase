@@ -21,6 +21,8 @@ class CfrFileType < ActiveRecord::Base
 
   scope :find_by_extension, ->( ext ){ where "extensions_internal LIKE \"%,#{ ext },%\"" }
 
+  set_trimmed :label
+
   # ensure that an extension is not assigned twice; this appears expensive
   # but since file type records are not modified often, I thought it's worth it
 
@@ -62,11 +64,5 @@ class CfrFileType < ActiveRecord::Base
   def extensions
     read_attribute( :extensions_internal ).try( :slice, 1..-2 )
   end
-
-  # remove leading and trailing blanks
-
-  def label=( text )
-    write_attribute( :label, AppHelper.clean_up( text ))
-  end  
 
 end

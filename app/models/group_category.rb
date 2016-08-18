@@ -12,11 +12,6 @@ class GroupCategory < ActiveRecord::Base
     presence: true,
     numericality: { only_integer: true }
 
-  # overwrite write accessor to ensure that [label] does not contain
-  # any redundant blanks
-
-  def label=( text )
-    write_attribute( :label, AppHelper.clean_up( text ))
-  end
+  set_trimmed :label
 
 end

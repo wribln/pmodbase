@@ -67,6 +67,18 @@ module ApplicationModel
       [[ self.model_name.human, 'Total', count ]]
     end
 
+    # create attribute setter which trims the given parameter before
+    # storing it to the attribute
+  
+    def set_trimmed ( *attributes )
+      attributes.each do |a|
+        define_method "#{ a.to_s }=" do |t|
+          tt = t.blank? ? nil : t.strip.squeeze(' ')
+          write_attribute( a, tt )
+        end
+      end
+    end
+
   end
 
 end

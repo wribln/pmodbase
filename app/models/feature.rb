@@ -1,7 +1,7 @@
 require './lib/assets/app_helper.rb'
 class Feature < ActiveRecord::Base
   include ApplicationModel
-  include ActiveModelErrorsAdd
+  #include ActiveModelErrorsAdd
   
   belongs_to :feature_category, -> { readonly }, inverse_of: :features
   has_many   :permission4_groups, -> { readonly }, inverse_of: :features
@@ -52,6 +52,8 @@ class Feature < ActiveRecord::Base
   scope :with_wf, -> { where( 'no_workflows > 0' )}
   scope :all_by_label, -> { order( label: :asc )}
 
+  set_trimmed :code, :label
+
   # permitted_features: scope helper in conjunction with Account.permitted_features
   # to provide the scope for features to which a user has access to: This will
   # return then all Feature records to which the given account is permitted
@@ -77,17 +79,6 @@ class Feature < ActiveRecord::Base
 
   def create_target
     self.class.create_target( code )
-  end
-
-  # overwrite write accessors to ensure that text fields do not contain
-  # any redundant blanks
-
-  def code=( text )
-    write_attribute( :code, AppHelper.clean_up( text ))
-  end
-
-  def label=( text )
-    write_attribute( :label, AppHelper.clean_up( text ))
   end
 
   # provide labels with id suffix

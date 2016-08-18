@@ -17,17 +17,8 @@ class Reference < ActiveRecord::Base
     allow_blank: true,
     length: { maximum: ProjectDocLog::MAX_LENGTH_OF_DOC_ID }
 
+  set_trimmed :code, :project_doc_id
+
   default_scope { order( code: :asc )}
-
-  # overwrite write accessors to ensure that text fields do not contain
-  # any redundant blanks
-
-  def code=( text )
-    write_attribute( :code, AppHelper.clean_up( text ))
-  end
-
-  def project_doc_id=( text )
-    write_attribute( :project_doc_id, AppHelper.clean_up( text ))
-  end
 
 end

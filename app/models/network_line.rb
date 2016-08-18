@@ -27,6 +27,8 @@ class NetworkLine < ActiveRecord::Base
   validates :location_code,
     presence: true, if: Proc.new{ |me| me.location_code_id.present? }
 
+  set_trimmed :code, :label
+
   # scopes
 
   default_scope { order( seqno: :asc, code: :asc )}
@@ -36,14 +38,6 @@ class NetworkLine < ActiveRecord::Base
 
   # overwrite write accessors to ensure that text fields do not contain
   # any redundant blanks 
-
-  def code=( text )
-    write_attribute( :code, AppHelper.clean_up( text ))
-  end
-
-  def label=( text )
-    write_attribute( :label, AppHelper.clean_up( text ))
-  end
 
   def code_and_label
     code + ' - ' + label

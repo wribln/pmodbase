@@ -15,16 +15,16 @@ class PcpCategory < ActiveRecord::Base
     length: { maximum: MAX_LENGTH_OF_LABEL }
 
   validates :c_group,
-    presence: true, if: Proc.new{ |me| me.c_group_id.present? }
+    presence: true
 
   validates :p_group,
-    presence: true, if: Proc.new{ |me| me.p_group_id.present? }
+    presence: true
 
   validates :c_owner,
-    presence: true, if: Proc.new{ |me| me.c_owner_id.present? }
+    presence: true
 
   validates :p_owner,
-    presence: true, if: Proc.new{ |me| me.p_owner_id.present? }
+    presence: true
 
   validates :c_deputy,
     presence: true, if: Proc.new{ |me| me.c_deputy_id.present? }

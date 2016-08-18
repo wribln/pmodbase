@@ -54,9 +54,9 @@ CSV.foreach(File.join(Rails.root, 'db', 'std_csv', 'glossary.csv' ),
     puts ">>> bad row #{ row_no} not added"
     puts
   end
-
+  print '.'
 end
-
+puts
 puts "Seed glossary_items completed:"
 puts "#{ good_rows } rows added"
 puts "#{ bad_rows } rows skipped due to errors."
