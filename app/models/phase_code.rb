@@ -37,7 +37,7 @@ class PhaseCode < ActiveRecord::Base
   default_scope { order( acro: :asc )}
   scope :as_code, -> ( a ){ 
       where( 'code LIKE ? ESCAPE \'+\'',
-        if has_code_prefix( abbr ) then
+        if has_code_prefix( a ) then
           "#{ sanitize_sql_like( a,'+' )}%"
         else
           "#{ sanitize_sql_like( code_prefix, '+')}#{ a }%"

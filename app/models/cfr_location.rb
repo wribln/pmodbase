@@ -55,7 +55,7 @@ class CfrLocation < ActiveRecord::Base
   # prepare hyperlink for display
 
   def get_hyperlink
-    /\A(https?|file|ftp):\/\//i =~ uri ? uri : 'file://' + uri unless uri.blank?
+    /\A(https?|file|ftp):\/\//i =~ uri ? uri : "file://#{ uri }" unless uri.blank?
   end
 
 end

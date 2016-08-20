@@ -42,7 +42,7 @@
       <div class="form-group p-group">
         <p class="col-sm-3 p-label"><%= t( '.ext_labels' ) %></p>
         <p class="col-sm-3"><%= @cfr_record.file_type_label %></p>
-        <p class="col-sm-3">(.<%= @cfr_record.extension %>)</p>
+        <p class="col-sm-3"><%= "(.#{ @cfr_record.extension })" unless @cfr_record.extension.blank? %></p>
       </div>
       <%- end -%>
       <%- unless @cfr_record.hash_function.blank? && @cfr_record.hash_value.blank? %>
