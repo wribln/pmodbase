@@ -197,8 +197,8 @@ class CfrRecord < ActiveRecord::Base
 
   # provide a link form the main location to the file
 
-  def link_to_file
-    main_location.present? ? main_location.get_hyperlink : nil
+  def main_location_uri
+    main_location.present? ? main_location.uri : nil
   end
 
 end

@@ -33,7 +33,7 @@
         <% @cfr_records.each do |cfr| %>
           <tr>
             <td><%= cfr.to_id %></td>
-            <td><%= a = cfr.link_to_file; link_to_if a, cfr.title, a %></td>
+            <td><%= link_to_file( cfr.main_location_uri, cfr.title )%></td>
             <td><%= cfr.file_type_label %></td>
             <td><%= cfr.doc_version %></td>
             <td><%= cfr.doc_date %></td>

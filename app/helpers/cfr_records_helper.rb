@@ -13,4 +13,13 @@ module CfrRecordsHelper
     end
     ( l + '&nbsp;&nbsp;&nbsp;' + link_to( d.to_id + ' ' + d.title, d )).html_safe
   end
+
+  # prepare a link to a file, if not title is given, use the uri
+
+  def link_to_file( uri, title = nil )
+    l = /\A(https?|file|ftp):\/\//i =~ uri ? uri : "file://#{ uri }" unless uri.blank?
+    Rails.logger.debug ">>>>> link_to_file( #{uri}, #{title} ) -> #{l}"
+    link_to_if( l, title.nil? ? uri : title, l, target: '_blank' )
+  end
+
 end
