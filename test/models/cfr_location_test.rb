@@ -10,6 +10,7 @@ class CfrLocationTest < ActiveSupport::TestCase
     refute_nil l.doc_version
     refute_nil l.doc_code
     refute_nil l.uri
+    assert l.valid?
   end
 
   test 'try new with defaults' do
@@ -24,7 +25,7 @@ class CfrLocationTest < ActiveSupport::TestCase
     refute l.valid?
     assert_includes l.errors, :cfr_record_id
     l.cfr_record_id = cfr_records( :two ).id 
-    assert l.valid?
+    assert l.valid?, l.errors.messages
   end
 
   test 'set defaults' do
@@ -38,14 +39,14 @@ class CfrLocationTest < ActiveSupport::TestCase
     l.set_defaults
     assert_nil l.file_name
 
-    l.uri = 'c:\test\test.pdf'
-    l.cfr_location_type = nil
+    l.uri = 'X:\blne058a\TS_TK_Proj\DNK_ODN\test.pdf'
+    l.cfr_location_type = cfr_location_types( :one )
     l.file_name = nil
     l.set_defaults
     assert_equal 'test.pdf', l.file_name
 
-    l.uri = 'https://www.siemens.com/sharepoint/file%20name%20with%20blanks.ext'
-    l.cfr_location_type = nil
+    l.uri = 'https://www.workspace.siemens.com/content/00000169/s/Forms/AllItems.aspx?file%20name%20with%20blanks.ext'
+    l.cfr_location_type = cfr_location_types( :two )
     l.file_name = nil
     l.set_defaults
     assert_equal 'file name with blanks.ext', l.file_name
@@ -90,6 +91,33 @@ class CfrLocationTest < ActiveSupport::TestCase
     l.cfr_record_id = accounts( :wop ).id
     refute l.valid?
     assert_includes l.errors, :cfr_record_id
+  end
+
+  test 'path prefix of location type must match uri prefix 1' do
+    l = cfr_locations( :one )
+    l.uri = 'X:\blne058a\TS_TK_Proj\DNK_ODN\test.pdf'
+    assert l.valid?
+
+    l.uri = 'X:\blne058a\TS_TK_Proj\DNK_ODN\and\a\few\more\folders\to\go\down\test.pdf'
+    assert l.valid?
+
+    l.uri = 'X:\Blne058a\TS_TK_Proj\DNK_ODN\test.pdf'
+    refute l.valid?
+  end
+
+  test 'path prefix of location type must match uri prefix 2' do
+    l = cfr_locations( :one )
+    l.cfr_location_type = cfr_location_types( :two )
+    refute l.valid?
+
+    l.cfr_location_type = cfr_location_types( :three )
+    refute l.valid?
+
+    l.cfr_location_type = cfr_location_types( :four )
+    refute l.valid?
+
+    l.cfr_location_type = cfr_location_types( :five )
+    refute l.valid?
   end
 
 end

@@ -195,10 +195,10 @@ class CfrRecord < ActiveRecord::Base
     cfr_file_type_id.nil? ? '' : cfr_file_type.label
   end
 
-  # provide a link form the main location to the file
+  # provide a link from the main location to the file
 
   def main_location_uri
-    main_location.present? ? main_location.uri : nil
+    main_location.present? ? main_location.get_hyperlink : nil
   end
 
 end

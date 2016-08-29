@@ -163,9 +163,9 @@ class CfrRecordTest < ActiveSupport::TestCase
 
   test 'link to file' do
     cfr = cfr_records( :one )
-    assert_nil cfr.link_to_file
+    assert_nil cfr.main_location_uri
     cfr = cfr_records( :two )
-    assert_equal 'file:///X:\somewhere\over\the\rainbow\way\up\high.pdf', cfr.link_to_file
+    assert_equal 'file://X:\blne058a\TS_TK_Proj\DNK_ODN\somewhere\over\the\rainbow\way\up\high.pdf', cfr.main_location_uri
   end
 
   test 'reject if location empty' do

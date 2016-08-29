@@ -1,25 +1,42 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  label:        'Location 1'
-  path_prefix:  'X:\somewhere\over\the\rainbow\'
+  label:        'Location 1 - Windows'
+  path_prefix:  'X:\blne058a\TS_TK_Proj\DNK_ODN\'
   location_type: 0
   concat_char:  '-'
   project_dms:  true
-  note:         'this is it!'
+  note:         'for testing on Windows'
 
 two:
-  label:        'Location 2'
+  label:        'Location 2 - Unix'
   location_type: 1
-  path_prefix:  'http://www.google.com?abc=1&xyz=2'
+  path_prefix:  '/home/wr/Projects/pmdb'
   concat_char:  '_'
   project_dms:  false
-  note:         'nothing to note'
+  note:         'for testing on Unix'
 
 three:
-  label:        'Location 3'
+  label:        'Location 3 - SharePoint'
   location_type: 2
-  path_prefix:  '/home/wr/Projects/pmdb'
+  path_prefix:  'https://www.workspace.siemens.com/content/00000169/s/Forms/AllItems.aspx?'
   concat_char:  '/'
   project_dms:  false
-  note:         'for testing on Linux'
+  note:         'for testing on SharePoint'
+
+four:
+  label:        'Location 4 - Aconex'
+  location_type: 3
+  path_prefix:  'https://ksa1.aconex.com/Logon?Action=View'
+  concat_char:
+  project_dms:  false
+  note:         'for testing on Aconex'
+
+five:
+  label:        'Location 5 - Internet'
+  location_type: 4
+  path_prefix:  'http://www.google.com?abc=1&xyz=2'
+  concat_char:  '.'
+  project_dms:  false
+  note:         'for testing on the Internet'
+

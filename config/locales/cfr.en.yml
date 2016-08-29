@@ -23,8 +23,8 @@ en:
         id:               :general.attributes.id
         label:            'Label'
         note:             'Note'
-        location_type:    'File System'
-        location_types:   [ 'Windows File', 'Internet', 'Unix File' ]
+        location_type:    'Filing System'
+        location_types:   [ 'Windows File', 'Unix File', 'SharePoint', 'Aconex', 'Internet' ]
         concat_char:      'Concatenation String'
         project_dms:      'Project DMS?'
         path_prefix:      'Path Prefix'
@@ -140,22 +140,26 @@ en:
       bad_main_loc:       'backward reference not valid.'
       too_many_mains:     'Only one location can be marked as main location.'
 
+  cfr_locations:
+    msg:
+      uri_bad_type:       'Prefix of Full Path must match Path Prefix of CFR Location Type.'
+
   cfr_location_types:
-    title:                'Storage Locations'
+    title:                'CFR Storage Locations'
     edit:
-      form_title:         'Edit Storage Location'
+      form_title:         'Edit CRF Storage Location'
     new:
-      form_title:         'Add Storage Location'
+      form_title:         'Add CFR Storage Location'
     index:
-      form_title:         'List All Storage Locations'
+      form_title:         'List All CFR Storage Locations'
     show:
       form_title:         'Show CFR Storage Location'
     msg:
-      only_one_pdms:      'Only one Storage Location can be the Project DMS.'
+      only_one_pdms:      'Only one CFR Storage Location can be the Project DMS.'
       bad_path:           'syntax does not correspond to given File System.'
-      create_ok:          'Storage Location successfully created.'
-      update_ok:          'Storage Location successfully updated.'
-      delete_ok:          'Storage Location successfully deleted.'
+      create_ok:          'CFR Storage Location successfully created.'
+      update_ok:          'CFR Storage Location successfully updated.'
+      delete_ok:          'CFR Storage Location successfully deleted.'
 
   cfr_relations:
     msg:

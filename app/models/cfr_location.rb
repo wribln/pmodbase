@@ -30,6 +30,8 @@ class CfrLocation < ActiveRecord::Base
   validates :cfr_location_type,
     presence: true, if: Proc.new{ |me| me.cfr_location_type_id.present? }
 
+  validate :location_type_and_uri
+
   # this is only to help cfr_record to determine which location is the main location
   # see comments there
 
@@ -37,6 +39,15 @@ class CfrLocation < ActiveRecord::Base
     inclusion: { in: [ true, false ]}
 
   set_trimmed :uri, :file_name, :doc_code, :doc_version
+
+  # ensure that prefix of cfr_location_type matches uri
+
+  def location_type_and_uri
+    if cfr_location_type && uri.present? then
+      errors.add( :base, I18n.t( 'cfr_locations.msg.uri_bad_type' )) \
+        unless cfr_location_type.same_location?( uri )
+    end
+  end
 
   # attempt to determine default values from given attributes
 
@@ -46,16 +57,18 @@ class CfrLocation < ActiveRecord::Base
          self.cfr_location_type = CfrLocationType.find_location_type( uri )
       end
       if file_name.blank? then
-        self.file_name = CfrLocationType.extract_file_name( uri )
+        self.file_name = cfr_location_type.try( :extract_file_name, uri )
         self.file_name = CGI.unescape( self.file_name ) if /%\h\h/.match( self.file_name )
       end
     end
   end
 
-  # prepare hyperlink for display
+  # return hyperlink for display - but only if there is an associated location type
 
   def get_hyperlink
-    /\A(https?|file|ftp):\/\//i =~ uri ? uri : "file://#{ uri }" unless uri.blank?
+    unless cfr_location_type_id.nil? || uri.blank? 
+      /\A(https?|file|ftp):\/\//i =~ uri ? uri : "file://#{ uri }"
+    end
   end
 
 end

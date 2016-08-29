@@ -48,34 +48,39 @@ class CfrLocationType < ActiveRecord::Base
     r = case location_type
     when 0 # windows drive
       /\A[a-z]:\\([^\\\/?|><:*"]+\\)*[^\\\/?|><:*"]*\z/i
-    when 1 # URI
-      /\A(https?|ftp|file):\/\/.+\z/i
-    when 2 # unix drive
+    when 1 # unix drive
       /\A\/([^\/?*|><]+\/)*[^\/?*|><]*\z/
+    when 2 # Sharepoint
+      /\Ahttps:\/\/www.workspace.siemens.com\/content\/\d+\/s\/Forms\/AllItems.aspx?(?:[A-Za-z0-9\-._~!$&'()*+,;=:@\/?]|%[0-9A-Fa-f]{2})*\z/
+    when 3 # Aconex
+      /\Ahttps:\/\/\w+.aconex.com\/Logon?(?:[A-Za-z0-9\-._~!$&'()*+,;=:@\/?]|%[0-9A-Fa-f]{2})*\z/
+    when 4 # internet
+      /\A(https?|ftp|file):\/\/.+\z/i
     end
     errors.add( :path_prefix, I18n.t( 'cfr_location_types.msg.bad_path' ))\
       unless r =~ path_prefix
   end
 
-  # retrieve file name and extension from given path:
-  # originally, this was dependent on the location_type but
-  # for the time being, this can be a class method (saves
-  # access to the database to retrieve location_type).
+  # retrieve file name and extension from given path - if possible
 
-  def self.extract_file_name( path )
+  def extract_file_name( path )
     return if path.blank?
-    #r = case location_type
-    #when 0 # windows drive
-    #  /([^\\\/?|><:*"]+)\z/i
-    #when 1 # internet
-    #  /\A(?:(?:https?|file):\/\/(?:[^\\\/]+[\\\/])*)([^\\\/?|><:*"]+)\z/
-    #when 2 # unix drive
-    #  /([^\/?*|><]+)\z/
-    #else
-    #  return nil
-    #end
-    #r.match( path ){ |m| m[ 1 ]}
-    /[^\\\/]+(\.[^\\\/\.]+)?\z/.match( path ){ |m| m[ 0 ]}
+    r = case location_type
+    when 0 # windows drive
+      /([^\\\/?|><:*"]+)\z/i
+    when 1 # unix drive
+      /([^\/?*|><]+)\z/
+    when 2 # sharepoint
+      return nil # not possible at this time
+    when 3 # aconex
+      return nil # not possible
+    when 4 # internet
+      /\A(?:(?:https?|file):\/\/(?:[^\\\/]+[\\\/])*)([^\\\/?|><:*"]+)\z/
+    else
+      return nil
+    end
+    r.match( path ){ |m| m[ 1 ]}
+    #/[^\\\/]+(\.[^\\\/\.]+)?\z/.match( path ){ |m| m[ 0 ]}
   end
 
   # compare given file path with current path prefix and return true if
@@ -89,7 +94,7 @@ class CfrLocationType < ActiveRecord::Base
     when 0 # windows drive: ignore case of drive letter
       path[ 0 ].casecmp( path_prefix[ 0 ]) &&
       path[ 1, path_prefix.length - 1 ] == path_prefix[ 1, path_prefix.length - 1 ]
-    when 1,2 # internet, case-sensitive compare
+    when 1, 2, 3, 4 # case-sensitive compare
       path[ 0, path_prefix.length ] == path_prefix
     else
       false

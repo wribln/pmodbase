@@ -15,6 +15,8 @@ end
 create_pair( 0, 'is predecessor of', 'is successor of' )
 create_pair( 0, 'is request for', 'is reply to' )
 create_pair( 0, 'is question for', 'is answer to' )
+create_pair( 0, 'contains questions on', 'contains answers to' )
+create_pair( 0, 'contains remarks on', 'is source for remarks in' )
 create_pair( 0, 'replaces', 'is replaced by' )
 
 create_pair( 1, 'is parent of', 'is child of' )

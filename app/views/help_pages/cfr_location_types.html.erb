@@ -3,23 +3,27 @@
     <%= helpcrumbs %>
     <%= help_header %>
     <p class="lead">Administer the locations of files in the Central File Register (CFR)</p>
-    <p>This table contains all common characteristics of file locations:</p>
+    <p>This table serves two purposes: (a) it identifies the filing system where files relevant
+    to this project are stored, and (b) provides a white-list of filing systems to be used -
+    ensuring that only valid file paths can be stored into the system. You can still add files
+    to any system but only those listed here can have a hyperlink directly to that file.</p>
     <ul>
       <li><%= help_param CfrLocationType.human_attribute_name( :label ) -%> describes the location,
-        for example: 'File Server' or 'Sharepoint' or 'Project DMS'.</li>
-      <li><%= help_param CfrLocationType.human_attribute_name( :location_type )-%> indicates what
-        format of file names or path names to expect (to support correct error diagnostics). When
-        specifying<br/>
+        for example: 'Server Berlin' or 'Sharepoint' or 'Project DMS'.</li>
+      <li><%= help_param CfrLocationType.human_attribute_name( :location_type )-%> lists the
+        possible destination types. Destination-specific syntax checking is implemented to ensure
+        that only safe destinations can be used.<br/>When specifying
         <%= help_term CfrLocationType.human_attribute_name( :location_types )[ 0 ]-%>, a Windows
         file name or path is expected in the format
-        '&lt;drive letter&gt;:\&lt;path&gt;\&lt;file name&gt;.&lt;extension&gt;'<br/>
-        <%= help_term CfrLocationType.human_attribute_name( :location_types )[ 1 ]-%>, an Internet
-        URI path is expected with a prefix of 'http://', 'https://', 'ftp://', or 'file:///'</li>
+        '&lt;drive letter&gt;:\&lt;path&gt;\&lt;file name&gt;.&lt;extension&gt;'.<br/>
+        Files on Unix systems use 
+        <%= help_term CfrLocationType.human_attribute_name( :location_types )[ 1 ]-%>, where the
+        path components are separated by forward slashes:
+        '/&lt;directory&gt;/&lt;directory&gt;/.../&lt;file name&gt;.&lt;extension&gt;'.</li>
       <li><%= help_param CfrLocationType.human_attribute_name( :path_prefix )-%> is the prefix for
         all files at this location. If this prefix is specified, it serves the following purposes:
         <ul>
           <li>to check whether the file's path contains this prefix and if thus the file's path corresponds with this location;</li>
-          <li>to complete a file's path if only a partial path is given;</li>
           <li>to determine a file's location based on the file's path.</li>
         </ul>
         It should be clear that the prefix must be unique in the database, i.e. no two file location
