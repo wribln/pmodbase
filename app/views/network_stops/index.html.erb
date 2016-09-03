@@ -14,12 +14,12 @@
           <th class="col-sm-1"><%= NetworkStop.human_attribute_name( :code )-%></th>
           <th class="col-sm-1"><%= NetworkStop.human_attribute_name( :location_code_id )-%></th>
           <th class="col-sm-5"><%= NetworkStop.human_attribute_name( :note )-%></th>
-          <th class="col-sm-1 hidden-print"><<%= t( 'action_title.header' )%></th>
+          <th class="col-sm-1 hidden-print"><%= t( 'action_title.header' )%></th>
         </tr>
       </thead>
       <tbody>
       <% if @network_stops.length.zero? %>
-        <%= render partial: 'shared/index_empty_row', locals:{ columns: 6, with_link: true }%>
+        <%= render partial: 'shared/index_empty_row', locals:{ columns: 7, with_link: true }%>
       <% else %>
         <% @network_stops.each do |network_stop| %>
           <tr>

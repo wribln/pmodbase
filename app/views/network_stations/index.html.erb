@@ -25,7 +25,7 @@
           <td><%= filter_action_button -%></td>
         <tr>
       <% if @network_stations.length.zero? %>
-        <%= render partial: 'shared/index_empty_row', locals:{ columns: 6, with_link: true }%>
+        <%= render partial: 'shared/index_empty_row', locals:{ columns: 5, with_link: true }%>
       <% else %>
         <% @network_stations.each do |ns| %>
           <% rowspan = ns.network_stops.size + 1 %>

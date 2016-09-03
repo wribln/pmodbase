@@ -19,7 +19,6 @@ class Abbreviation < ActiveRecord::Base
   default_scope { order( sort_code: :asc )}
   scope :as_abbr, ->  ( a ){ where( 'code LIKE ?', "#{ a }%" )}
   scope :as_desc, ->  ( d ){ where( 'description LIKE ?', "%#{ d }%" )}
-  scope :ff_id, ->    ( i ){ where id: i }
   class << self; 
     alias :ff_code :as_abbr
     alias :ff_desc :as_desc

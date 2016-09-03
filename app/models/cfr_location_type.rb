@@ -76,7 +76,7 @@ class CfrLocationType < ActiveRecord::Base
       return nil # not possible
     when 4 # internet
       /\A(?:(?:https?|file):\/\/(?:[^\\\/]+[\\\/])*)([^\\\/?|><:*"]+)\z/
-    else
+    else # don't even try it - you never know what's in front of the file name!
       return nil
     end
     r.match( path ){ |m| m[ 1 ]}

@@ -31,7 +31,7 @@ class CfrRecordsController2Test < ActionController::TestCase
     assert_no_difference( 'CfrRecord.count' ) do
       post :create, commit: I18n.t( 'button_label.defaults' ), cfr_record: {
         extension: '',
-        cfr_locations_attributes: [ uri: 'c:\temp\test%20with%20blanks.pdf' ]}
+        cfr_locations_attributes: [ uri: 'X:\blne058a\TS_TK_Proj\DNK_ODN\test%20with%20blanks.pdf' ]}
     end
     assert_response :success
     r = assigns( :cfr_record )
@@ -45,7 +45,7 @@ class CfrRecordsController2Test < ActionController::TestCase
   test 'should set defaults' do
     assert_no_difference( 'CfrRecord.count' ) do
       post :create, commit: I18n.t( 'button_label.defaults' ), cfr_record: {
-        cfr_locations_attributes: [ '0',  uri: 'X:\somewhere\over\the\rainbow\test.pdf', is_main_location: true ]}
+        cfr_locations_attributes: [ '0',  uri: 'X:\blne058a\TS_TK_Proj\DNK_ODN\test.pdf', is_main_location: true ]}
     end
     assert_response :success
     r = assigns( :cfr_record )
@@ -60,8 +60,8 @@ class CfrRecordsController2Test < ActionController::TestCase
     assert_no_difference( 'CfrRecord.count' ) do
       post :create, commit: I18n.t( 'button_label.defaults' ), cfr_record: {
         cfr_locations_attributes: {
-          '0' => { uri: 'X:\somewhere\over\the\rainbow\test.pdf' },
-          '1' => { uri: 'http://www.xxx.com/inside/a%20file%20with%20blanks' }}}
+          '0' => { uri: 'X:\blne058a\TS_TK_Proj\DNK_ODN\a%20file%20with%20blanks' },
+          '1' => { uri: 'https://www.xxx.com/inside/test.pdf' }}}
     end
     assert_response :success
     r = assigns( :cfr_record )
@@ -69,8 +69,8 @@ class CfrRecordsController2Test < ActionController::TestCase
     assert_equal @account.account_info, r.doc_owner
     assert_nil r.extension
     assert_nil r.title
-    assert_equal 'test.pdf', r.cfr_locations.first.file_name
-    assert_equal 'a file with blanks', r.cfr_locations.last.file_name
+    assert_equal 'a file with blanks', r.cfr_locations.first.file_name
+    assert_nil r.cfr_locations.last.file_name
     assert_equal cfr_location_types( :one ), r.cfr_locations.first.cfr_location_type
     assert_nil r.cfr_locations.last.cfr_location_type
   end

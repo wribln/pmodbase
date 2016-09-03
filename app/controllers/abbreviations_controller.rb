@@ -86,7 +86,7 @@ class AbbreviationsController < ApplicationController
     end
 
     def filter_params
-      params.slice( :ff_id, :ff_code, :ff_desc ).clean_up
+      params.slice( :ff_code, :ff_desc ).clean_up
     end      
 
 end

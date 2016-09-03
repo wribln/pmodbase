@@ -47,7 +47,7 @@ class CfrRecordsController0Test < ActionController::TestCase
   test 'should set defaults' do
     assert_no_difference( 'CfrRecord.count' ) do
       post :create, commit: I18n.t( 'button_label.defaults' ), cfr_record: {
-        cfr_locations_attributes: [ '0',  uri: 'X:\somewhere\over\the\rainbow\test.pdf', is_main_location: true ]}
+        cfr_locations_attributes: [ '0',  uri: 'X:\blne058a\TS_TK_Proj\DNK_ODN\test.pdf', is_main_location: true ]}
     end
     assert_response :success
     r = assigns( :cfr_record )
