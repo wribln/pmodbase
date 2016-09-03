@@ -16,7 +16,6 @@
         <% else %>
           <% @standards_bodies.each do |sb| %>
             <tr>
-              <td><%= sb.to_id %></td>
               <td><%= sb.code %></td>
               <td><%= sb.description %></td>
               <td><%= render partial: 'shared/actions', object: sb %></td>
