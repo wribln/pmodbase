@@ -23,9 +23,6 @@ task :recreate => :environment do
   Rake::Task['db:seed:holidays'].invoke
   puts '>>> db:seed:holidays completed.'
 
-  Rake::Task['import'].invoke('db/std_csv/references.csv','Reference')
-  puts '>>> import references completed.'
-
   Rake::Task['db:seed:groups'].invoke
   puts '>>> db:seed:groups completed'
 
@@ -36,10 +33,15 @@ task :recreate => :environment do
   Rake::Task['import'].invoke('db/std_csv/cfr_file_types.csv','CfrFileType')
   puts '>>> import cfr file types completed.'
 
-  exit!
+  Rake::Task['import'].reenable
+  Rake::Task['import'].invoke('db/std_csv/cfr_records.csv','CfrRecord')
+  puts '>>> import cfr records completed.'
 
-  Rake::Task['db:seed:glossary'].invoke
-  puts '>>> db:seed:glossary completed.'
+  Rake::Task['import'].reenable
+  Rake::Task['import'].invoke('db/std_csv/glossary.csv','GlossaryItem')
+  puts '>>> import glossary items completed.'
+  
+  #exit!
 
   Rake::Task['import'].reenable
   Rake::Task['import'].invoke('db/std_csv/pmdb_abbreviations.csv','Abbreviation')

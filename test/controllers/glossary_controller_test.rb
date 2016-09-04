@@ -27,7 +27,7 @@ class GlossaryItemsControllerTest < ActionController::TestCase
         code:         @glossary_item.code,
         description:  @glossary_item.description,
         term:         @glossary_item.term,
-        reference_id: @glossary_item.reference_id }
+        cfr_record_id: @glossary_item.cfr_record_id }
     end
     assert_redirected_to glossary_item_path( assigns( :glossary_item ))
   end
@@ -51,15 +51,14 @@ class GlossaryItemsControllerTest < ActionController::TestCase
     assert_difference('GlossaryItem.count', -1) do
       delete :destroy, id: @glossary_item
     end
-
     assert_redirected_to glossary_items_path
   end
 
   test "CSV download" do
     get :index, format: :xls
     assert_equal <<END_OF_CSV, response.body
-term;code;description;reference_code
-A Glossary Term;AGT;This is a glossary term.;REFONE
+term;code;description;cfr_record_id
+A Glossary Term;AGT;This is a glossary term.;just a title
 END_OF_CSV
   end
 

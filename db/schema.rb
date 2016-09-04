@@ -443,12 +443,12 @@ ActiveRecord::Schema.define(version: 20160809114810) do
   add_index "function_codes", ["code"], name: "index_function_codes_on_code"
 
   create_table "glossary_items", force: :cascade do |t|
-    t.string   "term",         limit: 60, null: false
-    t.string   "code",         limit: 10
+    t.string   "term",          limit: 60, null: false
+    t.string   "code",          limit: 10
     t.text     "description"
-    t.integer  "reference_id"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.integer  "cfr_record_id"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   add_index "glossary_items", ["code"], name: "index_glossary_items_on_code"
@@ -756,16 +756,6 @@ ActiveRecord::Schema.define(version: 20160809114810) do
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
   end
-
-  create_table "references", force: :cascade do |t|
-    t.string   "code",           limit: 10,  null: false
-    t.string   "description",    limit: 255
-    t.string   "project_doc_id", limit: 100
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-  end
-
-  add_index "references", ["code"], name: "index_references_on_code"
 
   create_table "region_names", force: :cascade do |t|
     t.integer  "country_name_id",            null: false

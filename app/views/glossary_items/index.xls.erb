@@ -2,11 +2,11 @@
     :term,
     :code,
     :description,
-    :reference_code], STD_CSV_OPTIONS ) -%>
+    :cfr_record_id ], STD_CSV_OPTIONS ) -%>
 <%- @glossary_items.each do |gi| -%>
 <%= CSV.generate_line([
     gi.term,
     gi.code,
     gi.description,
-    ( gi.reference.code unless gi.reference_id.nil? )], STD_CSV_OPTIONS ).html_safe -%>
+    ( gi.cfr_record.title unless gi.cfr_record_id.nil? )], STD_CSV_OPTIONS ).html_safe -%>
 <%- end -%>

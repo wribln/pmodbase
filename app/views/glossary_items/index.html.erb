@@ -11,8 +11,8 @@
           <th class="col-sm-1"><%= label_tag :ff_id,   GlossaryItem.human_attribute_name( :id   ), class: 'control-label' %></th>
           <th class="col-sm-2"><%= label_tag :ff_desc, GlossaryItem.human_attribute_name( :term ), class: 'control-label' %></th>
           <th class="col-sm-1"><%= label_tag :ff_code, GlossaryItem.human_attribute_name( :code ), class: 'control-label' %></th>
-          <th class="col-sm-5"><%= label_tag :ff_desc, GlossaryItem.human_attribute_name( :description ), class: 'control-label' %></th>
-          <th class="col-sm-2"><%= label_tag :ff_ref,  GlossaryItem.human_attribute_name( :reference ), class: 'control-label' %></th>
+          <th class="col-sm-6"><%= label_tag :ff_desc, GlossaryItem.human_attribute_name( :description ), class: 'control-label' %></th>
+          <th class="col-sm-1"><%= label_tag :ff_ref,  GlossaryItem.human_attribute_name( :cfr_record_id ), class: 'control-label' %></th>
           <th class="col-sm-1 hidden-print"><%= filter_action_title_header -%></th>
         </tr>
       </thead>
@@ -22,7 +22,7 @@
           <td><%= filter_field @filter_fields, :ff_term, :sw -%></td>
           <td><%= filter_field @filter_fields, :ff_code, :sl -%></td>
           <td><%= filter_field @filter_fields, :ff_desc, :sw -%></td>
-          <td><%= filter_select_from_array @filter_fields, :ff_ref, @references -%></td>
+          <td><%= filter_field @filter_fields, :ff_ref,  :id -%></td>
           <td><%= filter_action_button -%></td>
           </div>
         </tr>
@@ -35,7 +35,7 @@
               <td><%= g.term %></td>
               <td><%= g.code %></td>
               <td><%= display_lines_w_br g.description %></td>
-              <td><%= link_to g.reference_with_id, reference_path( g.reference_id ) unless g.reference.nil? %></td>
+              <td><%= link_to some_id( g.cfr_record_id ), g.cfr_record %></td>
               <td><%= render partial: 'shared/actions', object: g %></td>
             </tr>
           <% end %>

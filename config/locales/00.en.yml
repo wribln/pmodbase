@@ -100,7 +100,6 @@ en:
       region_name:        'Region Names and Codes'
       rfc_document:       'RfC Documents / Requests for Clarifications'
       rfc_status_record:  'RfC Status Register (RSR)'
-      reference:          'References'
       service_code:       'Service Codes'
       s_document_log:     'Siemens Document Log (SDL)'
       siemens_phase:      'Siemens Phase Codes'
@@ -432,6 +431,7 @@ en:
           other:        'Terms'
         code:           'Abbreviation'
         description:    'Description'
+        cfr_record_id:  'CFR Reference ID'
 
       group:
         id:             :general.attributes.id
@@ -558,12 +558,6 @@ en:
         activity_label: 'Activity Description'
         start_date:     'Start Date' 
         finish_date:    'Finish Date'
-
-      reference:
-        id:             :general.attributes.id
-        code:           'Code'
-        description:    'Description'
-        project_doc_id: :general.attributes.project_doc_id 
 
       region_name:
         id:               :general.attributes.id
@@ -1334,7 +1328,6 @@ en:
       new_ok:         'Glossary Item was successfully added.'
       edit_ok:        'Glossary Item was successfully updated.'
       delete_ok:      'Glossary Item was successfully removed.'
-      bad_reference_id: :general.non_existing
 
   groups:
     title:            'Project Groups'
@@ -1619,22 +1612,6 @@ en:
       no_dates:     'At least one date must be given: Start or Finish.'
       unique_id:    'Activity ID must be unique (within a project).'
       bad_dates:    'Finish Date must be later or equal to Start Date.'
-
-  references:
-    title:          'References'
-    index:
-      form_title:   'List of References'
-    new:
-      form_title:   'Add Reference'
-    show:
-      form_title:   'Show Reference'
-    edit:
-      form_title:   'Update Reference'
-    msg:
-      new_ok:       'Reference was successfully added.'
-      edit_ok:      'Reference was successfully updated.'
-      delete_ok:    'Reference was successfully deleted.'
-      dup_name:     'must be unique'
 
   region_names:
     title:          'Region Names and Codes'

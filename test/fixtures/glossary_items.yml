@@ -4,4 +4,4 @@ one:
   term:         'A Glossary Term'
   code:         'AGT'
   description:  'This is a glossary term.'
-  reference:    one
+  cfr_record:    one

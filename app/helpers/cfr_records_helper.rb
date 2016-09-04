@@ -18,7 +18,7 @@ module CfrRecordsHelper
 
   def link_to_file( uri, title = nil )
     l = /\A(https?|file|ftp):\/\//i =~ uri ? uri : "file://#{ uri }" unless uri.blank?
-    Rails.logger.debug ">>>>> link_to_file( #{uri}, #{title} ) -> #{l}"
+    # Rails.logger.debug ">>>>> link_to_file( #{uri}, #{title} ) -> #{l}"
     link_to_if( l, title.nil? ? uri : title, l, target: '_blank' )
   end
 

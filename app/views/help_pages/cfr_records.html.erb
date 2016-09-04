@@ -42,7 +42,8 @@
         <li>Even more complex is the situation where a Document consists in several versions (or
         revisions): Each version is a Document itself but all versions relate to the same Document.</li>
       </ul>
-      The CFR manages information/attributes of Files as the smallest unit of information. But the CFR allows you to keep track of the relationship between files such that you can easily traces which
+      The CFR manages information/attributes of Files as the smallest unit of information. But the CFR 
+      allows you to keep track of the relationship between files such that you can easily traces which
       files belong to a Document, or which files represent different versions of a document. You can
       even use the CFR to group files (just like folders on a computer): Just create a CFR entry
       (called <%= help_term 'CFR Record'-%>) with no actual file associated to it;
@@ -189,5 +190,18 @@
     with update access level 3 may modify CFR Records with
     <%= help_term CfrRecord.human_attribute_name( :conf_level )-%>&nbsp;=&nbsp;3 and lower
     for the given project group.</p>
+    <h3 id="file_access">File Access</h3>
+    <p>Due to security reasons, browsers usually block access from sites to local files, i.e.
+    you can specify 'C:\temp\test.pdf' as a location of a file but the link to that file would
+    not work. You could add an exception to your browser's configuration such that links 
+    provided by pmodbase would be allowed to link to your local files.</p>
+    <h4>Firefox</h4>
+    <p>Include into you Firefox pref.js file the following lines:</p>
+    <pre>
+user_pref("capability.policy.localfilelinks.checkloaduri.enabled", "allAccess");
+user_pref("capability.policy.localfilelinks.sites", "http://pmodbase.com");
+user_pref("capability.policy.policynames", "localfilelinks");</pre>
+    <h4>Windows Explorer</h4>
+    <p>missing information</p>
     <%= help_footer FEATURE_ID_CFR_RECORDS %>
   </div> <!-- /container -->
