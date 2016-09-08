@@ -481,7 +481,7 @@ en:
         start_point:    'Start Point'
         end_point:      'End Point'
         length:         'Length'
-        note:           'Note'
+        note:           'Notes'
 
       network_line:
         id:             :general.attributes.id

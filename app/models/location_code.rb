@@ -46,6 +46,7 @@ class LocationCode < ActiveRecord::Base
   default_scope { order( code: :asc )}
   scope :as_code, -> ( c ){ where( 'code  LIKE ?',  has_code_prefix( c ) ? "#{ c }%" : "#{ code_prefix }#{ c }%" )}
   scope :as_desc, -> ( l ){ where( 'label LIKE ?', "%#{ l }%" )}
+  scope :as_note, -> ( n ){ where( 'note  LIKE ?', "%#{ n }%" )}
   scope :ff_type, -> ( t ){ where( loc_type: t )}
 
   # add code_model features
@@ -122,7 +123,6 @@ class LocationCode < ActiveRecord::Base
           self.end_point = self.end_point || self.start_point + self.length
         end
       end
-      #puts ">>> new: type #{ self.loc_type }, center: #{ self.center_point }, start: #{ self.start_point }, end: #{ self.end_point }, l: #{ self.length }"
     end
   end
 

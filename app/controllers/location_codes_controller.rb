@@ -80,11 +80,11 @@ class LocationCodesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
 
     def location_code_params
-      params.require( :location_code ).permit( :code, :label, :loc_type, :center_point, :start_point, :end_point, :length, :note)
+      params.require( :location_code ).permit( :code, :label, :loc_type, :center_point, :start_point, :end_point, :length, :note )
     end
 
     def filter_params
-      params.slice( :as_code, :as_desc, :ff_type ).clean_up
+      params.slice( :as_code, :as_desc, :as_note, :ff_type ).clean_up
     end
 
 end

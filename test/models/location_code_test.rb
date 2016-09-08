@@ -249,6 +249,9 @@ class LocationCodeTest < ActiveSupport::TestCase
     as = LocationCode.as_desc( 'foobar' )
     assert_equal 0, as.length
 
+    as = LocationCode.as_note( 'not' )
+    assert_equal 1, as.length
+
     as = LocationCode.ff_type( 0 )
     assert_equal 1, as.length
 
