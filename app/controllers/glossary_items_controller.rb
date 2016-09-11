@@ -5,7 +5,6 @@ class GlossaryItemsController < ApplicationController
   initialize_feature FEATURE_ID_GLOSSARY, FEATURE_ACCESS_VIEW
 
   before_action :set_glossary_item, only: [ :show, :edit, :update, :destroy ]
-  before_action :set_selections, only:    [ :index, :new, :edit, :create, :update ]
 
   # GET /glossary
 
@@ -84,21 +83,11 @@ class GlossaryItemsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
 
     def glossary_item_params
-      params.require( :glossary_item ).permit( :term, :code, :description, :reference_id )
+      params.require( :glossary_item ).permit( :term, :code, :description, :cfr_record_id )
     end
 
     def filter_params
       params.slice( :ff_id, :ff_term, :ff_code, :ff_desc, :ff_ref ).clean_up
-    end
-
-    # prepare collection for list boxes: 
-    # for the filter, I need one with handcrafted -none- value so
-    # I can use it for filterning items without reference ...
-
-    def set_selections
-      @references = Array.new
-      @references.concat( [[ t( 'general.none' ), '0' ]]) if action_name == 'index'
-      @references.concat( Reference.all.pluck( :code, :id ))
     end
 
 end

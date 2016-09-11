@@ -406,16 +406,16 @@ Feature.new do |f|
   f.feature_category_id = fc3.id
 end.save!
 
-Feature.new do |f|
-  f.id = FEATURE_ID_REFERENCES
-  f.label = I18n.t('references.title')
-  f.code = 'REF'
-  f.seqno = 6
-  f.access_level = ReferencesController.feature_access_level
-  f.control_level = ReferencesController.feature_control_level
-  f.no_workflows = ReferencesController.no_workflows
-  f.feature_category_id = fc3.id
-end.save!
+#Feature.new do |f|
+#  f.id = FEATURE_ID_REFERENCES
+#  f.label = I18n.t('references.title')
+#  f.code = 'REF'
+#  f.seqno = 6
+#  f.access_level = ReferencesController.feature_access_level
+#  f.control_level = ReferencesController.feature_control_level
+#  f.no_workflows = ReferencesController.no_workflows
+#  f.feature_category_id = fc3.id
+#end.save!
 
 Feature.new do |f|
   f.id = FEATURE_ID_HOLIDAYS

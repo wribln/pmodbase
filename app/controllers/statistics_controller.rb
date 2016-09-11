@@ -24,7 +24,6 @@ class StatisticsController < ApplicationController
     @statistics << Permission4Flow.get_stats
     @statistics << Person.get_stats
     @statistics << PhaseCode.get_stats
-    @statistics << Reference.get_stats
     @statistics << RegionName.get_stats
     @statistics << Responsibility.get_stats
     @statistics << RfcDocument.get_stats

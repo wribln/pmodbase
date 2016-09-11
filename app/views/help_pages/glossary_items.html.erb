@@ -34,10 +34,11 @@
         <%= help_param GlossaryItem.human_attribute_name( :term ) -%>.<br/>
         When referring to another term, you should can use a right arrow as prefix
         to the capitalized term, for example like this: &rarr;Term.</li>
-      <li><%= help_param GlossaryItem.human_attribute_name( :reference ) -%> provides
-        a field to place a reference to the source of the information: This is filled
-        by selecting from the defined set of references defined in the system. The
-        field may be left empty if no source is known.</li>
+      <li><%= help_param GlossaryItem.human_attribute_name( :cfr_record_id ) -%>
+        allows you enter a reference to the source of the glossary entry by
+        specifying the number of an entry in the 
+        <%= link_to_help :cfr_records, 'CFR Registry'-%>. Leave this
+        field empty if no source is known.</li>
     </ul>
     <%= help_footer FEATURE_ID_GLOSSARY %>
   </div> <!-- /container -->

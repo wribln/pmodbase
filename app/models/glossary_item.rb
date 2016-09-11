@@ -4,7 +4,7 @@ class GlossaryItem < ActiveRecord::Base
   include ActiveModelErrorsAdd
   include Filterable
 
-  belongs_to :reference, -> { readonly }, inverse_of: :glossary_items
+  belongs_to :cfr_record, -> { readonly }, inverse_of: :glossary_items
 
   validates :term,
     length: { maximum: MAX_LENGTH_OF_TERM },
@@ -13,8 +13,8 @@ class GlossaryItem < ActiveRecord::Base
   validates :code,
     length: { maximum: MAX_LENGTH_OF_CODE }
 
-  validates :reference,
-    presence: true, if: Proc.new{ |me| me.reference_id.present? }
+  validates :cfr_record,
+    presence: true, if: Proc.new{ |me| me.cfr_record_id.present? }
 
   default_scope { order( term: :asc )}
   scope :as_abbr, ->  ( a ){ where( 'code LIKE ?', "#{ a }%" )}
@@ -23,12 +23,8 @@ class GlossaryItem < ActiveRecord::Base
   scope :ff_code, ->  ( a ){ as_abbr( a )}
   scope :ff_term, ->  ( t ){ where( 'term LIKE ?', "%#{ t }%" )}
   scope :ff_desc, ->  ( d ){ where( 'description LIKE ?', "%#{ d }%" )}
-  scope :ff_ref,  ->  ( r ){ where( r == '0' ? 'reference_id IS NULL' : 'reference_id = ?', r )}
+  scope :ff_ref,  ->  ( r ){ where( r == '0' ? 'cfr_record_id IS NULL' : 'cfr_record_id = ?', r )}
 
   set_trimmed :term, :code
-
-  def reference_with_id
-    assoc_text_and_id( :reference, :code )
-  end
 
 end

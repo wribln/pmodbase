@@ -47,7 +47,6 @@ class ApplicationRoutesTest < ActionController::TestCase
     %w( PPA ProgrammeActivities ),
     %w( RNC RegionNames ),
     %w( RPP Responsibilities ),
-    %w( REF References ),
     %w( RCD RfcDocuments ),
     %w( RSR RfcStatusRecords ),
     %w( SDL SDocumentLogs ),
