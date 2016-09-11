@@ -43,7 +43,7 @@ class LocationCodeTest < ActiveSupport::TestCase
     assert_nil lc.start_point
     assert_nil lc.end_point
     assert_nil lc.length
-    assert_nil lc.note
+    assert_nil lc.remarks
   end
 
   test 'code syntax' do
@@ -249,7 +249,7 @@ class LocationCodeTest < ActiveSupport::TestCase
     as = LocationCode.as_desc( 'foobar' )
     assert_equal 0, as.length
 
-    as = LocationCode.as_note( 'not' )
+    as = LocationCode.as_desc( 'not' )
     assert_equal 1, as.length
 
     as = LocationCode.ff_type( 0 )

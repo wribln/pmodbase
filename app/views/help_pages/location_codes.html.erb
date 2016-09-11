@@ -59,8 +59,8 @@
         verified by the system.</li>
       <li>The <%= help_param LocationCode.human_attribute_name( :length )-%> gives the computed or
         entered length of a structure or line section.</li>
-      <li>A <%= help_param LocationCode.human_attribute_name( :note )-%> field can be used to
-        enter additional information or tags for the location.</li>
+      <li>A <%= help_param LocationCode.human_attribute_name( :remarks )-%> field can be used to
+        enter additional information or (hash) tags for the location.</li>
     </ul>
     <h3>Computation of Coordinates</h3>
     <p>Depending on the type of location and the entered coordinates, any missing values will be
@@ -98,6 +98,8 @@
         <strong>+&lt;n&gt;.AS.&lt;nn&gt;</strong> for annex structures, etc.</li>
       <li><strong>+&lt;n&gt;.SP.&lt;nn&gt;</strong> could be used to code special points along the
         lines, e.g. beginning and end of the line (if needed).</li>
+      <li><strong>+&lt;n&gt;.RC.&lt;nn&gt;</strong> could be Road Crossings, Intersections, Junctions - any
+        section on the alignment which may require specific attention.</li>
       <li>Codes without a relationship to a line would not need the line indicator:
         <strong>+RS.&lt;nn&gt;</strong> for rolling stock: <strong>+RS.01</strong> would thus be
         the code for the first train.</li>
@@ -108,5 +110,17 @@
         for stabling yard, <strong>+DEP.HM</strong> for the heavy maintenance building, 
         <strong>+DEP.WP</strong> for the washing plant, etc.</li>
     </ul>
+    <p>Labels for road crossings along the alignment are suggested to be labeled as follows: use the name of the road
+      along the alignment first; if this road changes its name at the intersection, add the new name after a slash;
+      use a code 'r/c' for Road Crossing, or 'r/a' for Roundabout, followed by the name of the intersecting road; if
+      the name of a road changes at the intersection, list the both names with a slash as separator. For example:</p>
+    <ul>
+      <li>Alignment is along Road_A which intersects with Road_B: <strong>Road_A r/c Road_B</strong></li>
+      <li>Alignment is along Road_A which intersects with Road_B on one, Road_C on the other side: <strong>Road_A r/c Road_B / Road_C</strong></li>
+      <li>Alignment on Road_A turns into Road_B: <strong>Road_A / Road_B r/c</strong></li>
+      <li>Alignment on Road_A continues on Road_B, intersection with Road_C: <strong>Road_A / Road_B r/c Road_C</strong></li>
+      <li>Alignment on Road_A continues on Road_B, intersection with Road_C and Road_D: <strong>Road_A / Road_B r/c Road_C / Road_D</strong></li>
+    </ul>
     <%= help_footer FEATURE_ID_LOCATION_CODES %>
   </div> <!-- /container -->
+

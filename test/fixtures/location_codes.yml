@@ -6,7 +6,7 @@ two:
   start_point: 950
   end_point: 1050
   length: 100
-  note: 'nothing'
+  remarks: 'nothing'
 
 one:
   code: +1.SP.00

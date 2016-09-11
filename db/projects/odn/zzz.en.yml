@@ -1,0 +1,6 @@
+# use this file to specify project specific strings
+
+en:
+  project:
+    code: 'ODN'
+    name: 'Odense Letbane Project'

@@ -1,19 +1,25 @@
 module LocationCodeHelper
 
-  # format an integer as mileage xxx+xxx
+  # format a float as mileage xxx+xxx
 
-  def db_formatted_km( i )
-    return if i.nil?
-    if i < 0 then
+  def db_formatted_km( f )
+    return if f.nil?
+    if f < 0 then
       sgn = '-'
-      val = -i 
+      val = -f 
     else
       sgn = '+'
-      val = i 
+      val = f 
     end
-    hi_val = ( val / 1000 ).to_i
-    lo_val = val - ( hi_val * 1000 )
-    sprintf( '%d%s%3.3d', hi_val, sgn, lo_val )
+    aval = val.divmod( 1000 )
+    sprintf( '%d%s%07.3f', aval.first, sgn, aval.last )
+  end
+
+  # format a float as decimal with same precision as mileage
+
+  def db_formatted_km_len( f )
+    return if f.nil?
+    number_with_precision( f, precision: 3, separator: '.', delimiter: ' ' )
   end
 
 end

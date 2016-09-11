@@ -9,13 +9,13 @@
       <thead>
         <tr>
           <th class="col-sm-1"><%= label_tag :as_code, LocationCode.human_attribute_name( :code  ), class: 'control-label' %></th>
-          <th class="col-sm-3"><%= label_tag :as_desc, LocationCode.human_attribute_name( :label ), class: 'control-label' %></th>
-          <th class="col-sm-2"><%= label_tag :as_note, LocationCode.human_attribute_name( :note ),  class: 'control-label' %></th>
+          <th class="col-sm-4"><%= label_tag :as_desc, t( '.label_and_remarks' ), class: 'control-label' %></th>
           <th class="col-sm-1"><%= label_tag :ff_type, LocationCode.human_attribute_name( :loc_type ), class: 'control-label' %></th>
           <th class="col-sm-1"><%= LocationCode.human_attribute_name( :center_point ) %></th>
           <th class="col-sm-1"><%= LocationCode.human_attribute_name( :start_point  ) %></th>
           <th class="col-sm-1"><%= LocationCode.human_attribute_name( :end_point    ) %></th>
           <th class="col-sm-1"><%= LocationCode.human_attribute_name( :length       ) %></th>
+          <th class="col-sm-1"><%= LocationCode.human_attribute_name( :part_of_id )%></th>
           <th class="col-sm-1 hidden-print"><%= filter_action_title_header %></th>
         </tr>
       </thead>
@@ -23,9 +23,9 @@
         <tr <%= filter_row( @filter_fields ) -%>>
           <td><%= filter_field @filter_fields, :as_code, :sw -%></td>
           <td><%= filter_field @filter_fields, :as_desc, :sw -%></td>
-          <td><%= filter_field @filter_fields, :as_note, :sw -%></td>
           <td><%= filter_select_from_string_set @filter_fields, :ff_type, LocationCode::LOCATION_CODE_TYPES -%></td>
           <td colspan="4"></td>
+          <td><%= filter_field @filter_fields, :as_part, :sw -%></td>
           <td><%= filter_action_button -%></td>
         </tr>
       <% if @location_codes.length.zero? %>
@@ -34,21 +34,24 @@
         <% @location_codes.each do |lc| %>
           <tr>
             <td><%= lc.code %></td>
-            <td><%= lc.label %></td>
-            <td><%= lc.note %></td>
+            <td><%= display_to_items_w_hr lc.label, lc.remarks %></td>
             <td><%= lc.loc_type_label %></td>
             <td class="td-right"><%= db_formatted_km( lc.center_point )%></td>
             <td class="td-right"><%= db_formatted_km( lc.start_point  )%></td>
             <td class="td-right"><%= db_formatted_km( lc.end_point    )%></td>
-            <td class="td-right"><%= db_formatted_number( lc.length )%></td>
+            <td class="td-right"><%= db_formatted_km_len( lc.length )%></td>
+            <td><%= lc.part_of.try :code %>
             <td><%= render partial: 'shared/actions', object: lc %></td>
           </tr>
-        <% end %>
+       <% end %>
       <% end %>
       </tbody>
     </table>
     <% end %>
-    <%= render partial: 'shared/download_xls' %>
+    <div class="no-print" id="nav">
+      <%= render partial: 'shared/download_xls' %> / 
+      <%= link_to t( 'button_label.check' ), location_codes_check_path %>
+    </div>
     <%= render partial: 'shared/footer' %>
   </div>
 </div>

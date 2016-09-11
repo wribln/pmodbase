@@ -481,7 +481,8 @@ en:
         start_point:    'Start Point'
         end_point:      'End Point'
         length:         'Length'
-        note:           'Notes'
+        remarks:        'Notes'
+        part_of:        'Part of'
 
       network_line:
         id:             :general.attributes.id
@@ -752,6 +753,7 @@ en:
     workflow:     'Workflow Information'
     upd_baseline: 'Update Baseline'
     release:      'Release'
+    check:        'Validate All'
 
   a_code_modules:
     search_title:  
@@ -1418,6 +1420,9 @@ en:
       form_title:     'Edit Location Code'
     index:
       form_title:     'List of Location Codes'
+      label_and_remarks: 'Label / Notes'
+    index_check:
+      form_title:     'Result of Location Code Validation'
     new:
       form_title:     'Add new Location Code'
     show:

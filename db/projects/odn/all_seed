@@ -1,0 +1,29 @@
+#! /bin/sh
+echo "+----------------------------+"
+echo "| load project specific data |"
+echo "+----------------------------+"
+read -n 1 -p "for environment [d(evelopment)|p(roduction)] " e4r
+echo 
+case "$e4r" in
+  d ) e4r="development";;
+  p ) e4r="production";;
+esac
+if [ ${#e4r} -eq 1 ]; then
+  echo "Bad input found: '$e4r' - aborting request."
+  exit 1
+fi
+export RAILS_ENV="$e4r"
+bin/bundle exec rake import['db/projects/odn/location_codes.csv','LocationCode']
+#bin/bundle exec rake import['db/projects/odn/network_lines.csv','NetworkLine']
+#bin/bundle exec rake import['db/projects/odn/network_stations.csv','NetworkStation']
+#bin/bundle exec rake db:seed:network_stops
+#
+# the following file determines which is the project-specific document log 
+# SiemensDocumentLog or ADocumentLog
+#
+cp -p db/projects/dmr/project_doc_log.rb app/models/
+#
+if [[ "$e4r" == p* ]]; then
+ 	cp -p db/projects/dmr/zzz.en.yml config/locales
+ 	echo -e "\n>>> Project-specific I18 file copied\n"
+fi

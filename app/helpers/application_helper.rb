@@ -99,6 +99,18 @@ module ApplicationHelper
     html.html_safe
   end
 
+  # display two items in one cell with a horizontal line in between
+
+  def display_to_items_w_hr( text1, text2 )
+    html = String.new
+    html += text1.to_s
+    unless text2.blank?
+      html += raw('<hr style="margin: 0.5em 0"/>') 
+      html += text2.to_s
+    end
+    html.html_safe
+  end
+
   # display a boolean value with two strings; the second parameter must
   # correspond to the corresponding 'general.boolean.' settings
 
@@ -118,5 +130,6 @@ module ApplicationHelper
   def some_id( id )
     id.blank? ? '' : "[#{ id }]"
   end
+
 
 end

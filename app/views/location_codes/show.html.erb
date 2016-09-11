@@ -19,7 +19,7 @@
       </div>
       <div class="form-group">
         <%= f.label :label, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-4">
+        <div class="col-sm-6">
           <%= display_value f.object.label %>
         </div>
       </div>
@@ -54,9 +54,15 @@
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :note, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-4">
-          <%= display_value f.object.note %>
+        <%= f.label :part_of, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-6">
+          <%= display_value f.object.part_of.try :code_and_label %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :remarks, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-6">
+          <%= display_lines f.object.remarks %>
         </div>
       </div>
       <div class="form-group">

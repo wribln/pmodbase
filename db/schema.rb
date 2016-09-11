@@ -114,14 +114,14 @@ ActiveRecord::Schema.define(version: 20160809114810) do
   add_index "a8_codes", ["code"], name: "index_a8_codes_on_code"
 
   create_table "a_document_logs", force: :cascade do |t|
-    t.string   "a1_code",    limit: 10,  null: false
-    t.string   "a2_code",    limit: 10,  null: false
-    t.string   "a3_code",    limit: 10,  null: false
-    t.string   "a4_code",    limit: 10,  null: false
-    t.string   "a5_code",    limit: 10,  null: false
-    t.string   "a6_code",    limit: 10,  null: false
-    t.string   "a7_code",    limit: 10,  null: false
-    t.string   "a8_code",    limit: 10,  null: false
+    t.string   "a1_code",    limit: 16,  null: false
+    t.string   "a2_code",    limit: 16,  null: false
+    t.string   "a3_code",    limit: 16,  null: false
+    t.string   "a4_code",    limit: 16,  null: false
+    t.string   "a5_code",    limit: 16,  null: false
+    t.string   "a6_code",    limit: 16,  null: false
+    t.string   "a7_code",    limit: 16,  null: false
+    t.string   "a8_code",    limit: 16,  null: false
     t.integer  "account_id",             null: false
     t.string   "title",      limit: 128
     t.string   "doc_id",     limit: 50
@@ -132,8 +132,8 @@ ActiveRecord::Schema.define(version: 20160809114810) do
   add_index "a_document_logs", ["id"], name: "index_a_document_logs_on_id"
 
   create_table "abbreviations", force: :cascade do |t|
-    t.string   "code",        limit: 10,  null: false
-    t.string   "sort_code",   limit: 10,  null: false
+    t.string   "code",        limit: 16,  null: false
+    t.string   "sort_code",   limit: 16,  null: false
     t.string   "description", limit: 255, null: false
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
@@ -155,7 +155,7 @@ ActiveRecord::Schema.define(version: 20160809114810) do
   add_index "accounts", ["person_id"], name: "index_accounts_on_person_id"
 
   create_table "addresses", force: :cascade do |t|
-    t.string   "label",          limit: 50,  null: false
+    t.string   "label",          limit: 100, null: false
     t.string   "street_address", limit: 255
     t.string   "postal_address", limit: 255
     t.datetime "created_at",                 null: false
@@ -165,17 +165,17 @@ ActiveRecord::Schema.define(version: 20160809114810) do
   add_index "addresses", ["label"], name: "index_addresses_on_label"
 
   create_table "cfr_file_types", force: :cascade do |t|
-    t.string   "label",               limit: 50
-    t.string   "extensions_internal", limit: 50, null: false
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.string   "label",               limit: 100
+    t.string   "extensions_internal", limit: 50,  null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
   end
 
   create_table "cfr_location_types", force: :cascade do |t|
-    t.string   "label",         limit: 50,                  null: false
+    t.string   "label",         limit: 100,                 null: false
     t.integer  "location_type",             default: 0,     null: false
     t.string   "path_prefix",   limit: 255
-    t.string   "concat_char",   limit: 10
+    t.string   "concat_char",   limit: 16
     t.boolean  "project_dms",               default: false
     t.string   "note",          limit: 50
     t.datetime "created_at",                                null: false
@@ -231,12 +231,12 @@ ActiveRecord::Schema.define(version: 20160809114810) do
   add_index "cfr_relations", ["src_record_id"], name: "index_cfr_relations_on_src_record_id"
 
   create_table "cfr_relationships", force: :cascade do |t|
-    t.integer  "rs_group",                 default: 2
-    t.string   "label",         limit: 50
+    t.integer  "rs_group",                  default: 2
+    t.string   "label",         limit: 100
     t.integer  "reverse_rs_id"
-    t.boolean  "leading",                  default: false
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
+    t.boolean  "leading",                   default: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
   end
 
   create_table "contact_infos", force: :cascade do |t|
@@ -252,10 +252,10 @@ ActiveRecord::Schema.define(version: 20160809114810) do
   end
 
   create_table "country_names", force: :cascade do |t|
-    t.string   "code",       limit: 10, null: false
-    t.string   "label",      limit: 50, null: false
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.string   "code",       limit: 16,  null: false
+    t.string   "label",      limit: 100, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   add_index "country_names", ["code"], name: "index_country_names_on_code"
@@ -287,8 +287,8 @@ ActiveRecord::Schema.define(version: 20160809114810) do
     t.integer  "requesting_account_id"
     t.integer  "responsible_account_id"
     t.integer  "feature_id"
-    t.string   "detail",                 limit: 50
-    t.string   "action",                 limit: 10
+    t.string   "detail",                 limit: 100
+    t.string   "action",                 limit: 16
     t.integer  "status",                             default: 0
     t.string   "uri",                    limit: 255
     t.text     "request_text"
@@ -300,21 +300,21 @@ ActiveRecord::Schema.define(version: 20160809114810) do
   add_index "db_change_requests", ["responsible_account_id"], name: "index_db_change_requests_on_responsible_account_id"
 
   create_table "dcc_codes", force: :cascade do |t|
-    t.string   "code",       limit: 10,                 null: false
-    t.string   "label",      limit: 50,                 null: false
-    t.boolean  "active",                default: true,  null: false
-    t.boolean  "master",                default: true,  null: false
-    t.boolean  "standard",              default: true,  null: false
-    t.boolean  "heading",               default: false, null: false
+    t.string   "code",       limit: 16,                  null: false
+    t.string   "label",      limit: 100,                 null: false
+    t.boolean  "active",                 default: true,  null: false
+    t.boolean  "master",                 default: true,  null: false
+    t.boolean  "standard",               default: true,  null: false
+    t.boolean  "heading",                default: false, null: false
     t.string   "note",       limit: 50
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
   end
 
   add_index "dcc_codes", ["code"], name: "index_dcc_codes_on_code"
 
   create_table "dsr_doc_groups", force: :cascade do |t|
-    t.string   "code",       limit: 10
+    t.string   "code",       limit: 16
     t.string   "title",      limit: 128
     t.integer  "group_id",               null: false
     t.datetime "created_at",             null: false
@@ -415,36 +415,36 @@ ActiveRecord::Schema.define(version: 20160809114810) do
   end
 
   create_table "features", force: :cascade do |t|
-    t.string   "code",                limit: 10
-    t.string   "label",               limit: 50
-    t.integer  "seqno",                          default: 0
-    t.integer  "access_level",                   default: 0
-    t.integer  "control_level",                  default: 0
-    t.integer  "no_workflows",                   default: 0
-    t.integer  "feature_category_id",                        null: false
-    t.datetime "created_at",                                 null: false
-    t.datetime "updated_at",                                 null: false
+    t.string   "code",                limit: 16
+    t.string   "label",               limit: 100
+    t.integer  "seqno",                           default: 0
+    t.integer  "access_level",                    default: 0
+    t.integer  "control_level",                   default: 0
+    t.integer  "no_workflows",                    default: 0
+    t.integer  "feature_category_id",                         null: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
   end
 
   add_index "features", ["feature_category_id"], name: "index_features_on_feature_category_id"
 
   create_table "function_codes", force: :cascade do |t|
-    t.string   "code",       limit: 10,                 null: false
-    t.string   "label",      limit: 50,                 null: false
-    t.boolean  "active",                default: true,  null: false
-    t.boolean  "master",                default: true,  null: false
-    t.boolean  "standard",              default: true,  null: false
-    t.boolean  "heading",               default: false, null: false
+    t.string   "code",       limit: 16,                  null: false
+    t.string   "label",      limit: 100,                 null: false
+    t.boolean  "active",                 default: true,  null: false
+    t.boolean  "master",                 default: true,  null: false
+    t.boolean  "standard",               default: true,  null: false
+    t.boolean  "heading",                default: false, null: false
     t.string   "note",       limit: 50
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
   end
 
   add_index "function_codes", ["code"], name: "index_function_codes_on_code"
 
   create_table "glossary_items", force: :cascade do |t|
     t.string   "term",          limit: 60, null: false
-    t.string   "code",          limit: 10
+    t.string   "code",          limit: 16
     t.text     "description"
     t.integer  "cfr_record_id"
     t.datetime "created_at",               null: false
@@ -464,19 +464,19 @@ ActiveRecord::Schema.define(version: 20160809114810) do
   add_index "group_categories", ["seqno", "label"], name: "group_categories_key2"
 
   create_table "groups", force: :cascade do |t|
-    t.string   "code",              limit: 10, default: "",   null: false
-    t.string   "label",             limit: 50, default: "",   null: false
+    t.string   "code",              limit: 16,  default: "",   null: false
+    t.string   "label",             limit: 100, default: "",   null: false
     t.string   "notes",             limit: 50
-    t.integer  "seqno",                        default: 0
-    t.integer  "group_category_id",                           null: false
+    t.integer  "seqno",                         default: 0
+    t.integer  "group_category_id",                            null: false
     t.integer  "sub_group_of_id"
-    t.boolean  "participating",                default: true
-    t.boolean  "s_sender_code",                default: true
-    t.boolean  "s_receiver_code",              default: true
-    t.boolean  "active",                       default: true
-    t.boolean  "standard",                     default: true
-    t.datetime "created_at",                                  null: false
-    t.datetime "updated_at",                                  null: false
+    t.boolean  "participating",                 default: true
+    t.boolean  "s_sender_code",                 default: true
+    t.boolean  "s_receiver_code",               default: true
+    t.boolean  "active",                        default: true
+    t.boolean  "standard",                      default: true
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
   end
 
   add_index "groups", ["code"], name: "index_groups_on_code"
@@ -511,19 +511,21 @@ ActiveRecord::Schema.define(version: 20160809114810) do
   add_index "holidays", ["year_period"], name: "index_holidays_on_year_period"
 
   create_table "location_codes", force: :cascade do |t|
-    t.string   "code",         limit: 10,             null: false
-    t.string   "label",        limit: 50,             null: false
-    t.integer  "loc_type",                default: 2, null: false
-    t.integer  "center_point"
-    t.integer  "start_point"
-    t.integer  "end_point"
-    t.integer  "length"
-    t.string   "note",         limit: 50
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.string   "code",         limit: 16,                                       null: false
+    t.string   "label",        limit: 100,                                      null: false
+    t.integer  "loc_type",                                          default: 2, null: false
+    t.decimal  "center_point",             precision: 10, scale: 3
+    t.decimal  "start_point",              precision: 10, scale: 3
+    t.decimal  "end_point",                precision: 10, scale: 3
+    t.decimal  "length"
+    t.integer  "part_of_id"
+    t.string   "remarks",      limit: 255
+    t.datetime "created_at",                                                    null: false
+    t.datetime "updated_at",                                                    null: false
   end
 
   add_index "location_codes", ["code"], name: "index_location_codes_on_code"
+  add_index "location_codes", ["part_of_id"], name: "index_location_codes_on_part_of_id"
 
   create_table "network_lines", force: :cascade do |t|
     t.string   "code",                         null: false
@@ -722,27 +724,27 @@ ActiveRecord::Schema.define(version: 20160809114810) do
   add_index "permission4_groups", ["account_id", "feature_id", "group_id"], name: "afg_index", unique: true
 
   create_table "phase_codes", force: :cascade do |t|
-    t.string   "code",             limit: 10,             null: false
-    t.string   "label",            limit: 50,             null: false
-    t.string   "acro",             limit: 10
-    t.integer  "siemens_phase_id",                        null: false
-    t.integer  "level",                       default: 0
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
+    t.string   "code",             limit: 16,              null: false
+    t.string   "label",            limit: 100,             null: false
+    t.string   "acro",             limit: 16
+    t.integer  "siemens_phase_id",                         null: false
+    t.integer  "level",                        default: 0
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
   end
 
   add_index "phase_codes", ["siemens_phase_id"], name: "index_phase_codes_on_siemens_phase_id"
 
   create_table "product_codes", force: :cascade do |t|
-    t.string   "code",       limit: 10,                 null: false
-    t.string   "label",      limit: 50,                 null: false
-    t.boolean  "active",                default: true,  null: false
-    t.boolean  "master",                default: true,  null: false
-    t.boolean  "standard",              default: true,  null: false
-    t.boolean  "heading",               default: false, null: false
+    t.string   "code",       limit: 16,                  null: false
+    t.string   "label",      limit: 100,                 null: false
+    t.boolean  "active",                 default: true,  null: false
+    t.boolean  "master",                 default: true,  null: false
+    t.boolean  "standard",               default: true,  null: false
+    t.boolean  "heading",                default: false, null: false
     t.string   "note",       limit: 50
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
   end
 
   add_index "product_codes", ["code"], name: "index_product_codes_on_code"
@@ -758,11 +760,11 @@ ActiveRecord::Schema.define(version: 20160809114810) do
   end
 
   create_table "region_names", force: :cascade do |t|
-    t.integer  "country_name_id",            null: false
-    t.string   "code",            limit: 10, null: false
-    t.string   "label",           limit: 50, null: false
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.integer  "country_name_id",             null: false
+    t.string   "code",            limit: 16,  null: false
+    t.string   "label",           limit: 100, null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   add_index "region_names", ["country_name_id", "code"], name: "cr_index", unique: true
@@ -808,14 +810,14 @@ ActiveRecord::Schema.define(version: 20160809114810) do
   create_table "s_document_logs", force: :cascade do |t|
     t.integer  "group_id",                   null: false
     t.integer  "account_id",                 null: false
-    t.string   "receiver_group", limit: 10
-    t.string   "function_code",  limit: 10
-    t.string   "service_code",   limit: 10
-    t.string   "product_code",   limit: 10
-    t.string   "location_code",  limit: 10
-    t.string   "phase_code",     limit: 10
-    t.string   "dcc_code",       limit: 10
-    t.string   "revision_code",  limit: 10
+    t.string   "receiver_group", limit: 16
+    t.string   "function_code",  limit: 16
+    t.string   "service_code",   limit: 16
+    t.string   "product_code",   limit: 16
+    t.string   "location_code",  limit: 16
+    t.string   "phase_code",     limit: 16
+    t.string   "dcc_code",       limit: 16
+    t.string   "revision_code",  limit: 16
     t.date     "author_date"
     t.string   "title",          limit: 128
     t.string   "doc_id",         limit: 100
@@ -826,29 +828,29 @@ ActiveRecord::Schema.define(version: 20160809114810) do
   add_index "s_document_logs", ["id"], name: "index_s_document_logs_on_id"
 
   create_table "service_codes", force: :cascade do |t|
-    t.string   "code",       limit: 10,                 null: false
-    t.string   "label",      limit: 50,                 null: false
-    t.boolean  "active",                default: true,  null: false
-    t.boolean  "master",                default: true,  null: false
-    t.boolean  "standard",              default: true,  null: false
-    t.boolean  "heading",               default: false, null: false
+    t.string   "code",       limit: 16,                  null: false
+    t.string   "label",      limit: 100,                 null: false
+    t.boolean  "active",                 default: true,  null: false
+    t.boolean  "master",                 default: true,  null: false
+    t.boolean  "standard",               default: true,  null: false
+    t.boolean  "heading",                default: false, null: false
     t.string   "note",       limit: 50
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
   end
 
   add_index "service_codes", ["code"], name: "index_service_codes_on_code"
 
   create_table "siemens_phases", force: :cascade do |t|
-    t.string   "code",       limit: 10, null: false
-    t.string   "label_p",    limit: 50
-    t.string   "label_m",    limit: 50
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.string   "code",       limit: 16,  null: false
+    t.string   "label_p",    limit: 100
+    t.string   "label_m",    limit: 100
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "standards_bodies", force: :cascade do |t|
-    t.string   "code",        limit: 10,  null: false
+    t.string   "code",        limit: 16,  null: false
     t.string   "description", limit: 255, null: false
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
@@ -857,10 +859,10 @@ ActiveRecord::Schema.define(version: 20160809114810) do
   add_index "standards_bodies", ["code"], name: "index_standards_bodies_on_code"
 
   create_table "submission_groups", force: :cascade do |t|
-    t.string   "code",       limit: 10, null: false
-    t.string   "label",      limit: 50
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.string   "code",       limit: 16,  null: false
+    t.string   "label",      limit: 100
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   add_index "submission_groups", ["code"], name: "index_submission_groups_on_code"
@@ -917,10 +919,10 @@ ActiveRecord::Schema.define(version: 20160809114810) do
   add_index "tia_members", ["tia_list_id"], name: "index_tia_members_on_tia_list_id"
 
   create_table "unit_names", force: :cascade do |t|
-    t.string   "code",       limit: 10, null: false
-    t.string   "label",      limit: 50, null: false
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.string   "code",       limit: 16,  null: false
+    t.string   "label",      limit: 100, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   add_index "unit_names", ["code"], name: "index_unit_names_on_code"

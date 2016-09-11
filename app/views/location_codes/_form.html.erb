@@ -12,7 +12,7 @@
       </div>
       <div class="form-group">
         <%= form.label :label, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-4">
+        <div class="col-sm-6">
           <%= form.text_field :label, class: 'form-control', required: true %>
         </div>
       </div>
@@ -47,9 +47,15 @@
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :note, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-4">
-          <%= form.text_field :note, class: 'form-control' %>
+        <%= form.label :part_of_id, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-6">
+          <%= form.collection_select( :part_of_id, @line_locations, :id, :code_and_label, { prompt: true }, { class: 'form-control' })%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :remarks, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-6">
+          <%= form.text_area :remarks, cols: DEFAULT_COLS_TEXTAREA, rows: DEFAULT_ROWS_TEXTAREA, class: 'form-control' %>
         </div>
       </div>
 

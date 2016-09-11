@@ -8,6 +8,8 @@ class LocationCode < ActiveRecord::Base
 
   has_many :network_lines
   has_many :network_stops
+  has_many :parts_of_relations, class_name: 'LocationCode', foreign_key: 'part_of_id'
+  belongs_to :part_of, class_name: 'LocationCode'
 
   validates :code,
     presence: true,
@@ -30,24 +32,24 @@ class LocationCode < ActiveRecord::Base
 
   validates :center_point, :start_point, :end_point,
     allow_blank: true,
-    numericality: { only_integer: true }
+    numericality: :allow_nil
 
   validate :point_relationship
 
   validates :length,
     allow_blank: true,
-    numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+    numericality: { greater_than_or_equal_to: 0.0 }
 
-  validates :note,
-    length: { maximum: MAX_LENGTH_OF_NOTE }
+  validates :remarks,
+    length: { maximum: MAX_LENGTH_OF_DESCRIPTION }
 
   set_trimmed :code, :label
 
   default_scope { order( code: :asc )}
   scope :as_code, -> ( c ){ where( 'code  LIKE ?',  has_code_prefix( c ) ? "#{ c }%" : "#{ code_prefix }#{ c }%" )}
-  scope :as_desc, -> ( l ){ where( 'label LIKE ?', "%#{ l }%" )}
-  scope :as_note, -> ( n ){ where( 'note  LIKE ?', "%#{ n }%" )}
+  scope :as_desc, -> ( l ){ where( 'label LIKE :param OR remarks LIKE :param', param: "%#{ l }%" )}
   scope :ff_type, -> ( t ){ where( loc_type: t )}
+  scope :lines_only, ->{ where( loc_type: 2 )}
 
   # add code_model features
 
@@ -86,7 +88,7 @@ class LocationCode < ActiveRecord::Base
   def compute_missing_points
     case loc_type
     when 0 # label only, no mileage
-      self.center_point = self.start_point = self.end_point = self.length = nil
+      self.center_point = self.start_point = self.end_point = self.length = self.part_of_id = nil
     when 1 # point only, no start, end, length
       self.start_point = self.end_point = self.length = nil 
     when 2
@@ -94,7 +96,7 @@ class LocationCode < ActiveRecord::Base
         if self.length.nil? then
           if self.start_point && self.end_point then
             self.length = self.end_point - self.start_point
-            self.center_point = self.start_point + ( self.length / 2 ).to_i
+            self.center_point = self.start_point + ( self.length / 2 )
           else # start or end or both are nil
             # nothing to do
           end
@@ -104,11 +106,11 @@ class LocationCode < ActiveRecord::Base
               # nothing to do
             else
               self.start_point = self.end_point - self.length
-              self.center_point = self.start_point + ( self.length / 2 ).to_i
+              self.center_point = self.start_point + ( self.length / 2 )
             end
           else # start not nil?
             self.end_point = self.end_point || self.start_point + self.length
-            self.center_point = self.start_point + ( self.length / 2 ).to_i
+            self.center_point = self.start_point + ( self.length / 2 )
           end
         end
       else # center not nil
@@ -119,14 +121,14 @@ class LocationCode < ActiveRecord::Base
             # nothing to do
           end
         else
-          self.start_point = self.start_point || ( self.center_point - ( self.length / 2 ).to_i )
+          self.start_point = self.start_point || ( self.center_point - ( self.length / 2 ))
           self.end_point = self.end_point || self.start_point + self.length
         end
       end
     end
   end
 
-  # make sure relationship within points makes sense
+  # make sure relationship among points make sense
 
   def point_relationship
     return if loc_type.nil? || ( loc_type != 2 )

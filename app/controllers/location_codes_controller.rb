@@ -3,6 +3,7 @@ class LocationCodesController < ApplicationController
   include ControllerMethods
   initialize_feature FEATURE_ID_LOCATION_CODES, FEATURE_ACCESS_VIEW
   before_action :set_location_code, only: [ :show, :edit, :update, :destroy ]
+  before_action :set_line_locations, only: [ :edit, :update, :new ]
 
   # GET /scls
 
@@ -17,6 +18,12 @@ class LocationCodesController < ApplicationController
         set_header( :xls, 'location_codes.csv' )
       end
     end
+  end
+
+  # GET /scl/check
+
+  def index_check
+    @location_codes = LocationCode.all
   end
 
   # GET /scls/1
@@ -77,10 +84,15 @@ class LocationCodesController < ApplicationController
       @location_code = LocationCode.find( params[ :id ])
     end
 
+    def set_line_locations
+      @line_locations = LocationCode.lines_only
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
 
     def location_code_params
-      params.require( :location_code ).permit( :code, :label, :loc_type, :center_point, :start_point, :end_point, :length, :note )
+      params.require( :location_code ).permit(
+        :code, :label, :loc_type, :center_point, :start_point, :end_point, :length, :part_of_id, :remarks )
     end
 
     def filter_params

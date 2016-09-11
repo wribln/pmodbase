@@ -53,9 +53,9 @@
   MAX_LENGTH_OF_DOC_DATE = 20         # for date information on documents
   MAX_LENGTH_OF_DOC_VERSION = 10      # length of string for version information
 
-	MAX_LENGTH_OF_LABEL = 50
+	MAX_LENGTH_OF_LABEL = 100
   MAX_LENGTH_OF_NOTE = 50
-	MAX_LENGTH_OF_CODE = 10
+	MAX_LENGTH_OF_CODE = 16
   MAX_LENGTH_OF_EXTENSION = 10
 	MAX_LENGTH_OF_DESCRIPTION = 255
   MAX_LENGTH_OF_TITLE = 128

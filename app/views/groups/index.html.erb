@@ -29,7 +29,7 @@
             <tr>
               <td><%= g.to_id %></td>
               <td><%= g.code %></td>
-              <td><%= g.label %><%= raw('<hr style="margin: 0.5em 0"/>') unless g.notes.blank? %><%= g.notes %></td>
+              <td><%= display_to_items_w_hr g.label, g.notes %></td>
               <td><%= g.sub_group_of.try( :code )%></td>
               <td class="hidden-print"><%= render partial: 'shared/actions', object: g %></td>
             </tr>

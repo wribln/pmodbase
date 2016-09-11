@@ -4,11 +4,12 @@ class CreateLocationCodes < ActiveRecord::Migration
       t.string  :code,          limit: MAX_LENGTH_OF_CODE, null: false, index: true
       t.string  :label,         limit: MAX_LENGTH_OF_LABEL, null: false
       t.integer :loc_type,      null: false, default: 2
-      t.integer :center_point
-      t.integer :start_point
-      t.integer :end_point
-      t.integer :length
-      t.string  :note,          limit: MAX_LENGTH_OF_NOTE
+      t.decimal :center_point,  precision: 10, scale: 3
+      t.decimal :start_point,   precision: 10, scale: 3
+      t.decimal :end_point,     precision: 10, scale: 3
+      t.decimal :length
+      t.references :part_of,    index: true
+      t.string  :remarks,       limit: MAX_LENGTH_OF_DESCRIPTION
 
       t.timestamps null: false
     end

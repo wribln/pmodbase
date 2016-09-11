@@ -35,7 +35,7 @@ class LocationCodesControllerTest < ActionController::TestCase
   end
 
   test "should update location_code" do
-    patch :update, id: @location_code, location_code: { center_point: @location_code.center_point, code: @location_code.code, end_point: @location_code.end_point, length: @location_code.length, loc_type: @location_code.loc_type, note: @location_code.note, start_point: @location_code.start_point }
+    patch :update, id: @location_code, location_code: { center_point: @location_code.center_point, code: @location_code.code, end_point: @location_code.end_point, length: @location_code.length, loc_type: @location_code.loc_type, remarks: @location_code.remarks, start_point: @location_code.start_point }
     assert_redirected_to location_code_path(assigns( :location_code ))
   end
 
