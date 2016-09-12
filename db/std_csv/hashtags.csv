@@ -3,11 +3,11 @@ code;label;feature_id;seqno
 #SCOPE_NEW;New;55;1
 #SCOPE_MOD;Modify;55;2
 #SCOPE_NOC;No Change;55;3
-#PTYPE;Type of Platform;57;10
-#PTYPE_C;Center/Island (Track on each side);57;11
-#PTYPE_S;Sides (Track between platforms);57;12
-#PTYPE_M;Mixed (Details: See note);57;13
-#NOPSD;Number of Platform Sides (with PSD);57;20
+#PTYPE;Type of Platform;56;10
+#PTYPE_C;Center/Island (Track on each side);56;11
+#PTYPE_S;Sides (Track between platforms);56;12
+#PTYPE_M;Mixed (Details: See note);56;13
+#NOPSD;Number of Platform Sides (with PSD);56;20
 #LTYPE;Level of Line;55;0
 #LTYPE_EL;Elevated/Viaduct;55;1
 #LTYPE_AG;At Grade;55;2

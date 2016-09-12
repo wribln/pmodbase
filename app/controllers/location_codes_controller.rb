@@ -22,7 +22,7 @@ class LocationCodesController < ApplicationController
 
   # GET /scl/check
 
-  def index_check
+  def update_check
     @location_codes = LocationCode.all
   end
 
@@ -85,7 +85,7 @@ class LocationCodesController < ApplicationController
     end
 
     def set_line_locations
-      @line_locations = LocationCode.lines_only
+      @line_locations = LocationCode.no_labels
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

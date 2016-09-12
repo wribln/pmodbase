@@ -16,7 +16,7 @@
       <%= network_stop.label :network_line_id, class: 'col-sm-2 control-label' %>
       <div class="col-sm-6">
         <%= network_stop.collection_select( :network_line_id, NetworkLine.all, :id, :code_and_label,
-          { prompt: true, include_blank: false }, { class: 'form-control' })%>
+          { include_blank: false }, { class: 'form-control' })%>
       </div>
     <% end %>
   </div>
@@ -52,7 +52,7 @@
       <% else %>
       <div class="col-sm-6">
         <%= network_stop.collection_select( :location_code_id, LocationCode.all, :id, :code_and_label,
-        { prompt: true, include_blank: true }, { class: 'form-control' })%>
+        { include_blank: true }, { class: 'form-control' })%>
       </div>
       <% end %>
   </div>

@@ -13,14 +13,14 @@
       </div>
       <div class="form-group">
         <%= f.label :network_station_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-2">
-          <%= display_value f.object.network_station_id %>
+        <div class="col-sm-6">
+          <%= display_value f.object.network_station.try :code_and_label %>
         </div>
       </div>
       <div class="form-group">
         <%= f.label :network_line_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-2">
-          <%= display_value f.object.network_line_id %>
+        <div class="col-sm-6">
+          <%= display_value f.object.network_line.try :code_and_label %>
         </div>
       </div>
       <div class="form-group">
@@ -37,13 +37,13 @@
       </div>
       <div class="form-group">
         <%= f.label :location_code_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-2">
-          <%= display_value f.object.location_code_id %>
+        <div class="col-sm-6">
+          <%= display_value f.object.location_code.try :code_and_label %>
         </div>
       </div>
       <div class="form-group">
         <%= f.label :note, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-4">
+        <div class="col-sm-6">
           <%= display_value f.object.note %>
         </div>
       </div>

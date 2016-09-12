@@ -43,13 +43,19 @@ class LocationCode < ActiveRecord::Base
   validates :remarks,
     length: { maximum: MAX_LENGTH_OF_DESCRIPTION }
 
+  validates :part_of,
+    presence: true, if: Proc.new{ |me| me.part_of_id.present? }
+
+  validate :basic_part_checks
+  validate :additional_checks, on: :update_check
+
   set_trimmed :code, :label
 
   default_scope { order( code: :asc )}
   scope :as_code, -> ( c ){ where( 'code  LIKE ?',  has_code_prefix( c ) ? "#{ c }%" : "#{ code_prefix }#{ c }%" )}
   scope :as_desc, -> ( l ){ where( 'label LIKE :param OR remarks LIKE :param', param: "%#{ l }%" )}
   scope :ff_type, -> ( t ){ where( loc_type: t )}
-  scope :lines_only, ->{ where( loc_type: 2 )}
+  scope :no_labels, ->{ where.not( loc_type: 0 )}
 
   # add code_model features
 
@@ -143,4 +149,38 @@ class LocationCode < ActiveRecord::Base
     end
   end
 
+  # basic checks on the part_of attribute
+
+  def basic_part_checks
+    unless part_of.blank? || errors.include?( :part_of_id ) then
+      errors.add( :part_of_id, I18n.t( 'location_codes.msg.bad_part_of' )) \
+        unless part_of_id != id 
+    end
+  end
+
+  # extra validations for part_of - do only if requested
+
+  def additional_checks
+    unless part_of.blank? || errors.include?( :part_of_id ) then
+      errors.add( :base, I18n.t( 'location_codes.msg.bad_combo', p1: loc_type_label, p2: part_of.loc_type_label )) \
+        unless permitted_combination( loc_type, part_of.loc_type )
+    end
+  end
+
+  private
+
+    PERMITTED_COMBINATIONS = [
+      [],         # label must not be part of anything else
+      [ 2 ],      # point can be part of line section
+      [ 2 ],      # line section can be part of another line section
+      [ 5 ],      # building can be part of a physical area
+      [ 3, 5 ],   # room can be part of a building or a functional area
+      [ 3, 4, 5, 6 ], # functional areas can be part of almost anything
+      [ 3, 4, 5, 6 ]  # physical areas can be part of almost anything
+    ]
+
+    def permitted_combination( c, p )
+      PERMITTED_COMBINATIONS[ c ].include?( p )
+    end
+    
 end

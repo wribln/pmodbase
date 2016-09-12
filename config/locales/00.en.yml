@@ -476,7 +476,7 @@ en:
         code:           'Code'
         label:          'Label'
         loc_type:       'Type'
-        loc_types:      ['Label','Point','Line']
+        loc_types:      ['Label','Point','Line Section','Building','Room','Physical Area','Functional Area']
         center_point:   'Center Point'
         start_point:    'Start Point'
         end_point:      'End Point'
@@ -506,6 +506,7 @@ en:
       network_stop:
         id:                 :general.attributes.id
         location_code_id:   'Location Code'
+        code:               'Stop Code'
         stop_no:            'No of Stop on Line'
         network_line_id:    'Line'
         network_station_id: 'Station'
@@ -1421,8 +1422,10 @@ en:
     index:
       form_title:     'List of Location Codes'
       label_and_remarks: 'Label / Notes'
-    index_check:
+    update_check:
       form_title:     'Result of Location Code Validation'
+      msg_no_recs:    'No records found to validate.'
+      msg_no_errors:  'No record with validation errors.'
     new:
       form_title:     'Add new Location Code'
     show:
@@ -1433,6 +1436,8 @@ en:
       delete_ok:      'Location Code was successfully removed.'
       bad_start:      'must be before/less than End Point.'
       bad_center:     'must be between Start and End Point.'
+      bad_part_of:    'must not refer to itself.'
+      bad_combo:      '%{p1} cannot be Part of %{p2}.'
 
   network_lines:
     title:            'Network Lines'

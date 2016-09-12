@@ -50,7 +50,7 @@
     <% end %>
     <div class="no-print" id="nav">
       <%= render partial: 'shared/download_xls' %> / 
-      <%= link_to t( 'button_label.check' ), location_codes_check_path %>
+      <%= link_to t( 'button_label.check' ), location_codes_check_path, { target: '_blank' } %>
     </div>
     <%= render partial: 'shared/footer' %>
   </div>

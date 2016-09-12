@@ -49,7 +49,7 @@ Rails.application.routes.draw do
   resources :hashtags, path: 'htg', format: false
   get 'hld/:id/new', to: 'holidays#add', as: 'add_holiday', format: false
   resources :holidays, path: 'hld', format: false 
-  get 'scl/check', to: 'location_codes#index_check', as: 'location_codes_check', format: false
+  get 'scl/check', to: 'location_codes#update_check', as: 'location_codes_check', format: false
   resources :location_codes, path: 'scl', format: false
   resources :network_lines, path: 'nln', format: false
   resources :network_stations, path: 'nst', format: false

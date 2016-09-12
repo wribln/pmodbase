@@ -34,7 +34,6 @@ class NetworkStopTest < ActiveSupport::TestCase
   test 'required fields' do
     nst = NetworkStop.new 
     refute nst.valid?
-    assert_includes nst.errors, :network_line_id
     assert_includes nst.errors, :stop_no
     nst.network_line_id = network_lines( :one ).id
     refute nst.valid?

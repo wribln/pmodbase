@@ -1,0 +1,26 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <%= form_tag({},{ method: :get }) do %>
+    <%- if @location_codes.empty? -%>
+        <p><%= t( '.msg_no_recs' ) %></p>
+    <%- else -%>
+      <%- errors_found = false %>
+      <%- @location_codes.each do |lc| -%>
+        <%- unless lc.valid?( :update_check ) %>
+          <%- errors_found = true %>
+          <%- lc.errors.full_messages.each do |m| -%>
+            <div class="form-group">
+              <p class="col-sm-1"><%= link_to lc.code, location_code_path( lc ) %></p>
+              <p class="col-sm-6"><%= m %></p>
+            </div>
+          <%- end -%>
+        <%- end -%>
+      <%- end -%>
+      <%- unless errors_found %>
+        <p><%= t( '.msg_no_errors' ) %></p>
+      <%- end -%>
+    <%- end -%>
+  <%- end -%>
+</div>

@@ -48,4 +48,12 @@ class NetworkStation < ActiveRecord::Base
     end
   end
 
+  def code_and_label
+    if curr_name.blank?
+      code
+    else
+      code + ' - ' + curr_name
+    end
+  end
+
 end

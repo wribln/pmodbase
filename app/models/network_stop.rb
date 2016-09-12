@@ -10,7 +10,7 @@ class NetworkStop < ActiveRecord::Base
     numericality: { only_integer: true }
 
   validates :network_line,
-    presence: true
+    presence: true, if: Proc.new{ |me| me.network_line_id.present? }
 
   validates :network_station,
     presence: true, if: Proc.new{ |me| me.network_station_id.present? }
@@ -29,6 +29,7 @@ class NetworkStop < ActiveRecord::Base
   scope :order_by_line_seqno, -> { includes( :network_line ).order ( 'network_lines.seqno' )} 
 
   def stop_count_in_station
+    return if errors.include?( :network_station_id )
     if self.network_station_id.present?
       errors.add( :base, I18n.t( 'network_stops.msg.bad_no_stops' )) \
         unless self.network_station.transfer || self.network_station.network_stops.count < 1
