@@ -11,7 +11,7 @@
       line sections (e.g. between two stations), other buildings along the line (traction power substations),
       locations of turn-outs, etc. Also, locations not along the alignment are coded, e.g. buildings in
       depots, functional locations (such as control centers), and individual trains.</p>
-    <p>Three different types of location are recognized in this table:</p>
+    <p>Different types of location are recognized in this table:</p>
     <ul>
       <li>Type <%= help_term LocationCode::LOCATION_CODE_TYPES[ 0 ] -%> locations are not related to a line, i.e.
         not having chainage coordinates: For example, trains, buildings in depots, functional locations such
@@ -36,6 +36,17 @@
         <%= help_term LocationCode.human_attribute_name( :start_point ) -%> and the
         <%= help_term LocationCode.human_attribute_name( :end_point ) -%> - if possible.</li>
         </li>
+        <li>Type <%= help_term LocationCode::LOCATION_CODE_TYPES[ 3 ] -%> is for specific structures. No mileage
+        attributes will be accepted.</li>
+        <li>Type <%= help_term LocationCode::LOCATION_CODE_TYPES[ 4 ] -%> is for rooms in buildings. No mileage
+        attributes will be accepted. However, <%= help_term LocationCode::LOCATION_CODE_TYPES[ 4 ] -%> can be
+        part of a <%= help_term LocationCode::LOCATION_CODE_TYPES[ 3 ] -%>.</li>
+        <li>Type <%= help_term LocationCode::LOCATION_CODE_TYPES[ 5 ] -%> designates areas outside of the alignment,
+        for example, depot areas. <%= help_term LocationCode::LOCATION_CODE_TYPES[ 3 ] -%> can be part of a
+        <%= help_term LocationCode::LOCATION_CODE_TYPES[ 5 ] -%>. Such an area can be subdivided into other, smaller
+        areas, for example zones.</li>
+        <li>Type <%= help_term LocationCode::LOCATION_CODE_TYPES[ 6 ] -%> is for special locations, such as a
+        control center, or trains.</li>
     </ul>
     <p>The following fields can be administered:</p>
     <ul>
@@ -62,6 +73,11 @@
       <li>A <%= help_param LocationCode.human_attribute_name( :remarks )-%> field can be used to
         enter additional information or (hash) tags for the location.</li>
     </ul>
+    <h3><%= t( 'button_label.check' )%></h3>
+    <p>The index page provides a link to a special function of this feature: When you click
+    <%= help_term t( 'button_label.check' )%>, all location codes will be validated again and
+    a report about any irregularities will be produced. This may be useful if you want to be sure
+    that your data are consistent.</p>
     <h3>Computation of Coordinates</h3>
     <p>Depending on the type of location and the entered coordinates, any missing values will be
     computed as follows:</p>

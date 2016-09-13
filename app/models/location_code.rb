@@ -161,9 +161,30 @@ class LocationCode < ActiveRecord::Base
   # extra validations for part_of - do only if requested
 
   def additional_checks
+    if loc_type == 2 && start_point && end_point && center_point then
+      unless ( end_point - start_point - length ).abs < 1 then
+        errors.add( :base, I18n.t( 'location_codes.msg.bad_line1' ))
+        return
+      end
+      unless ( start_point + ( length / 2.0 ) - center_point ).abs < 1 then
+        errors.add( :base, I18n.t( 'location_codes.msg.bad_line2' ))
+        return
+      end
+    end
     unless part_of.blank? || errors.include?( :part_of_id ) then
-      errors.add( :base, I18n.t( 'location_codes.msg.bad_combo', p1: loc_type_label, p2: part_of.loc_type_label )) \
-        unless permitted_combination( loc_type, part_of.loc_type )
+      unless permitted_combination( loc_type, part_of.loc_type ) then
+        errors.add( :base, I18n.t( 'location_codes.msg.bad_combo', p1: loc_type_label, p2: part_of.loc_type_label ))
+        return
+      end
+      if part_of.loc_type == 2 && part_of.start_point && part_of.end_point then # check for boundaries
+        if loc_type == 1 then
+          check_range( center_point )
+        elsif loc_type == 2 then
+          check_range( center_point )
+          check_range( start_point )
+          check_range( end_point )
+        end
+      end
     end
   end
 
@@ -181,6 +202,16 @@ class LocationCode < ActiveRecord::Base
 
     def permitted_combination( c, p )
       PERMITTED_COMBINATIONS[ c ].include?( p )
+    end
+
+    def add_range_error( value )
+      return if value.nil?
+      unless ( value >= part_of.start_point && value <= part_of.end_point )
+        errors.add( :base, I18n.t( 'location_codes.msg.bad_range', 
+          p1: db_formatted_km( value ), 
+          p2: db_formatted_km( part_of.start_point ),
+          p3: db_formatted_km( part_of.end_point )))
+      end
     end
     
 end

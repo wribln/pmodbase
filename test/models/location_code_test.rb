@@ -263,6 +263,20 @@ class LocationCodeTest < ActiveSupport::TestCase
 
     as = LocationCode.ff_type( 3 )
     assert_equal 0, as.length
+
+    as = LocationCode.no_labels
+    assert_equal 3, as.length
+  end
+
+  test 'validate_all tests' do
+    LocationCode.all.each do |lc|
+      lc.additional_checks
+      assert lc.errors.empty?, lc.errors.messages
+    end
+  end
+
+  test 'force error messages' do
+    flunk
   end
 
 end
