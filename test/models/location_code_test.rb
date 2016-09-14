@@ -34,6 +34,20 @@ class LocationCodeTest < ActiveSupport::TestCase
     assert_equal lc.length, ( lc.end_point - lc.start_point ) 
   end
 
+  test 'fixtures type 3, 4, 5, 6' do
+    [[ 3, :four ], [ 4, :five ], [ 5, :six ], [ 6, :seven ]].each do |l|
+      lc = location_codes( l.last )
+      refute_nil lc.code
+      refute_nil lc.label
+      assert l.first, lc.loc_type
+      assert_nil lc.center_point
+      assert_nil lc.start_point
+      assert_nil lc.end_point
+      assert_nil lc.length
+      assert lc.valid?
+    end
+  end
+
   test 'default values' do
     lc = LocationCode.new
     assert_nil lc.code
@@ -261,11 +275,11 @@ class LocationCodeTest < ActiveSupport::TestCase
     as = LocationCode.ff_type( 2 )
     assert_equal 2, as.length
 
-    as = LocationCode.ff_type( 3 )
+    as = LocationCode.ff_type( 7 )
     assert_equal 0, as.length
 
     as = LocationCode.no_labels
-    assert_equal 3, as.length
+    assert_equal 7, as.length
   end
 
   test 'validate_all tests' do
@@ -275,8 +289,102 @@ class LocationCodeTest < ActiveSupport::TestCase
     end
   end
 
-  test 'force error messages' do
-    flunk
+  test 'error messages' do
+    lc = location_codes( :one ) # must use existing location with id
+    lc.loc_type = 2
+    lc.center_point = 1
+    lc.start_point = 0
+    lc.end_point = 2
+    assert lc.valid?, lc.errors.messages
+
+    lc.start_point = 3
+    refute lc.valid?
+    assert_includes lc.errors, :start_point
+
+    lc.errors.clear
+    lc.end_point = 5
+    refute lc.valid?
+    assert_includes lc.errors, :center_point
+
+    lc.errors.clear
+    lc.center_point = 4
+    assert lc.valid?, lc.errors.messages
+
+    lc.errors.clear
+    lc.part_of_id = lc.id 
+    refute lc.valid?
+    assert_includes lc.errors, :part_of_id
+  end
+
+  test 'additional checks' do
+    lc = location_codes( :two )
+    lc.additional_checks
+    assert lc.errors.empty?
+
+    lc.length = lc.length - 1
+    lc.additional_checks
+    refute lc.errors.empty?, lc.errors.messages
+
+    lc.errors.clear
+    lc.length = lc.length + 1.1
+    lc.additional_checks
+    assert lc.errors.empty?
+
+    lc.center_point = lc.center_point - 1
+    lc.additional_checks
+    refute lc.errors.empty?, lc.errors.messages
+
+    lc.errors.clear
+    lc.center_point = lc.center_point + 1.1
+    lc.additional_checks
+    assert lc.errors.empty?
+
+    lc.part_of = location_codes( :three )
+    lc.additional_checks
+    assert lc.errors.empty?
+
+    lc.part_of = location_codes( :zero )
+    lc.additional_checks
+    refute lc.errors.empty?
+
+    lc.errors.clear
+    lc.part_of = location_codes( :one )
+    lc.additional_checks
+    refute lc.errors.empty?
+
+    lc.errors.clear
+    lc.part_of = location_codes( :three )
+    offset = lc.part_of.end_point + 1
+    lc.center_point = lc.center_point + offset
+    lc.start_point = lc.start_point + offset
+    lc.end_point = lc.end_point + offset
+    lc.additional_checks
+    assert_equal 3, lc.errors.count
+  end
+
+  test 'compute missing points' do
+    lc = location_codes( :three )
+    for i in 0..LocationCode::LOCATION_CODE_TYPES.length - 1
+      lc.loc_type = i
+      assert lc.valid?, lc.errors.messages
+      case i
+      when 0, 3..6
+        assert_nil lc.center_point
+        assert_nil lc.start_point
+        assert_nil lc.end_point
+      when 1
+        refute_nil lc.center_point
+        assert_nil lc.start_point
+        assert_nil lc.end_point
+      when 2
+        refute_nil lc.center_point
+        refute_nil lc.start_point
+        refute_nil lc.end_point
+      else
+        assert false, 'check range of loc_type'
+      end
+      lc.reload
+    end
   end
 
 end

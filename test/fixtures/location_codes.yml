@@ -28,5 +28,23 @@ three:
   end_point: 15000
   length: 15000
 
-  
+four:
+  code:   '+DEP.MW'
+  label:  'depot main workshop building'
+  loc_type: 3
+
+five:
+  code:   '+DEP.MW.SR'
+  label:  'Server Room'
+  loc_type: 4
+
+six:
+  code:   '+DEP'
+  label:  'Depot Area'
+  loc_type: 5
+
+seven:
+  code:   '+OCC'
+  label:  'OCC'
+  loc_type: 6
 

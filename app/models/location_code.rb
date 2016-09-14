@@ -14,14 +14,25 @@ class LocationCode < ActiveRecord::Base
   validates :code,
     presence: true,
     uniqueness: true,
-    format: { with: Regexp.union( /\A\+!\z/,/\A\+[A-Z0-9.\-]+\z/ ), message: I18n.t( 's_code_modules.msg.bad_code_syntax' )},
+    format: { with: Regexp.union( /\A\+!\z/,/\A\+[A-Z0-9.\-]+\z/ ), message: I18n.t( 'location_codes.msg.bad_code_syntax' )},
     length: { maximum: MAX_LENGTH_OF_CODE }
 
-  #validate :code_has_prefix # not needed: prefix is part of code validation
+  # not needed, test for code prefix is part of code validation: 
+  # validate :code_has_prefix
 
   validates :label,
     presence: true,
     length: { maximum: MAX_LENGTH_OF_LABEL }
+
+  # location code types are:
+  #
+  # 0 - label
+  # 1 - point
+  # 2 - line (section = 2 points)
+  # 3 - building
+  # 4 - room
+  # 5 - physical area
+  # 6 - functional area
 
   LOCATION_CODE_TYPES = LocationCode.human_attribute_name( :loc_types ).freeze
 
@@ -75,7 +86,7 @@ class LocationCode < ActiveRecord::Base
   # make sure the given code includes the class prefix
   
   def code_has_prefix
-    errors.add( :code, I18n.t( 'code_modules.msg.bad_code_format', prefix: self.class.code_prefix )) \
+    errors.add( :code, I18n.t( 's_code_modules.msg.bad_code_format', prefix: self.class.code_prefix )) \
       unless self.class.has_code_prefix( code )
   end
 
@@ -93,7 +104,7 @@ class LocationCode < ActiveRecord::Base
 
   def compute_missing_points
     case loc_type
-    when 0 # label only, no mileage
+    when 0, 3..6 # no mileage
       self.center_point = self.start_point = self.end_point = self.length = self.part_of_id = nil
     when 1 # point only, no start, end, length
       self.start_point = self.end_point = self.length = nil 
@@ -152,13 +163,15 @@ class LocationCode < ActiveRecord::Base
   # basic checks on the part_of attribute
 
   def basic_part_checks
-    unless part_of.blank? || errors.include?( :part_of_id ) then
+    unless part_of_id.blank? || errors.include?( :part_of_id ) then
       errors.add( :part_of_id, I18n.t( 'location_codes.msg.bad_part_of' )) \
         unless part_of_id != id 
     end
   end
 
   # extra validations for part_of - do only if requested
+  # these validations should produce rather warnings that something
+  # could be wrong with this records...
 
   def additional_checks
     if loc_type == 2 && start_point && end_point && center_point then
@@ -204,7 +217,7 @@ class LocationCode < ActiveRecord::Base
       PERMITTED_COMBINATIONS[ c ].include?( p )
     end
 
-    def add_range_error( value )
+    def check_range( value )
       return if value.nil?
       unless ( value >= part_of.start_point && value <= part_of.end_point )
         errors.add( :base, I18n.t( 'location_codes.msg.bad_range', 

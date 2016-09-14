@@ -13,7 +13,15 @@ module LocationCodeHelper
       val = f 
     end
     aval = val.divmod( 1000 )
-    sprintf( long ? '%d%s%07.3f' : '%d%s%03d', aval.first, sgn, aval.last )
+    if long 
+      fmt = '%d%s%07.3f'
+      prc = 3
+    else
+      fmt = '%d%s%03d'
+      prc = 0
+    end
+    aval[ 1 ] = aval[ 1 ].round( prc )
+    sprintf( fmt, aval[ 0 ], sgn, aval[ 1 ] )
   end
 
   # format a float as decimal with same precision as mileage
@@ -23,7 +31,7 @@ module LocationCodeHelper
     if long
       number_with_precision( f, precision: 3, separator: '.', delimiter: ' ' )
     else
-      f.to_i
+      number_with_precision( f, precision: 0, delimiter: ' ')
     end
   end
 

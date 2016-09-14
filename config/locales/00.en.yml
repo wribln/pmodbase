@@ -1425,7 +1425,7 @@ en:
     update_check:
       form_title:     'Result of Location Code Validation'
       msg_no_recs:    'No records found to validate.'
-      msg_no_errors:  'No record with validation errors.'
+      msg_no_errors:  'All records passed the validation tests!'
     new:
       form_title:     'Add new Location Code'
     show:
@@ -1437,10 +1437,11 @@ en:
       bad_start:      'must be before/less than End Point.'
       bad_center:     'must be between Start and End Point.'
       bad_part_of:    'must not refer to itself.'
-      bad_combo:      '%{p1} cannot be Part of %{p2}.'
-      bad_line1:      'Length is not difference between Start and End Point.'
+      bad_combo:      '%{p1} cannot be Part of a %{p2}.'
+      bad_line1:      'Length is not the difference between Start and End Point.'
       bad_line2:      'Center Point is not in the middle between Start and End Point.'
       bad_range:      'Point at %{p1} is not within Part of boundaries: %{p2} to %{p3}.'
+      bad_code_syntax: 'must start with + followed by A-Z, 0-9, period, or dash.'
 
   network_lines:
     title:            'Network Lines'

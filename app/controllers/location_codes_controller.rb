@@ -50,6 +50,7 @@ class LocationCodesController < ApplicationController
       if @location_code.save
         format.html { redirect_to @location_code, notice: t( 'location_codes.msg.new_ok' )}
       else
+        set_line_locations
         format.html { render :new }
       end
     end
@@ -62,6 +63,7 @@ class LocationCodesController < ApplicationController
       if @location_code.update(location_code_params)
         format.html { redirect_to @location_code, notice: t( 'location_codes.msg.edit_ok' )}
       else
+        set_line_locations
         format.html { render :edit }
       end
     end
