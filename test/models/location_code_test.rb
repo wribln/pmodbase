@@ -280,6 +280,9 @@ class LocationCodeTest < ActiveSupport::TestCase
 
     as = LocationCode.no_labels
     assert_equal 7, as.length
+
+    as = LocationCode.ff_part( 0 )
+    assert_equal 0, as.length
   end
 
   test 'validate_all tests' do

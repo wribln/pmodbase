@@ -5,21 +5,20 @@
 #
 require 'csv'
 
-h = nil
 row_no = 1 # include header row for easier reference
 bad_rows = 0
 good_rows = 0
 
 puts
 
-CSV.foreach(File.join(Rails.root, 'db', 'projects', 'dmr', 'network_stops.csv' ), 
+CSV.foreach(File.join(Rails.root, 'db', 'projects', @project, 'network_stops.csv' ), 
   col_sep: ';', headers: true, skip_blanks: true, encoding: 'UTF-8' ) do |row|
 
   row_no += 1
   with_errors = false
 
   if row[ 'network_station' ].nil? then
-    puts '> required network_station not specified'
+    puts "\n>>> required network_station not specified\n"
     with_errors = true
   else
     network_station = NetworkStation.find_by_code( row[ 'network_station' ])
@@ -32,12 +31,12 @@ CSV.foreach(File.join(Rails.root, 'db', 'projects', 'dmr', 'network_stops.csv' )
   end
 
   if row[ 'network_line' ].nil? then
-    puts '> required network_line not specified'
+    puts "\n>>> required network_line not specified\n"
     with errors = true
   else
     network_line = NetworkLine.find_by_code( row[ 'network_line' ])
     if network_line.nil? then
-      puts '> network_line not found in NetworkLine table'
+      puts "\n>>> network_line not found in NetworkLine table\n"
       with_errors = true
     else
       network_line_id = network_line.id
@@ -49,7 +48,7 @@ CSV.foreach(File.join(Rails.root, 'db', 'projects', 'dmr', 'network_stops.csv' )
   else
     location_code = LocationCode.find_by_code( row[ 'location_code' ])
     if location_code.nil? then
-      puts '> location_code not found in LocationCode table'
+      puts "\n>>> location_code not found in LocationCode table\n"
       with_errors = true
     else
       location_code_id = location_code.id
@@ -76,13 +75,12 @@ CSV.foreach(File.join(Rails.root, 'db', 'projects', 'dmr', 'network_stops.csv' )
   if with_errors then
     bad_rows += 1
     puts row.inspect
-    puts ">>> bad row #{ row_no} not added"
-    puts
+    puts ">>> bad row #{ row_no} not added\n"
   end
   print '.'
 end
 puts
-puts "Seed location_codes.csv completed:"
+puts "Seed network_stops.csv completed for project/#{ @project }"
 puts "#{ good_rows } rows added"
 puts "#{ bad_rows } rows skipped due to errors."
 puts

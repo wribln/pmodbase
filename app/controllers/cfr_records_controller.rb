@@ -3,7 +3,7 @@ class CfrRecordsController < ApplicationController
   initialize_feature FEATURE_ID_CFR_RECORDS, FEATURE_ACCESS_INDEX, FEATURE_CONTROL_GRP 
   before_action :set_cfr_record, only: [ :show, :show_all, :edit, :update, :destroy ]
   before_action :set_all_relations, only: [ :show, :show_all, :edit ]
-  before_action :set_file_types, only: [ :index, :edit, :new, :update ]
+  before_action :set_filter_options, only: [ :index, :edit, :new, :update ]
 
   # GET /cfr
 
@@ -59,7 +59,7 @@ class CfrRecordsController < ApplicationController
           format.html { redirect_to @cfr_record, notice: I18n.t( 'cfr_records.msg.create_ok' )}
           next
         end
-        set_file_types
+        set_filter_options
         @cfr_groups = permitted_groups( :to_create )
         format.html { render :new }
       end
@@ -84,7 +84,7 @@ class CfrRecordsController < ApplicationController
           format.html { redirect_to @cfr_record, notice: I18n.t( 'cfr_records.msg.update_ok' )}
           next
         end
-        set_file_types
+        set_filter_options
         @cfr_groups = permitted_groups( :to_update )
         format.html { render :edit }
       end
@@ -139,7 +139,7 @@ class CfrRecordsController < ApplicationController
       current_user.permission_to_access( feature_identifier, to_x, @cfr_record.group_id ) >= @cfr_record.conf_level
     end
 
-    def set_file_types
+    def set_filter_options
       @cfr_file_types = CfrFileType.all.collect{ |ft| [ ft.label, ft.id ]}
     end
 

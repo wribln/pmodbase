@@ -225,7 +225,9 @@
     <p>The last fields are again for each DSR Status Record:</p>
     <ul>
       <li><%= help_param DsrStatusRecord.human_attribute_name( :notes ) -%> is a field
-        to keep any document specific notes.</li>
+        to keep any document specific notes. When using the filter function, this field
+        is searched as well for the text given for the 
+        <%= help_term DsrStatusRecord.human_attribute_name :title -%> field.</li>
       <li><%= help_param DsrStatusRecord.human_attribute_name( :current_status ) -%>
         shows the current status of this document in its life cycle. This field is changed when a new
         <%= help_term DsrStatusRecord.human_attribute_name( :next_status_task ) -%>
@@ -291,7 +293,7 @@
       <li><%= help_term DsrStatusRecord.human_attribute_name( :quantity          ) -%></li>
       <li><%= help_term DsrStatusRecord.human_attribute_name( :weight            ) -%></li>
       <li><%= help_term DsrStatusRecord.human_attribute_name( :dsr_doc_group_id  ) -%></li>
-      <li><%= help_term DsrStatusRecord.human_attribute_name( :note              ) -%> - if needed</li>
+      <li><%= help_term DsrStatusRecord.human_attribute_name( :notes             ) -%> - if needed</li>
     </ul>
     <h4>Staging</h4>
     <p>When defining individual documents for preparation, the following, additional
@@ -340,5 +342,10 @@
       <p>Various statistics on the DSR are shown on the <%= help_term t( 'general.statistics' )-%>
       page. The statistics can be accessed via the link at the bottom of the index page. Specific
       information on the various statistics available for the DSR can be found on the <%= link_to_help :dsr_statistics, 'DSR Statistics' %> page.</p>
+    <h3>Notes on Filtering</h3>
+    <p>When using a filter for the
+      <%= help_term DsrStatusRecord.human_attribute_name :title -%> field, all
+      <%= help_term DsrStatusRecord.human_attribute_name :notes -%> will be searched as well for the
+      given term.</p>
     <%= help_footer FEATURE_ID_DSR_STATUS_RECORDS %>
   </div> <!-- /container -->

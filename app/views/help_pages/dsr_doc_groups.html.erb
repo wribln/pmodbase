@@ -18,5 +18,17 @@
         which project group this document group belongs to. Only accounts belonging
         to this project group can access this document group.</li>
     </ul>
+    <h3>Notes</h3>
+    <p><%= DsrDocGroup.model_name.human -%> are defined for sets of related
+      documents; such a document group would initially be planned as a number of
+      documents here. Later in the project, specific documents are derived from
+      this set until all documents in the document group have been individually
+      planned.</p>
+      <p>Monthly Progress Reports would be an example of a
+      <%= DsrDocGroup.model_name.human -%>: At the beginning of the project, a
+      Monthly Progress Report is planned for each month of the project's
+      duration. Every month, one Monthly Progress Report would be created as
+      individual document in the DSR. The remaining number of documents in this
+      group would be reduced accordingly.</p>
     <%= help_footer FEATURE_ID_DSR_DOC_GROUPS %>
   </div> <!-- /container -->

@@ -15,7 +15,7 @@
           <th class="col-sm-1"><%= LocationCode.human_attribute_name( :start_point  ) %></th>
           <th class="col-sm-1"><%= LocationCode.human_attribute_name( :end_point    ) %></th>
           <th class="col-sm-1"><%= LocationCode.human_attribute_name( :length       ) %></th>
-          <th class="col-sm-1"><%= LocationCode.human_attribute_name( :part_of_id )%></th>
+          <th class="col-sm-1"><%= label_tag :ff_part, LocationCode.human_attribute_name( :part_of_id )%></th>
           <th class="col-sm-1 hidden-print"><%= filter_action_title_header %></th>
         </tr>
       </thead>
@@ -24,8 +24,8 @@
           <td><%= filter_field @filter_fields, :as_code, :sw -%></td>
           <td><%= filter_field @filter_fields, :as_desc, :sw -%></td>
           <td><%= filter_select_from_string_set @filter_fields, :ff_type, LocationCode::LOCATION_CODE_TYPES -%></td>
-          <td colspan="4"></td>
-          <td><%= filter_field @filter_fields, :as_part, :sw -%></td>
+          <td colspan="3"></td>
+          <td colspan="2"><%= filter_select_from_array @filter_fields, :ff_part, @part_of_options -%></td>
           <td><%= filter_action_button -%></td>
         </tr>
       <% if @location_codes.length.zero? %>
@@ -34,7 +34,7 @@
         <% @location_codes.each do |lc| %>
           <tr>
             <td><%= lc.code %></td>
-            <td><%= display_to_items_w_hr lc.label, lc.remarks %></td>
+            <td><%= display_two_items_w_hr lc.label, lc.remarks %></td>
             <td><%= lc.loc_type_label %></td>
             <td class="td-right"><%= db_formatted_km( lc.center_point, false )%></td>
             <td class="td-right"><%= db_formatted_km( lc.start_point, false  )%></td>
@@ -50,7 +50,7 @@
     <% end %>
     <div class="no-print" id="nav">
       <%= render partial: 'shared/download_xls' %> / 
-      <%= link_to t( 'button_label.check' ), location_codes_check_path, { target: '_blank' } %>
+      <%= link_to t( 'button_label.check' ), location_codes_check_path %>
     </div>
     <%= render partial: 'shared/footer' %>
   </div>

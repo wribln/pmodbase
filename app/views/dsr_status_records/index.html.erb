@@ -10,7 +10,7 @@
         <tr>
           <th class="col-sm-1"><%= label_tag :ff_id,     DsrStatusRecord.human_attribute_name( :id                  ), class: 'control-label' %></th>
           <th class="col-sm-1"><%= label_tag :ff_group,  DsrStatusRecord.human_attribute_name( :sender_group_id     ), class: 'control-label' %></th>
-          <th class="col-sm-2"><%= label_tag :ff_title,  DsrStatusRecord.human_attribute_name( :title               ), class: 'control-label' %></th>
+          <th class="col-sm-2"><%= label_tag :ff_title,  t( '.title_and_note' ), class: 'control-label' %></th>
           <th class="col-sm-1"><%= label_tag :ff_docgr,  DsrStatusRecord.human_attribute_name( :dsr_doc_group_id    ), class: 'control-label' %></th>
           <th class="col-sm-1"><%= label_tag :ff_subgr,  DsrStatusRecord.human_attribute_name( :submission_group_id ), class: 'control-label' %></th>
           <th class="col-sm-1"><%= label_tag :ff_docsts, DsrStatusRecord.human_attribute_name( :document_status     ), class: 'control-label' %></th>
@@ -38,7 +38,7 @@
           <tr>
             <td><%= dsr.to_id %></td>
             <td><%= dsr.sender_group_code %></td>
-            <td><%= dsr.title %></td>
+            <td><%= display_two_items_w_hr dsr.title, dsr.notes %></td>
             <td><%= dsr.doc_group_code %></td>
             <td><%= dsr.submission_group_code %></td>
             <td><%= dsr.document_status_label %></td>

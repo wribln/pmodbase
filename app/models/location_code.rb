@@ -15,14 +15,16 @@ class LocationCode < ActiveRecord::Base
     presence: true,
     uniqueness: true,
     format: { with: Regexp.union( /\A\+!\z/,/\A\+[A-Z0-9.\-]+\z/ ), message: I18n.t( 'location_codes.msg.bad_code_syntax' )},
-    length: { maximum: MAX_LENGTH_OF_CODE }
+    length: { maximum: MAX_LENGTH_OF_CODE },
+    on: [ :create, :update ] # don't repeat this check for :update_check
 
   # not needed, test for code prefix is part of code validation: 
   # validate :code_has_prefix
 
   validates :label,
     presence: true,
-    length: { maximum: MAX_LENGTH_OF_LABEL }
+    length: { maximum: MAX_LENGTH_OF_LABEL },
+    on: [ :create, :update ] # don't repeat this check for :update_check
 
   # location code types are:
   #
@@ -39,34 +41,41 @@ class LocationCode < ActiveRecord::Base
   validates :loc_type,
     presence: true,
     numericality: { only_integer: true },
-    inclusion: { in: 0..( LOCATION_CODE_TYPES.size - 1 )}
+    inclusion: { in: 0..( LOCATION_CODE_TYPES.size - 1 )},
+    on: [ :create, :update ] # don't repeat this check for :update_check
 
   validates :center_point, :start_point, :end_point,
     allow_blank: true,
-    numericality: :allow_nil
+    numericality: :allow_nil,
+    on: [ :create, :update ] # don't repeat this check for :update_check
 
   validate :point_relationship
 
   validates :length,
     allow_blank: true,
-    numericality: { greater_than_or_equal_to: 0.0 }
+    numericality: { greater_than_or_equal_to: 0.0 },
+    on: [ :create, :update ] # don't repeat this check for :update_check
 
   validates :remarks,
-    length: { maximum: MAX_LENGTH_OF_DESCRIPTION }
+    length: { maximum: MAX_LENGTH_OF_DESCRIPTION },
+    on: [ :create, :update ] # don't repeat this check for :update_check
 
   validates :part_of,
-    presence: true, if: Proc.new{ |me| me.part_of_id.present? }
+    presence: true, if: Proc.new{ |me| me.part_of_id.present? },
+    on: [ :create, :update ] # don't repeat this check for :update_check
 
-  validate :basic_part_checks
+  validate :basic_part_checks, on: [ :create, :update ]
   validate :additional_checks, on: :update_check
 
   set_trimmed :code, :label
 
-  default_scope { order( code: :asc )}
+  scope :code_order, ->{ order( code: :asc )}
   scope :as_code, -> ( c ){ where( 'code  LIKE ?',  has_code_prefix( c ) ? "#{ c }%" : "#{ code_prefix }#{ c }%" )}
   scope :as_desc, -> ( l ){ where( 'label LIKE :param OR remarks LIKE :param', param: "%#{ l }%" )}
   scope :ff_type, -> ( t ){ where( loc_type: t )}
+  scope :ff_part, -> ( p ){ where( part_of_id: p )}
   scope :no_labels, ->{ where.not( loc_type: 0 )}
+  scope :part_ofs, ->{ where.not( part_of_id: nil ).distinct }
 
   # add code_model features
 

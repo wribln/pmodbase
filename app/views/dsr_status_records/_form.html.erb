@@ -253,7 +253,7 @@
       <%- end -%>
       <%- if @workflow.permitted_to_edit?( :dsr_doc_group_id ) then %>
       <div class="form-group">
-        <%= form.label :dsr_doc_group_id, class: 'col-sm-3 control-label' %>
+        <%= form.label :dsr_doc_group_idx, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
           <%= form.text_field :dsr_doc_group_id, class: 'form-control' %>
         </div>
@@ -289,7 +289,7 @@
       <%- end -%>
       <%- if @workflow.permitted_to_edit?( :prep_activity_id ) then %>
       <div class="form-group">
-        <%= form.label :prep_activity_id, class: 'col-sm-3 control-label' %>
+        <%= form.label :prep_activity_idx, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
           <%= form.text_field :prep_activity_id, class: 'form-control' %>
         </div>
@@ -309,7 +309,7 @@
       <%- end -%>
       <%- if @workflow.permitted_to_edit?( :subm_activity_id ) then %>
       <div class="form-group">
-        <%= form.label :subm_activity_id, class: 'col-sm-3 control-label' %>
+        <%= form.label :subm_activity_idx, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
           <%= form.text_field :subm_activity_id, class: 'form-control' %>
         </div>

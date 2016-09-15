@@ -1,4 +1,4 @@
-code;label;loc_type;center_point;start_point;end_point;length;note
+code;label;loc_type;center_point;start_point;end_point;length;remarks
 +1.LS;Red Line;2;;88292;140266;;
 +2.LS;Green Line;2;;83777;106248;;
 +3.LS;EXPO Line;2;;286270;301225;;

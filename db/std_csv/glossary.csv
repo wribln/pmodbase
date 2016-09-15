@@ -264,4 +264,5 @@ Work Breakdown Structure;WBS;The Work Breakdown Structure is a deliverables-orie
 Work Breakdown Structure;WBS;A hierarchical method that successively subdivides the work of the project into smaller detail. A WBS may be designed product-oriented, function-oriented, phase-oriented or mixed.;2
 Work Package;WP;A generic term for a unit within a →Work Breakdown Structure (WBS) at the lowest level of its branch, not necessarily at the lowest level of the whole WBS. Its purpose is to bundle services for specification, tender, bid, order, execution, settlement and make them easy to manage. It may be divided into →Activities.;2
 Works;;means the works and the remedying of any defects to be executed by the Contractor under the Contract.;1
-day;;"means a calendar day and ""year"" means 365 days.";1
+Day;;"means a calendar day and ""Year"" means 365 days.";1
+Year;;"""Day"" means a calendar day and ""Year"" means 365 days.";1

@@ -72,8 +72,29 @@
         entered length of a structure or line section.</li>
       <li>A <%= help_param LocationCode.human_attribute_name( :remarks )-%> field can be used to
         enter additional information or (hash) tags for the location.</li>
+      <li><%= help_param LocationCode.human_attribute_name( :part_of_id )-%> is basically for
+        information only: If is a reference to another location code which telling you that this
+        location is part of another location. For example, if you have work fronts and within
+        work fronts, you have work sections. If you assign each work section to its respective
+        work front, the tool is able to verify that the mileage points of any work section is
+        really within the boundaries of the work fronts.<br/>
+        <%= help_term LocationCode.human_attribute_name( :part_of_id )-%> makes only sense in
+        certain combinations with the current <%= LocationCode.human_attribute_name( :loc_type )-%>:
+        <ul>
+          <li>A label should not be used as
+            <%= help_term LocationCode.human_attribute_name( :part_of_id )-%> reference: How can
+            something be a part of a label? Labels are thought to document upper levels of 
+            location codes, for example '+1' would be a label for all location codes with the
+            prefix '+1'. Hence, the relationship between '+1' and '+1.LS.01' would already be
+            determined.</li>
+          <li>A point or a line section can only be a part of another, longer section.</li>
+          <li>A room can only be part of a building.</li>
+        </ul>
+        The <%= help_term LocationCode.human_attribute_name( :part_of_id )-%> will be used for
+        the <%= link_to t( 'button_label.check' ), '#check' -%> function available on the index
+        page.</li>
     </ul>
-    <h3><%= t( 'button_label.check' )%></h3>
+    <h3 id="check"><%= t( 'button_label.check' )%></h3>
     <p>The index page provides a link to a special function of this feature: When you click
     <%= help_term t( 'button_label.check' )%>, all location codes will be validated again and
     a report about any irregularities will be produced. This may be useful if you want to be sure
@@ -83,14 +104,14 @@
     computed as follows:</p>
     <ul>
       <li>Center = Start + Length / 2</li>
-      <li>Center = End - Length</li>
+      <li>Center = End - Length / 2</li>
       <li>Length = End - Start</li>
-      <li>Start = Center + Length / 2</li>
+      <li>Start = Center - Length / 2</li>
       <li>Start = End - Length</li>
-      <li>End = Center - Length / 2</li>
+      <li>End = Center + Length / 2</li>
       <li>End = Start + Length</li>
     </ul>
-    <h3>Suggested Coding Standard</h3>
+    <h3>Suggested Coding Standards</h3>
     <p>The following standard coding for rail system projects has been proven useful:</p>
     <ul>
       <li><strong>+&lt;n&gt;.LS</strong> is used to define a line section with a continuous chainage, for
@@ -128,10 +149,12 @@
     </ul>
     <p>Labels for road crossings along the alignment are suggested to be labeled as follows: use the name of the road
       along the alignment first; if this road changes its name at the intersection, add the new name after a slash;
-      use a code 'r/c' for Road Crossing, or 'r/a' for Roundabout, followed by the name of the intersecting road; if
+      use a code 'r/c' for Road Crossing, or 'r/a' for Roundabout, or 'r/j' for a Road
+      Junction, followed by the name of the intersecting road; if
       the name of a road changes at the intersection, list the both names with a slash as separator. For example:</p>
     <ul>
       <li>Alignment is along Road_A which intersects with Road_B: <strong>Road_A r/c Road_B</strong></li>
+      <li>Alignment is along Road_A where Road_B ends in a junction: <strong>Road_A r/j Road_B</strong></li>
       <li>Alignment is along Road_A which intersects with Road_B on one, Road_C on the other side: <strong>Road_A r/c Road_B / Road_C</strong></li>
       <li>Alignment on Road_A turns into Road_B: <strong>Road_A / Road_B r/c</strong></li>
       <li>Alignment on Road_A continues on Road_B, intersection with Road_C: <strong>Road_A / Road_B r/c Road_C</strong></li>

@@ -344,9 +344,12 @@ en:
         document_status_b:   'Document Status (Baseline)'
         document_states:    ['planned','in progress','in review','in submission','submitted','approved','approved with comments','rejected','completed w/o approval','updated','withdrawn/doc group complete']
         dsr_doc_group_id:     'Document Group'
+        dsr_doc_group_idx:    'Document Group [ID]'
         submission_group_id:  'Submission Group'
-        prep_activity_id:     'Prepare/Submit Activity [ID]'
-        subm_activity_id:     'Review/Approve Activity [ID]'
+        prep_activity_id:     'Prepare/Submit Activity'
+        prep_activity_idx:    'Prepare/Submit Activity [ID]'
+        subm_activity_id:     'Review/Approve Activity'
+        subm_activity_idx:    'Review/Approve Activity [ID]'
         plnd_xxx:             'Planned ...'
         plnd_xxx_b:           'Planned ... (Baseline)'
         estm_xxx:             'Estimated ...'
@@ -1159,6 +1162,7 @@ en:
       form_title:     'Edit Document Status Record'
     index:
       form_title:     'List of Documents (DSR)'
+      title_and_note: 'Title / Notes'
     new:
       form_title:     'Create Document Status Record (DSR)'
     add:

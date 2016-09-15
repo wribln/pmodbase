@@ -34,7 +34,7 @@
         <% @tia_items.each do |ti| %>
           <tr>
             <td><%= ti.tia_list.item_code( ti.seqno ) %></td>
-            <td><%= display_to_items_w_hr ti.description, ti.comment %></td>
+            <td><%= display_two_items_w_hr ti.description, ti.comment %></td>
             <td><%= ti.prio_label %></td>
             <td><%= link_to_contact_list( ti.account )%></td>
             <td><%= ti.status_label %></td>

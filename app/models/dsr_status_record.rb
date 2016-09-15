@@ -25,7 +25,7 @@ class DsrStatusRecord < ActiveRecord::Base
 
   scope :ff_id,     -> ( did ){ where( id:                  did )}
   scope :ff_group,  -> ( grp ){ where( sender_group_id:     grp )}
-  scope :ff_title,  -> ( txt ){ where( 'title LIKE ?', "%#{ txt }%" )}
+  scope :ff_title,  -> ( txt ){ where( 'title LIKE :param OR notes LIKE :param', param: "%#{ txt }%" )}
   scope :ff_docgr,  -> ( dgr ){ where( dsr_doc_group_id:    dgr )}
   scope :ff_subgr,  -> ( sgr ){ where( submission_group_id: sgr )}
   scope :ff_docsts, -> ( sts ){ where( document_status:     sts )}

@@ -31,7 +31,7 @@
             <% end %>
           <tr>
             <td>&nbsp;&nbsp;&nbsp;<%= ti.tia_list.item_code( ti.seqno ) %></td>
-            <td><%= display_to_items_w_hr ti.description, ti.comment %></td>
+            <td><%= display_two_items_w_hr ti.description, ti.comment %></td>
             <td><%= ti.prio_label %></td>
             <td><%= ti.status_label %></td>
             <td><%= db_formatted_d( ti.created_at.to_date )%></td>

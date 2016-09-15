@@ -9,12 +9,13 @@ class LocationCodesController < ApplicationController
 
   def index
     @filter_fields = filter_params
+    @part_of_options = LocationCode.includes( :parts_of_relations ).part_ofs.select( :part_of_id ).order( :part_of_id ).map{ |po| [ po.part_of.code, po.part_of_id ]}
     respond_to do |format|
       format.html do
-        @location_codes = LocationCode.filter( @filter_fields ).paginate( page: params[ :page ])
+        @location_codes = LocationCode.filter( @filter_fields ).code_order.paginate( page: params[ :page ])
       end
       format.xls do # no pagination for CSV format
-        @location_codes = LocationCode.filter( @filter_fields )
+        @location_codes = LocationCode.filter( @filter_fields ).code_order
         set_header( :xls, 'location_codes.csv' )
       end
     end
@@ -23,7 +24,7 @@ class LocationCodesController < ApplicationController
   # GET /scl/check
 
   def update_check
-    @location_codes = LocationCode.all
+    @location_codes = LocationCode.code_order
   end
 
   # GET /scls/1
@@ -98,7 +99,7 @@ class LocationCodesController < ApplicationController
     end
 
     def filter_params
-      params.slice( :as_code, :as_desc, :as_note, :ff_type ).clean_up
+      params.slice( :as_code, :as_desc, :ff_type, :ff_part ).clean_up
     end
 
 end

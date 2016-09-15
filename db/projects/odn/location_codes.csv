@@ -1,82 +1,105 @@
-code;label;loc_type;center_point;start_point;end_point;length;remarks
-+1.RC;Road Crossings (R/C);0;;;;;
-+1.RC.01;Rismarksvej R/C Ruggårdsvej;2;100075;100060;100090;30;#TLC
-+1.RC.02;Rismarksvej R/C Saxovej;2;100170;100164;100177;13;#TLC
-+1.RC.04;Rismarksvej / Højstrupvej R/C;2;100851;100841;100862;21;#TLC
-+1.RC.05;Høstrupvej R/C Uffesvej;2;101121;101112;101131;19;#TLC
-+1.RC.07;Højstrupvej Roundabout Møllemarksvej;2;101372;101364;101381;17;#TLC
-+1.RC.08;Højstrupvej / Stadionvej R/C;2;101741;101723;101760;37;#TLC
-+1.RC.09;Stadionvej / MIddelfartvej R/C;2;101979;101968;101990;22;#TLC
-+1.RC.10;Middelfartvej R/C Chr. Møllers Vej / Roesskovsvej;2;102315;102300;102330;30;#TLC
-+1.RC.12;Middelfartvej / Vesterbro R/C Grønløkkevej;2;102895;102867;102923;56;#TLC
-+1.RC.13;Vesterbro / Vestre Stationsvej R/C;2;103086;103075;103098;23;#TLC
-+1.RC.14;Vestre Stationsvej R/C Store Glasvej;2;103253;103248;103258;10;#TLC
-+1.RC.15;Vestre Stationsvej R/C Krudthusgade;2;103333;103330;103336;6;#TLC
-+1.RC.17;Vestre Stationsvej R/C Odinsgade / Fjordsgade;2;103609;103604;103614;10;#TLC
-+1.RC.20;Østre Stationsvej R/C Klostervej;2;104031;104026;104036;10;#TLC
-+1.RC.21;Østre Stationsvej R/C Hans Tausens Gade;2;104100;104097;104104;7;#TLC
-+1.RC.22;Østre Stationsvej R/C Jernbanegade;2;104243;104231;104255;24;#TLC
-+1.RC.24;Østre Stationsvej R/C Banegårdspladsen;2;104547;104540;104554;14;#TLC
-+1.RC.25;Østre Stationsvej R/C Nørregade;2;104629;104619;104640;21;#TLC
-+1.RC.33;Albanigade R/C Karen Brahes Vej;2;105433;105429;105437;8;#TLC
-+1.RC.35;Albanigade R/C Tværgade;2;105582;105579;105586;7;#TLC
-+1.RC.36;Albanigade R/C Tinghusgade;2;105646;105636;105656;20;#TLC
-+1.RC.38;Albanigade / Benediktsgade R/C;2;105801;105789;105813;24;#TLC
-+1.RC.39;Benediktsgade R/C Bjergegade;2;105934;105927;105941;14;#TLC
-+1.RC.40;Benediktsgade / Nyborgvej R/C Frederiksgade / R...;2;106133;106116;106151;35;#TLC
-+1.RC.42;Nyborgvej R/C Palnatokesvej / Reventlowsvej;2;106402;106399;106406;7;#TLC
-+1.RC.43;Nyborgvej R/C Eriksgade / Nansensgade;2;106746;106732;106760;28;#TLC
-+1.RC.44;Nyborgvej R/C Ejby Møllevej / Østerbæksvej;2;107057;107042;107073;31;#TLC
-+1.RC.46;Nyborgvej / Ørbækvej R/C Ejbyvej;2;107478;107462;107495;33;#TLC
-+1.RC.47;Ørbækvej R/C Købkesvej;2;107546;107540;107552;12;#TLC
-+1.RC.50;Ørbækvej R/C L. A. Rings Vej;2;107896;107890;107903;13;#TLC
-+1.RC.52;Ørbækvej R/C Munkerisvej;2;108225;108207;108244;37;#TLC
-+1.RC.54;Ørbækvej R/C Ørbækvej Rosengårdscentret Access;2;108525;108515;108535;20;#TLC
-+1.RC.56;Ørbækvej R/C Stærmosegårdsvej / Olfert Fischers V.;2;108849;108838;108860;22;#TLC
-+1.RC.61;Ørbækvej IKEA Cycle Way Crossing;2;109037;109034;109041;7;#TLC
-+1.RC.62;Ørbækvej R/C Ørbækvej / Bilka Access;2;109147;109138;109157;19;#TLC
-+1.RC.65;Niels Bohrs Allé / Campusvej R/C;2;109884;109864;109905;41;#TLC
-+1.RC.67;Campusvej R/C Moseskovvej;2;110083;110072;110095;23;#TLC
-+1.RC.68;Campusvej R/C Bøgeskovvej;2;110404;110396;110413;17;#TLC
-+1.RC.73;Nyt OUH Campus R/C Ringvej;2;111348;111344;111352;8;#TLC
-+1.RC.74;Nyt OUH Campus R/C Hospitalsvej;2;111838;111829;111848;19;#TLC
-+1.RC.77;Hestehaven R/C Munkebjergvej;2;112629;112611;112648;37;#TLC
-+1.RC.78;Hestehaven R/C COOP Access;2;112947;112944;112951;7;#TLC
-+1.RC.79;Hestehaven R/C Bjørnemosevej;2;113221;113214;113228;14;#TLC
-+1.RC.81;Hestehaven R/C Hjalleseparken;2;113418;113414;113422;8;#TLC
-+1.RC.83;Hestehaven / Hjallesegade R/C Svendborgvej;2;113702;113686;113719;33;#TLC
-+1.ST;Stations;0;;;;;
-+1.ST.01;Tarup Center;2;100027;100006;100048;42;
-+1.ST.02;Høstrup;2;100759;100738;100780;42;
-+1.ST.03;Odense Idrætspark;2;101459;101438;101480;42;
-+1.ST.04;Bolbro;2;102152;102131;102173;42;
-+1.ST.05;Vesterbro;2;103000;102979;103021;42;
-+1.ST.06;Vestre Stationsvej;2;103407;103386;103428;42;
-+1.ST.07;Kongensgade;2;103890;103869;103911;42;
-+1.ST.08;Bånegarden;2;104490;104469;104511;42;
-+1.ST.09;Odeon (Musik- og Theaterhuset);2;104853;104832;104874;42;
-+1.ST.10;Rådhuset;2;105225;105204;105246;42;
-+1.ST.12;Benediktsgade;2;105856;105835;105877;42;
-+1.ST.13;Palnatokesvej;2;106325;106304;106346;42;
-+1.ST.14;Svendsgade;2;107105;107084;107126;42;
-+1.ST.15;Ejbygade (Ejby);2;107403;107382;107424;42;
-+1.ST.16;L. A. Rings Vej;2;107939;107918;107960;42;
-+1.ST.17;Rosengårdcentret;2;108475;108454;108496;42;
-+1.ST.18;IKEA;2;108922;108901;108943;42;
-+1.ST.19;Bilka;2;109484;109463;109505;42;
-+1.ST.20;Cortex Park (Foskerparken);2;109966;109945;109987;42;
-+1.ST.21;SDU Nord;2;110446;110425;110467;42;
-+1.ST.22;SDU Syd;2;110892;110871;110913;42;
-+1.ST.23;OUH Nord;2;111268;111247;111289;42;
-+1.ST.24;OUH Syd;2;110892;110871;110913;42;
-+1.ST.25;Park & Ride;2;112361;112340;112382;42;
-+1.ST.26;Hestehaven Vest;2;113459;113438;113480;42;
-+1.ST.27;Hjallese;2;114184;114159;114209;50;
-+1.WF;Work Fronts;0;;;;;
-+1.WF.1;Work Front 1;2;101419;99958;102895;2922;Start of Line to Grønløkkevej
-+1.WF.1.01;Work Sector 1.1;2;100064;99958;100170;212;Start of Line to Saxovej
-+1.WF.1.02;Work Sector 1.2;2;100511;100170;100852;682;Saxovej to Høstrupvej
-+1.WF.1.03;Work Sector 1.3;2;101166;100852;101481;629;Rismarksvej to Station Odense Idrætspark
-+1.WF.1.04;Work Sector 1.4;2;101611;101481;101741;260;Station Odense Idrætspark to Stadionvej
-+1.WF.1.05;Work Sector 1.5;2;101854;101741;101968;227;Høstrupvej to Middlefartvej
-+1.WF.1.05.A;Work Sector 1.5 (Curve);2;;;;;Stadionvej / Middlefartvej Curve
+code;label;loc_type;center_point;start_point;end_point;length;remarks;part_of
++1.RC;Road Crossings (r/c);0;;;;;;
++1.RC.01;Rismarksvej r/c Ruggårdsvej;2;;100059.881;100089.62;;#TLC;
++1.RC.02;Rismarksvej r/c Saxovej;2;;100164.019;100177.059;;#TLC;
++1.RC.04;Rismarksvej / Højstrupvej r/c;2;;100841;100861.948;;#TLC;
++1.RC.05;Høstrupvej r/c Uffesvej;2;;101112.139;101131.839;;#TLC;
++1.RC.07;Højstrupvej Roundabout Møllemarksvej;2;;101364.112;101381;;#TLC;
++1.RC.08;Højstrupvej / Stadionvej r/c;2;;101723.486;101760;;#TLC;
++1.RC.09;Stadionvej / MIddelfartvej r/c;2;;101968.218;101989.93;;#TLC;
++1.RC.10;Middelfartvej r/c Christmas Møllers Vej / Roesskovsvej;2;;102299.68;102329.9;;#TLC;
++1.RC.12;Middelfartvej / Vesterbro r/c Grønløkkevej;2;;102866.942;102923.399;;#TLC;
++1.RC.13;Vesterbro / Vestre Stationsvej r/c;2;;103074.765;103097.506;;#TLC;
++1.RC.14;Vestre Stationsvej r/c Store Glasvej;2;;103248.131;103257.605;;#TLC;
++1.RC.15;Vestre Stationsvej r/c Krudthusgade;2;;103330.373;103336.326;;#TLC;
++1.RC.17;Vestre Stationsvej r/c Odinsgade / Fjordsgade;2;;103604.393;103613.507;;#TLC;
++1.RC.20;Østre Stationsvej r/c Klostervej;2;;104026.012;104036.002;;#TLC;
++1.RC.21;Østre Stationsvej r/c Hans Tausens Gade;2;;104097.245;104103.858;;#TLC;
++1.RC.22;Østre Stationsvej r/c Jernbanegade;2;;104231.177;104255.011;;#TLC;
++1.RC.24;Østre Stationsvej r/c Banegårdspladsen;2;;104540.225;104553.902;;#TLC;
++1.RC.25;Østre Stationsvej r/c Nørregade;2;;104619.39;104640;;#TLC;
++1.RC.33;Albanigade r/c Karen Brahes Vej;2;;105429.426;105436.705;;#TLC;
++1.RC.35;Albanigade r/c Tværgade;2;;105579.264;105586.483;;#TLC;
++1.RC.36;Albanigade r/c Tinghusgade;2;;105636.467;105655.543;;#TLC;
++1.RC.38;Albanigade / Benediktsgade r/c;2;;105788.611;105812.703;;#TLC;
++1.RC.39;Benediktsgade r/c Bjergegade;2;;105926.6;105941.1;;#TLC;
++1.RC.40;Benediktsgade / Nyborgvej r/c Frederiksgade / Rødegårdsvej;2;;106116.214;106151.315;;#TLC;
++1.RC.42;Nyborgvej r/c Palnatokesvej / Reventlowsvej;2;;106398.993;106405.881;;#TLC;
++1.RC.43;Nyborgvej r/c Eriksgade / Nansensgade;2;;106732.404;106760;;#TLC;
++1.RC.44;Nyborgvej r/c Ejby Møllevej / Østerbæksvej;2;;107041.52;107072.599;;#TLC;
++1.RC.46;Nyborgvej / Ørbækvej r/c Ejbyvej;2;;107461.789;107495.47;;#TLC;
++1.RC.47;Ørbækvej r/c Købkesvej;2;;107540;107551.562;;#TLC;
++1.RC.50;Ørbækvej r/c L. A. Rings Vej;2;;107890;107903;;#TLC;
++1.RC.52;Ørbækvej r/c Munkerisvej;2;;108206.832;108243.533;;#TLC;
++1.RC.54;Ørbækvej r/c Ørbækvej Rosengårdscentret Access;2;;108515.482;108535.272;;#TLC;
++1.RC.56;Ørbækvej r/c Stærmosegårdsvej / Olfert Fischers Vej;2;;108837.693;108860;;#TLC;
++1.RC.61;Ørbækvej IKEA Cycle Way Crossing;2;;109033.685;109040.685;;#TLC;
++1.RC.62;Ørbækvej r/c Ørbækvej / Bilka Access;2;;109138.178;109157.226;;#TLC;
++1.RC.65;Niels Bohrs Allé / Campusvej r/c;2;;109864.334;109905.063;;#TLC;
++1.RC.67;Campusvej r/c Moseskovvej;2;;110072.173;110095.433;;#TLC;
++1.RC.68;Campusvej r/c Bøgeskovvej;2;;110396.351;110412.843;;#TLC;
++1.RC.73;Nyt OUH Campus r/c Ringvej;2;;111343.666;111351.821;;#TLC;
++1.RC.74;Nyt OUH Campus r/c Hospitalsvej;2;;111829.207;111847.86;;#TLC;
++1.RC.77;Hestehaven r/c Munkebjergvej;2;;112610.917;112648.247;;#TLC;
++1.RC.78;Hestehaven r/j COOP Access;2;;112944.106;112951.172;;#TLC;
++1.RC.79;Hestehaven r/c Bjørnemosevej;2;;113213.953;113228.053;;#TLC;
++1.RC.81;Hestehaven r/c Hjalleseparken;2;;113413.93;113421.877;;#TLC;
++1.RC.83;Hestehaven / Hjallesegade r/c Svendborgvej;2;;113685.714;113719.329;;#TLC;
++1.ST;Stations;0;;;;;;
++1.ST.01;Tarup Center;2;;100006;100048;;;
++1.ST.02;Høstrup;2;;100738.034;100780.034;;;
++1.ST.03;Odense Idrætspark;2;;101438.392;101480.392;;;
++1.ST.04;Bolbro;2;;102130.757;102172.757;;;
++1.ST.05;Vesterbro;2;;102978.686;103020.686;;;
++1.ST.06;Vestre Stationsvej;2;;103385.999;103427.999;;;
++1.ST.07;Kongensgade;2;;103868.506;103910.506;;;
++1.ST.08;Bånegarden;2;;104468.689;104510.689;;;
++1.ST.09;Odeon (Musik- og Theaterhuset);2;;104832.236;104874.236;;;
++1.ST.10;Rådhuset;2;;105204.11;105246.11;;;
++1.ST.12;Benediktsgade;2;;105835.483;105877.483;;;
++1.ST.13;Palnatokesvej;2;;106304.088;106346.088;;;
++1.ST.14;Svendsgade;2;;107083.597;107125.597;;;
++1.ST.15;Ejbygade (Ejby);2;;107382.432;107424.432;;;
++1.ST.16;L. A. Rings Vej;2;;107917.963;107960.963;;;
++1.ST.17;Rosengårdcentret;2;;108454.179;108496.179;;;
++1.ST.18;IKEA;2;;108900.685;108942.685;;;
++1.ST.19;Bilka;2;;109463.47;109505.47;;;
++1.ST.20;Cortex Park (Foskerparken);2;;109945.051;109987.051;;;
++1.ST.21;SDU Nord;2;;110424.871;110466.871;;;
++1.ST.22;SDU Syd;2;;110870.602;110912.602;;;
++1.ST.23;OUH Nord;2;;111246.795;111288.795;;;
++1.ST.24;OUH Syd;2;;110870.602;110912.602;;;
++1.ST.25;Park & Ride;2;;112340;112382;;;
++1.ST.26;Hestehaven Vest;2;;113437.973;113479.973;;;
++1.ST.27;Hjallese;2;;114158.677;114200.677;;;
++1.WF;Work Fronts;0;;99958;114219.149;;;
++1.WF.1;Work Front 1;2;;99958;102895;;Start of Line to Grønløkkevej;
++1.WF.1.01;Work Sector 1.1;2;;99958;100170;;Start of Line to Saxovej;+1.WF.1
++1.WF.1.02;Work Sector 1.2;2;;100170;100852;;Saxovej to Høstrupvej;+1.WF.1
++1.WF.1.03;Work Sector 1.3;2;;100852;101481;;Rismarksvej to Station Odense Idrætspark;+1.WF.1
++1.WF.1.04;Work Sector 1.4;2;;101481;101741;;Station Odense Idrætspark to Stadionvej;+1.WF.1
++1.WF.1.05;Work Sector 1.5;2;;101741;101968;;Høstrupvej to Middlefartvej;+1.WF.1
++1.WF.1.05.A;Work Sector 1.5 (Curve);2;;101968;101998;;Stadionvej / Middlefartvej Curve;+1.WF.1
++1.TP;Traction Power Substations;0;;;;;;
++1.TP.01;TSS-01 Rismarksvej;1;100100;;;;on the other side of the street;+1.WF.1.01
++1.TP.02;TSS-02 Rømersvej;1;101700;;;;60-80m away from the alignment;+1.WF.1.05
++1.TP.03;TSS-03 Næsbyvej / Vestre Statioinsvej;1;103420;;;;50m away from alignment;+1.WF.2.02
++1.TP.04;TSS-04 Havnen / Banegården;1;104600;;;;80m away from alignment;+1.WF.2.06
++1.TP.05;TSS-05 Palnatokesvej;1;106330;;;;50m away from alignment;+1.WF.3.02
++1.TP.06;TSS-06 Risingvej / Ejbygade / Ejby;1;107450;;;;130m away from alignment;+1.WF.3.06
++1.TP.07;TSS-07 Ørbækvej / IKEA;1;108970;;;;100m away from alignment;+1.WF.4.01
++1.TP.08;TSS-08 SDU Nord;1;110400;;;;120m away from alignment;+1.WF.4.04
++1.TP.09;TSS-09 Park&Ride;1;112255;;;;;+1.WF.5.01
++1.TP.10;TSS-10 Hestehaven;1;112800;;;;;+1.WF.5.02
++1.TP.11;TSS-CMC;1;;;;;;
++1.WF.1.06;Work Sector 1.6;2;;;;;;
++1.WF.1.07;Work Sector 1.7;2;;;;;;
++1.WF.2;Work Front 2;2;;;;;;
++1.WF.2.01;Work Sector 2.1;2;;;;;;
++1.WF.2.02;Work Sector 2.2;2;;;;;;
++1.WF.2.03;Work Sector 2.3;2;;;;;;
++1.WF.2.04;Work Sector 2.4;2;;;;;;
++1.WF.2.05;Work Sector 2.5;2;;;;;;
++1.WF.2.06;Work Sector 2.6;2;;;;;;
++1.WF.2.07;Work Sector 2.7;2;;;;;;
++1.WF.2.08;Work Sector 2.8;2;;;;;;

@@ -22,10 +22,10 @@ bin/bundle exec rake import['db/projects/dmr/a6_codes.csv','A6Code']
 bin/bundle exec rake import['db/projects/dmr/a7_codes.csv','A7Code']
 bin/bundle exec rake import['db/projects/dmr/a8_codes.csv','A8Code']
 #
-bin/bundle exec rake import['db/projects/dmr/location_codes.csv','LocationCode']
+bin/bundle exec rake db:seed:location_codes['dmr']
 bin/bundle exec rake import['db/projects/dmr/network_lines.csv','NetworkLine']
 bin/bundle exec rake import['db/projects/dmr/network_stations.csv','NetworkStation']
-bin/bundle exec rake db:seed:network_stops
+bin/bundle exec rake db:seed:network_stops['dmr']
 #
 # the following file determines which is the project-specific document log 
 # SiemensDocumentLog or ADocumentLog

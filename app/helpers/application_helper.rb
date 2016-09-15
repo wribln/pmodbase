@@ -101,7 +101,7 @@ module ApplicationHelper
 
   # display two items in one cell with a horizontal line in between
 
-  def display_to_items_w_hr( text1, text2 )
+  def display_two_items_w_hr( text1, text2 )
     html = String.new
     html += text1.to_s
     unless text2.blank?

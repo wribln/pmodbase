@@ -74,5 +74,7 @@ task :recreate => :environment do
   Rake::Task['import'].reenable
   Rake::Task['import'].invoke('db/std_csv/hashtags.csv','Hashtag')
   puts '>>> import hash_tags completed.'
+  puts
+  puts '>>> NEXT: perform project specific seeds.'
 
 end

@@ -13,7 +13,7 @@ if [ ${#e4r} -eq 1 ]; then
   exit 1
 fi
 export RAILS_ENV="$e4r"
-bin/bundle exec rake import['db/projects/odn/location_codes.csv','LocationCode']
+bin/bundle exec rake db:seed:location_codes['odn']
 #bin/bundle exec rake import['db/projects/odn/network_lines.csv','NetworkLine']
 #bin/bundle exec rake import['db/projects/odn/network_stations.csv','NetworkStation']
 #bin/bundle exec rake db:seed:network_stops
