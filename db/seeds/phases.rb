@@ -1,5 +1,8 @@
 # - - - - - - - - - - Siemens phase standard
 
+puts
+puts '>>> Loading Siemens Phases'
+
 SiemensPhase.new do |sp|
   sp.code = '%PM010'
   sp.label_p = 'Lead Management'

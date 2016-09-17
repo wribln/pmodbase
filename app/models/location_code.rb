@@ -105,6 +105,13 @@ class LocationCode < ActiveRecord::Base
     LocationCode::LOCATION_CODE_TYPES[ loc_type ] unless loc_type.nil?
   end
 
+  # determine location type index from the given string
+  # (needed for reading input)
+
+  def self.loc_type_from_label( text )
+    LocationCode::LOCATION_CODE_TYPES.index( text )
+  end
+
   def code_and_label
     code + ' - ' + label
   end
@@ -124,19 +131,24 @@ class LocationCode < ActiveRecord::Base
             self.length = self.end_point - self.start_point
             self.center_point = self.start_point + ( self.length / 2 )
           else # start or end or both are nil
-            # nothing to do
+            # nothing I can do
           end
         else # length not nil
           if self.start_point.nil? then
             if self.end_point.nil? then
-              # nothing to do
+              # nothing I can do
             else
               self.start_point = self.end_point - self.length
               self.center_point = self.start_point + ( self.length / 2 )
             end
           else # start not nil?
-            self.end_point = self.end_point || self.start_point + self.length
-            self.center_point = self.start_point + ( self.length / 2 )
+            if self.end_point.nil? then
+              self.end_point = self.start_point + self.length
+              l = self.length
+            else
+              l = self.end_point - self.start_point
+            end
+            self.center_point = self.start_point + ( l / 2 )
           end
         end
       else # center not nil

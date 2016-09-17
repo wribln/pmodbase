@@ -7,7 +7,7 @@ class MyTiaItemsController < ApplicationController
   # get /tia_items
 
   def index
-    @tia_items = TiaItem.active.where( current_user.id ).order( :tia_list_id )
+    @tia_items = TiaItem.active.where( account: current_user.id ).order( :tia_list_id )
   end
 
   def show

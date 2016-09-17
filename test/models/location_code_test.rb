@@ -390,4 +390,11 @@ class LocationCodeTest < ActiveSupport::TestCase
     end
   end
 
+  test 'location type from label' do
+    assert 0, LocationCode.loc_type_from_label( 'label' )
+    assert_nil LocationCode.loc_type_from_label( 'labeltest' )
+    assert_nil LocationCode.loc_type_from_label( nil )
+    assert_nil LocationCode.loc_type_from_label( '' )
+  end
+
 end

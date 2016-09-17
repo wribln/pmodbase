@@ -1,15 +1,24 @@
 require 'test_helper'
 class TiaItemTest < ActiveSupport::TestCase
 
-  test 'fixture usefulness' do
+  test 'fixture 1 usefulness' do
     tia = tia_items( :tia_item_one )
-    assert_not_nil tia.tia_list_id
-    assert_not_nil tia.account_id
-    assert_equal tia.seqno, 1
+    refute_nil tia.tia_list_id
+    refute_nil tia.account_id
+    assert_equal 1, tia.seqno
     assert tia.description.length <= MAX_LENGTH_OF_DESCRIPTION
     assert tia.comment.length <= MAX_LENGTH_OF_DESCRIPTION unless tia.comment.nil?
     assert tia.prio >= 1 && tia.prio <= 3
     assert ( tia.status >= 0 )&&( tia.status <= ( TiaItem::TIA_ITEM_STATUS_LABELS.size - 1 ))
+  end
+
+  test 'fixture 2' do
+    tia = tia_items( :tia_item_two )
+    refute_nil tia.tia_list_id
+    refute_nil tia.account_id
+    assert_equal 2, tia.seqno
+    refute tia.description.blank?
+    assert_equal 1, tia.status
   end
 
   test 'ensure status dimensions' do
@@ -65,7 +74,7 @@ class TiaItemTest < ActiveSupport::TestCase
   end
 
   test 'required attributes' do
-    tx = tia_items( :tia_item_one )
+    tx = tia_items( :tia_item_two )
     tn = TiaItem.new
     assert tx.valid?
     assert_not tn.valid?
@@ -86,10 +95,10 @@ class TiaItemTest < ActiveSupport::TestCase
   end
 
   test 'seqno must be unique within list' do
-    tx = tia_items( :tia_item_one )
+    tx = tia_items( :tia_item_two )
     tn = tx
     tn.id = nil
-    assert_not tn.valid?
+    refute tn.valid?
     tn.seqno += 1
     assert tn.valid?
   end

@@ -6,7 +6,8 @@
   :start_point,
   :end_point,
   :length,
-  :remarks ], STD_CSV_OPTIONS ) -%>
+  :remarks,
+  :part_of ], STD_CSV_OPTIONS ) -%>
 <%- @location_codes.each do |lc| -%>
 <%= CSV.generate_line([
   lc.code,
@@ -16,5 +17,6 @@
   lc.start_point,
   lc.end_point,
   lc.length,
-  lc.remarks], STD_CSV_OPTIONS ).html_safe -%>
+  lc.remarks,
+  lc.part_of.try( :code )], STD_CSV_OPTIONS ).html_safe -%>
 <%- end -%>

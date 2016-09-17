@@ -12,6 +12,7 @@ bad_rows = 0
 good_rows = 0
 
 puts
+puts '>>> Loading Groups'
 
 CSV.foreach(File.join(Rails.root, 'db', 'std_csv', 'groups.csv' ), 
   col_sep: ';', headers: true, skip_blanks: true, encoding: 'UTF-8' ) do |row|

@@ -19,8 +19,8 @@
         of location will be removed.</li>
       <li>Type <%= help_term LocationCode::LOCATION_CODE_TYPES[ 1 ] -%> locations are designated by a single point along
         the alignment, for example the beginning and the end of a line section, or the position of a 
-        turn-out. Only the <%= help_term LocationCode.human_attribute_name( :center_point ) -%> coordinate
-        will be saved, all other coordinates
+        turn-out. Only the <%= help_term LocationCode.human_attribute_name( :center_point ) -%>
+        coordinate will be saved, all other coordinates
         (<%= help_term LocationCode.human_attribute_name( :start_point ) -%>,
         <%= help_term LocationCode.human_attribute_name( :end_point ) -%>, and
         <%= help_term LocationCode.human_attribute_name( :length ) -%>) will be removed.</li>
@@ -36,17 +36,19 @@
         <%= help_term LocationCode.human_attribute_name( :start_point ) -%> and the
         <%= help_term LocationCode.human_attribute_name( :end_point ) -%> - if possible.</li>
         </li>
-        <li>Type <%= help_term LocationCode::LOCATION_CODE_TYPES[ 3 ] -%> is for specific structures. No mileage
-        attributes will be accepted.</li>
-        <li>Type <%= help_term LocationCode::LOCATION_CODE_TYPES[ 4 ] -%> is for rooms in buildings. No mileage
-        attributes will be accepted. However, <%= help_term LocationCode::LOCATION_CODE_TYPES[ 4 ] -%> can be
-        part of a <%= help_term LocationCode::LOCATION_CODE_TYPES[ 3 ] -%>.</li>
-        <li>Type <%= help_term LocationCode::LOCATION_CODE_TYPES[ 5 ] -%> designates areas outside of the alignment,
-        for example, depot areas. <%= help_term LocationCode::LOCATION_CODE_TYPES[ 3 ] -%> can be part of a
-        <%= help_term LocationCode::LOCATION_CODE_TYPES[ 5 ] -%>. Such an area can be subdivided into other, smaller
-        areas, for example zones.</li>
-        <li>Type <%= help_term LocationCode::LOCATION_CODE_TYPES[ 6 ] -%> is for special locations, such as a
-        control center, or trains.</li>
+        <li>Type <%= help_term LocationCode::LOCATION_CODE_TYPES[ 3 ] -%> is for specific structures.
+        No mileage attributes will be accepted.</li>
+        <li>Type <%= help_term LocationCode::LOCATION_CODE_TYPES[ 4 ] -%> is for rooms in buildings.
+        No mileage attributes will be accepted. However, 
+        <%= help_term LocationCode::LOCATION_CODE_TYPES[ 4 ] -%> can be part of a
+        <%= help_term LocationCode::LOCATION_CODE_TYPES[ 3 ] -%>.</li>
+        <li>Type <%= help_term LocationCode::LOCATION_CODE_TYPES[ 5 ] -%> designates areas outside
+        of the alignment, for example, depot areas.
+        <%= help_term LocationCode::LOCATION_CODE_TYPES[ 3 ] -%> can be part of a
+        <%= help_term LocationCode::LOCATION_CODE_TYPES[ 5 ] -%>. Such an area can be subdivided 
+        into other, smaller areas, for example zones.</li>
+        <li>Type <%= help_term LocationCode::LOCATION_CODE_TYPES[ 6 ] -%> is for special locations,
+        such as a control center, or trains.</li>
     </ul>
     <p>The following fields can be administered:</p>
     <ul>
@@ -105,6 +107,7 @@
     <ul>
       <li>Center = Start + Length / 2</li>
       <li>Center = End - Length / 2</li>
+      <li>Center = Start + ( End - Start ) / 2</li>
       <li>Length = End - Start</li>
       <li>Start = Center - Length / 2</li>
       <li>Start = End - Length</li>

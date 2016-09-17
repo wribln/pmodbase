@@ -1,5 +1,8 @@
 # - - - - - - - - - - Countries
 
+puts
+puts '>>> Loading Countries'
+
 CountryName.create code: 'ARE', label: 'United Arab Emirates (favoured)'
 CountryName.create code: 'ARG', label: 'Argentina'
 CountryName.create code: 'AUS', label: 'Australia'
@@ -31,6 +34,9 @@ CountryName.create code: 'UAE', label: 'United Arab Emirates (preferred: ARE)'
 CountryName.create code: 'USA', label: 'United States of America'
 
 # - - - - - - - - - - States in Germany
+
+puts
+puts '>>> Loading Regions'
 
 CountryName.transaction do
   cn = CountryName.lock( true ).find_by!( code: 'GER' )

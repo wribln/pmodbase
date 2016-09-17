@@ -1,5 +1,8 @@
 # - - - - - - - - - - CfrRelations
 
+puts
+puts '>>> Loading CFR Relation Types'
+
 def create_pair( rg, l1, l2 )
   t1 = CfrRelationship.new
   t1.rs_group = rg

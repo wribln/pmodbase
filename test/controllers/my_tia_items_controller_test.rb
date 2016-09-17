@@ -11,7 +11,10 @@ class MyTiaItemsControllerTest < ActionController::TestCase
   test 'should get index' do
     get :index
     assert_response :success
-    assert_not_nil assigns( :tia_items )
+    tia_item_list = assigns( :tia_items )
+    refute tia_item_list.empty?
+    assert_equal 1, tia_item_list.length
+    # because fixture 2 belongs to different account!
   end
 
   test 'new is not permitted here' do

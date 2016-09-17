@@ -13,6 +13,7 @@ good_rows = 0
 ignored = 0
 
 puts
+puts '>>> Loading Holidays'
 
 CSV.foreach(File.join(Rails.root, 'db', 'std_csv', 'holidays.csv' ), 
   col_sep: ';', headers: true, skip_blanks: true, encoding: 'UTF-8' ) do |row|

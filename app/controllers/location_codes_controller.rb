@@ -9,13 +9,13 @@ class LocationCodesController < ApplicationController
 
   def index
     @filter_fields = filter_params
-    @part_of_options = LocationCode.includes( :parts_of_relations ).part_ofs.select( :part_of_id ).order( :part_of_id ).map{ |po| [ po.part_of.code, po.part_of_id ]}
+    @part_of_options = LocationCode.includes( :part_of ).part_ofs.select( :part_of_id ).order( :part_of_id ).map{ |po| [ po.part_of.code, po.part_of_id ]}
     respond_to do |format|
       format.html do
-        @location_codes = LocationCode.filter( @filter_fields ).code_order.paginate( page: params[ :page ])
+        @location_codes = LocationCode.filter( @filter_fields ).code_order.paginate( page: params[ :page ]).includes( :part_of )
       end
       format.xls do # no pagination for CSV format
-        @location_codes = LocationCode.filter( @filter_fields ).code_order
+        @location_codes = LocationCode.filter( @filter_fields ).code_order.includes( :part_of )
         set_header( :xls, 'location_codes.csv' )
       end
     end

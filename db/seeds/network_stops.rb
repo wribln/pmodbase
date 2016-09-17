@@ -10,6 +10,7 @@ bad_rows = 0
 good_rows = 0
 
 puts
+puts '>>> Loading Network Stops'
 
 CSV.foreach(File.join(Rails.root, 'db', 'projects', @project, 'network_stops.csv' ), 
   col_sep: ';', headers: true, skip_blanks: true, encoding: 'UTF-8' ) do |row|

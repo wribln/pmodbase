@@ -8,3 +8,10 @@ tia_item_one:
   status:   1
   archived: false
   due_date: 2015-06-08
+
+tia_item_two:
+  tia_list: tia_list_one
+  account:  two 
+  seqno:    2
+  description: 'second action item'
+  status:   1

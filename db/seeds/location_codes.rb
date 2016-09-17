@@ -12,6 +12,7 @@ good_rows = 0
 parts_rows = 0
 
 puts
+puts '>>> Loading Location Codes'
 
 # loop 1 - read data w/o part_of
 
@@ -23,7 +24,7 @@ CSV.foreach( File.join( Rails.root, 'db', 'projects', @project, 'location_codes.
   lc = LocationCode.new
   lc.code = row[ 'code' ]
   lc.label = row[ 'label' ]
-  lc.loc_type = row[ 'loc_type' ]
+  lc.loc_type = LocationCode.loc_type_from_label( row[ 'loc_type' ])
   lc.center_point = row[ 'center_point' ]
   lc.start_point = row[ 'start_point' ]
   lc.end_point = row[ 'end_point' ]
