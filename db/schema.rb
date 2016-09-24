@@ -684,9 +684,9 @@ ActiveRecord::Schema.define(version: 20160809114811) do
   add_index "pcp_subjects", ["s_owner_id"], name: "index_pcp_subjects_on_s_owner_id"
 
   create_table "people", force: :cascade do |t|
-    t.string   "formal_name",   limit: 70,  default: "",   null: false
-    t.string   "informal_name", limit: 70,  default: "",   null: false
-    t.string   "email",         limit: 255, default: "",   null: false
+    t.string   "formal_name",   limit: 70
+    t.string   "informal_name", limit: 70
+    t.string   "email",         limit: 255,                null: false
     t.boolean  "involved",                  default: true, null: false
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false

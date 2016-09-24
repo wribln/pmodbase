@@ -4,7 +4,8 @@
     <%= help_header %>
     <p class="lead">You can view and modify your personal information here:</p>
     <h3>Personal Data</h3>
-    <p>The following personal data can be updated by you:</p>
+    <p>View our statement on data privacy <%= link_to_help :data_privacy, 'here' %>.</p> 
+    <p>Help on updating your personal data:</p>
     <ul>
       <li><%= help_param Person.human_attribute_name( :formal_name ) -%> is
         the name which you prefer to be called in formal situations or by

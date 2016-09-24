@@ -23,7 +23,7 @@ class PeopleControllerTest < ActionController::TestCase
 
   test "should create person" do
     assert_difference('Person.count') do
-      post :create, person: { formal_name: @person.formal_name }
+      post :create, person: { formal_name: @person.formal_name, email: 'new@company.com' }
     end
     assert_response :success
   end
@@ -39,7 +39,7 @@ class PeopleControllerTest < ActionController::TestCase
   end
 
   test "should update person" do
-    patch :update, id: @person, person: { formal_name: @person.formal_name }
+    patch :update, id: @person, person: { formal_name: @person.formal_name, email: 'new@company.com' }
     assert_response :success
   end
 

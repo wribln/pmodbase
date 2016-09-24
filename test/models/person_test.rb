@@ -8,31 +8,33 @@ class PersonTest < ActiveSupport::TestCase
 
   test 'test default settings' do
     p = Person.new
-    assert_equal p.formal_name, '', 'should be empty string'
-    assert_equal p.informal_name, '', 'should be empty string'
-    assert_equal p.email, '', 'should be empty string'
+    assert_nil p.formal_name
+    assert_nil p.informal_name
+    assert_nil p.email
     assert p.involved, 'should be true'
-    assert_not p.save, 'at least one name must be given'
+    refute p.valid?
+    assert_includes p.errors, :base
+    assert_includes p.errors, :email
   end
 
   test 'at least formal name must be given' do
     assert_difference( 'Person.count' ) do
       p = Person.new
       p.formal_name = 'John N. Doe'
-      assert_equal p.informal_name, ''
+      p.email = 'john.doe@pmodbase.com'
+      assert_nil p.informal_name
       assert_equal p.name_with_id, 'John N. Doe'
       assert p.save, 'should be OK'
     end
   end
 
   test 'at least informal name must be given' do
-    assert_difference( 'Person.count' ) do
-      p = Person.new
-      p.informal_name = 'John'
-      assert_equal p.formal_name, ''
-      assert_equal p.name_with_id, 'John'
-      assert p.save, 'should be OK'
-    end
+    p = Person.new
+    p.informal_name = 'John'
+    p.email = 'john.doe@pmodbase.com'
+    assert_nil p.formal_name
+    assert_equal p.name_with_id, 'John'
+    assert p.valid?
   end
 
   test 'provide both names' do
@@ -40,8 +42,41 @@ class PersonTest < ActiveSupport::TestCase
       p = Person.new
       p.informal_name = 'John'
       p.formal_name = 'John N. Doe'
+      p.email = 'john.doe@pmodbase.com'
       assert_equal p.name_with_id, 'John N. Doe'
       assert p.save, 'should be OK'
+    end
+  end
+
+  test 'email must be unique' do
+    p = Person.new
+    p.informal_name = 'test'
+    p.email = people( :person_one ).email
+    refute p.valid?
+    assert_includes p.errors, :email
+    p.email = people( :person_two ).email
+    refute p.valid?
+    assert_includes p.errors, :email
+    p.email = 'x.' + p.email
+    assert p.valid?
+  end
+
+  test 'name and user_name' do
+    p = Person.new    
+    p.informal_name = 'informal'
+    [ nil, '' ].each do |f_n|
+      p.formal_name = f_n
+      assert_equal 'informal', p.name
+      assert_equal 'informal', p.user_name
+      assert_equal 'informal', p.name_with_id
+    end
+
+    p.formal_name = 'formal'
+    [ nil, '' ].each do |i_n|
+      p.informal_name = i_n
+      assert_equal 'formal', p.name
+      assert_equal 'formal', p.user_name
+      assert_equal 'formal', p.name_with_id
     end
   end
 

@@ -24,7 +24,7 @@ class Person < ActiveRecord::Base
   validates :email,
     length: { maximum: MAX_LENGTH_OF_EMAIL_STRING },
     format: { with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/ },
-    allow_blank: true,
+    presence: true,
     uniqueness: true
 
   set_trimmed :formal_name, :informal_name
@@ -32,7 +32,7 @@ class Person < ActiveRecord::Base
   # at least one of the two names must be given
 
   def check_names
-    if formal_name.empty? and informal_name.empty?
+    if formal_name.blank? and informal_name.blank?
       errors.add( :base, I18n.t( 'people.msg.one_name_at_least' ))
     end
   end
@@ -40,11 +40,11 @@ class Person < ActiveRecord::Base
   # return (in)formal name unless it is empty, then return the other name
 
   def name
-    self.formal_name.empty? ? self.informal_name : self.formal_name
+    self.formal_name.blank? ? self.informal_name : self.formal_name
   end
 
   def user_name
-    self.informal_name.empty? ? self.formal_name : self.informal_name
+    self.informal_name.blank? ? self.formal_name : self.informal_name
   end
 
   def name_with_id

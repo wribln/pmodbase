@@ -1,0 +1,28 @@
+<% help_title "Help on Data Privacy"%>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">Information about data privacy in pmodbase</p>
+    <p>This is to inform you about which of your personal data are stored in the pmodbase system.</p>
+    <p>Each user is identified by her or his email address only. Any user may have one or more accounts,
+    the account is linked to a person record which uniquely identifies a user by the email address. Any
+    other information stored about you is shown under
+    <%= help_term t( 'base.menu.my_data' )%> available on the <%= help_term t( 'base.title' )%>.
+    Furthermore, this information is completely under your control, i.e. you can update or remove any 
+    information you wish. However, an email address and a name (formal or informal) must be provided.</p>
+    <p>The email address may be used to send you information via email to you as the user of the system.
+    At this time, the email address is validated (it must have the correct syntax for an email address)
+    but not verified (checked if it is a valid email address). This may change in future versions of the
+    pmodbase system.</p>
+		<p>Whenever a reference to a specific user is saved in the database, it is done not on a person but
+		on an account basis: The reference is an internal account ID. Only when this information needs to be
+		shown to a user, this account ID is used to retrieve the current name (formal or informal) from your
+		personal data.</p>
+		<p>Any other personal data is made available for the mere purpose of easing the communication among
+		project members. The amount of information you provide is totally up to you. You can update or remove
+		it at any time.</p>
+		<p>For security reasons, backups of the database will be performed regularily. These backups contain
+		your personal data as per the date and time of the backup.</p>
+		<%= help_footer FEATURE_ID_PROFILE %>
+	</div>
+  
