@@ -72,7 +72,7 @@
           <%- unless l.object.doc_code.blank? && l.object.doc_version.blank? %>
             <div class="form-group p-group">
               <p class="col-sm-3 p-label"><%= t( '.doc_code_ver' )%></p>
-              <p class="col-sm-6"><%= l.object.cfr_location_type.try( :complete_code, l.object.doc_code, l.object.doc_version ) %></p>
+              <p class="col-sm-6"><%= l.object.complete_code %></p>
             </div>
           <%- end -%>
           <%- unless l.object.file_name.blank? %>

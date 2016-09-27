@@ -71,4 +71,10 @@ class CfrLocation < ActiveRecord::Base
     end
   end
 
+  # helper function: display document code and version if no location type present
+
+  def complete_code
+    cfr_location_type.present? ? cfr_location_type.complete_code( doc_code, doc_version ) : ( doc_code + ' - ' + doc_version )
+  end
+
 end

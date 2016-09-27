@@ -1,7 +1,4 @@
 date_from;date_until;country_name;region_name;description;work
-2016-08-25;;QAT;;Krishna Janmastami;0
-2016-09-10;2016-09-12;QAT;;Eid al-Adha (Grand Bairam/Feast of Sacrifice, est.);0
-2016-09-10;2016-09-16;KSA;;Eid Al Adha (Hajj Holiday, est.);0
 2016-12-18;;QAT;;National Day;0
 2016-12-25;;QAT;;Christmas Day;0
 2017-01-01;;QAT;;New Year's Day;0
@@ -47,7 +44,6 @@ date_from;date_until;country_name;region_name;description;work
 2018-01-01;;ARE;;New Year's Day;0
 2019-01-01;;ARE;;New Year's Day;0
 2020-01-01;;ARE;;New Year's Day;0
-2016-09-11;2016-09-13;ARE;;Eid al-Adha (Feast of the Sacrifice, est.);0
 2017-09-01;2017-09-03;ARE;;Eid al-Adha (Feast of the Sacrifice, est.);0
 2018-08-21;2018-08-23;ARE;;Eid al-Adha (Feast of the Sacrifice, est.);0
 2019-08-11;2019-08-13;ARE;;Eid al-Adha (Feast of the Sacrifice, est.);0
@@ -67,12 +63,10 @@ date_from;date_until;country_name;region_name;description;work
 2018-04-13;;ARE;;Leilat al Mi'raj (Ascension of the Prophet, est.);0
 2019-04-03;;ARE;;Leilat al Mi'raj (Ascension of the Prophet, est.);0
 2020-03-22;;ARE;;Leilat al Mi'raj (Ascension of the Prophet, est.);0
-2016-06-06;;ARE;;First of Ramadan;100
 2017-05-27;;ARE;;First of Ramadan (est.);100
 2018-05-16;;ARE;;First of Ramadan (est.);100
 2019-05-06;;ARE;;First of Ramadan (est.);100
 2020-04-24;;ARE;;First of Ramadan (est.);100
-2016-07-05;2016-07-10;ARE;;Eid al Fitr (End of Ramadan, est.);0
 2017-06-24;2017-06-29;ARE;;Eid al Fitr (End of Ramadan, est.);0
 2018-06-14;2018-06-19;ARE;;Eid al Fitr (End of Ramadan, est.);0
 2019-06-03;2019-06-08;ARE;;Eid al Fitr (End of Ramadan, est.);0
@@ -171,8 +165,6 @@ date_from;date_until;country_name;region_name;description;work
 2020-06-11;;GER;RP;Fronleichnam (German: Feast of Corpus Christi);0
 2020-06-11;;GER;SL;Fronleichnam (German: Feast of Corpus Christi);0
 2020-06-11;;AUT;;Fronleichnam (German: Feast of Corpus Christi);0
-2016-08-15;;AUT;;Mariä Himmelfahrt (German: Assumption of Mary);0
-2016-08-15;;GER;SL;Mariä Himmelfahrt (German: Assumption of Mary);0
 2017-08-15;;AUT;;Mariä Himmelfahrt (German: Assumption of Mary);0
 2017-08-15;;GER;SL;Mariä Himmelfahrt (German: Assumption of Mary);0
 2018-08-15;;AUT;;Mariä Himmelfahrt (German: Assumption of Mary);0

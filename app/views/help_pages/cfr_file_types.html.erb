@@ -9,11 +9,14 @@
       of the specific extension).</p>
     <ul>
       <li><%= help_param CfrFileType.human_attribute_name( :label )-%> is the label for the
-        given file extension.</li>
-      <li><%= help_param CfrFileType.human_attribute_name( :extensions ) -%> is a comma-separated
+        given file extension. This attribute is required.</li>
+      <li><%= help_param CfrFileType.human_attribute_name( :extensions ) -%> should be a comma-separated
         list of file extensions to be associated with the above label. Note: This feature
         does not perform extensive syntax checking on the string being input; it expects a list
         of strings separated by a comma, blanks will be removed.</li>
     </ul>
+    <h3>Note</h3>
+    <p>You can use a folder-type CFR record without any extensions as a collector for specific files. Each
+    file in that 'folder' can belong to several 'folders'. And you can specify 'folders' of 'folders'...</p>
     <%= help_footer FEATURE_ID_CFR_FILE_TYPES %>
   </div> <!-- /container -->

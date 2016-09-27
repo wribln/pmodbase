@@ -20,7 +20,7 @@ class CfrFileTypeTest < ActiveSupport::TestCase
     assert_nil ft.extensions
     assert_nil ft.label
     refute ft.valid?
-    assert_includes ft.errors, :extensions_internal
+    assert_includes ft.errors, :label
   end
 
   test 'no duplicate extension' do
@@ -76,6 +76,19 @@ class CfrFileTypeTest < ActiveSupport::TestCase
   end
 
   test 'uniqueness of extension' do
+    ft1 = cfr_file_types( :two )
+    assert ft1.extensions.include? 'pdf'
+    ft2 = CfrFileType.new
+    ft2.label = 'test'
+    ft2.extensions = 'pdf'
+    refute ft2.valid?
+    assert_includes ft2.errors, :extensions
+  end
+
+  test 'empty extension list' do
+    ft = CfrFileType.new
+    ft.label = 'Folder'
+    assert ft.valid?, ft.errors.messages
   end
 
 end

@@ -10,11 +10,12 @@ class CfrFileType < ActiveRecord::Base
   attr_accessor :extensions
 
   validates :extensions_internal,
-    presence: true,
+    allow_blank: true,
     length: { maximum: MAX_LENGTH_OF_NOTE },
     format: { with: /\A(,\w+)+,\z/, message: I18n.t( 'cfr_file_types.msg.bad_format' )}
 
   validates :label,
+    presence: true,
     length: { maximum: MAX_LENGTH_OF_LABEL }
 
   validate :uniqueness_of_extension
@@ -56,7 +57,7 @@ class CfrFileType < ActiveRecord::Base
   # remove all white space from string, make it lowercase, and add leading and trailing comma
 
   def extensions=( text )
-    text ? write_attribute( :extensions_internal, ',' + text.gsub( /\s+/,'' ).downcase + ',' ) : nil
+    text.blank? ? nil : write_attribute( :extensions_internal, ',' + text.gsub( /\s+/,'' ).downcase + ',' )
   end
 
   # somehow a getter method for views

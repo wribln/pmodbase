@@ -166,7 +166,7 @@ ActiveRecord::Schema.define(version: 20160809114811) do
 
   create_table "cfr_file_types", force: :cascade do |t|
     t.string   "label",               limit: 100
-    t.string   "extensions_internal", limit: 50,  null: false
+    t.string   "extensions_internal", limit: 50
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
   end
