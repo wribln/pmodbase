@@ -62,6 +62,10 @@ module ApplicationHelper
     html.html_safe
   end
 
+  def display_nil
+    '<input class="form-control" value="" readonly />'.html_safe
+  end
+
   # display a check box
 
   def display_check_box( value )

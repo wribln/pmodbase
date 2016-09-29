@@ -38,4 +38,8 @@ class ApplicationHelperTest < ActionView::TestCase
     assert_equal 'item1<br />item2', display_two_items_w_br( 'item1', 'item2' )
   end
 
+  test 'display nil' do
+    assert_equal display_nil, display_value( '' )
+  end
+
 end

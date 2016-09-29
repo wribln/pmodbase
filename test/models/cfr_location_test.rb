@@ -10,7 +10,7 @@ class CfrLocationTest < ActiveSupport::TestCase
     refute_nil l.doc_version
     refute_nil l.doc_code
     refute_nil l.uri
-    assert l.valid?
+    assert l.valid?, l.errors.messages
   end
 
   test 'try new with defaults' do
@@ -118,6 +118,21 @@ class CfrLocationTest < ActiveSupport::TestCase
 
     l.cfr_location_type = cfr_location_types( :five )
     refute l.valid?
+  end
+
+  test 'complete code method' do
+    l = cfr_locations( :one )
+    assert_equal 'WAY-UP-HI-0', l.complete_code
+    l.doc_version = ''
+    assert_equal 'WAY-UP-HI-', l.complete_code
+    l.doc_version = nil    
+    assert_equal 'WAY-UP-HI-', l.complete_code
+    l.doc_code = ''
+    assert l.complete_code.blank?
+    l.doc_code = nil
+    assert l.complete_code.blank?
+    l.doc_version = '1'
+    assert_equal '-1', l.complete_code
   end
 
 end

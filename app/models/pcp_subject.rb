@@ -13,6 +13,7 @@ class PcpSubject < ActiveRecord::Base
   belongs_to :c_deputy, -> { readonly }, foreign_key: :c_deputy_id, class_name: 'Account'
   belongs_to :p_deputy, -> { readonly }, foreign_key: :p_deputy_id, class_name: 'Account'
   belongs_to :s_owner,  -> { readonly }, foreign_key: :s_owner_id, class_name: 'Account'
+  belongs_to :cfr_record, ->{ readonly }, inverse_of: :pcp_subjects
   has_many   :pcp_steps,    -> { most_recent }, dependent: :destroy, autosave: true,  inverse_of: :pcp_subject
   has_many   :pcp_items,                        dependent: :destroy, validate: false, inverse_of: :pcp_subject
   has_many   :pcp_members,                      dependent: :destroy, validate: false, inverse_of: :pcp_subject
@@ -39,6 +40,9 @@ class PcpSubject < ActiveRecord::Base
 
   validates :s_owner,
     presence: true, if: Proc.new{ |me| me.s_owner_id.present? }
+
+  validates :cfr_record,
+    presence: true, if: Proc.new{ |me| me.cfr_record_id.present? }
 
   validates :title,
     length: { maximum: MAX_LENGTH_OF_TITLE }
@@ -148,10 +152,14 @@ class PcpSubject < ActiveRecord::Base
     end
     if project_doc_id && project_doc_id.is_n? then
       doc = ProjectDocLog.get_title_and_doc_id( project_doc_id.to_i )
-      unless doc.nil? then
-        write_attribute( :title, doc[ 0 ])
-        write_attribute( :project_doc_id, doc[ 1 ])
-      end
+    elsif cfr_record_id && project_doc_id.nil? then
+      doc = CfrRecord.get_title_and_doc_id( cfr_record_id )
+    else
+      doc = nil
+    end
+    unless doc.nil? then
+      write_attribute( :title, doc[ 0 ])
+      write_attribute( :project_doc_id, doc[ 1 ])
     end
   end 
 

@@ -9,6 +9,7 @@ class CreatePcpSubjects < ActiveRecord::Migration
       t.belongs_to  :p_owner,       null: false,  index: true
       t.belongs_to  :p_deputy,                    index: true
       t.belongs_to  :s_owner,                     index: true
+      t.belongs_to  :cfr_record,                  index: true
       t.string      :title,           limit: MAX_LENGTH_OF_TITLE
       t.string      :note,            limit: MAX_LENGTH_OF_NOTE
       t.string      :project_doc_id,  limit: MAX_LENGTH_OF_DOC_ID

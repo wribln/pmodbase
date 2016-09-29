@@ -9,9 +9,10 @@ class CfrRecord < ActiveRecord::Base
   belongs_to :main_location, foreign_key: 'main_location_id', class_name: 'CfrLocation', inverse_of: :cfr_record
   has_many   :src_relations, dependent: :destroy, foreign_key: 'src_record_id', class_name: 'CfrRelation', inverse_of: :src_record
   has_many   :dst_relations, dependent: :destroy, foreign_key: 'dst_record_id', class_name: 'CfrRelation', inverse_of: :dst_record
-  has_many   :cfr_locations, dependent: :destroy, inverse_of: :cfr_record
+  has_many   :cfr_locations, -> { order( is_main_location: :desc )}, dependent: :destroy, inverse_of: :cfr_record
   has_many   :main_locations, -> { where( is_main_location: true )}, class_name: 'CfrLocation'
   has_many   :glossary_items, inverse_of: :cfr_record
+  has_many   :pcp_subjects, inverse_of: :cfr_record
   accepts_nested_attributes_for :cfr_locations, allow_destroy: true, reject_if: :location_empty?
   accepts_nested_attributes_for :src_relations, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :dst_relations, allow_destroy: true, reject_if: :all_blank
@@ -116,7 +117,7 @@ class CfrRecord < ActiveRecord::Base
 
   def all_main_locations
     errors.add( :base, I18n.t( 'cfr_records.msg.too_many_mains' )) \
-      if cfr_locations.find_all{ |x| x[ :is_main_location ] && !x.marked_for_destruction? }.length > 1
+      if cfr_locations.find_all{ |x| x.is_main_location && !x.marked_for_destruction? }.length > 1
   end
 
   # the following validation method CANNOT be called during the 
@@ -200,6 +201,15 @@ class CfrRecord < ActiveRecord::Base
 
   def main_location_uri
     main_location.present? ? main_location.get_hyperlink : nil
+  end
+
+  # return title and document code - if any:
+  # the result is an array with the title in the .first element,
+  # and - if it exists - the document code in the .second element
+
+  def self.get_title_and_doc_id( i )
+    cfr = find( i )
+    [ cfr.title ] + cfr.cfr_locations.where.not( doc_code: nil ).order( is_main_location: :desc ).limit( 1 ).pluck( :doc_code )
   end
 
 end

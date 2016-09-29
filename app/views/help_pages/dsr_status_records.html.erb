@@ -197,7 +197,7 @@
         (for the first submission) or from the
         <%= help_term DsrStatusRecord.human_attribute_name( :next_submission ) -%>
         (for subsequent submissions) from the 
-        <%= link_to_help :dsr_status_records, DsrStatusRecord.model_name.human -%>.</li>
+        <%= help_term DsrStatusRecord.model_name.human -%>.</li>
       <li><%= help_param DsrSubmission.human_attribute_name( :actl_submission ) -%>
         is set to the actual date of the submission. Note: It should be agreed for the
         project which date should be used here, the date when the document was sent
@@ -218,8 +218,8 @@
       <li><%= help_param DsrSubmission.human_attribute_name( :response_status ) -%>
         needs to be filled out with the official review/approval status as listed in
         the response letter. This status will be carried over the overall 
-        <%= help_term DsrSubmission.human_attribute_name( :document_status ) -%>
-        within the <%= link_to_help :dsr_status_records, DsrStatusRecord.model_name.human -%>.</li>
+        <%= help_term DsrStatusRecord.human_attribute_name( :document_status ) -%>
+        within the <%= help_term DsrStatusRecord.model_name.human -%>.</li>
     </ul>
     </p>
     <p>The last fields are again for each DSR Status Record:</p>

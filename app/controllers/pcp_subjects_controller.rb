@@ -223,7 +223,7 @@ class PcpSubjectsController < ApplicationController
       if @pcp_subject.nil? || @pcp_subject.id.nil? then
         # assume new/create
         @valid_step_params = []
-        @valid_subject_params = [ :pcp_category_id, :title, :note, :project_doc_id, :report_doc_id ]
+        @valid_subject_params = [ :pcp_category_id, :title, :note, :project_doc_id, :report_doc_id, :cfr_record_id ]
       else
         if @pcp_curr_step.in_presenting_group? then
           if @pcp_subject.user_is_owner_or_deputy?( current_user, 0 )
@@ -232,11 +232,11 @@ class PcpSubjectsController < ApplicationController
               @valid_subject_params = [ :archived ]
             else
               @valid_step_params = [ :id, :subject_version, :note, :subject_date, :due_date, :report_version, :release_notice ]
-              @valid_subject_params = [ :pcp_category_id, :title, :note, :project_doc_id, :report_doc_id, :p_group_id, :p_owner_id, :p_deputy_id, :s_owner_id ]
+              @valid_subject_params = [ :pcp_category_id, :title, :note, :project_doc_id, :report_doc_id, :p_group_id, :p_owner_id, :p_deputy_id, :s_owner_id, :cfr_record_id ]
             end
           elsif @pcp_subject.user_is_creator?( current_user ) && @pcp_curr_step.step_no == 0
             @valid_step_params = []
-            @valid_subject_params = [ :title, :note, :project_doc_id, :report_doc_id ]
+            @valid_subject_params = [ :title, :note, :project_doc_id, :report_doc_id, :cfr_record_id ]
           end
         else
           @valid_step_params = [ :id, :note, :due_date, :new_assmt, :report_version, :release_notice ]

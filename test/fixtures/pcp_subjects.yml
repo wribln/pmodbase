@@ -12,6 +12,7 @@ one:
   p_owner:         one
   p_deputy: 
   report_doc_id:  'TEST(MIR)DIR_000002'
+  cfr_record:     one
 
 two:
   pcp_category:   one
@@ -25,3 +26,4 @@ two:
   p_owner:         one
   p_deputy: 
   report_doc_id:  'TEST(MIR)DIR_000004'
+  cfr_record:     two

@@ -1,0 +1,30 @@
+<% help_title 'PCP How to 17' %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header 'PCP - ' + t( 'pcp_help.pcp_how_to_17' ) %>
+    <p class="lead">If you do not or cannot use your project's main document management 
+    system to store all documents related to a Present-Comment Process (PCP), this text
+    shows you how to setup a CFR (Central File Register) structure to hold all PCP-related
+    documents.</p>
+    <p>In a simple PCP, you are dealing with a single <strong>PCP Document Version 0</strong>
+    which will be released for review. The initial release report would be the 
+    <strong>Release Report Version 0</strong>. When all comments are collected, these comments
+    would be returned in the <strong>Response Report Version 1</strong>. After modifications
+    of the <strong>PCP Document</strong>, a new version 1 is released with the
+    <strong>Release Report Version 2</strong>. Hopefully, all questions could be answered and 
+    the final <strong>Response Report Version 3</strong> would contain the approval of the
+    document.</p>
+    <%= image_tag 'pcp_cfr_structure.png', alt: 'Schematic CFR Structure for a PCP', class: 'img-responsive' -%>
+    <p>Each document (PCP Document, Release Report, Response Report) is added to the CFR as
+    individual record. The respective relations can be set accordingly:
+    <ul>
+    <li><strong>Release Reports</strong> have a <em>is release document for</em> relationship
+    to the submitted <strong>PCP Document</strong> (the reverse relationship is: 
+    <em>is released by</em>).</li>
+    <li>The corresponding <strong>Response Report</strong> <em>contains remarks on</em> the
+    previously submitted <strong>PCP Document</strong>.</li>
+    <li>The modified version of the <strong>PCP Document</strong> <em>is successor of</em>
+    the original version (the reverse relationship is: <em>is predecessor of</em>)</li>.
+    </ul>
+    <%= help_footer FEATURE_ID_HELP_PAGES %>
+  </div> <!-- /container -->

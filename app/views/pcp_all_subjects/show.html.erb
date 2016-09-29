@@ -30,6 +30,12 @@
         </div>
       </div>
       <div class="form-group">
+        <%= f.label :cfr_record_id, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-6">
+          <%= f.object.cfr_record_id.nil? ? display_nil : link_to_cfr( f.object.cfr_record, :button ) %>
+        </div>
+      </div>
+      <div class="form-group">
         <%= f.label :project_doc_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
           <%= display_value f.object.project_doc_id %>
@@ -43,20 +49,14 @@
       </div>
       <div class="form-group">
         <%= f.label :p_owner_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-1">
-          <%= display_value f.object.p_owner_id %>
-        </div>
-        <div class="col-sm-4">
-          <p class="form-control-static"><%= link_to_contact_list f.object.p_owner %></p>
+        <div class="col-sm-2">
+          <%= link_to_contact_list( f.object.p_owner, :button )%>
         </div>
       </div>
       <div class="form-group">
         <%= f.label :p_deputy_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-1">
-          <%= display_value f.object.p_deputy_id %>
-        </div>
-        <div class="col-sm-4">
-          <p class="form-control-static"><%= link_to_contact_list f.object.p_deputy %></p>
+        <div class="col-sm-2">
+          <%= f.object.p_deputy.nil? ? display_nil : link_to_contact_list( f.object.p_deputy, :button )%>
         </div>
       </div>
       <div class="form-group">
@@ -67,20 +67,14 @@
       </div>
       <div class="form-group">
         <%= f.label :c_owner_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-1">
-          <%= display_value f.object.c_owner_id %>
-        </div>
-        <div class="col-sm-4">
-          <p class="form-control-static"><%= link_to_contact_list f.object.c_owner %></p>
+        <div class="col-sm-2">
+          <%= link_to_contact_list( f.object.c_owner, :button )%>
         </div>
       </div>
       <div class="form-group">
         <%= f.label :c_deputy_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-1">
-          <%= display_value f.object.c_deputy_id %>
-        </div>
-        <div class="col-sm-4">
-          <p class="form-control-static"><%= link_to_contact_list f.object.c_deputy %></p>
+        <div class="col-sm-2">
+          <%= f.object.c_deputy.nil? ? display_nil : link_to_contact_list( f.object.c_deputy, :button )%>
         </div>
       </div>
       <div class="form-group">

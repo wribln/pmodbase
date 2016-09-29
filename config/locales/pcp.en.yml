@@ -66,6 +66,7 @@ en:
         note:           'Notes on this Subject'
         project_doc_id: :general.attributes.project_doc_id
         report_doc_id:  'Project DMS ID for PCP Report'
+        cfr_record_id:  'CFR Record'
         c_group_id:     'Commenting Project Group'
         p_group_id:     'Presenting Project Group'
         c_owner_id:     'Owner (Commenting Group)'
@@ -129,10 +130,15 @@ en:
     pcp_how_to_14:    'How to ... release a PCP Subject for the next Review Step'
     pcp_how_to_15:    'How to ... release a PCP Subject for the next Response Step'
     pcp_how_to_16:    'How to ... document site observations'
+    pcp_how_to_17:    'How to ... structure CFR Records for the a PCP Subject'
 
   pcp_categories:
     title:            'PCP Categories'
     form:
+      c_owner_id:     'Owner (Commenting Group) [ID]'
+      p_owner_id:     'Owner (Presenting Group) [ID]'
+      c_deputy_id:    'Deputy (Commenting Group) [ID]'
+      p_deputy_id:    'Deputy (Presenting Group) [ID]'
       g_prompt:       :general.select_prompt
     edit:
       form_title:     'Edit PCP Category'
@@ -262,6 +268,13 @@ en:
   pcp_subjects:
     title:            'My PCP Subjects'
     form:
+      c_owner_id:     'Owner (Commenting Group) [ID]'
+      p_owner_id:     'Owner (Presenting Group) [ID]'
+      c_deputy_id:    'Deputy (Commenting Group) [ID]'
+      p_deputy_id:    'Deputy (Presenting Group) [ID]'
+      s_owner_id:     'Subject Owner [ID]'
+      cfr_record_id:  'CFR Record [ID]'
+      cfr_record_link: 'Show CFR Index'
       g_prompt:       :general.select_prompt
       c_prompt:       'Use PCP Category Default'
       cs_heading:     'Current Step: %{label}'

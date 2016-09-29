@@ -14,6 +14,7 @@ class PcpSubjectTest < ActiveSupport::TestCase
     refute_nil ps.p_owner_id
     assert_nil ps.c_deputy_id
     assert_nil ps.p_deputy_id
+    refute_nil ps.cfr_record_id
     assert ps.valid?, ps.errors.messages
     assert_equal 0, ps.valid_subject?
     assert_equal 2, ps.pcp_steps.count
@@ -32,6 +33,7 @@ class PcpSubjectTest < ActiveSupport::TestCase
     refute_nil ps.p_owner_id
     assert_nil ps.c_deputy_id
     assert_nil ps.p_deputy_id
+    refute_nil ps.cfr_record_id
     assert ps.valid?, ps.errors.messages
     assert_equal 0, ps.valid_subject?
     assert_equal 1, ps.pcp_steps.count
@@ -51,6 +53,7 @@ class PcpSubjectTest < ActiveSupport::TestCase
     refute_includes ps.errors, :note
     refute_includes ps.errors, :project_doc_id
     refute_includes ps.errors, :report_doc_id
+    refute_includes ps.errors, :cfr_record_id
   end
 
   test 'new object inherits defaults from given pcp_category' do
@@ -109,6 +112,30 @@ class PcpSubjectTest < ActiveSupport::TestCase
     oc.destroy
     assert_raises( ActiveRecord::RecordNotFound ){ ps.reload }
     refute ps.valid?, ps.inspect
+  end
+
+  test 'cfr_record must be valid - if given' do
+    ps = pcp_subjects( :one )
+
+    ps.cfr_record_id = nil
+    assert ps.valid?
+
+    ps.cfr_record_id = 0
+    refute ps.valid?
+    assert_includes ps.errors, :cfr_record_id
+
+    ps.cfr_record = cfr_records( :two )
+    assert ps.valid?
+
+    nc = cfr_records( :one ).dup
+    nc.save
+    ps.cfr_record_id = nc.id
+    assert ps.save
+
+    nc.destroy
+    ps.reload
+    refute ps.valid?
+    assert_includes ps.errors, :cfr_record_id
   end
 
   test 'permit to set p defaults from PCP Category' do
@@ -442,6 +469,23 @@ class PcpSubjectTest < ActiveSupport::TestCase
     assert_equal 1, as.length
     assert_equal as[ 0 ].id, pcp_subjects( :two ).id
 
+  end
+
+  test 'load title and document code when using cfr_record' do
+    ps = PcpSubject.new
+    ps.pcp_category = pcp_categories( :one )
+
+    # just a title
+
+    ps.cfr_record = cfr_records( :one )
+    assert ps.valid?, ps.errors.messages
+    assert_equal cfr_records( :one ).title, ps.title
+    assert_nil ps.project_doc_id
+
+    ps.cfr_record = cfr_records( :two )
+    assert ps.valid?, ps.errors.messages
+    assert_equal cfr_records( :two ).title, ps.title
+    assert_equal cfr_locations( :one ).doc_code, ps.project_doc_id
   end
 
 end

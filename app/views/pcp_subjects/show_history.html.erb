@@ -24,6 +24,10 @@
           <td><%= @pcp_subject.note %></td>
         </tr>
         <tr>
+          <td><%= PcpSubject.human_attribute_name( :cfr_record_id )%></td>
+          <td><%= @pcp_subject.cfr_record.try( :text_and_id, :title )%></td>
+        </tr>
+        <tr>
           <td><%= PcpSubject.human_attribute_name( :project_doc_id )%></td>
           <td><%= @pcp_subject.project_doc_id %></td>
         </tr>

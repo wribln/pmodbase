@@ -8,6 +8,7 @@ Drawing (AutoCAD);dwg,dxf,dxb,dwf,shp
 Drawing (MicroStation);dgn
 E-Mail (Microsoft);msg
 File Archive (ZIP);zip
+Folder;
 Image;gif,jpeg,jpg,png,tif,tiff
 Plain Text File;txt
 Portable Document Format (PDF);pdf

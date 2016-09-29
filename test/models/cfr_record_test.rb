@@ -219,8 +219,45 @@ class CfrRecordTest < ActiveSupport::TestCase
     cfr.update_main_location
     cfr.reload
     assert_equal l2.id, cfr.main_location_id
-    assert cfr.valid?
+    assert cfr.valid?, cfr.errors.messages
   end
 
+  test 'get title and doc id' do
+    cfr = cfr_records( :one )
+    td = CfrRecord.get_title_and_doc_id( cfr.id )
+    assert_equal td.first, cfr.title
+    assert_nil td.second
+    
+    cfr = cfr_records( :two )
+    cfl = cfr_locations( :one )
+    td = CfrRecord.get_title_and_doc_id( cfr.id )
+    assert_equal 2, td.length
+    assert_equal td.first, cfr.title
+    assert_equal td.second, cfl.doc_code
+
+    # add other location with doc_code
+
+    cfn = cfr.cfr_locations.build( doc_code: 'ONE-MORE' )
+    assert cfn.save
+
+    # ... should give same result as above
+
+    td = CfrRecord.get_title_and_doc_id( cfr.id )
+    assert_equal 2, td.length
+    assert_equal td.first, cfr.title
+    assert_equal td.second, cfl.doc_code
+
+    # remove doc_code from main location
+
+    cfl.doc_code = nil
+    assert cfl.save
+
+    # should give new doc code
+
+    td = CfrRecord.get_title_and_doc_id( cfr.id )
+    assert_equal 2, td.length
+    assert_equal td.first, cfr.title
+    assert_equal td.second, cfn.doc_code
+  end
 
 end

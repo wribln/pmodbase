@@ -16,7 +16,7 @@
         </div>
         <div class="form-group">
           <%= form.label :title, class: 'col-sm-3 control-label' %>
-          <div class="col-sm-4">
+          <div class="col-sm-6">
             <%- if @valid_subject_params.include? :title then -%>
               <%= form.text_field :title, class: 'form-control' %>
             <%- else -%>
@@ -26,7 +26,7 @@
         </div>
         <div class="form-group">
           <%= form.label :note, class: 'col-sm-3 control-label' %>
-          <div class="col-sm-4">
+          <div class="col-sm-6">
             <%- if @valid_subject_params.include? :note then -%>
               <%= form.text_field :note, class: 'form-control' %>
             <%- else -%>
@@ -44,6 +44,22 @@
             <%- end -%>
           </div>
         </div>
+        <div class="form-group">
+        <%- if @valid_subject_params.include? :cfr_record_id then -%>
+          <%= form.label :cfr_record_id, t( '.cfr_record_id' ), class: 'col-sm-3 control-label' %>
+          <div class="col-sm-1">
+            <%= form.text_field :cfr_record_id, class: 'form-control' %>
+          </div>
+          <div class="col-sm-2">
+            <%= link_to t( '.cfr_record_link' ), cfr_records_path, class: 'btn btn-sm btn-block btn-default', target: '_blank' %>
+          </div>
+        <%- else -%>
+          <%= form.label :cfr_record_id, class: 'col-sm-3 control-label' %>
+          <div class="col-sm-6">
+            <%= display_value form.object.cfr_record.try( :text_and_id, :title ) %>
+          </div>
+        <%- end -%>
+        </div>
       <!-- request input for groups and accounts only when updating -->
       <%- unless action_name == 'new' -%>
        <div class="form-group">
@@ -57,7 +73,7 @@
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :p_owner_id, class: 'col-sm-3 control-label' %>
+        <%= form.label :p_owner_id, t( '.p_owner_id' ), class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
           <%- if @valid_subject_params.include? :p_owner_id then -%>
             <%= form.text_field :p_owner_id, class: 'form-control' %>
@@ -70,7 +86,7 @@
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :p_deputy_id, class: 'col-sm-3 control-label' %>
+        <%= form.label :p_deputy_id, t( '.p_deputy_id' ), class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
           <%- if @valid_subject_params.include? :p_deputy_id then -%>
             <%= form.text_field :p_deputy_id, class: 'form-control' %>
@@ -82,7 +98,7 @@
       <%# do not show subject owner if current user is not in the presenting group %>
       <%- if PcpSubject.same_group?( 0, @pcp_viewing_group_map ) -%>
       <div class="form-group">
-        <%= form.label :s_owner_id, class: 'col-sm-3 control-label' %>
+        <%= form.label :s_owner_id, t( '.s_owner_id' ), class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
           <%- if @valid_subject_params.include? :s_owner_id then -%>
             <%= form.text_field :s_owner_id, class: 'form-control' %>
@@ -103,7 +119,7 @@
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :c_owner_id, class: 'col-sm-3 control-label' %>
+        <%= form.label :c_owner_id, t( '.c_owner_id' ), class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
           <%- if @valid_subject_params.include? :c_owner_id then -%>
           <%= form.text_field :c_owner_id, class: 'form-control' %>
@@ -116,7 +132,7 @@
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :c_deputy_id, class: 'col-sm-3 control-label' %>
+        <%= form.label :c_deputy_id, t( '.c_deputy_id' ), class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
           <%- if @valid_subject_params.include? :c_deputy_id then -%>
             <%= form.text_field :c_deputy_id, class: 'form-control' %>

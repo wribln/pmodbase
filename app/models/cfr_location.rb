@@ -33,12 +33,25 @@ class CfrLocation < ActiveRecord::Base
   validate :location_type_and_uri
 
   # this is only to help cfr_record to determine which location is the main location
-  # see comments there
+  # see comments there; needs to be an integer in the database as boolean is not a
+  # standard data type in SQL and I need to be able to sort by this field correctly 
+  # (is_main_location should be first for all databases); implemented to be boolean
+  # in model, integer internally (see getter/setter methods)
 
   validates :is_main_location,
-    inclusion: { in: [ true, false ]}
+    inclusion: { in: [ false, true ]}
 
   set_trimmed :uri, :file_name, :doc_code, :doc_version
+
+  # getter/setter for is_main_location
+
+  def is_main_location=( b )
+    write_attribute( :is_main_location, b ? 1 : 0 )
+  end
+
+  def is_main_location
+    read_attribute( :is_main_location ) == 0 ? false : true
+  end
 
   # ensure that prefix of cfr_location_type matches uri
 

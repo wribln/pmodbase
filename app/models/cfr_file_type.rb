@@ -21,6 +21,7 @@ class CfrFileType < ActiveRecord::Base
   validate :uniqueness_of_extension
 
   scope :find_by_extension, ->( ext ){ where "extensions_internal LIKE \"%,#{ ext },%\"" }
+  default_scope  { order( label: :asc )}
 
   set_trimmed :label
 
@@ -30,8 +31,7 @@ class CfrFileType < ActiveRecord::Base
   def uniqueness_of_extension
     return if extensions.blank?
     ft0 = extensions.split( ',' )
-    ftr = CfrFileType.find_each do |ft|
-      next if ft.id == self.id
+    ftr = CfrFileType.where.not( id: self.id, extensions_internal: nil ).unscope( :order ).each do |ft|
       ftd = ft.extensions.split( ',' ) & ft0
       unless ftd.empty?
         errors.add( :extensions, I18n.t( 'cfr_file_types.msg.dup_ext', dup: ftd, id: ft.id ))

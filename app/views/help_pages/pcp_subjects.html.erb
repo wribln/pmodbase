@@ -49,6 +49,22 @@
         to do so: Only remember that the version or revision code
         (<%= help_term PcpStep.human_attribute_name( :subject_version )-%>
         is appended to this string for the release report.</li>
+      <li><%= help_param PcpSubject.human_attribute_name( :cfr_record_id )-%> allows you
+        to link a CFR Record to this PCP Subject. For practical purposes, you should link
+        the CFR Record for the initial version of the document to be reviewed. When the
+        new files created during the PCP are linked correctly 
+        (see <%= link_to_help :pcp_how_to_17, t( 'pcp_help.pcp_how_to_17' )%> for 
+        explanations), you can follow the chain of files until you find the file you
+        are looking for.<br/>
+        When you set a link to a CFR Record, 
+        <%= help_term I18n.t( 'pcp_subjects.form.cfr_record_id' )-%> and the
+        <%= help_term PcpSubject.human_attribute_name( :title )-%> and the
+        <%= help_term PcpSubject.human_attribute_name( :project_doc_id )-%> fields
+        are left empty, the <%= help_term CfrRecord.human_attribute_name( :title )-%> will
+        be used for the <%= help_term PcpSubject.human_attribute_name( :title )-%> and the
+        <%= help_term CfrLocation.human_attribute_name( :doc_code )-%> of the
+        main location (if defined) will be
+        used for the <%= help_term PcpSubject.human_attribute_name( :project_doc_id )-%>.</li>
       <li><%= help_param PcpSubject.human_attribute_name( :p_group_id )-%> is the 
         project group presenting the PCP Subject for review and comment. For documents
         and drawings, this would be the project group which prepared the document or

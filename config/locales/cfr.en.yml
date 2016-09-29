@@ -120,7 +120,7 @@ en:
       version_date:       'Document Version and Date'
       main_location:      'Main Storage Location'
       othr_location:      'Storage Location'
-      doc_code_ver:       'Document Code and Version'
+      doc_code_ver:       'Document Code - Version'
       no_locations:       'No Storage Locations.'
       no_relations:       'No Relations.'
       relations:          'This CFR Record %{id}'
