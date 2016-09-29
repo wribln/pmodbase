@@ -20,10 +20,4 @@ SiemensPhase.create( code: '%PM700', label_p: 'Warranty',                 label_
 
 # - - - - - - - - - - Initial phase codes from above
 
-SiemensPhase.find_each do |sp|
-  PhaseCode.create do |pc|
-    pc.code: code
-    pc.siemens_phase_id: id
-    pc.label: label_p
-  end
-end
+SiemensPhase.find_each {|sp| PhaseCode.create( code: sp.code, siemens_phase_id: sp.id, label: sp.label_p )}

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160809114811) do
+ActiveRecord::Schema.define(version: 20161231235959) do
 
   create_table "a1_codes", force: :cascade do |t|
     t.string   "code",                      null: false
@@ -171,6 +171,8 @@ ActiveRecord::Schema.define(version: 20160809114811) do
     t.datetime "updated_at",                      null: false
   end
 
+  add_index "cfr_file_types", ["label"], name: "index_cfr_file_types_on_label"
+
   create_table "cfr_location_types", force: :cascade do |t|
     t.string   "label",         limit: 100,                 null: false
     t.integer  "location_type",             default: 0,     null: false
@@ -185,13 +187,13 @@ ActiveRecord::Schema.define(version: 20160809114811) do
   create_table "cfr_locations", force: :cascade do |t|
     t.integer  "cfr_record_id"
     t.integer  "cfr_location_type_id"
-    t.boolean  "is_main_location",                  default: false, null: false
+    t.integer  "is_main_location",                  default: 0, null: false
     t.string   "file_name",            limit: 255
     t.string   "doc_code",             limit: 100
     t.string   "doc_version",          limit: 10
     t.text     "uri",                  limit: 2048
-    t.datetime "created_at",                                        null: false
-    t.datetime "updated_at",                                        null: false
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
   end
 
   add_index "cfr_locations", ["cfr_location_type_id"], name: "index_cfr_locations_on_cfr_location_type_id"
@@ -664,6 +666,7 @@ ActiveRecord::Schema.define(version: 20160809114811) do
     t.integer  "p_owner_id",                                  null: false
     t.integer  "p_deputy_id"
     t.integer  "s_owner_id"
+    t.integer  "cfr_record_id"
     t.string   "title",           limit: 128
     t.string   "note",            limit: 50
     t.string   "project_doc_id",  limit: 100
@@ -677,6 +680,7 @@ ActiveRecord::Schema.define(version: 20160809114811) do
   add_index "pcp_subjects", ["c_deputy_id"], name: "index_pcp_subjects_on_c_deputy_id"
   add_index "pcp_subjects", ["c_group_id"], name: "index_pcp_subjects_on_c_group_id"
   add_index "pcp_subjects", ["c_owner_id"], name: "index_pcp_subjects_on_c_owner_id"
+  add_index "pcp_subjects", ["cfr_record_id"], name: "index_pcp_subjects_on_cfr_record_id"
   add_index "pcp_subjects", ["p_deputy_id"], name: "index_pcp_subjects_on_p_deputy_id"
   add_index "pcp_subjects", ["p_group_id"], name: "index_pcp_subjects_on_p_group_id"
   add_index "pcp_subjects", ["p_owner_id"], name: "index_pcp_subjects_on_p_owner_id"
