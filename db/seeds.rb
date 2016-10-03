@@ -519,10 +519,21 @@ Feature.new do |f|
 end.save!
 
 Feature.new do |f|
+  f.id = FEATURE_ID_ISR_INTERFACES
+  f.label = I18n.t( 'isr_interfaces.title' )
+  f.code = 'ISF'
+  f.seqno = 11
+  f.access_level = IsrInterfacesController.feature_access_level
+  f.control_level = IsrInterfacesController.feature_control_level
+  f.no_workflows = IsrInterfacesController.no_workflows
+  f.feature_category_id = fc4.id
+end.save!
+
+Feature.new do |f|
   f.id = FEATURE_ID_RFC_STATUS_RECORDS
   f.label = I18n.t('rfc_status_records.title')
   f.code = 'RSR'
-  f.seqno = 7
+  f.seqno = 21
   f.access_level = RfcStatusRecordsController.feature_access_level
   f.control_level = RfcStatusRecordsController.feature_control_level
   f.no_workflows = RfcStatusRecordsController.no_workflows

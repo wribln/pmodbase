@@ -1,9 +1,9 @@
 # Read about fixtures at http://api".rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 group_one:
-  code: "ONE"
-  label: "Group 1"
-  notes: ""
+  code: 'ONE'
+  label: 'Group 1'
+  notes: ''
   group_category: group_category_one
   active: true
   participating: true
@@ -12,9 +12,9 @@ group_one:
   standard: true
 
 group_two:
-  code:  "TWO"
-  label: "Group 2"
-  notes: ""
+  code:  'TWO'
+  label: 'Group 2'
+  notes: ''
   group_category: group_category_one
   sub_group_of: group_one
   active: true

@@ -1,0 +1,17 @@
+one:
+  if_code:        'IF-1-ONE-TWO'
+  l_group:        group_one
+  p_group:        group_two
+  l_owner:        one
+  p_owner:        one
+  l_deputy:       one
+  title:          'Test Interface'
+  desc:           'This is a test description of the Test Interface'
+  if_level:       0
+  if_status:      0
+  current_status: 0
+  current_task:   0
+  cfr_record:     one 
+  safety_related: false
+  l_signature:    ''
+  p_signature:    ''

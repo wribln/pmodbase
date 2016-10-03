@@ -159,5 +159,7 @@
   FEATURE_ID_CFR_LOCATIONS = 76
   FEATURE_ID_CFR_LOCATION_TYPES = 77
   FEATURE_ID_CFR_FILE_TYPES = 78
+  FEATURE_ID_ISR_INTERFACES = 79
+  FEATURE_ID_ISR_AGREEMENTS = 80
 
-  FEATURE_ID_MAX_PLUS_ONE = 79 # update this when inserting new features!
+  FEATURE_ID_MAX_PLUS_ONE = 81 # update this when inserting new features!

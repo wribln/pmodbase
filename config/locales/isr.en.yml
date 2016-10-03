@@ -1,0 +1,44 @@
+en:
+
+  activerecord:
+
+    models:
+      isr_interface:     'ISR Interface'
+
+    attributes:
+
+      isr_interface:
+        id:               :general.attributes.id
+        if_code:          'Interface Code'
+        l_group_id:       'Leading Group'
+        p_group_id:       'Partner Group'
+        l_owner_id:       'Leading Group Representative'
+        p_owner_id:       'Partner Group Representative'
+        l_deputy_id:      'Leading Group Deputy'
+        p_deputy_id:      'Partner Group Deputy'
+        l_signature:      'Signed by Leading Group'
+        p_signature:      'Signed by Partner Group'
+        title:            'Title'
+        desc:             'Description'
+        if_level:         'Level'
+        if_levels:        ['low','normal','high']
+        if_status:        'Status'
+        if_states:        ['open','identified','defined','agreed','resolved','closed']
+        current_status_task: 'Current Status / Task'
+
+  isr_interfaces:
+    title:                'Interface Status Register (ISR)'
+    edit:
+      form_title:         'Edit ISR Interface'
+    new:
+      form_title:         'Add ISR Interface'
+    index:
+      form_title:         'List of All ISR Interfaces'
+    show:
+      form_title:         'Show ISR Interface'
+    msg:
+      create_ok:          'ISR Interface successfully created.'
+      update_ok:          'ISR Interface successfully updated.'
+      delete_ok:          'ISR Interface successfully deleted.'
+      no_access:          'has no permission to access ISR Interfaces.'
+      bad_account_id:     :general.non_existing

@@ -2,7 +2,7 @@ require 'core_ext/string'
 class PcpSubject < ActiveRecord::Base
   include ApplicationModel
   include ActiveModelErrorsAdd
-  include PcpSubjectAccess
+  include AccountAccess
   include Filterable
 
   belongs_to :pcp_category, -> { readonly }, inverse_of: :pcp_subjects
@@ -53,9 +53,10 @@ class PcpSubject < ActiveRecord::Base
   validates :project_doc_id, :report_doc_id,
     length: { maximum: ProjectDocLog::MAX_LENGTH_OF_DOC_ID }
 
-  validate{ given_account_has_access( :c_owner_id, :c_group_id )}
-  validate{ given_account_has_access( :p_owner_id, :p_group_id )}
-#  validate{ given_account_has_access( :s_owner_id, :p_group_id )}, on: :create
+  # make sure the given account has access for this PCP Subject
+
+  validate{ given_account_has_access( :c_owner_id, :c_group_id, FEATURE_ID_MY_PCP_SUBJECTS )}
+  validate{ given_account_has_access( :p_owner_id, :p_group_id, FEATURE_ID_MY_PCP_SUBJECTS )}
 
   validate :archived_and_status
 

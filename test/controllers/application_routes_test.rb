@@ -63,7 +63,8 @@ class ApplicationRoutesTest < ActionController::TestCase
     %w( CFS CfrRelationships ),
     %w( CFR CfrRecords ),
     %w( CFU CfrLocationTypes ),
-    %w( CFT CfrFileTypes )
+    %w( CFT CfrFileTypes ),
+    %w( ISF IsrInterfaces )
     ]
 
   @my_resources.each do |r|

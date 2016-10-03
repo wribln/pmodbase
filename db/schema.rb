@@ -512,6 +512,31 @@ ActiveRecord::Schema.define(version: 20161231235959) do
   add_index "holidays", ["date_from"], name: "index_holidays_on_date_from"
   add_index "holidays", ["year_period"], name: "index_holidays_on_year_period"
 
+  create_table "isr_interfaces", force: :cascade do |t|
+    t.string   "if_code",        limit: 16
+    t.integer  "l_group_id",                                 null: false
+    t.integer  "l_owner_id"
+    t.integer  "l_deputy_id"
+    t.string   "l_signature",    limit: 90
+    t.integer  "p_group_id"
+    t.integer  "p_owner_id"
+    t.integer  "p_deputy_id"
+    t.string   "p_signature",    limit: 90
+    t.string   "title",          limit: 128
+    t.string   "desc",           limit: 255
+    t.boolean  "safety_related",             default: false
+    t.integer  "cfr_record_id"
+    t.integer  "if_level",                   default: 0,     null: false
+    t.integer  "if_status",                  default: 0,     null: false
+    t.integer  "current_status",             default: 0,     null: false
+    t.integer  "current_task",               default: 0,     null: false
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+  end
+
+  add_index "isr_interfaces", ["cfr_record_id"], name: "index_isr_interfaces_on_cfr_record_id"
+  add_index "isr_interfaces", ["l_group_id"], name: "index_isr_interfaces_on_l_group_id"
+
   create_table "location_codes", force: :cascade do |t|
     t.string   "code",         limit: 16,                                       null: false
     t.string   "label",        limit: 100,                                      null: false

@@ -1,0 +1,38 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="table-responsive">
+    <%= form_tag({},{ method: :get }) do %>
+    <%# will_paginate @isr_interfaces %>
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th class="col-sm-2"><%= label_tag :ff_code, IsrInterface.human_attribute_name( :if_code ), class: 'control_label' %></th>
+          <th class="col-sm-3"><%= label_tag :ff_titl, IsrInterface.human_attribute_name( :title ), class: 'control_label' %></th>
+          <th class="col-sm-2"><%= label_tag :ff_stat, IsrInterface.human_attribute_name( :if_status ), class: 'control_label' %></th>
+          <th class="col-sm-3"><%= label_tag :ff_wfls, IsrInterface.human_attribute_name( :current_status_task ), class: 'control_label' %></th>
+          <th class="col-sm-1 hidden-print"><%= filter_action_title_header %></th>
+        </tr>
+      </thead>
+      <tbody>
+      <% if @isr_interfaces.length.zero? %>
+        <%= render partial: 'shared/index_empty_row', locals:{ columns: 4, with_link: true }%>
+      <% else %>
+        <% @isr_interfaces.each do |isr| %>
+          <tr>
+            <td><%= ifr.interface_id %></td>
+            <td><%= ifr.title %></td>
+            <td><%= ifr.if_status %></td>
+            <td><%= ifr_interface.current_task %></td>
+            <td><%= @workflow.status_task_label( isr.current_status, isr.current_task, 0 ) %></td>
+            <td><%= render partial: 'shared/actions', object: isr %></td>
+          </tr>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+    <%- end -%>
+    <%= render partial: 'shared/footer' %>
+  </div>
+</div>
