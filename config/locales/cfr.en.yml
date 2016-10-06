@@ -52,6 +52,7 @@ en:
         hash_function:    'Hash Function'
         hash_functions:   [ 'MD5', 'SHA-256' ]
         hash_value:       'Hash Value'
+        rec_frozen:       'Freeze Record?'
         doc_date:         'Document Date'
         doc_version:      'Document Version / Release'
         doc_owner:        'Author / Owner'
@@ -113,6 +114,7 @@ en:
       form_title:         'Show Details of CFR Record'
       no_locations:       'No Storage Locations.'
       no_relations:       'No Relations.'
+      rec_frozen:         'Record frozen since'
     show:
       form_title:         'Show Information for CFR Record '
       hash_label:         'Hash Function and Value'
@@ -124,6 +126,7 @@ en:
       no_locations:       'No Storage Locations.'
       no_relations:       'No Relations.'
       relations:          'This CFR Record %{id}'
+      rec_frozen:         'Record frozen since'
     edit:
       form_title:         'Edit Details of CFR Record'
     new:
@@ -139,6 +142,7 @@ en:
       defaults_set:       'Defaults set but CFR Record not yet saved!'
       bad_main_loc:       'backward reference not valid.'
       too_many_mains:     'Only one location can be marked as main location.'
+      frozen_rec:         'Record is frozen: No change possible.'
 
   cfr_locations:
     msg:

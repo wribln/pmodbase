@@ -17,6 +17,10 @@ class CfrRecord < ActiveRecord::Base
   accepts_nested_attributes_for :src_relations, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :dst_relations, allow_destroy: true, reject_if: :all_blank
 
+  before_validation :check_frozen
+
+  attr_accessor :rec_frozen
+
   CONF_LEVEL_LABELS = CfrRecord.human_attribute_name( :conf_levels ).freeze
 
   validates :conf_level,
@@ -52,8 +56,6 @@ class CfrRecord < ActiveRecord::Base
     format: { with: /\A\h+\z/, message: I18n.t( 'cfr_records.msg.hex_only' )}
 
   validate :hash_function_and_value
-
-  #validate :given_main_location_ok
 
   validates :note,
     length: { maximum: MAX_LENGTH_OF_DESCRIPTION }
@@ -211,5 +213,27 @@ class CfrRecord < ActiveRecord::Base
     cfr = find( i )
     [ cfr.title ] + cfr.cfr_locations.where.not( doc_code: nil ).order( is_main_location: :desc ).limit( 1 ).pluck( :doc_code )
   end
+
+  # define reader/writer to translate rec_frozen (model) to freeze_date (database)
+
+  def rec_frozen=( set_rec )
+    # throw exception if set_rec is not '1' nor '0'
+    write_attribute( :freeze_date, DateTime.now ) if set_rec == '1' && freeze_date.nil?
+  end
+
+  def rec_frozen
+    freeze_date.nil? ? false : true
+  end
+
+  private
+
+    def check_frozen
+      if freeze_date.nil? || self.freeze_date_changed? then
+        return true
+      else
+        errors.add( :base, I18n.t( 'cfr_records.msg.frozen_rec' ))
+        return false
+      end
+    end
 
 end

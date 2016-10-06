@@ -52,6 +52,12 @@
         <p class="col-sm-6"><%= @cfr_record.hash_value %></p>
       </div>
       <%- end -%>
+      <%- if @cfr_record.rec_frozen %>
+      <div class="form-group p-group">
+        <p class="col-sm-3 p-label"><%= t( '.rec_frozen' )%></p>
+        <p class="col-sm-2"><%= db_formatted_dt @cfr_record.freeze_date %></p>
+      </div>
+      <%- end -%>
       <!-- Divider Line -->
       <div class="form-group">
         <hr style="margin:4px"/>  

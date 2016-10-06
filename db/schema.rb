@@ -212,6 +212,7 @@ ActiveRecord::Schema.define(version: 20161231235959) do
     t.string   "hash_value",       limit: 64
     t.integer  "hash_function"
     t.integer  "main_location_id"
+    t.datetime "freeze_date"
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false
   end

@@ -152,7 +152,7 @@ class CfrRecordsController < ApplicationController
     def cfr_record_params
       params.require( :cfr_record ).permit( 
         :title, :note, :group_id, :conf_level, :doc_version, :doc_date, :doc_owner,
-        :extension, :cfr_file_type_id, :hash_value, :hash_function,
+        :extension, :cfr_file_type_id, :hash_value, :hash_function, :rec_frozen,
         cfr_locations_attributes: [ :id, :_destroy, :cfr_location_type_id, :file_name, :doc_code, :doc_version, :uri, :is_main_location ],
         src_relations_attributes: [ :id, :_destroy, :dst_record_id, :cfr_relationship_id ],
         dst_relations_attributes: [ :id, :_destroy, :src_record_id, :cfr_relationship_id ])

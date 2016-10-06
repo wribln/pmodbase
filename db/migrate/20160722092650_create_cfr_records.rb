@@ -14,6 +14,7 @@ class CreateCfrRecords < ActiveRecord::Migration
       t.string      :hash_value,  limit: MAX_LENGTH_OF_HASH
       t.integer     :hash_function
       t.belongs_to  :main_location
+      t.datetime    :freeze_date
 
       t.timestamps null: false
     end
