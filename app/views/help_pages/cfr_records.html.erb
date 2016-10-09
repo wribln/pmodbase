@@ -106,6 +106,12 @@
       to store the result of a <%= help_term CfrRecord.human_attribute_name( :hash_function )-%> for
       the given file: This enables you to verify that the file contents has not changed, or if two
       files are identical - even if they have a different name.</li>
+      <li>The <%= help_param CfrRecord.human_attribute_name( :rec_frozen )%> flag
+      -&nbsp;when set&nbsp;- will freeze
+      this CFR record such that it cannot be modified anymore. The date and time when the record
+      was frozen is saved and will be displayed instead. It is still possible to add, change, or
+      remove file locations and relations. CFR records may become frozen as result of
+      a workflow status changes (for example in the Interface Status Register - ISR).</li>
     </ul>
     <p>The next set up attributes can be set for each storage location where this file is located, i.e.
       you specify here where you keep a copy of this file. If you only have a single copy, enter the

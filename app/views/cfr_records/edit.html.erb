@@ -6,7 +6,11 @@
     <%= form_for @cfr_record do |f| %>
       <%= render partial: 'shared/notice' %>
       <%= render partial: 'shared/errors', object: @cfr_record.errors %>
-      <%= render partial: 'form', object: f %>
+      <%- if @cfr_record.rec_frozen then -%>
+        <%= render partial: 'show_all', object: f %>
+      <%- else -%>
+        <%= render partial: 'form', object: f %>
+      <%- end -%>
       <%= render partial: 'locations_header' %>
       <!-- Locations -->
       <%= f.fields_for :cfr_locations, @cfr_record.cfr_locations do |l| -%>

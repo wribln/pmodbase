@@ -71,7 +71,9 @@ class CfrRecordsController < ApplicationController
   # PATCH/PUT /cfr/1
 
   def update
-    if has_access?( :to_update )
+    if @cfr_record.rec_frozen && @cfr_record.changed?
+      render_rec_frozen
+    elsif has_access?( :to_update )
       respond_to do |format|
         params[ :cfr_record ][ :cfr_locations_attributes ].try( :delete, 'template' )
         params[ :cfr_record ][ :src_relations_attributes ].try( :delete, 'template' )
@@ -96,7 +98,9 @@ class CfrRecordsController < ApplicationController
   # DELETE /cfr/1
 
   def destroy
-    if has_access?( :to_delete )
+    if @cfr_record.rec_frozen
+      render_rec_frozen
+    elsif has_access?( :to_delete )
       @cfr_record.destroy
       respond_to do |format|
         format.html { redirect_to cfr_records_url, notice: I18n.t( 'cfr_records.msg.delete_ok' )}
@@ -167,6 +171,13 @@ class CfrRecordsController < ApplicationController
     def permitted_groups( action )
       pg = current_user.permitted_groups( feature_identifier, action )
       Group.permitted_groups( pg ).all.collect{ |g| [ g.code, g.id ]}
+    end
+
+    # return to show when record is frozen
+
+    def render_rec_frozen
+      flash.notice = I18n.t( 'cfr_records.msg.frozen_rec' )
+      redirect_to cfr_record_details_path( @cfr_record )
     end
 
 end

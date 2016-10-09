@@ -1,0 +1,85 @@
+      <div class="form-group">
+        <%= show_all.label :id, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-2">
+          <%= display_value show_all.object.to_id %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= show_all.label :title, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-6">
+          <%= display_value show_all.object.title %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= show_all.label :note, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-6">
+          <%= display_value show_all.object.note %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= show_all.label :group_id, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-2">
+          <%= display_value show_all.object.group_code %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= show_all.label :conf_level, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-2">
+          <%= display_value CfrRecord::CONF_LEVEL_LABELS[ show_all.object.conf_level ] %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= show_all.label :doc_version, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-2">
+          <%= display_value show_all.object.doc_version %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= show_all.label :doc_date, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-2">
+          <%= display_value show_all.object.doc_date %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= show_all.label :doc_owner, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-4">
+          <%= display_value show_all.object.doc_owner %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= show_all.label :extension, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-1">
+          <%= display_value show_all.object.extension %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= show_all.label :cfr_file_type_id, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-3">
+          <%= display_value show_all.object.file_type_label %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= show_all.label :hash_function, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-2">
+          <%= display_value show_all.object.hash_function_label %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= show_all.label :hash_value, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-6">
+          <%= display_value show_all.object.hash_value %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%- if show_all.object.rec_frozen -%>
+          <%= show_all.label :rec_frozen, t( '.rec_frozen' ), class: 'col-sm-3 control-label' %>
+          <div class="col-sm-3">
+            <%= display_value db_formatted_dt( show_all.object.freeze_date )%>
+          </div>
+        <%- else -%>
+          <%= show_all.label :rec_frozen, class: 'col-sm-3 control-label' %>
+          <div class="col-sm-1">
+            <%= display_check_box show_all.object.rec_frozen %>
+          </div>
+        <%- end -%>
+      </div>

@@ -215,10 +215,18 @@ class CfrRecord < ActiveRecord::Base
   end
 
   # define reader/writer to translate rec_frozen (model) to freeze_date (database)
+  # allow boolean parameter and parameter values '0' (false) and '1' (true) 
+  #
+  # the attribute will not be modified once set!
 
   def rec_frozen=( set_rec )
-    # throw exception if set_rec is not '1' nor '0'
-    write_attribute( :freeze_date, DateTime.now ) if set_rec == '1' && freeze_date.nil?
+    if [ '1', true ].include? set_rec
+      write_attribute( :freeze_date, DateTime.now ) if freeze_date.nil?
+    elsif [ '0', false ].include? set_rec
+      # no change
+    else
+      raise ArgumentError, 'Argument is not true/''1'' or false/''0'''
+    end 
   end
 
   def rec_frozen
@@ -227,12 +235,20 @@ class CfrRecord < ActiveRecord::Base
 
   private
 
+    # before_validation call back method: prohibit any change of a frozen record
+    # return true to continue validation, else false with error message
+
     def check_frozen
-      if freeze_date.nil? || self.freeze_date_changed? then
-        return true
+      if changed? && rec_frozen then
+        # only allow a change to frozen
+        if changed_attributes.key?( :freeze_date ) && changed_attributes[ :freeze_date ].nil? then
+          return true
+        else
+          errors.add( :base, I18n.t( 'cfr_records.msg.frozen_rec' ))
+          return false
+        end
       else
-        errors.add( :base, I18n.t( 'cfr_records.msg.frozen_rec' ))
-        return false
+        return true
       end
     end
 

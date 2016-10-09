@@ -5,6 +5,7 @@ class CfrRecordTest < ActiveSupport::TestCase
     cfr = cfr_records( :one )
     assert_equal 0, cfr.conf_level
     refute_nil cfr.title
+    refute cfr.rec_frozen
     assert cfr.valid?, cfr.errors.messages
   end
 
@@ -21,6 +22,7 @@ class CfrRecordTest < ActiveSupport::TestCase
     assert_equal cfr_file_types( :two ).id, cfr.cfr_file_type_id
     refute_nil cfr.hash_value
     refute_nil cfr.hash_function
+    refute cfr.rec_frozen
     assert_equal cfr_locations( :one ).id, cfr.main_location_id
     assert cfr.valid?, cfr.errors.messages
   end
@@ -258,6 +260,40 @@ class CfrRecordTest < ActiveSupport::TestCase
     assert_equal 2, td.length
     assert_equal td.first, cfr.title
     assert_equal td.second, cfn.doc_code
+  end
+
+  test 'frozen records' do 
+    cfr = cfr_records( :one )
+    cfr.rec_frozen = '0'
+    refute cfr.rec_frozen
+    assert cfr.valid?
+    cfr.rec_frozen = false
+    refute cfr.rec_frozen
+    assert cfr.valid?
+    cfr.rec_frozen = '1'
+    assert cfr.valid?
+    assert cfr.rec_frozen
+    cfr.rec_frozen = true
+    assert cfr.valid?
+    assert cfr.rec_frozen
+    assert_raises( ArgumentError ){ cfr.rec_frozen = 'Yes' }
+    assert_raises( ArgumentError ){ cfr.rec_frozen = 1 }
+    cfr.save
+    cfr.reload
+    assert cfr.valid?, cfr.errors.messages
+    cfr.title = 'other title'
+    refute cfr.valid?
+    assert_includes cfr.errors, :base
+    cfr.reload
+    cfr.rec_frozen = true
+    assert cfr.valid?
+    cfr.title = 'test'
+    refute cfr.valid?
+    cfr.reload
+    cfr.rec_frozen = false
+    cfr.title = 'test'
+    assert cfr.rec_frozen
+    refute cfr.valid?
   end
 
 end
