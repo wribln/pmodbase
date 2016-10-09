@@ -4,6 +4,8 @@ class IsrInterface < ActiveRecord::Base
   include AccountAccess  
   include Filterable
 
+  before_save :update_if_code
+
   belongs_to :l_group,    -> { readonly }, foreign_key: :l_group_id, class_name: :Group
   belongs_to :p_group,    -> { readonly }, foreign_key: :p_group_id, class_name: :Group
   belongs_to :l_owner,    -> { readonly }, foreign_key: :l_owner_id, class_name: :Account
@@ -60,4 +62,7 @@ class IsrInterface < ActiveRecord::Base
 
   set_trimmed :title
 
+  def update_if_code
+    write_attribute( :if_code, "IF-#{ id }-#{ l_group.code }-#{ p_group.code }" )
+  end
 end

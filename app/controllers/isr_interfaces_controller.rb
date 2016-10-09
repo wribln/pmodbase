@@ -3,7 +3,7 @@ class IsrInterfacesController < ApplicationController
   initialize_feature FEATURE_ID_ISR_INTERFACES, FEATURE_ACCESS_INDEX, FEATURE_CONTROL_GRPWF, 1
 
   #before_action :set_general_workflow
-  before_action :set_isr_interface, only: [:show, :edit, :update, :destroy]
+  before_action :set_isr_interface, only: [ :show, :edit, :update, :destroy ]
 
   # GET /isr
 
@@ -20,11 +20,13 @@ class IsrInterfacesController < ApplicationController
 
   def new
     @isr_interface = IsrInterface.new
+    set_isr_groups
   end
 
   # GET /isr/1/edit
 
   def edit
+    set_isr_groups
   end
 
   # POST /isr
@@ -35,6 +37,7 @@ class IsrInterfacesController < ApplicationController
       if @isr_interface.save
         format.html { redirect_to @isr_interface, notice: 'Ifr interface was successfully created.' }
       else
+        set_isr_groups
         format.html { render :new }
       end
     end
@@ -47,6 +50,7 @@ class IsrInterfacesController < ApplicationController
       if @isr_interface.update(isr_interface_params)
         format.html { redirect_to @isr_interface, notice: 'Ifr interface was successfully updated.' }
       else
+        set_isr_groups
         format.html { render :edit }
       end
     end
@@ -67,6 +71,10 @@ class IsrInterfacesController < ApplicationController
 
     def set_isr_interface
       @isr_interface = IsrInterface.find( params[ :id ])
+    end
+
+    def set_isr_groups
+      @isr_groups = Group.all.collect{ |g| [ g.code, g.id ]}
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

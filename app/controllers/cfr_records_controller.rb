@@ -71,17 +71,21 @@ class CfrRecordsController < ApplicationController
   # PATCH/PUT /cfr/1
 
   def update
-    if @cfr_record.rec_frozen && @cfr_record.changed?
-      render_rec_frozen
-    elsif has_access?( :to_update )
+    if has_access?( :to_update )
       respond_to do |format|
         params[ :cfr_record ][ :cfr_locations_attributes ].try( :delete, 'template' )
         params[ :cfr_record ][ :src_relations_attributes ].try( :delete, 'template' )
         cfr_params = cfr_record_params
         @cfr_record.assign_attributes( cfr_params ) unless cfr_params.empty?
-        if params[ :commit ] == I18n.t( 'button_label.defaults' ) then
+        if @cfr_record.rec_frozen && @cfr_record.changed? then
+          render_rec_frozen
+          Rails.logger.debug ">>> render rec frozen"
+          break
+        elsif params[ :commit ] == I18n.t( 'button_label.defaults' ) then
           set_defaults
+          Rails.logger.debug ">>> button default"
         elsif @cfr_record.save then
+          Rails.logger.debug ">>> normal: #{ @cfr_record.inspect } "
           @cfr_record.update_main_location # no harm if separate transaction
           format.html { redirect_to @cfr_record, notice: I18n.t( 'cfr_records.msg.update_ok' )}
           next

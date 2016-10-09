@@ -12,22 +12,18 @@ class CfrRecordsController3Test < ActionController::TestCase
 
   test 'should update cfr_record' do
     patch :update, id: @cfr_record, cfr_record: { 
-      title: 'test 1 2 3',
-      rec_frozen: true }
+      title: 'test 1 2 3', rec_frozen: true }
     r = assigns( :cfr_record )
-    assert_redirected_to cfr_record_path( r )
+    assert_redirected_to cfr_record_details_path( r )
     assert_empty r.errors
 
-    get :edit, id: @cfr_record
-    r = assigns( :cfr_record )
-    assert_redirected_to cfr_record_details_path( @cfr_record )
-    refute_empty flash
+    r.save
+    @cfr_record.reload
 
     patch :update, id: @cfr_record, cfr_record: {
       title: 'test 4 5 6' }
     r = assigns( :cfr_record )
     assert_redirected_to cfr_record_details_path( @cfr_record )
-    refute_empty flash
 
     assert_no_difference( 'CfrRecord.count' ) do
       delete :destroy, id: @cfr_record
