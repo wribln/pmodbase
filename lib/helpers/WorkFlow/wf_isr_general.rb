@@ -22,7 +22,11 @@ wf.add_new_flow 3, 4, 'definition confirmed'
 wf.add_new_task 5, 'Withdraw IF','IFM'
 wf.add_new_flow 2, 5, 'request withdrawal'
 
+wf.add_new_task 6, 'Process IAs','IFM'
+wf.add_new_flow 4, 6, 'IF defined'
+
 wf.add_final_task
+#wf.add_new_flow 6, wf.last_task, 'closed - all IAs closed'
 wf.add_new_flow 1, wf.last_task, 'closed - not applicable'
 wf.add_new_flow 5, wf.last_task, 'closed - withdrawn'
 

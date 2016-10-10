@@ -1041,6 +1041,14 @@ Permission4Flow.new do |p|
   p.tasklist = '0,1,2,3,4,5,6,7,8,9,10'
 end.save!
 
+Permission4Flow.new do |p|
+  p.feature_id = FEATURE_ID_ISR_INTERFACES
+  p.account_id = a1.id
+  p.workflow_id = 0
+  p.label = 'Administrator'
+  p.tasklist = '0,1,2,3,4,5,6'
+end.save!
+
 # - - - - - - - - - - DSR Progress Rates - one record per state
 
 # PROGRESS_AT_SUBMISSION 60%

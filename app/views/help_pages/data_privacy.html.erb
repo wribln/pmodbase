@@ -14,13 +14,22 @@
     At this time, the email address is validated (it must have the correct syntax for an email address)
     but not verified (checked if it is a valid email address). This may change in future versions of the
     pmodbase system.</p>
-		<p>Whenever a reference to a specific user is saved in the database, it is done not on a person but
+		<p>When a reference to a specific user is saved in the database, it is done not on a person but
 		on an account basis: The reference is an internal account ID. Only when this information needs to be
 		shown to a user, this account ID is used to retrieve the current name (formal or informal) from your
 		personal data.</p>
+		<p>Some features require tracing of who performed which action: In this case, the account ID together
+		with the current user name (formal or informal) is stored in the database.</p>
 		<p>Any other personal data is made available for the mere purpose of easing the communication among
 		project members. The amount of information you provide is totally up to you. You can update or remove
 		it at any time.</p>
+		<p>Standard log files are created which trace the activities on the system. These log files contain
+		the following information:</p>
+		<ul>
+			<li>Date, time, IP-address, browser (type and version), HTTP request details and system response.</li>
+		</ul>
+		<p>A cookie is containing the account ID and account-specific settings is used to implement the
+		session control.</p>
 		<p>For security reasons, backups of the database will be performed regularily. These backups contain
 		your personal data as per the date and time of the backup.</p>
 		<%= help_footer FEATURE_ID_PROFILE %>

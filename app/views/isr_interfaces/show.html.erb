@@ -6,69 +6,63 @@
     <%= form_for @isr_interface do |f| %>
       <%= render partial: 'shared/notice' %>
       <div class="form-group">
-        <%= f.label :id, class: 'col-sm-3 control-label' %>
+        <%= f.label :if_code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= display_value f.object.to_id %>
+          <%= display_value f.object.if_code %>
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :interface_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-4">
-          <%= display_value f.object.interface_id %>
+        <%= f.label :l_group_id, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-6">
+          <%= display_value f.object.l_group.try( :code_and_label ) %>
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :leader_group_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-4">
-          <%= display_value f.object.leader_group_id %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :partner_group_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-4">
-          <%= display_value f.object.partner_group_id %>
+        <%= f.label :p_group_id, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-6">
+          <%= display_value f.object.p_group.try( :code_and_label ) %>
         </div>
       </div>
       <div class="form-group">
         <%= f.label :title, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-4">
+        <div class="col-sm-6">
           <%= display_value f.object.title %>
         </div>
       </div>
       <div class="form-group">
         <%= f.label :desc, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-4">
-          <%= display_value f.object.desc %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :type, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-4">
-          <%= display_value f.object.type %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :current_status, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-4">
-          <%= display_value f.object.current_status %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :current_task, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-4">
-          <%= display_value f.object.current_task %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :cfr_record_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-4">
-          <%= display_value f.object.cfr_record_id %>
+        <div class="col-sm-6">
+          <%= display_lines f.object.desc %>
         </div>
       </div>
       <div class="form-group">
         <%= f.label :safety_related, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= display_value f.object.safety_related %>
+          <%= display_check_box f.object.safety_related %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :if_level, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-2">
+          <%= display_value f.object.if_level_label %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :cfr_record_id, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-6">
+          <%= f.object.cfr_record_id.nil? ? display_nil : link_to_cfr( f.object.cfr_record, :button ) %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :if_status, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-2">
+          <%= display_value f.object.if_status_label %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :current_status_task, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-6">
+          <%= display_value @workflow.status_task_label %>
         </div>
       </div>
       <div class="form-group">

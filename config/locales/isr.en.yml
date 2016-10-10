@@ -3,7 +3,7 @@ en:
   activerecord:
 
     models:
-      isr_interface:     'ISR Interface'
+      isr_interface:     'ISR Interfaces'
 
     attributes:
 
@@ -21,10 +21,12 @@ en:
         title:            'Title'
         desc:             'Description'
         if_level:         'Level'
-        if_levels:        ['low','normal','high']
-        if_status:        'Status'
+        if_levels:        ['low','medium','high']
+        if_status:        'Interface Status'
         if_states:        ['open','identified','defined','agreed','resolved','closed']
+        cfr_record_id:    'CFR Record'
         current_status_task: 'Current Status / Task'
+        next_status_task:    'Next Status / Task'        
 
   isr_interfaces:
     title:                'Interface Status Register (ISR)'
@@ -34,11 +36,46 @@ en:
       form_title:         'Add ISR Interface'
     index:
       form_title:         'List of All ISR Interfaces'
+      if_status:          'Status'
+      if_code:            'Code'
     show:
       form_title:         'Show ISR Interface'
+    info_workflow:
+      form_title:         'ISR Interface Workflow Information'
+    form:
+      g_prompt:           :general.select_prompt
+      cfr_record_id:      'CFR Record [ID]'
+      cfr_record_link:    'Show CFR Index'
     msg:
       create_ok:          'ISR Interface successfully created.'
       update_ok:          'ISR Interface successfully updated.'
       delete_ok:          'ISR Interface successfully deleted.'
       no_access:          'has no permission to access ISR Interfaces.'
       bad_account_id:     :general.non_existing
+      you_no_edit:        'You have no permission to update this interface.'
+      you_no_new:         'You have no permission to create an interface.'      
+
+    workflows:
+      w00:
+        label:    'ISR Interface'
+        tasks:
+          t00:    '<start new workflow>'
+          t01:    'Identify'
+          t02:    'Define'
+          t03:    'Confirm Definition'
+          t04:    'Archive IF Status'
+          t05:    'Withdraw IF'
+          t06:    'Process IAs'
+          t07:    '<workflow completed>'
+        states:
+          s00:    '<initial>'
+          s01:    'identified'
+          s02:    'definition released'
+          s03:    'definition in progress'
+          s04:    'definition rejected'
+          s05:    'definition confirmed'
+          s06:    'request withdrawal'
+          s07:    'IF defined'
+          s08:    'closed - not applicable'
+          s09:    'closed - withdrawn'
+  

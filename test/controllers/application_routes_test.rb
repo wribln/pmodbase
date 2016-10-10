@@ -189,6 +189,10 @@ class ApplicationRoutesTest < ActionController::TestCase
     check_routing( 'get', '/dsr/1/update', 'dsr_status_records', 'update_b_one', id: '1' )
   end
 
+  test 'special routes: ISR Interfaces' do
+    check_routing( 'get', '/isf/info'    , 'isr_interfaces', 'info_workflow' )
+  end    
+
   test 'special routes: PCS PcpSubjects' do
     check_routing( 'get', '/pcs/1/release' , 'pcp_subjects', 'update_release', id: '1' )
     check_routing( 'get', '/pcs/1/history' , 'pcp_subjects', 'show_history',   id: '1' )

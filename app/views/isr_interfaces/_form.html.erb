@@ -1,25 +1,19 @@
       <div class="form-group">
-        <%= form.label :id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-2">
-          <%= display_value form.object.to_id %>
-        </div>
-      </div>
-      <div class="form-group">
         <%= form.label :if_code, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-3">
+        <div class="col-sm-2">
           <%= display_value form.object.if_code %>
         </div>
       </div>
       <div class="form-group">
         <%= form.label :l_group_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-2">
-          <%= form.select :l_group_id, @isr_groups, { include_blank: true },{ class: 'form-control' }%>
+        <div class="col-sm-6">
+          <%= form.select :l_group_id, @isr_groups, { prompt: t( '.g_prompt' )},{ class: 'form-control', required: true }%>
         </div>
       </div>
       <div class="form-group">
         <%= form.label :p_group_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-2">
-          <%= form.select :p_group_id, @isr_groups, { include_blank: true },{ class: 'form-control' }%>
+        <div class="col-sm-6">
+          <%= form.select :p_group_id, @isr_groups, { prompt: t( '.g_prompt' )},{ class: 'form-control', required: true }%>
         </div>
       </div>
       <div class="form-group">
@@ -35,27 +29,46 @@
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :current_status, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-4">
-          <%= form.text_field :current_status, class: 'form-control' %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= form.label :current_task, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-4">
-          <%= form.text_field :current_task, class: 'form-control' %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= form.label :cfr_record_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-2">
-          <%= form.text_field :cfr_record_id, class: 'form-control' %>
-        </div>
-      </div>
-      <div class="form-group">
         <%= form.label :safety_related, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-4">
-          <%= form.text_field :safety_related, class: 'form-control' %>
+        <div class="col-sm-1">
+          <%= form.check_box :safety_related %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :if_level, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-2">
+          <%= form.select :if_level, select_options( IsrInterface::ISR_IF_LEVEL_LABELS ), { prompt: t( '.g_prompt' ) }, { class: 'form-control' }%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :cfr_record_id, t( '.cfr_record_id' ), class: 'col-sm-3 control-label' %>
+
+          <div class="col-sm-2">
+            <%= form.text_field :cfr_record_id, class: 'form-control' %>
+          </div>
+          <div class="col-sm-2">
+            <%= link_to t( '.cfr_record_link' ), cfr_records_path, class: 'btn btn-sm btn-block btn-default', target: '_blank' %>
+          </div>
+          
+      </div>
+      <div class="form-group">
+        <%= form.label :if_status, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-2">
+          <%= display_value form.object.if_status_label %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :current_status_task, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-6">
+          <%= form.text_field :current_status_task, class: 'form-control', value: @workflow.status_task_label, disabled: true %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :next_status_task, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-6">
+          <%= select_tag :next_status_task,
+            options_for_select( @workflow.next_status_task_labels_for_select, selected: 0 ), { class: 'form-control' }%>
         </div>
       </div>
 

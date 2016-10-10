@@ -8,23 +8,33 @@
     <table class="table table-striped table-bordered">
       <thead>
         <tr>
-          <th class="col-sm-2"><%= label_tag :ff_code, IsrInterface.human_attribute_name( :if_code ), class: 'control_label' %></th>
-          <th class="col-sm-3"><%= label_tag :ff_titl, IsrInterface.human_attribute_name( :title ), class: 'control_label' %></th>
-          <th class="col-sm-2"><%= label_tag :ff_stat, IsrInterface.human_attribute_name( :if_status ), class: 'control_label' %></th>
-          <th class="col-sm-3"><%= label_tag :ff_wfls, IsrInterface.human_attribute_name( :current_status_task ), class: 'control_label' %></th>
+          <th class="col-sm-2" colspan="2"><%= label_tag :ff_id, t( '.if_code' ), class: 'control-label' %></th>
+          <th class="col-sm-4"><%= label_tag :ff_txt, IsrInterface.human_attribute_name( :title ), class: 'control-label' %></th>
+          <th class="col-sm-1"><%= label_tag :ff_lvl,  IsrInterface.human_attribute_name( :if_level ), class: 'control-label' %></th>
+          <th class="col-sm-1"><%= label_tag :ff_sts, t( '.if_status' ), class: 'control-label' %></th>
+          <th class="col-sm-3"><%= label_tag :ff_wfs, IsrInterface.human_attribute_name( :current_status_task ), class: 'control-label' %></th>
           <th class="col-sm-1 hidden-print"><%= filter_action_title_header %></th>
         </tr>
       </thead>
       <tbody>
+        <tr <%= filter_row( @filter_fields ) -%>>
+          <td class="col-sm-1"><%= filter_field @filter_fields, :ff_id, :id %></td>
+          <td class="col-sm-1"><%= filter_select_from_array @filter_fields, :ff_grp, @filter_groups %></td>
+          <td><%= filter_field @filter_fields, :ff_txt, :sw %></td>
+          <td><%= filter_select_from_string_set @filter_fields, :ff_lvl, IsrInterface::ISR_IF_LEVEL_LABELS %></td>
+          <td><%= filter_select_from_string_set @filter_fields, :ff_sts, IsrInterface::ISR_IF_STATUS_LABELS %></td>
+          <td><%= filter_select_from_array @filter_fields, :ff_wfs, @filter_states %></td>
+          <td><%= filter_action_button %></td>
+        </tr>
       <% if @isr_interfaces.length.zero? %>
-        <%= render partial: 'shared/index_empty_row', locals:{ columns: 4, with_link: true }%>
+        <%= render partial: 'shared/index_empty_row', locals:{ columns: 6, with_link: true }%>
       <% else %>
         <% @isr_interfaces.each do |isr| %>
           <tr>
-            <td><%= isr.interface_id %></td>
+            <td colspan="2"><%= isr.if_code %></td>
             <td><%= isr.title %></td>
-            <td><%= isr.if_status %></td>
-            <td><%= isr_interface.current_task %></td>
+            <td><%= isr.if_level_label %></td>
+            <td><%= isr.if_status_label %></td>
             <td><%= @workflow.status_task_label( isr.current_status, isr.current_task, 0 ) %></td>
             <td><%= render partial: 'shared/actions', object: isr %></td>
           </tr>

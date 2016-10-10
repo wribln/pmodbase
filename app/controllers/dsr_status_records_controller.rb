@@ -10,7 +10,6 @@ class DsrStatusRecordsController < ApplicationController
 
   def index
     @filter_fields = filter_params
-    @filter_states = @workflow.all_states_for_select
     @filter_groups = permitted_groups( :to_index )
     @filter_states = @workflow.all_states_for_select( 0 )
     @filter_doc_groups = DsrDocGroup.all.collect    { |g| [ g.code, g.id ]}

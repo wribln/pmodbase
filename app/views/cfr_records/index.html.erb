@@ -8,12 +8,12 @@
     <table class="table table-striped table-bordered">
       <thead>
         <tr>
-          <th class="col-sm-1"><%= label_tag :ff_id,   CfrRecord.human_attribute_name( :id ), class: 'control_label' %></th>
-          <th class="col-sm-3"><%= label_tag :ff_text, CfrRecord.human_attribute_name( :title ), class: 'control_label' %></th>
-          <th class="col-sm-3"><%= label_tag :ff_type, t( '.type_location'  ), class: 'control_label' %></th>
+          <th class="col-sm-1"><%= label_tag :ff_id,   CfrRecord.human_attribute_name( :id ), class: 'control-label' %></th>
+          <th class="col-sm-3"><%= label_tag :ff_text, CfrRecord.human_attribute_name( :title ), class: 'control-label' %></th>
+          <th class="col-sm-3"><%= label_tag :ff_type, t( '.type_location'  ), class: 'control-label' %></th>
           <th class="col-sm-1"><%= CfrRecord.human_attribute_name( :doc_version )%></th>
           <th class="col-sm-2"><%= CfrRecord.human_attribute_name( :doc_date )%></th>
-          <th class="col-sm-1"><%= label_tag :ff_grp, CfrRecord.human_attribute_name( :group_id ), class: 'control_label' %></th>
+          <th class="col-sm-1"><%= label_tag :ff_grp, CfrRecord.human_attribute_name( :group_id ), class: 'control-label' %></th>
           <th class="col-sm-1 hidden-print"><%= filter_action_title_header %></th>
         </tr>
       </thead>

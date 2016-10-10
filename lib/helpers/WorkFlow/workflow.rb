@@ -245,6 +245,7 @@ class WorkFlow
     puts "      label:\t'#{ wf_name }'"
     puts "      tasks:"
     @task_list.each_with_index do |t,i|
+    next if t.nil?
     puts "        #{ sprintf('t%02d',i)}:\t'#{ t.label }#{ ' <obsolete>' if t.obsolete }'"
     end
     puts "      states:"
@@ -271,6 +272,7 @@ class WorkFlow
         sep = "\n"
         flow_tasks = ''
         @task_list[0...-1].each do |t|
+          next if t.nil?
           flow_tasks = t.outflows.collect{ |f| "[ %d, %d ]" % [ f.status_id, f.target_task_id ]}.join(',')
           printf "%s [%s]", sep, flow_tasks
           sep = ",\n"
@@ -289,6 +291,7 @@ class WorkFlow
       s = sprintf "%-20s", @role_list[ i ]
       sep = ''
       @task_list[0...-1].each_with_index do |t,j|
+        next if t.nil?
         if t.role_id == i then
           s += sep + j.to_s
           sep = ','
@@ -449,6 +452,7 @@ class WorkFlow
         end
         # task label must be unique
         @task_list[ i+1 .. -1 ].each do |s|
+          next if s.nil?
           if s.label == t.label then
             puts "  Identical label for tasks #{ t.id } and { s.id }: '#{ t.label }'"
             e += 1
@@ -525,6 +529,7 @@ class WorkFlow
     end until work_stack.empty?
     e = 0
     node_has_path_to_terminal_node.each_with_index do |n,i|
+      next if @task_list[ i ].nil?
       if !n and !@task_list[ i ].obsolete then
         puts "  task ##{ i } '#{ @task_list[i].label }' has no path to terminal task"
         e += 1

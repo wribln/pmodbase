@@ -1,0 +1,12 @@
+<% help_title "Help on #{ IsrInterface.model_name.human }" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">... lead text ...</p>
+    <h3>... subtitle ...</h3>
+    <p>... help text ...</p>
+    <ul>
+      <li><%= help_param IsrInterface.human_attribute_name( :if_code ) -%></li>
+    </ul>
+    <%= help_footer FEATURE_ID_ISR_INTERFACES %>
+  </div> <!-- /container -->

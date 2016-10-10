@@ -1,7 +1,6 @@
 class CreateIsrInterfaces < ActiveRecord::Migration
   def change
     create_table :isr_interfaces do |t|
-      t.string      :if_code,         limit: MAX_LENGTH_OF_CODE
       t.belongs_to  :l_group,         null: false, index: true
       t.belongs_to  :l_owner
       t.belongs_to  :l_deputy

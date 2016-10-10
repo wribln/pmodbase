@@ -1,10 +1,9 @@
 require './lib/assets/app_helper.rb'
 class IsrInterface < ActiveRecord::Base
   include ApplicationModel
+  include ActiveModelErrorsAdd
   include AccountAccess  
   include Filterable
-
-  before_save :update_if_code
 
   belongs_to :l_group,    -> { readonly }, foreign_key: :l_group_id, class_name: :Group
   belongs_to :p_group,    -> { readonly }, foreign_key: :p_group_id, class_name: :Group
@@ -62,7 +61,49 @@ class IsrInterface < ActiveRecord::Base
 
   set_trimmed :title
 
-  def update_if_code
-    write_attribute( :if_code, "IF-#{ id }-#{ l_group.code }-#{ p_group.code }" )
+  # all permitted: all groups for this account, check for conf_level must be done on a
+  # group by group basis within views
+
+  scope :all_permitted, ->( a ){ self.permitted_records( a, :to_index )}
+  default_scope { order( id: :desc )}
+
+  # filter scopes
+
+  scope :ff_id, ->  ( i ){ where id: i }
+  scope :ff_txt, -> ( t ){ where( 'title LIKE :param OR desc LIKE :param', param: "%#{ t }%")}
+  scope :ff_grp, -> ( g ){ where( 'l_group_id = :param OR p_group_id = :param', param: g )}
+  scope :ff_sts, -> ( s ){ where( if_status: s )}
+  scope :ff_lvl, -> ( l ){ where( if_level: l )}
+  scope :ff_wfs, -> ( s ){ where( current_status: s )}
+
+  # format interface code
+
+  def if_code
+    "IF-#{ id }-#{ l_group.try( :code )}-#{ p_group.try( :code )}" unless id.nil?
   end
+
+  def if_status_label
+    ISR_IF_STATUS_LABELS[ if_status ] unless if_status.nil?
+  end
+
+  def if_level_label
+    ISR_IF_LEVEL_LABELS[ if_level ] unless if_level.nil?
+  end
+
+  # prepare condition to restrict access to permitted groups for this user
+  # this is patterned after Group.permitted_groups but considers here two
+  # attributes ... to be used in queries
+
+  def self.permitted_records( account, action )
+    pg = account.permitted_groups( FEATURE_ID_ISR_INTERFACES, action )
+    case pg
+    when nil
+      none
+    when ''
+      all
+    else
+      where( 'l_group_id IN ( :param ) OR p_group_id IN ( :param )', param: pg )
+    end      
+  end
+
 end
