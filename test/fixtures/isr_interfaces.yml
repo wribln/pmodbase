@@ -1,5 +1,4 @@
 one:
-  if_code:        'IF-1-ONE-TWO'
   l_group:        group_one
   p_group:        group_two
   l_owner:        one

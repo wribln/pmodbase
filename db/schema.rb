@@ -514,7 +514,6 @@ ActiveRecord::Schema.define(version: 20161231235959) do
   add_index "holidays", ["year_period"], name: "index_holidays_on_year_period"
 
   create_table "isr_interfaces", force: :cascade do |t|
-    t.string   "if_code",        limit: 16
     t.integer  "l_group_id",                                 null: false
     t.integer  "l_owner_id"
     t.integer  "l_deputy_id"
