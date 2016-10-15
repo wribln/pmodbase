@@ -56,6 +56,8 @@ en:
         doc_date:         'Document Date'
         doc_version:      'Document Version / Release'
         doc_owner:        'Author / Owner'
+        rec_created:        'Record Creation'
+        rec_updated:        'Record Last Update'
 
       cfr_record/src_relations:
         src_record:       'Related CFR Record'

@@ -77,15 +77,12 @@ class CfrRecordsController < ApplicationController
         params[ :cfr_record ][ :src_relations_attributes ].try( :delete, 'template' )
         cfr_params = cfr_record_params
         @cfr_record.assign_attributes( cfr_params ) unless cfr_params.empty?
-        if @cfr_record.rec_frozen && @cfr_record.changed? then
+        if @cfr_record.rec_was_frozen then
           render_rec_frozen
-          Rails.logger.debug ">>> render rec frozen"
           break
         elsif params[ :commit ] == I18n.t( 'button_label.defaults' ) then
           set_defaults
-          Rails.logger.debug ">>> button default"
         elsif @cfr_record.save then
-          Rails.logger.debug ">>> normal: #{ @cfr_record.inspect } "
           @cfr_record.update_main_location # no harm if separate transaction
           format.html { redirect_to @cfr_record, notice: I18n.t( 'cfr_records.msg.update_ok' )}
           next

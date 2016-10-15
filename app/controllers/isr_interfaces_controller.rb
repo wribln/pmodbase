@@ -107,7 +107,7 @@ class IsrInterfacesController < ApplicationController
 
     def isr_interface_params
       params.require( :isr_interface ).permit(
-        :if_code, :if_level, :l_group_id, :p_group_id, :title, :desc, 
+        :if_level, :l_group_id, :p_group_id, :title, :desc, 
         :current_status, :current_task, :cfr_record_id, :safety_related )
     end
 

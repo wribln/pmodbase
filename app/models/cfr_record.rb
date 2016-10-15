@@ -19,8 +19,6 @@ class CfrRecord < ActiveRecord::Base
 
   before_validation :check_frozen
 
-  attr_accessor :rec_frozen
-
   CONF_LEVEL_LABELS = CfrRecord.human_attribute_name( :conf_levels ).freeze
 
   validates :conf_level,
@@ -233,23 +231,26 @@ class CfrRecord < ActiveRecord::Base
     freeze_date.nil? ? false : true
   end
 
-  private
+  # return true if record was already frozen
 
-    # before_validation call back method: prohibit any change of a frozen record
-    # return true to continue validation, else false with error message
-
-    def check_frozen
-      if changed? && rec_frozen then
-        # only allow a change to frozen
-        if changed_attributes.key?( :freeze_date ) && changed_attributes[ :freeze_date ].nil? then
-          return true
-        else
-          errors.add( :base, I18n.t( 'cfr_records.msg.frozen_rec' ))
-          return false
-        end
-      else
-        return true
-      end
+  def rec_was_frozen
+    if changed? && rec_frozen then
+      return !( changed_attributes.key?( :freeze_date ) && changed_attributes[ :freeze_date ].nil? )
+    else
+      return false
     end
+  end
+
+  # before_validation call back method: prohibit any change of a frozen record
+  # return true to continue validation, else false with error message
+
+  def check_frozen
+    if rec_was_frozen && changed? then
+      errors.add( :base, I18n.t( 'cfr_records.msg.frozen_rec' ))
+      return false
+    else
+      return true
+    end
+  end
 
 end
