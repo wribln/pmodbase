@@ -1,6 +1,5 @@
 require 'test_helper'
 class ResponsibilitiesController1Test < ActionController::TestCase
-
   tests ResponsibilitiesController
 
   setup do

@@ -59,6 +59,7 @@ th, td {
 
 ol.upper-alpha { list-style-type: upper-alpha; }
 ol.lower-alpha { list-style-type: lower-alpha; }
+ul.no-marker { list-style-type: none; }
 
 /* replacement for control-label */
 

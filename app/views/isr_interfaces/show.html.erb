@@ -59,6 +59,22 @@
           <%= display_value f.object.if_status_label %>
         </div>
       </div>
+      <%- unless f.object.l_signature.blank? -%>
+        <div class="form-group">
+          <%= f.label :l_signature, class: 'col-sm-3 control-label' %>
+          <div class="col-sm-3"><p class="form-control-static"><%= f.object.l_signature %></p></div>
+          <div class="col-sm-1"><p class="form-control-static"><%= t( 'isr_interfaces.on_time' ) %></p></div>
+          <div class="col-sm-2"><p class="form-control-static"><%= db_formatted_dt f.object.l_sign_time %></p></div>
+        </div>
+      <%- end -%>
+      <%- unless f.object.p_signature.blank? -%>
+        <div class="form-group">
+          <%= f.label :p_signature, class: 'col-sm-3 control-label' %>
+          <div class="col-sm-3"><p class="form-control-static"><%= f.object.p_signature %></p></div>
+          <div class="col-sm-1"><p class="form-control-static"><%= t( 'isr_interfaces.on_time' ) %></p></div>
+          <div class="col-sm-2"><p class="form-control-static"><%= db_formatted_dt f.object.p_sign_time %></p></div>
+        </div>
+      <%- end -%>
       <div class="form-group">
         <%= f.label :current_status_task, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
@@ -68,6 +84,9 @@
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-2">
           <%= link_to t( 'button_label.edit' ), edit_isr_interface_path( @isr_interface ), class: 'btn btn-lg btn-block btn-default' %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to t( 'button_label.print' ), isr_show_icf_path( @isr_interface ), class: 'btn btn-lg btn-block btn-default' %>
         </div>
         <div class="col-sm-2">
           <%= link_to t( 'button_label.go_to_index' ), isr_interfaces_path, class: 'btn btn-lg btn-block btn-default' %>

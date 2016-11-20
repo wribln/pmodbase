@@ -18,6 +18,7 @@ en:
         p_deputy_id:      'Partner Group Deputy'
         l_signature:      'Signed by Leading Group'
         p_signature:      'Signed by Partner Group'
+        l_sign_time:      'Signature Date/Time'
         title:            'Title'
         desc:             'Description'
         if_level:         'Level'
@@ -30,8 +31,11 @@ en:
 
   isr_interfaces:
     title:                'Interface Status Register (ISR)'
+    on_time:              'on'
     edit:
       form_title:         'Edit ISR Interface'
+      confirm:            'Confirm'
+      reject:             'Reject'
     new:
       form_title:         'Add ISR Interface'
     index:
@@ -40,6 +44,10 @@ en:
       if_code:            'Code'
     show:
       form_title:         'Show ISR Interface'
+    icf:
+      main_heading:       'Interface Control Form'
+      as_of:              'Status as of'
+      references:         'References [CFR]'
     info_workflow:
       form_title:         'ISR Interface Workflow Information'
     form:
@@ -53,7 +61,8 @@ en:
       no_access:          'has no permission to access ISR Interfaces.'
       bad_account_id:     :general.non_existing
       you_no_edit:        'You have no permission to update this interface.'
-      you_no_new:         'You have no permission to create an interface.'      
+      you_no_new:         'You have no permission to create an interface.'
+      no_edit_now:        'Nothing can be updated at this stage.'  
 
     workflows:
       w00:
@@ -64,18 +73,21 @@ en:
           t02:    'Define'
           t03:    'Confirm Definition'
           t04:    'Archive IF Status'
-          t05:    'Withdraw IF'
-          t06:    'Process IAs'
-          t07:    '<workflow completed>'
+          t05:    'Process IAs'
+          t06:    'Update IF'
+          t07:    'Withdraw IF'
+          t08:    '<workflow completed>'
         states:
           s00:    '<initial>'
           s01:    'identified'
-          s02:    'definition released'
-          s03:    'definition in progress'
-          s04:    'definition rejected'
-          s05:    'definition confirmed'
-          s06:    'request withdrawal'
-          s07:    'IF defined'
-          s08:    'closed - not applicable'
-          s09:    'closed - withdrawn'
-  
+          s02:    'definition in progress'
+          s03:    'definition released'
+          s04:    'definition confirmed'
+          s05:    'defined'
+          s06:    'request update'
+          s07:    'identification updated'
+          s08:    'request withdrawal'
+          s09:    'definition rejected'
+          s10:    'closed - not applicable'
+          s11:    'closed - withdrawn'
+          s12:    'closed'

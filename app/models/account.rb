@@ -84,8 +84,10 @@ class Account < ActiveRecord::Base
 
   def permitted_groups( feature, action = :to_index, check_val = nil )
     if active
-      if $DEBUG then
-        raise ArgumentError.new( "invalid action: #{ action }" ) \
+      if $DEBUG
+        fail ArgumentError, 'feature must not be nil' \
+          if feature.nil?
+        fail ArgumentError, "invalid action: #{ action }" \
           unless [ :to_index, :to_create, :to_read, :to_update, :to_delete ].include? action
       end
       p = permission4_groups.where( feature: feature ).where( check_val.nil? ? "#{action} > 0" : "#{action} = #{check_val}" ).pluck( :group_id )
@@ -138,7 +140,15 @@ class Account < ActiveRecord::Base
     if active
       p = permission4_flows.where( feature: feature, workflow_id: workflow)
       p.empty? ? false : p[ 0 ].permission_for_task?( task )
+    else
+      return false
     end
+  end
+
+  # combination of permission_to_access and _for_task:
+
+  def permission_for_task_for_group?( feature, workflow, task, group, action )
+    permission_for_task?( feature, workflow, task ) && permission_to_access( feature, action, group )
   end
 
   # return those workflows to which the current user has creation access to

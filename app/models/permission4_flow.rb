@@ -48,7 +48,6 @@ class Permission4Flow < ActiveRecord::Base
       return
     else
       no_workflows = self.try( :feature ).try( :no_workflows )
-      logger.debug "no_workflows: #{ no_workflows }, workflow_id: #{ self.workflow_id }"
       if no_workflows && workflow_id > ( no_workflows - 1 ) then
         errors.add :workflow_id, I18n.t( 'permission4_flows.msg.bad_workflow' )
         logger.debug "ERROR with workflow_id!"

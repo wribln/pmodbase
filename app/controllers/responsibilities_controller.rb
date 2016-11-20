@@ -30,7 +30,7 @@ class ResponsibilitiesController < ApplicationController
 
   def create
     @responsibility = Responsibility.new( responsibility_params )
-    return unless has_group_access?( @responsibility )
+    return unless has_group_access?( @responsibility.group_id )
     respond_to do |format|
       if @responsibility.save
         format.html { redirect_to @responsibility, notice: t('responsibilities.msg.new_ok' )}
@@ -67,7 +67,7 @@ class ResponsibilitiesController < ApplicationController
 
     def set_responsibility
       @responsibility = Responsibility.find( params[ :id ])
-      return unless has_group_access?( @responsibility )
+      return unless has_group_access?( @responsibility.group_id )
     end
 
     def set_responsibilities
@@ -83,7 +83,7 @@ class ResponsibilitiesController < ApplicationController
     # Groups to select from are those for which the current user has access to
 
     def set_selections( action )
-      pg = current_user.permitted_groups( FEATURE_ID_RESPONSIBILITIES, action )
+      pg = current_user.permitted_groups( feature_identifier, action )
       @group_selection = Group.active_only.participants_only.permitted_groups( pg ).collect{ |g| [ g.code_and_label, g.id ]}
     end
 

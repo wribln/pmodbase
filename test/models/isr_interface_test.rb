@@ -7,6 +7,24 @@ class IsrInterfaceTest < ActiveSupport::TestCase
     assert isr.valid?, isr.errors.messages
   end
 
+  test 'defaults' do
+    isr = IsrInterface.new
+    assert_nil isr.l_group_id
+    assert_nil isr.l_signature
+    assert_nil isr.l_sign_time
+    assert_nil isr.p_group_id
+    assert_nil isr.p_signature
+    assert_nil isr.p_sign_time
+    assert_nil isr.title
+    assert_nil isr.desc
+    assert_equal false, isr.safety_related
+    assert_nil isr.cfr_record_id
+    assert_equal 0, isr.if_level
+    assert_equal 0, isr.if_status
+    assert_equal 0, isr.current_status
+    assert_equal 0, isr.current_task
+  end
+
   test 'labels for levels' do
     isr = IsrInterface.new
 
@@ -62,6 +80,63 @@ class IsrInterfaceTest < ActiveSupport::TestCase
     assert_equal 0, IsrInterface.ff_sts( 1 ).count
     assert_equal 1, IsrInterface.ff_wfs( 0 ).count
     assert_equal 0, IsrInterface.ff_wfs( 1 ).count
+  end
+
+  test 'freeze and unfreeze cfr record' do
+    isr = isr_interfaces( :one )
+    refute isr.cfr_record.nil?
+    refute isr.cfr_record.rec_frozen
+    assert_nil isr.l_sign_time
+    d = DateTime.now
+
+    assert_raises( ArgumentError ) { isr.freeze_cfr_record }
+    refute isr.cfr_record.rec_frozen
+
+    assert_raises( ArgumentError ) { isr.unfreeze_cfr_record }
+    refute isr.cfr_record.rec_frozen
+
+    isr.l_sign_time = d
+    isr.freeze_cfr_record
+    assert isr.cfr_record.rec_frozen
+
+    isr.l_sign_time = d + 60
+    isr.freeze_cfr_record
+    assert isr.cfr_record.rec_frozen
+
+    isr.unfreeze_cfr_record
+    assert isr.cfr_record.rec_frozen
+
+    isr.l_sign_time = d
+    isr.unfreeze_cfr_record
+    refute isr.cfr_record.rec_frozen
+
+    c = isr.cfr_record
+    isr.cfr_record_id = nil
+    refute c.rec_frozen
+
+    isr.freeze_cfr_record
+    refute c.rec_frozen
+
+    isr.unfreeze_cfr_record
+    refute c.rec_frozen
+
+    c.rec_frozen = true
+    assert c.rec_frozen
+
+    isr.freeze_cfr_record
+    assert c.rec_frozen
+
+    isr.unfreeze_cfr_record
+    assert c.rec_frozen
+
+    isr.cfr_record = c
+    assert isr.cfr_record.rec_frozen
+
+    isr.freeze_cfr_record
+    assert isr.cfr_record.rec_frozen
+
+    isr.unfreeze_cfr_record
+    assert isr.cfr_record.rec_frozen    
   end
 
 end

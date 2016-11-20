@@ -242,7 +242,7 @@ class DsrStatusRecordsController < ApplicationController
             @dsr_status_record.dsr_current_submission = @dsr_current_submission
             @dsr_status_record.save!
           end
-          format.html { redirect_to @dsr_status_record, notice: t( 'dsr_status_records.msg.edit_ok' )}
+          format.html { redirect_to @dsr_status_record, notice: t( 'dsr_status_records.msg.update_ok' )}
         else
           @dsr_sender_groups = permitted_groups( :to_update )
           format.html { render :edit }

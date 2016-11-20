@@ -296,4 +296,33 @@ class CfrRecordTest < ActiveSupport::TestCase
     refute cfr.valid?
   end
 
+  test 'freeze and unfreeze' do 
+    cfr = cfr_records( :one )
+    refute cfr.rec_frozen
+    cfr.freeze_rec( nil )
+    refute cfr.rec_frozen
+    cfr.unfreeze_rec( nil )
+    refute cfr.rec_frozen
+
+    d = DateTime.now
+    cfr.freeze_rec( d )
+    assert cfr.rec_frozen
+    cfr.unfreeze_rec( d )
+    refute cfr.rec_frozen
+    assert cfr.valid?
+
+    cfr.freeze_rec( d )
+    assert cfr.rec_frozen
+    cfr.freeze_rec( d + 60 )
+    assert cfr.rec_frozen
+    assert_equal cfr.freeze_date, d
+
+    cfr.unfreeze_rec( d + 60 )
+    assert cfr.rec_frozen
+    assert_equal cfr.freeze_date, d
+
+    cfr.unfreeze_rec( d )
+    refute cfr.rec_frozen
+  end
+
 end

@@ -231,6 +231,18 @@ class CfrRecord < ActiveRecord::Base
     freeze_date.nil? ? false : true
   end
 
+  # special freeze handling for special situations (e.g. ISR):
+  # freeze: set new freeze date only if not yet frozen
+  # unfreeze: clear freeze date only if given time is same as freeze_date
+
+  def freeze_rec( d )
+    self.freeze_date = d if freeze_date.nil?
+  end
+
+  def unfreeze_rec( d )
+    self.freeze_date = nil if freeze_date == d
+  end
+
   # return true if record was already frozen
 
   def rec_was_frozen

@@ -2,21 +2,21 @@ require 'test_helper'
 class AbbreviationsControllerAccessTest < ActionController::TestCase
   tests AbbreviationsController
 
-  test "check class_attributes"  do
+  test 'check class_attributes'  do
     validate_feature_class_attributes FEATURE_ID_ABBREVIATIONS, ApplicationController::FEATURE_ACCESS_VIEW
   end
 
   # index
 
-  test "index is permitted for all valid accounts" do
+  test 'index is permitted for all valid accounts' do
     @account = accounts( :wop )
-    session[ :current_user_id ] = accounts( :wop ).id
+    session[ :current_user_id ] = @account.id
     get :index
     assert_response :success
     assert_select 'h2', I18n.t( 'abbreviations.index.form_title' )
   end
 
-  test "should not get index" do
+  test 'should not get index' do
     @account = nil
     session[ :current_user_id ] = nil
     get :index
@@ -25,14 +25,14 @@ class AbbreviationsControllerAccessTest < ActionController::TestCase
 
   # show
 
-  test "show is permitted" do
+  test 'show is permitted' do
     @account = accounts( :wop )
-    session[ :current_user_id ] = accounts( :wop ).id
+    session[ :current_user_id ] = @account.id
     get :show, id: abbreviations( :sag )
     assert_response :success
   end
 
-  test "should not get show" do
+  test 'should not get show' do
     @account = nil
     session[ :current_user_id ] = nil
     get :show, id: abbreviations( :sag )
@@ -41,14 +41,14 @@ class AbbreviationsControllerAccessTest < ActionController::TestCase
 
   # edit
 
-  test "edit is not permitted but results in cr form" do
+  test 'edit is not permitted but results in cr form' do
     @account = accounts( :wop )
-    session[ :current_user_id ] = accounts( :wop ).id
+    session[ :current_user_id ] = @account.id
     get :edit, id: abbreviations( :sag )
     check_for_cr
   end
 
-  test "should not get edit" do
+  test 'should not get edit' do
     @account = nil
     session[ :current_user_id ] = nil
     get :edit, id: abbreviations( :sag )
@@ -57,14 +57,14 @@ class AbbreviationsControllerAccessTest < ActionController::TestCase
 
   # new
 
-  test "new is not permitted but results in cr form" do
+  test 'new is not permitted but results in cr form' do
     @account = accounts( :wop )
-    session[ :current_user_id ] = accounts( :wop ).id
+    session[ :current_user_id ] = @account.id
     assert_difference( 'Abbreviation.count', 0 ) { get :new }
     check_for_cr
   end
 
-  test "should not get new" do
+  test 'should not get new' do
     @account = nil
     session[ :current_user_id ] = nil
     assert_difference( 'Abbreviation.count', 0 ) { get :new }
@@ -73,14 +73,14 @@ class AbbreviationsControllerAccessTest < ActionController::TestCase
 
   # update
 
-  test "update is not permitted but results in cr form" do
+  test 'update is not permitted but results in cr form' do
     @account = accounts( :wop )
-    session[ :current_user_id ] = accounts( :wop ).id
+    session[ :current_user_id ] = @account.id
     patch :update, id: abbreviations( :sag )
     check_for_cr
   end
 
-  test "update is  not permitted" do
+  test 'update is  not permitted' do
     @account = nil
     session[ :current_user_id ] = nil
     patch :update, id: abbreviations( :sag )
@@ -89,14 +89,14 @@ class AbbreviationsControllerAccessTest < ActionController::TestCase
 
   # create
 
-  test "create is not permitted but results in cr form" do
+  test 'create is not permitted but results in cr form' do
     @account = accounts( :wop )
-    session[ :current_user_id ] = accounts( :wop ).id
+    session[ :current_user_id ] = @account.id
     assert_difference( 'Abbreviation.count', 0 ) { post :create }
     check_for_cr
   end
 
-  test "create is not permitted" do
+  test 'create is not permitted' do
     @account = nil
     session[ :current_user_id ] = nil
     assert_difference( 'Abbreviation.count', 0 ) { post :create }
@@ -105,14 +105,14 @@ class AbbreviationsControllerAccessTest < ActionController::TestCase
 
   # delete
 
-  test "delete is not permitted but results in cr form" do
+  test 'delete is not permitted but results in cr form' do
     @account = accounts( :wop )
-    session[ :current_user_id ] = accounts( :wop ).id
+    session[ :current_user_id ] = @account.id
     assert_difference( 'Abbreviation.count', 0 ) { delete :destroy, id: abbreviations( :sag )}
     check_for_cr
   end
 
-  test "delete is not permitted" do
+  test 'delete is not permitted' do
     @account = nil
     session[ :current_user_id ] = nil
     assert_difference( 'Abbreviation.count', 0 ) { delete :destroy, id: abbreviations( :sag )}

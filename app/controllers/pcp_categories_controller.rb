@@ -30,7 +30,7 @@ class PcpCategoriesController < ApplicationController
 
   def create
     @pcp_category = PcpCategory.new( pcp_category_params )
-    return unless has_group_access?( @pcp_category )
+    return unless has_group_access?( @pcp_category.p_group_id )
     respond_to do |format|
       if @pcp_category.save
         format.html { redirect_to @pcp_category, notice: I18n.t( 'pcp_categories.msg.new_ok' )}
@@ -45,7 +45,7 @@ class PcpCategoriesController < ApplicationController
 
   def update
     respond_to do |format|
-      if @pcp_category.update(pcp_category_params)
+      if @pcp_category.update( pcp_category_params )
         format.html { redirect_to @pcp_category, notice: I18n.t( 'pcp_categories.msg.edit_ok' )}
       else
         format.html { render :edit }

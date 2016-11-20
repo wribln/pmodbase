@@ -1,9 +1,10 @@
 one:
   l_group:        group_one
   p_group:        group_two
-  l_owner:        one
-  p_owner:        one
-  l_deputy:       one
+#  l_owner:        
+#  l_deputy:      
+#  p_owner:       
+#  p_deputy:       
   title:          'Test Interface'
   desc:           'This is a test description of the Test Interface'
   if_level:       0

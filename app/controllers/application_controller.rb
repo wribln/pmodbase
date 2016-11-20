@@ -153,10 +153,12 @@ class ApplicationController < ActionController::Base
 
   end
 
-  # check if user has permission to access current group's data
+  # check if user has permission to access group as given by group_id
+  # if group_id is nil - which should never occur - the method will return false as well
+  # since group_id must not be null (see schema)
 
-  def has_group_access?( for_object )
-    unless current_user.permission_to_access( self.feature_identifier, map_action_to_permission, for_object[ :group_id ])
+  def has_group_access?( group_id )
+    unless current_user.permission_to_access( self.feature_identifier, map_action_to_permission, group_id )
       request_change
       false
     else

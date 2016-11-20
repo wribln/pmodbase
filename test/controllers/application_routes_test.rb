@@ -191,6 +191,7 @@ class ApplicationRoutesTest < ActionController::TestCase
 
   test 'special routes: ISR Interfaces' do
     check_routing( 'get', '/isf/info'    , 'isr_interfaces', 'info_workflow' )
+    check_routing( 'get', '/isf/1/icf'   , 'isr_interfaces', 'show_icf', id: '1' )
   end    
 
   test 'special routes: PCS PcpSubjects' do

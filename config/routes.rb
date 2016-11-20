@@ -50,6 +50,7 @@ Rails.application.routes.draw do
   get 'hld/:id/new', to: 'holidays#add', as: 'add_holiday', format: false
   resources :holidays, path: 'hld', format: false 
   get 'isf/info', to: 'isr_interfaces#info_workflow', as: 'isr_workflow_info', format: false
+  get 'isf/:id/icf', to: 'isr_interfaces#show_icf', as: 'isr_show_icf', format: false
   resources :isr_interfaces, path: 'isf', format: false
   get 'scl/check', to: 'location_codes#update_check', as: 'location_codes_check', format: false
   resources :location_codes, path: 'scl', format: false

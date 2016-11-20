@@ -1,6 +1,8 @@
 require './lib/assets/work_flow_helper.rb'
 class RfcStatusRecordsController < ApplicationController
+
   initialize_feature FEATURE_ID_RFC_STATUS_RECORDS, FEATURE_ACCESS_INDEX, FEATURE_CONTROL_GRPWF, 3
+  
   before_action :set_general_workflow
   before_action :set_rfc_status_record,  only: [ :show, :edit, :update, :destroy ]
   before_action :set_rfc_status_records, only: [ :index ]
@@ -170,7 +172,7 @@ class RfcStatusRecordsController < ApplicationController
     # the main model), the permitted record parameter list may be empty
 
     def rfc_status_record_params
-      params.include?( :rfc_status_record ) ? params.require( :rfc_status_record ).permit( @workflow.permitted_params ) : []
+      params.include?( :rfc_status_record ) ? params.require( :rfc_status_record ).permit( @workflow.permitted_params ) : {}
     end
 
     def filter_params

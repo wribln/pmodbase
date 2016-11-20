@@ -41,7 +41,7 @@ class SDocumentLogsController < ApplicationController
 
   def create
     @s_document_log = SDocumentLog.new( s_document_log_params )
-    return unless has_group_access?( @s_document_log )
+    return unless has_group_access?( @s_document_log.group_id )
     @s_document_log.account_id = current_user.id
     respond_to do |format|
       if @s_document_log.save
@@ -57,8 +57,10 @@ class SDocumentLogsController < ApplicationController
   # PATCH/PUT /sdl/1
 
   def update
+    @s_document_log.assign_attributes( s_document_log_params )
+    return unless has_group_access?( @s_document_log.group_id )
     respond_to do |format|
-      if @s_document_log.update(s_document_log_params)
+      if @s_document_log.save
         format.html { redirect_to @s_document_log, notice: t( 's_document_logs.msg.edit_ok' )}
       else
         set_selections( :to_update )
@@ -97,7 +99,7 @@ class SDocumentLogsController < ApplicationController
     end
 
     def set_selections( action )
-      pg = current_user.permitted_groups( FEATURE_ID_S_DOCUMENT_LOG, action )
+      pg = current_user.permitted_groups( feature_identifier, action )
       @group_selection = Group.active_only.sender_codes.permitted_groups( pg ).all.collect{ |g| [ g.code_and_label, g.id ]}
     end
 

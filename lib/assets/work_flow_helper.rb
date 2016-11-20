@@ -269,9 +269,9 @@ class WorkFlowHelper
 
   def status_change_possible?
     current_options = @wf_transitions[ @wf_current_index ][ @wf_current_task ]
-    ( current_options.length > 1 ) or 
-    ( current_options[ 0 ][ 1 ] != @wf_current_task ) or 
-    ( current_options[ 0 ][ 0 ] != -1 )
+    ( current_options.length > 1 ) or (
+    ( current_options[ 0 ][ 1 ] != @wf_current_task ) and 
+    ( current_options[ 0 ][ 0 ] != -1 ))
   end
 
   # prepare a collection of labels 'status / task' for list boxes in views

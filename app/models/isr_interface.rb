@@ -7,11 +7,13 @@ class IsrInterface < ActiveRecord::Base
 
   belongs_to :l_group,    -> { readonly }, foreign_key: :l_group_id, class_name: :Group
   belongs_to :p_group,    -> { readonly }, foreign_key: :p_group_id, class_name: :Group
-  belongs_to :l_owner,    -> { readonly }, foreign_key: :l_owner_id, class_name: :Account
-  belongs_to :l_deputy,   -> { readonly }, foreign_key: :l_deputy_id, class_name: :Account
-  belongs_to :p_owner,    -> { readonly }, foreign_key: :p_owner_id, class_name: :Account
-  belongs_to :p_deputy,   -> { readonly }, foreign_key: :p_deputy_id, class_name: :Account
-  belongs_to :cfr_record, -> { readonly }
+#  belongs_to :l_owner,    -> { readonly }, foreign_key: :l_owner_id, class_name: :Account
+#  belongs_to :l_deputy,   -> { readonly }, foreign_key: :l_deputy_id, class_name: :Account
+#  belongs_to :p_owner,    -> { readonly }, foreign_key: :p_owner_id, class_name: :Account
+#  belongs_to :p_deputy,   -> { readonly }, foreign_key: :p_deputy_id, class_name: :Account
+  belongs_to :cfr_record
+
+  after_save :update_cfr_record
 
   validates :l_group,
     presence: true, if: Proc.new{ |me| me.l_group_id.present? }
@@ -19,17 +21,17 @@ class IsrInterface < ActiveRecord::Base
   validates :p_group,
     presence: true, if: Proc.new{ |me| me.p_group_id.present? }
 
-  validates :l_owner,
-    presence: true, if: Proc.new{ |me| me.l_owner_id.present? }
+#  validates :l_owner,
+#    presence: true, if: Proc.new{ |me| me.l_owner_id.present? }
 
-  validates :p_owner,
-    presence: true, if: Proc.new{ |me| me.p_owner_id.present? }
+#  validates :p_owner,
+#    presence: true, if: Proc.new{ |me| me.p_owner_id.present? }
 
-  validates :l_deputy,
-    presence: true, if: Proc.new{ |me| me.l_deputy_id.present? }
+#  validates :l_deputy,
+#    presence: true, if: Proc.new{ |me| me.l_deputy_id.present? }
 
-  validates :p_deputy,
-    presence: true, if: Proc.new{ |me| me.p_deputy_id.present? }
+#  validates :p_deputy,
+#    presence: true, if: Proc.new{ |me| me.p_deputy_id.present? }
 
   validates :cfr_record,
     presence: true, if: Proc.new{ |me| me.cfr_record_id.present? }
@@ -39,6 +41,16 @@ class IsrInterface < ActiveRecord::Base
 
   validates :desc,
     length: { maximum: MAX_LENGTH_OF_DESCRIPTION }
+
+  validates :current_status,
+    allow_blank: false,
+    numericality: { only_integer: true },
+    inclusion: { in: 0..12 }
+
+  validates :current_task,
+    allow_blank: false,
+    numericality: { only_integer: true },
+    inclusion: { in: 0..8 }
 
   ISR_IF_LEVEL_LABELS = IsrInterface.human_attribute_name( :if_levels ).freeze
 
@@ -54,17 +66,13 @@ class IsrInterface < ActiveRecord::Base
     numericality: { only_integer: true },
     inclusion: { in: 0..( ISR_IF_STATUS_LABELS.size - 1 )}
 
-  validate{ given_account_has_access( :l_owner_id,  :l_group_id, FEATURE_ID_ISR_INTERFACES )}
-  validate{ given_account_has_access( :l_deputy_id, :l_group_id, FEATURE_ID_ISR_INTERFACES )}
-  validate{ given_account_has_access( :p_owner_id,  :p_group_id, FEATURE_ID_ISR_INTERFACES )}
-  validate{ given_account_has_access( :p_deputy_id, :p_group_id, FEATURE_ID_ISR_INTERFACES )}
+#  validate{ given_account_has_access( :l_owner_id,  :l_group_id, FEATURE_ID_ISR_INTERFACES )}
+#  validate{ given_account_has_access( :l_deputy_id, :l_group_id, FEATURE_ID_ISR_INTERFACES )}
+#  validate{ given_account_has_access( :p_owner_id,  :p_group_id, FEATURE_ID_ISR_INTERFACES )}
+#  validate{ given_account_has_access( :p_deputy_id, :p_group_id, FEATURE_ID_ISR_INTERFACES )}
 
   set_trimmed :title
 
-  # all permitted: all groups for this account, check for conf_level must be done on a
-  # group by group basis within views
-
-  scope :all_permitted, ->( a ){ self.permitted_records( a, :to_index )}
   default_scope { order( id: :desc )}
 
   # filter scopes
@@ -104,6 +112,27 @@ class IsrInterface < ActiveRecord::Base
     else
       where( 'l_group_id IN ( :param ) OR p_group_id IN ( :param )', param: pg )
     end      
+  end
+
+  # freeze/unfreeze cfr_record
+  # both require a valid l_sign_time
+
+  def freeze_cfr_record
+    return if cfr_record.nil?
+    raise ArgumentError, 'freeze_cfr_record requires l_sign_time' if l_sign_time.nil?
+    cfr_record.freeze_rec( l_sign_time )
+  end
+
+  def unfreeze_cfr_record
+    return if cfr_record.nil?
+    raise ArgumentError, 'unfreeze_cfr_record requires l_sign_time' if l_sign_time.nil?
+    cfr_record.unfreeze_rec( l_sign_time )
+  end
+
+  # if related cfr_record was modified, save it here within the save transaction
+
+  def update_cfr_record
+    cfr_record.try( :save )
   end
 
 end

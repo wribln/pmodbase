@@ -1,0 +1,12 @@
+<% help_title "Help on #{ A1Code.model_name.human }" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">Manage Interface Agreements within the ISR</p>
+    <h3>... subtitle ...</h3>
+    <p>... help text ...</p>
+    <ul>
+      <li><%= help_param A1Code.human_attribute_name( :code ) -%></li>
+    </ul>
+    <%= help_footer FEATURE_ID_ISR_AGREEMENTS %>
+  </div> <!-- /container -->
