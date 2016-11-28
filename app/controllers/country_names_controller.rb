@@ -78,6 +78,6 @@ class CountryNamesController < ApplicationController
     end
 
     def filter_params
-      params.slice( :ff_id, :ff_code, :ff_label ).clean_up
+      params.slice( :ff_code, :ff_label ).clean_up
     end
 end

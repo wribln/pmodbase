@@ -36,8 +36,8 @@
               <td><%= rds.to_id %></td>
               <td><%= @workflow.workflow_label( rds.rfc_type )%></td>
               <td><%= rds.title %></td>
-              <td><%= rds.asking_group_code %></td>
-              <td><%= rds.answering_group_code %></td>
+              <td><%= rds.group_code( :asking_group ) %></td>
+              <td><%= rds.group_code( :answering_group ) %></td>
               <td><%= @workflow.status_label( rds.current_status, rds.rfc_type ) %></td>
               <td><%= @workflow.task_label( rds.current_task, rds.rfc_type )%></td>
               <td><%= render partial: 'shared/actions', object: rds %></td>

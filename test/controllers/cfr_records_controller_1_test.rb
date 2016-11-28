@@ -56,13 +56,17 @@ class CfrRecordsController1Test < ActionController::TestCase
   end
 
   test 'should show cfr_record' do
+    assert_nil @cfr_record.group_id
+    assert @cfr_record.conf_level == 0
     get :show, id: @cfr_record
-    assert_response :unauthorized
+    assert_response :success
   end
 
   test 'should show details of cfr_record' do
+    assert_nil @cfr_record.group_id
+    assert @cfr_record.conf_level == 0
     get :show_all, id: @cfr_record
-    assert_response :unauthorized
+    assert_response :success
   end
 
   test 'should get edit' do

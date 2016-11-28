@@ -11,7 +11,7 @@ class IsrInterfacesController < ApplicationController
   def index
     @filter_fields = filter_params
     @filter_states = @workflow.all_states_for_select
-    @filter_groups = all_groups
+    @filter_groups = Group.active_only.participants_only.collect{ |g| [ g.code, g.id ]}
     @isr_interfaces = IsrInterface.filter( @filter_fields ).all.paginate( page: params[ :page ])
   end
 
@@ -129,14 +129,10 @@ class IsrInterfacesController < ApplicationController
       params.slice( :ff_id, :ff_grp, :ff_txt, :ff_lvl, :ff_sts, :ff_wfs  ).clean_up
     end
 
-    def all_groups
-      Group.all.collect{ |g| [ g.code_and_label, g.id ]}
-    end
-
     def set_selections( action )
-      @isr_p_groups = all_groups
+      @isr_p_groups = Group.active_only.participants_only.collect{ |g| [ g.code_and_label, g.id ]}
       pg = current_user.permitted_groups( feature_identifier, action )
-      @isr_l_groups = Group.permitted_groups( pg ).all.collect{ |g| [ g.code, g.id ]}
+      @isr_l_groups = Group.permitted_groups( pg ).active_only.participants_only.collect{ |g| [ g.code_and_label, g.id ]}
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

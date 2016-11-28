@@ -35,21 +35,40 @@ class NetworkStopTest < ActiveSupport::TestCase
     nst = NetworkStop.new 
     refute nst.valid?
     assert_includes nst.errors, :stop_no
-    nst.network_line_id = network_lines( :one ).id
+    assert_includes nst.errors, :network_line_id
+    assert_includes nst.errors, :network_station_id
+    nst.network_line = network_lines( :one )
     refute nst.valid?
     assert_includes nst.errors, :stop_no
     refute_includes nst.errors, :network_line_id
+    assert_includes nst.errors, :network_station_id
     nst.stop_no = 2
+    refute nst.valid?
+    refute_includes nst.errors, :stop_no
+    refute_includes nst.errors, :network_line_id
+    assert_includes nst.errors, :network_station_id
+    nst.network_station = network_stations( :one )
     assert nst.valid?
   end
 
   test 'line must exist' do
     nst = NetworkStop.new
+    nst.network_station = network_stations( :one )
     nst.network_line_id = 0
     nst.stop_no = 0
     refute nst.valid?
     assert_includes nst.errors, :network_line_id
-    nst.network_line_id = network_lines( :two ).id
+    nst.network_line = network_lines( :two )
+    assert nst.valid?
+  end
+
+  test 'station must exist' do
+    nst = NetworkStop.new
+    nst.network_line = network_lines( :two )
+    nst.stop_no = 0
+    refute nst.valid?
+    assert_includes nst.errors, :network_station_id
+    nst.network_station = network_stations( :one )
     assert nst.valid?
   end
 

@@ -61,21 +61,21 @@
       <%- end -%>
       <div class="form-group">
         <%= form.label :asking_group_id, class: 'col-sm-3 control-label' -%>
-        <div class="col-sm-2">
+        <div class="col-sm-6">
           <%- if @workflow.param_permitted?( :asking_group_id ) then %>
             <%= form.select :asking_group_id, @author_groups, { prompt: t( '.g_prompt' )}, class: 'form-control' %>
           <%- else -%>
-            <%= form.text_field :asking_group_id, class: 'form-control', value: form.object.asking_group_code, disabled: true %>
+            <%= display_value form.object.group_code_and_label( :asking_group ) %>
           <%- end -%>
         </div>
       </div>
       <div class="form-group">
         <%= form.label :answering_group_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-2">
+        <div class="col-sm-6">
           <%- if @workflow.param_permitted?( :answering_group_id ) then %>
             <%= form.select :answering_group_id, @resp_groups, { prompt: t( '.g_prompt' )}, class: 'form-control' %>
           <%- else -%>
-            <%= form.text_field :answering_group_id, class: 'form-control', value: form.object.answering_group_code, disabled: true %>
+            <%= display_value form.object.group_code_and_label( :answering_group ) %>
           <%- end -%>
         </div>
       </div>
@@ -85,7 +85,7 @@
           <%- if @workflow.param_permitted?( :project_doc_id ) then %>
             <%= form.text_field :project_doc_id, class: 'form-control' %>
           <%- else -%>
-            <%= form.text_field :project_doc_id, class: 'form-control', disabled: true %>
+            <%= display_value form.object.project_doc_id %>
           <%- end -%>
         </div>
       </div>

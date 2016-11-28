@@ -18,7 +18,6 @@ class CountryName < ActiveRecord::Base
   default_scope { order( code: :asc )}
   scope :as_abbr, ->  ( a ){ where( 'code  LIKE ?',  "#{ a }%" )}
   scope :as_desc, ->  ( l ){ where( 'label LIKE ?', "%#{ l }%" )}
-  scope :ff_id, ->    ( i ){ where id: i }
   class << self;
     alias :ff_code  :as_abbr
     alias :ff_label :as_desc

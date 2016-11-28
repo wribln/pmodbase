@@ -93,7 +93,8 @@ class CsrStatusRecordsController < ApplicationController
     # prepare lists for selections
 
     def set_selections
-      @all_groups = Group.all
+      @all_groups = Group.participants_only.active_only
+      @any_groups = Group.all
     end
 
     def filter_params

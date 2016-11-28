@@ -16,7 +16,7 @@
       <% else %>
         <% @web_links.each do |wl| %>
           <tr>
-            <td><%= link_to_unless wl.hyperlink.blank?, wl.label, wl.hyperlink %></td>
+            <td><%= link_to_unless wl.hyperlink.blank?, wl.label, wl.hyperlink, target: '_blank' %></td>
             <td><%= render partial: 'shared/actions', object: wl %></td>
           </tr>
         <% end %>

@@ -97,11 +97,6 @@ class CountryNameTest < ActiveSupport::TestCase
     as = CountryName.ff_label( 'foobar' )
     assert_equal 0, as.length
 
-    as = CountryName.ff_id( country_names( :ger ).id )
-    assert_equal 1, as.length
-
-    as = CountryName.ff_id( 0 )
-    assert_equal 0, as.length
   end
 
 

@@ -2,7 +2,7 @@ class HolidaysController < ApplicationController
   require 'csv'
   include ControllerMethods
 
-  initialize_feature FEATURE_ID_HOLIDAYS, FEATURE_ACCESS_INDEX
+  initialize_feature FEATURE_ID_HOLIDAYS, FEATURE_ACCESS_VIEW
 
   before_action :set_holiday,    only: [ :show, :edit, :update, :destroy, :add ]
   before_action :set_selections, only: [ :edit, :new, :create, :update, :add ]

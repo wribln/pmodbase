@@ -1,14 +1,18 @@
 code;label
-pcs;pieces
-sets;sets as specified
-t;metric tons (1000 kg)
+d;calendar days
+h;hours
+km;kilometre(s)
+km/h;kilometres per hour
+kV;kilovolts
+L;liters
 m;meters
 m²;square meters
 m³;cubic meters
-d;calendar days
-wd;working days
-MW;megawatts
-kV;kilovolts
-h;hours
 min;minutes
-L;liters
+MW;megawatts
+pcs;pieces
+sets;sets as specified
+t;metric tons (1000 kg)
+T;tesla
+wd;working days
+µT;micro tesla

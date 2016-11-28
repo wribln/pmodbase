@@ -47,6 +47,16 @@
         for reporting: All Project Groups (within a given Project Group
         Category) are listed in ascending order of the Sequence Number given
         here.</li>
+      <li><%= help_param Group.human_attribute_name( :group_category_id ) %>
+        provides means to roughly group the project participants.</li>
+      <li><%= help_param Group.human_attribute_name( :belongs_to ) %> refers
+        to another project group which this group is part of. This allows 
+        you to create a hierarchical structure of all project groups.
+        Other features may use this information to group information 
+        according to this group hierarchy. This relationship among the
+        project groups is validated such that any invalid - non-hierarchical - 
+        relationships (e.g. A belongs to B and B belongs to A) is detected
+        and reported.</li>
       <li><%= help_param Group.human_attribute_name( :participating )-%> is
         a flag which is set for all actively participating groups in the
         project. This flag is used to select all groups which could be

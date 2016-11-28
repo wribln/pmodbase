@@ -8,7 +8,7 @@ class HolidaysControllerTest < ActionController::TestCase
   end
 
   test "check class_attributes"  do
-    validate_feature_class_attributes FEATURE_ID_HOLIDAYS, ApplicationController::FEATURE_ACCESS_INDEX
+    validate_feature_class_attributes FEATURE_ID_HOLIDAYS, ApplicationController::FEATURE_ACCESS_VIEW
   end
 
   test "should get index" do

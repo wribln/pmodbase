@@ -67,14 +67,14 @@
       <%- end -%>
       <div class="form-group">
         <%= f.label :asking_group_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-2">
-          <%= display_value f.object.asking_group_code %>
+        <div class="col-sm-6">
+          <%= display_value f.object.group_code_and_label( :asking_group ) %>
         </div>
       </div>
       <div class="form-group">
         <%= f.label :answering_group_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-2">
-          <%= display_value f.object.answering_group_code %>
+        <div class="col-sm-6">
+          <%= display_value f.object.group_code_and_label( :answering_group ) %>
         </div>
       </div>
       <div class="form-group">

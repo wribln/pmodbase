@@ -73,15 +73,19 @@ class Group < ActiveRecord::Base
    text_and_id( :code )    
   end
 
-  # ensure that the referenced subgroup is valid
+  # ensure that the referenced subgroup is valid:
+  # 1. must not reference itself
+  # 2. must be an existing group
+  # 3. references must be hierarchical, no cycles allowed
 
   def sub_group_reference
-    unless sub_group_of_id.nil? then
-      if sub_group_of_id == id then
+    unless sub_group_of_id.nil?
+      if sub_group_of_id == id
         errors.add( :sub_group_of_id, I18n.t( 'groups.msg.bad_sub_ref' ))
-      else
-        errors.add( :sub_group_of_id, I18n.t( 'groups.msg.bad_sub_group' )) \
-         unless Group.exists?( sub_group_of_id )
+      elsif !Group.exists?( sub_group_of_id )
+        errors.add( :sub_group_of_id, I18n.t( 'groups.msg.bad_sub_group' ))
+      elsif Group.descendant_groups.empty?
+        errors.add( :base, I18n.t( 'group.msg.bad_hierarchy' ))
       end
     end
   end
@@ -110,6 +114,52 @@ class Group < ActiveRecord::Base
       errors.add( :base, I18n.t( 'groups.msg.in_use' ))
       false
     end
+  end
+
+  # helper function for descendant_groups:
+  # used recursively to traverse all sub_groups
+
+  private_class_method def self.collect_descendants( b, c, r, i )
+    if c[ i ].nil? # node not yet visited
+      c[ i ] = [ i ]
+      b[ i ].each{| j | collect_descendants( b, c, i, j )}
+    end
+    return if r == i # we are done for this node
+    if( c[ r ] & c[ i ]).empty?
+      c[ r ].concat( c[ i ])
+    else
+      raise ArgumentError, "cycle detected while adding #{ i }"
+    end
+  end
+
+  # create a hash containing all sub-groups of each group
+  # return nil if group structure is not hierarchical
+
+  def self.descendant_groups
+
+    # retrieve all relationships
+
+    a = self.pluck( :id, :sub_group_of_id )
+
+    # create hash of direct descendants
+
+    b = Hash.new
+    a.each {| x | b[ x.first ] = Array.new unless x.first.nil? }
+    a.each do | x |
+      next if x.last.nil? # ignore nodes w/o parent
+      return nil if b[ x.last ].nil?  # reference to non-existing node - should not occur
+      return nil if x.first == x.last # reference to itself - should not occur
+      b[ x.last ].push( x.first )
+    end
+
+    c = Hash.new
+    begin
+      b.each_key{| x | collect_descendants( b, c, x, x )}
+    rescue ArgumentError
+      c.clear
+    end
+    return c
+
   end
 
 end

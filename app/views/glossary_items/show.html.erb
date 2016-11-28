@@ -25,14 +25,14 @@
       </div>
       <div class="form-group">
         <%= gi.label :description, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-7">
+        <div class="col-sm-6">
           <%= display_lines gi.object.description %>
         </div>
       </div>
       <div class="form-group">
-        <%= gi.label :reference_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-2">
-          <%= display_value some_id( gi.object.cfr_record_id )%>
+        <%= gi.label :cfr_record_id, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-6">
+          <%= gi.object.cfr_record_id.nil? ? display_nil : link_to_cfr( gi.object.cfr_record, :button ) %>
         </div>
       </div>
       <div class="form-group">

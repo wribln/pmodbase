@@ -57,13 +57,13 @@ class IsrInterfaceTest < ActiveSupport::TestCase
     assert_nil isr.if_code
 
     isr.id = 1
-    assert_equal 'IF-1--', isr.if_code
+    assert_equal 'IF-001--', isr.if_code
 
     isr.l_group_id = groups( :group_one ).id
-    assert_equal 'IF-1-ONE-', isr.if_code
+    assert_equal 'IF-001-ONE-', isr.if_code
 
     isr.p_group_id = groups( :group_two ).id
-    assert_equal 'IF-1-ONE-TWO', isr.if_code
+    assert_equal 'IF-001-ONE-TWO', isr.if_code
   end
 
   test 'try all scopes' do

@@ -108,4 +108,47 @@ class GroupTest < ActiveSupport::TestCase
     refute g.destroy
   end
 
+  test 'get sub_groups' do
+    g = Group.descendant_groups
+    g1 = groups( :group_one ).id
+    g2 = groups( :group_two ).id
+    assert_equal [ g1, g2 ], g[ g1 ]
+    assert_equal [ g2 ], g[ g2 ]
+  end
+
+  test 'test sub_groups' do
+    g1 = groups( :group_one )
+    g2 = groups( :group_two )
+    g3 = Group.create(
+      group_category: group_categories( :group_category_one ),
+      code: 'XXX',
+      label: 'Group 3',
+      sub_group_of: g2 )
+    g = Group.descendant_groups
+    assert_equal 3, g[ g1.id ].length
+    assert_includes g[ g1.id ], g1.id
+    assert_includes g[ g1.id ], g2.id
+    assert_includes g[ g1.id ], g3.id
+    assert_equal 2, g[ g2.id ].length
+    assert_includes g[ g2.id ], g2.id
+    assert_includes g[ g2.id ], g3.id
+    assert_equal 1, g[ g3.id ].length
+    assert_includes g[ g3.id ], g3.id
+
+    g3.update_attribute( :sub_group_of_id, g1.id )
+    g = Group.descendant_groups
+    assert_equal 3, g[ g1.id ].length
+    assert_includes g[ g1.id ], g1.id
+    assert_includes g[ g1.id ], g2.id
+    assert_includes g[ g1.id ], g3.id
+    assert_equal 1, g[ g2.id ].length
+    assert_includes g[ g2.id ], g2.id
+    assert_equal 1, g[ g3.id ].length
+    assert_includes g[ g3.id ], g3.id
+
+    g1.update_attribute( :sub_group_of_id, g3.id )
+    g = Group.descendant_groups
+    assert g.empty?
+  end
+
 end

@@ -434,7 +434,7 @@ en:
           other:        'Terms'
         code:           'Abbreviation'
         description:    'Description'
-        cfr_record_id:  'CFR Reference ID'
+        cfr_record_id:  'CFR Record'
 
       group:
         id:             :general.attributes.id
@@ -1322,6 +1322,9 @@ en:
 
   glossary_items:
     title:            'Glossary'
+    form:
+      cfr_record_id:   'CFR Record [ID]'
+      cfr_record_link: 'Show CFR Index'
     edit:
       form_title:     'Edit Glossary Item'
     new:
@@ -1353,7 +1356,8 @@ en:
       delete_ok:      'Group Information was successfully destroyed.'
       bad_group_cat:  'Selected Group Category does not exist.'
       bad_sub_group:  'Specified (master) group does not exist.'
-      bad_sub_ref:    'Cannot be sub-group of itself.'  
+      bad_sub_ref:    'Cannot be sub-group of itself.'
+      bad_hierarchy:  'Groups and sub-group relationships must be a hierarchy'
       no_deactivate:  'Can clear active flag only when no user has permissions for this group.'
       in_use:         'Cannot delete group because it is still in use.'
 

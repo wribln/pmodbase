@@ -65,13 +65,14 @@ class RfcStatusRecord < ActiveRecord::Base
   scope :ff_stts, -> ( stts ){ where AppHelper.map_values( stts, :rfc_type, :current_status )}
 
   # retrieve group_code to display in index/show
+  # use association symbol, i.e. :asking_group or :answering_group
 
-  def asking_group_code
-    ( asking_group.try :code_with_id ) || some_id( asking_group_id )
-  end  
+  def group_code( group )
+    try( group ).try :code
+  end
 
-  def answering_group_code
-    ( answering_group.try :code_with_id ) || some_id( answering_group_id )
+  def group_code_and_label( group )
+    try( group ).try :code_and_label
   end
 
 end

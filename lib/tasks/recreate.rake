@@ -41,7 +41,7 @@ task :recreate => :environment do
   Rake::Task['import'].invoke('db/std_csv/glossary.csv','GlossaryItem')
   puts '>>> import glossary items completed.'
   
-  exit!
+ # exit!
 
   Rake::Task['import'].reenable
   Rake::Task['import'].invoke('db/std_csv/pmdb_abbreviations.csv','Abbreviation')
@@ -73,6 +73,10 @@ task :recreate => :environment do
 
   Rake::Task['import'].reenable
   Rake::Task['import'].invoke('db/std_csv/hashtags.csv','Hashtag')
+
+  Rake::Task['import'].reenable
+  Rake::Task['import'].invoke('db/std_csv/web_links.csv','WebLink')
+  
   puts '>>> import hash_tags completed.'
   puts
   puts '>>> NEXT: perform project specific seeds.'

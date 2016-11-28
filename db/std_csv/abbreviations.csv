@@ -38,6 +38,7 @@ AVM;Add Value Machine;avm
 AW;Assigned Weight;aw
 BACS;Building Automation and Control System;bacs
 BCS;Building Control System;bcs
+BD;Business Development;bd
 BIIP;Best International Industry Practice;biip
 BIM;Building Information Modeling;bim
 BLE;Bluetooth Low Energy (Bluetooth Smart);ble
@@ -45,6 +46,7 @@ BMS;Building Management System;bms
 BP;Building Plan;bp
 BPS;Bulk Power Supply;bps
 BPS;Bulk Power Substation;bps
+BRC;Business Risk Class;brc
 BS;British Standard;bs
 BS;Business Segment;bs
 BUEES;Bogie and Underframe Exchange System;buees
@@ -70,14 +72,18 @@ CFD;Computational Fluid Dynamic;cfd
 CFO;Chief Financial Officer;cfo
 CIA;Central Intelligence Agency;cia
 CIE;Civil Infrastructure Engineer;cie
+CIP;Continuous Improvement Process;cip
 CLK;Clock;clk
 CM;Corrective Maintenance;cm
+CMMS;Computerized Maintenance Management System;cmms
 CNC;Computer Numerical Control;cnc
+CO;Compliance Officer;co
 CO2;Carbon Dioxide;co2
 COO;Chief Operation Officer;coo
 COSHH;Control of Substances Hazardous to Health;coshh
 COTS;Commercial Off-the-Shelf;cots
 COM;Commissioning Manager;com
+CPM;Commercial Project Manager;cpm
 CR;Construction Reinforcement;cr
 CRE;Chances, Risks, Events;cre
 CRM;Customer Relationship Management;crm
@@ -94,6 +100,7 @@ CTO;Chief Technical Officer;cto
 CV;Curriculum Vita;cv
 CWR;Continuously Welded Rail;cwr
 D&B;Design and Build;db
+DAMEX;Datenmaschinelle Exportkontrolle (Siemens automated export control system);damex
 Dba;Decibels;dba
 DBI;Deutsche Bahn International (German: German Railroad International);dbi
 DC;Direct Current;dc
@@ -105,6 +112,7 @@ DMZ;Demilitarized Zone;dmz
 DNS;Domain Name System;dns
 DoC;Declaration of Conformity;doc
 DOORS;Dynamic Object Oriented Requirements System;doors
+DoR;Division of Responsibility;dor
 DPS;Data Preparation System;dps
 DRACAS;Data Reporting and Corrective Action System;dracas
 DRN;Delivery Release Notification;drn
@@ -133,6 +141,8 @@ EC;European Commission;ec
 ECA;Export Credit Agency;eca
 ECC;Export Credit Coverage;ecc
 ECC;Emergency Control Center;ecc
+ECC;Export Control and Customs;ecc
+ECCN;Export Control Classification Number;eccn
 ECS;Emergency Call System;ecs
 EDMS;Electronic Document Management System;edms
 EDP;Emergency Driving Position;edp
@@ -158,6 +168,7 @@ EMS;Environmental Management System;ems
 EMS;Energy Management Systems;ems
 EMU;Electrical Multiple Unit (electrically powered train);emu
 EN;European Norm;en
+ENG;Engineering;eng
 EP;Electro-Pneumatic;ep
 EPC;Engineering, Procurement, Construction;epc
 ERP;Enterprise Resource Planning;erp
@@ -243,9 +254,11 @@ IFC;International Finance Coorporation;ifc
 IFL;Interface Leader;ifl
 IFP;Interface Partner;ifp
 IFM;Interface Management;ifm
+IG;Implementation Guideline;ig
 IHA;Interface Hazard Analysis;iha
 ILPA;Interim Logistics and Production Area;ilpa
 IMAPP;Integrated Management and Project Planning;imapp
+INCOTERMS;International Commercial Terms;incoterms
 INFRA;Infrasture Project Manager;infra
 IP;Internet Protocol;ip
 IP;Ingress Protection;ip
@@ -270,11 +283,8 @@ ITT;Instruction to Tenderers;itt
 ITT;Invitation to Tender;itt
 IXL;Interlocking System;ixl
 JV;Joint Venture;jv
-km;kilometre(s);km
-km/h;kilometres per hour;kmh
 KPI;Key Performance Indicator;kpi
 KPR;Key Performance Requirements;kpr
-kV;kilovolts;kv
 LAN;Local Area Network;lan
 LCC;Life Cycle Cost;lcc
 LCP;Life Cycle Phase;lcp
@@ -283,11 +293,12 @@ LD;Long Distance;ld
 LDR;Long Distance Railway;ldr
 LED;Light Emitting Diode;led
 LEED;Leadership in Energy and Environmental Design;leed
+LL;Lessons Learned;ll
 LMSS;Light Mass-Spring System;lmss
 LNG;Liquified Natural Gas;lng
 LoA;Limits of Authority (a Siemens-internal process);loa
 LoD;List of Deliverables;lod
-LOP;List of Open Points;lop
+LoP;List of Open Points;lop
 LOPA;Layers of Protection Analysis;lopa
 LoR;List of Responsibilities;lor
 LORA;Level of Repair Analysis;lora
@@ -339,6 +350,7 @@ MPM;Maturity in Project Management;mpm
 MRS;Monthly Recurring Charge;mrs
 MRS;Monthly Recurring Cost;mrs
 MS;Microsoft;ms
+MS;Milestone;ms
 MSD;Motorized Smoke Damper;msd
 MSD;Motorized Sliding Door;msd
 MSDS;Material Safety Data Sheet;msds
@@ -346,7 +358,6 @@ MSI;Manufacture, Supply and Install;msi
 MSI;Main Systems Integrator;msi
 MSP;Manager Supply Process;msp
 MSQ;Measured Service Quality;msq
-µT;Micro Tesla;mt
 MTA;Milestone Trend Analysis;mta
 MTBF;Mean Time between Failures;mtbf
 MTBFF;Mean Time Between Functional Failure;mtbff
@@ -383,6 +394,7 @@ OFC;Optical Fibre Cables;ofc
 OHS;Occupational Health and Safety;ohs
 OHSAS;Occupational Health & Safety Assessment Series;ohsas
 OI;Order Income;oi
+OIC;Order Income Calculation;oic
 OJEU;Official Journal of the European Union;ojeu
 O&M;Operations and Maintenance;om
 O&M;Operations and Maintenance Services Manager;om
@@ -403,6 +415,8 @@ PAC;Partical Acceptance Certificate;pac
 PACT;Project Acceleration through Coaching and Teamwork;pact
 PAH;Polycyclic Aromatic Hydrocarbon;pah
 PAS;Passenger Announcement System;pas
+PATAC;Process Adjustment Tax Advice and Compliance;patac
+PB;Project Business;pb
 PBB;Polybromated Biphenyls;pbb
 PBT;Polybromated Tri-phenyls;pbt
 PC;Personal Computer;pc
@@ -462,6 +476,7 @@ PSP;Projektstrukturplan (German: Work Breakdown Structure);psp
 PSS;Product and Solution Security;pss
 PSS/E;Power System Simulator for Engineering Tool;psse
 PSTN;Public Switched Telephone Network;pstn
+PTA;Project Manager Target Agreement;pta
 PTO;Purchase to Order;pto
 PTW;Permit to Work;ptw
 PTZ;Pan - Tilt - Zoom;ptz
@@ -477,6 +492,7 @@ QMS;Quality Management System;qms
 QSRA;Quantitative Schedule Risk Analysis;qsra
 R/A;Roundabout;ra
 R/O;Risks and Opportunities;ro
+R&O;Risks and Opportunities;ro
 RACI;Responsible, Accountable, Consulted and Informed;raci
 RAD;Radio;rad
 RAM;Reliability, Availability, Maintainability;ram
@@ -495,6 +511,10 @@ REM;Requirements Management;rem
 RF;Radio Frequency;rf
 RFID;Radio Frequency Identification;rfid
 RFM;Remote Failures Monitoring;rfm
+RfQ;Request for Quotation;rfq
+RfI;Request for Information;rfi
+RfC;Request for Clarification;rfc
+RIC;Risk and Internal Control;ric
 RIM;Risk Management;rim
 RM;Risk Management;rm
 RM;Restricted Manual Mode;rm
@@ -533,7 +553,10 @@ SE;Service Engineering Manager;se
 SEC;Security;sec
 SEM;Structural, Electrical and Mechanical;sem
 SPM;Senior Project Manager;spm
+SPMP;Siemens Project Management Plan;spmp
 SFR;System Failure Rate;sfr
+SFS;Siemens Financial Service;sfs
+SIECUS;Siemens Customs System;siecus
 SIFIT;Static Integrated Factory Interface Test;sifit
 SIIT;Static Integrated Interface Test;siit
 SIL;Safety Integrity Level;sil
@@ -564,7 +587,7 @@ ST;Scheduled (Number of) Trains (Available);st
 STK;Scheduled Train Kilometres;stk
 STR;Scheduled Train Runs;str
 SWL;Safe Working Load;swl
-t;(metric) tonne;t
+SWP;Strategic Workforce Planning;swp
 TAD;Tunnel Access Door (same as PED - Platform End Door);tad
 TBM;Tunnel Boring Machine;tbm
 T&C;Terms and Conditions;tc
@@ -593,6 +616,7 @@ TMA;Truck Mounted Attenuator;tma
 TMD;Traffic Management Drawing;tmd
 TMS;Train Management System;tms
 TOC;Taking-Over Certificate;toc
+TOCO;Total Cost of Ownership;toco
 TOR;Top of Rail;tor
 TOR;Terms of Reference;tor
 TPH;Traction Parallel Hut;tph

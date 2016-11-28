@@ -1,6 +1,6 @@
 class CfrRecordsController < ApplicationController
 
-  initialize_feature FEATURE_ID_CFR_RECORDS, FEATURE_ACCESS_INDEX, FEATURE_CONTROL_GRP 
+  initialize_feature FEATURE_ID_CFR_RECORDS, FEATURE_ACCESS_VIEW, FEATURE_CONTROL_GRP 
   before_action :set_cfr_record, only: [ :show, :show_all, :edit, :update, :destroy ]
   before_action :set_all_relations, only: [ :show, :show_all, :edit ]
   before_action :set_filter_options, only: [ :index, :edit, :new, :update ]
@@ -140,8 +140,15 @@ class CfrRecordsController < ApplicationController
       @cfr_record = CfrRecord.includes( :cfr_locations ).find( params[ :id ])
     end
 
+    # anybody may view conf_level 0 records when no group specified
+
     def has_access?( to_x )
-      current_user.permission_to_access( feature_identifier, to_x, @cfr_record.group_id ) >= @cfr_record.conf_level
+      if to_x == :to_read && @cfr_record.group_id.nil? && @cfr_record.conf_level == 0
+        true
+      else
+        l = current_user.permission_to_access( feature_identifier, to_x, @cfr_record.group_id )
+        l == false ? false : l >= @cfr_record.conf_level
+      end
     end
 
     def set_filter_options
