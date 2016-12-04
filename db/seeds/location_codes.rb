@@ -12,7 +12,7 @@ good_rows = 0
 parts_rows = 0
 
 puts
-puts '>>> Loading Location Codes'
+puts "Loading Location Codes from db/projects/#{ @project }/location_codes.csv"
 
 # loop 1 - read data w/o part_of
 

@@ -4,6 +4,9 @@
     <%= help_header %>
     <p class="lead">Manage Interfaces within the Interface Status Register (ISR)</p>
     <p>This help text contains information on the handling of the top-level information of interfaces. For more information on the Interface Status Register (ISR) in general, see <%= link_to_help :isr_general, 'here' %>.
+    <h3>Interfaces</h3>
+    <p>&quot;Interfaces are considered as the boundaries between independent but interacting systems,
+    organizations, stakeholders, project phases and scopes, and construction elements.&quot;</p>
     <h3>Interface Attributes</h3>
     <ul>
       <li><%= help_param IsrInterface.human_attribute_name( :if_code ) -%> is the unique identifier
@@ -20,7 +23,8 @@
       of the 'Interface Partner'. This group is responsible to provide support to resolve any
       issues related to the specified interface.</li>
       <li>The <%= help_param IsrInterface.human_attribute_name( :title )-%> provides a short
-      topic of the interface.</li>
+      topic of the interface. This text is displayed as header on all listings regarding this
+      interface together with the interface identifier.</li>
       <li><%= help_param IsrInterface.human_attribute_name( :desc )-%> contains an elaboration
       of the respective interface. This text can be up to 255 characters long.</li>
       <li><%= help_param IsrInterface.human_attribute_name( :safety_related )-%> is a flag

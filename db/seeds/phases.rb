@@ -1,7 +1,7 @@
 # - - - - - - - - - - Siemens phase standard
 
 puts
-puts '>>> Loading Siemens Phases - as per PM@Siemens Guide Version 6.0.2, released 04.10.2016'
+puts 'Loading Siemens Phases - as per PM@Siemens Guide Version 6.0.2, released 04.10.2016'
 
 SiemensPhase.create( code: '%PM010', label_p: 'Lead Management',          label_m: 'Go / No-Go Decision' )
 SiemensPhase.create( code: '%PM020', label_p: 'Opportunity Development',  label_m: 'Bid Decision' )

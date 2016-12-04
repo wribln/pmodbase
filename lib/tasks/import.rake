@@ -17,6 +17,7 @@ task :import, [ :filename, :model, :col_sep ] => :environment do |tasks, args|
     next
   end
 
+  puts
   puts "Importing from file:       #{ args[ :filename ]}"
   puts "          to model:        #{ args[ :model    ]}"
   puts "    using separator:      '#{ args[ :col_sep  ]}'"

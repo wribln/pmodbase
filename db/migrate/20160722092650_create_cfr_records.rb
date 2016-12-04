@@ -18,6 +18,6 @@ class CreateCfrRecords < ActiveRecord::Migration
 
       t.timestamps null: false
     end
-    add_index :cfr_records, [ :id ], order: { id: :desc }, name: 'default_order'
+    add_index :cfr_records, [ :id ], order: { id: :desc }, name: 'cfr_default_order'
   end
 end

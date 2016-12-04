@@ -219,7 +219,7 @@ ActiveRecord::Schema.define(version: 20161231235959) do
 
   add_index "cfr_records", ["cfr_file_type_id"], name: "index_cfr_records_on_cfr_file_type_id"
   add_index "cfr_records", ["group_id"], name: "index_cfr_records_on_group_id"
-  add_index "cfr_records", ["id"], name: "default_order"
+  add_index "cfr_records", ["id"], name: "cfr_default_order"
 
   create_table "cfr_relations", force: :cascade do |t|
     t.integer  "src_record_id"
@@ -532,8 +532,9 @@ ActiveRecord::Schema.define(version: 20161231235959) do
     t.datetime "updated_at",                                 null: false
   end
 
-  add_index "isr_interfaces", ["cfr_record_id"], name: "index_isr_interfaces_on_cfr_record_id"
+  add_index "isr_interfaces", ["l_group_id", "p_group_id"], name: "isr_default_order"
   add_index "isr_interfaces", ["l_group_id"], name: "index_isr_interfaces_on_l_group_id"
+  add_index "isr_interfaces", ["p_group_id"], name: "index_isr_interfaces_on_p_group_id"
 
   create_table "location_codes", force: :cascade do |t|
     t.string   "code",         limit: 16,                                       null: false

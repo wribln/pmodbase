@@ -12,7 +12,7 @@ bad_rows = 0
 good_rows = 0
 
 puts
-puts '>>> Loading Groups'
+puts 'Loading Groups from db/std_csv/groups.csv'
 
 CSV.foreach(File.join(Rails.root, 'db', 'std_csv', 'groups.csv' ), 
   col_sep: ';', headers: true, skip_blanks: true, encoding: 'UTF-8' ) do |row|
@@ -63,4 +63,3 @@ puts
 puts "Seed groups completed:"
 puts "#{ good_rows } rows added"
 puts "#{ bad_rows } rows skipped due to errors."
-puts

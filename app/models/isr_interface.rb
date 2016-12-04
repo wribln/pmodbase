@@ -52,7 +52,7 @@ class IsrInterface < ActiveRecord::Base
 
   set_trimmed :title
 
-  default_scope { order( id: :desc )}
+  default_scope { order( :l_group_id, :p_group_id )}
 
   # filter scopes
 

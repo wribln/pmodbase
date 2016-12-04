@@ -43,6 +43,9 @@ task :recreate => :environment do
   
  # exit!
 
+  Rake::Task['db:seed:isr_interfaces'].invoke
+  puts '>>> db:seed:isr_interfaces completed'
+
   Rake::Task['import'].reenable
   Rake::Task['import'].invoke('db/std_csv/pmdb_abbreviations.csv','Abbreviation')
   puts '>>> import pmdb abbreviations completed.'
@@ -73,11 +76,12 @@ task :recreate => :environment do
 
   Rake::Task['import'].reenable
   Rake::Task['import'].invoke('db/std_csv/hashtags.csv','Hashtag')
+  puts '>>> import hash_tags completed.'
 
   Rake::Task['import'].reenable
   Rake::Task['import'].invoke('db/std_csv/web_links.csv','WebLink')
+  puts '>>> import web_links completed.'
   
-  puts '>>> import hash_tags completed.'
   puts
   puts '>>> NEXT: perform project specific seeds.'
 
