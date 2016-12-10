@@ -41,10 +41,10 @@ task :recreate => :environment do
   Rake::Task['import'].invoke('db/std_csv/glossary.csv','GlossaryItem')
   puts '>>> import glossary items completed.'
   
- # exit!
-
   Rake::Task['db:seed:isr_interfaces'].invoke
   puts '>>> db:seed:isr_interfaces completed'
+
+exit!
 
   Rake::Task['import'].reenable
   Rake::Task['import'].invoke('db/std_csv/pmdb_abbreviations.csv','Abbreviation')

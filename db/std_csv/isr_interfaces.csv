@@ -1,4 +1,7 @@
-l_group;p_group;safety_related;if_level;title;desc
-COM;CIV;FALSE;1;COM equipment rooms at OCC/BCC;Requirements for Telecom Equipment at Operation Control Centre and Back-up Control Rooms - dimensions, arrangement, power rating, cable routing, etc.
-COM;CIV;FALSE;1;COM equipment in stops;Requirements for Telecom Equipment at stops - dimensions, arrangement, power rating, cable routing, etc.
-COM;CIV;FALSE;1;Foundations for Radio Antennas;Requirements for installation of Radio Antenna in the Depot area - dimensions, fixation, weight, locations, cable route, etc.
+rt;l_group;p_group;safety_related;if_level;title;desc
+IF;COM;CIV;FALSE;1;COM equipment rooms at OCC/BCC;Requirements for Telecom Equipment at Operation Control Centre and Back-up Control Rooms - dimensions, arrangement, power rating, cable routing, etc.
+IA;COM;CIV;;;;COM to provide data, CIV to consider in design and construction
+IF;COM;CIV;FALSE;1;COM equipment in stops;Requirements for Telecom Equipment at stops - dimensions, arrangement, power rating, cable routing, etc.
+IA;COM;CIV;;;;COM to provide data, CIV to consider in design and construction
+IF;COM;CIV;FALSE;1;Foundations for Radio Antennas;Requirements for installation of Radio Antenna in the Depot area - dimensions, fixation, weight, locations, cable route, etc.
+IA;COM;CIV;;;;COM to provide data, CIV to consider in design and construction

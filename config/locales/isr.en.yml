@@ -4,69 +4,113 @@ en:
 
     models:
       isr_interface:     'ISR Interfaces'
+      isr_agreement:     'ISR Agreements'
 
     attributes:
 
       isr_interface:
         id:               :general.attributes.id
+        code:             'Code'
         if_code:          'Interface Code'
         l_group_id:       'Leading Group'
         p_group_id:       'Partner Group'
-        l_owner_id:       'Leading Group Representative'
-        p_owner_id:       'Partner Group Representative'
-        l_deputy_id:      'Leading Group Deputy'
-        p_deputy_id:      'Partner Group Deputy'
-        l_signature:      'Signed by Leading Group'
-        p_signature:      'Signed by Partner Group'
-        l_sign_time:      'Signature Date/Time'
         title:            'Title'
         desc:             'Description'
         if_level:         'Level'
         if_levels:        ['low','medium','high']
-        if_status:        'Interface Status'
-        if_states:        ['open','identified','defined','agreed','resolved','closed']
+        if_status:        'Status'
+        #                   0            1              2                3                4
+        if_states:        ['identified','defined-open','defined-frozen','not applicable','withdrawn']
+        #                   0            1                               2
+        if_states_maj:    ['identified','defined',                      'closed'                    ]
+        cfr_record_id:    'CFR Record'
+        note:             'Notes'
+
+      isr_agreement:
+        id:               :general.attributes.id
+        code:             'Code'
+        ia_code:          'Interface Agreement Code'
+        l_group_id:       'Leading Group'
+        p_group_id:       'Partner Group'
+        l_signature:      'Signed by Leading Group'
+        p_signature:      'Signed by Partner Group'
+        l_sign_time:      'Signature Date/Time'
+        title:            'Title'
+        def_text:         'Definition'
+        ia_status:        'Status'
+        #                   0      1        2          3        4             5            6            7
+        ia_states:        ['open','agreed','resolved','closed','in revision','superseded','terminated','withdrawn']
         cfr_record_id:    'CFR Record'
         current_status_task: 'Current Status / Task'
-        next_status_task:    'Next Status / Task'        
+        next_status_task:    'Next Status / Task'
+        revision_suffix:  'Rev. %{rev_no}'
+        res_steps_label:  'Resolution of %{code}'
+        val_steps_label:  'Validation of %{code}'
+        res_steps_id:     'Resolution Steps'
+        val_steps_id:     'Validation Steps'
+        based_on_id:      'Based on IA'
 
   isr_interfaces:
     title:                'Interface Status Register (ISR)'
-    on_time:              'on'
     edit:
-      form_title:         'Edit ISR Interface'
+      form_title:         'Edit Interface'
       confirm:            'Confirm'
       reject:             'Reject'
     new:
-      form_title:         'Add ISR Interface'
+      form_title:         'Add Interface'
     index:
-      form_title:         'List of All ISR Interfaces'
-      if_status:          'Status'
-      if_code:            'Code'
+      form_title:         'List of Interfaces and Interface Agreements'
+      if_title:           'Title / Interface Agreements (IAs)'
     show:
-      form_title:         'Show ISR Interface'
-    icf:
-      main_heading:       'Interface Control Form'
-      as_of:              'Status as of'
-      references:         'References [CFR]'
-    info_workflow:
-      form_title:         'ISR Interface Workflow Information'
+      form_title:         'Show '
+      no_agreements:      'No active Interface Agreements.'
+      groups:             'Leading / Partner Group'
+      ia_label:           'Interface Agreement'
+      signed_on:          'Signed on'
+      signed_by:          'Signed by'
+      res_val_steps:      'Resolution / Validation Steps'
+    show_all:
+      form_title:         'Show Details of Interface'
     form:
       g_prompt:           :general.select_prompt
       cfr_record_id:      'CFR Record [ID]'
       cfr_record_link:    'Show CFR Index'
     msg:
-      create_ok:          'ISR Interface successfully created.'
-      update_ok:          'ISR Interface successfully updated.'
-      delete_ok:          'ISR Interface successfully deleted.'
-      no_access:          'has no permission to access ISR Interfaces.'
-      bad_account_id:     :general.non_existing
-      you_no_edit:        'You have no permission to update this interface.'
-      you_no_new:         'You have no permission to create an interface.'
-      no_edit_now:        'Nothing can be updated at this stage.'  
+      create_ok:          'Interface successfully created.'
+      update_ok:          'Interface successfully updated.'
+      delete_ok:          'Interface successfully deleted.'
+      withdrawing:        'You are about to withdraw this Interface!'
+      wdr_not_now:        'Current status prohibits withdrawing this Interface.'
+
+  isr_agreements:
+    title:          'ISR - Interface Agreements'
+    form:
+      g_prompt:           :general.select_prompt
+      cfr_record_id:      'CFR Record [ID]'
+      cfr_record_link:    'Show CFR Index'
+    new:
+      form_title:   'Create New Interface Agreement'
+    index:
+      form_title:   'List of All Interface Agreements'
+    show:
+      form_title:   'Show '
+    show_all:
+      form_title:   'Show Details of Interface Agreement'
+    info_workflow:
+      form_title:   'ISR Workflow Information'
+    edit:
+      form_title:   'Edit Interface Agreement'
+    icf:
+      main_heading: 'Interface Control Form'
+      as_of:        'Status as of'
+      if_references:   'Interface References [CFR]'
+      ia_references:   'Agreement References [CFR]'
+      on_time:      'on'
+      empty_or_none: 'None.'
 
     workflows:
       w00:
-        label:    'ISR Interface'
+        label:    'ISR Agreement'
         tasks:
           t00:    '<start new workflow>'
           t01:    'Identify'
@@ -91,3 +135,4 @@ en:
           s10:    'closed - not applicable'
           s11:    'closed - withdrawn'
           s12:    'closed'
+

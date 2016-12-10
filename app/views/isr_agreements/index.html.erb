@@ -1,0 +1,50 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="table-responsive">
+    <%= form_tag({},{ method: :get }) do %>
+    <%= will_paginate @isr_agreements %>
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th class="col-sm-2" colspan="2"><%= label_tag :ff_id, IsrAgreement.human_attribute_name( :code ), class: 'control-label' %></th>
+          <th class="col-sm-3"><%= label_tag :ff_txt, IsrAgreement.human_attribute_name( :def_text ), class: 'control-lavel' %></th>
+          <th class="col-sm-1"><%= label_tag :ff_sts, IsrAgreement.human_attribute_name( :status ), class: 'control-label' %></th>
+          <th class="col-sm-3"><%= label_tag :ff_wfs, IsrAgreement.human_attribute_name( :current_status_task ), class: 'control-label' %></th>
+          <th class="col-sm-1"><%= IsrAgreement.human_attribute_name( :res_steps_id ) %></th>
+          <th class="col-sm-1"><%= IsrAgreement.human_attribute_name( :val_steps_id ) %></th>
+          <th class="col-sm-1 hidden-print"><%= filter_action_title_header %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr <%= filter_row( @filter_fields ) -%>>
+          <td class="col-sm-1"><%= filter_field @filter_fields, :ff_id, :id %></td>
+          <td class="col-sm-1"><%= filter_select_from_array @filter_fields, :ff_grp, @filter_groups %></td>
+          <td><%= filter_field @filter_fields, :ff_txt, :sw %></td>
+          <td><%= filter_select_from_string_set @filter_fields, :ff_sts, IsrAgreement::ISR_IA_STATUS_LABELS %></td>
+          <td><%= filter_select_from_array @filter_fields, :ff_wfs, @filter_states %></td>
+          <td colspan="2">&nbsp;</td>
+          <td><%= filter_action_button %></td>
+        </tr>
+      <% if @isr_agreements.length.zero? %>
+        <%= render partial: 'shared/index_empty_row', locals:{ columns: 7, with_link: true }%>
+      <% else %>
+        <% @isr_agreements.each do |isa| %>
+          <tr>
+            <td colspan="2"><%= isa.code_and_revision %></td>
+            <td><%= isa.def_text %></td>
+            <td><%= isa.ia_status_label %></td>
+            <td><%= @workflow.status_task_label( isa.current_status, isa.current_task, 0 ) %></td>
+            <td><%= link_to_tia( isa.res_steps, display = :to_id )%></td>
+            <td><%= link_to_tia( isa.val_steps, display = :to_id )%></td>
+            <td><%= render partial: 'shared/actions', object: isa %></td>
+          </tr>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+    <%- end -%>
+    <%= render partial: 'shared/footer' %>
+  </div>
+</div>

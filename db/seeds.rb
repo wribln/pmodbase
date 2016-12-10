@@ -521,11 +521,22 @@ end.save!
 Feature.new do |f|
   f.id = FEATURE_ID_ISR_INTERFACES
   f.label = I18n.t( 'isr_interfaces.title' )
-  f.code = 'ISF'
+  f.code = 'ISR'
   f.seqno = 11
   f.access_level = IsrInterfacesController.feature_access_level
   f.control_level = IsrInterfacesController.feature_control_level
   f.no_workflows = IsrInterfacesController.no_workflows
+  f.feature_category_id = fc4.id
+end.save!
+
+Feature.new do |f|
+  f.id = FEATURE_ID_ISR_AGREEMENTS
+  f.label = I18n.t( 'isr_agreements.title' )
+  f.code = 'ISA'
+  f.seqno = 12
+  f.access_level = IsrAgreementsController.feature_access_level
+  f.control_level = IsrAgreementsController.feature_control_level
+  f.no_workflows = IsrAgreementsController.no_workflows
   f.feature_category_id = fc4.id
 end.save!
 
@@ -1042,13 +1053,13 @@ Permission4Flow.new do |p|
   p.tasklist = '0,1,2,3,4,5,6,7,8,9,10'
 end.save!
 
-Permission4Flow.new do |p|
-  p.feature_id = FEATURE_ID_ISR_INTERFACES
-  p.account_id = a1.id
-  p.workflow_id = 0
-  p.label = 'Administrator'
-  p.tasklist = '0,1,2,3,4,5,6,7'
-end.save!
+#Permission4Flow.new do |p|
+#  p.feature_id = FEATURE_ID_ISR_AGREEMENTS
+#  p.account_id = a1.id
+#  p.workflow_id = 0
+#  p.label = 'Administrator'
+#  p.tasklist = '0,1,2,3,4,5,6,7'
+#end.save!
 
 # - - - - - - - - - - DSR Progress Rates - one record per state
 

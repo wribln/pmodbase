@@ -1,0 +1,40 @@
+          <div class="form-group p-group">
+            <p class="col-sm-3 p-label"><%= t( 'isr_interfaces.show.ia_label' )%></p>
+            <p class="col-sm-3"><%= link_to show_ia.code_and_revision, isr_agreement_path( show_ia ) %></p>
+            <p class="col-sm-1 p-label"><%= IsrAgreement.human_attribute_name( :ia_status )%></p>
+            <p class="col-sm-2"><%= show_ia.ia_status_label %></p>
+          </div>
+          <div class="form-group p-group">
+            <p class="col-sm-3 p-label"><%= t( 'isr_interfaces.show.groups' ) %></p>
+            <p class="col-sm-3"><%= show_ia.l_group.try( :code_and_label )%></p>
+            <p class="col-sm-3"><%= show_ia.p_group.try( :code_and_label )%></p>
+          </div>
+          <%- unless show_ia.l_sign_time.nil? %>
+            <div class="form-group p-group">
+              <p class="col-sm-3 p-label"><%= t( 'isr_interfaces.show.signed_on' ) %></p>
+              <p class="col-sm-3"><%= db_formatted_dt show_ia.l_sign_time %></p>
+              <p class="col-sm-3"><%= db_formatted_dt show_ia.p_sign_time %></p>
+            </div>
+            <div class="form-group p-group">
+              <p class="col-sm-3 p-label"><%= t( 'isr_interfaces.show.signed_by' ) %></p>
+              <p class="col-sm-3"><%= db_formatted_dt show_ia.l_signature %></p>
+              <p class="col-sm-3"><%= db_formatted_dt show_ia.p_signature %></p>
+            </div>
+          <%- end -%>
+          <div class="form-group p-group">
+            <p class="col-sm-3 p-label"><%= IsrAgreement.human_attribute_name( :def_text )%></p>
+            <p class="col-sm-6"><%= show_ia.def_text %></p>
+          </div>
+          <%- unless show_ia.cfr_record_id.nil? -%>
+            <div class="form-group p-group">
+              <p class="col-sm-3 p-label"><%= IsrAgreement.human_attribute_name( :cfr_record_id )%></p>
+              <p class="col-sm-6"><%= link_to_cfr( show_ia.cfr_record )%></p>
+            </div>
+          <%- end -%>
+          <%- if show_ia.res_steps_id || show_ia.val_steps_id -%>
+            <div class="form-group p-group">
+              <p class="col-sm-3 p-label"><%= t( 'isr_interfaces.show.res_val_steps' )%></p>
+              <p class="col-sm-2"><%= link_to( show_ia.res_steps.code, my_tia_list_our_tia_items_path( show_ia.res_steps_id ), target: '_blank' ) unless show_ia.res_steps_id.nil? %></p>  
+              <p class="col-sm-2"><%= link_to( show_ia.val_steps.code, my_tia_list_our_tia_items_path( show_ia.val_steps_id ), target: '_blank' ) unless show_ia.val_steps_id.nil? %></p>
+            </div>
+          <%- end -%>

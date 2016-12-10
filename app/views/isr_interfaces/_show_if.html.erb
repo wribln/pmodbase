@@ -1,0 +1,39 @@
+      <%- code = defined?( if_code ) ? :if_code : :code -%>
+      <div class="form-group p-group">
+        <p class="col-sm-3 p-label"><%= IsrInterface.human_attribute_name( code )%></p>
+        <p class="col-sm-3"><%= link_to @isr_interface.code, isr_interface_path( @isr_interface ) %></p>
+        <p class="col-sm-1 p-label"><%= IsrAgreement.human_attribute_name( :status )%></p>
+        <p class="col-sm-2"><%= @isr_interface.if_status_label %></p>
+      </div>
+      <div class="form-group p-group">
+        <p class="col-sm-3 p-label"><%= t( 'isr_interfaces.show.groups' ) %></p>
+        <p class="col-sm-3"><%= @isr_interface.l_group.try( :code_and_label )%></p>
+        <p class="col-sm-3"><%= @isr_interface.p_group.try( :code_and_label )%></p>
+      </div>
+      <div class="form-group p-group">
+        <p class="col-sm-3 p-label"><%= IsrInterface.human_attribute_name( :title )%></p>
+        <p class="col-sm-6"><strong><%= @isr_interface.title %></strong></p>
+      </div>
+      <div class="form-group p-group">
+        <p class="col-sm-3 p-label"><%= IsrInterface.human_attribute_name( :desc )%></p>
+        <p class="col-sm-6"><%= @isr_interface.desc %></p>
+      </div>
+      <%- unless @isr_interface.cfr_record_id.nil? -%>
+        <div class="form-group p-group">
+          <p class="col-sm-3 p-label"><%= IsrInterface.human_attribute_name( :cfr_record_id )%></p>
+          <p class="col-sm-6"><%= link_to_cfr( @isr_interface.cfr_record )%></p>
+        </div>
+      <%- end -%>
+      <div class="form-group p-group">
+        <p class="col-sm-3 p-label"><%= IsrInterface.human_attribute_name( :safety_related )%></p>
+        <p class="col-sm-1"><%= display_boolean @isr_interface.safety_related %></p>
+        <p class="col-sm-3 p-label"><%= IsrInterface.human_attribute_name( :level )%></p>
+        <p class="col-sm-2"><%= @isr_interface.if_level_label %></p>
+      </div>
+      <%- if defined?( note )-%>
+      <div class="form-group p-group">
+        <p class="col-sm-3 p-label"><%= IsrInterface.human_attribute_name( :note )%></p>
+        <p class="col-sm-6"><%= @isr_interface.note %></p>
+      </div>
+      <%- end -%>
+

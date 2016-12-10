@@ -1,0 +1,70 @@
+      <div class="form-group">
+        <%= show_all_ia.label :code, IsrAgreement.human_attribute_name( :ia_code ), class: 'col-sm-3 control-label' %>
+        <div class="col-sm-3">
+          <%= display_value show_all_ia.object.code_and_revision %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= show_all_ia.label :l_group_id, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-4">
+          <%= display_value show_all_ia.object.l_group.try( :code_and_label ) %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= show_all_ia.label :p_group_id, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-4">
+          <%= display_value show_all_ia.object.p_group.try( :code_and_label ) %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= show_all_ia.label :def_text, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-6">
+          <%= display_lines show_all_ia.object.def_text %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= show_all_ia.label :cfr_record_id, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-6">
+          <%= show_all_ia.object.cfr_record_id.nil? ? display_nil : link_to_cfr( show_all_ia.object.cfr_record, :button )%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= show_all_ia.label :res_steps_id, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-2">
+          <%= show_all_ia.object.res_steps_id.nil? ? display_nil : link_to_tia( show_all_ia.object.res_steps, :button )%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= show_all_ia.label :val_steps_id, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-2">
+          <%= show_all_ia.object.val_steps_id.nil? ? display_nil : link_to_tia( show_all_ia.object.val_steps, :button )%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= show_all_ia.label :ia_status, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-2">
+          <%= display_value show_all_ia.object.ia_status_label %>
+        </div>
+      </div>
+      <%- unless show_all_ia.object.l_signature.blank? -%>
+        <div class="form-group">
+          <%= show_all_ia.label :l_signature, class: 'col-sm-3 control-label' %>
+          <div class="col-sm-3"><p class="form-control-static"><%= show_all_ia.object.l_signature %></p></div>
+          <div class="col-sm-1"><p class="form-control-static"><%= t( 'isr_interfaces.on_time' ) %></p></div>
+          <div class="col-sm-2"><p class="form-control-static"><%= db_formatted_dt show_all_ia.object.l_sign_time %></p></div>
+        </div>
+      <%- end -%>
+      <%- unless show_all_ia.object.p_signature.blank? -%>
+        <div class="form-group">
+          <%= show_all_ia.label :p_signature, class: 'col-sm-3 control-label' %>
+          <div class="col-sm-3"><p class="form-control-static"><%= show_all_ia.object.p_signature %></p></div>
+          <div class="col-sm-1"><p class="form-control-static"><%= t( 'isr_interfaces.on_time' ) %></p></div>
+          <div class="col-sm-2"><p class="form-control-static"><%= db_formatted_dt show_all_ia.object.p_sign_time %></p></div>
+        </div>
+      <%- end -%>
+      <div class="form-group">
+        <%= show_all_ia.label :current_status_task, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-6">
+          <%= display_value @workflow.status_task_label %>
+        </div>
+      </div>

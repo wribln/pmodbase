@@ -11,7 +11,7 @@ class IsrInterfacesController0Test < ActionController::TestCase
   test 'check class attributes' do
     validate_feature_class_attributes FEATURE_ID_ISR_INTERFACES, 
       ApplicationController::FEATURE_ACCESS_VIEW,
-      ApplicationController::FEATURE_CONTROL_GRPWF, 1
+      ApplicationController::FEATURE_CONTROL_GRP
   end
 
   test 'should get index' do
@@ -55,9 +55,16 @@ class IsrInterfacesController0Test < ActionController::TestCase
   end
 
   test 'should update isr_interface' do
-    patch :update, id: @isr_interface, isr_interface: { 
-      current_status: 1, current_task: 1, desc: @isr_interface.desc, safety_related: true }
-    assert_redirected_to isr_interface_path( assigns( :isr_interface ))
+    patch :update, id: @isr_interface, isr_interface: { desc: @isr_interface.desc, safety_related: true }
+    assert_redirected_to isr_interface_details_path( assigns( :isr_interface ))
+  end
+
+  test 'should withdraw' do
+    get :edit_withdraw, id: @isr_interface
+    assert_response :success
+    assert( assigns( :isr_withdrawing ))
+    refute flash[ :notice ].blank?
+    assert_template :edit
   end
 
   test 'should fail to update isr_interface' do
@@ -65,6 +72,14 @@ class IsrInterfacesController0Test < ActionController::TestCase
     assert_response :success
     isr = assigns( :isr_interface )
     refute isr.errors.empty?
+  end
+
+  test 'should perform withdraw' do
+    patch :update, id: @isr_interface, isr_withdrawing: true, isr_interface: { note: 'test' }
+    isr = assigns( :isr_interface )
+    assert_redirected_to isr_interface_details_path( isr )
+    assert_equal 4, isr.if_status
+    assert_equal 7, isr.isr_agreements.first.ia_status
   end
 
   test 'should destroy isr_interface' do

@@ -758,6 +758,8 @@ en:
     upd_baseline: 'Update Baseline'
     release:      'Release'
     check:        'Validate All'
+    withdraw:     'Withdraw'
+    revise:       'Revise'
 
   a_code_modules:
     search_title:  

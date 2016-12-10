@@ -1,4 +1,4 @@
-<% help_title 'Help on #{ IsrAgreement.model_name.human }' %>
+<% help_title "Help on #{ IsrAgreement.model_name.human }" %>
   <div class="container">
     <%= helpcrumbs %>
     <%= help_header %>
@@ -23,6 +23,32 @@
       and replaced by a new IA with new resolution and validation steps.</p>
     <ul>
       <li><%= help_param 'IsrAgreement.human_attribute_name( :code )' -%></li>
+      <li><%= help_param IsrInterface.human_attribute_name( :current_status_task )-%> shows the
+      current status and the current task according to the workflow.</li>
+      <li><%= help_param IsrInterface.human_attribute_name( :next_status_task )-%> is the input
+      field from which you can select the next possible workflow status and task.</li>
     </ul>
+    <h3>Detailed Workflow Information</h3>
+      <p>Information on the workflow tasks and possible status transitions
+      can be found <%= link_to 'here', isr_workflow_info_path %>.</p>
+    <h3>Permissions</h3>
+      <p>The tasks within this workflow are to be performed by the Interface Manager (IFM), the
+      Interface Leader (IFL), and the Interface Partner (IFP):</p>
+      <ul class="no-marker">
+        <li>0 - add a new interface (IFM)</li>
+        <li>1 - identify the interface (IFM)</li>
+        <li>2 - define the interface (IFL)</li>
+        <li>3 - confirm interface definition (IFP)</li>
+        <li>4 - archive the interface status (IFM)</li>
+        <li>5 - process Interface Agreements (IFM)</li>
+        <li>6 - update interface (IFM)</li>
+        <li>7 - perform withdrawel of the interface upon request (IFM)</li>
+      </ul>
+      <p>The required access to the workflow tasks thus are:</p>
+      <ul class="no-martker">
+        <li>IFM: 0, 1, 4, 5, 6, 7.</li>
+        <li>IFL: 2</li>
+        <li>IFP: 3</li>
+      </ul>
     <%= help_footer FEATURE_ID_ISR_AGREEMENTS %>
   </div> <!-- /container -->

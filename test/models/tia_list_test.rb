@@ -1,7 +1,7 @@
 require 'test_helper'
 class TiaListTest < ActiveSupport::TestCase
 
-  test "fixture usefulness" do
+  test 'fixture usefulness' do
     tia = tia_lists( :tia_list_one )
     assert tia.code.length < MAX_LENGTH_OF_CODE
     assert tia.label.length <= MAX_LENGTH_OF_DESCRIPTION
@@ -9,7 +9,7 @@ class TiaListTest < ActiveSupport::TestCase
     assert_not_nil tia.deputy_account_id
   end
 
-  test "item code" do
+  test 'item code' do
     tia = tia_lists( :tia_list_one )
     assert_equal 'TIA-1', tia.item_code( 1 )
     assert_equal 'TIA-11', tia.item_code( 11 )
@@ -18,7 +18,7 @@ class TiaListTest < ActiveSupport::TestCase
     assert_equal '-11-', tia.item_code( 11 )
   end
 
-  test "code shall not have leading/trailing blanks" do
+  test 'code shall not have leading/trailing blanks' do
     tia = TiaList.new
     [ 'ABC', '  ABC', 'ABC  ', '  ABC  ' ].each do |c|
       tia.code = c
@@ -26,7 +26,7 @@ class TiaListTest < ActiveSupport::TestCase
     end
   end
 
-  test "label shall not have leading/trailing blanks" do
+  test 'label shall not have leading/trailing blanks' do
     tia = TiaList.new
     [ 'a label', '  a label', 'a label  ', '  a label  ', '  a  label  ' ].each do |c|
       tia.label = c
@@ -34,7 +34,7 @@ class TiaListTest < ActiveSupport::TestCase
     end
   end
 
-  test "one owner should not use same code twice" do
+  test 'one owner should not use same code twice' do
     t1 = tia_lists( :tia_list_one )
     t2 = TiaList.new
     t2.code = t1.code
@@ -44,7 +44,7 @@ class TiaListTest < ActiveSupport::TestCase
     assert t2.valid?
   end
 
-  test "given account must exist" do
+  test 'given account must exist' do
     a1 = accounts( :two )
     id1 = a1.id
     assert_difference( 'Account.count', -1 ) do
@@ -63,7 +63,7 @@ class TiaListTest < ActiveSupport::TestCase
     tia.deputy_account_id = id2
   end 
 
-  test "owner or deputy?" do
+  test 'owner or deputy?' do
     t = TiaList.new
     a = accounts( :wop ).id
 
@@ -76,13 +76,13 @@ class TiaListTest < ActiveSupport::TestCase
     assert t.user_is_owner_or_deputy?( a )
   end
 
-  test "accounts_for_select 1" do
+  test 'accounts_for_select 1' do
     t = tia_lists( :tia_list_one )
     a = t.accounts_for_select
     assert_equal a, a | [ accounts( :three ).id, accounts( :one ).id, accounts( :wop ).id ]
   end
 
-  test "accounts_for_select 2" do
+  test 'accounts_for_select 2' do
     t = tia_lists( :tia_list_two )
     a = t.accounts_for_select
     assert_equal a, a | [ accounts( :one ).id, accounts( :two ).id, accounts( :wop ).id, ]

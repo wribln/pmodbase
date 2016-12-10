@@ -49,9 +49,17 @@ Rails.application.routes.draw do
   resources :hashtags, path: 'htg', format: false
   get 'hld/:id/new', to: 'holidays#add', as: 'add_holiday', format: false
   resources :holidays, path: 'hld', format: false 
-  get 'isf/info', to: 'isr_interfaces#info_workflow', as: 'isr_workflow_info', format: false
-  get 'isf/:id/icf', to: 'isr_interfaces#show_icf', as: 'isr_show_icf', format: false
-  resources :isr_interfaces, path: 'isf', format: false
+  get 'isa/info', to: 'isr_agreements#info_workflow', as: 'isr_workflow_info', format: false
+  post 'isa/:id/rev',to: 'isr_agreements#create_rev', format: false
+  post 'isa/:id/new',to: 'isr_agreements#create_new', format: false
+  get 'isa/:id/new', to: 'isr_agreements#new',      as: 'new_isr_agreement', format: false
+  get 'isa/:id/rev', to: 'isr_agreements#new_revise',as: 'revise_isr_agreement', format: false
+  get 'isa/:id/icf', to: 'isr_agreements#show_icf', as: 'isr_show_icf', format: false
+  get 'isa/:id/all', to: 'isr_agreements#show_all', as: 'isr_agreement_details', format: false
+  get 'isr/:id/all', to: 'isr_interfaces#show_all', as: 'isr_interface_details', format: false
+  get 'isr/:id/wdr', to: 'isr_interfaces#edit_withdraw', as: 'isr_interface_withdraw', format: false
+  resources :isr_interfaces, path: 'isr', format: false
+  resources :isr_agreements, path: 'isa', format: false, only: [ :index, :show, :edit, :update, :destroy ]
   get 'scl/check', to: 'location_codes#update_check', as: 'location_codes_check', format: false
   resources :location_codes, path: 'scl', format: false
   resources :network_lines, path: 'nln', format: false

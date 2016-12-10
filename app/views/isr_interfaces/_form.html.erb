@@ -1,102 +1,70 @@
+      <%- code = defined?( if_code ) ? :if_code : :code -%>
       <div class="form-group">
-        <%= form.label :if_code, class: 'col-sm-3 control-label' %>
+        <%= form.label :code, IsrInterface.human_attribute_name( code ), class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= display_value form.object.if_code %>
+          <%= display_value form.object.code %>
         </div>
       </div>
       <div class="form-group">
         <%= form.label :l_group_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%- if @workflow.param_permitted?( :l_group_id ) -%> 
-            <%= form.select :l_group_id, @isr_l_groups, { prompt: t( '.g_prompt' )},{ class: 'form-control', required: true }%>
-          <%- else -%>
-            <%= display_value form.object.l_group.try( :code_and_label ) %>
-          <%- end -%>
+          <%= form.select :l_group_id, @isr_l_groups, { prompt: t( '.g_prompt' )},{ class: 'form-control', required: true }%>
         </div>
       </div>
       <div class="form-group">
         <%= form.label :p_group_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%- if @workflow.param_permitted?( :p_group_id ) -%> 
-            <%= form.select :p_group_id, @isr_p_groups, { prompt: t( '.g_prompt' )},{ class: 'form-control', required: true }%>
-          <%- else -%>
-            <%= display_value form.object.p_group.try( :code_and_label ) %>
-          <%- end -%>
+          <%= form.select :p_group_id, @isr_p_groups, { prompt: t( '.g_prompt' )},{ class: 'form-control', required: true }%>
         </div>
       </div>
       <div class="form-group">
         <%= form.label :title, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
-          <%- if @workflow.param_permitted?( :title ) -%> 
-            <%= form.text_field :title, class: 'form-control' %>
-          <%- else -%>
-            <%= display_value form.object.title %>
-          <%- end -%>
+          <%= form.text_field :title, class: 'form-control' %>
         </div>
       </div>
       <div class="form-group">
         <%= form.label :desc, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
-          <%- if @workflow.param_permitted?( :desc ) -%> 
-            <%= form.text_area :desc, class: 'form-control', cols: DEFAULT_COLS_TEXTAREA, rows: DEFAULT_ROWS_TEXTAREA %>
-          <%- else -%>
-            <%= display_lines form.object.desc %>
-          <%- end -%>
+          <%= form.text_area :desc, class: 'form-control', cols: DEFAULT_COLS_TEXTAREA, rows: DEFAULT_ROWS_TEXTAREA %>
         </div>
       </div>
       <div class="form-group">
         <%= form.label :safety_related, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
-          <%- if @workflow.param_permitted?( :safety_related ) -%> 
-            <%= form.check_box :safety_related %>
-          <%- else -%>
-            <%= display_check_box form.object.safety_related %>
-          <%- end -%>
+          <%= form.check_box :safety_related %>
         </div>
       </div>
       <div class="form-group">
         <%= form.label :if_level, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%- if @workflow.param_permitted?( :if_level ) -%> 
-            <%= form.select :if_level, select_options( IsrInterface::ISR_IF_LEVEL_LABELS ), { prompt: t( '.g_prompt' ) }, { class: 'form-control' }%>
-          <%- else -%>
-            <%= display_value form.object.if_level_label %>
-          <%- end -%>
+          <%= form.select :if_level, select_options( IsrInterface::ISR_IF_LEVEL_LABELS ), { prompt: t( '.g_prompt' )}, { class: 'form-control' }%>
         </div>
       </div>
       <div class="form-group">
         <%= form.label :cfr_record_id, t( '.cfr_record_id' ), class: 'col-sm-3 control-label' %>
-        <%- if @workflow.param_permitted?( :cfr_record_id ) -%> 
-          <div class="col-sm-2">
-            <%= form.text_field :cfr_record_id, class: 'form-control' %>
-          </div>
-          <div class="col-sm-2">
-            <%= link_to t( '.cfr_record_link' ), cfr_records_path, class: 'btn btn-sm btn-block btn-default', target: '_blank' %>
-          </div>
-        <%- else -%>
-          <div class="col-sm-6">
-            <%= form.object.cfr_record_id.nil? ? display_nil : link_to_cfr( form.object.cfr_record, :button ) %>
-          </div>
-        <%- end -%>
+        <div class="col-sm-2">
+          <%= form.text_field :cfr_record_id, class: 'form-control' %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to t( '.cfr_record_link' ), cfr_records_path, class: 'btn btn-sm btn-block btn-default', target: '_blank' %>
+        </div>
       </div>
       <div class="form-group">
         <%= form.label :if_status, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= display_value form.object.if_status_label %>
+          <%= form.select :if_status, @isr_sel_states, { prompt: t( '.g_prompt' )}, { class: 'form-control', required: true }%>
         </div>
       </div>
+      <%- if defined?( note )-%>
       <div class="form-group">
-        <%= form.label :current_status_task, class: 'col-sm-3 control-label' %>
+        <%= form.label :note, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
-          <%= display_value @workflow.status_task_label %>
+          <%- if note == :edit %>
+            <%= form.text_field :note, class: 'form-control' %>
+          <%- else -%>
+            <%= display_value form.object.note %>
+          <%- end -%>
         </div>
       </div>
-      <%- if @workflow.param_permitted?( :next_status_task ) -%>
-        <div class="form-group">
-          <%= form.label :next_status_task, class: 'col-sm-3 control-label' %>
-          <div class="col-sm-6">
-            <%= select_tag :next_status_task,
-              options_for_select( @workflow.next_status_task_labels_for_select, selected: 0 ), { class: 'form-control' } %>
-          </div>
-        </div>
       <%- end -%>

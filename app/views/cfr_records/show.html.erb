@@ -63,11 +63,11 @@
         <hr style="margin:4px"/>  
       </div>
       <!-- Location Info -->
-      <% if @cfr_record.cfr_locations.empty? %>
+      <%- if @cfr_record.cfr_locations.empty? -%>
         <div class="form-group">
           <div class="col-sm-offset-3 col-sm-4"><%= t( '.no_locations' ) %></div>
         </div>
-      <% else %>
+      <%- else -%>
         <%- n = 0 -%>
         <%= f.fields_for :cfr_locations, f.object.cfr_locations do |l| %>
           <%- n = n + 1 -%>

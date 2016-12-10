@@ -513,21 +513,44 @@ ActiveRecord::Schema.define(version: 20161231235959) do
   add_index "holidays", ["date_from"], name: "index_holidays_on_date_from"
   add_index "holidays", ["year_period"], name: "index_holidays_on_year_period"
 
-  create_table "isr_interfaces", force: :cascade do |t|
-    t.integer  "l_group_id",                                 null: false
-    t.string   "l_signature",    limit: 90
+  create_table "isr_agreements", force: :cascade do |t|
+    t.integer  "isr_interface_id",                        null: false
+    t.integer  "l_group_id",                              null: false
+    t.string   "l_signature",      limit: 90
     t.datetime "l_sign_time"
     t.integer  "p_group_id"
-    t.string   "p_signature",    limit: 90
+    t.string   "p_signature",      limit: 90
     t.datetime "p_sign_time"
+    t.integer  "cfr_record_id"
+    t.text     "def_text"
+    t.integer  "ia_status",                   default: 0, null: false
+    t.integer  "current_status",              default: 0, null: false
+    t.integer  "current_task",                default: 0, null: false
+    t.integer  "res_steps_id"
+    t.integer  "val_steps_id"
+    t.integer  "ia_no",                                   null: false
+    t.integer  "rev_no",                      default: 0, null: false
+    t.integer  "based_on_id"
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+  end
+
+  add_index "isr_agreements", ["isr_interface_id", "ia_no", "rev_no"], name: "isa_default_order", unique: true
+  add_index "isr_agreements", ["isr_interface_id"], name: "index_isr_agreements_on_isr_interface_id"
+  add_index "isr_agreements", ["l_group_id"], name: "index_isr_agreements_on_l_group_id"
+  add_index "isr_agreements", ["p_group_id"], name: "index_isr_agreements_on_p_group_id"
+
+  create_table "isr_interfaces", force: :cascade do |t|
+    t.integer  "l_group_id",                                 null: false
+    t.integer  "p_group_id"
     t.string   "title",          limit: 128
     t.string   "desc",           limit: 255
     t.boolean  "safety_related",             default: false
     t.integer  "cfr_record_id"
     t.integer  "if_level",                   default: 0,     null: false
     t.integer  "if_status",                  default: 0,     null: false
-    t.integer  "current_status",             default: 0,     null: false
-    t.integer  "current_task",               default: 0,     null: false
+    t.datetime "freeze_time"
+    t.string   "note",           limit: 50
     t.datetime "created_at",                                 null: false
     t.datetime "updated_at",                                 null: false
   end

@@ -1,92 +1,35 @@
 <%- page_title %>
 <div class="container">
   <%= breadcrumbs %>
-  <%= form_title %>
+  <%= form_title_w( @isr_interface.code ) %>
   <div class="form-horizontal" role="form">
     <%= form_for @isr_interface do |f| %>
       <%= render partial: 'shared/notice' %>
+      <%= render partial: 'show_if', locals:{ if_code: true, note: true }%>
+      <!-- Divider Line -->
       <div class="form-group">
-        <%= f.label :if_code, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-2">
-          <%= display_value f.object.if_code %>
-        </div>
+        <hr style="margin:4px"/>  
       </div>
-      <div class="form-group">
-        <%= f.label :l_group_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-4">
-          <%= display_value f.object.l_group.try( :code_and_label ) %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :p_group_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-4">
-          <%= display_value f.object.p_group.try( :code_and_label ) %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :title, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-6">
-          <%= display_value f.object.title %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :desc, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-6">
-          <%= display_lines f.object.desc %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :safety_related, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-4">
-          <%= display_check_box f.object.safety_related %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :if_level, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-2">
-          <%= display_value f.object.if_level_label %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :cfr_record_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-6">
-          <%= f.object.cfr_record_id.nil? ? display_nil : link_to_cfr( f.object.cfr_record, :button ) %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :if_status, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-2">
-          <%= display_value f.object.if_status_label %>
-        </div>
-      </div>
-      <%- unless f.object.l_signature.blank? -%>
+      <!-- Agreements -->
+      <%- if @isr_agreements.empty? -%>
         <div class="form-group">
-          <%= f.label :l_signature, class: 'col-sm-3 control-label' %>
-          <div class="col-sm-3"><p class="form-control-static"><%= f.object.l_signature %></p></div>
-          <div class="col-sm-1"><p class="form-control-static"><%= t( 'isr_interfaces.on_time' ) %></p></div>
-          <div class="col-sm-2"><p class="form-control-static"><%= db_formatted_dt f.object.l_sign_time %></p></div>
+          <div class="col-sm-offset-3 col-sm-4"><%= t( '.no_agreements' ) %></div>
         </div>
+      <%- else -%>
+        <%- @isr_agreements.each do |isa| %>
+          <%= render partial: 'show_ia', object: isa %>
+          <!-- Divider Line -->
+          <div class="form-group">
+            <hr style="margin:4px"/>  
+          </div>
+        <%- end %>
       <%- end -%>
-      <%- unless f.object.p_signature.blank? -%>
-        <div class="form-group">
-          <%= f.label :p_signature, class: 'col-sm-3 control-label' %>
-          <div class="col-sm-3"><p class="form-control-static"><%= f.object.p_signature %></p></div>
-          <div class="col-sm-1"><p class="form-control-static"><%= t( 'isr_interfaces.on_time' ) %></p></div>
-          <div class="col-sm-2"><p class="form-control-static"><%= db_formatted_dt f.object.p_sign_time %></p></div>
-        </div>
-      <%- end -%>
-      <div class="form-group">
-        <%= f.label :current_status_task, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-6">
-          <%= display_value @workflow.status_task_label %>
-        </div>
-      </div>
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-2">
           <%= link_to t( 'button_label.edit' ), edit_isr_interface_path( @isr_interface ), class: 'btn btn-lg btn-block btn-default' %>
         </div>
         <div class="col-sm-2">
-          <%= link_to t( 'button_label.print' ), isr_show_icf_path( @isr_interface ), class: 'btn btn-lg btn-block btn-default' %>
+          <%= link_to t( 'button_label.all' ), isr_interface_details_path( @isr_interface ), class: 'btn btn-lg btn-block btn-default' %>
         </div>
         <div class="col-sm-2">
           <%= link_to t( 'button_label.go_to_index' ), isr_interfaces_path, class: 'btn btn-lg btn-block btn-default' %>

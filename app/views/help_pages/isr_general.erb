@@ -77,19 +77,21 @@
     sub-contractors. Each member of the project delivers one or more sub-systems of the total scope. The
     drawing 'Types of Interfaces' depicts the different types of IFs which can be object of the
     Interface Management processes:</p>
-    <p><strong>External Interfaces</strong> are IFs between a sub-system delivered by one of the
-    project partners and systems supplied by the client or other external parties; for example, power
-    utility, water utility, telephone company, property owners, and the like. As these parties have no
-    contractual relationship to the project, any IF must be clarified under the sole responsibility
-    of the involved/effected sub-system. As no binding IA can be formally agreed, all activities to
-    resolve the IF must be handled by the effected sub-system alone.</p>
-    <p><strong>Internal Interfaces</strong> are IFs between different sub-systems within the project scope.
+    <p><strong>External Interfaces</strong> (or 'Extra-Project Interfaces') are IFs between a sub-system
+    delivered by one of the project partners and systems supplied by the client or other external parties;
+    for example, power utility, water utility, telephone company, property owners, and the like.
+    As these parties have no contractual relationship to the project, any IF must be clarified under the
+    sole responsibility of the involved/effected sub-system. As no binding IA can be formally agreed,
+    all activities to resolve the IF must be handled by the effected sub-system alone.</p>
+    <p><strong>Internal Interfaces</strong> (or 'Inter-Project Interfaces') are IFs between different 
+    sub-systems within the project scope.
     This is the classical case for IAs - formal agreements between legal entities on how an IF is resolved.
     The leading sub-system has the responsibility to drive all actions required to close any Interface
     Resolution and Validation Steps.</p>
-    <p><strong>Sub-System Internal Interfaces</strong> are IFs within a sub-system. Although such IFs may
-    not require a formal agreement to be resolved, it might be a useful idea to track the resolution of
-    these interfaces using the same methods and processes as for (project) Internal Interfaces.</p>
+    <p><strong>Sub-System Internal Interfaces</strong> (or 'Intra-Project Interfaces') are IFs within
+    a sub-system. Although such IFs may not require a formal agreement to be resolved, it might be a useful
+    idea to track the resolution of these interfaces using the same methods and processes as for (project)
+    Internal Interfaces.</p>
     <p>The type of an Interface effects some of the implemented workflows: An IF without a formal IA must
     allow the IFL to follow the workflow steps without actual involvment of the IFP. 
     </div>
@@ -112,28 +114,28 @@
     	</thead>
     	<tbody>
     	<tr>
-    		<th colspan="2">Identified</th>
+    		<th colspan="2"><%= IsrInterface::ISR_IF_STATUS_LABELM[ 0 ] %></th>
     		<td>Initial Status: Automatically set when an IF is created.</td>
     	</tr>
     	<tr>
-    		<th rowspan="2">Defined</th>
-    		<td>Defined-Open</td>
+    		<th rowspan="2"><%= IsrInterface::ISR_IF_STATUS_LABELM[ 1 ] %></th>
+    		<td><%= IsrInterface::ISR_IF_STATUS_LABELS[ 1 ] %></td>
     		<td>This status can be set by the IFM for statistical purposes once the documentation of the IF
     		is complete, i.e. the IF is named and described sufficiently, IFL and IFP are appointed.</td>
     	</tr>
     	<tr>
-    		<td>Defined-Frozen</td>
+    		<td><%= IsrInterface::ISR_IF_STATUS_LABELS[ 2 ] %></td>
     		<td>This status is set automatically when the first IA for this IF is released by the IFL for
     		confirmation by the IFP. This will prohibit any changes to the IF attributes once the IF is
     		agreed.</td>
     	</tr>
     	<tr>
-    		<th rowspan="2">Closed</th>
-    		<td>Not Applicable</td>
+    		<th rowspan="2"><%= IsrInterface::ISR_IF_STATUS_LABELM[ 2 ] %></th>
+    		<td><%= IsrInterface::ISR_IF_STATUS_LABELS[ 3 ] %></td>
     		<td>An IF was identified but later found to be not applicable to this project.</td>
     	</tr>
     	<tr>
-    		<td>Withdrawn</td>
+    		<td><%= IsrInterface::ISR_IF_STATUS_LABELS[ 4 ] %></td>
     		<td>An IF was defined but later found to be not required for this project. This status would
     		be used in those cases when all associated IAs would be terminated as well.</td>
     	</tr>
@@ -142,7 +144,9 @@
     </div>
     </div>
     <p>For the statistics, the total number of active IFs (IFs to be considerd in the number of IFs to be reported)
-    is the sum of all IFs with the status 'Identified' or 'Defined'.</p>
+    is the sum of all IFs with the status 
+    '<%= IsrInterface::ISR_IF_STATUS_LABELM[ 0 ] %>' or 
+    '<%= IsrInterface::ISR_IF_STATUS_LABELM[ 1 ] %>'.</p>
     <h3>Status Transitions (IA)</h3>
     <p>Interface Agreements (IA) always relate to a specific Interface (IF) but there can be 1 or more IAs
     for any given IF. Hence, the number of IAs can differ from the number of IFs. In order to correctly 
@@ -162,51 +166,61 @@
     	</thead>
     	<tbody>
     	<tr>
-    		<th>Open</th>
+    		<th><%= IsrAgreement::ISR_IA_STATUS_LABELS[ 0 ] %></th>
     		<td>Initial Status: Automatically set when an IA is created.</td>
     	</tr>
     	<tr>
-    		<th>Agreed</th>
+    		<th><%= IsrAgreement::ISR_IA_STATUS_LABELS[ 1 ] %></th>
     		<td>Set when both Interface Partners have agreed to the IA.</td>
     	</tr>
     	<tr>
-    		<th>Resolved</th>
-    		<td>An IA is considered 'Resolved' when all agreed Resolution Steps have been closed.</td>
+    		<th><%= IsrAgreement::ISR_IA_STATUS_LABELS[ 2 ] %></th>
+    		<td>An IA is considered '<%= IsrAgreement::ISR_IA_STATUS_LABELS[ 2 ] %>'
+            when all agreed Resolution Steps have been closed.</td>
     	</tr>
     	<tr>
-    		<th>Closed</th>
-    		<td>An IA is marked 'Closed' when all associated Validation Steps have been successfully completed.</td>
+    		<th><%= IsrAgreement::ISR_IA_STATUS_LABELS[ 3 ] %></th>
+    		<td>An IA is marked '<%= IsrAgreement::ISR_IA_STATUS_LABELS[ 3 ] %>' 
+            when all associated Validation Steps have been successfully completed.</td>
     	</tr>
     	<tr>
-    		<th>In Revision</th>
+    		<th><%= IsrAgreement::ISR_IA_STATUS_LABELS[ 4 ] %></th>
     		<td>A temporary status when an agreed IA is being changed. The previously agreed IA is still valid. Any
     		IA with this status will not be counted towards to total number of active IAs. Once the revised IA is
-    		agreed by both partners, the previous IA is marked with the status 'Superseded' and the new, revised
-    		IA becomes 'Agreed'.</td>
+    		agreed by both partners, the previous IA is marked with the status 
+            '<%= IsrAgreement::ISR_IA_STATUS_LABELS[ 5 ] %>' and the new, revised
+    		IA becomes '<%= IsrAgreement::ISR_IA_STATUS_LABELS[ 4 ] %>'.</td>
     	</tr>
     	<tr>
-    		<th>Superseded</th>
+    		<th><%= IsrAgreement::ISR_IA_STATUS_LABELS[ 5 ] %></th>
     		<td>Any previously agreed IA superseded by a revised IA is marked by this status. This will cause the
-    		respected IA to be counted as 'Inactive'.</td>
+    		respected IA to be counted as inactive.</td>
     	</tr>
     	<tr>
-    		<th>Terminated</th>
+    		<th><%= IsrAgreement::ISR_IA_STATUS_LABELS[ 6 ] %></th>
     		<td>In case an IA was deemed to be closed prior to completion of all agreed deliverables, it would be
-    		marked as 'Terminated' and would thus be considered 'Inactive'.</td>
+    		marked as '<%= IsrAgreement::ISR_IA_STATUS_LABELS[ 6 ] %>' and would thus be considered inactive.</td>
     	</tr>
     </tbody>
     </table>
     </div>
     </div>
     <p>For the purpose of computing statistics numbers, the total number of all active IAs is the sum of IAs
-    having a status 'Open', 'Agreed', 'Resolved', or 'Closed'. Inactive IAs are 'Superseded' and 'Terminated' IAs.
-    IAs 'In Revision' have a special status as they are neither 'Active' nor 'Inactive'.</p>
+    having a status
+    '<%= IsrAgreement::ISR_IA_STATUS_LABELS[ 0 ] %>',
+    '<%= IsrAgreement::ISR_IA_STATUS_LABELS[ 4 ] %>',
+    '<%= IsrAgreement::ISR_IA_STATUS_LABELS[ 2 ] %>' or 
+    '<%= IsrAgreement::ISR_IA_STATUS_LABELS[ 3 ] %>'. Inactive IAs are 
+    '<%= IsrAgreement::ISR_IA_STATUS_LABELS[ 5 ] %>' and 
+    '<%= IsrAgreement::ISR_IA_STATUS_LABELS[ 6 ] %>' IAs. IAs 
+    '<%= IsrAgreement::ISR_IA_STATUS_LABELS[ 4 ] %>' have a special status as they are neither active
+    nor inactive.</p>
     <h3>Status from Responsibility and Validation Steps (RS/VS)</h3>
     <p>Since Responsiblity and Validation Steps are implemented as Task/Issue/Action Item Lists, the status
-    from these lists is an agreegation of the individual items: Each item can be either 'Open' or it is 'Closed'
-    ('Waiting' is considered 'Open', 'Obsolete' is considered 'Closed'). A list of Resolution (or
-    Validation) Steps is thus either 'Open' (one or more items is still 'Open') or 'Closed' (all items are
-    'Closed').</p>
+    from these lists is an agreegation of the individual items: Each item can be either 'open' or it is 'closed'
+    ('waiting' is considered 'open', 'obsolete' is considered 'closed'). A list of Resolution (or
+    Validation) Steps is thus either 'open' (one or more items is still 'open') or 'closed' (all items are
+    'closed').</p>
     <hr/>
     <h3><a name="refs"></a>References</h3>
     <p>The Interface Management processes here (the implementation, terminology and also some of the phrases used

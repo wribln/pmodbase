@@ -1,0 +1,34 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title_w( @isr_agreement.code ) %>
+  <div class="form-horizontal" role="form">
+    <%= form_for @isr_agreement do |f| %>
+      <%= render partial: 'shared/notice' %>
+      <%= render partial: 'isr_interfaces/show_if', locals:{ if_code: true, note: true } %>
+      <!-- Divider Line -->
+      <div class="form-group">
+        <hr style="margin:4px"/>  
+      </div>
+      <%= render partial: 'isr_interfaces/show_ia', object: @isr_agreement %>
+      <!-- Divider Line -->
+      <div class="form-group">
+        <hr style="margin:4px"/>  
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-2">
+          <%= link_to t( 'button_label.edit' ), edit_isr_agreement_path( @isr_agreement ), class: 'btn btn-lg btn-block btn-default' %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to t( 'button_label.print' ), isr_show_icf_path( @isr_agreement ), class: 'btn btn-lg btn-block btn-default' %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to t( 'button_label.all' ), isr_agreement_details_path( @isr_agreement ), class: 'btn btn-lg btn-block btn-default' %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to t( 'button_label.go_to_index' ), isr_interfaces_path, class: 'btn btn-lg btn-block btn-default' %>
+        </div>
+      </div>
+    <%- end -%>
+  </div>
+</div>

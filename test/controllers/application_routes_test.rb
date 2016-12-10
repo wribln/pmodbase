@@ -64,7 +64,7 @@ class ApplicationRoutesTest < ActionController::TestCase
     %w( CFR CfrRecords ),
     %w( CFU CfrLocationTypes ),
     %w( CFT CfrFileTypes ),
-    %w( ISF IsrInterfaces )
+    %w( ISR IsrInterfaces )
     ]
 
   @my_resources.each do |r|
@@ -188,10 +188,25 @@ class ApplicationRoutesTest < ActionController::TestCase
     check_routing( 'get', '/dsr/update'  , 'dsr_status_records', 'update_b_all' )
     check_routing( 'get', '/dsr/1/update', 'dsr_status_records', 'update_b_one', id: '1' )
   end
-
+ 
   test 'special routes: ISR Interfaces' do
-    check_routing( 'get', '/isf/info'    , 'isr_interfaces', 'info_workflow' )
-    check_routing( 'get', '/isf/1/icf'   , 'isr_interfaces', 'show_icf', id: '1' )
+    check_routing( 'get', '/isr/1/all'   , 'isr_interfaces', 'show_all',  id: '1' )
+    check_routing( 'get', '/isr/1/wdr'   , 'isr_interfaces', 'edit_withdraw',  id: '1' )
+  end    
+
+  test 'special routes: ISR Interface Agreements' do
+    check_routing( 'get', '/isa'         , 'isr_agreements', 'index' )
+    check_routing( 'get', '/isa/info'    , 'isr_agreements', 'info_workflow' )
+    check_routing( 'get', '/isa/1/icf'   , 'isr_agreements', 'show_icf' , id: '1' )
+    check_routing( 'get', '/isa/1/all'   , 'isr_agreements', 'show_all' , id: '1' )
+    check_routing( 'get', '/isa/1/new'   , 'isr_agreements', 'new'      , id: '1' )
+    check_routing( 'get', '/isa/1/rev'   , 'isr_agreements', 'new_rev'  , id: '1' )
+    check_routing( 'get', '/isa/1'       , 'isr_agreements', 'show'     , id: '1' )
+    check_routing( 'post','/isa/1/new'   , 'isr_agreements', 'create_new',id: '1' )
+    check_routing( 'post','/isa/1/rev'   , 'isr_agreements', 'create_rev',id: '1' )
+    check_routing( 'get', '/isa/1/edit'  , 'isr_agreements', 'edit'     , id: '1' )
+    check_routing( 'put', '/isa/1'       , 'isr_agreements', 'update'   , id: '1' )
+    check_routing( 'delete','/isa/1'     , 'isr_agreements', 'destroy'  , id: '1' )
   end    
 
   test 'special routes: PCS PcpSubjects' do
