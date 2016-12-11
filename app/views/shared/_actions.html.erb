@@ -21,10 +21,13 @@
  and the most significant bit (2**3) the new button.
  For example: 9.to_s(2) = '1001' enables the show and the new button.
  
- Example (from User view)
+ Example (within view)
 
  <td>< %= render partial: 'shared/action_links', 
           object: @user, locals: { use_model_route: true } % ></td>
+
+ 
+ Special version of this partial: isr_interfaces/actions
 
 =end
 %>

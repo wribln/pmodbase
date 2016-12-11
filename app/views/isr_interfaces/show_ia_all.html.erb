@@ -5,7 +5,7 @@
   <div class="form-horizontal" role="form">
     <%= form_for @isr_interface do |f| %>
       <%= render partial: 'shared/notice' %>
-      <%= render partial: 'isr_interfaces/show_all_if', object: f, locals:{ note: true }%>
+      <%= render partial: 'show_all_if', object: f, locals:{ if_code: :true, note: true }%>
     <% end %>
     <!-- Divider Line -->
     <div class="form-group">
@@ -15,10 +15,13 @@
       <%= render partial: 'isr_interfaces/show_all_ia', object: f %>
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-2">
+          <%= link_to t( 'button_label.show' ), isr_agreement_path( @isr_agreement ), class: 'btn btn-lg btn-block btn-default' %>
+        </div>
+        <div class="col-sm-2">
           <%= link_to t( 'button_label.edit' ), edit_isr_agreement_path( @isr_agreement ), class: 'btn btn-lg btn-block btn-default' %>
         </div>
         <div class="col-sm-2">
-          <%= link_to t( 'button_label.print' ), isr_show_icf_path( @isr_agreement ), class: 'btn btn-lg btn-block btn-default' %>
+          <%= link_to t( 'button_label.print' ), isr_agreement_icf_path( @isr_agreement ), class: 'btn btn-lg btn-block btn-default' %>
         </div>
         <div class="col-sm-2">
           <%= link_to t( 'button_label.go_to_index' ), isr_interfaces_path, class: 'btn btn-lg btn-block btn-default' %>

@@ -30,7 +30,7 @@
         <p class="col-sm-3 p-label"><%= IsrInterface.human_attribute_name( :level )%></p>
         <p class="col-sm-2"><%= @isr_interface.if_level_label %></p>
       </div>
-      <%- if defined?( note )-%>
+      <%- if defined?( note ) && @isr_interface.note -%>
       <div class="form-group p-group">
         <p class="col-sm-3 p-label"><%= IsrInterface.human_attribute_name( :note )%></p>
         <p class="col-sm-6"><%= @isr_interface.note %></p>

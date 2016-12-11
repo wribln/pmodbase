@@ -9,6 +9,20 @@
             <p class="col-sm-3"><%= show_ia.l_group.try( :code_and_label )%></p>
             <p class="col-sm-3"><%= show_ia.p_group.try( :code_and_label )%></p>
           </div>
+          <%- if show_ia.l_owner_id || show_ia.p_owner_id %>
+            <div class="form-group p-group">
+              <p class="col-sm-3 p-label"><%= t( 'isr_interfaces.show.owners' )%></p>
+              <p class="col-sm-3"><%= link_to_contact_list show_ia.l_owner %></p>
+              <p class="col-sm-3"><%= link_to_contact_list show_ia.p_owner %></p>
+            </div>
+          <%- end -%>
+          <%- if show_ia.l_deputy_id || show_ia.p_deputy_id %>
+            <div class="form-group p-group">
+              <p class="col-sm-3 p-label"><%= t( 'isr_interfaces.show.deputies' )%></p>
+              <p class="col-sm-3"><%= link_to_contact_list show_ia.l_deputy %></p>
+              <p class="col-sm-3"><%= link_to_contact_list show_ia.p_deputy %></p>
+            </div>
+          <%- end -%>
           <%- unless show_ia.l_sign_time.nil? %>
             <div class="form-group p-group">
               <p class="col-sm-3 p-label"><%= t( 'isr_interfaces.show.signed_on' ) %></p>
@@ -38,3 +52,7 @@
               <p class="col-sm-2"><%= link_to( show_ia.val_steps.code, my_tia_list_our_tia_items_path( show_ia.val_steps_id ), target: '_blank' ) unless show_ia.val_steps_id.nil? %></p>
             </div>
           <%- end -%>
+          <div class="form-group p-group">
+            <p class="col-sm-3 p-label"><%= IsrAgreement.human_attribute_name( :current_status_task )%></p>
+            <p class="col-sm-4"><%= @workflow.status_task_label %></p>
+          </div>

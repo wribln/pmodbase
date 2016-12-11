@@ -65,12 +65,27 @@ en:
       form_title:         'Show '
       no_agreements:      'No active Interface Agreements.'
       groups:             'Leading / Partner Group'
+      owners:             'Leading / Partner Owner'
+      deputies:           'Leading / Partner Deputy'
       ia_label:           'Interface Agreement'
       signed_on:          'Signed on'
       signed_by:          'Signed by'
       res_val_steps:      'Resolution / Validation Steps'
+    show_ia:
+      form_title:         'Show '
+    show_ia_all:
+      form_title:         'Show Details of Interface Agreement'
+    show_ia_icf:
+      main_heading:       'Interface Control Form'
+      as_of:              'Status as of'
+      if_references:      'Interface References [CFR]'
+      ia_references:      'Agreement References [CFR]'
+      on_time:            'on'
+      empty_or_none:      'None.'
     show_all:
       form_title:         'Show Details of Interface'
+    info_workflow:
+      form_title:         'ISR Workflow Information'
     form:
       g_prompt:           :general.select_prompt
       cfr_record_id:      'CFR Record [ID]'
@@ -79,8 +94,8 @@ en:
       create_ok:          'Interface successfully created.'
       update_ok:          'Interface successfully updated.'
       delete_ok:          'Interface successfully deleted.'
-      withdrawing:        'You are about to withdraw this Interface!'
-      wdr_not_now:        'Current status prohibits withdrawing this Interface.'
+#      withdrawing:        'You are about to withdraw this Interface!'
+#      wdr_not_now:        'Current status prohibits withdrawing this Interface.'
 
   isr_agreements:
     title:          'ISR - Interface Agreements'
@@ -92,21 +107,8 @@ en:
       form_title:   'Create New Interface Agreement'
     index:
       form_title:   'List of All Interface Agreements'
-    show:
-      form_title:   'Show '
-    show_all:
-      form_title:   'Show Details of Interface Agreement'
-    info_workflow:
-      form_title:   'ISR Workflow Information'
     edit:
       form_title:   'Edit Interface Agreement'
-    icf:
-      main_heading: 'Interface Control Form'
-      as_of:        'Status as of'
-      if_references:   'Interface References [CFR]'
-      ia_references:   'Agreement References [CFR]'
-      on_time:      'on'
-      empty_or_none: 'None.'
 
     workflows:
       w00:

@@ -6,6 +6,10 @@ class IsrAgreement < ActiveRecord::Base
 
   belongs_to :l_group,    -> { readonly },  foreign_key: :l_group_id,   class_name: :Group
   belongs_to :p_group,    -> { readonly },  foreign_key: :p_group_id,   class_name: :Group
+  belongs_to :l_owner,    -> { readonly },  foreign_key: :l_owner_id,   class_name: :Account
+  belongs_to :l_deputy,   -> { readonly },  foreign_key: :l_deputy_id,  class_name: :Account
+  belongs_to :p_owner,    -> { readonly },  foreign_key: :p_owner_id,   class_name: :Account
+  belongs_to :p_deputy,   -> { readonly },  foreign_key: :p_deputy_id,  class_name: :Account
   belongs_to :res_steps,                    foreign_key: :res_steps_id, class_name: :TiaList 
   belongs_to :val_steps,                    foreign_key: :val_steps_id, class_name: :TiaList
   belongs_to :based_on,                     foreign_key: :based_on_id,  class_name: :IsrAgreement
@@ -26,6 +30,18 @@ class IsrAgreement < ActiveRecord::Base
 
   validates :res_steps,
     presence: true, if: Proc.new{ |me| me.res_steps_id.present? }
+
+  validates :l_owner,
+    presence: true, if: Proc.new{ |me| me.l_owner_id.present? }
+
+  validates :l_deputy,
+    presence: true, if: Proc.new{ |me| me.l_deputy_id.present? }
+
+  validates :p_owner,
+    presence: true, if: Proc.new{ |me| me.p_owner_id.present? }
+
+  validates :p_deputy,
+    presence: true, if: Proc.new{ |me| me.p_deputy_id.present? }
 
   # based_on refers back to the previous revision 
   # this is needed to synchronize the status of both revisions

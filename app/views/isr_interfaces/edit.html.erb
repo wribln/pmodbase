@@ -9,7 +9,7 @@
       <%- if @isr_interface.frozen? -%>
         <%= render partial: 'show_all_if', object: f, locals:{ note: :edit }%>
       <%- else -%>
-        <%= render partial: 'form', object: f, locals:{ note: :edit } %>
+        <%= render partial: 'form_if', object: f, locals:{ note: :edit } %>
       <%- end -%>
       <%- if @isr_withdrawing -%>
         <%= hidden_field_tag :isr_withdrawing %>

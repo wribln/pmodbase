@@ -45,7 +45,7 @@
             <td><%= isa.code %></td>
             <td colspan="2"><%= isa.ia_status_label %></td>
             <td><%= @workflow.status_task_label( isa.current_status, isa.current_task, 0 ) %></td>
-            <td><%= render partial: 'shared/actions', object: isa, locals:{ use_model_route: true, enabled_buttons: 0b11 }%></td>
+            <td><%= render partial: 'actions', object: isa %></td>
           </tr>
           <% end %> 
         <% end %>

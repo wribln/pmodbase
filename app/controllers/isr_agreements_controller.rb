@@ -36,9 +36,6 @@ class IsrAgreementsController < ApplicationController
 
   # GET /isr/info
 
-  def info_workflow
-  end
-
   # GET /isa/1/new
 
   def new

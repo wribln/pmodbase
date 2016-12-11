@@ -516,9 +516,13 @@ ActiveRecord::Schema.define(version: 20161231235959) do
   create_table "isr_agreements", force: :cascade do |t|
     t.integer  "isr_interface_id",                        null: false
     t.integer  "l_group_id",                              null: false
+    t.integer  "l_owner_id"
+    t.integer  "l_deputy_id"
     t.string   "l_signature",      limit: 90
     t.datetime "l_sign_time"
     t.integer  "p_group_id"
+    t.integer  "p_owner_id"
+    t.integer  "p_deputy_id"
     t.string   "p_signature",      limit: 90
     t.datetime "p_sign_time"
     t.integer  "cfr_record_id"

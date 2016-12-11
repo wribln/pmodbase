@@ -1,0 +1,7 @@
+<%# special actions for nested resource IA -%>
+<div class="btn-group btn-group-xs hidden-print">
+<%= link_to 'Q', url_for( action: :show_ia, id: actions.id ), class: 'btn btn-default btn-xs', title: t( 'action_title.show' )-%>
+<%= link_to '/', url_for( action: :edit_ia, id: actions.id ), class: 'btn btn-default btn-xs', title: t( 'action_title.edit' )-%>
+<%= link_to '-', url_for( action: :destroy_ia, id: actions.id ), method: :delete, data: { confirm: t('action_title.del_confirm' )}, class: 'btn btn-default btn-xs', title: t( 'action_title.delete' )-%>
+<%= link_to '+', url_for( action: :new_ia, id: actions.id ), class: 'btn btn-default btn-xs', title: t( 'action_title.add' )-%>
+</div>

@@ -49,17 +49,20 @@ Rails.application.routes.draw do
   resources :hashtags, path: 'htg', format: false
   get 'hld/:id/new', to: 'holidays#add', as: 'add_holiday', format: false
   resources :holidays, path: 'hld', format: false 
-  get 'isa/info', to: 'isr_agreements#info_workflow', as: 'isr_workflow_info', format: false
-  post 'isa/:id/rev',to: 'isr_agreements#create_rev', format: false
-  post 'isa/:id/new',to: 'isr_agreements#create_new', format: false
-  get 'isa/:id/new', to: 'isr_agreements#new',      as: 'new_isr_agreement', format: false
-  get 'isa/:id/rev', to: 'isr_agreements#new_revise',as: 'revise_isr_agreement', format: false
-  get 'isa/:id/icf', to: 'isr_agreements#show_icf', as: 'isr_show_icf', format: false
-  get 'isa/:id/all', to: 'isr_agreements#show_all', as: 'isr_agreement_details', format: false
-  get 'isr/:id/all', to: 'isr_interfaces#show_all', as: 'isr_interface_details', format: false
-  get 'isr/:id/wdr', to: 'isr_interfaces#edit_withdraw', as: 'isr_interface_withdraw', format: false
+  get 'isr/info',         to: 'isr_interfaces#info_workflow', format: false
+  get 'isr/stats',        to: 'isr_interfaces#show_stats',  format: false
+  get 'isr/:id/all',      to: 'isr_interfaces#show_all', as: 'isr_interface_details',     format: false
+  get 'isr/ia/:id',       to: 'isr_interfaces#show_ia',  as: 'isr_agreement',             format: false
+  get 'isr/ia/:id/all',   to: 'isr_interfaces#show_ia_all', as: 'isr_agreement_details',  format: false
+  get 'isr/ia/:id/icf',   to: 'isr_interfaces#show_ia_icf', as: 'isr_agreement_icf',      format: false
+  get 'isr/ia/:id/edit',  to: 'isr_interfaces#edit_ia',  as: 'edit_isr_agreement',        format: false
+  get 'isr/:id/new',      to: 'isr_interfaces#new_ia',      format: false
+  get 'isr/:id/rev',      to: 'isr_interfaces#new_ia_rev',  format: false
+  post 'isr/ia',          to: 'isr_interfaces#create_ia',   format: false
+  patch 'isr/ia/:id',     to: 'isr_interfaces#update_ia',   format: false
+  put   'isr/ia/:id',     to: 'isr_interfaces#update_ia',   format: false
+  delete 'isr/ia/:id',    to: 'isr_interfaces#destroy_ia',  format: false
   resources :isr_interfaces, path: 'isr', format: false
-  resources :isr_agreements, path: 'isa', format: false, only: [ :index, :show, :edit, :update, :destroy ]
   get 'scl/check', to: 'location_codes#update_check', as: 'location_codes_check', format: false
   resources :location_codes, path: 'scl', format: false
   resources :network_lines, path: 'nln', format: false
