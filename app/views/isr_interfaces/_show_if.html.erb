@@ -30,7 +30,14 @@
         <p class="col-sm-3 p-label"><%= IsrInterface.human_attribute_name( :level )%></p>
         <p class="col-sm-2"><%= @isr_interface.if_level_label %></p>
       </div>
-      <%- if defined?( note ) && @isr_interface.note -%>
+      <%- if note == :edit %>
+      <div class="form-group">
+        <%= show_if.label :note, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-6">
+          <%= show_if.text_field :note, class: 'form-control' %>
+        </div>
+      </div>
+      <%- elsif defined?( note ) && @isr_interface.note -%>
       <div class="form-group p-group">
         <p class="col-sm-3 p-label"><%= IsrInterface.human_attribute_name( :note )%></p>
         <p class="col-sm-6"><%= @isr_interface.note %></p>

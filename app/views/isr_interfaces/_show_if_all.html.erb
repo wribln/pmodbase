@@ -1,0 +1,62 @@
+      <%- code = defined?( if_code ) ? :if_code : :code -%>
+      <div class="form-group">
+        <%= show_if_all.label :code, IsrInterface.human_attribute_name( code ), class: 'col-sm-3 control-label' %>
+        <div class="col-sm-2">
+          <%= display_value show_if_all.object.code %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= show_if_all.label :l_group_id, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-4">
+          <%= display_value show_if_all.object.l_group.try( :code_and_label ) %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= show_if_all.label :p_group_id, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-4">
+          <%= display_value show_if_all.object.p_group.try( :code_and_label ) %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= show_if_all.label :title, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-6">
+          <%= display_value show_if_all.object.title %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= show_if_all.label :desc, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-6">
+          <%= display_lines show_if_all.object.desc %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= show_if_all.label :safety_related, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-4">
+          <%= display_check_box show_if_all.object.safety_related %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= show_if_all.label :if_level, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-2">
+          <%= display_value show_if_all.object.if_level_label %>
+        </div>
+      </div>
+      <%= render partial: 'shared/show_cfr', locals: { fbo: show_if_all }%>
+      <div class="form-group">
+        <%= show_if_all.label :if_status, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-2">
+          <%= display_value show_if_all.object.if_status_label %>
+        </div>
+      </div>
+      <%- if defined?( note )-%>
+      <div class="form-group">
+        <%= show_if_all.label :note, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-6">
+          <%- if note == :edit -%>
+            <%= show_if_all.text_field :note, class: 'form-control' %>
+          <%- else -%>
+            <%= display_value show_if_all.object.note %>
+          <%- end -%>
+        </div>
+      </div>
+      <%- end -%>

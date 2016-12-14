@@ -1,0 +1,23 @@
+<%#
+=begin
+
+	This partial ensures a consistent display of cfr information in views:
+
+	locals:
+    fbo:  <FormBuilder object>
+		a_id: <symbol>, default: :cfr_record_id
+    a_as: <account association symbol> (normally: a_id w/o '_id' suffix)
+          default: :cfr_record
+
+	< %= render 'shared/show_cfr', locals: { fbo: f, a_id: :xxx, a_as: :yyy }
+
+=end
+%>
+      <%- a_id = defined?( a_id ) ? :cfr_record_id : a_id %>
+      <%- a_as = defined?( a_as ) ? :cfr_record    : a_as %>
+      <div class="form-group">
+        <%= fbo.label a_id, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-6">
+          <%= fbo.object.try( a_id ).nil? ? display_nil : link_to_cfr( fbo.object.try( a_as ), :button )%>
+        </div>
+      </div>

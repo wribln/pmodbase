@@ -1,11 +1,11 @@
 <%- page_title %>
 <div class="container">
   <%= breadcrumbs %>
-  <%= form_title_w( @isr_interface.code ) %>
+  <%= form_title %>
   <div class="form-horizontal" role="form">
     <%= form_for @isr_interface do |f| %>
       <%= render partial: 'shared/notice' %>
-      <%= render partial: 'show_if', locals:{ if_code: true, note: true }%>
+      <%= render partial: 'show_if', object: f, locals:{ if_code: true, note: true }%>
       <!-- Divider Line -->
       <div class="form-group">
         <hr style="margin:4px"/>  

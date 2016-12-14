@@ -29,12 +29,7 @@
           <%= display_lines gi.object.description %>
         </div>
       </div>
-      <div class="form-group">
-        <%= gi.label :cfr_record_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-6">
-          <%= gi.object.cfr_record_id.nil? ? display_nil : link_to_cfr( gi.object.cfr_record, :button ) %>
-        </div>
-      </div>
+      <%= render partial: 'shared/show_cfr', locals: { fbo: gi }%>
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-2">
           <%= link_to t( 'button_label.edit' ), edit_glossary_item_path( @glossary_item ), class: 'btn btn-lg btn-block btn-default' %>

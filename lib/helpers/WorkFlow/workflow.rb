@@ -242,7 +242,7 @@ class WorkFlow
     puts 
     puts "  workflow:"
     puts "    w00:"
-    puts "      label:\t'#{ wf_name }'"
+    puts "      label:\t'#{ label }'"
     puts "      tasks:"
     @task_list.each_with_index do |t,i|
     next if t.nil?

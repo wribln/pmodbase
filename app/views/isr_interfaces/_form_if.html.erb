@@ -1,69 +1,61 @@
       <%- code = defined?( if_code ) ? :if_code : :code -%>
       <div class="form-group">
-        <%= form.label :code, IsrInterface.human_attribute_name( code ), class: 'col-sm-3 control-label' %>
+        <%= form_if.label :code, IsrInterface.human_attribute_name( code ), class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= display_value form.object.code %>
+          <%= display_value form_if.object.code %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :l_group_id, class: 'col-sm-3 control-label' %>
+        <%= form_if.label :l_group_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= form.select :l_group_id, @isr_l_groups, { prompt: t( '.g_prompt' )},{ class: 'form-control', required: true }%>
+          <%= form_if.select :l_group_id, @isr_l_groups, { prompt: true }, { class: 'form-control', required: true }%>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :p_group_id, class: 'col-sm-3 control-label' %>
+        <%= form_if.label :p_group_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= form.select :p_group_id, @isr_p_groups, { prompt: t( '.g_prompt' )},{ class: 'form-control', required: true }%>
+          <%= form_if.select :p_group_id, @isr_p_groups, { prompt: true }, { class: 'form-control', required: true }%>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :title, class: 'col-sm-3 control-label' %>
+        <%= form_if.label :title, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
-          <%= form.text_field :title, class: 'form-control' %>
+          <%= form_if.text_field :title, class: 'form-control' %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :desc, class: 'col-sm-3 control-label' %>
+        <%= form_if.label :desc, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
-          <%= form.text_area :desc, class: 'form-control', cols: DEFAULT_COLS_TEXTAREA, rows: DEFAULT_ROWS_TEXTAREA %>
+          <%= form_if.text_area :desc, class: 'form-control', cols: DEFAULT_COLS_TEXTAREA, rows: DEFAULT_ROWS_TEXTAREA %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :safety_related, class: 'col-sm-3 control-label' %>
+        <%= form_if.label :safety_related, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
-          <%= form.check_box :safety_related %>
+          <%= form_if.check_box :safety_related %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :if_level, class: 'col-sm-3 control-label' %>
+        <%= form_if.label :if_level, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= form.select :if_level, select_options( IsrInterface::ISR_IF_LEVEL_LABELS ), { prompt: t( '.g_prompt' )}, { class: 'form-control' }%>
+          <%= form_if.select :if_level, select_options( IsrInterface::ISR_IF_LEVEL_LABELS ), {}, { class: 'form-control' }%>
         </div>
       </div>
+      <%= render partial: 'shared/edit_cfr', locals: { fbo: form_if }%>
       <div class="form-group">
-        <%= form.label :cfr_record_id, t( '.cfr_record_id' ), class: 'col-sm-3 control-label' %>
+        <%= form_if.label :if_status, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= form.text_field :cfr_record_id, class: 'form-control' %>
-        </div>
-        <div class="col-sm-2">
-          <%= link_to t( '.cfr_record_link' ), cfr_records_path, class: 'btn btn-sm btn-block btn-default', target: '_blank' %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= form.label :if_status, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-2">
-          <%= form.select :if_status, @isr_sel_states, { prompt: t( '.g_prompt' )}, { class: 'form-control', required: true }%>
+          <%= form_if.select :if_status, @isr_sel_states, {}, { class: 'form-control', required: true }%>
         </div>
       </div>
       <%- if defined?( note )-%>
       <div class="form-group">
-        <%= form.label :note, class: 'col-sm-3 control-label' %>
+        <%= form_if.label :note, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
           <%- if note == :edit %>
-            <%= form.text_field :note, class: 'form-control' %>
+            <%= form_if.text_field :note, class: 'form-control' %>
           <%- else -%>
-            <%= display_value form.object.note %>
+            <%= display_value form_if.object.note %>
           <%- end -%>
         </div>
       </div>

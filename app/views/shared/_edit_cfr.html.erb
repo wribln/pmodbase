@@ -1,0 +1,23 @@
+<%#
+=begin
+
+	This partial ensures a consistent edit of cfr information:
+
+	locals:
+    fbo:  <FormBuilder object>
+		a_id: <symbol>, default: :cfr_record_id
+
+	< %= render 'shared/show_cfr', locals: { fbo: f, a_id: :xxx }
+
+=end
+%>
+      <%- a_id = defined?( a_id ) ? :cfr_record_id : a_id %>
+      <div class="form-group">
+        <%= fbo.label a_id, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-1">
+          <%= fbo.text_field a_id, class: 'form-control' %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to t( 'general.cfr_link' ), cfr_records_path, class: 'btn btn-sm btn-block btn-default', target: '_blank' %>
+        </div>
+      </div>

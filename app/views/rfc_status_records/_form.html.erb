@@ -63,7 +63,7 @@
         <%= form.label :asking_group_id, class: 'col-sm-3 control-label' -%>
         <div class="col-sm-6">
           <%- if @workflow.param_permitted?( :asking_group_id ) then %>
-            <%= form.select :asking_group_id, @author_groups, { prompt: t( '.g_prompt' )}, class: 'form-control' %>
+            <%= form.select :asking_group_id, @author_groups, { prompt: true }, class: 'form-control' %>
           <%- else -%>
             <%= display_value form.object.group_code_and_label( :asking_group ) %>
           <%- end -%>
@@ -73,7 +73,7 @@
         <%= form.label :answering_group_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
           <%- if @workflow.param_permitted?( :answering_group_id ) then %>
-            <%= form.select :answering_group_id, @resp_groups, { prompt: t( '.g_prompt' )}, class: 'form-control' %>
+            <%= form.select :answering_group_id, @resp_groups, { prompt: true }, class: 'form-control' %>
           <%- else -%>
             <%= display_value form.object.group_code_and_label( :answering_group ) %>
           <%- end -%>

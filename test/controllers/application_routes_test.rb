@@ -190,23 +190,20 @@ class ApplicationRoutesTest < ActionController::TestCase
   end
  
   test 'special routes: ISR Interfaces' do
-    check_routing( 'get', '/isr/1/all'   , 'isr_interfaces', 'show_all',  id: '1' )
-    check_routing( 'get', '/isr/1/wdr'   , 'isr_interfaces', 'edit_withdraw',  id: '1' )
-  end    
-
-  test 'special routes: ISR Interface Agreements' do
-    check_routing( 'get', '/isa'         , 'isr_agreements', 'index' )
-    check_routing( 'get', '/isa/info'    , 'isr_agreements', 'info_workflow' )
-    check_routing( 'get', '/isa/1/icf'   , 'isr_agreements', 'show_icf' , id: '1' )
-    check_routing( 'get', '/isa/1/all'   , 'isr_agreements', 'show_all' , id: '1' )
-    check_routing( 'get', '/isa/1/new'   , 'isr_agreements', 'new'      , id: '1' )
-    check_routing( 'get', '/isa/1/rev'   , 'isr_agreements', 'new_rev'  , id: '1' )
-    check_routing( 'get', '/isa/1'       , 'isr_agreements', 'show'     , id: '1' )
-    check_routing( 'post','/isa/1/new'   , 'isr_agreements', 'create_new',id: '1' )
-    check_routing( 'post','/isa/1/rev'   , 'isr_agreements', 'create_rev',id: '1' )
-    check_routing( 'get', '/isa/1/edit'  , 'isr_agreements', 'edit'     , id: '1' )
-    check_routing( 'put', '/isa/1'       , 'isr_agreements', 'update'   , id: '1' )
-    check_routing( 'delete','/isa/1'     , 'isr_agreements', 'destroy'  , id: '1' )
+    check_routing( 'get', '/isr/info'    , 'isr_interfaces', 'info_workflow' )
+    check_routing( 'get', '/isr/stats'   , 'isr_interfaces', 'show_stats'    )
+    check_routing( 'get', '/isr/1/all'   , 'isr_interfaces', 'show_all'   , id: '1' )
+    check_routing( 'get', '/isr/ia/1'    , 'isr_interfaces', 'show_ia'    , id: '1' )
+    check_routing( 'get', '/isr/ia/1/all', 'isr_interfaces', 'show_ia_all', id: '1' )
+    check_routing( 'get', '/isr/ia/1/icf', 'isr_interfaces', 'show_ia_icf', id: '1' )
+    check_routing( 'get', '/isr/ia/1/edit','isr_interfaces', 'edit_ia'    , id: '1' )
+    check_routing( 'get', '/isr/1/new'   , 'isr_interfaces', 'new_ia'     , id: '1' )
+    check_routing( 'get', '/isr/1/rev'   , 'isr_interfaces', 'new_ia_rev' , id: '1' )
+    check_routing( 'get', '/isr/1/fin'   , 'isr_interfaces', 'new_ia_fin' , id: '1' )
+    check_routing( 'post','/isr/ia'      , 'isr_interfaces', 'create_ia'     )
+    check_routing( 'put',   '/isr/ia/1'  , 'isr_interfaces', 'update_ia'  , id: '1' )
+    check_routing( 'patch', '/isr/ia/1'  , 'isr_interfaces', 'update_ia'  , id: '1' )
+    check_routing( 'delete','/isr/ia/1'  , 'isr_interfaces', 'destroy_ia' , id: '1' )
   end    
 
   test 'special routes: PCS PcpSubjects' do

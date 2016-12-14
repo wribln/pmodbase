@@ -15,7 +15,7 @@
         </div>
         <%= form.label :assessment, class: 'col-sm-2 control-label' %>
         <div class="col-sm-2">
-          <%= form.select :assessment, select_options( PcpItem::ASSESSMENT_LABELS ), { prompt: t( '.g_prompt' )}, { class: 'form-control' }%>
+          <%= form.select :assessment, select_options( PcpItem::ASSESSMENT_LABELS ), { prompt: true }, { class: 'form-control' }%>
         </div>
       </div>
       <div class="form-group">

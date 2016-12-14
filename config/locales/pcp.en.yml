@@ -139,7 +139,6 @@ en:
       p_owner_id:     'Owner (Presenting Group) [ID]'
       c_deputy_id:    'Deputy (Commenting Group) [ID]'
       p_deputy_id:    'Deputy (Presenting Group) [ID]'
-      g_prompt:       :general.select_prompt
     edit:
       form_title:     'Edit PCP Category'
     new:
@@ -176,10 +175,7 @@ en:
     title:            'PCP Items'
     pcp_step:         'Reported in Step'
     author:           'Author'
-    form:
-      g_prompt:       :general.select_prompt
     comment:
-      g_prompt:       :general.select_prompt
       make_public:    'Show in Public'
       in_step:        'in Step'
     index:
@@ -275,7 +271,6 @@ en:
       s_owner_id:     'Subject Owner [ID]'
       cfr_record_id:  'CFR Record [ID]'
       cfr_record_link: 'Show CFR Index'
-      g_prompt:       :general.select_prompt
       c_prompt:       'Use PCP Category Default'
       cs_heading:     'Current Step: %{label}'
       prev_version:   'previously:'

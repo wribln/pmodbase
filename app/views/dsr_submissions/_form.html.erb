@@ -112,6 +112,6 @@
       <div class="form-group">
         <%= form.label :response_status, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= form.select :response_status, select_options( DsrSubmission::DSR_RESPONSE_STATUS_LABELS ), { prompt: t('.g_prompt') }, { class: 'form-control' }%>
+          <%= form.select :response_status, select_options( DsrSubmission::DSR_RESPONSE_STATUS_LABELS ), { prompt: true }, { class: 'form-control' }%>
         </div>
       </div>

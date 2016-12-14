@@ -32,12 +32,7 @@
           <%= display_value f.object.note %>
         </div>
       </div>
-      <div class="form-group">
-        <%= f.label :cfr_record_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-6">
-          <%= f.object.cfr_record_id.nil? ? display_nil : link_to_cfr( f.object.cfr_record, :button ) %>
-        </div>
-      </div>
+      <%= render partial: 'shared/show_cfr', locals: { fbo: f }%>
       <div class="form-group">
         <%= f.label :project_doc_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
@@ -50,26 +45,11 @@
           <%= display_value f.object.p_group.code_and_label %>
         </div>
       </div>
-      <div class="form-group">
-        <%= f.label :p_owner_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-2">
-          <%= link_to_contact_list( f.object.p_owner, :button )%>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :p_deputy_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-2">
-          <%= f.object.p_deputy.nil? ? display_nil : link_to_contact_list( f.object.p_deputy, :button ) %>
-        </div>
-      </div>
+      <%= render partial: 'shared/show_account', locals: { fbo: f, a_id: :p_owner_id,  a_as: :p_owner,  sbtn: true }%>
+      <%= render partial: 'shared/show_account', locals: { fbo: f, a_id: :p_deputy_id, a_as: :p_deputy, sbtn: true }%>
       <%# do not show subject owner if current user is not in the presenting group %>
       <%- if PcpSubject.same_group?( 0, @pcp_viewing_group_map ) -%>
-      <div class="form-group">
-        <%= f.label :s_owner_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-2">
-          <%= f.object.s_owner.nil? ? display_nil : link_to_contact_list( f.object.s_owner, :button ) %>
-        </div>
-      </div>
+        <%= render partial: 'shared/show_account', locals: { fbo: f, a_id: :s_owner_id, a_as: :s_owner, sbtn: true }%>
       <%- end -%>
       <div class="form-group">
         <%= f.label :c_group_id, class: 'col-sm-3 control-label' %>
@@ -77,18 +57,8 @@
           <%= display_value f.object.c_group.code_and_label %>
         </div>
       </div>
-      <div class="form-group">
-        <%= f.label :c_owner_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-2">
-          <%= link_to_contact_list( f.object.c_owner, :button )%>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :c_deputy_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-2">
-          <%= f.object.c_deputy.nil? ? display_nil : link_to_contact_list( f.object.c_deputy, :button )%>
-        </div>
-      </div>
+      <%= render partial: 'shared/show_account', locals: { fbo: f, a_id: :c_owner_id,  a_as: :c_owner,  sbtn: true }%>
+      <%= render partial: 'shared/show_account', locals: { fbo: f, a_id: :c_deputy_id, a_as: :c_deputy, sbtn: true }%>
       <div class="form-group">
         <%= f.label :report_doc_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">

@@ -1,0 +1,27 @@
+<%#
+=begin
+
+	This partial ensures a consistent edit view of account information:
+
+	locals:
+    fbo:  <FormBuilder object>
+		a_id: <symbol>
+    wbtn: <any value>: display link to accounts, optional, default: no button
+    reqd: true or false, optional, default: false
+
+	< %= render 'shared/show_account', locals: { fbo: f, a_id: :xxx, wbtn: true, reqd: true }
+
+=end
+%>
+      <%- reqd = defined?( reqd ) ? reqd : false %>
+      <div class="form-group">
+        <%= fbo.label a_id, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-1">
+          <%= fbo.text_field a_id, class: 'form-control', required: reqd %>
+        </div>
+        <%- if defined?( wbtn )%>
+        <div class="col-sm-2">
+          <%= link_to t( 'general.accounts_link' ), account_list_path, class: 'btn btn-sm btn-block btn-default', target: '_blank' %>
+        </div>
+        <%- end %>
+      </div>

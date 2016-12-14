@@ -515,6 +515,7 @@ ActiveRecord::Schema.define(version: 20161231235959) do
 
   create_table "isr_agreements", force: :cascade do |t|
     t.integer  "isr_interface_id",                        null: false
+    t.integer  "ia_type",                     default: 0, null: false
     t.integer  "l_group_id",                              null: false
     t.integer  "l_owner_id"
     t.integer  "l_deputy_id"

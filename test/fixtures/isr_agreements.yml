@@ -13,5 +13,8 @@ one:
   val_steps: 
   rev_no:         0
   ia_no:          1
-  based_on: 
+  based_on:
+  l_owner:        one
+  p_owner:        one
+
 

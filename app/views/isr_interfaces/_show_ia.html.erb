@@ -48,8 +48,8 @@
           <%- if show_ia.res_steps_id || show_ia.val_steps_id -%>
             <div class="form-group p-group">
               <p class="col-sm-3 p-label"><%= t( 'isr_interfaces.show.res_val_steps' )%></p>
-              <p class="col-sm-2"><%= link_to( show_ia.res_steps.code, my_tia_list_our_tia_items_path( show_ia.res_steps_id ), target: '_blank' ) unless show_ia.res_steps_id.nil? %></p>  
-              <p class="col-sm-2"><%= link_to( show_ia.val_steps.code, my_tia_list_our_tia_items_path( show_ia.val_steps_id ), target: '_blank' ) unless show_ia.val_steps_id.nil? %></p>
+              <p class="col-sm-3"><%= link_to_tia( show_ia.res_steps, :link, :label )%></p>  
+              <p class="col-sm-3"><%= link_to_tia( show_ia.val_steps, :link, :label )%></p>  
             </div>
           <%- end -%>
           <div class="form-group p-group">

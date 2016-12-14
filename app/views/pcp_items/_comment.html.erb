@@ -18,7 +18,7 @@
         <%= comment.label :assessment, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <%- if @pcp_step.in_commenting_group? then -%>
-            <%= comment.select :assessment, select_options( PcpItem::ASSESSMENT_LABELS ), { prompt: t( '.g_prompt' )}, { class: 'form-control' }%>
+            <%= comment.select :assessment, select_options( PcpItem::ASSESSMENT_LABELS ), { prompt: true },{ class: 'form-control' }%>
           <%- else -%>
             <%= display_value PcpItem.assessment_label( comment.object.assessment ) %>
           <%- end -%>

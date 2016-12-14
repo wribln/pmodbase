@@ -12,14 +12,14 @@
           <%= display_value a1_all.first.code_and_label -%>
           <%= form.hidden_field :a1_code, value: a1_all.first.code -%>
         <%- else -%>
-          <%= form.collection_select( :a1_code, A1Code.active_only, :code, :code_and_label, { prompt: t( '.g_prompt' )}, { class: 'form-control', required: true })%>
+          <%= form.collection_select( :a1_code, A1Code.active_only, :code, :code_and_label, { prompt: true }, { class: 'form-control', required: true })%>
         <%- end -%>
         </div>
       </div>
       <div class="form-group">
         <%= form.label :a2_code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
-          <%= form.collection_select( :a2_code, A2Code.active_only, :code, :code_and_label, { prompt: t( '.g_prompt' )}, { class: 'form-control', required: true })%>
+          <%= form.collection_select( :a2_code, A2Code.active_only, :code, :code_and_label, { prompt: true }, { class: 'form-control', required: true })%>
         </div>
       </div>
       <div class="form-group">
@@ -28,34 +28,36 @@
           <p class="form-control-static">&nbsp;</p>
         </div>
       </div>
+      <%# Attention: options_from_collection_for_select needs prompt to standard path,
+          simply setting it to 'true' will not work :-( -%>
       <div class="form-group">
         <%= form.label :a4_code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
-          <%= select_tag( :a34_code, options_from_collection_for_select( A4Code.active_only, :code, :code_and_label, @a34_code ), { prompt: t( '.g_prompt' ), class: 'form-control', required: true })%>
+          <%= select_tag( :a34_code, options_from_collection_for_select( A4Code.active_only, :code, :code_and_label, @a34_code ), { prompt: t('helpers.select.prompt'), class: 'form-control', required: true })%>
         </div>
       </div>
       <div class="form-group">
         <%= form.label :a5_code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
-          <%= form.collection_select( :a5_code, A5Code.active_only, :code, :code_and_label, { prompt: t( '.g_prompt' )}, { class: 'form-control', required: true })%>
+          <%= form.collection_select( :a5_code, A5Code.active_only, :code, :code_and_label, { prompt: true }, { class: 'form-control', required: true })%>
         </div>
       </div>
       <div class="form-group">
         <%= form.label :a6_code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
-          <%= form.collection_select( :a6_code, A6Code.active_only, :code, :code_and_label, { prompt: t( '.g_prompt' )}, { class: 'form-control', required: true })%>
+          <%= form.collection_select( :a6_code, A6Code.active_only, :code, :code_and_label, { prompt: true }, { class: 'form-control', required: true })%>
         </div>
       </div>
       <div class="form-group">
         <%= form.label :a7_code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
-          <%= form.collection_select( :a7_code, A7Code.active_only, :code, :code_and_label, { prompt: t( '.g_prompt' )}, { class: 'form-control', required: true })%>
+          <%= form.collection_select( :a7_code, A7Code.active_only, :code, :code_and_label, { prompt: true }, { class: 'form-control', required: true })%>
         </div>
       </div>
       <div class="form-group">
         <%= form.label :a8_code, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
-          <%= form.collection_select( :a8_code, A8Code.active_only, :code, :code_and_label, { prompt: t( '.g_prompt' )}, { class: 'form-control', required: true })%>
+          <%= form.collection_select( :a8_code, A8Code.active_only, :code, :code_and_label, { prompt: true }, { class: 'form-control', required: true })%>
         </div>
       </div>
       <div class="form-group">

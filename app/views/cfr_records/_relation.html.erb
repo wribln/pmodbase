@@ -30,7 +30,7 @@
     <div class="col-sm-3">
       <%= cfr_relation.select :cfr_relationship_id, grouped_options_for_select(
         CfrRelationship.get_option_list, cfr_relation.object.cfr_relationship_id ),
-        { prompt: t( '.g_prompt' )}, { class: 'form-control' } -%>
+        { prompt: true }, { class: 'form-control' } -%>
     </div>
     <div class="col-sm-2">
       <%= cfr_relation.label :dst_record_id, class: 'hidden-md hidden-lg control-label' %>

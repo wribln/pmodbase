@@ -13,7 +13,7 @@
       <div class="form-group">
         <%= form.label :p_group_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
-          <%= form.select :p_group_id, @group_selection, { prompt: t( '.g_prompt' )},{ class: 'form-control', required: true }%>
+          <%= form.select :p_group_id, @group_selection, { prompt: true },{ class: 'form-control', required: true }%>
         </div>
       </div>
       <div class="form-group">
@@ -34,7 +34,7 @@
       <div class="form-group">
         <%= form.label :c_group_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
-          <%= form.select :c_group_id, @group_selection, { prompt: t( '.g_prompt' )},{ class: 'form-control', required: true }%>
+          <%= form.select :c_group_id, @group_selection, { prompt: true },{ class: 'form-control', required: true }%>
         </div>
       </div>
       <div class="form-group">

@@ -5,7 +5,19 @@
   <div class="form-horizontal" role="form">
     <%= form_for @isr_interface do |f| %>
       <%= render partial: 'shared/errors', object: @isr_interface.errors %>
-      <%= render partial: 'form_if', object: f, locals:{ note: :edit } %>
+      <%= render partial: 'shared/errors', object: @isr_agreement.errors %>
+      <%= render partial: 'show_if', object: f, locals:{ note: :edit } %>
+      <!-- Divider Line -->
+      <div class="form-group">
+        <hr style="margin:4px"/>  
+      </div>
+      <%= fields_for @isr_agreement_new do |a| %>
+        <%= render partial: 'form_ia', object: a %>
+      <%- end -%>
+      <!-- Divider Line -->
+      <div class="form-group">
+        <hr style="margin:4px"/>  
+      </div>
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-2">
           <%= f.submit class: 'btn btn-lg btn-block btn-primary' %>

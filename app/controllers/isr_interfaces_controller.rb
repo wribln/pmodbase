@@ -17,10 +17,9 @@
 # GET /isr/new          new         Create new IF                           IFM
 # POST /isr             create      
 #
-# GET /isr/1/new        new_ia      Create new IA for IF 1, start WF        IFM
-# POST /isr/ia          create_ia
-#
-# GET /isr/1/rev        new_ia_rev  Create revision for IA 1, start WF      IFM
+# GET /isr/1/new        new_ia      Create new IA for IF 1, start WF 0      IFM
+# GET /isr/1/rev        new_ia_rev  Create revision for IA 1, start WF 1    IFM
+# GET /isr/1/fin        new_ia_fin  Create termination for IA 1, start WF 2 IFM
 # POST /isr/ia          create_ia
 #
 # GET /isr/1/edit       edit        Edit IF 1                               IFM
@@ -44,15 +43,15 @@ require 'isr_work_flow.rb'
 class IsrInterfacesController < ApplicationController
   include IsrWorkFlow
 
-  initialize_feature FEATURE_ID_ISR_INTERFACES, FEATURE_ACCESS_VIEW, FEATURE_CONTROL_WF
+  initialize_feature FEATURE_ID_ISR_INTERFACES, FEATURE_ACCESS_VIEW, FEATURE_CONTROL_WF, 3
 
-  before_action :set_workflow,      only: [ :index, :show, :show_all, :show_ia, :show_ia_all, :edit, :edit_ia, :info_workflow ]
+  before_action :set_workflow
   before_action :load_data_from_if, only: [ :show,    :show_all,                  :edit,    :update,    :destroy    ]
-  before_action :load_data_from_ia, only: [ :show_ia, :show_ia_all, :show_ia_icf, :edit_ia, :update_ia, :destroy_ia ]
+  before_action :load_data_from_ia, only: [ :show_ia, :show_ia_all, :show_ia_icf, :edit_ia, :update_ia, :destroy_ia, :new_ia_rev ]
   
   def index
     @filter_fields = filter_params
-    @filter_states = @workflow.all_states_for_select( 0 )
+    @filter_states = @workflow.all_states_for_select
     @filter_groups = Group.active_only.participants_only.collect{ |g| [ g.code, g.id ]}
     @isr_interfaces = IsrInterface.includes( :active_agreements ).filter( @filter_fields ).all.paginate( page: params[ :page ])
   end
@@ -84,12 +83,39 @@ class IsrInterfacesController < ApplicationController
     render layout: 'plain_print'
   end
 
-
+  # create new IF
 
   def new
     @isr_interface = IsrInterface.new
     set_selections( :to_create )
   end
+
+  # create new IA based on this IF
+
+  def new_ia
+    set_final_breadcrumb( :new )
+    @isr_interface = IsrInterface.find( params[ :id ])
+    @isr_agreement = @isr_interface.isr_agreements.build
+    set_selections( :to_create )
+    @workflow.initialize_current( 0, 1, 1 )
+  end
+
+  def new_ia_rev
+    prepare_new_ia( 1 )
+  end
+
+  def new_ia_fin
+    prepare_new_ia( 2 )
+  end
+
+  def prepare_new_ia( wf )
+    set_final_breadcrumb( :new )
+    @isr_agreement_new = @isr_agreement.dup
+    @isr_agreement_new.revise
+    set_selections( :to_create )
+    @workflow.initialize_current( wf, 1, 1 )
+  end    
+  private :prepare_new_ia    
 
   # GET /isr/1/edit
 
@@ -97,17 +123,10 @@ class IsrInterfacesController < ApplicationController
     set_selections( :to_update )
   end
 
-  # GET /isr/1/wdr - withdraw IF: only possible if status is defined-frozen
-
-  def edit_withdraw
-    if [ 3, 4 ].include? @isr_interface.if_status
-      redirect_to isr_interface_details_path( @isr_interface ), notice: I18n.t( 'isr_interfaces.msg.wdr_not_now' )
-    else
-      @isr_interface.if_status = 4 # new status
-      @isr_withdrawing = true
-      flash.now[ :notice ] = I18n.t( 'isr_interfaces.msg.withdrawing' ) 
-      render :edit
-    end
+  def edit_ia
+    set_final_breadcrumb( :edit )
+    set_selections( :to_update )
+    @workflow.initialize_current( 0 )
   end
 
   # POST /isr
@@ -116,7 +135,7 @@ class IsrInterfacesController < ApplicationController
     @isr_interface = IsrInterface.new( isr_interface_params )
     respond_to do |format|
       if @isr_interface.save
-        format.html { redirect_to @isr_interface, notice: I18n.t( 'isr_interfaces.msg.create_ok' )}
+        format.html { redirect_to isr_interface_details_path( @isr_interface ), notice: I18n.t( 'isr_interfaces.msg.create_ok' )}
       else
         set_selections( :to_create )
         format.html { render :new }
@@ -124,16 +143,50 @@ class IsrInterfacesController < ApplicationController
     end
   end
 
+  def create_ia
+    set_final_breadcrumb( :create )
+    @isr_interface = IsrInterface.find( params[ :id ])
+    @isr_agreement = @isr_interface.isr_agreements.build( isr_agreement_params )
+    @isr_agreement.set_next_ia_no
+    respond_to do |format|
+      if @isr_agreement.save
+        format.html { redirect_to isr_agreement_details_path( @isr_agreement ), notice: I18n.t( 'isr_interfaces.msg.create_ia_ok' )}
+      else
+        set_selections( :to_create )
+        @workflow.initialize_current( 0 )
+        format.html { render :new_ia }
+      end
+    end
+  end
+
   # PATCH/PUT /isr/1
 
   def update
-    @isr_interface.withdraw unless params[ :isr_withdrawing ].nil?
     respond_to do |format|
       if @isr_interface.update( isr_interface_params )
         format.html { redirect_to isr_interface_details_path( @isr_interface ), notice: I18n.t( 'isr_interfaces.msg.update_ok' )}
       else
         set_selections( :to_update )
         format.html { render :edit }
+      end
+    end
+  end
+
+  def update_ia
+    respond_to do |format|
+      @isr_agreement.assign_attributes( isr_agreement_params )
+      @isr_interface.assign_attributes( isr_interface_params )
+      if @isr_interface.valid? && @isr_agreement.valid?
+        IsrAgreement.transaction do
+          @isr_agreement.save!
+          @isr_interface.save!
+        end
+        format.html { redirect_to isr_agreement_details_path( @isr_agreement ), notice: I18n.t( 'isr_interfaces.msg.update_ia_ok' )}
+      else
+        set_final_breadcrumb( :edit )        
+        set_selections( :to_update )
+        @workflow.initialize_current( 0 )
+        format.html { render :edit_ia }
       end
     end
   end
@@ -176,12 +229,16 @@ class IsrInterfacesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
 
     def isr_interface_params
-      if @isr_interface.frozen?
-        params.require( :isr_interface ).permit( :note )
-      else
-        params.require( :isr_interface ).permit( :l_group_id, :p_group_id, :title, :desc, 
-          :cfr_record_id, :safety_related, :if_status, :if_level, :note )
-      end
+      params.require( :isr_interface ).permit( :desc, :cfr_record_id,
+        :l_group_id, :p_group_id, :title, :desc, 
+        :safety_related, :if_status, :if_level, :note )
+    end
+
+    def isr_agreement_params
+      params.require( :isr_agreement ).permit( :def_text, :cfr_record_id, 
+        :l_group_id, :l_owner_id, :l_deputy_id,
+        :p_group_id, :p_owner_id, :p_deputy_id,
+        :res_steps_id, :val_steps_id )
     end
 
 end

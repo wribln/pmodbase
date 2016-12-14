@@ -25,7 +25,7 @@
       <div class="form-group">
         <%= form.label :feature_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">           
-          <%= form.select :feature_id, @permitted_features, { prompt: t( '.f_prompt' )}, class: 'form-control', required: true %>
+          <%= form.select :feature_id, @permitted_features, { prompt: true }, { class: 'form-control', required: true }%>
         </div>
       </div>
 

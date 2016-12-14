@@ -1,0 +1,20 @@
+<%#
+=begin
+
+	This partial ensures a consistent display of tia information:
+
+	locals:
+    fbo:  <FormBuilder object>
+		a_id: <symbol>
+    a_as: <association symbol>
+
+	< %= render 'shared/show_tia', locals: { fbo: f, a_id: :xxx, a_as: :xxx }
+
+=end
+%>
+      <div class="form-group">
+        <%= fbo.label a_id, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-6">
+          <%= fbo.object.try( a_as ).nil? ? display_nil : link_to_tia( fbo.object.try( a_as), :button, :label )%>
+        </div>
+      </div>

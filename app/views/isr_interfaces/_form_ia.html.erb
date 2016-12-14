@@ -1,76 +1,50 @@
       <div class="form-group">
-        <%= form.label :code, IsrAgreement.human_attribute_name( :ia_code ), class: 'col-sm-3 control-label' %>
+        <%= form_ia.label :code, IsrAgreement.human_attribute_name( :ia_code ), class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= display_value form.object.code_and_revision %>
+          <%= display_value form_ia.object.code_and_revision %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :l_group_id, class: 'col-sm-3 control-label' %>
+        <%= form_ia.label :l_group_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= form.select :l_group_id, @isr_l_groups, { prompt: t( '.g_prompt' )},{ class: 'form-control', required: true }%>
+          <%= form_ia.select :l_group_id, @isr_l_groups, { prompt: true },{ class: 'form-control', required: true }%>
         </div>
       </div>
+      <%= render partial: 'shared/edit_account', locals: { fbo: form_ia, a_id: :l_owner_id, wbtn: true }%>
+      <%= render partial: 'shared/edit_account', locals: { fbo: form_ia, a_id: :l_deputy_id }%>
       <div class="form-group">
-        <%= form.label :l_owner_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-1">
-          <%= form.text_field :l_owner_id, class: 'form-control', required: true %>
-        </div>
-        <div class="col-sm-2">
-          <%= link_to t( 'general.accounts_link' ), account_list_path, class: 'btn btn-sm btn-block btn-default', target: '_blank' %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= form.label :p_group_id, class: 'col-sm-3 control-label' %>
+        <%= form_ia.label :p_group_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= form.select :p_group_id, @isr_p_groups, { prompt: t( '.g_prompt' )},{ class: 'form-control', required: true }%>
+          <%= form_ia.select :p_group_id, @isr_p_groups, { prompt: true }, { class: 'form-control', required: true }%>
         </div>
       </div>
+      <%= render partial: 'shared/edit_account', locals: { fbo: form_ia, a_id: :p_owner_id, wbtn: true  }%>
+      <%= render partial: 'shared/edit_account', locals: { fbo: form_ia, a_id: :p_deputy_id }%>
       <div class="form-group">
-        <%= form.label :def_text, class: 'col-sm-3 control-label' %>
+        <%= form_ia.label :def_text, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
-          <%= form.text_area :def_text, class: 'form-control', cols: DEFAULT_COLS_TEXTAREA, rows: DEFAULT_ROWS_TEXTAREA %>
+          <%= form_ia.text_area :def_text, class: 'form-control', cols: DEFAULT_COLS_TEXTAREA, rows: DEFAULT_ROWS_TEXTAREA %>
         </div>
       </div>
+      <%= render partial: 'shared/edit_cfr', locals: { fbo: form_ia }%>
+      <%= render partial: 'shared/edit_tia', locals: { fbo: form_ia, a_id: :res_steps_id, a_as: :res_steps }%>
+      <%= render partial: 'shared/edit_tia', locals: { fbo: form_ia, a_id: :val_steps_id, a_as: :val_steps }%>
       <div class="form-group">
-        <%= form.label :cfr_record_id, t( '.cfr_record_id' ), class: 'col-sm-3 control-label' %>
+        <%= form_ia.label :ia_status, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= form.text_field :cfr_record_id, class: 'form-control' %>
-        </div>
-        <div class="col-sm-2">
-          <%= link_to t( '.cfr_record_link' ), cfr_records_path, class: 'btn btn-sm btn-block btn-default', target: '_blank' %>
+          <%= display_value form_ia.object.ia_status_label %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :res_steps_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-4">
-          <%= form.text_field :res_steps_id, class: 'form-control' %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= form.label :val_steps_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-4">
-          <%= form.text_field :val_steps_id, class: 'form-control' %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= form.label :ia_status, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-2">
-          <%= display_value form.object.ia_status_label %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= form.label :current_status_task, class: 'col-sm-3 control-label' %>
+        <%= form_ia.label :current_status_task, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
           <%= display_value @workflow.status_task_label %>
         </div>
       </div>
-      <%- if @workflow.param_permitted?( :next_status_task ) -%>
-        <div class="form-group">
-          <%= form.label :next_status_task, class: 'col-sm-3 control-label' %>
-          <div class="col-sm-6">
-            <%= select_tag :next_status_task,
-              options_for_select( @workflow.next_status_task_labels_for_select, selected: 0 ), { class: 'form-control' } %>
-          </div>
+      <div class="form-group">
+        <%= form_ia.label :next_status_task, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-6">
+          <%= select_tag :next_status_task,
+            options_for_select( @workflow.next_status_task_labels_for_select, selected: 0 ), { class: 'form-control' } %>
         </div>
-      <%- end -%>
-
+      </div>

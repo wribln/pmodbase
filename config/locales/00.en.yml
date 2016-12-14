@@ -10,12 +10,12 @@ en:
     errors:        'Error Message(s)'
     alerts:        'Error Message(s)'
     non_existing:  'does not exist.'
-    select_prompt: 'Select one:'
     download_xls:  'Download CSV File'
     download_doc:  'Download Report'
     statistics:    'Show Statistics'
     upd_baseline:  'Update Baseline'
     accounts_link: 'Show Index of Accounts'
+    cfr_link:      'Show Index of CFR'
     total:         'Total'
     subtotal:      'Subtotal'
     boolean:
@@ -38,6 +38,14 @@ en:
   date:
     formats:
       db_date:      '%Y-%m-%d'
+
+  helpers:
+    select:
+      prompt:     'Select one:'
+    submit:
+      add:        'Add now'
+      create:     'Add now'
+      update:     'Update now'
 
   coding_systems:
     code:           'Code'
@@ -727,12 +735,6 @@ en:
       dv:        'yyyy-mm-dd'
       ns:        'Search in Notes Text'
 
-  helpers:
-    submit:
-      add:        'Add now'
-      create:     'Add now'
-      update:     'Update now'
-
   button_label:
     add:          'Add'
     show:         'Show'
@@ -877,8 +879,6 @@ en:
 
   a_document_logs:
     title:            'Alternate Document Log (ADL)'
-    form:
-      g_prompt:       :general.select_prompt
     index:
       form_title:     'List of Alternate DMS Documents'
     show:
@@ -1012,8 +1012,6 @@ en:
 
   csr_status_records:
     title:            'Correspondence Status Register (CSR)'
-    form:
-      g_prompt:       :general.select_prompt
     index:
       form_title:     :csr_status_records.title
       other_group_id: 'Sender/ Receiver Group'
@@ -1070,8 +1068,6 @@ en:
 
   dsr_doc_groups:
     title:            'DSR Document Groups'
-    form:
-      g_prompt:       :general.select_prompt
     edit:
       form_title:     'Edit DSR Document Group'
     index:
@@ -1103,7 +1099,6 @@ en:
     form:
       ddg_link:       'Show Document Groups'
       ppa_link:       'Show Programme Activities'
-      g_prompt:       :general.select_prompt
       no_groups:      'No eligible submission groups found.'
       cb_add_text:    'Corresponding DSR entry %{dsr_id} will be updated.'
       sub_title:      'with Baseline as of: %{bl_date}'
@@ -1232,8 +1227,6 @@ en:
 
   dsr_submissions:
     title:            'DSR Submission Records'
-    form:
-      g_prompt:       :general.select_prompt
     new:
       form_title:     'Add New DSR Submission Record'
     show:
@@ -1274,7 +1267,6 @@ en:
       form_title:     'List of Features'
     new:
       form_title:     'Add New Feature'
-      fc_prompt:      :general.select_prompt
     show:
       form_title:     'Show Details of Feature'
 
@@ -1348,7 +1340,6 @@ en:
       form_title:     'List of Project Groups'
     new:
       form_title:     'Add New Project Group'
-      gc_prompt:      :general.select_prompt
     show:
       form_title:     'Show Details of Project Group'
     msg:
@@ -1386,8 +1377,6 @@ en:
 
   hashtags:
     title:            'Hashtag Labels'
-    form:
-      f_prompt:       :general.select_prompt
     edit:
       form_title:     'Edit Hashtag Label'
     index:
@@ -1424,8 +1413,6 @@ en:
 
   location_codes:
     title:            'Location Codes'
-    form:
-      t_prompt:       :general.select_prompt
     edit:
       form_title:     'Edit Location Code'
     index:
@@ -1655,7 +1642,6 @@ en:
   responsibilities:
     title:          'Responsibilities'
     form:
-      g_prompt:     :general.select_prompt
       people_link:  'Show Index of People'
     edit:
       form_title:   'Edit Responsibility'
@@ -1688,8 +1674,6 @@ en:
 
   rfc_status_records:
     title:          'RfC Status Register (RSR)'
-    form:
-      g_prompt:     :general.select_prompt
     info_workflow:
       form_title:   'Workflow Information'
     stats:
@@ -1698,7 +1682,6 @@ en:
       form_title:   'List of Requests for Clarification (RfC)'
     new:
       form_title:   'Add New Request for Clarification (RfC)'
-      g_prompt:     'Select type of RfC'
     edit:
       form_title:   'Edit Request for Clarification (RfC)'
     show:
@@ -1789,8 +1772,6 @@ en:
 
   s_document_logs:
     title:            'Siemens Document Log (SDL)'
-    form:
-      g_prompt:       :general.select_prompt
     index:
       form_title:     'List of Siemens Documents'
     show:

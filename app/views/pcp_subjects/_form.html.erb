@@ -8,7 +8,7 @@
           <%= form.label :pcp_category_id, class: 'col-sm-3 control-label' %>
           <div class="col-sm-4">
             <%- if @valid_subject_params.include? :pcp_category_id then -%>
-              <%= form.select :pcp_category_id, @pcp_categories, { prompt: t( '.g_prompt' )}, { class: 'form-control', required: true }%>
+              <%= form.select :pcp_category_id, @pcp_categories, { prompt: true }, { class: 'form-control', required: true }%>
             <%- else -%>
               <%= display_value form.object.pcp_category.label %>
             <%- end -%>
@@ -272,7 +272,7 @@
               <%= os.label :new_assmt, class: 'col-sm-3 control-label' %>
               <div class="col-sm-4">
                 <%- if @valid_step_params.include? :new_assmt -%>
-                  <%= os.select :new_assmt, select_options( PcpStep::ASSESSMENT_LABELS ), { prompt: t( '.g_prompt' ) }, { class: 'form-control' }%>
+                  <%= os.select :new_assmt, select_options( PcpStep::ASSESSMENT_LABELS ), { prompt: true }, { class: 'form-control' }%>
                 <%- else -%>
                   <%= display_value PcpStep.assessment_label( os.object.new_assmt) %>
                 <%- end %>

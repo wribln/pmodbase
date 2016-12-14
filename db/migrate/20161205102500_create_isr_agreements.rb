@@ -2,6 +2,7 @@ class CreateIsrAgreements < ActiveRecord::Migration
   def change
     create_table :isr_agreements do |t|
       t.belongs_to  :isr_interface,   null: false, index: true
+      t.integer     :ia_type,         null: false, default: 0
       t.belongs_to  :l_group,         null: false, index: true
       t.belongs_to  :l_owner
       t.belongs_to  :l_deputy

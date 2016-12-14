@@ -1,0 +1,30 @@
+<%#
+=begin
+
+	This partial ensures a consistent display of account information in views:
+
+	locals:
+    fbo:  <FormBuilder object>
+		a_id: <symbol>
+    a_as: <account association symbol> (normally: a_id w/o '_id' suffix)
+    sbtn: <any value>: display a single button with link to contact list
+
+	< %= render 'shared/show_account', locals: { fbo: f, a_id: :xxx, a_as: :yyy, sbtn: true }
+
+=end
+%>
+      <div class="form-group">
+        <%= fbo.label a_id, class: 'col-sm-3 control-label' %>
+        <%- if defined?( sbtn )%>
+        <div class="col-sm-4">
+          <%= fbo.object.try( a_id ).nil? ? display_nil : link_to_contact_list( fbo.object.try( a_as ), show_as = :button )%>
+        </div>
+        <%- else %>
+        <div class="col-sm-1">
+          <%= display_value fbo.object.try( a_id )%>
+        </div>
+        <div class="col-sm-3">
+          <p class="form-control-static"><%= link_to_contact_list( fbo.object.try( a_as ))%></p>
+        </div>
+        <%- end %>
+      </div>

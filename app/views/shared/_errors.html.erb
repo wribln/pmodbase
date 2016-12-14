@@ -2,16 +2,18 @@
 =begin
 
  this partial is to be used for any views to insert the error message block;
- use the object parameter to pass the array of error messages
+ use the object parameter to pass any object containing the array with the
+ error messages
 
  Example:
 
- < %= render partial: 'shared/errors', object: @personal_data.errors % >
+ < %= render partial: 'shared/errors', object: model.errors % >
+ < %= render partial: 'shared/errors', object: form_builder_object.object.errors % >
  
 =end
 %>
 
-    <% if errors.any? %>
+    <%- if errors.any? %>
     <div class="form-group">
       <label class="<%= %Q(control-label col-sm-#{ BT_COL_WIDTH_LABELS }) %>"><%= t( 'general.errors' ) %></label>
       <div class="col-sm-4">
@@ -20,4 +22,4 @@
         <% end %>
       </div>
     </div>
-    <% end %>
+    <%- end %>

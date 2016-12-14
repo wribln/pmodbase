@@ -23,44 +23,16 @@
           <%= display_value f.object.p_group.code_and_label %>
         </div>
       </div>
-      <div class="form-group">
-        <%= f.label :p_owner_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-2">
-          <%= link_to_contact_list( f.object.p_owner, :button )%>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :p_deputy_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-2">
-          <%- if f.object.p_deputy_id.nil? -%>
-            <%= display_value nil %>
-          <%- else -%>
-            <%= link_to_contact_list( f.object.p_deputy, :button )%>
-          <%- end -%>
-        </div>
-      </div>
+      <%= render partial: 'shared/show_account', locals: { fbo: f, a_id: :p_owner_id,  a_as: :p_owner,  sbtn: true }%>
+      <%= render partial: 'shared/show_account', locals: { fbo: f, a_id: :p_deputy_id, a_as: :p_deputy, sbtn: true }%>
       <div class="form-group">
         <%= f.label :c_group_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
           <%= display_value f.object.c_group.code_and_label %>
         </div>
       </div>
-      <div class="form-group">
-        <%= f.label :c_owner_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-2">
-          <%= link_to_contact_list( f.object.c_owner, :button )%>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :c_deputy_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-2">
-          <%- if f.object.c_deputy_id.nil? -%>
-            <%= display_value nil %>
-          <%- else -%>
-            <%= link_to_contact_list( f.object.c_deputy, :button )%>
-          <%- end -%>
-        </div>
-      </div>
+      <%= render partial: 'shared/show_account', locals: { fbo: f, a_id: :c_owner_id,  a_as: :c_owner,  sbtn: true }%>
+      <%= render partial: 'shared/show_account', locals: { fbo: f, a_id: :c_deputy_id, a_as: :c_deputy, sbtn: true }%>
       <div class="form-group">
         <%= f.label :description, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">

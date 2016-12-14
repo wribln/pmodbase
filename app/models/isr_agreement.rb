@@ -49,6 +49,16 @@ class IsrAgreement < ActiveRecord::Base
   validates :based_on,
     presence: true, if: Proc.new{ |me| me.based_on_id.present? }
 
+  # ia_type determines workflow:
+  # 0 - create new IA
+  # 1 - revise existing IA
+  # 2 - terminate existing IA
+
+  validates :ia_type,
+    allow_blank: false,
+    numericality: { only_integer: true },
+    inclusion: { in: 0..2 }  
+
   ISR_IA_STATUS_LABELS = IsrAgreement.human_attribute_name( :ia_states ).freeze
 
   validates :ia_status,
@@ -111,6 +121,12 @@ class IsrAgreement < ActiveRecord::Base
     else
       code
     end
+  end
+
+  # prepare new revision
+
+  def revise
+    self.rev_no += 1
   end
 
   # prepare code and label for related TIA lists

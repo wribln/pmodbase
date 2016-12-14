@@ -1,36 +1,66 @@
-# workflow information needs to be available in both the
-# IsrInterface- and the IsrAgreement-Controllers:
+# workflow information for ISR
 
 require './lib/assets/work_flow_helper.rb'
-
 module IsrWorkFlow
 
     # setup workflow - call once to initialize object
 
     def set_workflow
       @workflow = WorkFlowHelper.new([
-        [ # single workflow only
+        [ # create IA
           [[ 0, 1 ]],
-          [[ 1, 2 ],[ 10, 8 ]],
-          [[ 2, 2 ],[ 3, 3 ],[ 6, 6 ],[ 8, 7 ]],
-          [[ 4, 4 ],[ 9, 2 ]], # confirm, reject
-          [[ 5, 5 ]],
-          [[ -1, 8 ]],
-          [[ 7, 2 ]],
-          [[ 11, 8 ]],
-          [[ -1, 8 ]]
+          [[ 1, 2 ]],
+          [[ 2, 2 ],[ 3, 3 ],[ 6, 5 ]],
+          [[ 4, 2 ],[ 5, 4 ]],
+          [[ 8, 6 ]],
+          [[ 7, 6 ]],
+          [[ -1, 6 ]]
+        ],
+        [ # revise IA
+          [[ 0, 1 ]],
+          [[ 1, 2 ]],
+          [[ 2, 2 ],[ 3, 3 ],[ 6, 5 ]],
+          [[ 4, 2 ],[ 5, 4 ]],
+          [[ 8, 6 ]],
+          [[ 7, 6 ]],
+          [[ -1, 6 ]]
+        ],
+        [ # terminate IA
+          [[ 0, 1 ]],
+          [[ 1, 2 ]],
+          [[ 2, 2 ],[ 3, 3 ],[ 6, 5 ]],
+          [[ 4, 2 ],[ 5, 4 ]],
+          [[ 8, 6 ]],
+          [[ 7, 6 ]],
+          [[ -1, 6 ]]
         ],
         ],
         [
           [
-            [ :if_level, :l_group_id, :p_group_id, :title, :desc, :cfr_record_id, :safety_related, :cfr_record_id, :next_status_task ],
-            [ :if_level, :l_group_id, :p_group_id, :title, :desc, :cfr_record_id, :safety_related, :cfr_record_id, :next_status_task ],
-            [ :p_group_id, :desc, :cfr_record_id, :next_status_task ],
+            [ :l_group_id, :l_owner_id, :l_deputy_id, :p_group_id, :p_owner_id, :p_deputy_id, :def_text, :cfr_record_id, :res_steps_id, :val_steps_id, :next_status_task ],
+            [ :l_group_id, :l_owner_id, :l_deputy_id, :p_group_id, :p_owner_id, :p_deputy_id, :def_text, :cfr_record_id, :res_steps_id, :val_steps_id, :next_status_task ],
+            [                           :l_deputy_id, :p_group_id, :p_owner_id, :p_deputy_id, :def_text, :cfr_record_id, :res_steps_id, :val_steps_id, :next_status_task ],
             [],
             [ :next_status_task ],
+            [ :cfr_record_id, :res_steps_id, :val_steps_id, :next_status_task ],
+            []
+          ],
+          [
             [],
-            [ :if_level, :l_group_id, :p_group_id, :title, :desc, :cfr_record_id, :safety_related, :next_status_task ],
+            [ :l_group_id, :l_owner_id, :l_deputy_id, :p_group_id, :p_owner_id, :p_deputy_id, :def_text, :cfr_record_id, :res_steps_id, :val_steps_id, :next_status_task ],
+            [                           :l_deputy_id, :p_group_id, :p_owner_id, :p_deputy_id, :def_text, :cfr_record_id, :res_steps_id, :val_steps_id, :next_status_task ],
+            [],
             [ :next_status_task ],
+            [ :cfr_record_id, :res_steps_id, :val_steps_id, :next_status_task ],
+            []
+          ],
+          [
+            [],
+            [ :l_group_id, :l_owner_id, :l_deputy_id, :p_group_id, :p_owner_id, :p_deputy_id, :def_text, :cfr_record_id, :res_steps_id, :val_steps_id, :next_status_task ],
+            [                           :l_deputy_id, :p_group_id, :p_owner_id, :p_deputy_id, :def_text, :cfr_record_id, :res_steps_id, :val_steps_id, :next_status_task ],
+            [],
+            [ :next_status_task ],
+            [ :cfr_record_id, :res_steps_id, :val_steps_id, :next_status_task ],
             []
           ]
         ],

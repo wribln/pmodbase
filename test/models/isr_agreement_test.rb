@@ -12,7 +12,11 @@ class IsrAgreementTest < ActiveSupport::TestCase
     assert_nil isa.code
     assert_nil isa.isr_interface_id
     assert_nil isa.l_group_id
+    assert_nil isa.l_owner_id
+    assert_nil isa.l_deputy_id
     assert_nil isa.p_group_id
+    assert_nil isa.p_owner_id
+    assert_nil isa.p_deputy_id
     assert_nil isa.l_signature
     assert_nil isa.p_signature
     assert_nil isa.l_sign_time

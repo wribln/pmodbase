@@ -45,8 +45,8 @@
       <li><%= help_param IsrInterface.human_attribute_name( :cfr_record_id )-%> allows to specify
       a Central File Register (CFR) record linking to a single document or a set of documents 
       containing information on this interface. On input, you will need to enter the numerical
-      <%= help_term t( 'isr_interfaces.form.cfr_record_id' )-%>. The button next to the input field
-      labelled <%= help_term t( 'isr_interfaces.form.cfr_record_link' )-%> leads to the listing
+      <%= help_term t( 'isr_interfaces.form_if.cfr_record_id' )-%>. The button next to the input field
+      labelled <%= help_term t( 'isr_interfaces.form_if.cfr_record_link' )-%> leads to the listing
       of all CFR records.<br/>
       When an Interface is defined and frozen (IFL releases his definition), this CFR Record will
       be marked as 'frozen' such that no more changes to this CFR record can be made.<br/>
@@ -80,7 +80,7 @@
     the IA attributes.</p>
     <h3>Withdrawing an IF</h3>
     <p>When at any time an IF becomes obsolute even though IAs have been agreed, the 
-    <%= help_term t( 'button_label.withdraw' )-%> function can be used (on the 
+     help_term t( 'button_label.withdraw' ) function can be used (on the 
     <%= help_term t( 'button_label.all' )-%> page). This will cause all related IAs
     to be set to <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 7 ]-%> and the status
     of this IF also be set to <%= help_term IsrInterface::ISR_IF_STATUS_LABELS[ 4 ]-%>.
@@ -101,7 +101,7 @@
     <p>Viewing an individual IA (via 'Q' under Action on a line showing an IA) will display a short
     version*) of this IA including the related IF information. This IA display contains a button
     <%= help_term t( 'button_label.print')-%> which produces a printable view with the heading
-    '<%= t( 'isr_agreements.icf.main_heading' )%>'. The links on the top of this page
+    '<%= t( 'isr_interfaces.show_ia_icf.main_heading' )%>'. The links on the top of this page
     <%= help_term t( 'button_label.print' )%>
     <%= help_term t( 'button_label.show' )%>
     <%= help_term t( 'button_label.index' )%> will not be printed.</p>

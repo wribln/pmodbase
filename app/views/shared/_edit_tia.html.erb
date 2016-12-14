@@ -1,0 +1,29 @@
+<%#
+=begin
+
+	This partial ensures a consistent edit of tia information:
+
+	locals:
+    fbo:  <FormBuilder object>
+		a_id: <symbol>
+    a_as: <association symbol>
+
+	< %= render 'shared/show_tia', locals: { fbo: f, a_id: :xxx, a_as: :xxx }
+
+=end
+%>
+      <div class="form-group">
+        <%= fbo.label a_id, class: 'col-sm-3 control-label' %>
+        <%- if fbo.object.try( a_id ).nil? %>
+          <div class="col-sm-1">
+            <%= check_box_tag a_id, true, false %>
+          </div>
+        <%- else %>
+          <div class="col-sm-1">
+            <%= check_box_tag a_id, false, true %>
+          </div>
+          <div class="col-sm-5">
+            <%= display_value fbo.object.try( a_as ).label %>
+          </div>
+        <%- end %>
+      </div>

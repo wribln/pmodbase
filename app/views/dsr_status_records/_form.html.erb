@@ -70,7 +70,7 @@
       <div class="form-group">
         <%= form.label :sender_group_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= form.select :sender_group_id, @dsr_sender_groups, { prompt: t( '.g_prompt' )}, class: 'form-control', required: true %>
+          <%= form.select :sender_group_id, @dsr_sender_groups, { prompt: true }, class: 'form-control', required: true %>
         </div>
       </div>
       <%- end -%>
@@ -86,7 +86,7 @@
       <div class="form-group">
         <%= form.label :sender_group_b_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= form.select :sender_group_b_id, @dsr_sender_groups, { prompt: t( '.g_prompt' )}, class: 'form-control', required: true %>
+          <%= form.select :sender_group_b_id, @dsr_sender_groups, { prompt: true }, { class: 'form-control', required: true }%>
         </div>
       </div>
       <%- end -%>
@@ -118,7 +118,7 @@
       <div class="form-group">
         <%= form.label :receiver_group_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= form.select :receiver_group_id, @dsr_receiver_groups, { prompt: t( '.g_prompt' )}, class: 'form-control' %>
+          <%= form.select :receiver_group_id, @dsr_receiver_groups, { prompt: true }, { class: 'form-control' }%>
         </div>
       </div>
       <%- end -%>
@@ -150,7 +150,7 @@
       <div class="form-group">
         <%= form.label :sub_purpose, class: 'col-sm-3 control-label' %>
         <div class="col-sm-3">
-          <%= form.select :sub_purpose, select_options( DsrStatusRecord::DSR_SUB_PURPOSE_LABELS ), { prompt: t( '.g_prompt' ) }, { class: 'form-control' }%>
+          <%= form.select :sub_purpose, select_options( DsrStatusRecord::DSR_SUB_PURPOSE_LABELS ), { prompt: true }, { class: 'form-control' }%>
         </div>
       </div>
       <%- end -%>
@@ -166,7 +166,7 @@
       <div class="form-group">
         <%= form.label :sub_frequency, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= form.select :sub_frequency, select_options( DsrStatusRecord::DSR_SUB_FREQUENCY_LABELS ), { prompt: t( '.g_prompt' ) }, { class: 'form-control' }%>
+          <%= form.select :sub_frequency, select_options( DsrStatusRecord::DSR_SUB_FREQUENCY_LABELS ), { prompt: true }, { class: 'form-control' }%>
         </div>
       </div>
       <%- end -%>
@@ -274,7 +274,7 @@
       <div class="form-group">
         <%= form.label :submission_group_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= form.select :submission_group_id, @submission_groups, { prompt: t( '.g_prompt'), include_blank: true }, class: 'form-control' %>
+          <%= form.select :submission_group_id, @submission_groups, { prompt: true, include_blank: true }, class: 'form-control' %>
         </div>
       </div>
       <%- end -%>
@@ -743,7 +743,7 @@
         <div class="form-group">
           <%= cs.label :response_status, class: 'col-sm-3 control-label' %>
           <div class="col-sm-4">
-            <%= cs.select :response_status, select_options( DsrSubmission::DSR_RESPONSE_STATUS_LABELS ), { prompt: t('.g_prompt') }, { class: 'form-control' }%>
+            <%= cs.select :response_status, select_options( DsrSubmission::DSR_RESPONSE_STATUS_LABELS ), { prompt: true }, { class: 'form-control' }%>
           </div>
         </div>
         <%- end -%>

@@ -108,7 +108,6 @@ en:
     relation:
       relations:          'This CFR Record %{id}'
       dst_record_title:   'Title'
-      g_prompt:           :general.select_prompt
     index:
       form_title:         'Index of the Central File Register (CFR)'
       type_location:      'File Type / Main Storage Location'
