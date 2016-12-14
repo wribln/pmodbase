@@ -3,7 +3,8 @@
   <%= breadcrumbs %>
   <%= form_title %>
   <div class="form-horizontal" role="form">
-    <%= form_for @isr_interface do |f| %>
+    <%= form_for @isr_interface, url: isr_agreement_path( @isr_interface ) do |f| %>
+      <%= render partial: 'shared/errors', object: @isr_interface.errors %>
       <%= render partial: 'shared/errors', object: @isr_agreement.errors %>
       <%= render partial: 'form_if', object: f, locals:{ note: :edit } %>
       <!-- Divider Line -->

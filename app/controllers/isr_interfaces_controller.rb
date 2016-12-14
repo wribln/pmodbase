@@ -96,8 +96,9 @@ class IsrInterfacesController < ApplicationController
     set_final_breadcrumb( :new )
     @isr_interface = IsrInterface.find( params[ :id ])
     @isr_agreement = @isr_interface.isr_agreements.build
+    @isr_agreement.ia_type = 0
     set_selections( :to_create )
-    @workflow.initialize_current( 0, 1, 1 )
+    @workflow.initialize_current( 0, 0, 1 )
   end
 
   def new_ia_rev
@@ -112,8 +113,9 @@ class IsrInterfacesController < ApplicationController
     set_final_breadcrumb( :new )
     @isr_agreement_new = @isr_agreement.dup
     @isr_agreement_new.revise
+    @isr_agreement_new.ia_type = wf
     set_selections( :to_create )
-    @workflow.initialize_current( wf, 1, 1 )
+    @workflow.initialize_current( wf, 0, 1 )
   end    
   private :prepare_new_ia    
 
@@ -238,7 +240,7 @@ class IsrInterfacesController < ApplicationController
       params.require( :isr_agreement ).permit( :def_text, :cfr_record_id, 
         :l_group_id, :l_owner_id, :l_deputy_id,
         :p_group_id, :p_owner_id, :p_deputy_id,
-        :res_steps_id, :val_steps_id )
+        :res_steps_id, :val_steps_id, :ia_type )
     end
 
 end

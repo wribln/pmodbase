@@ -1,3 +1,6 @@
+      <%- if @workflow.param_permitted?( :ia_type )%>
+        <%= form_ia.hidden_field :ia_type %>
+      <%- end %>
       <div class="form-group">
         <%= form_ia.label :code, IsrAgreement.human_attribute_name( :ia_code ), class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">

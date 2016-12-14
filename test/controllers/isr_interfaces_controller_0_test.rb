@@ -165,27 +165,11 @@ class IsrInterfacesController0Test < ActionController::TestCase
     refute isa.errors.empty?
   end
 
-#  test 'should withdraw' do
-#    get :edit_withdraw, id: @isr_interface
-#    assert_response :success
-#    assert( assigns( :isr_withdrawing ))
-#    refute flash[ :notice ].blank?
-#    assert_template :edit
-#  end
-#
-#  test 'should perform withdraw' do
-#    patch :update, id: @isr_interface, isr_withdrawing: true, isr_interface: { note: 'test' }
-#    isr = assigns( :isr_interface )
-#    assert_redirected_to isr_interface_details_path( isr )
-#    assert_equal 4, isr.if_status
-#    assert_equal 7, isr.isr_agreements.first.ia_status
-#  end
-#
-#  test 'should destroy isr_interface' do
-#    assert_difference( 'IsrInterface.count', -1) do
-#      delete :destroy, id: @isr_interface
-#    end
-#    assert_redirected_to isr_interfaces_path
-#  end
+  test 'should destroy isr_interface' do
+    assert_difference( 'IsrInterface.count', -1) do
+      delete :destroy, id: @isr_interface
+    end
+    assert_redirected_to isr_interfaces_path
+  end
 
 end
