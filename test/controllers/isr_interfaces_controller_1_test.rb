@@ -28,23 +28,20 @@ class IsrInterfacesController1Test < ActionController::TestCase
 
     # create associated agreement
 
-    #assert_difference( 'IsrAgreement.count', 1 )do
+    assert_difference( 'IsrAgreement.count', 1 )do
       post :create_ia, id: isf, isr_interface: { note: '' },
         isr_agreement: { ia_type: '0',
         l_group_id: @isr_interface.l_group_id,
         p_group_id: @isr_interface.p_group_id,
         def_text: 'test definition' }
-    #end
+    end
     isf = assigns( :isr_interface )
     refute_nil isf
     isa = assigns( :isr_agreement )
     refute_nil isa
-    puts isa.errors.inspect
     assert_redirected_to isr_agreement_details_path( isa )
 
-
     isa.reload
-    puts isa.inspect
     assert_equal 1, isa.ia_no
     assert_equal 0, isa.rev_no
     assert_equal 0, isa.ia_status

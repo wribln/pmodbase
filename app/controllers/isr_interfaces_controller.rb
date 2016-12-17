@@ -95,8 +95,8 @@ class IsrInterfacesController < ApplicationController
     @isr_interface = IsrInterface.find( params[ :id ])
     @isr_agreement = @isr_interface.isr_agreements.build
     @isr_agreement.prepare_revision( 0 )
-    set_selections( :to_create )
     initialize_current_workflow
+    set_selections( :to_create )
   end
 
   # create new IA based on this IA
@@ -152,9 +152,11 @@ class IsrInterfacesController < ApplicationController
     set_final_breadcrumb( :create )
     @isr_interface = IsrInterface.find( params[ :id ])
     @isr_interface.assign_attributes( isr_interface_params )
-    wf = params.fetch( :isr_agreement ).fetch( :ia_type ).to_i
-    @workflow.initialize_current( wf, 0, 1 )
+    ia_type = params.fetch( :isr_agreement ).fetch( :ia_type ).to_i
+    @workflow.initialize_current( ia_type, 0, 0 )
     @isr_agreement = @isr_interface.isr_agreements.build( isr_agreement_params )
+    @isr_agreement.prepare_revision( ia_type )
+    @isr_agreement.set_next_ia_no
     update_status_and_task
     respond_to do |format|
       if @isr_agreement.valid? && @isr_interface.valid?
