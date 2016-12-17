@@ -188,6 +188,10 @@ class ApplicationRoutesTest < ActionController::TestCase
     check_routing( 'get', '/dsr/update'  , 'dsr_status_records', 'update_b_all' )
     check_routing( 'get', '/dsr/1/update', 'dsr_status_records', 'update_b_one', id: '1' )
   end
+
+  test 'special routes: ISR Agreements' do
+    check_routing( 'get', '/isa'         , 'isr_agreements', 'index' )
+  end
  
   test 'special routes: ISR Interfaces' do
     check_routing( 'get', '/isr/info'    , 'isr_interfaces', 'info_workflow' )

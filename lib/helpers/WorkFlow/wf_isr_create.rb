@@ -1,6 +1,6 @@
 require_relative 'workflow'
 
-wf = WorkFlow.new 'Create Interface Agreement', permit_duplicate_status=true
+wf = WorkFlow.new 'Create Interface Agreement' # permit_duplicate_status=true
 
 wf.add_role 'IFM'
 wf.add_role 'IFL'

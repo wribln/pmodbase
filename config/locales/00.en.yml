@@ -761,6 +761,7 @@ en:
     release:      'Release'
     check:        'Validate All'
     revise:       'Revise'
+    terminate:    'Terminate'
 
   a_code_modules:
     search_title:  

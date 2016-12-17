@@ -35,7 +35,7 @@ en:
         l_owner_id:       'Leading Group Owner'
         p_owner_id:       'Partner Group Owner'
         l_deputy_id:      'Leading Group Deputy'
-        p_deputy_id:      'Parnter Group Deputy'
+        p_deputy_id:      'Partner Group Deputy'
         l_signature:      'Signed by Leading Group'
         p_signature:      'Signed by Partner Group'
         l_sign_time:      'Signature Date/Time'
@@ -64,7 +64,7 @@ en:
     new:
       form_title:         'Add New Interface'
     new_ia:
-      form_title:         'Add New Interface Agreement to Interface'
+      form_titles:         [ 'Add New Interface Agreement to Interface', 'Revise Interface Agreement', 'Terminate Interface Agreement' ]
     new_ia_rev:
       form_title:         'Revise Interface Agreement'
     index:
@@ -80,8 +80,10 @@ en:
       signed_on:          'Signed on'
       signed_by:          'Signed by'
       res_val_steps:      'Resolution / Validation Steps'
+      add_ia:             'Add New'
+      copy_ia:            'Copy'
     show_all:
-      form_title:         'Show Details of Interface and Related Interface Agreements'
+      form_title:         'Show Details of Interface'
     show_ia:
       form_title:         'Show Interface Agreement and Interface'
     show_ia_all:
@@ -107,6 +109,7 @@ en:
       delete_ok:          'Interface successfully deleted.'
       update_ia_ok:       'Interface Agreement successfully updated.'
       create_ia_ok:       'Interface Agreement successfully created.'
+      no_edit_now:        'No update permitted at this state.'
 
   isr_agreements:
     title:          'ISR - Interface Agreements'
@@ -132,7 +135,7 @@ en:
           t05:    'Withdraw Agreement'
           t06:    '<workflow completed>'
         states:
-          s00:    '<initial>'
+          s00:    'new agreement'
           s01:    'agreement created'
           s02:    'agreement in progress'
           s03:    'agreement released'
@@ -153,7 +156,7 @@ en:
           t05:    'Withdraw Revision'
           t06:    '<workflow completed>'
         states:
-          s00:    '<initial>'
+          s00:    'new revision'
           s01:    'revision created'
           s02:    'revision in progress'
           s03:    'revision released'
@@ -174,7 +177,7 @@ en:
           t05:    'Withdraw Termination'
           t06:    '<workflow completed>'
         states:
-          s00:    '<initial>'
+          s00:    'termination request'
           s01:    'termination created'
           s02:    'termination in progress'
           s03:    'termination released'

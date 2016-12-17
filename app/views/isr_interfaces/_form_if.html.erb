@@ -45,7 +45,7 @@
       <div class="form-group">
         <%= form_if.label :if_status, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= form_if.select :if_status, @isr_sel_states, {}, { class: 'form-control', required: true }%>
+          <%= form_if.select :if_status, @isr_sel_states, { prompt: false }, { class: 'form-control' }%>
         </div>
       </div>
       <%- if defined?( note )-%>

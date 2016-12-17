@@ -89,6 +89,7 @@ CSV.foreach(File.join(Rails.root, 'db', 'std_csv', 'isr_interfaces.csv' ),
       h.def_text = row[ 'desc' ]
       ia_no += 1
       h.ia_no = ia_no
+      h.current_task = 1
     end
     h.save
     unless h.errors.empty? then

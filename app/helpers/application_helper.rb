@@ -43,6 +43,10 @@ module ApplicationHelper
     end
   end
 
+  def form_title_i( index )
+    content_tag( :h2, t( '.form_titles' )[ index ], class: 'form-title' )
+  end
+
   # display form title and optionally present sub_title
 
   def form_title_w_sub_title( sub_title_text )

@@ -7,12 +7,9 @@
       <%= render partial: 'shared/errors', object: @isr_interface.errors %>
       <%= render partial: 'shared/notice' %>
       <%- if @isr_interface.frozen? -%>
-        <%= render partial: 'show_all_if', object: f, locals:{ note: :edit }%>
+        <%= render partial: 'show_if_all', object: f, locals:{ note: :edit }%>
       <%- else -%>
         <%= render partial: 'form_if', object: f, locals:{ note: :edit } %>
-      <%- end -%>
-      <%- if @isr_withdrawing -%>
-        <%= hidden_field_tag :isr_withdrawing %>
       <%- end -%>
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-2">
@@ -22,6 +19,6 @@
           <%= link_to t( 'button_label.cancel_to_show' ), isr_interface_details_path( @isr_interface ), class: 'btn btn-lg btn-block btn-default' %>
         </div>
       <div>
-    <% end %>
+    <%- end %>
   </div>
 </div>

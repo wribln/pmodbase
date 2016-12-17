@@ -7,3 +7,4 @@ one:
   if_status:      0
   cfr_record:     one 
   safety_related: false
+  note:           'some remark'

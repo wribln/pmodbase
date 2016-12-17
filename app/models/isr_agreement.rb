@@ -69,12 +69,12 @@ class IsrAgreement < ActiveRecord::Base
   validates :current_status,
     allow_blank: false,
     numericality: { only_integer: true },
-    inclusion: { in: 0..12 }
+    inclusion: { in: 0..8 }
 
   validates :current_task,
     allow_blank: false,
     numericality: { only_integer: true },
-    inclusion: { in: 0..8 }
+    inclusion: { in: 0..5 }
 
   validates :rev_no,
     presence: true,
@@ -123,10 +123,23 @@ class IsrAgreement < ActiveRecord::Base
     end
   end
 
-  # prepare new revision
+  # prepare new or initial revision, assume that self is copy
+  # if ia_type is zero, assume reset to initial, default values
 
-  def revise
-    self.rev_no += 1
+  def prepare_revision( ia_type )
+    self.ia_type = ia_type
+    if ia_type == 0
+      self.rev_no = 0
+      self.ia_no = nil
+      self.res_steps_id = nil
+      self.val_steps_id = nil
+      self.cfr_record_id = nil
+    else
+      self.rev_no += 1
+    end
+    self.ia_status = 0
+    self.current_status = 0
+    self.current_task = 0
   end
 
   # prepare code and label for related TIA lists

@@ -28,7 +28,7 @@
           <td><%= filter_action_button %></td>
         </tr>
       <% if @isr_agreements.length.zero? %>
-        <%= render partial: 'shared/index_empty_row', locals:{ columns: 7, with_link: true }%>
+        <%= render partial: 'shared/index_empty_row', locals:{ columns: 8 }%>
       <% else %>
         <% @isr_agreements.each do |isa| %>
           <tr>
@@ -38,7 +38,7 @@
             <td><%= @workflow.status_task_label( isa.current_status, isa.current_task, 0 ) %></td>
             <td><%= link_to_tia( isa.res_steps, display = :to_id )%></td>
             <td><%= link_to_tia( isa.val_steps, display = :to_id )%></td>
-            <td><%= render partial: 'shared/actions', object: isa %></td>
+            <td><%= render partial: 'isr_interfaces/actions', object: isa %></td>
           </tr>
         <% end %>
       <% end %>

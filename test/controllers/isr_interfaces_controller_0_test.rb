@@ -138,8 +138,9 @@ class IsrInterfacesController0Test < ActionController::TestCase
   end
 
   test 'should create isr agreement' do
-    assert_difference( 'IsrAgreement.count', 1 ) do
-      post :create_ia, id: @isr_interface, isr_agreement: {
+    assert_difference( 'IsrAgreement.count', 1 )do
+      post :create_ia, id: @isr_interface, isr_interface: { note: '' },
+        isr_agreement: { ia_type: 0,
         l_group_id: @isr_interface.l_group_id,
         p_group_id: @isr_interface.p_group_id,
         def_text: 'test definition' }
@@ -155,7 +156,7 @@ class IsrInterfacesController0Test < ActionController::TestCase
 
   test 'should fail to create isr_agreement' do
     assert_no_difference( 'IsrInterface.count' ) do
-      post :create_ia, id: @isr_interface, isr_agreement: { l_group_id: 0 }
+      post :create_ia, id: @isr_interface, isr_interface: { note: '' }, isr_agreement: { ia_type: 0, l_group_id: 0 }
     end
     assert_response :success
     isr = assigns( :isr_interface )
