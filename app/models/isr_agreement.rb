@@ -12,7 +12,7 @@ class IsrAgreement < ActiveRecord::Base
   belongs_to :p_deputy,   -> { readonly },  foreign_key: :p_deputy_id,  class_name: :Account
   belongs_to :res_steps,                    foreign_key: :res_steps_id, class_name: :TiaList 
   belongs_to :val_steps,                    foreign_key: :val_steps_id, class_name: :TiaList
-  belongs_to :based_on,                     foreign_key: :based_on_id,  class_name: :IsrAgreement
+  belongs_to :based_on,                     foreign_key: :based_on_id,  class_name: :IsrAgreement, autosave: true
   belongs_to :isr_interface, inverse_of: :isr_agreements
   belongs_to :cfr_record
 
@@ -138,6 +138,7 @@ class IsrAgreement < ActiveRecord::Base
       self.cfr_record_id = nil
     else
       self.rev_no += 1
+      self.based_on.ia_status = 4 unless self.based_on_id.nil?
     end
     self.ia_status = 0
     self.current_status = 0

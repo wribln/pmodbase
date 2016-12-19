@@ -61,6 +61,7 @@ class IsrInterfacesController3Test < ActionController::TestCase
     assert_redirected_to isr_agreement_details_path( isa )
 
     isa.reload
+
     assert_equal 2, isa.ia_no
     assert_equal 1, isa.rev_no
     assert_equal 0, isa.ia_status
