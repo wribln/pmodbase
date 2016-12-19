@@ -66,7 +66,7 @@ class IsrInterfacesController0Test < ActionController::TestCase
     get :new_ia_rev, id: @isr_agreement
     assert_response :success
     isf = assigns( :isr_interface )
-    isa = assigns( :isr_agreement_new )
+    isa = assigns( :isr_agreement )
     refute_nil isf
     refute_nil isa
   end
@@ -110,9 +110,11 @@ class IsrInterfacesController0Test < ActionController::TestCase
   end
 
   test 'should fail to update isr agreement' do
-    patch :update_ia, id: @isr_interface, isr_agreement: { l_group_id: 0 }, isr_interface: { note: nil }
-    assert_response :success
+    patch :update_ia, id: @isr_agreement, 
+      isr_interface: { note: nil },
+      isr_agreement: { p_group_id: 0 }
     isa = assigns( :isr_agreement )
+    assert_response :success
     refute isa.errors.empty?
   end
 

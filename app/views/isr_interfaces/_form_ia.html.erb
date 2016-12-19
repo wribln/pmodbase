@@ -10,10 +10,18 @@
       <div class="form-group">
         <%= form_ia.label :l_group_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= form_ia.select :l_group_id, @isr_l_groups, { prompt: true },{ class: 'form-control', required: true }%>
+          <%- if @workflow.param_permitted?( :l_group_id )%>
+            <%= form_ia.select :l_group_id, @isr_l_groups, { prompt: true },{ class: 'form-control', required: true }%>
+          <%- else %>
+            <%= display_value form_ia.object.l_group.try( :code_and_label )%>
+          <%- end %>
         </div>
       </div>
-      <%= render partial: 'shared/edit_account', locals: { fbo: form_ia, a_id: :l_owner_id, wbtn: true }%>
+      <%- if @workflow.param_permitted?( :l_owner_id )%>
+        <%= render partial: 'shared/edit_account', locals: { fbo: form_ia, a_id: :l_owner_id, wbtn: true }%>
+      <%- else %>
+        <%= render partial: 'shared/show_account', locals: { fbo: form_ia, a_id: :l_owner_id,  a_as: :l_owner }%>
+      <%- end %>
       <%= render partial: 'shared/edit_account', locals: { fbo: form_ia, a_id: :l_deputy_id }%>
       <div class="form-group">
         <%= form_ia.label :p_group_id, class: 'col-sm-3 control-label' %>

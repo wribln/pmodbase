@@ -187,4 +187,10 @@ class IsrAgreement < ActiveRecord::Base
     self.ia_status = 7
   end
 
+  # not possible to modify record when:
+
+  def frozen?
+    self.current_status != 0
+  end
+
 end

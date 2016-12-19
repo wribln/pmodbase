@@ -75,7 +75,7 @@ class IsrInterface < ActiveRecord::Base
   # the status is not identified (0) or defined-open (1)
 
   def frozen?
-    if_status > 1
+    self.if_status > 1
   end
 
   # prepare condition to restrict access to permitted groups for this user

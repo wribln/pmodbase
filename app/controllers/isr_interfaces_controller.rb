@@ -193,10 +193,20 @@ class IsrInterfacesController < ApplicationController
     if @workflow.permitted_params.empty? and not @workflow.status_change_possible? then
       redirect_to @isr_interface, notice: I18n.t( 'isr_interfaces.msg.no_edit_now' )
     else
-      update_status_and_task( params.fetch( :next_status_task, 0 ).to_i )
+      nst = params.fetch( :next_status_task, -1 ).to_i
+      if nst < 0 then # next_status_task missing
+        if params[ :commit ] == I18n.t( 'isr_interfaces.edit.confirm' )
+          nst = 1
+        elsif params[ :commit ] == I18n.t( 'isr_interfaces.edit.reject' )
+          nst = 2
+        else
+          nst = 0 # no change
+        end
+      end
       respond_to do |format|
         @isr_agreement.assign_attributes( isr_agreement_params )
         @isr_interface.assign_attributes( isr_interface_params )
+        update_status_and_task( nst )
         if @isr_interface.valid? && @isr_agreement.valid?
           IsrAgreement.transaction do
             @isr_agreement.save!
@@ -264,7 +274,7 @@ class IsrInterfacesController < ApplicationController
     end
 
     def isr_agreement_params
-      params.require( :isr_agreement ).permit( @workflow.permitted_params )
+      @workflow.permitted_params.empty? ? {} : params.require( :isr_agreement ).permit( @workflow.permitted_params )
     end
 
     # determine whether to display Confirm/Reject buttons
@@ -290,14 +300,15 @@ class IsrInterfacesController < ApplicationController
         when 3
           @isr_agreement.l_signature = current_user.account_info
           @isr_agreement.l_sign_time = DateTime.now
-          @isr_agreement.freeze_cfr_record
+          @isr_interface.if_status = 2 if @isr_interface.if_status < 2
+        #  @isr_agreement.freeze_cfr_record
         when 4
-          @isr_agreement.p_signature = current_user.account_info
-          @isr_agreement.p_sign_time = DateTime.now
-        when 7
-          @isr_agreement.unfreeze_cfr_record
+        #  @isr_agreement.unfreeze_cfr_record
           @isr_agreement.l_sign_time = nil
           @isr_agreement.l_signature = nil
+        when 5
+          @isr_agreement.p_signature = current_user.account_info
+          @isr_agreement.p_sign_time = DateTime.now
       end
       @isr_agreement.errors.empty? && @isr_interface.errors.empty?
     end

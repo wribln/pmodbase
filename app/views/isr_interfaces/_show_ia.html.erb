@@ -31,8 +31,8 @@
             </div>
             <div class="form-group p-group">
               <p class="col-sm-3 p-label"><%= t( 'isr_interfaces.show.signed_by' ) %></p>
-              <p class="col-sm-3"><%= db_formatted_dt show_ia.l_signature %></p>
-              <p class="col-sm-3"><%= db_formatted_dt show_ia.p_signature %></p>
+              <p class="col-sm-3"><%= show_ia.l_signature %></p>
+              <p class="col-sm-3"><%= show_ia.p_signature %></p>
             </div>
           <%- end -%>
           <div class="form-group p-group">

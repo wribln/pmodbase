@@ -45,6 +45,7 @@ class IsrInterfacesController1Test < ActionController::TestCase
     assert_equal 1, isa.ia_no
     assert_equal 0, isa.rev_no
     assert_equal 0, isa.ia_status
+    assert_equal 0, isf.if_status
     assert_equal 0, isa.current_status
     assert_equal 1, isa.current_task
 
@@ -56,20 +57,23 @@ class IsrInterfacesController1Test < ActionController::TestCase
     assert_redirected_to isr_agreement_details_path( isa )
 
     isa.reload
+    isf.reload
     assert_equal 1, isa.ia_no
     assert_equal 0, isa.rev_no
     assert_equal 0, isa.ia_status
+    assert_equal 0, isf.if_status
     assert_equal 0, isa.current_status
     assert_equal 1, isa.current_task
 
-    # update to ... prepared
+    # next: Task 1 Prepare
 
     patch :update_ia, id: isa,
       isr_interface: { note: '' },
-      isr_agreement: { desc: 'update definition' }, next_status_task: 1
+      isr_agreement: { desc: 'next task: prepare' }, next_status_task: 1
     assert_redirected_to isr_agreement_details_path( isa )
 
     isa.reload
+    isf.reload
     assert_equal 1, isa.ia_no
     assert_equal 0, isa.rev_no
     assert_equal 0, isa.ia_status
@@ -77,23 +81,51 @@ class IsrInterfacesController1Test < ActionController::TestCase
     assert_equal 1, isa.current_status
     assert_equal 2, isa.current_task
 
-    return
+    # next: Task 2 Confirm
 
     patch :update_ia, id: isa,
       isr_interface: { note: '' },
-      isr_agreement: { desc: 'update definition' }, next_status_task: 1
+      isr_agreement: { desc: 'update definition' }, next_status_task: 2
 
     isa.reload
+    isf.reload
     assert_equal 1, isa.ia_no
     assert_equal 0, isa.rev_no
     assert_equal 0, isa.ia_status
-    assert_equal 0, isf.if_status
-    assert_equal 2, isa.current_status
-    assert_equal 2, isa.current_task
+    assert_equal 2, isf.if_status
+    assert_equal 3, isa.current_status
+    assert_equal 3, isa.current_task
 
+    # next: Task 3 Archive
 
+    patch :update_ia, id: isa,
+      commit: I18n.t( 'isr_interfaces.edit.confirm' ),
+      isr_interface: { note: '' }
 
+    isa.reload
+    isf.reload
+    assert_equal 1, isa.ia_no
+    assert_equal 0, isa.rev_no
+    assert_equal 0, isa.ia_status
+    assert_equal 2, isf.if_status
+    assert_equal 5, isa.current_status
+    assert_equal 4, isa.current_task
 
+    # next: agreed
+
+    patch :update_ia, id: isa,
+      isr_interface: { note: '' },
+      isr_agreement: { desc: 'agreed and archived' }, next_status_task: 1
+    
+
+    isa.reload
+    isf.reload
+    assert_equal 1, isa.ia_no
+    assert_equal 0, isa.rev_no
+    assert_equal 0, isa.ia_status
+    assert_equal 2, isf.if_status
+    assert_equal 8, isa.current_status
+    assert_equal 6, isa.current_task
 
   end
 

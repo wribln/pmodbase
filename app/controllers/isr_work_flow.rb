@@ -9,52 +9,58 @@ module IsrWorkFlow
       @workflow = WorkFlowHelper.new([
         [ # create IA
           [[ 0, 1 ]],
-          [[ 1, 1 ],[ 2, 2 ],[ 5, 4 ]],
-          [[ 3, 1 ],[ 4, 3 ]],
-          [[ 7, 5 ]],
-          [[ 6, 5 ]],
-          [[ -1, 5 ]]
+          [[ 1, 2 ]],
+          [[ 2, 2 ],[ 3, 3 ],[ 4, 5 ]],
+          [[ 5, 4 ],[ 6, 2 ]],
+          [[ 8, 6 ]],
+          [[ 7, 2 ],[ 9, 6 ]],
+          [[ -1, 6 ]]
         ],
         [ # revise IA
           [[ 0, 1 ]],
-          [[ 1, 1 ],[ 2, 2 ],[ 5, 4 ]],
-          [[ 3, 1 ],[ 4, 3 ]],
-          [[ 7, 5 ]],
-          [[ 6, 5 ]],
-          [[ -1, 5 ]]
+          [[ 1, 2 ]],
+          [[ 2, 2 ],[ 3, 3 ],[ 4, 5 ]],
+          [[ 5, 4 ],[ 6, 2 ]],
+          [[ 8, 6 ]],
+          [[ 7, 2 ],[ 9, 6 ]],
+          [[ -1, 6 ]]
         ],
         [ # terminate IA
           [[ 0, 1 ]],
-          [[ 1, 1 ],[ 2, 2 ],[ 5, 4 ]],
-          [[ 3, 1 ],[ 4, 3 ]],
-          [[ 7, 5 ]],
-          [[ 6, 5 ]],
-          [[ -1, 5 ]]
+          [[ 1, 2 ]],
+          [[ 2, 2 ],[ 3, 3 ],[ 4, 5 ]],
+          [[ 5, 4 ],[ 6, 2 ]],
+          [[ 8, 6 ]],
+          [[ 7, 2 ],[ 9, 6 ]],
+          [[ -1, 6 ]]
         ],
         ],
         [
           [
             [ :l_group_id, :l_owner_id, :l_deputy_id, :p_group_id, :p_owner_id, :p_deputy_id, :def_text, :cfr_record_id, :res_steps_id, :val_steps_id, :next_status_task, :ia_type ],
+            [ :l_group_id, :l_owner_id, :l_deputy_id, :p_group_id, :p_owner_id, :p_deputy_id, :def_text, :cfr_record_id, :res_steps_id, :val_steps_id, :next_status_task, :ia_type ],
             [                           :l_deputy_id, :p_group_id, :p_owner_id, :p_deputy_id, :def_text, :cfr_record_id, :res_steps_id, :val_steps_id, :next_status_task ],
-            [ :next_status_task ],
-            [ :next_status_task ],
-            [ :l_group_id, :l_owner_id ],
+            [],
+            [],
+            [],
             []
           ],
           [
             [ :l_group_id, :l_owner_id, :l_deputy_id, :p_group_id, :p_owner_id, :p_deputy_id, :def_text, :cfr_record_id, :res_steps_id, :val_steps_id, :next_status_task, :ia_type ],
+            [ :l_group_id, :l_owner_id, :l_deputy_id, :p_group_id, :p_owner_id, :p_deputy_id, :def_text, :cfr_record_id, :res_steps_id, :val_steps_id, :next_status_task, :ia_type ],
             [                           :l_deputy_id, :p_group_id, :p_owner_id, :p_deputy_id, :def_text, :cfr_record_id, :res_steps_id, :val_steps_id, :next_status_task ],
-            [ :next_status_task ],
-            [ :next_status_task ],
-            [ :l_group_id, :l_owner_id ],
+            [],
+            [],
+            [],
             []
           ],
           [
             [ :l_group_id, :l_owner_id, :l_deputy_id, :p_group_id, :p_owner_id, :p_deputy_id, :def_text, :cfr_record_id, :res_steps_id, :val_steps_id, :next_status_task, :ia_type ],
+            [ :l_group_id, :l_owner_id, :l_deputy_id, :p_group_id, :p_owner_id, :p_deputy_id, :def_text, :cfr_record_id, :res_steps_id, :val_steps_id, :next_status_task, :ia_type ],
             [                           :l_deputy_id, :p_group_id, :p_owner_id, :p_deputy_id, :def_text, :cfr_record_id, :res_steps_id, :val_steps_id, :next_status_task ],
-            [ :next_status_task ],
-            [ :next_status_task ],
-            [ :l_group_id, :l_owner_id ],
+            [],
+            [],
+            [],
             []
           ]
         ],

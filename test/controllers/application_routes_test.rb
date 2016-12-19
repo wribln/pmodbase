@@ -204,7 +204,7 @@ class ApplicationRoutesTest < ActionController::TestCase
     check_routing( 'get', '/isr/1/new'   , 'isr_interfaces', 'new_ia'     , id: '1' )
     check_routing( 'get', '/isr/1/rev'   , 'isr_interfaces', 'new_ia_rev' , id: '1' )
     check_routing( 'get', '/isr/1/fin'   , 'isr_interfaces', 'new_ia_fin' , id: '1' )
-    check_routing( 'post','/isr/ia'      , 'isr_interfaces', 'create_ia'     )
+    check_routing( 'post','/isr/ia/1'    , 'isr_interfaces', 'create_ia'  , id: '1' )
     check_routing( 'put',   '/isr/ia/1'  , 'isr_interfaces', 'update_ia'  , id: '1' )
     check_routing( 'patch', '/isr/ia/1'  , 'isr_interfaces', 'update_ia'  , id: '1' )
     check_routing( 'delete','/isr/ia/1'  , 'isr_interfaces', 'destroy_ia' , id: '1' )
