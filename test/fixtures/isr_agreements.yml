@@ -7,7 +7,7 @@ one:
   p_group:        group_two
   ia_status:      0
   current_status: 0
-  current_task:   1
+  current_task:   0
   cfr_record:     one 
   res_steps: 
   val_steps: 

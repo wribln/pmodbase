@@ -1,12 +1,18 @@
       <%- if @workflow.param_permitted?( :ia_type )%>
         <%= form_ia.hidden_field :ia_type %>
       <%- end %>
+      
+      <%- if @workflow.param_permitted?( :based_on_id )%>
+        <%= form_ia.hidden_field :based_on_id %>
+      <%- end %>
+
       <div class="form-group">
         <%= form_ia.label :code, IsrAgreement.human_attribute_name( :ia_code ), class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
           <%= display_value form_ia.object.code_and_revision %>
         </div>
       </div>
+
       <div class="form-group">
         <%= form_ia.label :l_group_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
@@ -17,42 +23,86 @@
           <%- end %>
         </div>
       </div>
+
       <%- if @workflow.param_permitted?( :l_owner_id )%>
         <%= render partial: 'shared/edit_account', locals: { fbo: form_ia, a_id: :l_owner_id, wbtn: true }%>
       <%- else %>
         <%= render partial: 'shared/show_account', locals: { fbo: form_ia, a_id: :l_owner_id,  a_as: :l_owner }%>
       <%- end %>
-      <%= render partial: 'shared/edit_account', locals: { fbo: form_ia, a_id: :l_deputy_id }%>
+
+      <%- if @workflow.param_permitted?( :l_deputy_id )%>
+        <%= render partial: 'shared/edit_account', locals: { fbo: form_ia, a_id: :l_deputy_id }%>
+      <%- else %>
+        <%= render partial: 'shared/show_account', locals: { fbo: form_ia, a_id: :l_deputy_id, a_as: :l_deputy }%>
+      <%- end %>
+
       <div class="form-group">
         <%= form_ia.label :p_group_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= form_ia.select :p_group_id, @isr_p_groups, { prompt: true }, { class: 'form-control', required: true }%>
+          <%- if @workflow.param_permitted?( :p_group_id )%>
+            <%= form_ia.select :p_group_id, @isr_p_groups, { prompt: true }, { class: 'form-control', required: true }%>
+          <%- else %>
+            <%= display_value form_ia.object.p_group.try( :code_and_label )%>
+          <%- end %>
         </div>
       </div>
-      <%= render partial: 'shared/edit_account', locals: { fbo: form_ia, a_id: :p_owner_id, wbtn: true  }%>
-      <%= render partial: 'shared/edit_account', locals: { fbo: form_ia, a_id: :p_deputy_id }%>
+
+      <%- if @workflow.param_permitted?( :p_owner_id )%>
+        <%= render partial: 'shared/edit_account', locals: { fbo: form_ia, a_id: :p_owner_id, wbtn: true  }%>
+      <%- else %>
+        <%= render partial: 'shared/show_account', locals: { fbo: form_ia, a_id: :p_owner_id, a_as: :p_owner }%>
+      <%- end %>
+
+      <%- if @workflow.param_permitted?( :p_deputy_id )%>
+        <%= render partial: 'shared/edit_account', locals: { fbo: form_ia, a_id: :p_deputy_id }%>
+      <%- else %>
+        <%= render partial: 'shared/show_account', locals: { fbo: form_ia, a_id: :l_deputy_id, a_as: :l_deputy }%>
+      <%- end %>
+
       <div class="form-group">
         <%= form_ia.label :def_text, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
-          <%= form_ia.text_area :def_text, class: 'form-control', cols: DEFAULT_COLS_TEXTAREA, rows: DEFAULT_ROWS_TEXTAREA %>
+          <%- if @workflow.param_permitted?( :def_text )%>
+            <%= form_ia.text_area :def_text, class: 'form-control', cols: DEFAULT_COLS_TEXTAREA, rows: DEFAULT_ROWS_TEXTAREA %>
+          <%- else %>
+            <%= display_lines form_ia.object.def_text %>
+          <%- end %>
         </div>
       </div>
-      <%= render partial: 'shared/edit_cfr', locals: { fbo: form_ia }%>
-      <%= render partial: 'shared/edit_tia', locals: { fbo: form_ia, a_id: :res_steps_id, a_as: :res_steps }%>
-      <%= render partial: 'shared/edit_tia', locals: { fbo: form_ia, a_id: :val_steps_id, a_as: :val_steps }%>
+
+      <%- if @workflow.param_permitted?( :cfr_record_id )%>
+        <%= render partial: 'shared/edit_cfr', locals: { fbo: form_ia }%>
+      <%- else %>
+        <%= render partial: 'shared/show_cfr', locals: { fbo: form_ia }%>
+      <%- end %>
+
+      <%- if @workflow.param_permitted?( :res_steps_id )%>
+        <%= render partial: 'shared/edit_tia', locals: { fbo: form_ia, a_id: :res_steps_id, a_as: :res_steps }%>
+      <%- else %>
+        <%= render partial: 'shared/show_tia', locals: { fbo: form_ia, a_id: :res_steps_id, a_as: :res_steps }%>
+      <%- end %>
+
+      <%- if @workflow.param_permitted?( :val_steps_id )%>
+        <%= render partial: 'shared/edit_tia', locals: { fbo: form_ia, a_id: :val_steps_id, a_as: :val_steps }%>
+      <%- else %>
+        <%= render partial: 'shared/show_tia', locals: { fbo: form_ia, a_id: :val_steps_id, a_as: :val_steps }%>
+      <%- end %>
+
       <div class="form-group">
         <%= form_ia.label :ia_status, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <%= display_value form_ia.object.ia_status_label %>
         </div>
       </div>
+
       <div class="form-group">
         <%= form_ia.label :current_status_task, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
           <%= display_value @workflow.status_task_label %>
         </div>
       </div>
-      <%- if @workflow.param_permitted?( :next_status_task )%>
+
+      <%- if [ 0, 1, 2, 4, 5 ].include? @workflow.wf_current_task %>
         <div class="form-group">
           <%= form_ia.label :next_status_task, class: 'col-sm-3 control-label' %>
           <div class="col-sm-6">

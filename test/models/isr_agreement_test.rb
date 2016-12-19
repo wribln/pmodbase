@@ -111,16 +111,16 @@ class IsrAgreementTest < ActiveSupport::TestCase
   end
 
   test 'all scopes' do
-    as = IsrAgreement.ff_wfs( 0 )
-    assert_equal 1, as.length
-
-    as = IsrAgreement.ff_wfs( 1 )
-    assert_equal 0, as.length
-
     as = IsrAgreement.ff_sts( 0 )
     assert_equal 1, as.length
 
     as = IsrAgreement.ff_sts( 1 )
+    assert_equal 0, as.length
+
+    as = IsrAgreement.ff_wfs( '0,0' ) # ia_type, current_status
+    assert_equal 1, as.length
+
+    as = IsrAgreement.ff_wfs( '1,1' )
     assert_equal 0, as.length
 
     as = IsrAgreement.ff_txt( 'test' )
@@ -161,6 +161,43 @@ class IsrAgreementTest < ActiveSupport::TestCase
     as = IsrAgreement.ff_id( 0 )
     assert_equal 0, as.length
 
+  end
+
+  test 'ia_type and belongs_to consistency' do
+    isa = isr_agreements( :one )
+    assert isa.valid?
+
+    isa.ia_type = 1
+    assert isa.invalid?
+    assert_includes isa.errors, :ia_type
+    assert_equal I18n.t( 'isr_interfaces.msg.inconsistent', detail: 1 ), isa.errors[ :ia_type ].first
+
+    isa.based_on_id = 0
+    assert isa.invalid?
+    assert_includes isa.errors, :ia_type
+    assert_equal I18n.t( 'isr_interfaces.msg.inconsistent', detail: 1 ), isa.errors[ :ia_type ].first
+
+    isr2 = isr_interfaces( :one ).dup 
+    assert isr2.save
+    isa2 = isr_agreements( :one ).dup
+    isa2.isr_interface_id = isr2.id
+    isa2.prepare_revision( 0 )
+    isa2.set_next_ia_no
+    isa2.based_on_id = nil
+    assert isa2.save, isa2.errors.messages
+
+    isa.based_on = isa2
+    assert isa.invalid?
+    assert_includes isa.errors, :based_on_id
+    assert_equal I18n.t( 'isr_interfaces.msg.inconsistent', detail: 2 ), isa.errors[ :based_on_id ].first
+
+    isa2.isr_interface_id = isr_interfaces( :one ).id
+    assert isa.invalid?
+    assert_includes isa.errors, :based_on_id
+    assert_equal I18n.t( 'isr_interfaces.msg.inconsistent', detail: 3 ), isa.errors[ :based_on_id ].first
+
+    isa2.rev_no = 1
+    assert isa2.save, isa2.errors.messages
   end
 
 end

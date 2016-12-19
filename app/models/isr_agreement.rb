@@ -69,12 +69,12 @@ class IsrAgreement < ActiveRecord::Base
   validates :current_status,
     allow_blank: false,
     numericality: { only_integer: true },
-    inclusion: { in: 0..8 }
+    inclusion: { in: 0..9 }
 
   validates :current_task,
     allow_blank: false,
     numericality: { only_integer: true },
-    inclusion: { in: 0..5 }
+    inclusion: { in: 0..6 }
 
   validates :rev_no,
     presence: true,
@@ -84,6 +84,8 @@ class IsrAgreement < ActiveRecord::Base
     presence: true,
     numericality: { only_integer: true, greater_than_or_equal_to: 1 }
 
+  validate :ia_type_integrity
+
   # default scope is order:
 
   default_scope { order( isr_interface_id: :asc, ia_no: :asc, rev_no: :desc )}
@@ -92,8 +94,8 @@ class IsrAgreement < ActiveRecord::Base
 
   scope :ff_id,  -> ( i ){ where( isr_interface_id: i )}
   scope :ff_txt, -> ( t ){ where( 'def_text LIKE :param', param: "%#{ t }%" )}
-  scope :ff_wfs, -> ( s ){ where( current_status: s )}
   scope :ff_sts, -> ( s ){ where( ia_status: s )}
+  scope :ff_wfs, -> ( s ){ where AppHelper.map_values( s, :ia_type, :current_status )}
   scope :ff_grp, -> ( g ){ where( 'l_group_id = :param OR p_group_id = :param', param: g )}
 
   # individual IAs are those which are not new or previous revisions ...
@@ -187,10 +189,32 @@ class IsrAgreement < ActiveRecord::Base
     self.ia_status = 7
   end
 
-  # not possible to modify record when:
+  # not possible to modify record when
 
   def frozen?
-    self.current_status != 0
+    self.ia_status != 0
+  end
+
+  # validates based_on relationship:
+  # (1) based_on must exist for ia_type > 0
+  # (2) related record must refer to same interface
+  # (3) revision number must be less than this one;
+
+  def ia_type_integrity
+    if self.ia_type > 0
+      unless self.based_on_id && IsrAgreement.exists?( self.based_on_id )
+        errors.add( :ia_type, I18n.t( 'isr_interfaces.msg.inconsistent', detail: 1 ))
+        return
+      end
+      unless self.based_on.isr_interface.id == self.isr_interface_id
+        errors.add( :based_on, I18n.t( 'isr_interfaces.msg.inconsistent', detail: 2 ))
+        return
+      end
+      unless self.based_on.rev_no < self.rev_no
+        errors.add( :based_on, I18n.t( 'isr_interfaces.msg.inconsistent', detail: 3 ))
+        return
+      end
+    end
   end
 
 end

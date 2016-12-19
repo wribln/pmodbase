@@ -99,7 +99,7 @@ class IsrInterfacesController0Test < ActionController::TestCase
   test 'should update agreement' do
     patch :update_ia, id: @isr_agreement,
       isr_interface: { note: 'test note' }, 
-      isr_agreement: { def_text: 'test description' }
+      isr_agreement: { def_text: 'test description' }, next_status_task: 0
     isr = assigns( :isr_interface )
     refute_nil isr
     assert_equal 'test note', isr.note
@@ -112,7 +112,7 @@ class IsrInterfacesController0Test < ActionController::TestCase
   test 'should fail to update isr agreement' do
     patch :update_ia, id: @isr_agreement, 
       isr_interface: { note: nil },
-      isr_agreement: { p_group_id: 0 }
+      isr_agreement: { p_group_id: 0 }, next_status_task: 0
     isa = assigns( :isr_agreement )
     assert_response :success
     refute isa.errors.empty?

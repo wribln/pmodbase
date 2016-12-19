@@ -14,28 +14,29 @@
           <%= render partial: 'form_if', object: f, locals:{ note: :edit } %>
         <%- end %>
       <%- end %>
-      <%- if confirm_or_reject? %>
+      <!-- Divider Line -->
+      <div class="form-group">
+        <hr style="margin:4px"/>  
+      </div>
+      <%- if @workflow.wf_current_task == 3 %>
         <%= render partial: 'show_ia', object: @isr_agreement %>
         <div class="form-group">
           <div class="col-sm-offset-3 col-sm-2">
-          <%= a.submit t('isr_interfaces.edit.confirm'), class: 'btn btn-lg btn-block btn-primary' %>
-        </div>
-        <div class="col-sm-2">
-          <%= a.submit t('isr_interfaces.edit.reject'), class: 'btn btn-lg btn-block btn-primary' %>
-      <%- elsif @isr_agreement.frozen? %>
-        <%= render partial: 'show_ia', object: @isr_agreement %>
-        <div class="form-group">
-          <div class="col-sm-offset-3 col-sm-2">
-        <%= a.submit class: 'btn btn-lg btn-block btn-primary' %>
+            <%= a.submit t('isr_interfaces.edit.confirm'), class: 'btn btn-lg btn-block btn-primary' %>
+          </div>
+          <div class="col-sm-2">
+            <%= a.submit t('isr_interfaces.edit.reject'), class: 'btn btn-lg btn-block btn-primary' %>
+          </div>
       <%- else %>
         <%= render partial: 'form_ia', object: a %>
         <div class="form-group">
           <div class="col-sm-offset-3 col-sm-2">
-        <%= a.submit class: 'btn btn-lg btn-block btn-primary' %>
-      <%- end %>
-        </div>
-        <div class="col-sm-2">
-          <%= link_to t( 'button_label.cancel_to_show' ), isr_agreement_details_path( @isr_interface ), class: 'btn btn-lg btn-block btn-default' %>
+            <%= a.submit class: 'btn btn-lg btn-block btn-primary' %>
+        	</div>
+      <%- end -%>
+          <div class="col-sm-2">
+            <%= link_to t( 'button_label.cancel_to_show' ), isr_agreement_details_path( @isr_agreement ), class: 'btn btn-lg btn-block btn-default' %>
+          </div>
         </div>
       <div>
     <%- end %>

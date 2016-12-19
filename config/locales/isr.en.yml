@@ -110,6 +110,7 @@ en:
       update_ia_ok:       'Interface Agreement successfully updated.'
       create_ia_ok:       'Interface Agreement successfully created.'
       no_edit_now:        'No update permitted at this state.'
+      inconsistent:       'Inconsistent data: %{detail}'
 
   isr_agreements:
     title:          'ISR - Interface Agreements'

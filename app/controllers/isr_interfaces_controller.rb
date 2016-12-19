@@ -106,16 +106,17 @@ class IsrInterfacesController < ApplicationController
   end
 
   def new_ia_rev
-    prepare_new_ia( 1 )
+    prepare_new_ia( 1, @isr_agreement.id )
   end
 
   def new_ia_fin
-    prepare_new_ia( 2 )
+    prepare_new_ia( 2, @isr_agreement.id )
   end
 
-  def prepare_new_ia( ia_type )
+  def prepare_new_ia( ia_type, based_on_id = nil )
     set_final_breadcrumb( :new )
     @isr_agreement = @isr_agreement.dup
+    @isr_agreement.based_on_id = based_on_id
     @isr_agreement.prepare_revision( ia_type )
     @workflow.initialize_current( ia_type, 0, 0 )
     set_selections( :to_create )
@@ -130,8 +131,12 @@ class IsrInterfacesController < ApplicationController
   end
 
   def edit_ia
-    set_final_breadcrumb( :edit )
-    set_selections( :to_update )
+    if @workflow.permitted_params.empty? and not @workflow.status_change_possible? then
+      redirect_to @isr_agreement, notice: I18n.t( 'isr_interfaces.msg.no_edit_now' )
+    else
+      set_final_breadcrumb( :edit )
+      set_selections( :to_update )
+    end
   end
 
   # POST /isr
@@ -193,8 +198,12 @@ class IsrInterfacesController < ApplicationController
     if @workflow.permitted_params.empty? and not @workflow.status_change_possible? then
       redirect_to @isr_interface, notice: I18n.t( 'isr_interfaces.msg.no_edit_now' )
     else
+      # for view with confirm / reject buttons, determine next_status_task
+      # redirect to short view rather than detail view, too.
+      redirect_path = isr_agreement_details_path( @isr_agreement )
       nst = params.fetch( :next_status_task, -1 ).to_i
-      if nst < 0 then # next_status_task missing
+      if nst < 0 then # next_status_task missing / assume confirm or reject
+        redirect_path = isr_agreement_path( @isr_agreement )
         if params[ :commit ] == I18n.t( 'isr_interfaces.edit.confirm' )
           nst = 1
         elsif params[ :commit ] == I18n.t( 'isr_interfaces.edit.reject' )
@@ -212,7 +221,7 @@ class IsrInterfacesController < ApplicationController
             @isr_agreement.save!
             @isr_interface.save!
           end
-          format.html { redirect_to isr_agreement_details_path( @isr_agreement ), notice: I18n.t( 'isr_interfaces.msg.update_ia_ok' )}
+          format.html { redirect_to redirect_path, notice: I18n.t( 'isr_interfaces.msg.update_ia_ok' )}
         else
           set_final_breadcrumb( :edit )        
           set_selections( :to_update )
@@ -277,13 +286,6 @@ class IsrInterfacesController < ApplicationController
       @workflow.permitted_params.empty? ? {} : params.require( :isr_agreement ).permit( @workflow.permitted_params )
     end
 
-    # determine whether to display Confirm/Reject buttons
-
-    def confirm_or_reject?
-      @workflow.wf_current_task == 3
-    end
-    helper_method :confirm_or_reject?
-
     # this method determines the next status and task for agreements
 
     def update_status_and_task( i = 1 )
@@ -309,6 +311,10 @@ class IsrInterfacesController < ApplicationController
         when 5
           @isr_agreement.p_signature = current_user.account_info
           @isr_agreement.p_sign_time = DateTime.now
+        when 8
+          @isr_agreement.ia_status = 1 # agreed
+        when 9
+          @isr_agreement.ia_status = 7 # withdrawn
       end
       @isr_agreement.errors.empty? && @isr_interface.errors.empty?
     end

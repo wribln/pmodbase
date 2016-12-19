@@ -37,29 +37,29 @@ module IsrWorkFlow
         ],
         [
           [
-            [ :l_group_id, :l_owner_id, :l_deputy_id, :p_group_id, :p_owner_id, :p_deputy_id, :def_text, :cfr_record_id, :res_steps_id, :val_steps_id, :next_status_task, :ia_type ],
-            [ :l_group_id, :l_owner_id, :l_deputy_id, :p_group_id, :p_owner_id, :p_deputy_id, :def_text, :cfr_record_id, :res_steps_id, :val_steps_id, :next_status_task, :ia_type ],
-            [                           :l_deputy_id, :p_group_id, :p_owner_id, :p_deputy_id, :def_text, :cfr_record_id, :res_steps_id, :val_steps_id, :next_status_task ],
+            [ :l_group_id, :l_owner_id, :l_deputy_id, :p_group_id, :p_owner_id, :p_deputy_id, :def_text, :cfr_record_id, :res_steps_id, :val_steps_id, :ia_type ],
+            [ :l_group_id, :l_owner_id, :l_deputy_id, :p_group_id, :p_owner_id, :p_deputy_id, :def_text, :cfr_record_id, :res_steps_id, :val_steps_id, :ia_type ],
+            [                           :l_deputy_id, :p_group_id, :p_owner_id, :p_deputy_id, :def_text, :cfr_record_id, :res_steps_id, :val_steps_id ],
             [],
             [],
-            [],
+            [ :l_group_id, :l_owner_id ],
             []
           ],
           [
-            [ :l_group_id, :l_owner_id, :l_deputy_id, :p_group_id, :p_owner_id, :p_deputy_id, :def_text, :cfr_record_id, :res_steps_id, :val_steps_id, :next_status_task, :ia_type ],
-            [ :l_group_id, :l_owner_id, :l_deputy_id, :p_group_id, :p_owner_id, :p_deputy_id, :def_text, :cfr_record_id, :res_steps_id, :val_steps_id, :next_status_task, :ia_type ],
-            [                           :l_deputy_id, :p_group_id, :p_owner_id, :p_deputy_id, :def_text, :cfr_record_id, :res_steps_id, :val_steps_id, :next_status_task ],
+            [ :l_group_id, :l_owner_id, :l_deputy_id, :p_group_id, :p_owner_id, :p_deputy_id, :def_text, :cfr_record_id, :res_steps_id, :val_steps_id, :ia_type, :based_on_id ],
+            [ :l_group_id, :l_owner_id, :l_deputy_id, :p_group_id, :p_owner_id, :p_deputy_id, :def_text, :cfr_record_id, :res_steps_id, :val_steps_id, :ia_type, :based_on_id ],
+            [                           :l_deputy_id, :p_group_id, :p_owner_id, :p_deputy_id, :def_text, :cfr_record_id, :res_steps_id, :val_steps_id ],
             [],
             [],
-            [],
+            [ :l_group_id, :l_owner_id ],
             []
           ],
           [
-            [ :l_group_id, :l_owner_id, :l_deputy_id, :p_group_id, :p_owner_id, :p_deputy_id, :def_text, :cfr_record_id, :res_steps_id, :val_steps_id, :next_status_task, :ia_type ],
-            [ :l_group_id, :l_owner_id, :l_deputy_id, :p_group_id, :p_owner_id, :p_deputy_id, :def_text, :cfr_record_id, :res_steps_id, :val_steps_id, :next_status_task, :ia_type ],
-            [                           :l_deputy_id, :p_group_id, :p_owner_id, :p_deputy_id, :def_text, :cfr_record_id, :res_steps_id, :val_steps_id, :next_status_task ],
+            [ :l_group_id, :l_owner_id, :l_deputy_id, :p_group_id, :p_owner_id, :p_deputy_id, :def_text, :cfr_record_id, :res_steps_id, :val_steps_id, :ia_type, :based_on_id ],
+            [ :l_group_id, :l_owner_id, :l_deputy_id, :p_group_id, :p_owner_id, :p_deputy_id, :def_text, :cfr_record_id, :res_steps_id, :val_steps_id, :ia_type, :based_on_id ],
+            [                           :l_deputy_id, :p_group_id, :p_owner_id, :p_deputy_id, :def_text, :cfr_record_id, :res_steps_id, :val_steps_id ],
             [],
-            [],
+            [ :l_group_id, :l_owner_id ],
             [],
             []
           ]
