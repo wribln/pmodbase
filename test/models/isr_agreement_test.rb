@@ -54,10 +54,10 @@ class IsrAgreementTest < ActiveSupport::TestCase
 
   test 'revision format' do
     isa = IsrAgreement.new
-    assert_equal 'Rev. 0', isa.revision
+    assert isa.revision =~ /Rev\..0/
 
     isa.rev_no += 1
-    assert_equal "Rev. 1", isa.revision
+    assert isa.revision =~ /Rev\..1/
   end
 
   test 'code and revision combined' do

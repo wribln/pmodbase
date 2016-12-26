@@ -124,7 +124,7 @@ class PcpStepTest < ActiveSupport::TestCase
 
     ps.prev_assmt = nil
     ps.new_assmt = nil
-    assert_equal ps.current_assmt, nil
+    assert_nil ps.current_assmt
 
     (0..4).each do |pa|
       ps.prev_assmt = pa

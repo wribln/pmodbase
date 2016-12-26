@@ -66,8 +66,8 @@ class PcpSubjectTest < ActiveSupport::TestCase
     assert_equal ps.p_group_id, oc.p_group_id
     assert_equal ps.c_owner_id, oc.c_owner_id
     assert_equal ps.p_owner_id, oc.p_owner_id
-    assert_equal ps.c_deputy_id, oc.c_deputy_id
-    assert_equal ps.p_deputy_id, oc.p_deputy_id
+    assert_nil ps.c_deputy_id
+    assert_nil ps.p_deputy_id
   end
 
   test 'check required attributes' do
