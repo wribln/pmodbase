@@ -94,6 +94,9 @@ class IsrInterfacesController < ApplicationController
     set_final_breadcrumb( :new )
     @isr_interface = IsrInterface.find( params[ :id ])
     @isr_agreement = @isr_interface.isr_agreements.build
+    # copy groups - for convenience
+    @isr_agreement.l_group_id = @isr_interface.l_group_id
+    @isr_agreement.p_group_id = @isr_interface.p_group_id
     @isr_agreement.prepare_revision( 0 )
     initialize_current_workflow
     set_selections( :to_create )
@@ -106,11 +109,19 @@ class IsrInterfacesController < ApplicationController
   end
 
   def new_ia_rev
-    prepare_new_ia( 1, @isr_agreement.id )
+    unless agreement_status_ok( 1, @isr_agreement )
+      redirect_to @isr_agreement, notice: I18n.t( 'isr_interfaces.msg.no_rev_now' )
+    else
+      prepare_new_ia( 1, @isr_agreement.id )
+    end
   end
 
   def new_ia_fin
-    prepare_new_ia( 2, @isr_agreement.id )
+    unless agreement_status_ok( 2, @isr_agreement )
+      redirect_to @isr_agreement, notice: I18n.t( 'isr_interfaces.msg.no_fin_now' )
+    else
+      prepare_new_ia( 2, @isr_agreement.id )
+    end
   end
 
   def prepare_new_ia( ia_type, based_on_id = nil )
@@ -160,19 +171,25 @@ class IsrInterfacesController < ApplicationController
     ia_type = params.fetch( :isr_agreement ).fetch( :ia_type ).to_i
     @workflow.initialize_current( ia_type, 0, 0 )
     @isr_agreement = @isr_interface.isr_agreements.build( isr_agreement_params )
-    @isr_agreement.prepare_revision( ia_type )
-    @isr_agreement.set_next_ia_no
-    update_status_and_task
-    respond_to do |format|
-      if @isr_agreement.valid? && @isr_interface.valid?
-        IsrAgreement.transaction do
-          @isr_agreement.save!
-          @isr_interface.save!
+    unless agreement_status_ok( ia_type, @isr_agreement.based_on )
+      respond_to do |format|
+        format.html { redirect_to @isr_agreement.based_on, notice: I18n.t( 'isr_interfaces.msg.no_fin_now' )}
+      end
+    else
+      @isr_agreement.prepare_revision( ia_type )
+      @isr_agreement.set_next_ia_no
+      update_status_and_task
+      respond_to do |format|
+        if @isr_agreement.valid? && @isr_interface.valid?
+          IsrAgreement.transaction do
+            @isr_agreement.save!
+            @isr_interface.save!
+          end
+          format.html { redirect_to isr_agreement_details_path( @isr_agreement ), notice: I18n.t( 'isr_interfaces.msg.create_ia_ok' )}
+        else
+          set_selections( :to_create )
+          format.html { render :new_ia }
         end
-        format.html { redirect_to isr_agreement_details_path( @isr_agreement ), notice: I18n.t( 'isr_interfaces.msg.create_ia_ok' )}
-      else
-        set_selections( :to_create )
-        format.html { render :new_ia }
       end
     end
   end
@@ -286,6 +303,20 @@ class IsrInterfacesController < ApplicationController
       @workflow.permitted_params.empty? ? {} : params.require( :isr_agreement ).permit( @workflow.permitted_params )
     end
 
+    # determine if certain action is permitted at this time
+    # let test pass if isa is not given (although required):
+    # validation should take care of this issue.
+
+    def agreement_status_ok( wf, isa )
+      return true if isa.nil?
+      case wf
+      when 1, 2
+        [ 1 ].include? isa.ia_status
+      else
+        true
+      end
+    end
+
     # this method determines the next status and task for agreements
 
     def update_status_and_task( i = 1 )
@@ -312,9 +343,19 @@ class IsrInterfacesController < ApplicationController
           @isr_agreement.p_signature = current_user.account_info
           @isr_agreement.p_sign_time = DateTime.now
         when 8
-          @isr_agreement.ia_status = 1 # agreed
+          case @isr_agreement.ia_type
+          when 0 # new agreement
+            @isr_agreement.ia_status = 1 # agreed
+          when 1 # revision
+            @isr_agreement.ia_status = 1 # agreed / superseeded
+            @isr_agreement.based_on.ia_status = 6 unless @isr_agreement.based_on_id.nil?
+          when 2 # termination            
+            @isr_agreement.ia_status = 7 # terminated
+            @isr_agreement.based_on.ia_status = 6 unless @isr_agreement.based_on_id.nil?
+          end
         when 9
-          @isr_agreement.ia_status = 7 # withdrawn
+          @isr_agreement.ia_status = 8 # withdrawn
+          @isr_agreement.based_on.ia_status = 1 unless  @isr_agreement.based_on_id.nil?
       end
       @isr_agreement.errors.empty? && @isr_interface.errors.empty?
     end

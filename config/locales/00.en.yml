@@ -709,6 +709,8 @@ en:
     index:
       title:          'Base'
     menu:
+      about:          'About'
+      contact:        'Contact'
       my_data:        'My Data'
       sign_off:       'Sign Off'
       welcome:        'Welcome, %{user}!'

@@ -62,7 +62,47 @@ class IsrInterfacesController0Test < ActionController::TestCase
     refute_nil isa
   end
 
+  test 'should get ia copy' do
+    get :new_ia_copy, id: @isr_agreement
+    assert_response :success
+    isf = assigns( :isr_interface )
+    isa = assigns( :isr_agreement )
+    refute_nil isf
+    refute_nil isa
+  end
+
   test 'should get revised ia' do
+
+    # first attempt fails due to wrong status (must be agreed)
+
+    get :new_ia_rev, id: @isr_agreement
+    isa = assigns( :isr_agreement )
+    refute_nil isa
+    assert_redirected_to isr_agreement_path( isa )
+
+    isa.ia_status = 1
+    assert isa.save
+
+    get :new_ia_rev, id: @isr_agreement
+    assert_response :success
+    isf = assigns( :isr_interface )
+    isa = assigns( :isr_agreement )
+    refute_nil isf
+    refute_nil isa
+  end
+
+  test 'should get termination ia' do
+
+    # first attempt fails due to wrong status (must be agreed)
+
+    get :new_ia_fin, id: @isr_agreement
+    isa = assigns( :isr_agreement )
+    refute_nil isa
+    assert_redirected_to isr_agreement_path( isa )
+
+    isa.ia_status = 1
+    assert isa.save
+
     get :new_ia_rev, id: @isr_agreement
     assert_response :success
     isf = assigns( :isr_interface )

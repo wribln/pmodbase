@@ -120,7 +120,7 @@ class IsrInterfacesController2Test < ActionController::TestCase
     isf.reload
     assert_equal 1, isa.ia_no
     assert_equal 0, isa.rev_no
-    assert_equal 7, isa.ia_status
+    assert_equal 8, isa.ia_status
     assert_equal 0, isf.if_status
     assert_equal 9, isa.current_status # closed - withdrawn
     assert_equal 6, isa.current_task   # workflow completed

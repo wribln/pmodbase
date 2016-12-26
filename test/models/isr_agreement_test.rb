@@ -57,7 +57,7 @@ class IsrAgreementTest < ActiveSupport::TestCase
     assert_equal 'Rev. 0', isa.revision
 
     isa.rev_no += 1
-    assert_equal 'Rev. 1', isa.revision
+    assert_equal "Rev. 1", isa.revision
   end
 
   test 'code and revision combined' do
@@ -78,7 +78,7 @@ class IsrAgreementTest < ActiveSupport::TestCase
     isa.ia_status = 0
     assert_equal isa.ia_status_label, IsrAgreement::ISR_IA_STATUS_LABELS[ 0 ]
 
-    isa.ia_status = 8 # max + 1
+    isa.ia_status = 10 # max + 1
     assert_nil isa.ia_status_label
   end
 
@@ -198,6 +198,53 @@ class IsrAgreementTest < ActiveSupport::TestCase
 
     isa2.rev_no = 1
     assert isa2.save, isa2.errors.messages
+  end
+
+  test 'owners/deputies have required access' do
+    isf = isr_interfaces( :one )
+    isa = isf.isr_agreements.build
+    isa.prepare_revision( 0 )
+    isa.set_next_ia_no
+
+    # no owner/deputy defined
+
+    isa.l_group_id = isf.l_group_id
+    assert isa.valid?, isa.errors.messages
+
+    %w( l_owner l_deputy ).each do |u|
+
+      # try user w/o permission
+
+      isa.send( "#{ u }=", accounts( :wop ))
+      assert isa.invalid?, "failed for #{u}"
+
+      # set user w/ permission
+
+      isa.send( "#{ u }=", accounts( :one ))
+      assert isa.valid?, isa.errors.messages
+
+    end
+
+    # p_group not defined - no checks done
+
+    %w( p_owner p_deputy ).each do |u|
+      isa.send( "#{ u }=", accounts( :wop ))
+      assert isa.valid?, isa.errors.messages
+    end
+
+    isa.p_group_id = isa.l_group_id
+    assert isa.invalid?
+    assert_includes isa.errors, :p_owner_id
+    assert_includes isa.errors, :p_deputy_id
+
+    isa.p_owner_id = accounts( :one ).id
+    assert isa.invalid?
+    refute_includes isa.errors, :p_owner_id
+    assert_includes isa.errors, :p_deputy_id
+
+    isa.p_deputy_id = isa.p_owner_id
+    assert isa.valid?
+
   end
 
 end

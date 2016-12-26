@@ -14,41 +14,41 @@
             <th class="col-sm-1"><%= A3Code.human_attribute_name( :active   )%></th>
             <th class="col-sm-1"><%= A3Code.human_attribute_name( :master   )%></th>
             <th class="col-sm-1"><%= A3Code.human_attribute_name( :mapping )%></th>
-            <th class="col-sm-1 hidden-print"><%= filter_action_title_header -%></th>
+            <th class="col-sm-1 hidden-print"><%= filter_action_title_header %></th>
           </tr>
         </thead>
         <tbody>
-          <tr <%= filter_row( @filter_fields ) -%>>
+          <tr <%= filter_row( @filter_fields ) %>>
             <td></td>
-            <td><%= filter_field @filter_fields, :as_code, :sw -%></td>
-            <td><%= filter_field @filter_fields, :as_desc, :sw -%></td>
+            <td><%= filter_field @filter_fields, :as_code, :sw %></td>
+            <td><%= filter_field @filter_fields, :as_desc, :sw %></td>
             <td colspan="3"></td>
-            <td><%= filter_action_button -%></td>
+            <td><%= filter_action_button %></td>
           </tr>
-        <% if @a3_codes.length.zero? %>
+        <%- if @a3_codes.length.zero? %>
           <%= render partial: 'shared/index_empty_row', locals:{ columns: 6, with_link: true }%>
-        <% else %>
+        <%- else %>
           <% @a3_codes.each do |a3| %>
-            <%- rowspan = a3.description.blank? ? 1 : 2 -%>
+            <%- rowspan = a3.description.blank? ? 1 : 2 %>
             <tr>
-              <td rowspan="<%= rowspan -%>"><%= a3.to_id %></td>
-              <td rowspan="<%= rowspan -%>"><%= a3.code %></td>
+              <td rowspan="<%= rowspan %>"><%= a3.to_id %></td>
+              <td rowspan="<%= rowspan %>"><%= a3.code %></td>
               <td><%= a3.label %></td>
               <td><%= A3Code.human_attribute_name( :active ) if a3.active %></td>
               <td><%= A3Code.human_attribute_name( :master ) if a3.master %></td>
               <td><%= a3.mapping %></td>
-              <td rowspan="<%= rowspan -%>"><%= render partial: 'shared/actions', object: a3 %></td>
+              <td rowspan="<%= rowspan %>"><%= render partial: 'shared/actions', object: a3 %></td>
             </tr>
-            <%- unless a3.description.blank? -%>
+            <%- unless a3.description.blank? %>
             <tr>
               <td colspan="4"><small><%= a3.description %></small></td>
             </tr>
-            <%- end -%>
-          <% end %>
-        <% end %>
+            <%- end %>
+          <%- end %>
+        <%- end %>
         </tbody>
       </table>
-    <% end %>
+    <%- end %>
     <%= render partial: 'shared/footer' %>
   </div>
 </div>

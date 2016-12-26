@@ -52,12 +52,14 @@ class IsrAgreement < ActiveRecord::Base
   # ia_type determines workflow:
   # 0 - create new IA
   # 1 - revise existing IA
-  # 2 - terminate existing IA
+  # 2 - change status to terminated
+  # 3 - change status to resolved
+  # 4 - change status to closed
 
   validates :ia_type,
     allow_blank: false,
     numericality: { only_integer: true },
-    inclusion: { in: 0..2 }  
+    inclusion: { in: 0..4 }  
 
   ISR_IA_STATUS_LABELS = IsrAgreement.human_attribute_name( :ia_states ).freeze
 
@@ -85,6 +87,8 @@ class IsrAgreement < ActiveRecord::Base
     numericality: { only_integer: true, greater_than_or_equal_to: 1 }
 
   validate :ia_type_integrity
+
+  validate :access_permissions
 
   # default scope is order:
 
@@ -129,18 +133,22 @@ class IsrAgreement < ActiveRecord::Base
   # if ia_type is zero, assume reset to initial, default values
 
   def prepare_revision( ia_type )
-    self.ia_type = ia_type
-    if ia_type == 0
+    case self.ia_type = ia_type
+    when 0
       self.rev_no = 0
       self.ia_no = nil
       self.res_steps_id = nil
       self.val_steps_id = nil
       self.cfr_record_id = nil
-    else
+      self.based_on_id = nil
+    when 1
       self.rev_no += 1
       self.based_on.ia_status = 4 unless self.based_on_id.nil?
+    when 2
+      self.rev_no += 1
+      self.based_on.ia_status = 5 unless self.based_on_id.nil?
     end
-    self.ia_status = 0
+    self.ia_status = 0 # open
     self.current_status = 0
     self.current_task = 0
   end
@@ -216,6 +224,34 @@ class IsrAgreement < ActiveRecord::Base
         return
       end
     end
+  end
+
+  # check if the given accounts do have access permissions for their role
+
+  def access_permissions
+
+    unless l_group_id.nil?
+      unless l_owner_id.nil?
+        errors.add( :l_owner_id, I18n.t( 'isr_interfaces.msg.no_access_4' )) \
+          unless l_owner.permission_to_access( FEATURE_ID_ISR_INTERFACES, :to_update, l_group_id )
+      end
+      unless l_deputy_id.nil?
+        errors.add( :l_deputy_id, I18n.t( 'isr_interfaces.msg.no_access_4' )) \
+          unless l_deputy.permission_to_access( FEATURE_ID_ISR_INTERFACES, :to_update, l_group_id )
+      end
+    end
+
+    unless p_group_id.nil?
+      unless p_owner_id.nil?
+        errors.add( :p_owner_id, I18n.t( 'isr_interfaces.msg.no_access_4' )) \
+          unless p_owner.permission_to_access( FEATURE_ID_ISR_INTERFACES, :to_update, p_group_id )
+      end
+      unless p_deputy_id.nil?
+        errors.add( :p_deputy_id, I18n.t( 'isr_interfaces.msg.no_access_4' )) \
+          unless p_deputy.permission_to_access( FEATURE_ID_ISR_INTERFACES, :to_update, p_group_id )
+      end
+    end
+
   end
 
 end

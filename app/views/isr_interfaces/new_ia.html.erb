@@ -6,7 +6,13 @@
     <%= form_for @isr_interface, method: :post, url: create_isr_agreement_path( @isr_interface ) do |f| %>
       <%= render partial: 'shared/errors', object: @isr_interface.errors %>
       <%= render partial: 'shared/errors', object: @isr_agreement.errors %>
-      <%= render partial: 'form_if', object: f, locals:{ note: :edit } %>
+      <%= fields_for @isr_interface do |f| %>
+        <%- if @isr_interface.frozen? %>
+          <%= render partial: 'show_if', object: f, locals:{ note: :edit }%>
+        <%- else %>
+          <%= render partial: 'form_if', object: f, locals:{ note: :edit } %>
+        <%- end %>
+      <%- end %>
       <!-- Divider Line -->
       <div class="form-group">
         <hr style="margin:4px"/>  

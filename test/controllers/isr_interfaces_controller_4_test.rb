@@ -1,5 +1,5 @@
 require 'test_helper'
-class IsrInterfacesController3Test < ActionController::TestCase
+class IsrInterfacesController4Test < ActionController::TestCase
   tests IsrInterfacesController
 
   # try steps in workflow 1 - standard path: create revision
@@ -11,7 +11,7 @@ class IsrInterfacesController3Test < ActionController::TestCase
     session[ :current_user_id ] = @account.id
   end
 
-  test 'test workflow 1a' do
+  test 'test workflow 2a' do
 
     # create interface
 
@@ -31,7 +31,7 @@ class IsrInterfacesController3Test < ActionController::TestCase
 
     assert_no_difference( 'IsrAgreement.count' )do
       post :create_ia, id: isf, isr_interface: { note: '' },
-        isr_agreement: { ia_type: '1',
+        isr_agreement: { ia_type: '2',
         l_group_id: @isr_interface.l_group_id,
         p_group_id: @isr_interface.p_group_id,
         def_text: 'test definition' }
@@ -45,14 +45,14 @@ class IsrInterfacesController3Test < ActionController::TestCase
 
   end
 
-  test 'test workflow 1b: revise agreement' do
+  test 'test workflow 2b: revise agreement' do
 
     @isr_agreement.ia_status = 1
     assert @isr_agreement.save
     
     assert_difference( 'IsrAgreement.count', 1 )do
       post :create_ia, id: @isr_interface, isr_interface: { note: '' },
-        isr_agreement: { ia_type: '1', based_on_id: @isr_agreement,
+        isr_agreement: { ia_type: '2', based_on_id: @isr_agreement,
         l_group_id: @isr_interface.l_group_id,
         p_group_id: @isr_interface.p_group_id,
         def_text: 'test definition' }
@@ -68,7 +68,7 @@ class IsrInterfacesController3Test < ActionController::TestCase
     assert_equal 2, isa.ia_no
     assert_equal 1, isa.rev_no
     assert_equal 0, isa.ia_status
-    assert_equal 4, isa.based_on.ia_status
+    assert_equal 5, isa.based_on.ia_status
     assert_equal 0, isf.if_status
     assert_equal 0, isa.current_status
     assert_equal 1, isa.current_task
@@ -85,7 +85,7 @@ class IsrInterfacesController3Test < ActionController::TestCase
     assert_equal 2, isa.ia_no
     assert_equal 1, isa.rev_no
     assert_equal 0, isa.ia_status
-    assert_equal 4, isa.based_on.ia_status
+    assert_equal 5, isa.based_on.ia_status
     assert_equal 0, isf.if_status
     assert_equal 1, isa.current_status
     assert_equal 2, isa.current_task
@@ -102,7 +102,7 @@ class IsrInterfacesController3Test < ActionController::TestCase
     assert_equal 2, isa.ia_no
     assert_equal 1, isa.rev_no
     assert_equal 0, isa.ia_status
-    assert_equal 4, isa.based_on.ia_status
+    assert_equal 5, isa.based_on.ia_status
     assert_equal 0, isf.if_status
     assert_equal 2, isa.current_status
     assert_equal 2, isa.current_task
@@ -118,7 +118,7 @@ class IsrInterfacesController3Test < ActionController::TestCase
     assert_equal 2, isa.ia_no
     assert_equal 1, isa.rev_no
     assert_equal 0, isa.ia_status
-    assert_equal 4, isa.based_on.ia_status
+    assert_equal 5, isa.based_on.ia_status
     assert_equal 2, isf.if_status
     assert_equal 3, isa.current_status
     assert_equal 3, isa.current_task
@@ -134,7 +134,7 @@ class IsrInterfacesController3Test < ActionController::TestCase
     assert_equal 2, isa.ia_no
     assert_equal 1, isa.rev_no
     assert_equal 0, isa.ia_status
-    assert_equal 4, isa.based_on.ia_status
+    assert_equal 5, isa.based_on.ia_status
     assert_equal 2, isf.if_status
     assert_equal 5, isa.current_status
     assert_equal 4, isa.current_task
@@ -149,7 +149,7 @@ class IsrInterfacesController3Test < ActionController::TestCase
     isf.reload
     assert_equal 2, isa.ia_no
     assert_equal 1, isa.rev_no
-    assert_equal 1, isa.ia_status # agreed
+    assert_equal 7, isa.ia_status # terminated
     assert_equal 2, isf.if_status # defined - frozen
     assert_equal 6, isa.based_on.ia_status # superseeded
     assert_equal 8, isa.current_status # agreed

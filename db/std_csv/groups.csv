@@ -15,7 +15,7 @@ code;label;notes;seqno;group_category_id;sub_group_of;participating;s_sender_cod
 "BUS";"Building Services (incl. Lighting)";"";4;2;;true;true;true;true;true
 "CCR";"Control Centres";"";5;2;;true;true;true;true;true
 "CIV";"Civil Works";"";6;2;;true;true;true;true;true
-"COM";"Telecommunication Systems";"";7;2;;true;true;true;true;true
+"COM";"Communication";"";7;2;;true;true;true;true;true
 "DWE";"Depot and Workshop Equipment";"";8;2;;true;true;true;true;true
 "ELE";"Elevators";"";9;2;;true;true;true;true;true
 "ESC";"Escalators";"";10;2;;true;true;true;true;true

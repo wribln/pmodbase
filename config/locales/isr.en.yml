@@ -29,6 +29,7 @@ en:
       isr_agreement:
         id:               :general.attributes.id
         code:             'Code'
+        rev_no:           'Revision No.'
         ia_code:          'Interface Agreement Code'
         l_group_id:       'Leading Group'
         p_group_id:       'Partner Group'
@@ -38,15 +39,15 @@ en:
         p_deputy_id:      'Partner Group Deputy'
         l_signature:      'Signed by Leading Group'
         p_signature:      'Signed by Partner Group'
-        l_sign_time:      'Signature Date/Time'
+        sign_time:        'Signature Date/Time'
         def_text:         'Text of Agreement'
         ia_status:        'Status'
-        #                   0      1        2          3        4             5            6            7
-        ia_states:        ['open','agreed','resolved','closed','in revision','superseded','terminated','withdrawn']
+        #                   0      1        2          3        4             5              6             7            8           9           10
+        ia_states:        ['open','agreed','resolved','closed','in revision','status change','superseded','terminated','withdrawn','rejected' ]
         cfr_record_id:    'CFR Record'
         current_status_task: 'Current Status / Task'
         next_status_task:    'Next Status / Task'
-        revision_suffix:  'Rev. %{rev_no}'
+        revision_suffix:  "Rev.\xA0%{rev_no}"
         res_steps_label:  'Resolution of %{code}'
         val_steps_label:  'Validation of %{code}'
         res_steps_id:     'Resolution Steps'
@@ -92,9 +93,11 @@ en:
     show_ia_icf:
       main_heading:       'Interface Control Form'
       as_of:              'Status as of'
+      on_time:            'on'
       if_references:      'Interface References [CFR]'
       ia_references:      'Agreement References [CFR]'
       empty_or_none:      'None.'
+      based_on:           'Predecessor Agreement'
     info_workflow:
       form_title:         'ISR Workflow Information'
     form_ia:
@@ -111,6 +114,9 @@ en:
       create_ia_ok:       'Interface Agreement successfully created.'
       no_edit_now:        'No update permitted at this state.'
       inconsistent:       'Inconsistent data: %{detail}'
+      no_access_4:        'Given account has no access permission for this role.'
+      no_rev_now:         'Revision only permitted on agreed Interface Agreements.'
+      no_fin_now:         'Termination only permitted on agreed Interface Agreements.'
 
   isr_agreements:
     title:          'ISR - Interface Agreements'

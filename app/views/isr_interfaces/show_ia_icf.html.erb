@@ -76,13 +76,18 @@
         <td class="row-head"><%= t( '.ia_references' ) %>:</td>
         <td><%= @isr_agreement.cfr_record.try( :text_and_id, :title ) %></td>
       </tr>
+      <%- unless @isr_agreement.based_on_id.nil? %>
+        <tr>
+          <td class="row-head"><%= t(  '.based_on' )%>:</td>
+          <td><%= link_to @isr_agreement.based_on.code_and_revision, isr_agreement_icf_path( @isr_agreement.based_on ) %></td>
+        </tr>
+      <%- end %>
       <tr>
         <td class="row-head"><%= IsrAgreement.human_attribute_name( :l_signature )%>:</td>
         <td>
           <%- unless @isr_agreement.l_signature.blank? %>
             <%= @isr_agreement.l_signature %><br/>
-            <%= t( 'isr_agreements.icf.on_time' ) %>
-            <%= db_formatted_dt @isr_agreement.l_sign_time %>
+            <%= t( '.on_time' ) %> <%= db_formatted_dt @isr_agreement.l_sign_time %>
           <%- else -%>
             &nbsp;
           <%- end -%>
@@ -93,8 +98,7 @@
         <td>
           <%- unless @isr_agreement.p_signature.blank? %>
             <%= @isr_agreement.p_signature %><br/>
-            <%= t( 'isr_agreements.icf.on_time' ) %>
-            <%= db_formatted_dt @isr_agreement.p_sign_time %>
+            <%= t( '.on_time' ) %> <%= db_formatted_dt @isr_agreement.p_sign_time %>
           <%- else -%>
             &nbsp;
           <%- end -%>
