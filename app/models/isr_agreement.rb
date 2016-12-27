@@ -132,8 +132,8 @@ class IsrAgreement < ActiveRecord::Base
   # prepare new or initial revision, assume that self is copy
   # if ia_type is zero, assume reset to initial, default values
 
-  def prepare_revision( ia_type )
-    case self.ia_type = ia_type
+  def prepare_revision
+    case self.ia_type
     when 0
       self.rev_no = 0
       self.ia_no = nil
@@ -144,7 +144,7 @@ class IsrAgreement < ActiveRecord::Base
     when 1
       self.rev_no += 1
       self.based_on.ia_status = 4 unless self.based_on_id.nil?
-    when 2
+    when 2, 3, 4
       self.rev_no += 1
       self.based_on.ia_status = 5 unless self.based_on_id.nil?
     end

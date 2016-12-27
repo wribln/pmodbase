@@ -28,8 +28,8 @@ module ApplicationHelper
 
   # insert a page heading from the I18n library using the current view path
   
-  def form_title
-    content_tag( :h2, t( '.form_title' ), class: 'form-title' )
+  def form_title( t = nil )
+    content_tag( :h2, t.nil? ? t( '.form_title' ) : t, class: 'form-title' )
   end
 
   def form_title_w( subject )

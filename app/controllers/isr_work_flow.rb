@@ -7,7 +7,7 @@ module IsrWorkFlow
 
     def set_workflow
       @workflow = WorkFlowHelper.new([
-        [ # create IA
+        [ # create new IA
           [[ 0, 1 ]],
           [[ 1, 2 ]],
           [[ 2, 2 ],[ 3, 3 ],[ 4, 5 ]],

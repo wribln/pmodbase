@@ -1,6 +1,6 @@
       <%- code = defined?( if_code ) ? :if_code : :code -%>
       <div class="form-group">
-        <%= show_if_all.label :code, IsrInterface.human_attribute_name( code ), class: 'col-sm-3 control-label' %>
+        <%= show_if_all.label :code, IsrInterface.human_attribute_name( :code ), class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
           <%= display_value show_if_all.object.code %>
         </div>

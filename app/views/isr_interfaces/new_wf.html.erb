@@ -1,0 +1,54 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="form-horizontal" role="form">
+    <%= form_for @isr_agreement, method: :get, url: new_isr_agreement_path( @isr_agreement, '5' ) do |f| %>
+      <div class="form-group">
+        <%= label_tag :wt, t( '.new_4_if', if_code: @isr_interface.code ), class: 'col-sm-3 control-label'%> 
+        <div class="col-sm-4 radio">
+          <label><%= radio_button_tag :wt, 6, true %>&nbsp;&nbsp;<%= t( '.new_4_if_label' )%></label>
+        </div>
+      </div>
+      <div class="form-group" style="margin-bottom:2px">
+        <label class="col-sm-3 control-label"><%= t( '.new_4_ia' )%></label>
+        <div class="col-sm-2">
+          <p class="form-control-static"><%= @isr_agreement.try( :code_and_revision )%></p>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-4 radio">
+          <label><%= radio_button_tag :wt, 0, false, disabled: @isr_agreement.nil? %>&nbsp;&nbsp;<%= t( '.copy')%></label>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-4 radio">
+          <label><%= radio_button_tag :wt, 1, false, disabled: @isr_agreement.nil? %>&nbsp;&nbsp;<%= t( '.revise')%></label>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-4 radio">
+          <label><%= radio_button_tag :wt, 2, false, disabled: @isr_agreement.nil? %>&nbsp;&nbsp;<%= t( '.terminate')%></label>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-4 radio">
+          <label><%= radio_button_tag :wt, 3, false, disabled: @isr_agreement.nil? %>&nbsp;&nbsp;<%= t( '.resolve')%>.</label>
+        </div>
+      </div>
+      <div class="form-group" style="margin-bottom:24px">
+        <div class="col-sm-offset-3 col-sm-4 radio">
+          <label><%= radio_button_tag :wt, 4, false, disabled: @isr_agreement.nil? %>&nbsp;&nbsp;<%= t( '.close')%>.</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-2">
+          <%= f.submit t( 'helpers.submit.add' ), class: 'btn btn-lg btn-block btn-primary' %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to t( 'button_label.cancel_to_index' ), isr_interfaces_path, class: 'btn btn-lg btn-block btn-default' %>
+        </div>
+      <div>
+    <% end %>
+  </div>
+</div>

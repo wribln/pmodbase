@@ -64,10 +64,18 @@ en:
       form_title:         'Edit Interface Agreement'
     new:
       form_title:         'Add New Interface'
-    new_ia:
-      form_titles:         [ 'Add New Interface Agreement to Interface', 'Revise Interface Agreement', 'Terminate Interface Agreement' ]
-    new_ia_rev:
-      form_title:         'Revise Interface Agreement'
+    new_ia:               # 0                            1                            2                               3                             4 
+      form_titles:        ['Create Interface Agreement','Revise Interface Agreement','Terminate Interface Agreement','Resolve Interface Agreement','Close Interface Agreement']
+    new_wf:
+      form_title:         'Add New or Modify Interface Agreement'
+      new_4_if:           'For Interface %{if_code}'
+      new_4_if_label:     'Add New Interface Agreement'
+      new_4_ia:           'For the Existing Interface Agreement'
+      copy:               'Create a Copy as New Interface Agreement'
+      revise:             'Start Revision Workflow'
+      terminate:          'Start Termination Workflow'
+      resolve:            'Start Workflow to Change Status to Resolved'
+      close:              'Start Workflow to Change Status to Closed'
     index:
       form_title:         'List of Interfaces and Interface Agreements'
       if_title:           'Title / Interface Agreements'
@@ -104,6 +112,7 @@ en:
       cfr_record_id:      'CFR Record [ID]'
       cfr_record_link:    'Show CFR Index'
     form_if:
+      code:               'Interface Code'
       cfr_record_id:      'CFR Record [ID]'
       cfr_record_link:    'Show CFR Index'
     msg:
@@ -115,8 +124,7 @@ en:
       no_edit_now:        'No update permitted at this state.'
       inconsistent:       'Inconsistent data: %{detail}'
       no_access_4:        'Given account has no access permission for this role.'
-      no_rev_now:         'Revision only permitted on agreed Interface Agreements.'
-      no_fin_now:         'Termination only permitted on agreed Interface Agreements.'
+      bad_status:         'Request not permitted for current Interface Agreement status.'
 
   isr_agreements:
     title:          'ISR - Interface Agreements'

@@ -17,10 +17,16 @@
 # GET /isr/new          new         Create new IF                           IFM
 # POST /isr             create      
 #
+# This is slightly tricky as the :id is used for both IF and IA, depending
+# on the second routing parameter :wt (workflow type)
+#
 # GET /isr/1/new        new_ia      Create new IA for IF 1, start WF 0      IFM
-# GET /isr/1/copy       new_ia_copy Copy this IA, start WF 0 (like new_ia)  IFM
-# GET /isr/1/rev        new_ia_rev  Create revision for IA 1, start WF 1    IFM
-# GET /isr/1/fin        new_ia_fin  Create termination for IA 1, start WF 2 IFM
+# GET /isr/1/new?wt=0               Create new IA as copy of IA 1 with WF 0
+# GET /isr/1/new?wt=1               Revise IA
+# GET /isr/1/new?wt=2               Terminate IA
+# GET /isr/1/new?wt=3               Change IA status to resolved
+# GET /isr/1/new?wt=4               Change IA status to closed
+# GET /isr/1/new?wt=5               Create new IA for IF of IA 1 with WF 0 
 # POST /isr/ia          create_ia
 #
 # GET /isr/1/edit       edit        Edit IF 1                               IFM
@@ -88,52 +94,49 @@ class IsrInterfacesController < ApplicationController
     set_selections( :to_create )
   end
 
-  # create new IA based on this IF
+  # create new IA via IF
 
   def new_ia
     set_final_breadcrumb( :new )
-    @isr_interface = IsrInterface.find( params[ :id ])
-    @isr_agreement = @isr_interface.isr_agreements.build
-    # copy groups - for convenience
-    @isr_agreement.l_group_id = @isr_interface.l_group_id
-    @isr_agreement.p_group_id = @isr_interface.p_group_id
-    @isr_agreement.prepare_revision( 0 )
-    initialize_current_workflow
-    set_selections( :to_create )
+    case wt = params.fetch( :wt, -1 ).to_i
+    when -1
+      @isr_interface = IsrInterface.find( params[ :id ])
+      @isr_agreement = @isr_interface.isr_agreements.build
+      @isr_agreement.ia_type = 0
+      @isr_agreement.l_group_id = @isr_interface.l_group_id
+      @isr_agreement.p_group_id = @isr_interface.p_group_id
+    when 0..4
+      prev_ia = @isr_agreement = IsrAgreement.find( params[ :id ])
+      @isr_interface = @isr_agreement.isr_interface
+      @isr_agreement = @isr_agreement.dup
+      @isr_agreement.ia_type = wt
+      @isr_agreement.based_on = prev_ia
+    when 5
+      @isr_agreement = IsrAgreement.find( params[ :id ])
+      @isr_interface = @isr_agreement.isr_interface
+      @isr_agreement = @isr_interface.isr_agreements.build
+      @isr_agreement.ia_type = 0
+      @isr_agreement.l_group_id = @isr_interface.l_group_id
+      @isr_agreement.p_group_id = @isr_interface.p_group_id
+    else
+      raise ArgumentError.new( "bad parameter value wt: #{ wt }." )
+    end
+    unless agreement_status_ok?
+      redirect_to @isr_agreement.based_on, notice: I18n.t( 'isr_interfaces.msg.bad_status' )
+    else
+      @isr_agreement.prepare_revision
+      initialize_current_workflow
+      set_selections( :to_create )
+    end
   end
 
   # create new IA based on this IA
 
-  def new_ia_copy
-    prepare_new_ia( 0 )
-  end
-
-  def new_ia_rev
-    unless agreement_status_ok( 1, @isr_agreement )
-      redirect_to @isr_agreement, notice: I18n.t( 'isr_interfaces.msg.no_rev_now' )
-    else
-      prepare_new_ia( 1, @isr_agreement.id )
-    end
-  end
-
-  def new_ia_fin
-    unless agreement_status_ok( 2, @isr_agreement )
-      redirect_to @isr_agreement, notice: I18n.t( 'isr_interfaces.msg.no_fin_now' )
-    else
-      prepare_new_ia( 2, @isr_agreement.id )
-    end
-  end
-
-  def prepare_new_ia( ia_type, based_on_id = nil )
+  def new_wf
     set_final_breadcrumb( :new )
-    @isr_agreement = @isr_agreement.dup
-    @isr_agreement.based_on_id = based_on_id
-    @isr_agreement.prepare_revision( ia_type )
-    @workflow.initialize_current( ia_type, 0, 0 )
-    set_selections( :to_create )
-    render :new_ia
-  end    
-  private :prepare_new_ia    
+    @isr_agreement = IsrAgreement.find( params[ :id ])
+    @isr_interface = @isr_agreement.isr_interface
+  end
 
   # GET /isr/1/edit
 
@@ -171,12 +174,12 @@ class IsrInterfacesController < ApplicationController
     ia_type = params.fetch( :isr_agreement ).fetch( :ia_type ).to_i
     @workflow.initialize_current( ia_type, 0, 0 )
     @isr_agreement = @isr_interface.isr_agreements.build( isr_agreement_params )
-    unless agreement_status_ok( ia_type, @isr_agreement.based_on )
+    unless agreement_status_ok?
       respond_to do |format|
-        format.html { redirect_to @isr_agreement.based_on, notice: I18n.t( 'isr_interfaces.msg.no_fin_now' )}
+        format.html { redirect_to @isr_agreement.based_on, notice: I18n.t( 'isr_interfaces.msg.bad_status' )}
       end
     else
-      @isr_agreement.prepare_revision( ia_type )
+      @isr_agreement.prepare_revision
       @isr_agreement.set_next_ia_no
       update_status_and_task
       respond_to do |format|
@@ -307,10 +310,11 @@ class IsrInterfacesController < ApplicationController
     # let test pass if isa is not given (although required):
     # validation should take care of this issue.
 
-    def agreement_status_ok( wf, isa )
+    def agreement_status_ok?
+      isa = @isr_agreement.based_on
       return true if isa.nil?
-      case wf
-      when 1, 2
+      case @isr_agreement.ia_type
+      when 1, 2, 3, 4
         [ 1 ].include? isa.ia_status
       else
         true

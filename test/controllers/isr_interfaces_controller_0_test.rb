@@ -63,7 +63,7 @@ class IsrInterfacesController0Test < ActionController::TestCase
   end
 
   test 'should get ia copy' do
-    get :new_ia_copy, id: @isr_agreement
+    get :new_ia, id: @isr_agreement, wt: 0
     assert_response :success
     isf = assigns( :isr_interface )
     isa = assigns( :isr_agreement )
@@ -75,15 +75,16 @@ class IsrInterfacesController0Test < ActionController::TestCase
 
     # first attempt fails due to wrong status (must be agreed)
 
-    get :new_ia_rev, id: @isr_agreement
+    get :new_ia, id: @isr_agreement, wt: 1
     isa = assigns( :isr_agreement )
     refute_nil isa
-    assert_redirected_to isr_agreement_path( isa )
+    assert_redirected_to isr_agreement_path( isa.based_on_id )
 
     isa.ia_status = 1
-    assert isa.save
+    puts isa.based_on.inspect
+    assert isa.save, isa.inspect
 
-    get :new_ia_rev, id: @isr_agreement
+    get :new_ia, id: @isr_agreement, wt: 1
     assert_response :success
     isf = assigns( :isr_interface )
     isa = assigns( :isr_agreement )
@@ -95,15 +96,15 @@ class IsrInterfacesController0Test < ActionController::TestCase
 
     # first attempt fails due to wrong status (must be agreed)
 
-    get :new_ia_fin, id: @isr_agreement
+    get :new_ia, id: @isr_agreement, wt: 2
     isa = assigns( :isr_agreement )
     refute_nil isa
-    assert_redirected_to isr_agreement_path( isa )
+    assert_redirected_to isr_agreement_path( isa.based_on )
 
     isa.ia_status = 1
-    assert isa.save
+    assert isa.save, isa.errors.messages
 
-    get :new_ia_rev, id: @isr_agreement
+    get :new_ia, id: @isr_agreement, wt: 2
     assert_response :success
     isf = assigns( :isr_interface )
     isa = assigns( :isr_agreement )
