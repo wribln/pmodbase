@@ -119,12 +119,13 @@ en:
       create_ok:          'Interface successfully created.'
       update_ok:          'Interface successfully updated.'
       delete_ok:          'Interface successfully deleted.'
+      delete_ia_ok:       'Interface Agreement successfully deleted.'
       update_ia_ok:       'Interface Agreement successfully updated.'
       create_ia_ok:       'Interface Agreement successfully created.'
       no_edit_now:        'No update permitted at this state.'
       inconsistent:       'Inconsistent data: %{detail}'
       no_access_4:        'Given account has no access permission for this role.'
-      bad_status:         'Request not permitted for current Interface Agreement status.'
+      bad_status:         'Request not permitted for current Interface (Agreement) status.'
 
   isr_agreements:
     title:          'ISR - Interface Agreements'
@@ -204,3 +205,60 @@ en:
           s07:    'termination modified'
           s08:    'termination agreed'
           s09:    'closed - withdrawn'
+
+      w02:
+        label:    'Terminate Interface Agreement'
+        tasks:
+          t00:    '<start new workflow>'
+          t01:    'Create Termination Request'
+          t02:    'Confirm Termination Request (IFL)'
+          t03:    'Confirm Termination Request (IFP)'
+          t04:    'Archive Termination Request'
+          t05:    '<workflow completed>'
+        states:
+          s00:    '<initial>'
+          s01:    'termination request created'
+          s02:    'termination request confirmed (IFL)'
+          s03:    'termination request confirmed (IFP)'
+          s04:    'termination request completed'
+          s05:    'termination request rejected (IFL)'
+          s06:    'termination request rejected (IFP)'
+          s07:    'closed - termination request rejected'
+
+      w03:
+        label:    'Resolve Interface Agreement'
+        tasks:
+          t00:    '<start new workflow>'
+          t01:    'Create Resolve Request'
+          t02:    'Confirm Resolve Request (IFL)'
+          t03:    'Confirm Resolve Request (IFP)'
+          t04:    'Archive Resolve Request'
+          t05:    '<workflow completed>'
+        states:
+          s00:    '<initial>'
+          s01:    'resolve request created'
+          s02:    'resolve request confirmed (IFL)'
+          s03:    'resolve request confirmed (IFP)'
+          s04:    'resolve request completed'
+          s05:    'resolve request rejected (IFL)'
+          s06:    'resolve request rejected (IFP)'
+          s07:    'closed - resolve request rejected'
+
+      w04:
+        label:    'Close Interface Agreement'
+        tasks:
+          t00:    '<start new workflow>'
+          t01:    'Create Close Request'
+          t02:    'Confirm Close Request (IFL)'
+          t03:    'Confirm Close Request (IFP)'
+          t04:    'Archive Close Request'
+          t05:    '<workflow completed>'
+        states:
+          s00:    '<initial>'
+          s01:    'close request created'
+          s02:    'close request confirmed (IFL)'
+          s03:    'close request confirmed (IFP)'
+          s04:    'close request completed'
+          s05:    'close request rejected (IFL)'
+          s06:    'close request rejected (IFP)'
+          s07:    'closed - close request rejected'

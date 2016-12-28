@@ -54,5 +54,5 @@
           <%- end -%>
           <div class="form-group p-group">
             <p class="col-sm-3 p-label"><%= IsrAgreement.human_attribute_name( :current_status_task )%></p>
-            <p class="col-sm-4"><%= @workflow.status_task_label( show_ia.current_status, show_ia.current_task, show_ia.ia_type ) %></p>
+            <p class="col-sm-6"><%= @workflow.status_task_label( show_ia.current_status, show_ia.current_task, show_ia.ia_type ) %></p>
           </div>

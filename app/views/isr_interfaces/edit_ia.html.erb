@@ -18,7 +18,7 @@
       <div class="form-group">
         <hr style="margin:4px"/>  
       </div>
-      <%- if @workflow.wf_current_task == 3 %>
+      <%- if confirm_or_reject? %>
         <%= render partial: 'show_ia', object: @isr_agreement %>
         <div class="form-group">
           <div class="col-sm-offset-3 col-sm-2">

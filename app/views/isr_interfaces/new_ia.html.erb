@@ -3,7 +3,7 @@
   <%= breadcrumbs %>
   <%= form_title_i @isr_agreement.ia_type %>
   <div class="form-horizontal" role="form">
-    <%= form_for @isr_interface do |f| %>
+    <%= form_for @isr_interface, method: :post, url: create_isr_agreement_path( @isr_interface ) do |f| %>
       <%= render partial: 'shared/errors', object: @isr_interface.errors %>
       <%= render partial: 'shared/errors', object: @isr_agreement.errors %>
       <%= fields_for @isr_interface do |f| %>

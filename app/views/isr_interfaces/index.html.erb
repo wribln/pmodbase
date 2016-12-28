@@ -42,9 +42,9 @@
           <% isr.isr_agreements.isr_active.each do |isa| %>
           <tr>
             <td colspan="2">&nbsp;</td>
-            <td><%= isa.code %></td>
+            <td><%= isa.code_and_revision %></td>
             <td colspan="2"><%= isa.ia_status_label %></td>
-            <td><%= @workflow.status_task_label( isa.current_status, isa.current_task, 0 ) %></td>
+            <td><%= @workflow.status_task_label( isa.current_status, isa.current_task, isa.ia_type ) %></td>
             <td><%= render partial: 'actions', object: isa %></td>
           </tr>
           <% end %> 

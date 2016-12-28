@@ -94,27 +94,6 @@ class IsrInterface < ActiveRecord::Base
     end      
   end
 
-  # freeze/unfreeze cfr_record
-  # both require a valid l_sign_time
-
-  def freeze_cfr_record
-    return if cfr_record.nil?
-    raise ArgumentError, 'freeze_cfr_record requires freeze_time' if freeze_time.nil?
-    cfr_record.freeze_rec( freeze_time )
-  end
-
-  def unfreeze_cfr_record
-    return if cfr_record.nil?
-    raise ArgumentError, 'unfreeze_cfr_record requires freeze_time' if freeze_time.nil?
-    cfr_record.unfreeze_rec( freeze_time )
-  end
-
-  # if related cfr_record was modified, save it here within the save transaction
-
-  def update_cfr_record
-    cfr_record.try( :save )
-  end
-
   # perform all actions to mark this interface as withdrawn
 
   def withdraw

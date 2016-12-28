@@ -40,11 +40,13 @@
     <ul>
       <li><%= help_param IsrAgreement.human_attribute_name( :code )%> together with the
       <%= help_param IsrAgreement.human_attribute_name( :rev_no )%> defines a
-      unique identifier for the IA. The format is: '<strong>IF&ndash;</strong>&lt;n&gt;<strong>&ndash;&lt;IA&gt;&ndash;</strong>&lt;m&gt;<strong>&ndash;</strong>&lt;IFL&gt;<strong>&ndash;</strong>&lt;IFP&gt;&nbsp;[&nbsp;<%= IsrAgreement.human_attribute_name( :revision_suffix, rev_no: '<r>' )%>&nbsp;]'
+      unique identifier for the IA. The format is:
+      '<strong>IF&ndash;</strong>&lt;n&gt;<strong>&ndash;&lt;IA&gt;&ndash;</strong>&lt;m&gt;<strong>&ndash;</strong>&lt;IFL&gt;<strong>&ndash;</strong>&lt;IFP&gt;&nbsp;[&nbsp;<%= IsrAgreement.human_attribute_name( :revision_suffix, rev_no: '<r>' )%>&nbsp;]'
       where &lt;n&gt; is the related IF number, &lt;m&gt; the sequence number of the IA for this IF,
       and &lt;r&gt; the number of the revision. The suffix with the revision number is not shown if
       the revision number is zero). For example, the first IA for 'IF&ndash;009&ndash;COM&ndash;CIV' would be coded as
-      'IF-009-IA-1-COM-CIV'. The second revision of this IA would be shown as 'IF&ndash;009&ndash;IA&ndash;1&ndash;COM&ndash;CIV&nbsp;<%= IsrAgreement.human_attribute_name( :revision_suffix, rev_no: '2' )%>'.<br/>
+      'IF-009-IA-1-COM-CIV'. The second revision of this IA would be shown as 
+      'IF&ndash;009&ndash;IA&ndash;1&ndash;COM&ndash;CIV&nbsp;<%= IsrAgreement.human_attribute_name( :revision_suffix, rev_no: '2' )%>'.<br/>
       The codes for the &lt;IFL&gt; and &lt;IFP&gt; refer to the groups of the IA-specific
       leading project group (the 'Interface Leader' or 
       <%= help_term IsrInterface.human_attribute_name( :l_group_id)-%>), and
@@ -56,11 +58,11 @@
       IFL in the related IF but it can also be another group.</li>
       <li><%= help_param IsrInterface.human_attribute_name( :p_group_id )-%> is the group code
       of the <strong>IA-specific</strong> IFP. This group is responsible to provide support 
-      during the resolution of any issues related to the specified IF according to this IA. This group can be the same as the
-      IFP in the related IF but it can also be another group.</li>
+      during the resolution of any issues related to the specified IF according to this IA.
+      This group can be the same as the IFP in the related IF but it can also be another group.</li>
       <li>For each group, IFL and IFP, an owner and an optional deputy account shall be defined. Only
-      the users with these accounts will have permission to perform the necessary tasks in this IA. These attributes are
-      named: 
+      the users with these accounts will have permission to perform the necessary tasks in this IA.
+      These attributes are named: 
       <%= help_param IsrAgreement.human_attribute_name( :l_owner_id )%>, 
       <%= help_param IsrAgreement.human_attribute_name( :p_owner_id )%>,
       <%= help_param IsrAgreement.human_attribute_name( :l_deputy_id )%>, and
@@ -77,8 +79,6 @@
       <%= help_term t( 'isr_interfaces.form_if.cfr_record_id' )-%>. The button next to the input field
       labelled <%= help_term t( 'isr_interfaces.form_if.cfr_record_link' )-%> leads to the listing
       of all CFR records.<br/>
-      When an IA is defined and frozen (when the IFL releases his definition), this CFR Record will
-      be marked as 'frozen' such that no more changes to this CFR record can be made.<br/>
       It is the task of the Interface Manager to ensure that all related documents are correctly
       stored in the project's document management system.</li>
       <li><%= help_param IsrAgreement.human_attribute_name( :res_steps_id )%> links to the IA-specific

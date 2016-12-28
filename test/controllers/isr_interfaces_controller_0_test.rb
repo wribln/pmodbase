@@ -12,7 +12,7 @@ class IsrInterfacesController0Test < ActionController::TestCase
   test 'check class attributes' do
     validate_feature_class_attributes FEATURE_ID_ISR_INTERFACES, 
       ApplicationController::FEATURE_ACCESS_VIEW,
-      ApplicationController::FEATURE_CONTROL_WF, 3
+      ApplicationController::FEATURE_CONTROL_WF, 5
   end
 
   test 'should get index' do
@@ -23,7 +23,7 @@ class IsrInterfacesController0Test < ActionController::TestCase
 
   test 'should show isr_interface' do
     get :show, id: @isr_interface
-    assert_response :success
+    assert_response :success  
   end
 
   test 'should show all' do
@@ -60,6 +60,8 @@ class IsrInterfacesController0Test < ActionController::TestCase
     isa = assigns( :isr_agreement )
     refute_nil isf
     refute_nil isa
+    assert_equal isf.id, @isr_interface.id
+    assert_equal isa.isr_interface.id, isf.id
   end
 
   test 'should get ia copy' do
@@ -69,6 +71,9 @@ class IsrInterfacesController0Test < ActionController::TestCase
     isa = assigns( :isr_agreement )
     refute_nil isf
     refute_nil isa
+    assert_equal isf.id, @isr_interface.id
+    assert_equal isa.isr_interface.id, isf.id
+    assert_nil isa.based_on_id
   end
 
   test 'should get revised ia' do
@@ -80,9 +85,8 @@ class IsrInterfacesController0Test < ActionController::TestCase
     refute_nil isa
     assert_redirected_to isr_agreement_path( isa.based_on_id )
 
-    isa.ia_status = 1
-    puts isa.based_on.inspect
-    assert isa.save, isa.inspect
+    isa.based_on.ia_status = 1
+    assert isa.save, isa.errors.messages
 
     get :new_ia, id: @isr_agreement, wt: 1
     assert_response :success
@@ -101,7 +105,7 @@ class IsrInterfacesController0Test < ActionController::TestCase
     refute_nil isa
     assert_redirected_to isr_agreement_path( isa.based_on )
 
-    isa.ia_status = 1
+    isa.based_on.ia_status = 1
     assert isa.save, isa.errors.messages
 
     get :new_ia, id: @isr_agreement, wt: 2

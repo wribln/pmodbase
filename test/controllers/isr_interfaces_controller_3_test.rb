@@ -2,7 +2,7 @@ require 'test_helper'
 class IsrInterfacesController3Test < ActionController::TestCase
   tests IsrInterfacesController
 
-  # try steps in workflow 1 - standard path: create revision
+  # try steps in workflow 1 - create revision
 
   setup do
     @isr_interface = isr_interfaces( :one ) 
@@ -24,7 +24,7 @@ class IsrInterfacesController3Test < ActionController::TestCase
     isf = assigns( :isr_interface )
     refute_nil isf
     assert_redirected_to isr_interface_details_path( isf )
-    assert 0, isf.if_status
+    assert_equal 0, isf.if_status
 
     # create associated agreement - should fail as revision is
     # only possible on an existing agreement
@@ -65,7 +65,7 @@ class IsrInterfacesController3Test < ActionController::TestCase
 
     isa.reload
 
-    assert_equal 2, isa.ia_no
+    assert_equal 1, isa.ia_no
     assert_equal 1, isa.rev_no
     assert_equal 0, isa.ia_status
     assert_equal 4, isa.based_on.ia_status
@@ -82,7 +82,7 @@ class IsrInterfacesController3Test < ActionController::TestCase
 
     isa.reload
     isf.reload
-    assert_equal 2, isa.ia_no
+    assert_equal 1, isa.ia_no
     assert_equal 1, isa.rev_no
     assert_equal 0, isa.ia_status
     assert_equal 4, isa.based_on.ia_status
@@ -99,7 +99,7 @@ class IsrInterfacesController3Test < ActionController::TestCase
 
     isa.reload
     isf.reload
-    assert_equal 2, isa.ia_no
+    assert_equal 1, isa.ia_no
     assert_equal 1, isa.rev_no
     assert_equal 0, isa.ia_status
     assert_equal 4, isa.based_on.ia_status
@@ -115,7 +115,7 @@ class IsrInterfacesController3Test < ActionController::TestCase
 
     isa.reload
     isf.reload
-    assert_equal 2, isa.ia_no
+    assert_equal 1, isa.ia_no
     assert_equal 1, isa.rev_no
     assert_equal 0, isa.ia_status
     assert_equal 4, isa.based_on.ia_status
@@ -131,7 +131,7 @@ class IsrInterfacesController3Test < ActionController::TestCase
 
     isa.reload
     isf.reload
-    assert_equal 2, isa.ia_no
+    assert_equal 1, isa.ia_no
     assert_equal 1, isa.rev_no
     assert_equal 0, isa.ia_status
     assert_equal 4, isa.based_on.ia_status
@@ -147,7 +147,7 @@ class IsrInterfacesController3Test < ActionController::TestCase
     
     isa.reload
     isf.reload
-    assert_equal 2, isa.ia_no
+    assert_equal 1, isa.ia_no
     assert_equal 1, isa.rev_no
     assert_equal 1, isa.ia_status # agreed
     assert_equal 2, isf.if_status # defined - frozen

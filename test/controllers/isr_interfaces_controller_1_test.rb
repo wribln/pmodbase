@@ -24,7 +24,7 @@ class IsrInterfacesController1Test < ActionController::TestCase
     isf = assigns( :isr_interface )
     refute_nil isf
     assert_redirected_to isr_interface_details_path( isf )
-    assert 0, isf.if_status
+    assert_equal 0, isf.if_status
 
     # create associated agreement
 

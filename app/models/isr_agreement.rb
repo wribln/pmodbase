@@ -92,7 +92,7 @@ class IsrAgreement < ActiveRecord::Base
 
   # default scope is order:
 
-  default_scope { order( isr_interface_id: :asc, ia_no: :asc, rev_no: :desc )}
+  default_scope { order( isr_interface_id: :asc, ia_no: :asc, rev_no: :asc )}
 
   # for filtering
 
@@ -106,9 +106,9 @@ class IsrAgreement < ActiveRecord::Base
 
   scope :individual, ->  { where( ia_status: [ 0, 1, 2, 3, 6 ])}
 
-  # IAs to be shown in the ISR index:
+  # IAs to be shown in the ISR index (all active and pending)
 
-  scope :isr_active, ->  { where( ia_status: [ 0, 1, 2, 4 ])}
+  scope :isr_active, ->  { where( ia_status: [ 0, 1, 2, 3, 4, 5 ])}
 
   # format IA code for display. IMPORTANT: if you change this code, you may
   # need to adjust the view helper link_to_isa (defined in /helpers/link_helper.rb)
@@ -132,21 +132,20 @@ class IsrAgreement < ActiveRecord::Base
   # prepare new or initial revision, assume that self is copy
   # if ia_type is zero, assume reset to initial, default values
 
-  def prepare_revision
-    case self.ia_type
-    when 0
+  def prepare_revision( wf, bo = nil )
+    self.ia_type = wf
+    case wf
+    when 0 # new/copy
       self.rev_no = 0
-      self.ia_no = nil
       self.res_steps_id = nil
       self.val_steps_id = nil
       self.cfr_record_id = nil
       self.based_on_id = nil
-    when 1
+      set_next_ia_no
+    when 1, 2, 3, 4 # revise, terminate, resolve, close
       self.rev_no += 1
-      self.based_on.ia_status = 4 unless self.based_on_id.nil?
-    when 2, 3, 4
-      self.rev_no += 1
-      self.based_on.ia_status = 5 unless self.based_on_id.nil?
+      self.based_on = bo
+      self.ia_no = bo.ia_no unless bo.nil?
     end
     self.ia_status = 0 # open
     self.current_status = 0

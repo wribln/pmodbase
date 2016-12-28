@@ -143,7 +143,7 @@ class IsrAgreementTest < ActiveSupport::TestCase
     assert_equal 0, as.length
 
     as = IsrAgreement.isr_active
-    assert_equal 0, as.length
+    assert_equal 1, as.length
 
     as = IsrAgreement.ff_grp( isa.l_group_id )
     assert_equal 1, as.length
@@ -181,8 +181,7 @@ class IsrAgreementTest < ActiveSupport::TestCase
     assert isr2.save
     isa2 = isr_agreements( :one ).dup
     isa2.isr_interface_id = isr2.id
-    isa2.ia_type = 0
-    isa2.prepare_revision
+    isa2.prepare_revision( 0 )
     isa2.set_next_ia_no
     isa2.based_on_id = nil
     assert isa2.save, isa2.errors.messages
@@ -204,8 +203,7 @@ class IsrAgreementTest < ActiveSupport::TestCase
   test 'owners/deputies have required access' do
     isf = isr_interfaces( :one )
     isa = isf.isr_agreements.build
-    isa.ia_type = 0
-    isa.prepare_revision
+    isa.prepare_revision( 0 )
     isa.set_next_ia_no
 
     # no owner/deputy defined
