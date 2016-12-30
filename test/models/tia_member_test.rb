@@ -1,7 +1,7 @@
 require 'test_helper'
 class TiaMemberTest < ActiveSupport::TestCase
 
-  test "fixture usefulness" do
+  test 'fixture usefulness' do
     # t1, t2 are members of tia_list_two, t3 of tia_list_one
     t1 = tia_members( :one )
     t2 = tia_members( :two )
@@ -23,7 +23,7 @@ class TiaMemberTest < ActiveSupport::TestCase
     assert t3.valid?
   end
 
-  test "required attributes" do
+  test 'required attributes' do
     tm = tia_members( :one )
     tx = tm.dup
 

@@ -28,6 +28,7 @@ class TiaList < ActiveRecord::Base
   # use this scope for own lists
 
   scope :for_user, -> ( id ){ where 'owner_account_id = :param OR deputy_account_id = :param', param: id }
+  scope :active,   -> { where archived: false }
 
   # check if related records exist
 
@@ -67,6 +68,14 @@ class TiaList < ActiveRecord::Base
   def accounts_for_select
     tia_members.pluck( :account_id ) + [ owner_account_id, deputy_account_id ].compact
   end
+
+  private
+
+    # ensure that archived is either true or false
+
+    def set_defaults
+      set_nil_default( :archived, false )
+    end
 
 end
   

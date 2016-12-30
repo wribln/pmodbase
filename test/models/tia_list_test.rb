@@ -7,6 +7,14 @@ class TiaListTest < ActiveSupport::TestCase
     assert tia.label.length <= MAX_LENGTH_OF_DESCRIPTION
     assert_not_nil tia.owner_account_id
     assert_not_nil tia.deputy_account_id
+    refute tia.archived
+
+    tia = tia_lists( :tia_list_two )
+    assert tia.code.length < MAX_LENGTH_OF_CODE
+    assert tia.label.length <= MAX_LENGTH_OF_DESCRIPTION
+    assert_not_nil tia.owner_account_id
+    assert_nil tia.deputy_account_id
+    refute tia.archived
   end
 
   test 'item code' do
@@ -86,6 +94,17 @@ class TiaListTest < ActiveSupport::TestCase
     t = tia_lists( :tia_list_two )
     a = t.accounts_for_select
     assert_equal a, a | [ accounts( :one ).id, accounts( :two ).id, accounts( :wop ).id, ]
+  end
+
+  test 'scopes' do
+    tl = TiaList.active
+    assert_equal 2, tl.count
+
+    tl[0].archived = true
+    tl[0].save
+
+    tl = TiaList.active
+    assert_equal 1, tl.count
   end
 
 end

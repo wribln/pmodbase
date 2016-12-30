@@ -18,7 +18,6 @@ class IsrInterfaceTest < ActiveSupport::TestCase
     assert_nil isr.cfr_record_id
     assert_equal 0, isr.if_level
     assert_equal 0, isr.if_status
-    assert_nil isr.freeze_time
   end
 
   test 'labels for levels' do
@@ -115,63 +114,6 @@ class IsrInterfaceTest < ActiveSupport::TestCase
     as = IsrInterface.includes( :active_agreements ).ff_wfs( 1 )
     assert_equal 0, as.length
 
-  end
-
-  test 'freeze and unfreeze cfr record' do
-    isr = isr_interfaces( :one )
-    refute isr.cfr_record.nil?
-    refute isr.cfr_record.rec_frozen
-    assert_nil isr.freeze_time
-    d = DateTime.now
-
-    assert_raises( ArgumentError ) { isr.freeze_cfr_record }
-    refute isr.cfr_record.rec_frozen
-
-    assert_raises( ArgumentError ) { isr.unfreeze_cfr_record }
-    refute isr.cfr_record.rec_frozen
-
-    isr.freeze_time = d
-    isr.freeze_cfr_record
-    assert isr.cfr_record.rec_frozen
-
-    isr.freeze_time = d + 60
-    isr.freeze_cfr_record
-    assert isr.cfr_record.rec_frozen
-
-    isr.unfreeze_cfr_record
-    assert isr.cfr_record.rec_frozen
-
-    isr.freeze_time = d
-    isr.unfreeze_cfr_record
-    refute isr.cfr_record.rec_frozen
-
-    c = isr.cfr_record
-    isr.cfr_record_id = nil
-    refute c.rec_frozen
-
-    isr.freeze_cfr_record
-    refute c.rec_frozen
-
-    isr.unfreeze_cfr_record
-    refute c.rec_frozen
-
-    c.rec_frozen = true
-    assert c.rec_frozen
-
-    isr.freeze_cfr_record
-    assert c.rec_frozen
-
-    isr.unfreeze_cfr_record
-    assert c.rec_frozen
-
-    isr.cfr_record = c
-    assert isr.cfr_record.rec_frozen
-
-    isr.freeze_cfr_record
-    assert isr.cfr_record.rec_frozen
-
-    isr.unfreeze_cfr_record
-    assert isr.cfr_record.rec_frozen    
   end
 
 end

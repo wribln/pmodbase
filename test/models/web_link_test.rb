@@ -2,7 +2,7 @@ require 'test_helper'
 
 class WebLinkTest < ActiveSupport::TestCase
 
-  test "fixture usefulness" do
+  test 'fixture usefulness' do
     wl = web_links( :one )
     assert wl.label.length <= MAX_LENGTH_OF_LABEL
     refute wl.hyperlink.blank?
@@ -10,24 +10,24 @@ class WebLinkTest < ActiveSupport::TestCase
     assert wl.seqno.kind_of? Integer
   end
 
-  test "label must not be blank" do
+  test 'label must not be blank' do
     wl = WebLink.new
     assert_not wl.valid?
     assert_includes wl.errors, :label
-    wl.label = "Something"
+    wl.label = 'Something'
     assert wl.valid?
   end
 
-  test "hyperlinks" do
+  test 'hyperlinks' do
     wl = WebLink.new
-    wl.label = "Hyperlinktest"
-    wl.hyperlink = ""
+    wl.label = 'Hyperlinktest'
+    wl.hyperlink = ''
     assert wl.valid? # empty hyperlink is ok
 
     wl.hyperlink = nil 
     assert wl.valid? # nil hyperlink is ok
 
-    wl.hyperlink = "test" # this should fail - no valid url
+    wl.hyperlink = 'test' # this should fail - no valid url
     refute wl.valid?
     assert_includes wl.errors, :hyperlink
   end

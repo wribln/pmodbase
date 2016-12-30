@@ -6,7 +6,7 @@ class DsrStatusRecordsController < ApplicationController
   before_action :set_dsr_status_record,  only: [ :show, :edit, :update, :destroy, :add, :update_b_one ]
   before_action :set_dsr_status_records, only: [ :index ]
 
-  # GET /dsrs
+  # GET /dsr
 
   def index
     @filter_fields = filter_params
@@ -16,8 +16,8 @@ class DsrStatusRecordsController < ApplicationController
     @submission_groups = SubmissionGroup.all.collect{ |g| [ g.code, g.id ]}
   end
 
-  # GET /dsrs/stats
-  # GET /dsrs/1/stats
+  # GET /dsr/stats
+  # GET /dsr/1/stats
 
   # TODO fix breadcrumbs: Currently, breadcrumbs does not support this type of nested feature
   # TODO this is not very DRY yet: stats 1/7, 2/8, 3/9, 4/10, 5/11, 6/12 are almost identical,
@@ -102,17 +102,17 @@ class DsrStatusRecordsController < ApplicationController
     end
   end
 
-  # GET /dsrs/1
+  # GET /dsr/1
 
   def show
   end
 
-  # GET /dsrs/info
+  # GET /dsr/info
 
   def info_workflow
   end
 
-  # GET /dsrs/1/update - update baseline for this record
+  # GET /dsr/1/update - update baseline for this record
 
   def update_b_one
     if current_user.permission_to_access( feature_identifier, :to_update ) == 4 then
@@ -124,7 +124,7 @@ class DsrStatusRecordsController < ApplicationController
     end
   end
 
-  # GET /dsrs/update - update baseline for all records
+  # GET /dsr/update - update baseline for all records
 
   def update_b_all
     if current_user.permission_to_access( feature_identifier, :to_update ) == 4 then
@@ -138,7 +138,7 @@ class DsrStatusRecordsController < ApplicationController
     end
   end
 
-  # GET /dsrs/new
+  # GET /dsr/new
 
   def new
     @dsr_status_record = DsrStatusRecord.new
@@ -153,7 +153,7 @@ class DsrStatusRecordsController < ApplicationController
    end
   end
 
-  # GET /dsrs/1/new = add
+  # GET /dsr/1/new = add
   # create a new document based on attributes of an existing document
 
   def add
@@ -177,13 +177,13 @@ class DsrStatusRecordsController < ApplicationController
    end
   end
 
-  # GET /dsrs/1/edit
+  # GET /dsr/1/edit
 
   def edit
     @dsr_sender_groups = permitted_groups( :to_update )
   end
 
-  # POST /dsrs
+  # POST /dsr
 
   def create
     init_current_workflow( 0, params.fetch( :sender_group_id, nil ))
@@ -218,7 +218,7 @@ class DsrStatusRecordsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /dsrs/1
+  # PATCH/PUT /dsr/1
 
   def update
     # check permissions - again, to be on the safe side
@@ -251,7 +251,7 @@ class DsrStatusRecordsController < ApplicationController
     end
   end
 
-  # DELETE /dsrs/1
+  # DELETE /dsr/1
 
   def destroy
     @dsr_status_record.destroy
@@ -307,11 +307,11 @@ class DsrStatusRecordsController < ApplicationController
 
     def permitted_groups( action )
       pg = current_user.permitted_groups( feature_identifier, action )
-      Group.permitted_groups( pg ).all.collect{ |g| [ g.code, g.id ]}
+      Group.permitted_groups( pg ).participants_only.collect{ |g| [ g.code, g.id ]}
     end
 
     def all_groups
-      Group.all.collect{ |g| [ g.code, g.id ]}
+      Group.participants_only.collect{ |g| [ g.code, g.id ]}
     end
 
     # collect common method calls

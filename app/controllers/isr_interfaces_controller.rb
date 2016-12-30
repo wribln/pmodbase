@@ -31,6 +31,7 @@
 #
 # GET /isr/1/edit       edit        Edit IF 1                               IFM
 # GET /isr/ia/1/edit    edit_ia     Edit IA 1 using WF                      IFL/IFP
+# GET /isr/1/wdr        edit_wdr    Withdraw IF 1 and associated, open IAs  IFM
 #
 # PATCH/PUT /isr/1      update      Update IF 1                             IFM
 # PATCH/PUT /isr/ia/1   update_ia   Update IA 1                             IFL/IFP
@@ -53,7 +54,7 @@ class IsrInterfacesController < ApplicationController
   initialize_feature FEATURE_ID_ISR_INTERFACES, FEATURE_ACCESS_VIEW, FEATURE_CONTROL_WF, 5
 
   before_action :set_workflow
-  before_action :load_data_from_if, only: [ :show,    :show_all,                  :edit,    :update,    :destroy    ]
+  before_action :load_data_from_if, only: [ :show, :show_all, :edit, :edit_wdr, :update, :destroy ]
   before_action :load_data_from_ia, only: [ :show_ia, :show_ia_all, :show_ia_icf, :edit_ia, :update_ia, :destroy_ia, 
                                             :new_ia_rev, :new_ia_fin, :new_ia_copy ]
   
@@ -90,6 +91,10 @@ class IsrInterfacesController < ApplicationController
   # create new IF
 
   def new
+    unless user_has_ifm_access?( :to_create )
+      render_no_permission
+      return
+    end
     @isr_interface = IsrInterface.new
     set_selections( :to_create )
   end
@@ -98,6 +103,10 @@ class IsrInterfacesController < ApplicationController
 
   def new_ia
     set_final_breadcrumb( :new )
+    unless user_has_ifm_access?( :to_create )
+      render_no_permission
+      return
+    end
     case wt = params.fetch( :wt, -1 ).to_i
     when -1
       @isr_interface = IsrInterface.find( params[ :id ])
@@ -119,30 +128,48 @@ class IsrInterfacesController < ApplicationController
       @isr_agreement.prepare_revision( 0 )
     else
       raise ArgumentError.new( "bad parameter value wt: #{ wt }." )
-    end
+    end 
     unless ia_status_ok?
-      redirect_to @isr_agreement.based_on, notice: I18n.t( 'isr_interfaces.msg.bad_status' )
-    else
-      initialize_current_workflow
-      set_selections( :to_create )
+      render_bad_logic I18n.t( 'isr_interfaces.msg.bad_ia_status' )
+      return
     end
+    initialize_current_workflow
+    set_selections( :to_create )
   end
 
   # create new IA based on this IA
 
   def new_wf
+    unless user_has_ifm_access?( :to_create )
+      render_no_permission
+      return
+    end
     set_final_breadcrumb( :new )
     @isr_agreement = IsrAgreement.find( params[ :id ])
     @isr_interface = @isr_agreement.isr_interface
   end
 
-  # GET /isr/1/edit
+  # edit IF attributes
 
   def edit
+    unless user_has_ifm_access?( :to_update )
+      render_no_permission
+      return
+    end
+    unless if_status_ok?
+      render_bad_logic t( 'isr_interfaces.msg.bad_if_status' )
+      return
+    end
     set_selections( :to_update )
   end
 
+  # edit IF and IA attributes
+
   def edit_ia
+    unless user_has_access?
+      render_no_permission
+      return
+    end
     set_final_breadcrumb( :edit )
     if @workflow.permitted_params.empty? and not @workflow.status_change_possible? then
       redirect_to @isr_agreement, notice: I18n.t( 'isr_interfaces.msg.no_edit_now' )
@@ -151,9 +178,19 @@ class IsrInterfacesController < ApplicationController
     end
   end
 
+  # withdraw IF and associated IAs - same as edit here
+
+  def edit_wdr
+    edit  
+  end
+
   # POST /isr
 
   def create
+    unless user_has_ifm_access?( :to_update )
+      render_no_permission
+      return
+    end
     @isr_interface = IsrInterface.new( isr_interface_params )
     respond_to do |format|
       if @isr_interface.save
@@ -166,6 +203,10 @@ class IsrInterfacesController < ApplicationController
   end
 
   def create_ia
+    unless user_has_ifm_access?( :to_create )
+      render_no_permission
+      return
+    end
     set_final_breadcrumb( :create )
     @isr_interface = IsrInterface.find( params[ :id ])
     @isr_interface.assign_attributes( isr_interface_params )
@@ -174,22 +215,20 @@ class IsrInterfacesController < ApplicationController
     @isr_agreement = @isr_interface.isr_agreements.build( isr_agreement_params )
     @isr_agreement.prepare_revision( ia_type, @isr_agreement.based_on )
     unless ia_status_ok?
-      respond_to do |format|
-        format.html { redirect_to @isr_agreement.based_on, notice: I18n.t( 'isr_interfaces.msg.bad_status' )}
-      end
-    else
-      update_status_and_task
-      respond_to do |format|
-        if @isr_agreement.valid? && @isr_interface.valid?
-          IsrAgreement.transaction do
-            @isr_agreement.save!
-            @isr_interface.save!
-          end
-          format.html { redirect_to isr_agreement_details_path( @isr_agreement ), notice: I18n.t( 'isr_interfaces.msg.create_ia_ok' )}
-        else
-          set_selections( :to_create )
-          format.html { render :new_ia }
+      render_bad_logic t( 'isr_interfaces.msg.bad_ia_status' )
+      return
+    end
+    update_status_and_task
+    respond_to do |format|
+      if @isr_agreement.valid? && @isr_interface.valid?
+        IsrAgreement.transaction do
+          @isr_agreement.save!
+          @isr_interface.save!
         end
+        format.html { redirect_to isr_agreement_details_path( @isr_agreement ), notice: I18n.t( 'isr_interfaces.msg.create_ia_ok' )}
+      else
+        set_selections( :to_create )
+        format.html { render :new_ia }
       end
     end
   end
@@ -197,21 +236,40 @@ class IsrInterfacesController < ApplicationController
   # PATCH/PUT /isr/1
 
   def update
+    unless user_has_ifm_access?( :to_update )
+      render_no_permission
+      return
+    end
     unless if_status_ok?
-      redirect_to @isr_interface, notice: I18n.t( 'isr_interfaces.msg.bad_status' )
-    else
-      respond_to do |format|
-        if @isr_interface.update( isr_interface_params )
-          format.html { redirect_to isr_interface_details_path( @isr_interface ), notice: I18n.t( 'isr_interfaces.msg.update_ok' )}
-        else
-          set_selections( :to_update )
-          format.html { render :edit }
-        end
+      render_bad_logic t( 'isr_interfaces.msg.bad_if_status' )
+      return
+    end
+    respond_to do |format|
+      @isr_interface.assign_attributes( isr_interface_params )
+      if params[ :commit ] == I18n.t( 'button_label.wdr' )
+        @isr_interface.withdraw
+        r_url = isr_interface_path( @isr_interface )
+        r_msg = t( 'isr_interfaces.msg.wdr_ok' )
+        r_lnk = :edit_wdr
+      else
+        r_url = isr_interface_details_path( @isr_interface )
+        r_msg = t( 'isr_interfaces.msg.update_ok' )
+        r_lnk = :edit
+      end
+      if @isr_interface.save
+        format.html { redirect_to r_url, notice: r_msg }
+      else
+        set_selections( :to_update )
+        format.html { render r_lnk }
       end
     end
   end
 
   def update_ia
+    unless user_has_access?
+      render_no_permission
+      return
+    end
     if @workflow.permitted_params.empty? and not @workflow.status_change_possible? then
       redirect_to @isr_interface, notice: I18n.t( 'isr_interfaces.msg.no_edit_now' )
     else
@@ -231,9 +289,9 @@ class IsrInterfacesController < ApplicationController
       end
       @isr_agreement.assign_attributes( isr_agreement_params )
       @isr_interface.assign_attributes( isr_interface_params )
-      update_status_and_task( nst )
+      update_status_and_task( nst ) # also performs validations!
       respond_to do |format|
-        if @isr_interface.valid? && @isr_agreement.valid?
+        if @isr_interface.errors.empty? && @isr_agreement.errors.empty?
           IsrAgreement.transaction do
             @isr_agreement.save!
             @isr_interface.save!
@@ -242,7 +300,7 @@ class IsrInterfacesController < ApplicationController
         else
           set_final_breadcrumb( :edit )        
           set_selections( :to_update )
-          @workflow.initialize_current( @isr_agreement.ia_type )
+          initialize_current_workflow
           format.html { render :edit_ia }
         end
       end
@@ -312,14 +370,8 @@ class IsrInterfacesController < ApplicationController
       @workflow.permitted_params.empty? ? {} : params.require( :isr_agreement ).permit( @workflow.permitted_params )
     end
 
-    # determine if access is permitted:
-    # - depends on task and permission level
-    # - IFM: permission level 2
-    # - IFL/IFP: permission level 1 
-
-
     # determine if status allows requested action:
-    # IF must not be closed;
+    # IF must not be closed, i.e. withdrawn, or not applicable
     # IA must be agreed
     #    let test pass if isa is not given (although required):
     #    validation should take care of this issue.
@@ -366,6 +418,12 @@ class IsrInterfacesController < ApplicationController
 
     def ready_for_next_status_task?
       return false unless @isr_agreement.valid? && @isr_interface.valid?
+      # need l_owner or l_deputy to prepare agreement or confirm status change
+      if @workflow.wf_updated_task == 2 && 
+         @isr_agreement.l_owner_id.nil? &&
+         @isr_agreement.l_deputy_id.nil? then
+        @isr_agreement.errors.add( :l_owner_id, t( 'isr_interfaces.msg.req_next_step' ))
+      end
       case @isr_agreement.ia_type
       when 0, 1 # new and revision
         case @workflow.wf_updated_status
@@ -373,10 +431,18 @@ class IsrInterfacesController < ApplicationController
           if action_name == 'create_ia' && !@isr_agreement.based_on.nil? # implies ia_type == 1
             @isr_agreement.based_on.ia_status = 4 # in revision
           end
-        when 3 # revision released
-          @isr_agreement.l_signature = current_user.account_info
-          @isr_agreement.l_sign_time = DateTime.now
-          @isr_interface.if_status = 2 if @isr_interface.if_status < 2
+        when 3 # agreement, revision to be released
+          # need p_owner or p_deputy to confirm agreement
+          @isr_agreement.errors.add( :p_owner_id, t( 'isr_interfaces.msg.req_next_step' )) \
+            if @isr_agreement.p_owner_id.nil? && @isr_agreement.p_deputy_id.nil?
+          # definition must not be empty
+          @isr_agreement.errors.add( :def_text, t( 'isr_interfaces.msg.req_next_step' )) \
+            if @isr_agreement.def_text.blank?
+          if @isr_agreement.errors.empty?
+            @isr_agreement.l_signature = current_user.account_info
+            @isr_agreement.l_sign_time = DateTime.now
+            @isr_interface.if_status = 2 if @isr_interface.if_status < 2
+          end
         when 5 # revision confirmed
           @isr_agreement.p_signature = current_user.account_info
           @isr_agreement.p_sign_time = DateTime.now
@@ -396,6 +462,13 @@ class IsrInterfacesController < ApplicationController
           if action_name == 'create_ia' && !@isr_agreement.based_on_id.nil?
             @isr_agreement.based_on.ia_status = 5 # in status change
           end
+        when 1
+          # need p_owner or p_deputy to confirm agreement
+          @isr_agreement.errors.add( :p_owner_id, t( 'isr_interfaces.msg.req_next_step' )) \
+            if @isr_agreement.p_owner_id.nil? && @isr_agreement.p_deputy_id.nil?
+          # definition must not be empty
+          @isr_agreement.errors.add( :def_text, t( 'isr_interfaces.msg.req_next_step' )) \
+            if @isr_agreement.def_text.blank?
         when 2 # status change confirmed by IFL
           @isr_agreement.l_signature = current_user.account_info
           @isr_agreement.l_sign_time = DateTime.now
@@ -419,4 +492,37 @@ class IsrInterfacesController < ApplicationController
       @isr_agreement.errors.empty? && @isr_interface.errors.empty?
     end
 
+    # determine if current user has permission for given action
+    # IFM needs permission level 2, IFL/IFP need 1
+
+    def user_has_ifm_access?( action )
+      a = current_user.permission_to_access( FEATURE_ID_ISR_INTERFACES, action )
+      a ? a > 1 : false
+    end
+
+    def user_has_ifl_access?
+      current_user.id == @isr_agreement.l_owner_id || current_user.id == @isr_agreement.l_deputy_id 
+    end
+
+    def user_has_ifp_access?
+      current_user.id == @isr_agreement.p_owner_id || current_user.id == @isr_agreement.p_deputy_id 
+    end      
+
+    # The following method heavily depends on the fact that all workflows
+    # use the same task number for IFM-/IFL-/IFP-specific tasks !!!
+
+    def user_has_access?
+      case @isr_agreement.current_task
+      when 0
+        user_has_ifm_access?( :to_create )
+      when 1, 4, 5 # create, archive, modify
+        user_has_ifm_access?( :to_update )
+      when 2
+        user_has_ifl_access?
+      when 3
+        user_has_ifp_access?
+      else
+        false
+      end
+    end
 end

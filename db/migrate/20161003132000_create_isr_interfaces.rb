@@ -9,7 +9,6 @@ class CreateIsrInterfaces < ActiveRecord::Migration
       t.belongs_to  :cfr_record,      foreign_key: true
       t.integer     :if_level,        default: 0, null: false
       t.integer     :if_status,       default: 0, null: false
-      t.datetime    :freeze_time
       t.string      :note,            limit: MAX_LENGTH_OF_NOTE
       
       t.timestamps null: false

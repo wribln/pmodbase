@@ -230,6 +230,9 @@ class ApplicationController < ActionController::Base
   end
 
   # This is a general handler for all unauthorized/invalid access attempts
+  #
+  # 401 - user has no authorization to access this action
+  # 403 - user has no permission for this action
 
   def render_no_access
     render file: 'public/401.html', status: :unauthorized

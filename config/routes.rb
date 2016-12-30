@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  # action name must be of a specific format:
+  # - must consist of either a standard action name
+  # - or a name with a standard action name prefix and 
+  #   with a button_label suffix
+  # - parts must be separated by _
+
   root 'home#index', as: 'home', format: false
 
   get  'base/index', as: 'base', format: false
@@ -59,6 +65,7 @@ Rails.application.routes.draw do
   get 'isr/ia/:id/edit',  to: 'isr_interfaces#edit_ia',       as: 'edit_isr_agreement',     format: false
   get 'isr/ia/:id/new',   to: 'isr_interfaces#new_wf',        as: 'new_isr_workflow',       format: false
   get 'isr/:id/new',      to: 'isr_interfaces#new_ia',        as: 'new_isr_agreement',      format: false
+  get 'isr/:id/wdr',      to: 'isr_interfaces#edit_wdr',      as: 'withdraw_isr_interface', format: false
   post 'isr/ia/:id',      to: 'isr_interfaces#create_ia',     as: 'create_isr_agreement',   format: false
   patch 'isr/ia/:id',     to: 'isr_interfaces#update_ia',   format: false
   put   'isr/ia/:id',     to: 'isr_interfaces#update_ia',   format: false

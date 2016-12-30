@@ -39,6 +39,9 @@
         <div class="col-sm-offset-3 col-sm-2">
           <%= link_to t( 'isr_interfaces.show.add_ia' ), new_isr_agreement_path( @isr_interface ), class: 'btn btn-lg btn-block btn-default' %>
         </div>
+        <div class="col-sm-2">
+          <%= link_to t( 'button_label.wdr' ), withdraw_isr_interface_path( @isr_interface ), class: 'btn btn-lg btn-block btn-default' %>
+        </div>
       </div>
     <%- end %>
   </div>

@@ -86,6 +86,9 @@
         One of the above must correspond to the current user's account id, i.e. the
         user creating or modifying these attributes of a list must either be the
         owner or the deputy.</li>
+      <li><%= help_param TiaList.human_attribute_name( :archived )%> if set will
+        cause this list not to be shown anymore: It will be hidden from all listings
+        as if it would not exist anymore.</li>
       <li>The list of users permitted to access detailed information on their
         individual items is managed follows the general list attributes. New
         participants of this TIA List can be added using the [+] button, and 

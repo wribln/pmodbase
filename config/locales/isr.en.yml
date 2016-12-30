@@ -62,6 +62,8 @@ en:
       reject:             'Reject'
     edit_ia:
       form_title:         'Edit Interface Agreement'
+    edit_wdr:
+      form_title:         'Withdraw Interface and All Associated Interface Agreements'
     new:
       form_title:         'Add New Interface'
     new_ia:               # 0                            1                            2                               3                             4 
@@ -91,7 +93,6 @@ en:
       res_val_steps:      'Resolution / Validation Steps'
       on_time:            'on'
       add_ia:             'Add New'
-      copy_ia:            'Copy'
     show_all:
       form_title:         'Show Details of Interface'
     show_ia:
@@ -119,13 +120,16 @@ en:
       create_ok:          'Interface successfully created.'
       update_ok:          'Interface successfully updated.'
       delete_ok:          'Interface successfully deleted.'
+      wdr_ok:             'Interface successfully withdrawn.'
       delete_ia_ok:       'Interface Agreement successfully deleted.'
       update_ia_ok:       'Interface Agreement successfully updated.'
       create_ia_ok:       'Interface Agreement successfully created.'
       no_edit_now:        'No update permitted at this state.'
       inconsistent:       'Inconsistent data: %{detail}'
       no_access_4:        'Given account has no access permission for this role.'
-      bad_status:         'Request not permitted for current Interface (Agreement) status.'
+      bad_if_status:      'Request not permitted for current Interface status.'
+      bad_ia_status:      'Request not permitted for current status of Interface Agreement'
+      req_next_step:      'required for next step in workflow'
 
   isr_agreements:
     title:          'ISR - Interface Agreements'

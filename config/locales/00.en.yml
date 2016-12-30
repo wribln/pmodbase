@@ -653,6 +653,7 @@ en:
         deputy_account_id:  'Deputy Account ID'
         deputy:             'Deputy'
         members:            'List Members'
+        archived:           'Archived'
 # for error messages in subform
         tia_members:        'At least one member record'
 
@@ -737,33 +738,37 @@ en:
       dv:        'yyyy-mm-dd'
       ns:        'Search in Notes Text'
 
+  # the following are not only used for buttons but also
+  # as breadcrumb labels for the last action, choose with care ...
+
   button_label:
     add:          'Add'
-    show:         'Show'
     all:          'Details'
-    edit:         'Edit'
-    update:       'Update'
-    comment:      'Comment'
-    create:       'Create'
-    destroy:      'Delete'
-    defaults:     'Defaults'
-    filter:       'Filter'
-    index:        'Index'
-    print:        'Print'
-    go_to_index:  'Go to Index'
     cancel_to_show:   'Cancel'
     cancel_to_index:  'Cancel'
+    check:        'Validate All'
+    comment:      'Comment'
+    create:       'Create'
+    defaults:     'Defaults'
+    destroy:      'Delete'
+    edit:         'Edit'
+    filter:       'Filter'
+    go_to_index:  'Go to Index'
     help:         'Help'
     history:      'History'
+    index:        'Index'
+    info:         'Info'
     new:          'Add'
     next:         'Next'
-    stats:        'Statistics'
-    workflow:     'Workflow Information'
-    upd_baseline: 'Update Baseline'
+    print:        'Print'
+    publish:      'Publish'
     release:      'Release'
-    check:        'Validate All'
-    revise:       'Revise'
-    terminate:    'Terminate'
+    show:         'Show'
+    stats:        'Statistics'
+    update:       'Update'
+    upd_baseline: 'Update Baseline'
+    wdr:          'Withdraw'
+    workflow:     'Workflow Information'
 
   a_code_modules:
     search_title:  

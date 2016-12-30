@@ -10,8 +10,6 @@ class IsrInterface < ActiveRecord::Base
   has_many   :isr_agreements, inverse_of: :isr_interface
   has_many   :active_agreements, ->{ isr_active }, class_name: :IsrAgreement, autosave: true
 
-  after_save :update_cfr_record
-
   validates :l_group,
     presence: true
 
@@ -71,7 +69,7 @@ class IsrInterface < ActiveRecord::Base
     ISR_IF_LEVEL_LABELS[ if_level ] unless if_level.nil?
   end
 
-  # an interface must not be modified once it is frozen, i.e.
+  # an interface must not be modified (other than note) once it is frozen, i.e.
   # the status is not identified (0) or defined-open (1)
 
   def frozen?
@@ -94,11 +92,11 @@ class IsrInterface < ActiveRecord::Base
     end      
   end
 
-  # perform all actions to mark this interface as withdrawn
+  # withdraw this IF and all associated IAs
 
   def withdraw
     self.if_status = 4
-    active_agreements.each{ |ia| ia.withdraw }
+    self.active_agreements.each { |ia| ia.withdraw }
   end
 
 end

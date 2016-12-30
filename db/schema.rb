@@ -554,7 +554,6 @@ ActiveRecord::Schema.define(version: 20161231235959) do
     t.integer  "cfr_record_id"
     t.integer  "if_level",                   default: 0,     null: false
     t.integer  "if_status",                  default: 0,     null: false
-    t.datetime "freeze_time"
     t.string   "note",           limit: 50
     t.datetime "created_at",                                 null: false
     t.datetime "updated_at",                                 null: false
@@ -951,12 +950,13 @@ ActiveRecord::Schema.define(version: 20161231235959) do
   add_index "tia_items", ["tia_list_id", "seqno"], name: "tia_list_items_index", unique: true
 
   create_table "tia_lists", force: :cascade do |t|
-    t.integer  "owner_account_id",  null: false
+    t.integer  "owner_account_id",                  null: false
     t.integer  "deputy_account_id"
     t.string   "code"
     t.string   "label"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.boolean  "archived",          default: false, null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
   end
 
   add_index "tia_lists", ["deputy_account_id"], name: "index_tia_lists_on_deputy_account_id"

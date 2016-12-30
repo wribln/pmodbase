@@ -8,6 +8,11 @@ class IsrInterfacesController3Test < ActionController::TestCase
     @isr_interface = isr_interfaces( :one ) 
     @isr_agreement = isr_agreements( :one )
     @account = accounts( :one )
+    pg = @account.permission4_groups.where( feature_id: FEATURE_ID_ISR_INTERFACES )
+    pg[ 0 ].to_read = 2
+    pg[ 0 ].to_update = 2
+    pg[ 0 ].to_create = 2
+    assert pg[ 0 ].save, pg[ 0 ].errors.messages
     session[ :current_user_id ] = @account.id
   end
 
@@ -77,7 +82,7 @@ class IsrInterfacesController3Test < ActionController::TestCase
 
     patch :update_ia, id: isa,
       isr_interface: { note: '' },
-      isr_agreement: { desc: 'next task: prepare' }, next_status_task: 1
+      isr_agreement: { def_text: 'next task: prepare', l_owner_id: @account.id }, next_status_task: 1
     assert_redirected_to isr_agreement_details_path( isa )
 
     isa.reload
@@ -94,7 +99,7 @@ class IsrInterfacesController3Test < ActionController::TestCase
 
     patch :update_ia, id: isa,
       isr_interface: { note: '' },
-      isr_agreement: { desc: 'still prepare' }, next_status_task: 1
+      isr_agreement: { def_text: 'still prepare' }, next_status_task: 1
     assert_redirected_to isr_agreement_details_path( isa )
 
     isa.reload
@@ -111,7 +116,7 @@ class IsrInterfacesController3Test < ActionController::TestCase
 
     patch :update_ia, id: isa,
       isr_interface: { note: '' },
-      isr_agreement: { desc: 'update definition' }, next_status_task: 2
+      isr_agreement: { def_text: 'update definition', p_owner_id: @account.id }, next_status_task: 2
 
     isa.reload
     isf.reload

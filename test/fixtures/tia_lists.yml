@@ -5,10 +5,12 @@ tia_list_one:
   label:    'Tasks - Issues - Action Items'
   owner_account:  one
   deputy_account: wop
+  archived: false
 
 tia_list_two:
   code:     'TEST'
   label:    'dummy for testing'
   owner_account: wop
+  archived: false
   
 

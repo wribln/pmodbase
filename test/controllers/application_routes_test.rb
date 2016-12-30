@@ -120,9 +120,12 @@ class ApplicationRoutesTest < ActionController::TestCase
   end
 
   test 'special routes: home/root' do
-    check_routing( 'get',  '/'            , 'home', 'index'   )
-    check_routing( 'post', '/home/signon' , 'home', 'signon'  )
-    check_routing( 'get',  '/home/signoff', 'home', 'signoff' )
+  #  check_routing( 'get',  '/'             , 'home', 'index'   )
+  #  check_routing( 'post', '/home/signon'  , 'home', 'signon'  )
+  #  check_routing( 'get',  '/home/signoff' , 'home', 'signoff' )
+    assert_routing({ method: 'get',  path: '/'             },{ controller: 'home', action: 'index'   })
+    assert_routing({ method: 'post', path: '/home/signon'  },{ controller: 'home', action: 'signon'  })
+    assert_routing({ method: 'get',  path: '/home/signoff' },{ controller: 'home', action: 'signoff' })
   end
 
   test 'special routes: CDL ContactLists index only' do
@@ -232,7 +235,7 @@ class ApplicationRoutesTest < ActionController::TestCase
 
   def check_routing( method, path, controller, action, ids = {})
     assert_routing({ method: method, path: path },{ controller: controller, action: action }.merge( ids ))
-    refute_nil @@action_prefix.include?( action[/[a-z]+/]),"action #{action} has no permitted prefix"
+    assert @@action_prefix.include?( action[/[a-z]+/]),"action #{action} has no permitted prefix"
   end
 
 end

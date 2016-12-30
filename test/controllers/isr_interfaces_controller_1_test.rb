@@ -8,6 +8,11 @@ class IsrInterfacesController1Test < ActionController::TestCase
     @isr_interface = isr_interfaces( :one ) 
     @isr_agreement = isr_agreements( :one )
     @account = accounts( :one )
+    pg = @account.permission4_groups.where( feature_id: FEATURE_ID_ISR_INTERFACES )
+    pg[ 0 ].to_read = 2
+    pg[ 0 ].to_update = 2
+    pg[ 0 ].to_create = 2
+    assert pg[ 0 ].save, pg[ 0 ].errors.messages
     session[ :current_user_id ] = @account.id
   end
 
@@ -53,7 +58,7 @@ class IsrInterfacesController1Test < ActionController::TestCase
 
     patch :update_ia, id: isa,
       isr_interface: { note: '' },
-      isr_agreement: { desc: 'update definition' }, next_status_task: 0
+      isr_agreement: { def_text: 'update definition' }, next_status_task: 0
     assert_redirected_to isr_agreement_details_path( isa )
 
     isa.reload
@@ -69,7 +74,17 @@ class IsrInterfacesController1Test < ActionController::TestCase
 
     patch :update_ia, id: isa,
       isr_interface: { note: '' },
-      isr_agreement: { desc: 'next task: prepare' }, next_status_task: 1
+      isr_agreement: { def_text: 'next task: prepare' }, next_status_task: 1
+
+    # fails because l_group_id is needed for next step
+
+    assert_response :success
+    isa = assigns( :isr_agreement )
+    assert_includes isa.errors, :l_owner_id
+
+    patch :update_ia, id: isa,
+      isr_interface: { note: '' },
+      isr_agreement: { def_text: 'next task: prepare', l_owner_id: @account.id }, next_status_task: 1
     assert_redirected_to isr_agreement_details_path( isa )
 
     isa.reload
@@ -85,7 +100,7 @@ class IsrInterfacesController1Test < ActionController::TestCase
 
     patch :update_ia, id: isa,
       isr_interface: { note: '' },
-      isr_agreement: { desc: 'still prepare' }, next_status_task: 1
+      isr_agreement: { def_text: 'still prepare' }, next_status_task: 1
     assert_redirected_to isr_agreement_details_path( isa )
 
     isa.reload
@@ -101,7 +116,19 @@ class IsrInterfacesController1Test < ActionController::TestCase
 
     patch :update_ia, id: isa,
       isr_interface: { note: '' },
-      isr_agreement: { desc: 'update definition' }, next_status_task: 2
+      isr_agreement: { def_text: '' }, next_status_task: 2
+
+    # fails because p_group_id and def_text is needed for next step
+
+    assert_response :success
+    isa = assigns( :isr_agreement )
+    assert_includes isa.errors, :p_owner_id
+    assert_includes isa.errors, :def_text
+
+    patch :update_ia, id: isa,
+      isr_interface: { note: '' },
+      isr_agreement: { def_text: 'update definition', p_owner_id: @account.id }, next_status_task: 2
+    assert_redirected_to isr_agreement_details_path( isa )
 
     isa.reload
     isf.reload

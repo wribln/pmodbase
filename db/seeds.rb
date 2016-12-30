@@ -1013,10 +1013,16 @@ p.to_read = 4
 p.to_update = 4
 p.save
 
-# full acdess for CFR - increase access level to max
+# full access for CFR - increase access level to max
 
 p = Permission4Group.find_by( feature_id: FEATURE_ID_CFR_RECORDS, account_id: a1.id )
 p.to_index = p.to_read = p.to_update = p.to_delete = CfrRecord::CONF_LEVEL_LABELS.size
+p.save
+
+# IFM access for ISR
+
+p = Permission4Group.find_by( feature_id: FEATURE_ID_ISR_INTERFACES, account_id: a1.id )
+p.to_read = p.to_create = p.to_update = 2
 p.save
 
 # - - - - - - - - - - permissions for workflows

@@ -10,7 +10,7 @@ module BreadcrumbHelper
     controller.breadcrumbs_to_here.try( :each ) do |i|
       i == breadcrumbs_to_here.last ? options = { class: 'active' } : nil
       if i.first.nil? then # show action only (normally last)
-        r += content_tag( :li, I18n.t( 'button_label.' + action_label( i.second )), options )
+        r += content_tag( :li, I18n.t( 'button_label.' + action_label( i.second ), default: i.second ), options )
       elsif i.second.nil? # show text only, no path
         r += content_tag( :li, I18n.t( i.first.to_s + '.title' ), options )
       else  # show text with path

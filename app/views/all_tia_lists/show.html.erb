@@ -25,6 +25,12 @@
       </div>
       <%= render partial: 'shared/show_account', locals: { fbo: f, a_id: :owner_account_id,  a_as: :owner_account }%>
       <%= render partial: 'shared/show_account', locals: { fbo: f, a_id: :deputy_account_id, a_as: :deputy_account }%>
+      <div class="form-group">
+        <%= f.label :archived, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-1">
+          <%= display_check_box f.object.archived %>
+        </div>
+      </div>
       <!-- tia members list -->
       <%= render partial: 'tia_member_header', locals: { action_type: :show } %>
       <% if f.object.tia_members.empty? %>

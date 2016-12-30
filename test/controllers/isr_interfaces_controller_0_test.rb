@@ -6,6 +6,11 @@ class IsrInterfacesController0Test < ActionController::TestCase
     @isr_interface = isr_interfaces( :one ) 
     @isr_agreement = isr_agreements( :one )
     @account = accounts( :one )
+    pg = @account.permission4_groups.where( feature_id: FEATURE_ID_ISR_INTERFACES )
+    pg[ 0 ].to_read = 2
+    pg[ 0 ].to_update = 2
+    pg[ 0 ].to_create = 2
+    assert pg[ 0 ].save, pg[ 0 ].errors.messages
     session[ :current_user_id ] = @account.id
   end
 
@@ -83,7 +88,7 @@ class IsrInterfacesController0Test < ActionController::TestCase
     get :new_ia, id: @isr_agreement, wt: 1
     isa = assigns( :isr_agreement )
     refute_nil isa
-    assert_redirected_to isr_agreement_path( isa.based_on_id )
+    assert_response :unprocessable_entity
 
     isa.based_on.ia_status = 1
     assert isa.save, isa.errors.messages
@@ -103,7 +108,7 @@ class IsrInterfacesController0Test < ActionController::TestCase
     get :new_ia, id: @isr_agreement, wt: 2
     isa = assigns( :isr_agreement )
     refute_nil isa
-    assert_redirected_to isr_agreement_path( isa.based_on )
+    assert_response :unprocessable_entity
 
     isa.based_on.ia_status = 1
     assert isa.save, isa.errors.messages

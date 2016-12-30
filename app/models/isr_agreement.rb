@@ -191,12 +191,6 @@ class IsrAgreement < ActiveRecord::Base
     ISR_IA_STATUS_LABELS[ ia_status ] unless ia_status.nil?
   end
 
-  # perform all action necessary to mark this IA as withdrawn
-
-  def withdraw
-    self.ia_status = 7
-  end
-
   # not possible to modify record when
 
   def frozen?
@@ -251,6 +245,22 @@ class IsrAgreement < ActiveRecord::Base
       end
     end
 
+  end
+
+  # process withdraw request:
+  # only change non-terminal states to withdrawn
+
+  def withdraw
+    if [ 0, 1, 4, 5 ].include? ia_status
+      self.ia_status = 8
+      close_ia
+    end
+  end
+
+  # perform necessary actions to close interface agreement, i.e.
+  # mark tia_lists and associated items as archived
+
+  def close_ia
   end
 
 end

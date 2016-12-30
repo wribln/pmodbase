@@ -69,7 +69,7 @@ class MyTiaListsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
 
     def set_tia_lists
-      @tia_lists = TiaList.for_user( current_user.id )
+      @tia_lists = TiaList.active.for_user( current_user.id )
     end
 
     def set_tia_list
@@ -80,7 +80,7 @@ class MyTiaListsController < ApplicationController
 
     def tia_list_params
       params.require( :tia_list ).permit(
-        :code, :label, :owner_account_id, :deputy_account_id,
+        :code, :label, :owner_account_id, :deputy_account_id, :archived,
         tia_members_attributes: 
           [ :id, :_destroy, :account_id, :to_access, :to_update ])
     end
