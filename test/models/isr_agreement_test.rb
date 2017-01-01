@@ -95,6 +95,8 @@ class IsrAgreementTest < ActiveSupport::TestCase
     tia_prefix = isa.code[ 0..-9 ]
     assert_equal "#{ tia_prefix }-RS", isa.tia_list_code( :res_steps )
     assert_equal "#{ tia_prefix }-VS", isa.tia_list_code( :val_steps )
+    assert isa.tia_list_code( :res_steps ).length <= MAX_LENGTH_OF_CODE
+    assert isa.tia_list_code( :val_steps ).length <= MAX_LENGTH_OF_CODE
     assert_raises ArgumentError do
       isa.tia_list_code( :test )
     end 
@@ -244,6 +246,25 @@ class IsrAgreementTest < ActiveSupport::TestCase
 
     isa.p_deputy_id = isa.p_owner_id
     assert isa.valid?
+
+  end
+
+  test 'ensure that tia list is created' do
+    isa = isr_agreements( :one )
+    isa.res_steps_req = 1
+    isa.val_steps_req = 1
+    assert isa.valid?, isa.errors.messages
+    assert_difference( 'TiaList.count', 2 ) do
+      assert isa.save, isa.errors.messages
+    end
+    isa.reload
+    assert_equal isa.l_owner_id, isa.res_steps.owner_account_id
+    assert_equal isa.l_owner_id, isa.val_steps.owner_account_id
+    isa.res_steps_req = 0
+    isa.val_steps_req = 0
+    assert_difference( 'TiaList.count', -2 ) do
+      assert isa.save, isa.errors.messages
+    end
 
   end
 

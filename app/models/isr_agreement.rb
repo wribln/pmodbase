@@ -10,11 +10,21 @@ class IsrAgreement < ActiveRecord::Base
   belongs_to :l_deputy,   -> { readonly },  foreign_key: :l_deputy_id,  class_name: :Account
   belongs_to :p_owner,    -> { readonly },  foreign_key: :p_owner_id,   class_name: :Account
   belongs_to :p_deputy,   -> { readonly },  foreign_key: :p_deputy_id,  class_name: :Account
-  belongs_to :res_steps,                    foreign_key: :res_steps_id, class_name: :TiaList 
-  belongs_to :val_steps,                    foreign_key: :val_steps_id, class_name: :TiaList
+  belongs_to :res_steps,                    foreign_key: :res_steps_id, class_name: :TiaList, autosave: true 
+  belongs_to :val_steps,                    foreign_key: :val_steps_id, class_name: :TiaList, autosave: true
   belongs_to :based_on,                     foreign_key: :based_on_id,  class_name: :IsrAgreement, autosave: true
   belongs_to :isr_interface, inverse_of: :isr_agreements
   belongs_to :cfr_record
+
+  before_validation :update_tia_lists
+
+  # the following attributes are used only to transfer a request to
+  # create or remove res/val_steps TIA lists; set flag to 1 create
+  # TIA list, to 0 to remove TIA list; define reader here, writer later
+
+  attr_reader :res_steps_req, :val_steps_req
+
+  after_initialize :initialize_steps_req
 
   validates :l_group,
     presence: true
@@ -25,11 +35,16 @@ class IsrAgreement < ActiveRecord::Base
   validates :cfr_record,
     presence: true, if: Proc.new{ |me| me.cfr_record_id.present? }
 
-  validates :val_steps,
-    presence: true, if: Proc.new{ |me| me.val_steps_id.present? }
-
   validates :res_steps,
-    presence: true, if: Proc.new{ |me| me.res_steps_id.present? }
+    presence: true, if: Proc.new{ |me| me.res_steps.present? && !me.res_steps.marked_for_destruction? }
+
+  validates :val_steps,
+    presence: true, if: Proc.new{ |me| me.val_steps.present? && !me.val_steps.marked_for_destruction? }
+
+  # owner is needed whenever a TIA list is generated
+
+  validates :l_owner_id,
+    presence: true, if: Proc.new{ |me| me.res_steps_req != 0 || me.val_steps_req != 0 }
 
   validates :l_owner,
     presence: true, if: Proc.new{ |me| me.l_owner_id.present? }
@@ -152,6 +167,47 @@ class IsrAgreement < ActiveRecord::Base
     self.current_task = 0
   end
 
+  # initialize non-database model attributes
+
+  def initialize_steps_req
+    self.res_steps_req = res_steps_id.nil? ? 0 : 1
+    self.val_steps_req = val_steps_id.nil? ? 0 : 1
+  end
+
+  def res_steps_req=( s )
+    @res_steps_req = s.to_i 
+  end
+
+  def val_steps_req=( s )
+    @val_steps_req = s.to_i
+  end
+
+  # create or remove TIA lists, update owners
+
+  def update_tia_lists
+
+    if self.res_steps.nil?
+      self.build_res_steps( code: tia_list_code( :res_steps ), label: tia_list_label( :res_steps ), 
+        owner_account_id: l_owner_id, deputy_account_id: l_deputy_id ) if res_steps_req != 0
+    elsif res_steps_req == 0
+      self.res_steps.mark_for_destruction
+    else
+      self.res_steps.owner_account_id = l_owner_id
+      self.res_steps.deputy_account_id = l_deputy_id
+    end
+
+    if self.val_steps.nil?
+      self.build_val_steps( code: tia_list_code( :val_steps ), label: tia_list_label( :val_steps ), 
+          owner_account_id: l_owner_id, deputy_account_id: l_deputy_id ) if val_steps_req != 0
+    elsif val_steps_req == 0
+      self.val_steps.mark_for_destruction
+    else
+      self.val_steps.owner_account_id = l_owner_id
+      self.val_steps.deputy_account_id = l_deputy_id
+    end
+
+  end
+
   # prepare code and label for related TIA lists
 
   def tia_list_code( s_list )
@@ -261,6 +317,8 @@ class IsrAgreement < ActiveRecord::Base
   # mark tia_lists and associated items as archived
 
   def close_ia
+    self.res_steps.archive = true unless res_steps.nil?
+    self.val_steps.archive = true unless res_steps.nil?
   end
 
 end

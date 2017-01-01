@@ -51,7 +51,9 @@ en:
         res_steps_label:  'Resolution of %{code}'
         val_steps_label:  'Validation of %{code}'
         res_steps_id:     'Resolution Steps'
+        res_steps_req:    'Resolution Steps'
         val_steps_id:     'Validation Steps'
+        val_steps_req:    'Validation Steps'
         based_on_id:      'Based on IA'
 
   isr_interfaces:

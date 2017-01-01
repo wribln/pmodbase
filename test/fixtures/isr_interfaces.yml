@@ -1,4 +1,8 @@
+# need to use fixed id so the total length of related, generated codes does not
+# exceed the maximum allowed
+
 one:
+  id:             101
   l_group:        group_one
   p_group:        group_two
   title:          'Test Interface'

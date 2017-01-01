@@ -90,6 +90,7 @@ CSV.foreach(File.join(Rails.root, 'db', 'std_csv', 'isr_interfaces.csv' ),
       ia_no += 1
       h.ia_no = ia_no
       h.prepare_revision( 0 )
+      h.current_task = 1 # skip status 0
     end
     h.save
     unless h.errors.empty? then

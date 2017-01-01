@@ -76,16 +76,16 @@
         <%= render partial: 'shared/show_cfr', locals: { fbo: form_ia }%>
       <%- end %>
 
-      <%- if @workflow.param_permitted?( :res_steps_id )%>
-        <%= render partial: 'shared/edit_tia', locals: { fbo: form_ia, a_id: :res_steps_id, a_as: :res_steps }%>
+      <%- if @workflow.param_permitted?( :res_steps_req )%>
+        <%= render partial: 'shared/edit_tia', locals: { fbo: form_ia, a_id: :res_steps_req, a_as: :res_steps }%>
       <%- else %>
-        <%= render partial: 'shared/show_tia', locals: { fbo: form_ia, a_id: :res_steps_id, a_as: :res_steps }%>
+        <%= render partial: 'shared/show_tia', locals: { fbo: form_ia, a_id: :res_steps_req, a_as: :res_steps }%>
       <%- end %>
 
-      <%- if @workflow.param_permitted?( :val_steps_id )%>
-        <%= render partial: 'shared/edit_tia', locals: { fbo: form_ia, a_id: :val_steps_id, a_as: :val_steps }%>
+      <%- if @workflow.param_permitted?( :val_steps_req )%>
+        <%= render partial: 'shared/edit_tia', locals: { fbo: form_ia, a_id: :val_steps_req, a_as: :val_steps }%>
       <%- else %>
-        <%= render partial: 'shared/show_tia', locals: { fbo: form_ia, a_id: :val_steps_id, a_as: :val_steps }%>
+        <%= render partial: 'shared/show_tia', locals: { fbo: form_ia, a_id: :val_steps_req, a_as: :val_steps }%>
       <%- end %>
 
       <div class="form-group">

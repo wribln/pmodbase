@@ -1,7 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  isr_interface:  one
+  isr_interface_id:  101 # one
   def_text:       'Test Agreement 1'
   l_group:        group_one
   p_group:        group_two
@@ -9,8 +9,6 @@ one:
   current_status: 0
   current_task:   0
   cfr_record:     one 
-  res_steps: 
-  val_steps: 
   rev_no:         0
   ia_no:          1
   based_on:

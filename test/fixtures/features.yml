@@ -14,7 +14,7 @@ feature_<%= f %>:
   <% elsif f == 39 %>
   no_workflows: 1
   <% elsif f == 79 %>
-  no_workflows: 1
+  no_workflows: 5
   <% else %>
   no_workflows: 0
   <% end %>

@@ -72,6 +72,7 @@ class IsrInterfacesController < ApplicationController
   end
 
   def show_all
+    set_final_breadcrumb( :show )
   end
 
   def show_ia
@@ -79,7 +80,7 @@ class IsrInterfacesController < ApplicationController
   end
 
   def show_ia_all
-    set_final_breadcrumb( :all )
+    set_final_breadcrumb( :show )
   end
 
   def show_ia_icf
@@ -181,7 +182,7 @@ class IsrInterfacesController < ApplicationController
   # withdraw IF and associated IAs - same as edit here
 
   def edit_wdr
-    edit  
+    edit
   end
 
   # POST /isr
