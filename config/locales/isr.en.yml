@@ -109,6 +109,7 @@ en:
       ia_references:      'Agreement References [CFR]'
       empty_or_none:      'None.'
       based_on:           'Predecessor Agreement'
+      due_date:           '(until %{due_date})'
     info_workflow:
       form_title:         'ISR Workflow Information'
     form_ia:

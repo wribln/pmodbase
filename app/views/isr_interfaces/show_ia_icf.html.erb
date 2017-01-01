@@ -116,7 +116,7 @@
         <tr>
           <td>&nbsp;</td>
             <%- end -%>
-          <td><%= item.seqno %>. <%= item.description %></td>
+          <td><%= item.seqno %>. <%= item.description %> <%= t( '.due_date', due_date: db_formatted_dt( item.due_date )) unless item.due_date.nil? %></td>
         </tr>
           <%- end -%>
         <%- end -%>
@@ -132,7 +132,7 @@
         <tr>
           <td>&nbsp;</td>
             <%- end -%>
-          <td><%= item.seqno %>. <%= item.description %></td>
+          <td><%= item.seqno %>. <%= item.description %> <%= t( '.due_date', due_date: db_formatted_dt( item.due_date )) unless item.due_date.nil? %></td>
         </tr>
           <%- end -%>
         <%- end -%>
