@@ -6,104 +6,110 @@
       the Project Management Office.</p>
     <h3>Attributes</h3>
     <ul>
-      <li><%= help_param CsrStatusRecord.human_attribute_name( :id ) -%> is the unique
+      <li><%= help_param CsrStatusRecord.human_attribute_name( :id )%> is the unique
         identifier for each item of correspondence. This number is used to identify
         any item of correspondence.</li>
-      <li><%= help_param CsrStatusRecord.human_attribute_name( :correspondence_type ) -%>
+      <li><%= help_param CsrStatusRecord.human_attribute_name( :correspondence_type )%>
         determines the type of correspondence which can be
-        <%= help_value( CsrStatusRecord.human_attribute_name( :correspondence_types )[0])-%>, i.e.
+        <%= help_value( CsrStatusRecord.human_attribute_name( :correspondence_types )[0])%>, i.e.
         all correspondence received, or
-        <%= help_value( CsrStatusRecord.human_attribute_name( :correspondence_types )[1])-%>, i.e.
+        <%= help_value( CsrStatusRecord.human_attribute_name( :correspondence_types )[1])%>, i.e.
         all correspondence sent out from the project management office.</li>
-      <li><%= help_param CsrStatusRecord.human_attribute_name( :transmission_type ) -%>
+      <li><%= help_param CsrStatusRecord.human_attribute_name( :transmission_type )%>
         can be used to note the type of transmission used for this correspondence:<br/>
         <ul>
-          <% CsrStatusRecord.human_attribute_name( :transmission_types ).each do |t| -%>
+          <% CsrStatusRecord.human_attribute_name( :transmission_types ).each do |t|%>
           <li><%= help_value t %></li>
-          <% end -%>
+          <%- end %>
         </ul>
         </li>
-      <li><%= help_param CsrStatusRecord.human_attribute_name( :subject )-%> is the
+      <li><%= help_param CsrStatusRecord.human_attribute_name( :subject )%> is the
         subject reference normally listed on top of the correspondence. This can also be
         used to give a short overview of the letter's content.</li>
-      <li><%= help_param CsrStatusRecord.human_attribute_name( :receiver_group_id )-%> is
+      <li><%= help_param CsrStatusRecord.human_attribute_name( :receiver_group_id )%> is
         the code of the receiving project entity.</li>
-      <li><%= help_param CsrStatusRecord.human_attribute_name( :sender_group_id )-%> is
+      <li><%= help_param CsrStatusRecord.human_attribute_name( :sender_group_id )%> is
         the code of the sending project entity.</li>
-      <li>When showing all items on the index page <%= help_value t( 'csr_status_records.index.form_title' )-%>, the field
-        under the heading <%= help_term t( 'csr_status_records.index.other_group_id' )-%>
-        shows the <%= help_term CsrStatusRecord.human_attribute_name( :sender_group_id )-%>
-        for <%= help_value( CsrStatusRecord.human_attribute_name( :correspondence_types )[0])-%>
-        correspondence, and <%= help_term CsrStatusRecord.human_attribute_name( :sender_group_id )-%>
-        for <%= help_value( CsrStatusRecord.human_attribute_name( :correspondence_types )[1])-%>
+      <li>When showing all items on the index page <%= help_value t( 'csr_status_records.index.form_title' )%>, the field
+        under the heading <%= help_term t( 'csr_status_records.index.other_group_id' )%>
+        shows the <%= help_term CsrStatusRecord.human_attribute_name( :sender_group_id )%>
+        for <%= help_value( CsrStatusRecord.human_attribute_name( :correspondence_types )[0])%>
+        correspondence, and <%= help_term CsrStatusRecord.human_attribute_name( :sender_group_id )%>
+        for <%= help_value( CsrStatusRecord.human_attribute_name( :correspondence_types )[1])%>
         correspondence. When using the filter method, the filter will search in both fields.</li>
-      <li><%= help_param CsrStatusRecord.human_attribute_name( :sender_reference )-%> is a field
+      <li><%= help_param CsrStatusRecord.human_attribute_name( :sender_reference )%> is a field
         to store the reference code of the sent correspondence.</li>
-      <li><%= help_param CsrStatusRecord.human_attribute_name( :correspondence_date )-%> shall be
+      <li><%= help_param CsrStatusRecord.human_attribute_name( :correspondence_date )%> shall be
         used to store the date when the correspondence was sent or received respectively. This
         is normally the date on the correspondence itself. If no date is given, today's date
         will be used per default (it cannot be empty due to sorting reasons which require
         some date in this field).</li>
-      <li><%= help_param CsrStatusRecord.human_attribute_name( :classification )-%> (or 
-        <%= help_term t( 'csr_status_records.index.classification' )-%> on the index page)
+      <li><%= help_param CsrStatusRecord.human_attribute_name( :classification )%> (or 
+        <%= help_term t( 'csr_status_records.index.classification' )%> on the index page)
         identifies the kind of action required on this correspondence:<br/>
         <ul>
-          <li><%= help_value( CsrStatusRecord.human_attribute_name( :classifications )[ 0 ])-%>
+          <li><%= help_value( CsrStatusRecord.human_attribute_name( :classifications )[ 0 ])%>
             is used to note that no further action is required.</li>
-          <li><%= help_value( CsrStatusRecord.human_attribute_name( :classifications )[ 1 ])-%>
+          <li><%= help_value( CsrStatusRecord.human_attribute_name( :classifications )[ 1 ])%>
             means that some action is required, other than responding to this letter.</li>
-          <li><%= help_value( CsrStatusRecord.human_attribute_name( :classifications )[ 2 ])-%>
+          <li><%= help_value( CsrStatusRecord.human_attribute_name( :classifications )[ 2 ])%>
             denotes that a response must be prepared for this letter. The date when this response should
             be sent out should be noted in the 
-            <%= help_term CsrStatusRecord.human_attribute_name( :plan_reply_date )-%> field.</li>
+            <%= help_term CsrStatusRecord.human_attribute_name( :plan_reply_date )%> field.</li>
         </ul>
         </li>
-      <li><%= help_param CsrStatusRecord.human_attribute_name( :plan_reply_date )-%> can be used
+      <li><%= help_param CsrStatusRecord.human_attribute_name( :plan_reply_date )%> can be used
         to set a date when the response should be sent out. This date could also be taken from
         the corresponding if the sender has noted that he expects an answer by a certain date.</li>
-      <li><%= help_param CsrStatusRecord.human_attribute_name( :actual_reply_date )-%> should
+      <li><%= help_param CsrStatusRecord.human_attribute_name( :actual_reply_date )%> should
         record when the actual response was sent out to the original sender. At the same time,
-        the <%= help_term CsrStatusRecord.human_attribute_name( :reply_status_record_id )-%> should
-        be set to the <%= help_term CsrStatusRecord.human_attribute_name( :id )-%> of the newly
+        the <%= help_term CsrStatusRecord.human_attribute_name( :reply_status_record_id )%> should
+        be set to the <%= help_term CsrStatusRecord.human_attribute_name( :id )%> of the newly
         created response letter. This response must be of different type than the current
         correspondence, naturally, and it cannot refer back to the current correspondence. When
-        viewing details, the given <%= help_term CsrStatusRecord.human_attribute_name( :id )-%>
+        viewing details, the given <%= help_term CsrStatusRecord.human_attribute_name( :id )%>
         links to the respective correspondence item.</li>
-      <li>When showing all items on the index page <%= help_value t( 'csr_status_records.index.form_title' )-%>,
-        the field under the heading <%= help_term t( 'csr_status_records.index.reply_date' )-%>
-        will show both dates (when present), the <%= help_term CsrStatusRecord.human_attribute_name( :plan_reply_date )-%>,
-        and the <%= help_term CsrStatusRecord.human_attribute_name( :actual_reply_date )-%>. The
+      <li>When showing all items on the index page <%= help_value t( 'csr_status_records.index.form_title' )%>,
+        the field under the heading <%= help_term t( 'csr_status_records.index.reply_date' )%>
+        will show both dates (when present), the <%= help_term CsrStatusRecord.human_attribute_name( :plan_reply_date )%>,
+        and the <%= help_term CsrStatusRecord.human_attribute_name( :actual_reply_date )%>. The
         latter will contain a link to the response item (if present).</li>
-      <li><%= help_param CsrStatusRecord.human_attribute_name( :status )-%> should be set to the
+      <li><%= help_param CsrStatusRecord.human_attribute_name( :status )%> should be set to the
       current status of this correspondence:<br/>
         <ul>
-          <li><%= help_value( CsrStatusRecord.human_attribute_name( :states )[ 0 ])-%> is set on
+          <li><%= help_value( CsrStatusRecord.human_attribute_name( :states )[ 0 ])%> is set on
           all newly opened correspondence items. This status should remain as long as the
           letter is not completely processed.</li>
-          <li><%= help_value( CsrStatusRecord.human_attribute_name( :states )[ 1 ])-%> can be
+          <li><%= help_value( CsrStatusRecord.human_attribute_name( :states )[ 1 ])%> can be
           set to indicate that no further action is required on this item. All items with this
           status remain visible in the CSR until the status is set to </li>
-          <li><%= help_value( CsrStatusRecord.human_attribute_name( :states )[ 2 ])-%> which 
+          <li><%= help_value( CsrStatusRecord.human_attribute_name( :states )[ 2 ])%> which 
           causes this item to be made 'invisible' on further CSR listings.</li>
         </ul>
         </li>
-      <li><%= help_param CsrStatusRecord.human_attribute_name( :notes )-%> is a free text field
+      <li><%= help_param CsrStatusRecord.human_attribute_name( :notes )%> is a free text field
         which can be used for additional information or tags for this correspondence item.</li>
-      <li><%= help_param CsrStatusRecord.human_attribute_name( :project_doc_id )-%> shall hold
+      <li><%= help_param CsrStatusRecord.human_attribute_name( :project_doc_id )%> shall hold
         the identification of this correspondence item within the project's document management
         system (DMS).</li>
-      <li><%= help_param CsrStatusRecord.human_attribute_name( :sender_doc_id )-%> is a field to
+      <li><%= help_param CsrStatusRecord.human_attribute_name( :sender_doc_id )%> is a field to
         store the document code of an incoming correspondence, for example when using Aconex
         as communication platform.</li>
     </ul>
     <h3>Notes</h3>
     <p>The sequence of the entries in the CSR is in reverse order of the 
-      <%= help_term( CsrStatusRecord.human_attribute_name( :correspondence_date ))-%>
+      <%= help_term( CsrStatusRecord.human_attribute_name( :correspondence_date ))%>
       such that the latest correspondence is listed first. This is the reason why
       always a date must be given: an empty date would show the record at the very end
       of all entries.</p>
     <p>Entries with the status 
-      <%= help_value( CsrStatusRecord.human_attribute_name( :states )[ 2 ])-%> are
+      <%= help_value( CsrStatusRecord.human_attribute_name( :states )[ 2 ])%> are
       not shown in the CSR index.</p>
+    <p>When looking for items with a due date in the past, use the filter function on the
+      CSR index and select
+      <%= help_term t( 'csr_status_records.index.due_labels')[ 0 ]%> under 
+      <%= help_term t( 'csr_status_records.index.reply_date')%>; when searching for items which
+      will be due within the next week (i.e within the next 7 days), select
+      <%= help_term t( 'csr_status_records.index.due_labels')[ 1 ]%>.</p>
     <%= help_footer FEATURE_ID_CSR_STATUS_RECORDS %>
-  </div> <!-- /container -->
+  </div>

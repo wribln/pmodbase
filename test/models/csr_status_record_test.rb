@@ -1,7 +1,7 @@
 require 'test_helper'
 class CsrStatusRecordTest < ActiveSupport::TestCase
 
-  test "fixture 1 usefulness" do 
+  test 'fixture 1 usefulness' do 
     csr = csr_status_records( :csr_one )
     assert_equal 1, csr.correspondence_type
     assert_equal 1, csr.transmission_type
@@ -12,7 +12,7 @@ class CsrStatusRecordTest < ActiveSupport::TestCase
     assert csr.valid?
   end
 
-  test "fixture 2 usefulness" do 
+  test 'fixture 2 usefulness' do 
     csr = csr_status_records( :csr_two )
     assert_equal 0, csr.correspondence_type
     assert_equal 1, csr.transmission_type
@@ -103,16 +103,16 @@ class CsrStatusRecordTest < ActiveSupport::TestCase
     assert_equal csr.sender_group_code, csr.sender_receiver_group_code
 
     csr.sender_group_id = 0
-    assert_equal "[0]",csr.sender_group_code
+    assert_equal '[0]',csr.sender_group_code
 
     csr.sender_group_id = nil
-    assert_equal "",csr.sender_group_code
+    assert_equal '',csr.sender_group_code
 
     csr.receiver_group_id = 0
-    assert_equal "[0]",csr.receiver_group_code
+    assert_equal '[0]',csr.receiver_group_code
 
     csr.receiver_group_id = nil
-    assert_equal "",csr.receiver_group_code
+    assert_equal '',csr.receiver_group_code
 
   end
 
@@ -165,6 +165,59 @@ class CsrStatusRecordTest < ActiveSupport::TestCase
     as = CsrStatusRecord.ff_note( 'foobar' )
     assert_equal 0, as.length
 
+  end
+
+  test 'past and near due date' do
+
+    as = CsrStatusRecord.ff_due( '0' ) # past
+    assert_equal 0, as.length
+
+    as = CsrStatusRecord.ff_due( '1' ) # near
+    assert_equal 0, as.length
+
+    nr = CsrStatusRecord.new
+    nr.correspondence_type = 1
+    nr.correspondence_date = Date.today
+    assert_difference( 'CsrStatusRecord.count', +1 )do
+      assert nr.save, nr.errors.messages
+    end
+
+    as = CsrStatusRecord.ff_due( '0' ) # past
+    assert_equal 0, as.length
+
+    as = CsrStatusRecord.ff_due( '1' ) # near
+    assert_equal 0, as.length
+
+    nr.reload
+    nr.plan_reply_date = Date.today - 1
+    assert nr.save
+
+    as = CsrStatusRecord.ff_due( '0' ) # past
+    assert_equal 1, as.length
+
+    as = CsrStatusRecord.ff_due( '1' ) # near
+    assert_equal 0, as.length
+
+    nr.reload
+    nr.plan_reply_date = Date.today + 1
+    assert nr.save
+
+    as = CsrStatusRecord.ff_due( '0' ) # past
+    assert_equal 0, as.length
+
+    as = CsrStatusRecord.ff_due( '1' ) # near
+    assert_equal 1, as.length
+
+    nr.reload
+    nr.plan_reply_date = Date.today + 10
+    assert nr.save
+
+    as = CsrStatusRecord.ff_due( '0' ) # past
+    assert_equal 0, as.length
+
+    as = CsrStatusRecord.ff_due( '1' ) # near
+    assert_equal 0, as.length
+    
   end
 
 end

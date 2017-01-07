@@ -8,7 +8,7 @@ class IsrInterface < ActiveRecord::Base
   belongs_to :p_group,    -> { readonly }, foreign_key: :p_group_id, class_name: :Group
   belongs_to :cfr_record
   has_many   :isr_agreements, inverse_of: :isr_interface
-  has_many   :active_agreements, ->{ isr_active }, class_name: :IsrAgreement, autosave: true
+  has_many   :active_agreements, ->{ current }, class_name: :IsrAgreement, autosave: true
 
   validates :l_group,
     presence: true
@@ -54,6 +54,12 @@ class IsrInterface < ActiveRecord::Base
 
   scope :ff_ats, -> ( s ){ where( 'isr_agreements.ia_status = :param', param: s ).references( :isa_agreements )}
   scope :ff_wfs, -> ( s ){ where( 'isr_agreements.current_status = :param', param: s ).references( :isa_agreements )}
+
+  # search scopes
+
+  class << self;
+    alias :for_group :ff_grp
+  end
 
   # format interface code for display
 

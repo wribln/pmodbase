@@ -91,7 +91,7 @@ class IsrInterfacesController0Test < ActionController::TestCase
     assert_response :unprocessable_entity
 
     isa.based_on.ia_status = 1
-    assert isa.save, isa.errors.messages
+    assert isa.save #, isa.errors.messages
 
     get :new_ia, id: @isr_agreement, wt: 1
     assert_response :success

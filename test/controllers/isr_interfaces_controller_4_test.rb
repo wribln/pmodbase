@@ -146,7 +146,7 @@ class IsrInterfacesController4Test < ActionController::TestCase
     assert_equal 1, isa.ia_no
     assert_equal 1, isa.rev_no
     assert_equal 2, isf.if_status # defined - frozen
-    assert_equal 6, isa.based_on.ia_status # superseeded
+    assert_equal 6, isa.based_on.ia_status # superseded
     assert_equal 4, isa.current_status # agreed
     assert_equal 5, isa.current_task   # workflow completed
 

@@ -33,17 +33,18 @@ en:
         ia_code:          'Interface Agreement Code'
         l_group_id:       'Leading Group'
         p_group_id:       'Partner Group'
-        l_owner_id:       'Leading Group Owner'
-        p_owner_id:       'Partner Group Owner'
-        l_deputy_id:      'Leading Group Deputy'
-        p_deputy_id:      'Partner Group Deputy'
+        l_owner_id:       'Leading Group Owner ID'
+        p_owner_id:       'Partner Group Owner ID'
+        l_deputy_id:      'Leading Group Deputy ID'
+        p_deputy_id:      'Partner Group Deputy ID'
         l_signature:      'Signed by Leading Group'
         p_signature:      'Signed by Partner Group'
         sign_time:        'Signature Date/Time'
         def_text:         'Text of Agreement'
         ia_status:        'Status'
-        #                   0      1        2          3        4             5              6             7            8           9           10
-        ia_states:        ['open','agreed','resolved','closed','in revision','status change','superseded','terminated','withdrawn','rejected' ]
+        #                   0      1        2          3        4             5              6             7            8           9          10
+        ia_states:        ['open','agreed','resolved','closed','in revision','status change','superseded','terminated','cancelled','rejected','withdrawn' ]
+        ia_status_groups: ['Active','Closed','Inactive','Pending']
         cfr_record_id:    'CFR Record'
         current_status_task: 'Current Status / Task'
         next_status_task:    'Next Status / Task'
@@ -103,8 +104,7 @@ en:
       form_title:         'Show Details of Interface Agreement and Interface'
     show_ia_icf:
       main_heading:       'Interface Control Form'
-      as_of:              'Status as of'
-      on_time:            'on'
+      status_dt:          'Status as at'
       if_references:      'Interface References [CFR]'
       ia_references:      'Agreement References [CFR]'
       empty_or_none:      'None.'
@@ -135,16 +135,15 @@ en:
       req_next_step:      'required for next step in workflow'
 
   isr_agreements:
-    title:          'ISR - Interface Agreements'
-    form:
-      cfr_record_id:      'CFR Record [ID]'
-      cfr_record_link:    'Show CFR Index'
-    new:
-      form_title:   'Create New Interface Agreement'
+    title:          'All ISR Interface Agreements'
     index:
       form_title:   'List of All Interface Agreements'
-    edit:
-      form_title:   'Edit Interface Agreement'
+    show_stats:
+      form_title:   'ISR Statistics on Interfaces and Interface Agreements'
+      freq_title:   'Frequency Table: Individual IAs per IF'
+      ia_per_if:    'IAs per IF'
+      if_count:     'IFs' 
+      ia_count:     'IAs' 
 
     workflows:
       w00:
@@ -189,29 +188,7 @@ en:
           s06:    'revision rejected'
           s07:    'revision modified'
           s08:    'revision agreed'
-          s09:    'closed - withdrawn'
-
-      w02:
-        label:    'Terminate Interface Agreement'
-        tasks:
-          t00:    '<start new workflow>'
-          t01:    'Create Termination'
-          t02:    'Prepare Termination'
-          t03:    'Confirm Termination'
-          t04:    'Archive Termination'
-          t05:    'Modify Termination'
-          t06:    '<workflow completed>'
-        states:
-          s00:    '<new termination>'
-          s01:    'termination created'
-          s02:    'termination in progress'
-          s03:    'termination released'
-          s04:    'termination to modify'
-          s05:    'termination confirmed'
-          s06:    'termination rejected'
-          s07:    'termination modified'
-          s08:    'termination agreed'
-          s09:    'closed - withdrawn'
+          s09:    'closed - cancelled'
 
       w02:
         label:    'Terminate Interface Agreement'

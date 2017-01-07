@@ -1,6 +1,12 @@
 class HomeController < ApplicationController
   initialize_feature FEATURE_ID_HOME_PAGE, FEATURE_ACCESS_ALL + FEATURE_ACCESS_NBP
 
+  # the next callback is needed to prevent an ActionController::InvalidAuthenticityToken
+  # exception after the session control cookie timed-out (as defined in 
+  # config/initializers/session_store.rb)
+
+  skip_before_action :verify_authenticity_token
+
   # index: initial view, shows homepage for sign-on
 
   def index

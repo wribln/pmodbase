@@ -22,26 +22,26 @@
         difference between the <%= t('dsr_status_records.stats.curr') %>
         and the <%= t('dsr_status_records.stats.base') %> columns.</li>
     </ul>
-    <p>The <%= help_term t('dsr_status_records.stats.abs') %> columns
+    <p>The <%= help_term t('statistics.abs') %> columns
       contain the absolute number (computed as the sum of all quantities in
       the DSR Status Records) of documents in that 
       <%= Group.human_attribute_name( :code_short ) %> having that
       <%= DsrStatusRecord.human_attribute_name( :document_status ) %>.</p>
-    <p>The columns labeled <%= help_term t('dsr_status_records.stats.rel') %>
+    <p>The columns labeled <%= help_term t('statistics.rel') %>
       for the current and baseline data refer to the column percent
       within a group. Thus the row labelled 
-      <%= help_term t('dsr_status_records.stats.grand_total' ) %> always contains 100%,
+      <%= help_term t('statistics.grand_total' ) %> always contains 100%,
       and the rows labelled 
-      <%= help_term t('dsr_status_records.stats.sub_total' ) %> for each project group
+      <%= help_term t('statistics.sub_total' ) %> for each project group
       shows their relationship to the 
-      <%= help_term t('dsr_status_records.stats.grand_total' ) %>; however, within each
+      <%= help_term t('statistics.grand_total' ) %>; however, within each
       project group, the column percent values refer to the group's total in the 
-      row labelled <%= help_term t('dsr_status_records.stats.sub_total') %>.</p>
+      row labelled <%= help_term t('statistics.sub_total') %>.</p>
     <p>The first group of data contains the <%= help_term( 
-      t('dsr_status_records.stats.grand_total' ))%>,
+      t('statistics.grand_total' ))%>,
       that is the sum over all project groups. All percentages relate to
       the ratio between the count and the sub total count for that column.</p>
-    <p>However, the <%= help_term t('dsr_status_records.stats.rel') %> for the
+    <p>However, the <%= help_term t('statistics.rel') %> for the
       <%= help_term t('dsr_status_records.stats.var' ) %> shows the percentage
       of the change, i.e. 0% means 'no change', 100% is output to indicate
       'twice as many' as in the baseline, or when the baseline is empty;
@@ -65,26 +65,26 @@
         difference between the <%= t('dsr_status_records.stats.curr') %>
         and the <%= t('dsr_status_records.stats.base') %> columns.</li>
     </ul>
-    <p>The <%= help_term t('dsr_status_records.stats.abs') %> columns
+    <p>The <%= help_term t('statistics.abs') %> columns
       contain the absolute weight (computed as the sum of all weight values in
       the DSR Status Records) of all documents in that 
       <%= Group.human_attribute_name( :code_short ) %> having that
       <%= DsrStatusRecord.human_attribute_name( :document_status ) %>.</p>
-    <p>The columns labeled <%= help_term t('dsr_status_records.stats.rel') %>
+    <p>The columns labeled <%= help_term t('statistics.rel') %>
       for the current and baseline data refer to the column percent
       within a group. Thus the row labelled 
-      <%= help_term t('dsr_status_records.stats.grand_total' ) %> always contains 100%,
+      <%= help_term t('statistics.grand_total' ) %> always contains 100%,
       and the rows labelled 
-      <%= help_term t('dsr_status_records.stats.sub_total' ) %> for each project group
+      <%= help_term t('statistics.sub_total' ) %> for each project group
       shows their relationship to the 
-      <%= help_term t('dsr_status_records.stats.grand_total' ) %>; however, within each
+      <%= help_term t('statistics.grand_total' ) %>; however, within each
       project group, the column percent values refer to the group's total in the 
-      row labelled <%= help_term t('dsr_status_records.stats.sub_total') %>.</p>
+      row labelled <%= help_term t('statistics.sub_total') %>.</p>
     <p>The first group of data contains the <%= help_term( 
-      t('dsr_status_records.stats.grand_total' ))%>,
+      t('statistics.grand_total' ))%>,
       that is the sum over all project groups. All percentages relate to
       the ratio between the combined weight and the sub total weight for that column.</p>
-    <p>However, the <%= help_term t('dsr_status_records.stats.rel') %> for the
+    <p>However, the <%= help_term t('statistics.rel') %> for the
       <%= help_term t('dsr_status_records.stats.var' ) %> shows the percentage
       of the change, i.e. 0% means 'no change', 100% is output to indicate
       'twice as much' as in the baseline, or when the baseline is empty;

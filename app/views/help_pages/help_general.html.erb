@@ -1,60 +1,62 @@
 <% help_title "General Help" %>
-  <div class="container">
-    <%= helpcrumbs %>
-    <%= help_header %>
-    <p class="lead">Some helpful information for users of the pmodbase application</p>
-    <h3>Terminology</h3>
-      <p><strong>pmodbase</strong> is the name of this web application. It consists
-      of the pmodbase database and the supporting pmodbase system.</p>
-      <p>pmodbase consists of various so-called Features, each consisting of a simple
-      table (like a spreadsheet), or a more complex combination of various tables,
-      or even workflows and process-supporting sub-applications.</p>
-    <h3>Bookmarks</h3>
-    <p>The way the pmodbase application is implemented, you can bookmark
-      any page which you
-      see on the screen specifically with filters set: So you can define 
-      specific filters which you need for your evaluations and then bookmark
-      this page for immediate access to up-to-date information.</p>
-    <h3>CSV Files</h3>
-    <p>Even though CSV stands for 'comma separated files', the system will
-      <em>always</em> create 'semicolon separated files': The reason for
-      this is simply that semicolons are more general - specifically in some
-      countries, CSV files are always expected to use a ';' as field
-      separator. These files can normally be processed by any spreadsheet
-      office programme, such as Microsoft Excel, or LibreOffice Calc.
-      The mime-type for the download is set such that the respective tool
-      should open automatically for such files.</p>
-    <h3>DOC Files</h3>
-    <p>Reports and other files to be further processed by a word-processor
-    such as Word or LibreOffice Writer, are generated as HTML-files.
-    As these files can normally be imported easily by such a word-processor,
-    further formatting or editing can be done on the generated files. The
-    mime-type for the download is set such that the respective tool should
-    open automatically for such files.</p>
-    <h3>Input of Dates</h3>
-    <p>When the input of dates is requested, various date formats will be
-      recognized. The safest way to input a date is to use the unambiguous
-      ISO 8601 format 'YYYY-MM-DD' with leading zeros, or to use the
-      datepicker.</p>
-    <h3>Output of Time</h3>
-    <p>As the pmodbase application is used all over the world, any time-related information
-      needs to be stored in a manner independent of the local time at the
-      origin of the information. All time information will be stored and
-      shown in UTC (Universal Time Coordinated).</p>
-    <h3>Unique Record Identifier</h3>
-      <p>Each and every record in the pmodbase database has a unique record identifier.
-      This is a number generated automatically by the underlying database to
-      ensure that all records can be distinguished even though they may look
-      identical.</p>
-      <p>The name of this identifier is usually abbreviated as
-      <%= t( 'general.attributes.id')-%> -&nbsp;for example in headings;
-      a value of this identifier is shown in brackets, e.g. [42]. This way
-      it should be easily recognized by you.</p>
-      <p>When accessing record specific information, this identifier will be
-      used to designate the record to be used. Hence, you will find this
-      number in the URL. For example: '.../aaa/1' takes you to the details
-      page of the first abbreviation.</p>
-      <p>When reporting problems on a specific item in the database, the
-      best way to identify the item is by mentioning this identifier.</p>      
-    <%= help_footer FEATURE_ID_HELP_PAGES %>
-  </div> <!-- /container -->
+<div class="container">
+  <%= helpcrumbs %>
+  <%= help_header %>
+  <p class="lead">Some helpful information for users of the pmodbase application</p>
+  <h3>Terminology</h3>
+    <p><strong>pmodbase</strong> is the name of this web application. It consists
+    of the pmodbase database and the supporting pmodbase system.</p>
+    <p>pmodbase provides various so-called Features, each consisting of a simple
+    table (like a spreadsheet), or a more complex combination of various tables,
+    or even workflows and process-supporting sub-applications.</p>
+  <h3>Bookmarks</h3>
+  <p>The way the pmodbase application is implemented, you can bookmark any page which you
+    see on the screen specifically with filters set: So you can define 
+    specific filters which you need for your evaluations and then bookmark
+    this page for immediate access to up-to-date information.</p>
+  <h3>CSV Files</h3>
+  <p>Even though CSV stands for 'comma separated files', the system will
+    <em>always</em> create 'semicolon separated files': The reason for
+    this is simply that semicolons are more general - specifically in some
+    countries, CSV files are always expected to use a ';' as field
+    separator. These files can normally be processed by any spreadsheet
+    office programme, such as Microsoft Excel, or LibreOffice Calc.
+    The mime-type for the download is set such that the respective tool
+    should open automatically for such files.</p>
+  <p>According to the CSV standard (RFC 4180), strings are only enclosed in 
+  double quotes when they contain special characters, such as line feeds,
+  double quotes, or semicolons.</p>
+  <h3>DOC Files</h3>
+  <p>Reports and other files to be further processed by a word-processor
+  such as Word or LibreOffice Writer, are generated as HTML-files.
+  As these files can normally be imported easily by such a word-processor,
+  further formatting or editing can be done on the generated files. The
+  mime-type for the download is set such that the respective tool should
+  open automatically for such files.</p>
+  <h3>Input of Dates</h3>
+  <p>When the input of dates is requested, various date formats will be
+    recognized. The safest way to input a date is to use the unambiguous
+    ISO 8601 format 'YYYY-MM-DD' with leading zeros, or to use the
+    datepicker.</p>
+  <h3>Output of Time</h3>
+  <p>As the pmodbase application is used all over the world, any time-related
+    information needs to be stored in a manner independent of the local time
+    at the origin of the information. All time information will be stored and
+    shown in UTC (Universal Time Coordinated).</p>
+  <h3>Unique Record Identifier</h3>
+    <p>Each and every record in the pmodbase database has a unique record identifier.
+    This is a number generated automatically by the underlying database management
+    system to ensure that all records can be distinguished even though they may look
+    identical.</p>
+    <p>The name of this identifier is usually abbreviated as
+    <%= t( 'general.attributes.id' )%> -&nbsp;for example in headings;
+    a value of this identifier is shown in brackets, e.g. [42]. This way
+    it should be easily recognized by you.</p>
+    <p>When accessing record specific information, this identifier will be
+    used to designate the record to be used. Hence, you will find this
+    number in the URL. For example: '.../aaa/1' takes you to the details
+    page of the first abbreviation.</p>
+    <p>When reporting problems on a specific item in the database, the
+    best way to identify the item is by mentioning this identifier.</p>
+  <%= help_footer FEATURE_ID_HELP_PAGES %>
+</div>

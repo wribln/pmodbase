@@ -35,6 +35,9 @@ en:
     formats:
       db_time:      '%Y-%m-%d %H:%M UTC'
       db_date:      '%Y-%m-%d'
+    as_at_dt:       'as at: %{dt}'
+    at_time:        'at: '
+
   date:
     formats:
       db_date:      '%Y-%m-%d'
@@ -1026,6 +1029,7 @@ en:
       other_date:     'Send/ Receive Date'
       reply_date:     'Planned/ Actual Reply Date'
       classification: 'Class.'
+      due_labels:     ['past','near']
     new:
       form_title:     'Add Correspondence Status Record'
     show:
@@ -1103,13 +1107,12 @@ en:
 
   dsr_status_records:
     title:            'Document Status Register (DSR)'
-    sub_title:        'as of: %{stats_date}'
     form:
       ddg_link:       'Show Document Groups'
       ppa_link:       'Show Programme Activities'
       no_groups:      'No eligible submission groups found.'
       cb_add_text:    'Corresponding DSR entry %{dsr_id} will be updated.'
-      sub_title:      'with Baseline as of: %{bl_date}'
+      sub_title:      'with Baseline as at: %{bl_date}'
       no_bl_date:     '<not yet set>'
       no_group:       '<unassigned>' # keep it short, must fit into code column (10 chars max)
 
@@ -1123,12 +1126,6 @@ en:
       ds:             'Document Status'
       wfs:            'Workflow Status'
       wft:            'Workflow Task'
-      abs:            'absolute'
-      rel:            'relative'
-      grand_total:    'Grand Total'
-      sub_total:      'Sub Total'
-      progress:       'Progress'
-      progress_wgt:   'Weighted Progress'
       pa_id:          'Programme Activity [ID]'
     stats_1:
       form_title:     'Quantity by Project Group, Document Status'
@@ -1850,6 +1847,15 @@ en:
     index:
       form_title:   'Global pmodbase Database Statistics'
 
+    # general statistical terms
+
+    abs:            'absolute'
+    rel:            'relative'
+    grand_total:    'Grand Total'
+    sub_total:      'Sub Total'
+    progress:       'Progress'
+    progress_wgt:   'Weighted Progress'
+
   submission_groups:
     title:          'DSR Submission Groups'
     index:
@@ -1893,9 +1899,9 @@ en:
       form_title:   'Edit Item for: '
     info:
       form_title:   'Details on Task/Issue/Action Item'
-      status:       'Status as of %{at}:'
-      changes:      'Changes as per %{at}:'
-      created:      'Created on %{at}:'
+      status:       'Status as at %{at}:'
+      changes:      'Changes as at %{at}:'
+      created:      'Created at %{at}:'
     msg:
       bad_tia_item_id:  'given Task/Issue/Action Item does not exist.'
       bad_seqno:        'is not unique for this Task/Issue/Action Item List.'

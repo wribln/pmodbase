@@ -98,7 +98,7 @@ class CsrStatusRecordsController < ApplicationController
     end
 
     def filter_params
-      params.slice( :ff_id, :ff_type, :ff_group, :ff_class, :ff_status, :ff_sub, :ff_note ).clean_up
+      params.slice( :ff_id, :ff_type, :ff_group, :ff_class, :ff_due, :ff_status, :ff_sub, :ff_note ).clean_up
     end
 
 end

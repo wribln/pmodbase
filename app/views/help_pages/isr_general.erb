@@ -48,10 +48,10 @@
     new lots, possibly resulting in different deadlines for the deliverables, or even a different 
     solution of the IF.</p>
     <p>Once the new IAs have been agreed upon with each new lot, the original IA can be marked as
-    'superseeded by specific IAs'.</p>
+    'superseded by specific IAs'.</p>
     <p>In addition, we must consider that IAs might need to be revised, i.e. a former IA requires a
     revision of the original IA. In this case, the new IA will eventually replace the previous IA. The
-    previous IA can be marked as 'superseeded by revision'.</p>
+    previous IA can be marked as 'superseded by revision'.</p>
     </div>
     <div class="col-sm-6">
     <%= image_tag 'isr_drawing_02.png', alt: 'Interface Agreements Scenario 1', class: 'img-responsive' -%>
@@ -144,18 +144,23 @@
     </table>
     </div>
     </div>
-    <p>For the statistics, the total number of active IFs (IFs to be considerd in the number of IFs to be reported)
-    is the sum of all IFs with the status 
-    '<%= IsrInterface::ISR_IF_STATUS_LABELM[ 0 ] %>' or 
-    '<%= IsrInterface::ISR_IF_STATUS_LABELM[ 1 ] %>'.</p>
     <h3>Status Transitions (IA)</h3>
     <p>Interface Agreements (IA) always relate to a specific Interface (IF) but there can be 1 or more IAs
-    for any given IF. Hence, the number of IAs can differ from the number of IFs. In order to correctly 
-    determine the status of the Interface Management activities, we need to look at IFs and IAs separately.</p>
+    for any given IF. Hence, the number of IAs can differ from the number of IFs.</p>
+    <p>Furthermore, a specific IA may consist of several <%= help_term 'IA Records'%> - each IA Record
+    tracing a new revision or status change of the IA. The previous - normally agreed - IA Record shows 
+    the currently valid agreement, the new IA Record is in the workflow to revise the previous agreement
+    or to change the status of the previous agreement. The previous IA Record is still valid (as agreement)
+    until the new, revised IA (status) becomes effective per mutual agreement.</p>
+    <p>In the simple case, an IA is represented by the most recent IA Record. The status of that IA Record
+    can be used as status of the IA in total.</p>
+    <p>When an IA is in the process of being revised, the IA is represented by two IA Records: The original,
+    agreed IA Record is shown together with the new IA Record under revision until the new IA Record 
+    replaced the previous IA Record.</p>
     <div class="row">
     <div class="table-responsive col-sm-8">
  		<table class="table table-bordered table-condensed">
- 			<caption>On the IA level, the following IA states can be identified:</caption>
+ 			<caption>States used for IAs/IA Records</caption>
  			<colgroup>
  				<col class="col-sm-2"/>
  				<col class="col-sm-6"/>
@@ -168,60 +173,94 @@
     	<tbody>
     	<tr>
     		<th><%= IsrAgreement::ISR_IA_STATUS_LABELS[ 0 ] %></th>
-    		<td>Initial Status: Automatically set when an IA is created.</td>
+    		<td>Initial Status: Automatically set when an IA (Record) is created.</td>
     	</tr>
     	<tr>
     		<th><%= IsrAgreement::ISR_IA_STATUS_LABELS[ 1 ] %></th>
-    		<td>Set when both Interface Partners have agreed to the IA.</td>
+    		<td>Set when both Interface Partners have agreed to the IA (or the new IA Record).</td>
     	</tr>
     	<tr>
     		<th><%= IsrAgreement::ISR_IA_STATUS_LABELS[ 2 ] %></th>
-    		<td>An IA is considered '<%= IsrAgreement::ISR_IA_STATUS_LABELS[ 2 ] %>'
-            when all agreed Resolution Steps have been closed.</td>
+    		<td>An IA can be considered <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 2 ] %>
+            when all agreed Resolution Steps have been closed. This status is set by 
+            agreement of the involved parties (as a revision of the IA). The status of the
+            preceding IA Record is set to
+            <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 6 ] %>.</td>
     	</tr>
     	<tr>
     		<th><%= IsrAgreement::ISR_IA_STATUS_LABELS[ 3 ] %></th>
-    		<td>An IA is marked '<%= IsrAgreement::ISR_IA_STATUS_LABELS[ 3 ] %>' 
-            when all associated Validation Steps have been successfully completed.</td>
+    		<td>An IA is marked <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 3 ] %>
+            when all associated Validation Steps have been successfully completed. This
+            status is set by agreement of the involved parties (as a revision of the IA).
+            The status of the preceding IA Record is set to
+            <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 6 ] %>.</td>
     	</tr>
     	<tr>
     		<th><%= IsrAgreement::ISR_IA_STATUS_LABELS[ 4 ] %></th>
-    		<td>A temporary status when an agreed IA is being changed. The previously agreed IA is still valid. Any
-    		IA with this status will not be counted towards to total number of active IAs. Once the revised IA is
-    		agreed by both partners, the previous IA is marked with the status 
-            '<%= IsrAgreement::ISR_IA_STATUS_LABELS[ 5 ] %>' and the new, revised
-    		IA becomes '<%= IsrAgreement::ISR_IA_STATUS_LABELS[ 4 ] %>'.</td>
+    		<td>A temporary status when an agreed IA is in the process to be changed.
+            This - the previously agreed - IA (Record) is still valid, and the new IA (Record) will be
+            considered as <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 0 ] %> at the same time.
+            Once the new, revised IA is agreed by both partners, its status changes to
+            <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 1 ] %> and the previous IA (Record) is
+            marked as <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 6 ] %>.</td>
     	</tr>
     	<tr>
     		<th><%= IsrAgreement::ISR_IA_STATUS_LABELS[ 5 ] %></th>
-    		<td>Any previously agreed IA superseded by a revised IA is marked by this status. This will cause the
-    		respected IA to be counted as inactive.</td>
+    		<td>This status is similar to the status 
+            <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 4 ]%>:
+            It is set when a new revision (IA Record) of the IA is created with the purpose to
+            change the status of the IA to
+            <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 2 ]%>, or
+            <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 3 ]%>, or when an IA is to be
+            terminated for some reason. The new IA has the status 
+            <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 0 ]%> until all parties have
+            agreed to the new status at which time the previous IA (Record) is marked as
+            <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 6 ] %>.</td>
     	</tr>
     	<tr>
     		<th><%= IsrAgreement::ISR_IA_STATUS_LABELS[ 6 ] %></th>
-    		<td>In case an IA was deemed to be closed prior to completion of all agreed deliverables, it would be
-    		marked as '<%= IsrAgreement::ISR_IA_STATUS_LABELS[ 6 ] %>' and would thus be considered inactive.</td>
+            <td>This status is used for IA Records which were replaced by a revised IA, or an IA Record
+            with a new status of the IA. IA Records with this status are normally not shown as they
+            represent no valid agreement anymore.</td>
     	</tr>
+        <tr>
+            <th><%= IsrAgreement::ISR_IA_STATUS_LABELS[ 7 ] %></th>
+            <td>This status for an IA (Record) indicates that the IA has been terminated by both parties
+            by mutual agreement. It is the result of a status change request. The previous IA Record is
+            marked as <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 6 ] %>.</td>
+        </tr>
+        <tr>
+            <th><%= IsrAgreement::ISR_IA_STATUS_LABELS[ 8 ] %></th>
+            <td>An IA Record is marked as <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 8 ] %>
+            during a workflow when an attempt to revise an IA was aborted. The status of the 
+            previous IA Record is reset to <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 1 ] %>
+            again, indicating that the previous IA Record reflects the current status of the IA.</td>
+        </tr>
+        <tr>
+            <th><%= IsrAgreement::ISR_IA_STATUS_LABELS[ 9 ] %></th>
+            <td>An IA Record is marked as <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 9 ] %>
+            during a workflow when a request for a status change of an IA was aborted. The status of the 
+            previous IA Record is reset to <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 1 ] %>
+            again, indicating that the previous IA Record reflects the current status of the IA.</td>
+        </tr>
+        <tr>
+            <th><%= IsrAgreement::ISR_IA_STATUS_LABELS[ 10 ] %></th>
+            <td>An IA is marked <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 10 ] %> when 
+            during the creation (workflow) of an IA, the IA was found to be not applicable or
+            not useful.</td>
+        </tr>
     </tbody>
     </table>
     </div>
     </div>
-    <p>For the purpose of computing statistics numbers, the total number of all active IAs is the sum of IAs
-    having a status
-    '<%= IsrAgreement::ISR_IA_STATUS_LABELS[ 0 ] %>',
-    '<%= IsrAgreement::ISR_IA_STATUS_LABELS[ 4 ] %>',
-    '<%= IsrAgreement::ISR_IA_STATUS_LABELS[ 2 ] %>' or 
-    '<%= IsrAgreement::ISR_IA_STATUS_LABELS[ 3 ] %>'. Inactive IAs are 
-    '<%= IsrAgreement::ISR_IA_STATUS_LABELS[ 5 ] %>' and 
-    '<%= IsrAgreement::ISR_IA_STATUS_LABELS[ 6 ] %>' IAs. IAs 
-    '<%= IsrAgreement::ISR_IA_STATUS_LABELS[ 4 ] %>' have a special status as they are neither active
-    nor inactive.</p>
-    <h3>Status from Responsibility and Validation Steps (RS/VS)</h3>
-    <p>Since Responsiblity and Validation Steps are implemented as Task/Issue/Action Item Lists, the status
-    from these lists is an agreegation of the individual items: Each item can be either 'open' or it is 'closed'
-    ('waiting' is considered 'open', 'obsolete' is considered 'closed'). A list of Resolution (or
-    Validation) Steps is thus either 'open' (one or more items is still 'open') or 'closed' (all items are
-    'closed').</p>
+    <p>The various statistics based on the status of IFs, IAs, and IA Records are documented
+    in the help text for <%= link_to_help :isr_agreements, IsrAgreement.model_name.human %>.</p>
+    <h3>Status from Responsibility and Validation Steps (RS/VS) - Proposal</h3>
+    <p>Since Responsiblity and Validation Steps are implemented as Task/Issue/Action Item Lists,
+    the status from these lists is could be an agregation of the individual items: Each item can
+    be either 'open' or it is 'closed' ('waiting' should be considered 'open', 'obsolete' should be
+    considered 'closed'). A list of Resolution (or Validation) Steps is thus either 'open' (one or
+    more items is still 'open') or 'closed' (all items are 'closed').</p>
     <hr/>
     <h3><a name="refs"></a>References</h3>
     <p>The Interface Management processes here (the implementation, terminology and also some of the phrases used

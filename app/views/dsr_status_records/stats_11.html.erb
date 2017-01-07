@@ -1,7 +1,7 @@
 <%- page_title %>
 <div class="container">
   <%= breadcrumbs %>
-  <%= form_title_w_sub_title t('dsr_status_records.sub_title', stats_date: db_formatted_dt( Time.now ))%>
+  <%= form_title_w_time_stamp %>
   <div class="table-responsive col-sm-7">
     <table class="table table-striped table-bordered table-condensed">
       <thead>
@@ -14,14 +14,14 @@
         <tr>
           <th class="col-sm-1"><%= SubmissionGroup.human_attribute_name( :code ) %></th>
           <th class="col-sm-3"><%= t('dsr_status_records.stats.wft' ) %></th>
-          <th class="th-center"><%= t('dsr_status_records.stats.abs') %></th>
-          <th class="th-center"><%= t('dsr_status_records.stats.abs') %></th>
-          <th class="th-center"><%= t('dsr_status_records.stats.abs') %></th>
+          <th class="th-center"><%= t('statistics.abs') %></th>
+          <th class="th-center"><%= t('statistics.abs') %></th>
+          <th class="th-center"><%= t('statistics.abs') %></th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td colspan="2"><strong><%= t('dsr_status_records.stats.grand_total' ) %></strong></td>
+          <td colspan="2"><strong><%= t('statistics.grand_total' ) %></strong></td>
           <td class="td-right"><%= @dsr_stats_gt[ 0 ] %></td>
           <td class="td-right"><%= @dsr_stats_gt[ 1 ] %></td>
           <td class="td-right"><%= @dsr_stats_gt[ 1 ] - @dsr_stats_gt[ 0 ] %></td>
@@ -46,7 +46,7 @@
         <%- @dsr_stats_st.each do |st| -%>
           <tr>
             <td><strong><%= @dsr_groups.assoc( st[ 0 ])[ 1 ] %></strong></td>
-            <td><em><%= t('dsr_status_records.stats.sub_total' ) %></em></td>
+            <td><em><%= t('statistics.sub_total' ) %></em></td>
             <td class="td-right"><%= st[ 1 ] %></td>
             <td class="td-right"><%= st[ 2 ] %></td>
             <td class="td-right"><%= st[ 1 ] - st[ 2 ] %></td>

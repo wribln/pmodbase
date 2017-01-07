@@ -16,7 +16,7 @@
         <td><%= @isr_interface.if_status_label %></td>
       </tr>
       <tr>
-        <td class="row-head"><%= t( '.as_of' ) %>:</td>
+        <td class="row-head"><%= t( '.status_dt' ) %>:</td>
         <td><%= db_formatted_dt @isr_interface.updated_at %></td>
       </tr>
       <tr>
@@ -53,7 +53,7 @@
         <td><strong><%= @isr_agreement.code_and_revision %></strong></td>
       </tr>
       <tr>
-        <td class="row-head"><%= t( '.as_of' ) %>:</td>
+        <td class="row-head"><%= t( '.status_dt' ) %>:</td>
         <td><%= db_formatted_dt @isr_agreement.updated_at %></td>
       </tr>
       <tr>
@@ -87,7 +87,7 @@
         <td>
           <%- unless @isr_agreement.l_signature.blank? %>
             <%= @isr_agreement.l_signature %><br/>
-            <%= t( '.on_time' ) %> <%= db_formatted_dt @isr_agreement.l_sign_time %>
+            <%= t( 'time.at_time' ) %> <%= db_formatted_dt @isr_agreement.l_sign_time %>
           <%- else -%>
             &nbsp;
           <%- end -%>
@@ -98,7 +98,7 @@
         <td>
           <%- unless @isr_agreement.p_signature.blank? %>
             <%= @isr_agreement.p_signature %><br/>
-            <%= t( '.on_time' ) %> <%= db_formatted_dt @isr_agreement.p_sign_time %>
+            <%= t( 'time.at_time' ) %> <%= db_formatted_dt @isr_agreement.p_sign_time %>
           <%- else -%>
             &nbsp;
           <%- end -%>
@@ -107,35 +107,47 @@
       <tr><td colspan="2"><hr/></td></tr>
       <tr>
         <td class="row-head"><%= IsrAgreement.human_attribute_name( :res_steps_id )%>:</td>
-        <%- if @res_steps_items.blank? -%>
+        <%- if @res_steps_items.nil? -%>
           <td><%= t( '.empty_or_none' )%></td>
-        </tr>
         <%- else -%>
-          <%- @res_steps_items.each_with_index do |item, index | -%>
-            <%- if index > 0 -%>
+          <td><%= t( 'time.as_at_dt', dt: db_formatted_dt( DateTime.now ))%></td>
+        </tr>
+        <%- if @res_steps_items.empty? -%>
         <tr>
           <td>&nbsp;</td>
-            <%- end -%>
-          <td><%= item.seqno %>. <%= item.description %> <%= t( '.due_date', due_date: db_formatted_dt( item.due_date )) unless item.due_date.nil? %></td>
+          <td><%= t( '.empty_or_none' )%></td>
+        </tr>
+        <%- else -%>                      
+          <%- @res_steps_items.each_with_index do |item, index | -%>
+        <tr>
+          <td class="right"><%= @isr_agreement.res_steps.item_code( item.seqno )%>:</td>
+          <td><%= item.description %> <%= t( '.due_date', due_date: db_formatted_dt( item.due_date )) unless item.due_date.nil? %></td>
         </tr>
           <%- end -%>
         <%- end -%>
+      <%- end -%>
       <tr><td colspan="2"><hr/></td></tr>
       <tr>
         <td class="row-head"><%= IsrAgreement.human_attribute_name( :val_steps_id )%>:</td>
-        <%- if @val_steps_items.blank? -%>
+        <%- if @val_steps_items.nil? -%>
           <td><%= t( '.empty_or_none' )%></td>
+        <%- else -%>
+          <td><%= t( 'time.as_at_dt', dt: db_formatted_dt( DateTime.now ))%></td>
+        </tr>
+        <%- if @val_steps_items.empty? -%>
+        <tr>
+          <td>&nbsp;</td>
+          <td><%= t( '.empty_or_none' )-%></td>
         </tr>
         <%- else -%>
           <%- @val_steps_items.each_with_index do |item, index | -%>
-            <%- if index > 0 -%>
         <tr>
-          <td>&nbsp;</td>
-            <%- end -%>
-          <td><%= item.seqno %>. <%= item.description %> <%= t( '.due_date', due_date: db_formatted_dt( item.due_date )) unless item.due_date.nil? %></td>
+          <td class="right"><%= @isr_agreement.val_steps.item_code( item.seqno )%>:</td>
+          <td><%= item.description %> <%= t( '.due_date', due_date: db_formatted_dt( item.due_date )) unless item.due_date.nil? %></td>
         </tr>
           <%- end -%>
         <%- end -%>
+      <%- end -%>
     </tbody>
   </table>
 

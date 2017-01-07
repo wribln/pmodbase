@@ -36,6 +36,19 @@
       of tasks and status transitions. For any given task, either the IFM, the IFL or the IFP has
       the sole responsibility to perform necessary actions associated in that task and to initiate
       the next step.</p>
+    <p>Each revision and request for a status change results in the creation of a new 
+      <%= help_term 'IA Record' %>: Each IA Record refers to the same IA (and IF) and is shown as
+      revision of the IA. Until the new, revised IA Record or status change is agreed by both
+      IA partners, the original IA Record (containing the previously agreed agreement) is marked
+      as either <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 4 ]%> or as
+      <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 5 ]%>, whereas the new revision has a
+      status of <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 0 ]%>. When the workflow for
+      the revision or the status change is completed, the original IA Record receives the status
+      <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 6 ]%> and the new IA Record the status
+      <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 1 ]%>, 
+      <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 2 ]%>, or
+      <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 3 ]%>, replacing the previous version of
+      the IA (Record) by the new agreement.</p> 
     <h3>IA Attributes</h3>
     <ul>
       <li><%= help_param IsrAgreement.human_attribute_name( :code )%> together with the
@@ -51,12 +64,12 @@
       leading project group (the 'Interface Leader' or 
       <%= help_term IsrInterface.human_attribute_name( :l_group_id)-%>), and
       and the IA-specific partner project group (the 'Interface Partner' or
-      <%= help_term IsrInterface.human_attribute_name( :p_group_id )-%>).</li>
-      <li><%= help_param IsrInterface.human_attribute_name( :l_group_id )-%> is the group code
+      <%= help_term IsrAgreement.human_attribute_name( :p_group_id )-%>).</li>
+      <li><%= help_param IsrAgreement.human_attribute_name( :l_group_id )-%> is the group code
       of the <strong>IA-specific</strong> IFL. This group is responsible to lead the IA and to
       resolve the documented interface as per this agreement. This group can be the same as the
       IFL in the related IF but it can also be another group.</li>
-      <li><%= help_param IsrInterface.human_attribute_name( :p_group_id )-%> is the group code
+      <li><%= help_param IsrAgreement.human_attribute_name( :p_group_id )-%> is the group code
       of the <strong>IA-specific</strong> IFP. This group is responsible to provide support 
       during the resolution of any issues related to the specified IF according to this IA.
       This group can be the same as the IFP in the related IF but it can also be another group.</li>
@@ -66,7 +79,10 @@
       <%= help_param IsrAgreement.human_attribute_name( :l_owner_id )%>, 
       <%= help_param IsrAgreement.human_attribute_name( :p_owner_id )%>,
       <%= help_param IsrAgreement.human_attribute_name( :l_deputy_id )%>, and
-      <%= help_param IsrAgreement.human_attribute_name( :p_deputy_id )%>.</li>
+      <%= help_param IsrAgreement.human_attribute_name( :p_deputy_id )%>.<br/>
+      These accounts must have access permissions for their respective groups, i.e. 
+      <%= help_term IsrAgreement.human_attribute_name( :l_group_id )%> or
+      <%= help_term IsrAgreement.human_attribute_name( :p_group_id )%>.</li>
       <li><%= help_param IsrAgreement.human_attribute_name( :def_text )%> provides the detailed agreement
       information. 
       This text should detail specific deliveries and their delivery time frame - specific instruction
@@ -95,26 +111,32 @@
       '<strong>IF&ndash;</strong>&lt;n&gt;<strong>&ndash;IA&ndash;</strong>&lt;m&gt;<strong>&ndash;VS</strong>'
       corresponding to the inital part of the IA code.<br/>
       If - for any reason - this list becomes obsolete, it can be removed by unchecking the checkbox again.</li>
-      <li>IAs have a <%= IsrAgreement.human_attribute_name( :ia_status )%> field which shows the current status
-      of this IA:<br/>
+      <li>IAs have a <%= IsrAgreement.human_attribute_name( :ia_status )%> field which shows the current
+      status of this IA or IA revision:<br/>
       <ul class="no-marker">
-        <li>[0] <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 0 ]%> for any IA after creation and before an agreement
-        has been reached among the IA partners;</li>
-        <li>[1] <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 1 ]%> when both IA partners have agreed to this IA;</li>
-        <li>[2] <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 2 ]%> when both IA partners have confirmed that no further
-        resolution activities are required, or all agreed resolution steps have been closed;</li>
-        <li>[3] <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 3 ]%> when both IA partners have confirmed that no further
-        validation activities are required, or all agreed validation steps have been closed;</li>
-        <li>[4] <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 4 ]%> is used to mark IAs when a revision IA is currently
-        in progress;</li>
-        <li>[5] <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 5 ]%> are those IAs which contain a request to change
-        of the IA status but this request has not yet been confirmed by all parties;</li>
-        <li>[6] <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 6 ]%> is the status for those IAs which are succeeded by
-        a revised version of this IA or a IA with a status change;</li>
-        <li>[7] <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 7 ]%> are those IAs which were terminated;</li>
-        <li>[8] <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 8 ]%> are those IAs which were withdrawn during creation;</li>
-        <li>[9] <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 9 ]%> are those IAs originally containing a status
-        change request which was eventually rejected by one IA partner.</li>
+        <li>[0] <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 0 ]%> for any IA after creation and
+        before an agreement has been reached among the IA partners;</li>
+        <li>[1] <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 1 ]%> when both IA partners have 
+        agreed to this IA;</li>
+        <li>[2] <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 2 ]%> when both IA partners have
+        confirmed that no further resolution activities are required, or all agreed resolution steps 
+        have been closed;</li>
+        <li>[3] <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 3 ]%> when both IA partners have 
+        confirmed that no further validation activities are required, or all agreed validation steps have been closed;</li>
+        <li>[4] <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 4 ]%> is used to mark IAs when a
+        revision IA is currently in progress;</li>
+        <li>[5] <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 5 ]%> are those IAs which contain
+        a request to change of the IA status but this request has not yet been confirmed by all parties;</li>
+        <li>[6] <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 6 ]%> is the status for those IAs which
+        are succeeded by a revised version of this IA or a IA with a status change;</li>
+        <li>[7] <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 7 ]%> are those IAs which were
+        terminated by mutual agreement;</li>
+        <li>[8] <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 8 ]%> are revisions of IAs which
+        were not completed and terminated prior to agreement and confirmation;
+        <li>[9] <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 9 ]%> are those IAs originally
+        containing a status change request which was eventually rejected by one IA partner.</li>
+        <li>[10] <%= help_term IsrAgreement::ISR_IA_STATUS_LABELS[ 10 ]%> are those IAs which were 
+        withdrawn during creation;</li>
       </ul>
       <li>When the new or revised IA was released or the new status confirmed by the IFL, the attribute
       <%= help_param IsrAgreement.human_attribute_name( :l_signature )%>
@@ -122,12 +144,31 @@
       <li>When the new or revised IA or the new status was confirmed by the IFP, the attribute
       <%= help_param IsrAgreement.human_attribute_name( :p_signature )%>
       contains the user information of the IFP who made the confirmation.</li>
-      <li>Correspondingly, <%= help_param IsrAgreement.human_attribute_name( :sign_time )%> contains the date and time of
-      the formal signing of the IA for each party individually.</li>
-      <li><%= help_param IsrAgreement.human_attribute_name( :current_status_task )%> show the status and task of the IA
-      within the current workflow. Detailed information on the workflow tasks and possible status transitions
-      can be found <%= link_to 'here', isr_workflow_info_path %>.</li>
+      <li>Correspondingly, <%= help_param IsrAgreement.human_attribute_name( :sign_time )%> contains
+      the date and time of the formal signing of the IA for each party individually.</li>
+      <li><%= help_param IsrAgreement.human_attribute_name( :current_status_task )%> show the status
+      and task of the IA within the current workflow. Detailed information on the workflow tasks and
+      possible status transitions can be found <%= link_to 'here', isr_workflow_info_path %>.</li>
     </ul>
+    <h3>Statistics</h3>
+    <p>An overview of the status of IFs and IAs can be requested from the listing of all interface
+    agreements (accessible by the IFM). A selected subset of the tables shown can be downloaded as
+    CSV file (see below for details).</p>
+    <p>The first table counts the status of the Interfaces. The second table can be used to gain
+    an understanding of the relationship between the Interfaces and the Interface Agreements: Each
+    row in the second table shows how many IFs have how many IAs. The third table displays the
+    number of IAs and their status.</p>
+    <h3>CSV File</h3>
+    <p>The CSV file contains the statistical information in a raw format using four columns:</p>
+    <ol>
+    <li>'table_id' indicates which table this count belongs to (refer to the listing for the table)</li>
+    <li>'line_id' is a running number for the item</li>
+    <li>'label' is the description of the item - the respective status</li>
+    <li>'count' is the number of IFs or IAs with this status</li>
+    </ol>
+    <p>The line containing '3;1;open;2' contains data from the third table (column 1: 3); 
+    it shows that there are two IAs (column 4: 2) having the first status (column 2: 1) 'open'.</p>
+    <p>The first line is appended with the date and time when these statistics were computed.</p>
     <h3>Permissions</h3>
       <p>The tasks within this workflow are to be performed by the Interface Manager (IFM), the
       Interface Leader (IFL) or the Interface Partner (IFP):</p>
@@ -146,7 +187,15 @@
       <%= help_term IsrAgreement.human_attribute_name( :p_deputy_id )%>.</p>
       <p> IFL and IFP accounts only require (level 1) permission to update IAs within the ISR (Feature
       <%= FEATURE_ID_ISR_INTERFACES %>).</p>
-      <p>The IFM needs (level 2) permission to create and update 
-      any IF and IA records.</p>
+      <p>The IFM needs (level 2) permission to create and update any IF and IA records.</p>
+      <p>The <%= help_term IsrAgreement.human_attribute_name( :l_owner_id )%> and the 
+      <%= help_term IsrAgreement.human_attribute_name( :l_deputy_id )%> will be assigned automatically
+      as <%= help_term TiaList.human_attribute_name( :owner_account_id )%> and
+      <%= help_term TiaList.human_attribute_name( :deputy_account_id )%> for the
+      respective Task/Issue/Action Item Lists. In order to allow access to these lists for the
+      <%= help_term IsrAgreement.human_attribute_name( :p_owner_id )%> and/or the
+      <%= help_term IsrAgreement.human_attribute_name( :p_deputy_id )%>, the IFM must
+      specifically define them as members to these lists and grant them the required access
+      permissions.</p>
     <%= help_footer FEATURE_ID_ISR_AGREEMENTS %>
-  </div> <!-- /container -->
+  </div>

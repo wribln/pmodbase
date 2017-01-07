@@ -5,7 +5,6 @@
 # GET /isr              index       Show all IFs + related IAs              all
 #
 # GET /isr/info         show_info   Display workflow information            all
-# GET /isr/stats        show_stats  Display statistics                      all
 #
 # GET /isr/1            show        Show IF 1 + related IAs / short         all
 # GET /isr/1/all        show_all    Show IF 1 / detailed                    all
@@ -45,7 +44,7 @@
 # 1. create
 # 2. revise, i.e. any change after initial agreement, including termination;
 #            implemented as new revision where result could be 'agreed'
-#            or 'terminated' (previous IA 'superseeded').
+#            or 'terminated' (previous IA 'superseded').
 
 require 'isr_work_flow.rb'
 class IsrInterfacesController < ApplicationController
@@ -453,9 +452,13 @@ class IsrInterfacesController < ApplicationController
         when 8 # agreed
           @isr_agreement.ia_status = 1 # agreed
           @isr_agreement.based_on.ia_status = 6 unless @isr_agreement.based_on.nil? # implies ia_type == 1
-        when 9 # withdrawn
-          @isr_agreement.ia_status = 8
-          @isr_agreement.based_on.ia_status = 1 unless @isr_agreement.based_on.nil? # implies ia_type == 1
+        when 9 # withdrawn / cancelled
+          if @isr_agreement.ia_type == 0
+            @isr_agreement.ia_status = 10
+          else
+            @isr_agreement.ia_status = 8 
+            @isr_agreement.based_on.ia_status = 1 unless @isr_agreement.based_on.nil? # implies ia_type == 1
+          end
         end
       when 2, 3, 4
         case @workflow.wf_updated_status
@@ -477,13 +480,13 @@ class IsrInterfacesController < ApplicationController
           @isr_agreement.p_signature = current_user.account_info
           @isr_agreement.p_sign_time = DateTime.now
         when 4 # status change completed
-          @isr_agreement.based_on.ia_status = 6 # superseeded
+          @isr_agreement.based_on.ia_status = 6 # superseded
           if @isr_agreement.ia_type == 2
-            @isr_agreement.ia_status = 7 # terminated
+            @isr_agreement.terminate_ia
           elsif @isr_agreement.ia_type == 3
-            @isr_agreement.ia_status = 2 # resolved
+            @isr_agreement.resolve_ia
           elsif @isr_agreement.ia_type == 4
-            @isr_agreement.ia_status = 3
+            @isr_agreement.close_ia
           end
         when 6 # status change rejected by IFP
           @isr_agreement.l_sign_time = nil

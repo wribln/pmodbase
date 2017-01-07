@@ -47,12 +47,7 @@
       containing information on this IF. On input, you will need to enter the numerical
       <%= help_term t( 'isr_interfaces.form_if.cfr_record_id' )-%>. The button next to the input field
       labelled <%= help_term t( 'isr_interfaces.form_if.cfr_record_link' )-%> leads to the listing
-      of all CFR records.<br/>
-      When an IF is defined and frozen (IFL releases his definition), this CFR Record will
-      be marked as 'frozen' such that no more changes to this CFR record can be made.<br/>
-      It is the task of the IFM to ensure that all related documents are correctly
-      stored in the project's document management system once the IF reaches the status 
-      <%= help_term IsrInterface::ISR_IF_STATUS_LABELS[ 2 ]%>.</li>
+      of all CFR records.</li>
       <li><%= help_param IsrInterface.human_attribute_name( :if_status )-%> shows the current status
       of the IF:<br/>
       	<%= help_term IsrInterface::ISR_IF_STATUS_LABELS[ 0 ]-%> is the initial status of an

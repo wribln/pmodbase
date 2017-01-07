@@ -58,6 +58,11 @@ module ApplicationHelper
     end
   end
 
+  def form_title_w_time_stamp( time_stamp = nil )
+    dt = time_stamp || Time.now
+    form_title_w_sub_title( t( 'time.as_at_dt', dt: db_formatted_dt( dt )))
+  end
+
   # display some arbitrary value in an input box
 
   def display_value( value )

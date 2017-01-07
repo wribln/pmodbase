@@ -1,3 +1,13 @@
+# Notes on PCP Subjects
+#
+# - a PCP Subject can only be created by the Presenting Group
+# - a PCP Subject has at least one associated PCP Step (step_no 0)
+# - PCP Subjects have 0 to n PCP Items:
+#   - 0 PCP Items when created, or
+#   - 0 PCP Items when released with immediate approval, i.e.
+#     no observations, issues, comments (this would be after
+#     exactly two PCP Steps: Initial Release and Initial Review)
+
 require 'core_ext/string'
 class PcpSubject < ActiveRecord::Base
   include ApplicationModel

@@ -9,12 +9,11 @@
  
 =end
 %>
-
     <% if flash[:alert] %>
     <div class="form-group">
-      <label class="<%= %Q(control-label col-sm-#{ BT_COL_WIDTH_LABELS }) %>"><%= t( 'general.alert' ) %></label>
+      <label class="<%= %Q(control-label col-sm-#{ BT_COL_WIDTH_LABELS }) %>"><%= t( 'general.alert' )%></label>
       <div class="col-sm-4">
-        <p class="btn-lg bg-info"><%= flash[ :alert ] -%></p>
+        <p class="btn-lg bg-info"><%= flash[ :alert ]%></p>
       </div>
     </div>
     <% end %>

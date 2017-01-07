@@ -256,8 +256,8 @@ en:
       form_title:     'Show PCP Subject Details'
     stats:
       form_title:     'Status of PCP Subjects by Category'
-      sub_title_0:    'permitted groups, as of: %{stats_date}'
-      sub_title_1:    'all groups, as of: %{stats_date}'
+      sub_title_0:    'permitted groups, as at: %{stats_date}'
+      sub_title_1:    'all groups, as at: %{stats_date}'
       total_col:      'Total'
       total_row:      'Grand Total'
 

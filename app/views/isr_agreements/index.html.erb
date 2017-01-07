@@ -35,7 +35,7 @@
             <td colspan="2"><%= isa.code_and_revision %></td>
             <td><%= isa.def_text %></td>
             <td><%= isa.ia_status_label %></td>
-            <td><%= @workflow.status_task_label( isa.current_status, isa.current_task, 0 ) %></td>
+            <td><%= @workflow.status_task_label( isa.current_status, isa.current_task, isa.ia_type ) %></td>
             <td><%= link_to_tia( isa.res_steps, display = :to_id )%></td>
             <td><%= link_to_tia( isa.val_steps, display = :to_id )%></td>
             <td><%= render partial: 'isr_interfaces/actions', object: isa %></td>
@@ -45,6 +45,7 @@
       </tbody>
     </table>
     <%- end -%>
+    <%= link_to t( 'general.statistics' ), isr_statistics_path %>
     <%= render partial: 'shared/footer' %>
   </div>
 </div>

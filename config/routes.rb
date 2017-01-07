@@ -56,8 +56,8 @@ Rails.application.routes.draw do
   get 'hld/:id/new', to: 'holidays#add', as: 'add_holiday', format: false
   resources :holidays, path: 'hld', format: false
   get 'isa',              to: 'isr_agreements#index',         as: 'isr_agreements',    format: false
+  get 'isa/stats',        to: 'isr_agreements#show_stats',    as: 'isr_statistics',    format: false
   get 'isr/info',         to: 'isr_interfaces#info_workflow', as: 'isr_workflow_info', format: false
-  get 'isr/stats',        to: 'isr_interfaces#show_stats',  format: false
   get 'isr/:id/all',      to: 'isr_interfaces#show_all',      as: 'isr_interface_details',  format: false
   get 'isr/ia/:id',       to: 'isr_interfaces#show_ia',       as: 'isr_agreement',          format: false
   get 'isr/ia/:id/all',   to: 'isr_interfaces#show_ia_all',   as: 'isr_agreement_details',  format: false

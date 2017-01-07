@@ -1,3 +1,13 @@
+# Notes on PCP Items
+#
+# - PCP Items can only be created by the Commenting Group
+# - Assessments can only be made by the Commenting Group
+#   and they cannot be changed by the Presenting Group
+# - any PCP Item has 0 or more PCP Comments
+# - the related PCP Step must always be odd as all PCP Items
+#   are created by the Commenting Group
+
+
 class PcpItem < ActiveRecord::Base
   include ApplicationModel
   include PcpAssessmentModel

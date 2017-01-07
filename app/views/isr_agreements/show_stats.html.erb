@@ -1,0 +1,134 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title_w_time_stamp %>
+  <div class="row">
+  <div class="table-responsive col-sm-3">
+    <table class="table table-striped table-bordered table-condensed">
+      <caption>1. <%= IsrInterface.model_name.human -%></caption>
+      <thead>
+        <tr>
+          <th class="col-sm-2"><%= IsrInterface.human_attribute_name( :if_status )%></th>
+          <th class="col-sm-1 td-right"><%= t( 'statistics.abs' )-%></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="tr-bold">
+          <td><%= t( 'statistics.grand_total' )%></td>
+          <td class="td-right"><%= db_formatted_abs( @if_total )-%></td>
+        </tr>
+        <%- IsrInterface::ISR_IF_STATUS_LABELS.each_with_index do |item,index| -%>
+        <tr>
+          <td><%= item %></td>
+          <td class="td-right"><%= db_formatted_abs( @if_stats[ index ]) %></td>
+        </tr>
+        <%- end -%>
+      </tbody>
+    </table>
+  </div>
+  </div>
+  <div class="row">
+  <div class="table-responsive col-sm-3">
+    <table class="table table-striped table-bordered table-condensed">
+    <caption>2. <%= t( '.freq_title' )-%></caption>
+    <thead>
+      <tr>
+        <th class="col-sm-1 td-right"><%= t( '.ia_per_if' )%></th>
+        <th class="col-sm-1 td-right"><%= t( '.if_count'  )%></th>
+        <th class="col-sm-1 td-right"><%= t( '.ia_count'  )%></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%- @if_freq.rows.each do |r|-%>
+      <tr>
+        <td class="td-right"><%= r[ 0 ]-%></td>
+        <td class="td-right"><%= r[ 1 ]-%></td>
+        <td class="td-right"><%= r[ 2 ]-%></td>
+      </tr>
+      <%- end -%>
+      <tr class="tr-bold">
+        <td><%= t( 'statistics.grand_total' )-%></td>
+        <td class="td-right"><%= @if_count %></td>
+        <td class="td-right"><%= @ia_count %></td>
+      </tr>
+    </table>
+  </div>
+  </div>
+  <div class="row">
+  <div class="table-responsive col-sm-4">
+    <table class="table table-striped table-bordered table-condensed">
+      <caption>3. <%= IsrAgreement.model_name.human -%></caption>
+      <thead>
+        <tr>
+          <th class="col-sm-2"><%= IsrAgreement.human_attribute_name( :ia_status )%></th>
+          <th class="col-sm-1 td-right"><%= t( 'statistics.abs' )-%></th>
+          <th class="col-sm-1 td-right"><%= t( 'statistics.rel' )-%></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="tr-bold">
+          <td><%= t( 'statistics.grand_total' )%></td>
+          <td class="td-right"><%= @ia_total -%></td>
+          <td class="td-right"><%= db_formatted_pct( percent_abs( @ia_total, @ia_total ))-%></td>
+        </tr>
+
+        <tr class="tr-bold">
+          <td><%= IsrAgreement::ISR_IA_STATUS_GROUPS[ 0 ]-%></td>
+          <td class="td-right"><%= db_formatted_abs( @ia_active )-%></td>
+          <td class="td-right"><%= db_formatted_pct( percent_abs( @ia_active, @ia_total ))-%></td>
+        </tr>
+        <%- IsrAgreement::ISR_IA_STATUS_ACTIVE.each do |index| -%>
+        <tr>
+          <td>&nbsp;&nbsp;&nbsp;<%= IsrAgreement::ISR_IA_STATUS_LABELS[ index ]-%></td>
+          <td class="td-right"><%= db_formatted_abs( @ia_stats[ index ])-%></td>
+          <td class="td-right"><%= db_formatted_pct( percent_abs( @ia_stats[ index ], @ia_active ))-%></td>
+        </tr>
+        <%- end -%>
+
+        <tr class="tr-bold">
+          <td><%= IsrAgreement::ISR_IA_STATUS_GROUPS[ 1 ]-%></td>
+          <td class="td-right"><%= db_formatted_abs( @ia_closed )-%></td>
+          <td class="td-right"><%= db_formatted_pct( percent_abs( @ia_closed, @ia_total ))-%></td>
+        </tr>
+        <%- IsrAgreement::ISR_IA_STATUS_CLOSED.each do |index| -%>
+        <tr>
+          <td>&nbsp;&nbsp;&nbsp;<%= IsrAgreement::ISR_IA_STATUS_LABELS[ index ]-%></td>
+          <td class="td-right"><%= db_formatted_abs( @ia_stats[ index ])-%></td>
+          <td class="td-right"><%= db_formatted_pct( percent_abs( @ia_stats[ index ], @ia_closed ))-%></td>
+        </tr>
+        <%- end -%>
+
+        <tr class="tr-bold">
+          <td><%= IsrAgreement::ISR_IA_STATUS_GROUPS[ 2 ]-%></td>
+          <td class="td-right"><%= db_formatted_abs( @ia_inactive )-%></td>
+          <td class="td-right"><%= db_formatted_pct( percent_abs( @ia_inactive, @ia_total ))-%></td>
+        </tr>
+        <%- IsrAgreement::ISR_IA_STATUS_INACTIVE.each do |index| -%>
+        <tr>
+          <td>&nbsp;&nbsp;&nbsp;<%= IsrAgreement::ISR_IA_STATUS_LABELS[ index ]-%></td>
+          <td class="td-right"><%= db_formatted_abs( @ia_stats[ index ])-%></td>
+          <td class="td-right"><%= db_formatted_pct( percent_abs( @ia_stats[ index ], @ia_inactive ))-%></td>
+        </tr>
+        <%- end -%>
+
+        <tr class="tr-bold">
+          <td><%= IsrAgreement::ISR_IA_STATUS_GROUPS[ 3 ]-%></td>
+          <td class="td-right"><%= db_formatted_abs( @ia_pending )-%></td>
+          <td class="td-right"><%= db_formatted_pct( percent_abs( @ia_pending, @ia_total ))-%></td>
+        </tr>
+        <%- IsrAgreement::ISR_IA_STATUS_PENDING.each do |index| -%>
+        <tr>
+          <td>&nbsp;&nbsp;&nbsp;<%= IsrAgreement::ISR_IA_STATUS_LABELS[ index ]-%></td>
+          <td class="td-right"><%= db_formatted_abs( @ia_stats[ index ])-%></td>
+          <td class="td-right"><%= db_formatted_pct( percent_abs( @ia_stats[ index ], @ia_pending ))-%></td>
+        </tr>
+        <%- end -%>
+
+      </tbody>
+    </table>
+    <%= link_to t( 'button_label.go_to_index' ), isr_agreements_path %> -
+    <%= render partial: 'shared/download_xls' %>
+    <%= render partial: 'shared/footer', locals: { feature_identifier: FEATURE_ID_ISR_AGREEMENTS, cr_details: 'statistics page' } %>
+  </div>
+  </div>
+</div>

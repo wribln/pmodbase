@@ -6,22 +6,22 @@ class GroupsControllerTest < ActionController::TestCase
     session[ :current_user_id ] = accounts( :one ).id
   end
 
-  test "check class_attributes"  do
+  test 'check class_attributes'  do
     validate_feature_class_attributes FEATURE_ID_GROUPS, ApplicationController::FEATURE_ACCESS_VIEW
   end
 
-  test "should get index" do
+  test 'should get index' do
     get :index
     assert_response :success
     assert_not_nil assigns(:groups)
   end
 
-  test "should get new" do
+  test 'should get new' do
     get :new
     assert_response :success
   end
 
-  test "should create group" do
+  test 'should create group' do
     assert_difference( 'Group.count' )do
       post :create, group: { code: @group.code << 'a', label: @group.label, group_category_id: @group.group_category_id }
     end
@@ -29,22 +29,22 @@ class GroupsControllerTest < ActionController::TestCase
     assert_redirected_to group_path( assigns( :group ))
   end
 
-  test "should show group" do
+  test 'should show group' do
     get :show, id: @group
     assert_response :success
   end
 
-  test "should get edit" do
+  test 'should get edit' do
     get :edit, id: @group
     assert_response :success
   end
 
-  test "should update group" do
+  test 'should update group' do
     patch :update, id: @group, group: { label: @group.label, code: @group.code }
     assert_redirected_to group_path(assigns(:group))
   end
 
-  test "should destroy group" do
+  test 'should destroy group' do
     # this is only possible with a group not used by any one
     g = Group.new( code: 'ABC', label: 'abc', group_category_id: @group.group_category_id )
     assert g.save, g.errors.messages
@@ -55,7 +55,7 @@ class GroupsControllerTest < ActionController::TestCase
     assert_redirected_to groups_path
   end
   
-  test "CSV download" do
+  test 'CSV download' do
     get :index, format: :xls
     assert_equal <<END_OF_CSV, response.body
 code;label;notes;seqno;group_category;sub_group_of;participating;s_sender_code;s_receiver_code;active;standard

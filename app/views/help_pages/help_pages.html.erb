@@ -1,121 +1,120 @@
 <% help_title 'Help Index' %>
-  <div class="container">
-    <%= helpcrumbs %>
-    <%= help_header %>
-    <p class="lead">Help pages provide information on a specific feature, 
-      project topic, or work flow.</p>
-    <p>The following topics currently available:</p>
-    <div class="row"><div class="col-sm-4">
-    <ul>
-      <li><%= link_to_help :about, 'About pmodbase'%> and 
-          <%= link_to_help :contact, 'Contacts' %></li>
-      <li><%= link_to_help :a_code_search, 'Alternate Coding System, Global Search' %></li>
-      <li><%= link_to_help :a_coding_system, 'Alternate Coding System' %></li>
-      <li><%= link_to_help :a_document_logs, 'Alternate Document Log (ADL)' %></li>
-      <li><%= link_to_help :abbreviations, Abbreviation.model_name.human %></li>
-      <li><%= link_to_help :abbr_search, 'Abbreviations, Global Search' %></li>
-      <li><%= link_to_help :accounts, Account.model_name.human %></li>
-      <li><%= link_to_help :addresses, Address.model_name.human %></li>
-      <li><%= link_to_help :base, 'Base Page' %></li>
-      <li><%= link_to_help :db_change_requests, 'Change Requests, General' %></li>
-      <li><%= link_to_help :my_change_requests, 'Change Requests, Personal' %></li>
-      <li><%= link_to_help :cfr_records, 'CFR - Central File Register' %></li>
-      <li><%= link_to_help :cfr_file_types, CfrFileType.model_name.human %></li>
-      <li><%= link_to_help :cfr_relationships, CfrRelationship.model_name.human %></li>
-      <li><%= link_to_help :cfr_location_types, CfrLocationType.model_name.human %></li>
-      <li><%= link_to_help :contact_infos, 'Contact Information Records' %></li>
-      <li><%= link_to_help :contact_lists, 'Contact List (for the project)' %></li>
-      <li><%= link_to_help :csr_status_records, CsrStatusRecord.model_name.human %></li>
-      <li><%= link_to_help :country_names, CountryName.model_name.human %></li>
-      <li><%= link_to_help :data_privacy, 'Data Privacy' %></li>
-      <li><%= link_to_help :statistics, 'Database Statistics' %></li>
-      <li><%= link_to_help :dcc_codes, 'Document Classification Codes' %></li>
-      <li><%= link_to_help :dsr_status_records, DsrStatusRecord.model_name.human %></li>
-      <li><%= link_to_help :dsr_doc_groups, DsrDocGroup.model_name.human %></li>
-      <li><%= link_to_help :dsr_progress_rates, DsrProgressRate.model_name.human %></li>
-      <li><%= link_to_help :dsr_statistics, 'DSR Statistics' %></li>
-      <li><%= link_to_help :dsr_submissions, DsrSubmission.model_name.human %></li>
-      <li><%= link_to_help :submission_groups, SubmissionGroup.model_name.human %></li>
-      <li><%= link_to_help :features, 'Features, General' %></li>
-      <li><%= link_to_help :feature_access_control, 'Features, Access Control' %></li>
-      <li><%= link_to_help :feature_categories, 'Features, Categories' %></li>
-      <li><%= link_to_help :feature_responsibilities, 'Features, Responsibilities' %></li>
-      <li><%= link_to_help :filter, 'Filter Functionality' %></li>
-      <li><%= link_to_help :function_codes, FunctionCode.model_name.human %></li>
-      <li><%= link_to_help :group_categories, 'Groups, Categories' %></li>
-      <li><%= link_to_help :groups, 'Groups, General' %></li>
-      <li><%= link_to_help :glossary_items, GlossaryItem.model_name.human %></li>
-      </ul></div><div class="col-sm-4"><ul>
-      <li>Help Functionality (this page)</li>
-      <li><%= link_to_help :hashtags, Hashtag.model_name.human %></li>
-      <li><%= link_to_help :help_general, 'Help on General Functionality' %></li>
-      <li><%= link_to_help :holidays, Holiday.model_name.human %></li>
-      <li><%= link_to_help :home, 'Home Page, Application Overview' %></li>
-      <li><%= link_to_help :isr_general, 'ISR - Interface Status Register' %></li>
-      <li><%= link_to_help :isr_interfaces, 'ISR - Interfaces' %></li>
-      <li><%= link_to_help :isr_agreements, 'ISR - Interface Agreements' %></li>
-      <li><%= link_to_help :location_codes, LocationCode.model_name.human %></li>
-      <li><%= link_to_help :network_general, 'Network - General Overview' %></li>
-      <li><%= link_to_help :network_lines, 'Network - Lines' %></li>
-      <li><%= link_to_help :network_stations, 'Network - Stations' %></li>
-      <li><%= link_to_help :network_stops, 'Network - Stops' %></li>
-      <li><%= link_to_help :pcp_general, 'PCP - The Present-Comment Process' %></li>
-      <li><%= link_to_help :pcp_why, 'PCP - ' + t( 'pcp_help.pcp_why' ) %></li>
-      <li>PCP - Help on how to ...<br/><small>
-      <%= link_to_help :pcp_how_to_03, t( 'pcp_help.pcp_how_to_03' )%><br/>
-      <%= link_to_help :pcp_how_to_04, t( 'pcp_help.pcp_how_to_04' )%><br/>
-      <%= link_to_help :pcp_how_to_05, t( 'pcp_help.pcp_how_to_05' )%><br/>
-      <%= link_to_help :pcp_how_to_06, t( 'pcp_help.pcp_how_to_06' )%><br/>
-      <%= link_to_help :pcp_how_to_16, t( 'pcp_help.pcp_how_to_16' )%><br/>
-      <%= link_to_help :pcp_how_to_07, t( 'pcp_help.pcp_how_to_07' )%><br/>
-      <%= link_to_help :pcp_how_to_08, t( 'pcp_help.pcp_how_to_08' )%><br/>
-      <%= link_to_help :pcp_how_to_09, t( 'pcp_help.pcp_how_to_09' )%><br/>
-      <%= link_to_help :pcp_how_to_10, t( 'pcp_help.pcp_how_to_10' )%><br/>
-      <%= link_to_help :pcp_how_to_01, t( 'pcp_help.pcp_how_to_01' )%><br/>
-      <%= link_to_help :pcp_how_to_12, t( 'pcp_help.pcp_how_to_12' )%><br/>
-      <%= link_to_help :pcp_how_to_02, t( 'pcp_help.pcp_how_to_02' )%><br/>
-      <%= link_to_help :pcp_how_to_11, t( 'pcp_help.pcp_how_to_11' )%><br/>
-      <%= link_to_help :pcp_how_to_13, t( 'pcp_help.pcp_how_to_13' )%><br/>
-      <%= link_to_help :pcp_how_to_14, t( 'pcp_help.pcp_how_to_14' )%><br/>
-      <%= link_to_help :pcp_how_to_15, t( 'pcp_help.pcp_how_to_15' )%><br/>
-      <%= link_to_help :pcp_how_to_17, t( 'pcp_help.pcp_how_to_17' )%>
-      </small></li>
-      </ul></div><div class="col-sm-4"><ul>
-      <li><%= link_to_help :pcp_categories, 'PCP Categories' %></li>
-      <li><%= link_to_help :pcp_items, 'PCP Items' %></li>
-      <li><%= link_to_help :pcp_members, 'PCP Participants' %></li>
-      <li><%= link_to_help :pcp_subjects, 'PCP Subjects' %></li>
-      <li><%= link_to_help :pcp_all_subjects, 'PCP All Subjects' %></li>
-      <li><%= link_to_help :people, 'Personal Information, General' %></li>
-      <li><%= link_to_help :profile, 'Personal Information, Own Profile' %></li>
-      <li><%= link_to_help :phase_codes, PhaseCode.model_name.human %></li>
-      <li><%= link_to_help :product_codes, ProductCode.model_name.human %></li>
-      <li><%= link_to_help :programme_activities, ProgrammeActivity.model_name.human %></li>
-      <li><%= link_to_help :region_names, RegionName.model_name.human %></li>
-      <li><%= link_to_help :responsibilities, Responsibility.model_name.human %></li>
-      <li><%= link_to_help :rfc_documents, 'RfC Documents' %></li>
-      <li><%= link_to_help :rfc_status_records, 'RfC Status Register' %></li>
-      <li><%= link_to_help :service_codes, ServiceCode.model_name.human %></li>
-      <li><%= link_to_help :s_code_search, 'Siemens Coding System, Global Search' %></li>
-      <li><%= link_to_help :s_coding_system, 'Siemens Coding System' %></li>
-      <li><%= link_to_help :s_document_logs, 'Siemens Document Log (SDL)' %></li>
-      <li><%= link_to_help :siemens_phases, SiemensPhase.model_name.human %></li>
-      <li><%= link_to_help :standards_bodies, StandardsBody.model_name.human %></li>
-      <li><%= link_to_help :my_tia_items, TiaItem.model_name.human + ' (all assigned to individual)' %></li>
-      <li><%= link_to_help :our_tia_items, TiaItem.model_name.human + ' (all within a list)' %></li>
-      <li><%= link_to_help :my_tia_lists, TiaList.model_name.human + ' (all managed by individual)' %></li>
-      <li><%= link_to_help :all_tia_lists, TiaList.model_name.human + ' (all in system)' %></li>
-      <li><%= link_to_help :unit_names, UnitName.model_name.human %></li>
-      <li><%= link_to_help :web_links, WebLink.model_name.human %></li> 
-      <li><%= link_to_help :workflow_responsibilities, 'Workflow Responsibilities, General Help' %></li>
-      <li><%= link_to_help :home, 'Welcome Page' %></li>
-     </ul>
-    </div></div>
-    <p><strong>Note:</strong> Some of the listed features may not be available to you because of
-      access restrictions, or because they are for project site administrators only.</p>
-    <p>If you find any error on a help page, or if you have any suggestion
-      on how to improve the help system, please use the 'Request a Change'
-      feature on the bottom of the help page: This will open a dialog
-      allowing you to describe your proposal.</p>
-    <%= help_footer FEATURE_ID_HELP_PAGES %>
-  </div> <!-- /container -->
+<div class="container">
+  <%= helpcrumbs %>
+  <%= help_header %>
+  <p class="lead">Help pages provide information on a specific feature, project topic, or work flow.</p>
+  <p>The following topics currently available:</p>
+  <div class="row"><div class="col-sm-4">
+  <ul>
+    <li><%= link_to_help :about, 'About pmodbase'%> and 
+        <%= link_to_help :contact, 'Contacts' %></li>
+    <li><%= link_to_help :a_code_search, 'Alternate Coding System, Global Search' %></li>
+    <li><%= link_to_help :a_coding_system, 'Alternate Coding System' %></li>
+    <li><%= link_to_help :a_document_logs, 'Alternate Document Log (ADL)' %></li>
+    <li><%= link_to_help :abbreviations, Abbreviation.model_name.human %></li>
+    <li><%= link_to_help :abbr_search, 'Abbreviations, Global Search' %></li>
+    <li><%= link_to_help :accounts, Account.model_name.human %></li>
+    <li><%= link_to_help :addresses, Address.model_name.human %></li>
+    <li><%= link_to_help :base, 'Base Page' %></li>
+    <li><%= link_to_help :db_change_requests, 'Change Requests, General' %></li>
+    <li><%= link_to_help :my_change_requests, 'Change Requests, Personal' %></li>
+    <li><%= link_to_help :cfr_records, 'CFR - Central File Register' %></li>
+    <li><%= link_to_help :cfr_file_types, CfrFileType.model_name.human %></li>
+    <li><%= link_to_help :cfr_relationships, CfrRelationship.model_name.human %></li>
+    <li><%= link_to_help :cfr_location_types, CfrLocationType.model_name.human %></li>
+    <li><%= link_to_help :contact_infos, 'Contact Information Records' %></li>
+    <li><%= link_to_help :contact_lists, 'Contact List (for the project)' %></li>
+    <li><%= link_to_help :csr_status_records, CsrStatusRecord.model_name.human %></li>
+    <li><%= link_to_help :country_names, CountryName.model_name.human %></li>
+    <li><%= link_to_help :data_privacy, 'Data Privacy' %></li>
+    <li><%= link_to_help :statistics, 'Database Statistics' %></li>
+    <li><%= link_to_help :dcc_codes, 'Document Classification Codes' %></li>
+    <li><%= link_to_help :dsr_status_records, DsrStatusRecord.model_name.human %></li>
+    <li><%= link_to_help :dsr_doc_groups, DsrDocGroup.model_name.human %></li>
+    <li><%= link_to_help :dsr_progress_rates, DsrProgressRate.model_name.human %></li>
+    <li><%= link_to_help :dsr_statistics, 'DSR Statistics' %></li>
+    <li><%= link_to_help :dsr_submissions, DsrSubmission.model_name.human %></li>
+    <li><%= link_to_help :submission_groups, SubmissionGroup.model_name.human %></li>
+    <li><%= link_to_help :features, 'Features, General' %></li>
+    <li><%= link_to_help :feature_access_control, 'Features, Access Control' %></li>
+    <li><%= link_to_help :feature_categories, 'Features, Categories' %></li>
+    <li><%= link_to_help :feature_responsibilities, 'Features, Responsibilities' %></li>
+    <li><%= link_to_help :filter, 'Filter Functionality' %></li>
+    <li><%= link_to_help :function_codes, FunctionCode.model_name.human %></li>
+    <li><%= link_to_help :group_categories, 'Groups, Categories' %></li>
+    <li><%= link_to_help :groups, 'Groups, General' %></li>
+    <li><%= link_to_help :glossary_items, GlossaryItem.model_name.human %></li>
+    </ul></div><div class="col-sm-4"><ul>
+    <li>Help Functionality (this page)</li>
+    <li><%= link_to_help :hashtags, Hashtag.model_name.human %></li>
+    <li><%= link_to_help :help_general, 'Help on General Functionality' %></li>
+    <li><%= link_to_help :holidays, Holiday.model_name.human %></li>
+    <li><%= link_to_help :home, 'Home Page, Application Overview' %></li>
+    <li><%= link_to_help :isr_general, 'ISR - Interface Status Register' %></li>
+    <li><%= link_to_help :isr_interfaces, 'ISR - Interfaces' %></li>
+    <li><%= link_to_help :isr_agreements, 'ISR - Interface Agreements' %></li>
+    <li><%= link_to_help :location_codes, LocationCode.model_name.human %></li>
+    <li><%= link_to_help :network_general, 'Network - General Overview' %></li>
+    <li><%= link_to_help :network_lines, 'Network - Lines' %></li>
+    <li><%= link_to_help :network_stations, 'Network - Stations' %></li>
+    <li><%= link_to_help :network_stops, 'Network - Stops' %></li>
+    <li><%= link_to_help :pcp_general, 'PCP - The Present-Comment Process' %></li>
+    <li><%= link_to_help :pcp_why, 'PCP - ' + t( 'pcp_help.pcp_why' ) %></li>
+    <li>PCP - Help on how to ...<br/><small>
+    <%= link_to_help :pcp_how_to_03, t( 'pcp_help.pcp_how_to_03' )%><br/>
+    <%= link_to_help :pcp_how_to_04, t( 'pcp_help.pcp_how_to_04' )%><br/>
+    <%= link_to_help :pcp_how_to_05, t( 'pcp_help.pcp_how_to_05' )%><br/>
+    <%= link_to_help :pcp_how_to_06, t( 'pcp_help.pcp_how_to_06' )%><br/>
+    <%= link_to_help :pcp_how_to_16, t( 'pcp_help.pcp_how_to_16' )%><br/>
+    <%= link_to_help :pcp_how_to_07, t( 'pcp_help.pcp_how_to_07' )%><br/>
+    <%= link_to_help :pcp_how_to_08, t( 'pcp_help.pcp_how_to_08' )%><br/>
+    <%= link_to_help :pcp_how_to_09, t( 'pcp_help.pcp_how_to_09' )%><br/>
+    <%= link_to_help :pcp_how_to_10, t( 'pcp_help.pcp_how_to_10' )%><br/>
+    <%= link_to_help :pcp_how_to_01, t( 'pcp_help.pcp_how_to_01' )%><br/>
+    <%= link_to_help :pcp_how_to_12, t( 'pcp_help.pcp_how_to_12' )%><br/>
+    <%= link_to_help :pcp_how_to_02, t( 'pcp_help.pcp_how_to_02' )%><br/>
+    <%= link_to_help :pcp_how_to_11, t( 'pcp_help.pcp_how_to_11' )%><br/>
+    <%= link_to_help :pcp_how_to_13, t( 'pcp_help.pcp_how_to_13' )%><br/>
+    <%= link_to_help :pcp_how_to_14, t( 'pcp_help.pcp_how_to_14' )%><br/>
+    <%= link_to_help :pcp_how_to_15, t( 'pcp_help.pcp_how_to_15' )%><br/>
+    <%= link_to_help :pcp_how_to_17, t( 'pcp_help.pcp_how_to_17' )%>
+    </small></li>
+    </ul></div><div class="col-sm-4"><ul>
+    <li><%= link_to_help :pcp_categories, 'PCP Categories' %></li>
+    <li><%= link_to_help :pcp_items, 'PCP Items' %></li>
+    <li><%= link_to_help :pcp_members, 'PCP Participants' %></li>
+    <li><%= link_to_help :pcp_subjects, 'PCP Subjects' %></li>
+    <li><%= link_to_help :pcp_all_subjects, 'PCP All Subjects' %></li>
+    <li><%= link_to_help :people, 'Personal Information, General' %></li>
+    <li><%= link_to_help :profile, 'Personal Information, Own Profile' %></li>
+    <li><%= link_to_help :phase_codes, PhaseCode.model_name.human %></li>
+    <li><%= link_to_help :product_codes, ProductCode.model_name.human %></li>
+    <li><%= link_to_help :programme_activities, ProgrammeActivity.model_name.human %></li>
+    <li><%= link_to_help :region_names, RegionName.model_name.human %></li>
+    <li><%= link_to_help :responsibilities, Responsibility.model_name.human %></li>
+    <li><%= link_to_help :rfc_documents, 'RfC Documents' %></li>
+    <li><%= link_to_help :rfc_status_records, 'RfC Status Register' %></li>
+    <li><%= link_to_help :service_codes, ServiceCode.model_name.human %></li>
+    <li><%= link_to_help :s_code_search, 'Siemens Coding System, Global Search' %></li>
+    <li><%= link_to_help :s_coding_system, 'Siemens Coding System' %></li>
+    <li><%= link_to_help :s_document_logs, 'Siemens Document Log (SDL)' %></li>
+    <li><%= link_to_help :siemens_phases, SiemensPhase.model_name.human %></li>
+    <li><%= link_to_help :standards_bodies, StandardsBody.model_name.human %></li>
+    <li><%= link_to_help :my_tia_items, TiaItem.model_name.human + ' (all assigned to individual)' %></li>
+    <li><%= link_to_help :our_tia_items, TiaItem.model_name.human + ' (all within a list)' %></li>
+    <li><%= link_to_help :my_tia_lists, TiaList.model_name.human + ' (all managed by individual)' %></li>
+    <li><%= link_to_help :all_tia_lists, TiaList.model_name.human + ' (all in system)' %></li>
+    <li><%= link_to_help :unit_names, UnitName.model_name.human %></li>
+    <li><%= link_to_help :web_links, WebLink.model_name.human %></li> 
+    <li><%= link_to_help :workflow_responsibilities, 'Workflow Responsibilities, General Help' %></li>
+    <li><%= link_to_help :home, 'Welcome Page' %></li>
+  </ul>
+  </div></div>
+  <p><strong>Note:</strong> Some of the listed features may not be available to you because of
+    access restrictions, or because they are for project site administrators only.</p>
+  <p>If you find any error on a help page, or if you have any suggestion
+    on how to improve the help system, please use the 'Request a Change'
+    feature on the bottom of each help page: This will open a dialog
+    allowing you to describe your proposal.</p>
+  <%= help_footer FEATURE_ID_HELP_PAGES %>
+</div>

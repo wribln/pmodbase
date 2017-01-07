@@ -14,7 +14,7 @@
           <th class="col-sm-1"><%= label_tag :ff_group,  t( '.other_group_id' ), class: 'control-label' %></th>
           <th class="col-sm-1"><%= label_tag :ff_class,  t( '.classification' ), class: 'control-label' %></th>
           <th class="col-sm-1"><%= t( '.other_date' )%></th>
-          <th class="col-sm-1"><%= t( '.reply_date' )%></th>
+          <th class="col-sm-1"><%= label_tag :ff_due,    t( '.reply_date' ), class: 'control-label' %></th>
           <th class="col-sm-1"><%= label_tag :ff_status, CsrStatusRecord.human_attribute_name( :status              ), class: 'control-label' %></th>
           <th class="col-sm-2"><%= label_tag :ff_note,   CsrStatusRecord.human_attribute_name( :note                ), class: 'control-label' %></th>
           <th class="col-sm-1 hidden-print"><%= filter_action_title_header %></th>
@@ -25,10 +25,10 @@
           <td><%= filter_field @filter_fields, :ff_id, :id %></td>
           <td><%= filter_select_from_string_set @filter_fields, :ff_type, CsrStatusRecord::CSR_CORRESP_TYPE_LABELS %></td>
           <td><%= filter_field @filter_fields, :ff_subj, :sw %></td>
-          <td><%= filter_single_select @filter_fields, :ff_group, @any_groups, :code -%></td>
+          <td><%= filter_single_select @filter_fields, :ff_group, @any_groups, :code %></td>
           <td><%= filter_select_from_string_set @filter_fields, :ff_class, CsrStatusRecord::CSR_CLASS_LABELS %></td>
           <td>&nbsp;</td>
-          <td>&nbsp;</td>
+          <td><%= filter_select_from_string_set @filter_fields, :ff_due, t( '.due_labels' )%></td>
           <td><%= filter_select_from_string_set @filter_fields, :ff_status, CsrStatusRecord::CSR_STATUS_LABELS %></td>
           <td><%= filter_field @filter_fields, :ff_note, :sw %></td>
           <td><%= filter_action_button -%></td>

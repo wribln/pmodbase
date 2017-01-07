@@ -76,7 +76,15 @@ class IsrAgreement < ActiveRecord::Base
     numericality: { only_integer: true },
     inclusion: { in: 0..4 }  
 
+  # status of IAs:
+
   ISR_IA_STATUS_LABELS = IsrAgreement.human_attribute_name( :ia_states ).freeze
+  ISR_IA_STATUS_GROUPS = IsrAgreement.human_attribute_name( :ia_status_groups ).freeze
+  ISR_IA_STATUS_ACTIVE = [ 0, 1, 2 ].freeze
+  ISR_IA_STATUS_CLOSED = [ 3, 7, 10 ].freeze
+  ISR_IA_STATUS_INACTIVE = [ 6, 8, 9 ].freeze
+  ISR_IA_STATUS_PENDING = [ 4, 5 ].freeze
+  ISR_IA_STATUS_TO_SHOW = [ 0, 1, 2, 3, 4, 5 ].freeze
 
   validates :ia_status,
     allow_blank: false,
@@ -102,7 +110,6 @@ class IsrAgreement < ActiveRecord::Base
     numericality: { only_integer: true, greater_than_or_equal_to: 1 }
 
   validate :ia_type_integrity
-
   validate :access_permissions
 
   # default scope is order:
@@ -117,13 +124,15 @@ class IsrAgreement < ActiveRecord::Base
   scope :ff_wfs, -> ( s ){ where AppHelper.map_values( s, :ia_type, :current_status )}
   scope :ff_grp, -> ( g ){ where( 'l_group_id = :param OR p_group_id = :param', param: g )}
 
-  # individual IAs are those which are not new or previous revisions ...
+  # search scopes
+  
+  class << self; 
+    alias :for_group :ff_grp
+  end
 
-  scope :individual, ->  { where( ia_status: [ 0, 1, 2, 3, 6 ])}
+  # IAs to be shown in the ISR index (all active, pending, closed )
 
-  # IAs to be shown in the ISR index (all active and pending)
-
-  scope :isr_active, ->  { where( ia_status: [ 0, 1, 2, 3, 4, 5 ])}
+  scope :current, ->  { where( ia_status: ISR_IA_STATUS_TO_SHOW)}
 
   # format IA code for display. IMPORTANT: if you change this code, you may
   # need to adjust the view helper link_to_isa (defined in /helpers/link_helper.rb)
@@ -152,15 +161,20 @@ class IsrAgreement < ActiveRecord::Base
     case wf
     when 0 # new/copy
       self.rev_no = 0
-      self.res_steps_id = nil
-      self.val_steps_id = nil
+      self.res_steps_req = 0
+      self.val_steps_req = 0
+      self.initialize_steps_req
       self.cfr_record_id = nil
       self.based_on_id = nil
+      self.l_signature = nil
+      self.l_sign_time = nil
+      self.p_signature = nil
+      self.p_sign_time = nil
       set_next_ia_no
     when 1, 2, 3, 4 # revise, terminate, resolve, close
-      self.rev_no += 1
       self.based_on = bo
       self.ia_no = bo.ia_no unless bo.nil?
+      self.set_next_rev_no
     end
     self.ia_status = 0 # open
     self.current_status = 0
@@ -234,14 +248,21 @@ class IsrAgreement < ActiveRecord::Base
     I18n.t( 'activerecord.attributes.isr_agreement.' << s_id, code: code )
   end
 
-  # return the sequence number to use for the next item
+  # return the sequence number to use for the next IA
 
   def set_next_ia_no
-    a = self.isr_interface.isr_agreements.individual
+    a = self.isr_interface.isr_agreements.select( :ia_no ).distinct
     m = a.maximum( :ia_no ) || 0
     n = a.count
     self.ia_no = ( n > m ? n : m ) + 1
-  end 
+  end
+
+  def set_next_rev_no
+    a = self.isr_interface.isr_agreements.where( ia_no: self.ia_no )
+    m = a.maximum( :rev_no ) || 0
+    n = a.count
+    self.rev_no = ( n > m ? n : m + 1 )
+  end
 
   def ia_status_label
     ISR_IA_STATUS_LABELS[ ia_status ] unless ia_status.nil?
@@ -257,8 +278,10 @@ class IsrAgreement < ActiveRecord::Base
   # (1) based_on must exist for ia_type > 0
   # (2) related record must refer to same interface
   # (3) revision number must be less than this one;
+  # (4) status withdrawn can only occur for rev_no == 0
 
   def ia_type_integrity
+
     if self.ia_type > 0
       unless self.based_on_id && IsrAgreement.exists?( self.based_on_id )
         errors.add( :ia_type, I18n.t( 'isr_interfaces.msg.inconsistent', detail: 1 ))
@@ -273,6 +296,12 @@ class IsrAgreement < ActiveRecord::Base
         return
       end
     end
+    if self.ia_status == 10
+      errors.add( :ia_status, I18n.t( 'isr_interfaces.msg.inconsistent', detail: 4 )) \
+        unless self.rev_no == 0
+      return
+    end
+
   end
 
   # check if the given accounts do have access permissions for their role
@@ -305,20 +334,34 @@ class IsrAgreement < ActiveRecord::Base
 
   # process withdraw request:
   # only change non-terminal states to withdrawn
+  # set workflow status to complete / withdrawn
 
   def withdraw
     if [ 0, 1, 4, 5 ].include? ia_status
-      self.ia_status = 8
       close_ia
+      self.ia_status = 10
+      self.current_task = 6
+      self.current_status = 9
     end
   end
 
-  # perform necessary actions to close interface agreement, i.e.
-  # mark tia_lists and associated items as archived
+  # perform necessary actions to resolve/close/terminate interface agreement,
+  # i.e. mark tia_lists and associated items as archived
+
+  def resolve_ia
+    self.ia_status = 2
+    self.res_steps.archived = true unless res_steps.nil?
+  end    
 
   def close_ia
-    self.res_steps.archive = true unless res_steps.nil?
-    self.val_steps.archive = true unless res_steps.nil?
+    resolve_ia
+    self.ia_status = 3
+    self.val_steps.archived = true unless res_steps.nil?
+  end
+
+  def terminate_ia
+    close_ia
+    self.ia_status = 7
   end
 
 end

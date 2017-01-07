@@ -1,0 +1,16 @@
+<%= CSV.generate_line([
+  'table_id',
+  'line_id',
+  'label',
+  'count',
+  t('time.as_at_dt', dt: db_formatted_dt( Time.now ))], STD_CSV_OPTIONS ) -%>
+<%- IsrInterface::ISR_IF_STATUS_LABELS.each_with_index do |item,index| -%>
+<%= CSV.generate_line([
+  1, index + 1, item, @if_stats[ index ]
+  ], STD_CSV_OPTIONS ).html_safe -%>
+<%- end -%>
+<%- IsrAgreement::ISR_IA_STATUS_LABELS.each_with_index do |item,index| -%>
+<%= CSV.generate_line([
+  3, index + 1, item, @ia_stats[ index ]
+  ], STD_CSV_OPTIONS ).html_safe -%>
+<%- end -%>

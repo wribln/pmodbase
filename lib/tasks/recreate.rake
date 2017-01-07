@@ -20,7 +20,7 @@ task :recreate => :environment do
   Rake::Task['db:seed:regions'].invoke
   puts '>>> db:seed:regions completed.'
 
-  Rake::Task['db:seed:holidays'].invoke
+  Rake::Task['holidays'].invoke('GER')
   puts '>>> db:seed:holidays completed.'
 
   Rake::Task['db:seed:groups'].invoke

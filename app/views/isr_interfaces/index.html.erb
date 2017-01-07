@@ -39,7 +39,7 @@
             <td>&nbsp;</td>
             <td><%= render partial: 'shared/actions', object: isr %></td>
           </tr>
-          <% isr.isr_agreements.isr_active.each do |isa| %>
+          <% isr.isr_agreements.current.each do |isa| %>
           <tr>
             <td colspan="2">&nbsp;</td>
             <td><%= isa.code_and_revision %></td>

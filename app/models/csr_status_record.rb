@@ -85,6 +85,9 @@ class CsrStatusRecord < ActiveRecord::Base
   scope :ff_status, -> ( status ){ where status: status }
   scope :ff_subj,   -> ( subj   ){ where( 'subject LIKE ?', "%#{ subj }%" )}
   scope :ff_note,   -> ( note   ){ where( 'notes LIKE ?',   "%#{ note }%" )}
+  scope :ff_due,    -> ( flag   ){ ( flag.to_i == 0 ? 
+    where( 'plan_reply_date <= ?', Date.today ) : 
+    where( plan_reply_date: ( Date.today + 1 )..( Date.today + 7 ))).where( actual_reply_date: nil )}
 
   # set defaults
 

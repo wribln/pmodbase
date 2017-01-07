@@ -108,6 +108,8 @@ class Group < ActiveRecord::Base
     if self.responsibilities.empty? &&
        self.permission4_groups.empty? &&
        self.sub_groups.empty? &&
+       IsrInterface.for_group( id ).empty? &&
+       IsrAgreement.for_group( id ).empty? &&
        self.cfr_records.empty? then
       true
     else

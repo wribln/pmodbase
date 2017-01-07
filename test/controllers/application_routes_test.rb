@@ -194,11 +194,11 @@ class ApplicationRoutesTest < ActionController::TestCase
 
   test 'special routes: ISR Agreements' do
     check_routing( 'get', '/isa'         , 'isr_agreements', 'index' )
+    check_routing( 'get', '/isa/stats'   , 'isr_agreements', 'show_stats' )
   end
  
   test 'special routes: ISR Interfaces' do
     check_routing( 'get', '/isr/info'    , 'isr_interfaces', 'info_workflow' )
-    check_routing( 'get', '/isr/stats'   , 'isr_interfaces', 'show_stats'    )
     check_routing( 'get', '/isr/1/all'   , 'isr_interfaces', 'show_all'   , id: '1' )
     check_routing( 'get', '/isr/ia/1'    , 'isr_interfaces', 'show_ia'    , id: '1' )
     check_routing( 'get', '/isr/ia/1/all', 'isr_interfaces', 'show_ia_all', id: '1' )

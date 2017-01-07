@@ -78,16 +78,32 @@ class IsrAgreementTest < ActiveSupport::TestCase
     isa.ia_status = 0
     assert_equal isa.ia_status_label, IsrAgreement::ISR_IA_STATUS_LABELS[ 0 ]
 
-    isa.ia_status = 10 # max + 1
+    isa.ia_status = 11 # max + 1
     assert_nil isa.ia_status_label
   end
 
   test 'set next ia_no' do
     isa1 = isr_agreements( :one )
     assert_equal 1, isa1.ia_no
-    isa2 = isa1.isr_interface.isr_agreements.build
+
+    isa2 = isa1.isr_interface.isr_agreements.build( l_group_id: isa1.l_group_id )
     isa2.set_next_ia_no
     assert_equal 2, isa2.ia_no
+    assert isa2.save, isa2.errors.messages
+
+    isa3 = isa2.isr_interface.isr_agreements.build( l_group_id: isa2.l_group_id )
+    isa3.set_next_ia_no
+    assert_equal 3, isa3.ia_no
+    assert isa3.save
+
+    assert_difference( 'IsrAgreement.count', -1 ){ assert isa2.destroy }
+
+    isa4 = isa3.isr_interface.isr_agreements.build( l_group_id: isa3.l_group_id )
+    isa4.set_next_ia_no
+    assert isa4.save
+
+    assert_equal 4, isa4.ia_no
+    assert_equal 3, isa4.isr_interface.isr_agreements.count
   end
 
   test 'tia list code' do
@@ -131,20 +147,14 @@ class IsrAgreementTest < ActiveSupport::TestCase
     as = IsrAgreement.ff_txt( 'nothing' )
     assert_equal 0, as.length
 
-    as = IsrAgreement.individual
-    assert_equal 1, as.length
-
-    as = IsrAgreement.isr_active
+    as = IsrAgreement.current
     assert_equal 1, as.length
 
     isa = isr_agreements( :one )
     isa.ia_status = 5
     assert isa.save
 
-    as = IsrAgreement.individual
-    assert_equal 0, as.length
-
-    as = IsrAgreement.isr_active
+    as = IsrAgreement.current
     assert_equal 1, as.length
 
     as = IsrAgreement.ff_grp( isa.l_group_id )
@@ -253,18 +263,165 @@ class IsrAgreementTest < ActiveSupport::TestCase
     isa = isr_agreements( :one )
     isa.res_steps_req = 1
     isa.val_steps_req = 1
+    isa.l_deputy_id = isa.l_owner_id
     assert isa.valid?, isa.errors.messages
     assert_difference( 'TiaList.count', 2 ) do
       assert isa.save, isa.errors.messages
     end
     isa.reload
+    # and l_owner is set as owner of the tia list
     assert_equal isa.l_owner_id, isa.res_steps.owner_account_id
     assert_equal isa.l_owner_id, isa.val_steps.owner_account_id
+    assert_equal isa.l_deputy_id, isa.res_steps.deputy_account_id
+    assert_equal isa.l_deputy_id, isa.val_steps.deputy_account_id
+    # change accounts
+    a1 = accounts( :one ) # has permissions
+    a2 = accounts( :two ) # needs permissions
+    pg = a2.permission4_groups.build( feature_id: FEATURE_ID_ISR_INTERFACES, group_id: 0, to_read: 1, to_update: 1 )
+    assert pg.save, pg.errors.messages
+
+    isa.l_owner_id = a2.id
+    assert isa.save, isa.errors.messages
+    assert_equal a2.id, isa.res_steps.owner_account_id
+    assert_equal a2.id, isa.val_steps.owner_account_id
+    assert_equal a1.id, isa.res_steps.deputy_account_id
+    assert_equal a1.id, isa.val_steps.deputy_account_id
+
+    isa.l_owner_id = a1.id
+    isa.l_deputy_id = a2.id
+    assert isa.save, isa.errors.messages
+    assert_equal a1.id, isa.res_steps.owner_account_id
+    assert_equal a1.id, isa.val_steps.owner_account_id
+    assert_equal a2.id, isa.res_steps.deputy_account_id
+    assert_equal a2.id, isa.val_steps.deputy_account_id
+    # remove lists
     isa.res_steps_req = 0
     isa.val_steps_req = 0
     assert_difference( 'TiaList.count', -2 ) do
       assert isa.save, isa.errors.messages
     end
+
+  end
+
+  test 'agreement termination: terminate' do
+    isa = isr_agreements( :one )
+    isa.res_steps_req = 1
+    isa.val_steps_req = 1
+    assert isa.save, isa.errors.messages
+    isa.reload
+    isa.terminate_ia
+    assert isa.valid?
+    assert_equal 7, isa.ia_status
+    assert isa.res_steps.archived
+    assert isa.val_steps.archived
+  end
+
+  test 'agreement termination: resolved' do
+    isa = isr_agreements( :one )
+    isa.res_steps_req = 1
+    isa.val_steps_req = 1
+    assert isa.save, isa.errors.messages
+    isa.reload
+    isa.resolve_ia
+    assert isa.save
+    isa.reload
+    assert_equal 2, isa.ia_status
+    assert isa.res_steps.archived
+    refute isa.val_steps.archived
+  end
+
+  test 'agreement termination: closed' do
+    isa = isr_agreements( :one )
+    isa.res_steps_req = 1
+    isa.val_steps_req = 1
+    assert isa.save, isa.errors.messages
+    isa.reload
+    isa.close_ia
+    assert isa.save
+    isa.reload
+    assert_equal 3, isa.ia_status
+    assert isa.res_steps.archived
+    assert isa.val_steps.archived
+  end
+
+  test 'agreement termination: withdrawn' do
+    isa = isr_agreements( :one )
+    isa.res_steps_req = 1
+    isa.val_steps_req = 1
+    assert isa.save, isa.errors.messages
+    isa.reload
+    isa.withdraw
+    assert isa.save
+    isa.reload
+    assert_equal 10, isa.ia_status
+    assert_equal 6, isa.current_task
+    assert_equal 9, isa.current_status
+    assert isa.res_steps.archived
+    assert isa.val_steps.archived
+  end
+
+  test 'set_next_rev_no' do
+    isa1 = isr_agreements( :one )
+    assert_equal 1, isa1.ia_no
+    assert_equal 0, isa1.rev_no
+
+    isa2 = isa1.isr_interface.isr_agreements.build( ia_no: 1, l_group_id: isa1.l_group_id )
+    isa2.set_next_rev_no
+    assert_equal 1, isa2.rev_no
+    assert isa2.save
+
+    isa3 = isa2.isr_interface.isr_agreements.build( ia_no: 1, l_group_id: isa2.l_group_id )
+    isa3.set_next_rev_no
+    assert_equal 2, isa3.rev_no
+    assert isa3.save
+
+    assert_difference( 'IsrAgreement.count', -1 ){ isa2.destroy }
+
+    isa4 = isa3.isr_interface.isr_agreements.build( ia_no: 1, l_group_id: isa3.l_group_id )
+    isa4.set_next_rev_no
+    assert_equal 3, isa4.rev_no
+    assert isa4.save
+  end
+
+  test 'provoke inconsistencies' do
+    isa1 = isr_agreements( :one )
+    isa2 = isa1.isr_interface.isr_agreements.build( ia_no: 1, l_group_id: isa1.l_group_id )
+    isa2.prepare_revision( 1, isa1 )
+    assert isa2.save
+
+    # 4 - withdrawn IA may only be for revision 0
+
+    assert_equal 1, isa2.rev_no
+    isa2.ia_status = 10
+    refute isa2.valid?
+    assert_includes isa2.errors, :ia_status
+    assert_equal '4',isa2.errors[ :ia_status ][ 0 ][ -1 ]
+
+    # 3 - new revision must have larger rev_no
+
+    isa2.rev_no = 0
+    isa2.ia_status = 0
+    refute isa2.valid?
+    assert_includes isa2.errors, :based_on_id
+    assert_equal '3',isa2.errors[ :based_on_id ][ 0 ][ -1 ]
+
+    # 2 - new IA must refer to same IF as based_on IA
+
+    isf1 = isa1.isr_interface
+    isf2 = isf1.dup
+    assert isf2.save
+
+    isa1.isr_interface = isf2
+    refute isa2.valid?
+    assert_includes isa2.errors, :based_on_id
+    assert_equal '2',isa2.errors[ :based_on_id ][ 0 ][ -1 ]
+
+    # 1 - based_on IA must exist
+
+    assert isa1.destroy
+    refute isa2.valid?
+    assert_includes isa2.errors, :ia_type
+    assert_equal '1',isa2.errors[ :ia_type ][ 0 ][ -1 ]
 
   end
 

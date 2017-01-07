@@ -95,7 +95,12 @@ class IsrInterfacesController5Test < ActionController::TestCase
     isa9.ia_status = 9
     assert isa9.save, isa9.errors.messages
 
-    assert_equal 10, isf.isr_agreements.count
+    isa9 = isa0.dup
+    isa9.ia_no = 11
+    isa9.ia_status = 10
+    assert isa9.save, isa9.errors.messages
+
+    assert_equal 11, isf.isr_agreements.count
 
     # preparation complete - now the action
 
@@ -108,10 +113,10 @@ class IsrInterfacesController5Test < ActionController::TestCase
 
     isf.isr_agreements.each do |ia|
       case ia.ia_no
-      when 3, 4, 7, 8, 10
+      when 3, 4, 7, 8, 9, 10, 11 # should not have changed status
         assert_equal ia.ia_no - 1, ia.ia_status
-      when 1, 2, 5, 6, 9
-        assert_equal 8, ia.ia_status
+      when 1, 2, 5, 6 # status should have gone to withdrawn
+        assert_equal 10, ia.ia_status
       else
         fail "invalid agreement no: #{ ia.ia_no }"
       end
