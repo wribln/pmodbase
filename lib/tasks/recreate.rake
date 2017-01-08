@@ -1,6 +1,8 @@
 #lib/tasks/recreate.rake
-desc 'This rebuilds the development database'
-task :recreate => :environment do
+desc 'This rebuilds the standard database'
+task recreate: :environment do
+
+  puts ">>> recreate database in environment: #{ Rails.env }"
 
   Rake::Task['db:drop'].invoke
   puts '>>> db:drop completed.'
@@ -44,7 +46,7 @@ task :recreate => :environment do
   Rake::Task['db:seed:isr_interfaces'].invoke
   puts '>>> db:seed:isr_interfaces completed'
 
-exit!
+  abort '>>> premature termination for developement' if Rails.env.development?
 
   Rake::Task['import'].reenable
   Rake::Task['import'].invoke('db/std_csv/pmdb_abbreviations.csv','Abbreviation')
