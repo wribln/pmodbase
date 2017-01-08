@@ -60,7 +60,7 @@ end
 
 group :production do
   gem 'mysql2'
-  gem 'nokogiri', '~>1.6' # 1.7 requires ruby > 2.0
+  gem 'nokogiri', '~> 1.6.8.1' # 1.7 requires ruby > 2.0
 end
 
 # for long listings, we could use some pagination
