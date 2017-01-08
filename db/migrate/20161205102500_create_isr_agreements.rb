@@ -30,14 +30,14 @@ class CreateIsrAgreements < ActiveRecord::Migration
     add_foreign_key :isr_agreements, :groups, column: :p_group_id
     add_foreign_key :isr_agreements, :isr_agreements, column: :based_on_id
     add_foreign_key :isr_agreements, :isr_interfaces, column: :isr_interface_id
-    add_foreign_key :isr_agreements, :tia_lists, column: :res_steps
-    add_foreign_key :isr_agreements, :tia_lists, column: :val_steps
+    add_foreign_key :isr_agreements, :tia_lists, column: :res_steps_id
+    add_foreign_key :isr_agreements, :tia_lists, column: :val_steps_id
     add_foreign_key :isr_agreements, :accounts, column: :l_owner_id
     add_foreign_key :isr_agreements, :accounts, column: :l_deputy_id
     add_foreign_key :isr_agreements, :accounts, column: :p_owner_id
     add_foreign_key :isr_agreements, :accounts, column: :p_deputy_id
     add_index       :isr_agreements, [ :isr_interface_id, :ia_no, :rev_no ], 
-                      order: { isr_interface_id: :asc, ia_no: :asc, rev_no: :desc }, 
+                      order: { isr_interface_id: :asc, ia_no: :asc, rev_no: :asc }, 
                       unique: true, name: 'isa_default_order'
   end
 end
