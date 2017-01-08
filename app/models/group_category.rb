@@ -1,4 +1,4 @@
-require "./lib/assets/app_helper.rb"
+require './lib/assets/app_helper.rb'
 class GroupCategory < ActiveRecord::Base
   include ApplicationModel
 

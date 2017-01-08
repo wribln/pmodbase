@@ -121,7 +121,9 @@ class Group < ActiveRecord::Base
   # helper function for descendant_groups:
   # used recursively to traverse all sub_groups
 
-  private_class_method def self.collect_descendants( b, c, r, i )
+  # private_class_method def self.collect_descendants( b, c, r, i ) > ruby 2.1
+
+  def self.collect_descendants( b, c, r, i )
     if c[ i ].nil? # node not yet visited
       c[ i ] = [ i ]
       b[ i ].each{| j | collect_descendants( b, c, i, j )}
@@ -133,6 +135,7 @@ class Group < ActiveRecord::Base
       raise ArgumentError, "cycle detected while adding #{ i }"
     end
   end
+  private_class_method :collect_descendants
 
   # create a hash containing all sub-groups of each group
   # return nil if group structure is not hierarchical
