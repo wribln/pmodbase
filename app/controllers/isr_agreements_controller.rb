@@ -28,7 +28,7 @@ class IsrAgreementsController < ApplicationController
     @if_stats = IsrInterface.unscoped.group( :if_status ).count
     @if_total = @if_stats.values.inject( :+ )
 
-    @if_freq = ActiveRecord::Base.connection.exec_query( 'SELECT ia_nos, COUNT(*), SUM(ia_nos) FROM (SELECT DISTINCT COUNT(ia_no) AS ia_nos, isr_interface_id AS id_s FROM "isr_agreements" GROUP BY id_s ) GROUP BY ia_nos' )
+    @if_freq = ActiveRecord::Base.connection.exec_query( 'SELECT ia_nos, COUNT(*), SUM(ia_nos) FROM (SELECT DISTINCT COUNT(ia_no) AS ia_nos, isr_interface_id AS id_s FROM isr_agreements GROUP BY id_s ) AS t GROUP BY ia_nos' )
     @if_count = @if_freq.rows.sum{ |e| e[ 1 ]}
     @ia_count = @if_freq.rows.sum{ |e| e[ 2 ]}
 

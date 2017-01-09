@@ -6,6 +6,9 @@ DCC;Document kind Class Code;dcc
 DMS;Document Management System;dms
 DSR;Document Status Register;dsr
 FAC;Feature Access Control;fac
+IF;Interface;if
+IA;Interface Agreement;ia
+ISR;Interface Status Register;isr
 PCP;Present-Comment Process;pcp
 PMO;Project Management Office;pmo
 RfC;Request for Clarification;rfc
