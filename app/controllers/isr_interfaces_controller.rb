@@ -50,7 +50,7 @@ require 'isr_work_flow.rb'
 class IsrInterfacesController < ApplicationController
   include IsrWorkFlow
 
-  initialize_feature FEATURE_ID_ISR_INTERFACES, FEATURE_ACCESS_VIEW, FEATURE_CONTROL_WF, 5
+  initialize_feature FEATURE_ID_ISR_INTERFACES, FEATURE_ACCESS_VIEW, FEATURE_CONTROL_GRPWF, 5
 
   before_action :set_workflow
   before_action :load_data_from_if, only: [ :show, :show_all, :edit, :edit_wdr, :update, :destroy ]
@@ -61,7 +61,7 @@ class IsrInterfacesController < ApplicationController
     @filter_fields = filter_params
     @filter_states = @workflow.all_states_for_select
     @filter_groups = Group.active_only.participants_only.collect{ |g| [ g.code, g.id ]}
-    @isr_interfaces = IsrInterface.includes( :active_agreements ).filter( @filter_fields ).all.paginate( page: params[ :page ])
+    @isr_interfaces = IsrInterface.includes( :active_agreements, :l_group, :p_group ).filter( @filter_fields ).all.paginate( page: params[ :page ])
   end
 
   def info_workflow

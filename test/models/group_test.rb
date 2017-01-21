@@ -81,7 +81,7 @@ class GroupTest < ActiveSupport::TestCase
     p.group_id = g.id
     assert p.save, p.errors.messages
     refute g.valid?, g.errors.messages
-    assert_includes g.errors, :base
+    assert_includes g.errors.messages, :base
     p.group_id = 0
     assert p.save, p.errors.messages
     assert g.valid?, p.errors.messages    
@@ -93,14 +93,14 @@ class GroupTest < ActiveSupport::TestCase
     assert_equal g2.sub_group_of_id, g1.id
     g2.sub_group_of_id = 0
     refute g2.valid?
-    assert_includes g2.errors, :sub_group_of_id
+    assert_includes g2.errors.messages, :sub_group_of_id
   end
 
   test 'cannot assign myself as master' do
     g = groups( :group_one )
     g.sub_group_of_id = g.id
     refute g.valid?, g.errors.messages
-    assert_includes g.errors, :sub_group_of_id
+    assert_includes g.errors.messages, :sub_group_of_id
   end
 
   test 'must not delete master group' do
@@ -149,6 +149,69 @@ class GroupTest < ActiveSupport::TestCase
     g1.update_attribute( :sub_group_of_id, g3.id )
     g = Group.descendant_groups
     assert g.empty?
+  end
+
+  test 'sub group reference validation' do
+    g1 = groups( :group_one )
+    g2 = groups( :group_two )
+    g3 = Group.create( 
+      group_category: group_categories( :group_category_one ),
+      code: 'XXX',
+      label: 'Group 3')
+
+    # g1 <- g2
+    # g3
+
+    assert_nil g1.sub_group_of_id
+    assert_nil g3.sub_group_of_id
+    assert_equal g2.sub_group_of_id, g1.id
+
+    assert g3.valid?
+
+    # g3 <- g3 ... error
+
+    g3.sub_group_of = g3
+    refute g3.valid?
+    assert_includes g3.errors.messages, :sub_group_of_id
+
+    # g1 <- g2 <- g3 ... ok 
+
+    g3.sub_group_of = g2
+    assert g3.valid?
+
+    # g1 <- g2, g3 ... ok
+    
+    g3.sub_group_of = g1
+    assert g3.save
+
+    # g1 <- g2 <- g3 ... ok
+
+    g3.sub_group_of = g2
+    assert g3.valid?
+
+    # g3 <- g3 ... error
+
+    g3.sub_group_of = g3
+    refute g3.valid?
+    assert_includes g3.errors.messages, :sub_group_of_id
+
+    # g1 <- g2, g3 ... ok
+
+    g3.reload
+    assert g3.valid?
+
+    # g1 <- g2, g3 <- g1 ... error: loop
+
+    g1.sub_group_of = g3
+    refute g1.valid?
+    assert_includes g1.errors.messages, :base
+
+    # g1 <- 0 ... error bad group
+
+    g1.sub_group_of_id = 0
+    refute g1.valid?
+    assert_includes g1.errors.messages, :sub_group_of_id
+
   end
 
 end

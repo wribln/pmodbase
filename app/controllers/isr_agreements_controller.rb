@@ -19,7 +19,7 @@ class IsrAgreementsController < ApplicationController
     @filter_fields = filter_params
     @filter_states = @workflow.all_states_for_select
     @filter_groups = Group.active_only.participants_only.collect{ |g| [ g.code, g.id ]}
-    @isr_agreements = IsrAgreement.filter( @filter_fields ).all.paginate( page: params[ :page ])
+    @isr_agreements = IsrAgreement.includes( :l_group, :p_group ).filter( @filter_fields ).all.paginate( page: params[ :page ])
   end
 
   # GET /isa/stats

@@ -84,8 +84,8 @@ class Group < ActiveRecord::Base
         errors.add( :sub_group_of_id, I18n.t( 'groups.msg.bad_sub_ref' ))
       elsif !Group.exists?( sub_group_of_id )
         errors.add( :sub_group_of_id, I18n.t( 'groups.msg.bad_sub_group' ))
-      elsif Group.descendant_groups.empty?
-        errors.add( :base, I18n.t( 'group.msg.bad_hierarchy' ))
+      elsif Group.descendant_groups([ self.id, self.sub_group_of_id ]).empty?
+        errors.add( :base, I18n.t( 'groups.msg.bad_hierarchy' ))
       end
     end
   end
@@ -126,7 +126,7 @@ class Group < ActiveRecord::Base
   def self.collect_descendants( b, c, r, i )
     if c[ i ].nil? # node not yet visited
       c[ i ] = [ i ]
-      b[ i ].each{| j | collect_descendants( b, c, i, j )}
+      b[ i ].each{| j | collect_descendants( b, c, i, j )} unless b[ i ].nil?
     end
     return if r == i # we are done for this node
     if( c[ r ] & c[ i ]).empty?
@@ -139,12 +139,19 @@ class Group < ActiveRecord::Base
 
   # create a hash containing all sub-groups of each group
   # return nil if group structure is not hierarchical
+  # parameter this is used during creation/update to enable
+  # consideration of new configuration: set this_group to
+  # [ id, new sub_group_id ] 
 
-  def self.descendant_groups
+  def self.descendant_groups( this_group = nil )
 
     # retrieve all relationships
 
     a = self.pluck( :id, :sub_group_of_id )
+    unless this_group.nil?
+      # keep all but this_group (if it exists) and add new entry
+      a.delete_if {| x | x.first == this_group.first } << this_group
+    end
 
     # create hash of direct descendants
 

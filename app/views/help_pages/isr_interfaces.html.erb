@@ -90,6 +90,8 @@
     a deputy can be defined as <%= help_term IsrAgreement.human_attribute_name( :l_deputy_id )%> and
     <%= help_term IsrAgreement.human_attribute_name( :p_deputy_id )%> respectively. All users acting as
     IFL and IFP must have a permission level 1 for this feature.</p>
+    <p>In addition, the IFL should be given access to the <%= help_term TiaList.model_name.human %> feature
+    so he can manage the IA related resolution and validation steps.</p>
     <h3>Remarks on Actions</h3>
     <p>The index page '<%= t( 'isr_interfaces.index.form_title' )%>' lists all IFs and associated,
     active IAs in alphabetical order of (1) IFL and (2) IFP.</p>

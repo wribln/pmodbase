@@ -17,7 +17,7 @@ class IsrInterfacesController0Test < ActionController::TestCase
   test 'check class attributes' do
     validate_feature_class_attributes FEATURE_ID_ISR_INTERFACES, 
       ApplicationController::FEATURE_ACCESS_VIEW,
-      ApplicationController::FEATURE_CONTROL_WF, 5
+      ApplicationController::FEATURE_CONTROL_GRPWF, 5
   end
 
   test 'should get index' do

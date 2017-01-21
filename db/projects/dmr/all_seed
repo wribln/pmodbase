@@ -30,6 +30,9 @@ bin/bundle exec rake db:seed:network_stops['dmr']
 # the following file determines which is the project-specific document log 
 # SiemensDocumentLog or ADocumentLog
 #
+# THIS ONLY WORKS FOR THE INITIAL RELEASE - later updates will not have the
+# following modifications (capistrano logic...) THINK OF SOMETHING ELSE!
+#
 cp -p db/projects/dmr/project_doc_log.rb app/models/
 #
 if [[ "$e4r" == p* ]]; then

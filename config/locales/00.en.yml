@@ -788,7 +788,7 @@ en:
       bad_code_syntax2: 'must consist of two parts separated by -, each containing A-Z, 0-9, or &.'
 
   a_code_search:
-    title:         'Search for Codes'
+    title:         'Search for Ax Codes'
     index:
       form_title:  :s_code_search.title
       list_source: "Results from %{table}"
@@ -1770,7 +1770,7 @@ en:
       bad_code_syntax:  'may only contain A-Z, 0-9, period, or dash.'
 
   s_code_search:
-    title:            'Search for Codes'
+    title:            'Search for Siemens Codes'
     index:
       form_title:     :s_code_search.title
       list_source:    "Results from %{table}"
