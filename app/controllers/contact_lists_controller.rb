@@ -18,8 +18,8 @@ class ContactListsController < ApplicationController
     end
   end
 
-  # GET /contact_lists/info - for a short list with accounts -
-  # for situations where a selection by account_id is required (e.g. TiaMember)
+  # GET /cdl/info - for a short list with accounts -
+  # for situations where a selection by account_id is required
 
   def info
     @accounts = Account.where( active: true ).includes( :person )
