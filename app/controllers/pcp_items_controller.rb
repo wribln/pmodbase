@@ -35,7 +35,7 @@ class PcpItemsController < ApplicationController
   def show
     get_item
     @pcp_subject = @pcp_item.pcp_subject
-    @pcp_step = @pcp_item.pcp_step
+    @pcp_step = @pcp_subject.current_step
     unless user_has_permission?( :to_access )
       render_bad_logic t( 'pcp_items.msg.nop_to_view' )
       return
@@ -56,7 +56,6 @@ class PcpItemsController < ApplicationController
   def show_next
     get_item
     @pcp_subject = @pcp_item.pcp_subject
-    @pcp_step = @pcp_item.pcp_step
     # try to find next item, check access to remaining item later
     ps = @pcp_item # save original record
     loop do
@@ -64,16 +63,16 @@ class PcpItemsController < ApplicationController
       if pi.nil? then
         flash.now[ :notice ] = t( 'pcp_items.msg.last_reached' )
         @pcp_item = ps # revert back to original record
-        @pcp_step = @pcp_item.pcp_step
       else
         @pcp_item = pi
-        @pcp_step = @pcp_item.pcp_step
+        @pcp_step = @pcp_subject.current_step
         next unless user_has_permission?( :to_access )
         next unless user_may_view_item?
       end
       break
     end
     # now check permissions - worst case: original item was already inaccessible!
+    @pcp_step = @pcp_subject.current_step
     unless user_has_permission?( :to_access )
       render_bad_logic t( 'pcp_items.msg.nop_to_view' )
       return
@@ -510,9 +509,11 @@ class PcpItemsController < ApplicationController
     # checks if a user is permitted to view a PCP Item:
     # the item must be released and public, or we are in 
     # the commenting group (which created the PCP Item)
+    #
+    # This method must refer to the step of the current item!
 
     def user_may_view_item?
-      @pcp_step.released? || @pcp_step.in_commenting_group?
+      @pcp_item.pcp_step.released? || @pcp_item.pcp_step.in_commenting_group?
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

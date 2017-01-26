@@ -1,0 +1,66 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="form-horizontal" role="form">
+    <%= form_for @sir_entry do |f| %>
+      <%= render partial: 'shared/notice' %>
+      <div class="form-group">
+        <%= f.label :id, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-2">
+          <%= display_value f.object.to_id %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :sir_item, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-4">
+          <%= display_value f.object.sir_item %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :type, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-4">
+          <%= display_value f.object.type %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :group, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-4">
+          <%= display_value f.object.group %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :due_date, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-4">
+          <%= display_value f.object.due_date %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :parent, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-4">
+          <%= display_value f.object.parent %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :no_sub_req, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-4">
+          <%= display_value f.object.no_sub_req %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :desc, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-4">
+          <%= display_value f.object.desc %>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-2">
+          <%= link_to t( 'button_label.edit' ), edit_sir_entry_path( @sir_entry ), class: 'btn btn-lg btn-block btn-default' %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to t( 'button_label.go_to_index' ), sir_entries_path, class: 'btn btn-lg btn-block btn-default' %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

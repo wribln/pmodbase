@@ -34,7 +34,6 @@ en:
         is_public:      'Public Flag'
 #
         description:    'Comment'
-        author:         'Author'
         author:         :activerecord.attributes.pcp_item.author
         assessment:     'Assessment'
 

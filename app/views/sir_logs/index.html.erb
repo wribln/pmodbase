@@ -1,0 +1,32 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th class="col-sm-1"><%= SirLog.human_attribute_name( :id    )%></th>
+          <th class="col-sm-4"><%= SirLog.human_attribute_name( :label )%></th>
+          <th class="col-sm-6"><%= SirLog.human_attribute_name( :desc  )%></th>
+          <th class="col-sm-1"><%= t( 'action_title.header' )%></th>
+        </tr>
+      </thead>
+      <tbody>
+      <% if @sir_logs.length.zero? %>
+        <%= render partial: 'shared/index_empty_row', locals:{ columns: 3, with_link: true }%>
+      <% else %>
+        <% @sir_logs.each do |s| %>
+          <tr>
+            <td><%= s.to_id %></td>
+            <td><%= link_to s.label, sir_log_sir_items_path( s ) %></td>
+            <td><%= s.desc  %></td>
+            <td><%= render partial: 'shared/actions', object: s %></td>
+          </tr>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+    <%= render partial: 'shared/footer' %>
+  </div>
+</div>

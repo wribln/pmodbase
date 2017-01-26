@@ -122,6 +122,11 @@ class PcpItemsController1Test < ActionController::TestCase
     @controller.reset_4_test
     switch_to_user( @account_p )
 
+    # check if current user can view the item
+
+    get :show, id: @pcp_item
+    assert_response :success
+
     # back at the presenter: add response to item
 
     assert_difference( 'PcpComment.count' ) do

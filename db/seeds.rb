@@ -608,6 +608,17 @@ Feature.new do |f|
   f.feature_category_id = fc5.id
 end.save!
 
+Feature.new do |f|
+  f.id = FEATURE_ID_SIR_LOGS
+  f.label = I18n.t( 'sir_logs.title' )
+  f.code = 'SIL'
+  f.seqno = 6
+  f.access_level = SirLogsController.feature_access_level
+  f.control_level = SirLogsController.feature_control_level
+  f.no_workflows = SirLogsController.no_workflows
+  f.feature_category_id = fc5.id
+end.save!
+
 # - - - - - - - - - - utilities
 
 Feature.new do |f|

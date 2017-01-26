@@ -114,6 +114,11 @@ Rails.application.routes.draw do
   resources :a_document_logs, path: 'adl', format: false
   resources :service_codes, path: 'scv', format: false
   resources :siemens_phases, path: 'spc', format: false
+  resources :sir_logs, path: 'sil', format: false do
+    resources :sir_items, path: 'sii', format: false, shallow: true do
+      resources :sir_entries, path: 'sie', format: false, shallow: true
+    end
+  end
   resources :standards_bodies, path: 'sso', format: false
   resources :statistics, path: 'sdh', format: false, only: :index
   resources :submission_groups, path: 'sgp', format: false

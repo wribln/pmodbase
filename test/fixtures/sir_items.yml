@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  group_id: 
+  ref_id: MyString
+  cfr_record_id: 
+  label: MyString
+  status: 1
+  category: 1
+  phase_code_id: 
+  archived: false
+  desc: MyText
+
+two:
+  group_id: 
+  ref_id: MyString
+  cfr_record_id: 
+  label: MyString
+  status: 1
+  category: 1
+  phase_code_id: 
+  archived: false
+  desc: MyText

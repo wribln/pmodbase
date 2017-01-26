@@ -1,0 +1,19 @@
+      <div class="form-group">
+        <%= form.label :id, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-2">
+          <%= display_value form.object.to_id %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :label, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-4">
+          <%= form.text_field :label, class: 'form-control' %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :desc, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-8">
+          <%= form.text_field :desc, class: 'form-control' %>
+        </div>
+      </div>
+

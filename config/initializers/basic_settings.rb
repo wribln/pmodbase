@@ -161,5 +161,8 @@
   FEATURE_ID_CFR_FILE_TYPES = 78
   FEATURE_ID_ISR_INTERFACES = 79
   FEATURE_ID_ISR_AGREEMENTS = 80
+  FEATURE_ID_SIR_LOGS = 81
+  FEATURE_ID_SIR_ITEMS = 82
+  FEATURE_ID_SIR_ENTRIES = 83
 
-  FEATURE_ID_MAX_PLUS_ONE = 81 # update this when inserting new features!
+  FEATURE_ID_MAX_PLUS_ONE = 84 # update this when inserting new features!

@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sir_item_id: 
+  rec_type: 1
+  group_id: 
+  due_date: 2017-01-26
+  parent_id: 
+  no_sub_req: 1
+  desc: MyText
+
+two:
+  sir_item_id: 
+  rec_type: 1
+  group_id: 
+  due_date: 2017-01-26
+  parent_id: 
+  no_sub_req: 1
+  desc: MyText

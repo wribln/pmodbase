@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161231235959) do
+ActiveRecord::Schema.define(version: 20170126144502) do
 
   create_table "a1_codes", force: :cascade do |t|
     t.string   "code",                      null: false
@@ -900,6 +900,48 @@ ActiveRecord::Schema.define(version: 20161231235959) do
     t.string   "code",       limit: 16,  null: false
     t.string   "label_p",    limit: 100
     t.string   "label_m",    limit: 100
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "sir_entries", force: :cascade do |t|
+    t.integer  "sir_item_id"
+    t.integer  "group_id"
+    t.integer  "parent_id"
+    t.integer  "rec_type",    null: false
+    t.date     "due_date"
+    t.integer  "no_sub_req"
+    t.text     "desc"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "sir_entries", ["group_id"], name: "index_sir_entries_on_group_id"
+  add_index "sir_entries", ["sir_item_id", "created_at"], name: "sir_entries_default_order"
+  add_index "sir_entries", ["sir_item_id"], name: "index_sir_entries_on_sir_item_id"
+
+  create_table "sir_items", force: :cascade do |t|
+    t.integer  "sir_log_id"
+    t.integer  "group_id"
+    t.integer  "cfr_record_id"
+    t.integer  "phase_code_id"
+    t.string   "ref_id",        limit: 50
+    t.string   "label",         limit: 100,                 null: false
+    t.integer  "status",                                    null: false
+    t.integer  "category",                                  null: false
+    t.boolean  "archived",                  default: false, null: false
+    t.text     "desc"
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
+  end
+
+  add_index "sir_items", ["group_id"], name: "index_sir_items_on_group_id"
+  add_index "sir_items", ["phase_code_id"], name: "index_sir_items_on_phase_code_id"
+  add_index "sir_items", ["sir_log_id"], name: "index_sir_items_on_sir_log_id"
+
+  create_table "sir_logs", force: :cascade do |t|
+    t.string   "label",      limit: 100
+    t.string   "desc",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end

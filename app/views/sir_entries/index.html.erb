@@ -1,0 +1,42 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title %>
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Sir item</th>
+          <th>Type</th>
+          <th>Group</th>
+          <th>Due date</th>
+          <th>Parent</th>
+          <th>No sub req</th>
+          <th>Desc</th>
+          <th><%= t( 'action_title.header' )%></th>
+        </tr>
+      </thead>
+      <tbody>
+      <% if @sir_entries.length.zero? %>
+        <%= render partial: 'shared/index_empty_row', locals:{ columns: 8, with_link: true }%>
+      <% else %>
+        <% @sir_entries.each do |sir_entry| %>
+          <tr>
+            <td><%= sir_entry.id %></td>
+            <td><%= sir_entry.sir_item %></td>
+            <td><%= sir_entry.type %></td>
+            <td><%= sir_entry.group %></td>
+            <td><%= sir_entry.due_date %></td>
+            <td><%= sir_entry.parent %></td>
+            <td><%= sir_entry.no_sub_req %></td>
+            <td><%= sir_entry.desc %></td>
+            <td><%= render partial: 'shared/actions', object: sir_entry %></td>
+          </tr>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+    <%= render partial: 'shared/footer' %>
+  </div>
+</div>
