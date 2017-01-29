@@ -1,41 +1,35 @@
 <%- page_title %>
 <div class="container">
   <%= breadcrumbs %>
-  <%= form_title %>
+  <%= form_title_w_link( @sir_log.label, sir_logs_path )%>
   <div class="table-responsive">
     <table class="table table-striped table-bordered">
       <thead>
         <tr>
-          <th>ID</th>
-          <th>Group</th>
-          <th>Ref</th>
-          <th>Cfr record</th>
-          <th>Label</th>
-          <th>Status</th>
-          <th>Category</th>
-          <th>Phase</th>
-          <th>Archived</th>
-          <th>Desc</th>
-          <th><%= t( 'action_title.header' )%></th>
+          <th class="col-sm-2"><%= SirItem.human_attribute_name( :seqno     )%></th>
+          <th class="col-sm-2"><%= SirItem.human_attribute_name( :reference )%></th>
+          <th class="col-sm-3"><%= SirItem.human_attribute_name( :label     )%></th>
+          <th class="col-sm-1"><%= SirItem.human_attribute_name( :group_id  )%></th>
+          <th class="col-sm-1"><%= SirItem.human_attribute_name( :status    )%></th>
+          <th class="col-sm-1"><%= SirItem.human_attribute_name( :category  )%></th>
+          <th class="col-sm-1"><%= SirItem.human_attribute_name( :phase_code_id )%></th>
+          <th class="col-sm-1"><%= t( 'action_title.header' )%></th>
         </tr>
       </thead>
       <tbody>
       <% if @sir_items.length.zero? %>
-        <%= render partial: 'shared/index_empty_row', locals:{ columns: 10, with_link: true }%>
+        <%= render partial: 'shared/index_empty_row', locals:{ columns: 7, with_link: true }%>
       <% else %>
-        <% @sir_items.each do |sir_item| %>
+        <% @sir_items.each do |si| %>
           <tr>
-            <td><%= sir_item.id %></td>
-            <td><%= sir_item.group %></td>
-            <td><%= sir_item.ref_id %></td>
-            <td><%= sir_item.cfr_record %></td>
-            <td><%= sir_item.label %></td>
-            <td><%= sir_item.status %></td>
-            <td><%= sir_item.category %></td>
-            <td><%= sir_item.phase %></td>
-            <td><%= sir_item.archived %></td>
-            <td><%= sir_item.desc %></td>
-            <td><%= render partial: 'shared/actions', object: sir_item %></td>
+            <td><%= si.item_code %></td>
+            <td><%= si.reference %></td>
+            <td><%= si.label %></td>
+            <td><%= si.group_code %></td>
+            <td><%= si.status_label %></td>
+            <td><%= si.category_label.first %></td>
+            <td><%= si.phase_code_code %></td>
+            <td><%= render partial: 'shared/actions', object: si %></td>
           </tr>
         <% end %>
       <% end %>

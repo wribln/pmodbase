@@ -14,6 +14,8 @@ class Account < ActiveRecord::Base
   has_many :dsr_doc_groups, inverse_of: :account
   has_many :pcp_members, inverse_of: :account
   has_many :isr_agreements, inverse_of: :account
+  has_many :sir_logs, inverse_of: :account
+  has_many :sir_members, inverse_of: :account
   accepts_nested_attributes_for :permission4_groups, allow_destroy: true, reject_if: :ignore_permission
   accepts_nested_attributes_for :permission4_flows, allow_destroy: true
   validates_associated :permission4_groups

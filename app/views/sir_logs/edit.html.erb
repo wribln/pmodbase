@@ -4,8 +4,25 @@
   <%= form_title %>
   <div class="form-horizontal" role="form">
     <%= form_for @sir_log do |f| %>
+    <p><%= @sir_log.errors.inspect %></p>
       <%= render partial: 'shared/errors', object: @sir_log.errors %>
       <%= render partial: 'form', object: f %>
+      <%= render partial: 'sir_member_header' %>
+      <!-- SIR Member Header -->
+      <%= f.fields_for :sir_members, f.object.sir_members do |m| %>
+        <%= render partial: 'sir_member', locals: { sir_member: m, action_type: :edit }%>
+      <% end %>
+      <%= f.fields_for :sir_members, @sir_log.sir_members.new, { child_index: 'template' } do |m| %>
+        <%= render partial: 'sir_member', locals: { sir_member: m, action_type: :edit }%>
+      <% end %>
+      <!-- button to add another member record -->
+      <div class="form-group">
+        <div class="col-sm-1">
+          <%= link_to '+', '#', class: 'btn btn-info btn-default btn-block add-subform-button' %>
+        </div>
+        <label class="col-sm-4"><%= t( 'sir_logs.add_label' )%></label>
+      </div>
+      <%= render partial: 'sir_member_footer' %>
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-2">
           <%= f.submit class: 'btn btn-lg btn-block btn-primary' %>

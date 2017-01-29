@@ -1,23 +1,25 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
-  group_id: 
-  ref_id: MyString
-  cfr_record_id: 
-  label: MyString
-  status: 1
-  category: 1
-  phase_code_id: 
-  archived: false
-  desc: MyText
+  sir_log:    sir_log_one
+  seqno:      1
+  group:      group_one  
+  reference:  'other-id 1'
+  cfr_record: one
+  label:      'Item No 1'
+  status:     0
+  category:   1
+  phase_code: prl 
+  archived:   false
+  description: 'This is the description for item no 1'
 
 two:
-  group_id: 
-  ref_id: MyString
-  cfr_record_id: 
-  label: MyString
-  status: 1
-  category: 1
-  phase_code_id: 
-  archived: false
-  desc: MyText
+  sir_log:    sir_log_one
+  seqno:      2
+  group:      group_two
+  reference:
+  cfr_record:
+  label:      'just another item'
+  status:     0
+  category:   1
+  phase_code:
+  archived:   false
+  description: 'This is the description for item no 2'

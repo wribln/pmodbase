@@ -1,16 +1,14 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 tia_list_one:
-  code:     'TIA'
-  label:    'Tasks - Issues - Action Items'
+  code:           'TIA'
+  label:          'Tasks - Issues - Action Items'
   owner_account:  one
   deputy_account: wop
-  archived: false
+  archived:       false
 
 tia_list_two:
-  code:     'TEST'
-  label:    'dummy for testing'
-  owner_account: wop
-  archived: false
+  code:           'TEST'
+  label:          'dummy for testing'
+  owner_account:  wop
+  archived:       false
   
 

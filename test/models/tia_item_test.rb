@@ -77,7 +77,7 @@ class TiaItemTest < ActiveSupport::TestCase
     tx = tia_items( :tia_item_two )
     tn = TiaItem.new
     assert tx.valid?
-    assert_not tn.valid?
+    refute tn.valid?
 
     assert_includes tn.errors, :tia_list_id
     tn.tia_list_id = tx.tia_list_id

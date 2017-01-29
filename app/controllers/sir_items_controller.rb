@@ -1,8 +1,9 @@
 class SirItemsController < ApplicationController
-  initialize_feature FEATURE_ID_SIR_ITEMS, FEATURE_ACCESS_INDEX, FEATURE_CONTROL_GRP
+#  initialize_feature FEATURE_ID_SIR_ITEMS, FEATURE_ACCESS_INDEX, FEATURE_CONTROL_GRP
+  initialize_feature FEATURE_ID_SIR_ITEMS, FEATURE_ACCESS_VIEW, FEATURE_CONTROL_GRP
 
   before_action :set_sir_log,  only: [ :index, :new ]
-  before_action :set_sir_item, only: [ :show, :edit, :update, :destroy ]
+  before_action :set_sir_item, only: [ :show, :show_all, :edit, :update, :destroy ]
 
   # GET /sil/1/sii
  
@@ -13,6 +14,12 @@ class SirItemsController < ApplicationController
   # GET /sii/1
  
   def show
+    @sir_entries = SirEntry.all
+  end
+
+  # GET /sii/1/all
+
+  def show_all
   end
 
   # GET /sil/1/sii/new
@@ -29,7 +36,7 @@ class SirItemsController < ApplicationController
   # POST /sii
  
   def create
-    @sir_item = SirItem.new(sir_item_params)
+    @sir_item = SirItem.new( sir_item_params )
     respond_to do |format|
       if @sir_item.save
         format.html { redirect_to @sir_item, notice: I18n.t( 'sir_items.msg.create_ok' )}
@@ -75,6 +82,8 @@ class SirItemsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
 
     def sir_item_params
-      params.require( :sir_item ).permit( :group_id, :ref_id, :cfr_record_id, :label, :status, :category, :phase_code_id, :archived, :desc )
+      params.require( :sir_item ).permit(
+        :group_id, :reference, :cfr_record_id, :label, :status,
+        :category, :phase_code_id, :archived, :description )
     end
 end

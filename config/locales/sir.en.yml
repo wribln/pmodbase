@@ -4,30 +4,48 @@ en:
 
     models:
       sir_log:           'Structured Issue-Response (SIR) Logs'
-      sir_item:          'SIR Items'
-      sir_entry:         'SIR Entries'
+      sir_item:          'SIR Log Items'
+      sir_entry:         'SIR Log Entries'
+      sir_member:        'SIR Log Members'
 
     attributes:
 
       sir_log:
-        id:               :general.attributes.id
-        label:            'Label'
-        desc:             'Description'
+        id:                 :general.attributes.id
+        code:               'Log Prefix'
+        label:              'Description'
+        owner_account_id:   'Owner Account ID'
+        owner:              'Owner'
+        deputy_account_id:  'Deputy Account ID'
+        deputy:             'Deputy'
+        members:            'List Members'
+        archived:           'Archived'
+# for error messages in subform
+        sir_members:        'At least one member record'
+
+      sir_member:
+        account_id:     'Account ID'
+        to_access:      'Can Access'
+        to_update:      'Can Update'
+        member_account: 'Participants (Account ID and Name)'
 
       sir_item:
         id:               :general.attributes.id
+        reference:        'Reference'
         sir_log_id:       'SIR Log'
-        group_id:         'Group'
+        seqno:            'Item Id'
+        group_id:         'Originating Group'
         cfr_record_id:    'Reference Document'
         phase_code_id:    'Project Phase'
-        label:            'Label'
+        label:            'Title'
         status:           'Status'
-        #                    0     1      2            3
+        # default: 0         0     1      2            3
         states:           [ 'new','open','resp. acc.','closed' ]
         category:         'Category'
-        categories:       [ 'A - severe', 'B - major', 'C - marginal/formal', 'R - recommendation', 'Q - Question' ]
+        # default: 0         0              1            2           3                     4
+        categories:       [ 'Q - Question','A - severe','B - major','C - marginal/formal','R - recommendation' ]
         archived:         'Archived'
-        desc:             'Description'
+        description:      'Description'
 
       sir_entry:
         id:               :general.attributes.id
@@ -38,19 +56,58 @@ en:
         parent_id:        'Related SIR Entry'
         due_date:         'Due Date'
         no_sub_req:       'Number of Sub-Requests'
-        desc:             'Description'
+        depth:            'Depth in Structure'
+        description:      'Description'
 
   sir_logs:
-    title:            'Structured Issue-Response (SIR) Logs'
+    no_members_info:    'No participants assigned yet.'
+    members_heading:    'Participants in this list'
+    add_label:          'Add additional participants'
+    action:             'Action'
+    title:              'Structured Issue-Response (SIR) Logs'
     index:
-      form_title:     'Index of SIR Logs'
+      form_title:       'Index of All SIR Logs'
     new:
-      form_title:     'Create New SIR Log'
+      form_title:       'Create New SIR Log'
     show:
-      form_title:     'Show Details of SIR Log'
+      form_title:       'Show Details of SIR Log'
     edit:
-      form_title:     'Edit Details of SIR Log'
+      form_title:       'Edit Details of SIR Log'
     msg:
-      create_ok:      'SIR Log successfully created.'
-      edit_ok:        'SIR Log successfully updated.'
-      delete_ok:      'SIR Log successfully deleted.'
+      create_ok:        'SIR Log successfully created.'
+      edit_ok:          'SIR Log successfully updated.'
+      delete_ok:        'SIR Log successfully deleted.'
+      account_nonexist: :general.non_existing
+      bad_account:      'Current user must be owner or deputy of this SIR Log for this task.'
+
+  sir_members:
+    msg:
+      dup_account_id: 'is already a member in this log.'
+      own_account_id: 'is already Owner or Deputy for this log.'
+
+  sir_items:
+    title:              'SIR Items'
+    index:
+      form_title:       'All Items in '
+    show:
+      form_title:       'Show SIR Item and Log Entries'
+      no_entries:       'No log entries for this item.'
+      rec_head_0:       'Request for %{group}'
+      rec_head_1:       'Comment by %{group}'
+      rec_head_2:       'Response by %{group}'
+      due_by:           'due by %{due_date}'
+    show_all:
+      form_title:       'Show Details of SIR Item'
+    msg:
+      bad_seqno:        'must be unique within this SIR Log.'
+      bad_archive:      'cannot be set on open items.'
+      bad_link:         'New SIR Entry has bad reference.'
+
+
+  sir_entries:
+    msg:
+      bad_parent_id:    'Related Log Entry not found.'
+      bad_cross_ref:    'Related Log Entry must be for same Item.'
+      bad_rr_combo:     'A Response must refer to a Request.'
+      bad_rr_group:     'Related Log Entries must belong to same Group.'
+      bad_req_group:    'A Request must refer to Group other than own.'

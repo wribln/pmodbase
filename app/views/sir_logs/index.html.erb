@@ -7,21 +7,25 @@
       <thead>
         <tr>
           <th class="col-sm-1"><%= SirLog.human_attribute_name( :id    )%></th>
+          <th class="col-sm-2"><%= SirLog.human_attribute_name( :code  )%></th>
           <th class="col-sm-4"><%= SirLog.human_attribute_name( :label )%></th>
-          <th class="col-sm-6"><%= SirLog.human_attribute_name( :desc  )%></th>
-          <th class="col-sm-1"><%= t( 'action_title.header' )%></th>
+          <th class="col-sm-2"><%= SirLog.human_attribute_name( :owner_account_id  )%></th>
+          <th class="col-sm-2"><%= SirLog.human_attribute_name( :deputy_account_id )%></th>
+          <th class="col-sm-1 hidden-print"><%= t( 'action_title.header' )%></th>
         </tr>
       </thead>
       <tbody>
       <% if @sir_logs.length.zero? %>
-        <%= render partial: 'shared/index_empty_row', locals:{ columns: 3, with_link: true }%>
+        <%= render partial: 'shared/index_empty_row', locals:{ columns: 5, with_link: true }%>
       <% else %>
-        <% @sir_logs.each do |s| %>
+        <% @sir_logs.each do |sl| %>
           <tr>
-            <td><%= s.to_id %></td>
-            <td><%= link_to s.label, sir_log_sir_items_path( s ) %></td>
-            <td><%= s.desc  %></td>
-            <td><%= render partial: 'shared/actions', object: s %></td>
+            <td><%= sl.to_id %></td>
+            <td><%= sl.code %></td>
+            <td><%= link_to sl.label, sir_log_sir_items_path( sl.id ) unless sl.label.nil? %></td>
+            <td><%= link_to_contact_list( sl.owner_account  )%></td>
+            <td><%= link_to_contact_list( sl.deputy_account )%></td>
+            <td><%= render partial: 'shared/actions', object: sl %></td>
           </tr>
         <% end %>
       <% end %>

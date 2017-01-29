@@ -1,19 +1,19 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
-  sir_item_id: 
-  rec_type: 1
-  group_id: 
-  due_date: 2017-01-26
-  parent_id: 
-  no_sub_req: 1
-  desc: MyText
+  sir_item:  one
+  rec_type:  0
+  group:     group_two
+  due_date:  2017-01-26
+  parent: 
+  no_sub_req: 0
+  depth:      0
+  description: 'Hey, dude, get this!'
 
 two:
-  sir_item_id: 
-  rec_type: 1
-  group_id: 
-  due_date: 2017-01-26
-  parent_id: 
-  no_sub_req: 1
-  desc: MyText
+  sir_item:  one
+  rec_type:  2
+  group:     group_two
+  due_date:
+  parent:    one
+  no_sub_req: 0
+  depth:      0
+  description: 'This is the answer to the question!'

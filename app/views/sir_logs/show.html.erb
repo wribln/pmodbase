@@ -12,17 +12,37 @@
         </div>
       </div>
       <div class="form-group">
+        <%= f.label :code, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-1">
+          <%= display_value f.object.code %>
+        </div>
+      </div>
+      <div class="form-group">
         <%= f.label :label, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
           <%= display_value f.object.label %>
         </div>
       </div>
+      <%= render partial: 'shared/show_account', locals: { fbo: f, a_id: :owner_account_id,  a_as: :owner_account }%>
+      <%= render partial: 'shared/show_account', locals: { fbo: f, a_id: :deputy_account_id, a_as: :deputy_account }%>
       <div class="form-group">
-        <%= f.label :desc, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-8">
-          <%= display_value f.object.desc %>
+        <%= f.label :archived, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-1">
+          <%= display_check_box f.object.archived %>
         </div>
       </div>
+      <!-- sir members list -->
+      <%= render partial: 'sir_member_header', locals: { action_type: :show } %>
+      <% if f.object.sir_members.empty? %>
+      <div class="form-group">
+        <div class="col-sm-offset-1 col-sm-4"><%= t( 'sir_logs.no_members_info' )%></div>
+      </div>
+      <% else %>
+        <%= f.fields_for :tia_members, f.object.sir_members do |m| %>
+          <%= render partial: 'sir_member', locals: { sir_member: m, action_type: :show } %>
+        <% end %>
+      <% end %>
+      <%= render partial: 'sir_member_footer' %>
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-2">
           <%= link_to t( 'button_label.edit' ), edit_sir_log_path( @sir_log ), class: 'btn btn-lg btn-block btn-default' %>

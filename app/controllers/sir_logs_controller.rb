@@ -6,7 +6,7 @@ class SirLogsController < ApplicationController
   # GET /sil
 
   def index
-    @sir_logs = SirLog.all
+    @sir_logs = SirLog.active
   end
 
   # GET /sil/1
@@ -42,7 +42,9 @@ class SirLogsController < ApplicationController
 
   def update
     respond_to do |format|
-      if @sir_log.update(sir_log_params)
+      params[ :sir_log ][ :sir_members_attributes ].try( :delete, 'template' )
+      @sir_log.assign_attributes( sir_log_params ) unless sir_log_params.empty?
+      if @sir_log.save
         format.html { redirect_to @sir_log, notice: I18n.t( 'sir_logs.msg.edit_ok' )}
       else
         format.html { render :edit }
@@ -70,7 +72,10 @@ class SirLogsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
 
     def sir_log_params
-      params.require( :sir_log ).permit( :label, :desc ) 
+      params.require( :sir_log ).permit(
+        :code, :label, :owner_account_id, :deputy_account_id, :archived,
+        sir_members_attributes: 
+          [ :id, :_destroy, :account_id, :to_access, :to_update ])
     end
 
 end

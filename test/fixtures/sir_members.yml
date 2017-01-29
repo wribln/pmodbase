@@ -1,0 +1,18 @@
+one:
+  account:    one
+  sir_log:    sir_log_two
+  to_access:  true
+  to_update:  false
+
+two:
+  account:    two
+  sir_log:    sir_log_two
+  to_access:  true
+  to_update:  true
+
+three:
+  account:    three
+  sir_log:    sir_log_one
+  to_access:  false
+  to_update:  true
+  

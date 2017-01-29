@@ -114,6 +114,7 @@ Rails.application.routes.draw do
   resources :a_document_logs, path: 'adl', format: false
   resources :service_codes, path: 'scv', format: false
   resources :siemens_phases, path: 'spc', format: false
+  get 'sii/:id/all', to: 'sir_items#show_all', as: 'sir_item_details', format: false
   resources :sir_logs, path: 'sil', format: false do
     resources :sir_items, path: 'sii', format: false, shallow: true do
       resources :sir_entries, path: 'sie', format: false, shallow: true

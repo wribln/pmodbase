@@ -1,3 +1,5 @@
+# NOTE: this model is almost identical to sir_member
+
 class TiaMember < ActiveRecord::Base
   include ApplicationModel
   include ActiveModelErrorsAdd

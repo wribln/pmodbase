@@ -1924,9 +1924,9 @@ en:
     add_label:          'Add additional participants'
     action:             'Action'
     msg:
-      new_ok:       'Task/Issue/Action Item List successfully added.'
-      edit_ok:      'Task/Issue/Action Item List successfully modified.'
-      delete_ok:    'Task/Issue/Action Item List successfully removed.'
+      new_ok:           'Task/Issue/Action Item List successfully added.'
+      edit_ok:          'Task/Issue/Action Item List successfully modified.'
+      delete_ok:        'Task/Issue/Action Item List successfully removed.'
       account_nonexist: :general.non_existing
       bad_account:      'Current user must be owner or deputy of this Task/Issue/Action Item List for this task.'
 

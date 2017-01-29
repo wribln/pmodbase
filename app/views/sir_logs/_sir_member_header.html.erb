@@ -1,0 +1,15 @@
+      <!-- Heading for TIA members -->
+      <div class="form-group hidden-xs hidden-sm" style="margin-bottom:0px">
+      	<div class="col-sm-1">
+      	<%- if action_name == :edit then -%>
+        	<label><%= t( 'sir_list.action' )%></label>
+        <%- end -%>
+        </div>
+        <div class="col-sm-3"><label><%= SirMember.human_attribute_name( :member_account )%></label></div>
+        <div class="col-sm-2"><label><%= SirMember.human_attribute_name( :to_access )%></label></div>
+        <div class="col-sm-2"><label><%= SirMember.human_attribute_name( :to_update )%></label></div>
+      </div>
+      <!-- Divider Line -->
+      <div class="form-group">
+        <hr style="margin:0px"/>  
+      </div>

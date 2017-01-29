@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170126144502) do
+ActiveRecord::Schema.define(version: 20170127112428) do
 
   create_table "a1_codes", force: :cascade do |t|
     t.string   "code",                      null: false
@@ -908,12 +908,13 @@ ActiveRecord::Schema.define(version: 20170126144502) do
     t.integer  "sir_item_id"
     t.integer  "group_id"
     t.integer  "parent_id"
-    t.integer  "rec_type",    null: false
+    t.integer  "rec_type",    default: 0, null: false
     t.date     "due_date"
-    t.integer  "no_sub_req"
-    t.text     "desc"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "no_sub_req",  default: 0
+    t.integer  "depth",       default: 0
+    t.text     "description"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   add_index "sir_entries", ["group_id"], name: "index_sir_entries_on_group_id"
@@ -925,12 +926,13 @@ ActiveRecord::Schema.define(version: 20170126144502) do
     t.integer  "group_id"
     t.integer  "cfr_record_id"
     t.integer  "phase_code_id"
-    t.string   "ref_id",        limit: 50
+    t.integer  "seqno",                                     null: false
+    t.string   "reference",     limit: 50
     t.string   "label",         limit: 100,                 null: false
-    t.integer  "status",                                    null: false
-    t.integer  "category",                                  null: false
+    t.integer  "status",                    default: 0,     null: false
+    t.integer  "category",                  default: 0,     null: false
     t.boolean  "archived",                  default: false, null: false
-    t.text     "desc"
+    t.text     "description"
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
   end
@@ -940,11 +942,29 @@ ActiveRecord::Schema.define(version: 20170126144502) do
   add_index "sir_items", ["sir_log_id"], name: "index_sir_items_on_sir_log_id"
 
   create_table "sir_logs", force: :cascade do |t|
-    t.string   "label",      limit: 100
-    t.string   "desc",       limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.integer  "owner_account_id",                  null: false
+    t.integer  "deputy_account_id"
+    t.string   "code"
+    t.string   "label"
+    t.boolean  "archived",          default: false, null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
   end
+
+  add_index "sir_logs", ["deputy_account_id"], name: "index_sir_logs_on_deputy_account_id"
+  add_index "sir_logs", ["owner_account_id"], name: "index_sir_logs_on_owner_account_id"
+
+  create_table "sir_members", force: :cascade do |t|
+    t.integer  "account_id",                 null: false
+    t.integer  "sir_log_id",                 null: false
+    t.boolean  "to_access",  default: true,  null: false
+    t.boolean  "to_update",  default: false, null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "sir_members", ["account_id"], name: "index_sir_members_on_account_id"
+  add_index "sir_members", ["sir_log_id"], name: "index_sir_members_on_sir_log_id"
 
   create_table "standards_bodies", force: :cascade do |t|
     t.string   "code",        limit: 16,  null: false

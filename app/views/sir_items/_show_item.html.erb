@@ -1,0 +1,34 @@
+          <div class="form-group p-group">
+            <p class="col-sm-3 p-label"><%= SirItem.human_attribute_name( :seqno )%></p>
+            <p class="col-sm-3"><%= show_item.item_code %></p>
+            <p class="col-sm-1 p-label"><%= SirItem.human_attribute_name( :reference )%></p>
+            <p class="col-sm-2"><%= show_item.reference %></p>
+          </div>
+          <div class="form-group p-group">
+            <p class="col-sm-3 p-label"><%= SirItem.human_attribute_name( :category )%></p>
+            <p class="col-sm-2"><%= show_item.category_label %></p>
+            <p class="col-sm-2 p-label"><%= SirItem.human_attribute_name( :status )%></p>
+            <p class="col-sm-2"><%= show_item.status_label %></p>
+          </div>
+          <div class="form-group p-group">
+            <p class="col-sm-3 p-label"><%= SirItem.human_attribute_name( :label )%></p>
+            <p class="col-sm-9"><strong><%= show_item.label %></strong></p>
+          </div>
+          <%- unless show_item.description.blank? %>
+            <div class="form-group p-group">
+              <p class="col-sm-3 p-label"><%= SirItem.human_attribute_name( :description )%></p>
+              <p class="col-sm-6"><%= show_item.description %></p>
+            </div>
+          <%- end %>
+          <%- unless show_item.cfr_record_id.nil? %>
+            <div class="form-group p-group">
+              <p class="col-sm-3 p-label"><%= SirItem.human_attribute_name( :cfr_record_id )%></p>
+              <p class="col-sm-6"><%= link_to_cfr( show_item.cfr_record )%></p>
+            </div>
+          <%- end %>
+          <div class="form-group p-group">
+            <p class="col-sm-3 p-label"><%= SirItem.human_attribute_name( :phase_code_id )%></p>
+            <p class="col-sm-2"><%= show_item.phase_code.try( :code )%></p>
+            <p class="col-sm-2 p-label"><%= SirItem.human_attribute_name( :group_id )%></p>
+            <p class="col-sm-2"><%= show_item.group.try( :code )%></p>
+          </div>

@@ -1,3 +1,13 @@
-one:
-  label:  'test_log'
-  desc:   'description'
+sir_log_one:
+  code:             'SL1'
+  label:            'SIR Log One'
+  owner_account:    one
+  deputy_account:   wop
+  archived:         false
+
+sir_log_two:
+  code:             'SL2'
+  label:            'dummy for testing'
+  owner_account:    wop
+  archived:         false
+  

@@ -1,0 +1,13 @@
+<div class="form-group p-group">
+  <%- if show_entry.depth == 0 %>
+    <p class="col-sm-6 p-group">
+  <%- elsif show_entry.depth < 6 %>
+    <%= "<p class=\"col-sm-offset-#{ depth } col-sm-6 p-group\">" %>
+  <%- else %>
+    <p class="col-sm-offset-6 col-sm-6 p-group">
+  <%- end %>
+  <strong>[<%= db_formatted_d( show_entry.updated_at )%>]
+  <%= t( "sir_items.show.rec_head_#{ show_entry.rec_type }", group: show_entry.group_code )%>,
+  <%= t( 'sir_items.show.due_by', due_date: show_entry.due_date ) unless show_entry.due_date.nil? %>:</strong><br/>
+  <%= show_entry.description %></p>
+</div>

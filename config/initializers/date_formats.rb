@@ -3,3 +3,4 @@
 
 Date::DATE_FORMATS[ :db_date ] = "%Y-%m-%d"
 Time::DATE_FORMATS[ :db_time ] = "%Y-%m-%d %H:%M UTC"
+Time::DATE_FORMATS[ :db_date ] = "%Y-%m-%d"
