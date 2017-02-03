@@ -117,7 +117,7 @@ Rails.application.routes.draw do
   get 'sii/:id/all', to: 'sir_items#show_all', as: 'sir_item_details', format: false
   resources :sir_logs, path: 'sil', format: false do
     resources :sir_items, path: 'sii', format: false, shallow: true do
-      resources :sir_entries, path: 'sie', format: false, shallow: true
+      resources :sir_entries, path: 'sie', format: false, shallow: true, only: [ :new, :create, :show, :edit, :update, :destroy ]
     end
   end
   resources :standards_bodies, path: 'sso', format: false

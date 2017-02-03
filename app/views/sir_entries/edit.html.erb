@@ -5,6 +5,11 @@
   <div class="form-horizontal" role="form">
     <%= form_for @sir_entry do |f| %>
       <%= render partial: 'shared/errors', object: @sir_entry.errors %>
+      <%= render partial: 'sir_items/show_item', object: @sir_entry.sir_item %>
+      <!-- Divider Line -->
+      <div class="form-group">
+        <hr style="margin:4px"/>  
+      </div>
       <%= render partial: 'form', object: f %>
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-2">

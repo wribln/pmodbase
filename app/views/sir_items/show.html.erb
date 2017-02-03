@@ -13,7 +13,11 @@
       <!-- SIR Entries -->
       <%- if @sir_entries.empty? -%>
         <div class="form-group">
-          <div class="col-sm-offset-3 col-sm-4"><%= t( '.no_entries' ) %></div>
+          <div class="col-sm-3"><small>
+            <%= entry_action( :comment, @sir_item )%> |
+            <%= entry_action( :forward, @sir_item )%>
+          </small></div>
+          <div class="col-sm-4"><%= t( '.no_entries' ) %></div>
         </div>
       <%- else -%>
         <%- @sir_entries.each do |se| %>
@@ -33,14 +37,6 @@
         </div>
         <div class="col-sm-2">
           <%= link_to t( 'button_label.go_to_index' ), sir_log_sir_items_path( @sir_item.sir_log ), class: 'btn btn-lg btn-block btn-default' %>
-        </div>
-      </div>
-      <div class="form-group">    
-        <div class="col-sm-offset-5 col-sm-2">
-          <%= link_to t( 'isr_interfaces.show.add_ia' ), new_sir_log_sir_item_path( @sir_item.sir_log ), class: 'btn btn-lg btn-block btn-default' %>
-        </div>
-        <div class="col-sm-2">
-          <%# link_to t( 'button_label.wdr' ), withdraw_isr_interface_path( @isr_interface ), class: 'btn btn-lg btn-block btn-default' %>
         </div>
       </div>
     <%- end %>

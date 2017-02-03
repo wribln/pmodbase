@@ -4,7 +4,6 @@ one:
   group:     group_two
   due_date:  2017-01-26
   parent: 
-  no_sub_req: 0
   depth:      0
   description: 'Hey, dude, get this!'
 
@@ -14,6 +13,5 @@ two:
   group:     group_two
   due_date:
   parent:    one
-  no_sub_req: 0
   depth:      0
   description: 'This is the answer to the question!'

@@ -11,6 +11,7 @@ class SirLog < ActiveRecord::Base
   validates_associated :sir_members
 
   validates :code,
+    presence: true,
     length: { maximum: MAX_LENGTH_OF_CODE },
     uniqueness: { scope: :owner_account_id }
 
@@ -39,14 +40,14 @@ class SirLog < ActiveRecord::Base
     end
   end
 
-  # a helper to return a TIA item code
+  # a helper to return a SIR Item code
 
   def item_code( seqno )
-    "#{ code }-#{ seqno }#{ '-' if code.nil? }" unless seqno.nil?
+    "#{ code }-#{ seqno ? seqno : '?' }"
   end
 
   def next_seqno_for_item
-    n = ( self.sir_items.maximum( :seqno ) || 0 ) + 1
+    ( self.sir_items.maximum( :seqno ) || 0 ) + 1
   end
 
   # provide access checks

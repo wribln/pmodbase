@@ -20,7 +20,8 @@ class SirItem < ActiveRecord::Base
   validates :seqno,
     presence: true,
     numericality: { only_integer: true, greater_than: 0 },
-    uniqueness: { scope: :sir_log_id, message: I18n.t( 'sir_items.msg.bad_seqno' )}
+    uniqueness: { scope: :sir_log_id, message: I18n.t( 'sir_items.msg.bad_seqno' )},
+    on: :update
 
   validates :label,
     presence: true,
@@ -79,6 +80,12 @@ class SirItem < ActiveRecord::Base
     ( phase_code.try :code ) || some_id( phase_code_id )
   end
 
+  # set seqno 
+
+  def set_seqno
+    self.seqno = sir_log.next_seqno_for_item
+  end
+
   # is the item still open?
 
   def status_open?
@@ -115,7 +122,6 @@ class SirItem < ActiveRecord::Base
       raise RunTimeError, 'loop in SIR Log entries' if se_i.id == se_n.id
     end
   end
-
 
   private
 

@@ -33,7 +33,7 @@ class SirItemTest < ActiveSupport::TestCase
     assert_equal 4, SirItem::SIR_ITEM_STATUS_LABELS.size
     assert_equal 'new', SirItem::SIR_ITEM_STATUS_LABELS[ 0 ]
     assert_equal 'open', SirItem::SIR_ITEM_STATUS_LABELS[ 1 ]
-    assert_equal 'resp. acc.', SirItem::SIR_ITEM_STATUS_LABELS[ 2 ]
+    assert_equal 'response accepted', SirItem::SIR_ITEM_STATUS_LABELS[ 2 ]
     assert_equal 'closed', SirItem::SIR_ITEM_STATUS_LABELS[ 3 ]
   end
 
@@ -71,13 +71,6 @@ class SirItemTest < ActiveSupport::TestCase
     si.group = groups( :group_two )
     refute si.valid?
     refute_includes si.errors, :group_id
-
-    # seqno
-
-    assert_includes si.errors, :seqno
-    si.seqno = si.sir_log.next_seqno_for_item
-    refute si.valid?
-    refute_includes si.errors, :seqno
 
     # label
 

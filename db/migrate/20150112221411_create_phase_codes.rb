@@ -9,5 +9,6 @@ class CreatePhaseCodes < ActiveRecord::Migration
 
       t.timestamps null: false
     end
+    add_index :phase_codes, :code, order: { code: :asc }, name: 'phase_codes_std_order'
   end
 end

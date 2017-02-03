@@ -11,7 +11,7 @@ class WorkFlowHelperTest < ActionView::TestCase
                                ], [[[:id1, id1_set: [:id1a, :id1b]],[:id2],[:id3]],[[:id4],[:id5]]], 'rfc_status_records' )
   end
 
-  test "setup" do
+  test 'setup' do
     assert_not_nil @wfh.i18n_prefix
     assert_not_nil @wfh.wf_transitions
     assert_nil @wfh.wf_current_index
@@ -20,7 +20,7 @@ class WorkFlowHelperTest < ActionView::TestCase
     assert @wfh.validate_instance
   end
 
-  test "counts" do
+  test 'counts' do
     assert_equal 2,@wfh.no_of_workflows
     assert_equal 3,@wfh.no_of_tasks(0)
     assert_equal 2,@wfh.no_of_tasks(1)
@@ -28,7 +28,7 @@ class WorkFlowHelperTest < ActionView::TestCase
     assert_equal 1,@wfh.no_of_states(1)
   end
 
-  test "validate_instance - standard case" do
+  test 'validate_instance - standard case' do
     assert_equal 2, @wfh.wf_transitions.length
     assert_equal 3, @wfh.wf_transitions[0].length
     assert_equal 1, @wfh.wf_transitions[0][0].length
@@ -58,7 +58,7 @@ class WorkFlowHelperTest < ActionView::TestCase
 
   # tests for wf_permits
 
-  test "wf_permits 0" do
+  test 'wf_permits 0' do
     assert @wfh.validate_instance
     assert_equal 2, @wfh.wf_permits.length
     assert_equal 3, @wfh.wf_permits[ 0 ].length
@@ -70,7 +70,7 @@ class WorkFlowHelperTest < ActionView::TestCase
     assert_equal :id5, @wfh.wf_permits[ 1 ][ 1 ][ 0 ]
   end
 
-  test "initialize current" do
+  test 'initialize current' do
     @wfh.initialize_current( 0 )
     assert_equal 0, @wfh.wf_current_index
     assert_equal 0, @wfh.wf_current_status
@@ -90,7 +90,7 @@ class WorkFlowHelperTest < ActionView::TestCase
     assert @wfh.validate_instance
   end
 
-  test "step through tasks - workflow 0" do
+  test 'step through tasks - workflow 0' do
 
     @wfh.initialize_current 0, 0, 0
     assert @wfh.status_change_possible?
@@ -112,7 +112,7 @@ class WorkFlowHelperTest < ActionView::TestCase
     assert_equal 2, @wfh.wf_updated_task
   end
 
-  test "step through tasks - workflow 1" do
+  test 'step through tasks - workflow 1' do
 
     @wfh.initialize_current 1, 0, 0
     assert @wfh.status_change_possible?
@@ -127,61 +127,61 @@ class WorkFlowHelperTest < ActionView::TestCase
     assert_equal 1, @wfh.wf_updated_task
   end
 
-  test "validate negative 1" do
+  test 'validate negative 1' do
     wfh_bad = WorkFlowHelper.new( '', nil, '' )
     x = assert_raises( ArgumentError ){ wfh_bad.validate_instance }
     assert_equal( 'wf_transitions must be an Array', x.message )
   end
 
-  test "validate negative 2" do
+  test 'validate negative 2' do
     wfh_bad = WorkFlowHelper.new( [], nil, '' )
     x = assert_raises( ArgumentError ){ wfh_bad.validate_instance }
     assert_equal( 'wf_transitions must not be empty', x.message )
   end
 
-  test "validate negative 3a" do
+  test 'validate negative 3a' do
     wfh_bad = WorkFlowHelper.new( [ 0 ], nil, '' )
     x = assert_raises( ArgumentError ){ wfh_bad.validate_instance }
     assert_equal( 'wf_transitions[ 0 ] must be an Array', x.message )
   end
 
-  test "validate negative 3b" do
+  test 'validate negative 3b' do
     wfh_bad = WorkFlowHelper.new( [[]], nil, '' )
     x = assert_raises( ArgumentError ){ wfh_bad.validate_instance }
     assert_equal( 'wf_transitions[ 0 ] must not be empty', x.message )
   end
 
-  test "validate negative 4a" do
+  test 'validate negative 4a' do
     wfh_bad = WorkFlowHelper.new( [[ 0 ]], nil, '' )
     x = assert_raises( ArgumentError ){ wfh_bad.validate_instance }
     assert_equal( 'wf_transitions[ 0 ][ 0 ] must be an Array', x.message )
   end
 
-  test "validate negative 4b" do
+  test 'validate negative 4b' do
     wfh_bad = WorkFlowHelper.new( [[[]]], nil, '' )
     x = assert_raises( ArgumentError ){ wfh_bad.validate_instance }
     assert_equal( 'wf_transitions[ 0 ][ 0 ] must not be empty', x.message )
   end
 
-  test "validate negative 4c" do
+  test 'validate negative 4c' do
     wfh_bad = WorkFlowHelper.new( [[[ 0 ]]], nil, '' )
     x = assert_raises( ArgumentError ){ wfh_bad.validate_instance }
     assert_equal( 'wf_transitions[ 0 ][ 0 ][ 0 ] must be an Array', x.message )
   end
 
-  test "validate negative 5" do
+  test 'validate negative 5' do
     wfh_bad = WorkFlowHelper.new( [[[[ 0, 'nil' ]]]], nil, '' )
     x = assert_raises( ArgumentError ){ wfh_bad.validate_instance }
     assert_equal( 'wf_transitions[ 0 ][ 0 ][ 0 ][ 1 ] must be an Integer', x.message )
   end
 
-  test "validate i18n_prefix" do
+  test 'validate i18n_prefix' do
     wfh_bad = WorkFlowHelper.new( [[[[ -1, 0 ]]]], nil, nil )
     x = assert_raises( ArgumentError ){ wfh_bad.validate_instance }
     assert_equal( 'i18n_prefix must be a String', x.message )
   end
 
-  test "validate wf_current_index" do
+  test 'validate wf_current_index' do
     @wfh.initialize_current ''
     x = assert_raises( ArgumentError ){ @wfh.validate_instance }
     assert_equal( 'wf_current_index must be an Integer', x.message )
@@ -195,23 +195,23 @@ class WorkFlowHelperTest < ActionView::TestCase
     assert true, @wfh.validate_instance
   end
 
-  test "workflow label 1" do
+  test 'workflow label 1' do
     assert_equal( 'incoming', @wfh.workflow_label( 0 ))
     assert_equal( 'outgoing', @wfh.workflow_label( 1 ))
   end
 
-  test "workflow label 2" do
+  test 'workflow label 2' do
     @wfh.initialize_current 0
     assert_equal( 'incoming', @wfh.workflow_label )
     @wfh.initialize_current 1
     assert_equal( 'outgoing', @wfh.workflow_label )
   end
 
-  test "workflow labels" do
+  test 'workflow labels' do
     assert_equal( [[ 'incoming', 0 ],[ 'outgoing', 1 ]], @wfh.workflow_labels_for_select )
   end
 
-  test "status and task labels for select 1" do
+  test 'status and task labels for select 1' do
     assert_equal( '<initial>',    @wfh.status_label( 0, 0 ))
     assert_equal( '<start new workflow>',   @wfh.task_label(   0, 0 ))
     assert_equal( '<initial> / <start new workflow>', @wfh.status_task_label( 0, 0, 0 ))
@@ -220,7 +220,7 @@ class WorkFlowHelperTest < ActionView::TestCase
     assert_equal( 'new / Receive Question', @wfh.status_task_label( 1, 1, 0 ))
   end
 
-  test "status and task labels for select 2" do
+  test 'status and task labels for select 2' do
     @wfh.initialize_current 0
     assert_equal( '<initial>',        @wfh.status_label( 0 ))
     assert_equal( '<start new workflow>',   @wfh.task_label(   0 ))
@@ -230,7 +230,7 @@ class WorkFlowHelperTest < ActionView::TestCase
     assert_equal( 'new / Receive Question', @wfh.status_task_label( 1, 1 ))
   end
 
-  test "next_status_task_labels for select" do
+  test 'next_status_task_labels for select' do
     @wfh.initialize_current 0, 0, 0
     assert @wfh.validate_instance
     assert_equal([[ '<initial> / <start new workflow>', 0 ],[ 'new / Receive Question', 1 ]], @wfh.next_status_task_labels_for_select )
@@ -238,91 +238,91 @@ class WorkFlowHelperTest < ActionView::TestCase
 
   # tests for wf_permits
 
-  test "wf_permits 1" do
+  test 'wf_permits 1' do
     wfh_bad = WorkFlowHelper.new( @wfh.wf_transitions, '', 'rfc_status_records' )
     x = assert_raises( ArgumentError ){ wfh_bad.validate_instance }
     assert_equal( 'wf_permits must be an Array', x.message )
   end    
 
-  test "wf_permits 2a" do
+  test 'wf_permits 2a' do
     wfh_bad = WorkFlowHelper.new( @wfh.wf_transitions, [], 'rfc_status_records' )
     x = assert_raises( ArgumentError ){ wfh_bad.validate_instance }
     assert_equal( 'wf_permits, level 1 must have same length (0) as wf_transitions (2)', x.message )
   end    
 
-  test "wf_permits 2b" do
+  test 'wf_permits 2b' do
     wfh_bad = WorkFlowHelper.new( @wfh.wf_transitions, [1], 'rfc_status_records' )
     x = assert_raises( ArgumentError ){ wfh_bad.validate_instance }
     assert_equal( 'wf_permits, level 1 must have same length (1) as wf_transitions (2)', x.message )
   end    
 
-  test "wf_permits 3a" do
+  test 'wf_permits 3a' do
     wfh_bad = WorkFlowHelper.new( @wfh.wf_transitions, [1,2], 'rfc_status_records' )
     x = assert_raises( ArgumentError ){ wfh_bad.validate_instance }
     assert_equal( 'wf_permits[ 0 ] must be an Array', x.message )
   end    
 
-  test "wf_permits 3b" do
+  test 'wf_permits 3b' do
     wfh_bad = WorkFlowHelper.new( @wfh.wf_transitions, [[1],2], 'rfc_status_records' )
     x = assert_raises( ArgumentError ){ wfh_bad.validate_instance }
     assert_equal( 'wf_permits[ 0 ] must be same length (1) as corresponding @wf_transitions (3)', x.message )
   end   
 
-  test "wf_permits 3c" do
+  test 'wf_permits 3c' do
     wfh_bad = WorkFlowHelper.new( @wfh.wf_transitions, [[1,2,3],2], 'rfc_status_records' )
     x = assert_raises( ArgumentError ){ wfh_bad.validate_instance }
     assert_equal( 'wf_permits[ 0 ][ 0 ] must be an Array', x.message )
   end
 
-  test "wf_permits 3d" do
+  test 'wf_permits 3d' do
     wfh_bad = WorkFlowHelper.new( @wfh.wf_transitions, [[[1],2,3],2], 'rfc_status_records' )
     x = assert_raises( ArgumentError ){ wfh_bad.validate_instance }
     assert_equal( 'wf_permits[ 0 ][ 0 ][ 0 ] must be a Symbol or a Hash', x.message )
   end
 
-  test "wf_permits 3e" do
+  test 'wf_permits 3e' do
     wfh_bad = WorkFlowHelper.new( @wfh.wf_transitions, [[[:id],2,3],2], 'rfc_status_records' )
     x = assert_raises( ArgumentError ){ wfh_bad.validate_instance }
     assert_equal( 'wf_permits[ 0 ][ 1 ] must be an Array', x.message )
   end
 
-  test "wf_permits 3f" do
+  test 'wf_permits 3f' do
     wfh_bad = WorkFlowHelper.new( @wfh.wf_transitions, [[[:id],[:id],[:id]],2], 'rfc_status_records' )
     x = assert_raises( ArgumentError ){ wfh_bad.validate_instance }
     assert_equal( 'wf_permits[ 1 ] must be an Array', x.message )
   end
 
-  test "wf_permits 3g" do
+  test 'wf_permits 3g' do
     wfh_bad = WorkFlowHelper.new( @wfh.wf_transitions, [[[:id],[:id],[:id]],[2]], 'rfc_status_records' )
     x = assert_raises( ArgumentError ){ wfh_bad.validate_instance }
     assert_equal( 'wf_permits[ 1 ] must be same length (1) as corresponding @wf_transitions (2)', x.message )
   end   
 
-  test "wf_permits 3h" do
+  test 'wf_permits 3h' do
     wfh_bad = WorkFlowHelper.new( @wfh.wf_transitions, [[[:id],[:id],[:id]],[2,2]], 'rfc_status_records' )
     x = assert_raises( ArgumentError ){ wfh_bad.validate_instance }
     assert_equal( 'wf_permits[ 1 ][ 0 ] must be an Array', x.message )
   end
 
-  test "wf_permits 3i" do
+  test 'wf_permits 3i' do
     wfh_bad = WorkFlowHelper.new( @wfh.wf_transitions, [[[:id],[:id],[:id]],[[2],2]], 'rfc_status_records' )
     x = assert_raises( ArgumentError ){ wfh_bad.validate_instance }
     assert_equal( 'wf_permits[ 1 ][ 0 ][ 0 ] must be a Symbol or a Hash', x.message )
   end
 
-  test "wf_permits 3j" do
+  test 'wf_permits 3j' do
     wfh_bad = WorkFlowHelper.new( @wfh.wf_transitions, [[[:id],[:id],[:id]],[[:id],2]], 'rfc_status_records' )
     x = assert_raises( ArgumentError ){ wfh_bad.validate_instance }
     assert_equal( 'wf_permits[ 1 ][ 1 ] must be an Array', x.message )
   end
 
-  test "wf_permits 3k" do
+  test 'wf_permits 3k' do
     wfh_bad = WorkFlowHelper.new( @wfh.wf_transitions, [[[:id],[:id],[:id]],[[:id],[2]]], 'rfc_status_records' )
     x = assert_raises( ArgumentError ){ wfh_bad.validate_instance }
     assert_equal( 'wf_permits[ 1 ][ 1 ][ 0 ] must be a Symbol or a Hash', x.message )
   end
 
-  test "permitted_params exceptions" do
+  test 'permitted_params exceptions' do
     @wfh.initialize_current( 0, 0, 0 )
     x = assert_raises( ArgumentError ){ @wfh.param_permitted? }
     assert_equal( 'param_permitted? argument list must contain at least one item', x.message )
@@ -330,7 +330,7 @@ class WorkFlowHelperTest < ActionView::TestCase
     assert_equal( 'param_permitted? argument must be a Symbol', x.message )
   end
 
-  test "permitted_params 0 0 0" do
+  test 'permitted_params 0 0 0' do
     @wfh.initialize_current( 0, 0, 0 )
     assert_equal [:id1, id1_set: [:id1a, :id1b]], @wfh.permitted_params
     assert @wfh.param_permitted?( :id1 )
@@ -344,7 +344,7 @@ class WorkFlowHelperTest < ActionView::TestCase
     assert_not @wfh.param_permitted?( :id5 )
   end
 
-  test "permitted_params 0 0 1" do
+  test 'permitted_params 0 0 1' do
     @wfh.initialize_current( 0, 0, 1 )
     assert_equal [ :id2 ], @wfh.permitted_params
     assert_not @wfh.param_permitted?( :id1 )
@@ -358,7 +358,7 @@ class WorkFlowHelperTest < ActionView::TestCase
     assert_not @wfh.param_permitted?( :id5 )
   end
 
-  test "permitted_params 0 0 2" do
+  test 'permitted_params 0 0 2' do
     @wfh.initialize_current( 0, 0, 2 )
     assert_equal [ :id3 ], @wfh.permitted_params
     assert @wfh.param_permitted?( :id3 )
@@ -371,7 +371,7 @@ class WorkFlowHelperTest < ActionView::TestCase
     assert_not @wfh.param_permitted?( :id5 )
   end
 
-  test "permitted_params 1 0 0" do
+  test 'permitted_params 1 0 0' do
     @wfh.initialize_current( 1, 0, 0 )
     assert_equal [ :id4 ], @wfh.permitted_params
     assert @wfh.param_permitted?( :id4 )
@@ -384,7 +384,7 @@ class WorkFlowHelperTest < ActionView::TestCase
     assert_not @wfh.param_permitted?( :id5 )
   end
 
-  test "permitted_params 1 0 1" do
+  test 'permitted_params 1 0 1' do
     @wfh.initialize_current( 1, 0, 1 )
     assert_equal [ :id5 ], @wfh.permitted_params
     assert @wfh.param_permitted?( :id5 )
@@ -397,15 +397,15 @@ class WorkFlowHelperTest < ActionView::TestCase
     assert_not @wfh.param_permitted?( :id4 )
   end
 
-  test "all_states_for_select" do
+  test 'all_states_for_select' do
     assert_equal ([
-      ["incoming...","0"],
-      ["...<initial>","0,0"],
-      ["...new","0,1"],
-      ["...assigned","0,2"],
-      ["...re-evaluate","0,3"],
-      ["outgoing...","1"],
-      ["...<initial>","1,0"]]),
+      ['incoming...','0'],
+      ['...<initial>','0,0'],
+      ['...new','0,1'],
+      ['...assigned','0,2'],
+      ['...re-evaluate','0,3'],
+      ['outgoing...','1'],
+      ['...<initial>','1,0']]),
       @wfh.all_states_for_select
   end
 

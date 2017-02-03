@@ -18,6 +18,12 @@
         </div>
       </div>
       <div class="form-group">
+        <%= f.label :group_id, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-4">
+          <%= display_value f.object.group.try( :code_and_label )%>
+        </div>
+      </div>
+      <div class="form-group">
         <%= f.label :label, class: 'col-sm-3 control-label' %>
         <div class="col-sm-6">
           <%= display_value f.object.label %>
@@ -46,12 +52,6 @@
         <%= f.label :phase_code_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
           <%= display_value f.object.phase_code.try( :code_and_label ) %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :group_id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-4">
-          <%= display_value f.object.group.try( :code_and_label )%>
         </div>
       </div>
       <div class="form-group">

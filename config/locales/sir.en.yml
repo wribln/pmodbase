@@ -39,18 +39,18 @@ en:
         phase_code_id:    'Project Phase'
         label:            'Title'
         status:           'Status'
-        # default: 0         0     1      2            3
-        states:           [ 'new','open','resp. acc.','closed' ]
+        # default: 0         0     1      2                   3
+        states:           [ 'new','open','response accepted','closed' ]
         category:         'Category'
         # default: 0         0              1            2           3                     4
-        categories:       [ 'Q - Question','A - severe','B - major','C - marginal/formal','R - recommendation' ]
+        categories:       [ 'Q - question','A - severe','B - major','C - marginal/formal','R - recommendation' ]
         archived:         'Archived'
         description:      'Description'
 
       sir_entry:
         id:               :general.attributes.id
-        rec_type:         'Entry Type'
-        rec_types:        [ 'Request', 'Comment', 'Response' ]
+        rec_type:         'Type'
+        rec_types:        [ 'Forward to', 'Comment by', 'Response to' ]
         sir_item_id:      'SIR Item'
         group_id:         'Group'
         parent_id:        'Related SIR Entry'
@@ -89,23 +89,47 @@ en:
     title:              'SIR Items'
     index:
       form_title:       'All Items in '
+    new:
+      form_title:       'Add SIR Item to '
+    edit:
+      form_title:       'Edit SIR Item Attributes'
     show:
+      archived:         'archived'
+      respond:          'Respond'
+      comment:          'Comment'
+      forward:          'Forward'
+      show:             'Q Show'
+      edit:             '/ Edit'
+      delete:           '- Delete'
       form_title:       'Show SIR Item and Log Entries'
       no_entries:       'No log entries for this item.'
-      rec_head_0:       'Request for %{group}'
+      rec_head_0:       'Forward to %{group}'
       rec_head_1:       'Comment by %{group}'
       rec_head_2:       'Response by %{group}'
-      due_by:           'due by %{due_date}'
+      due_by:           ', due by %{due_date}'
     show_all:
       form_title:       'Show Details of SIR Item'
     msg:
       bad_seqno:        'must be unique within this SIR Log.'
       bad_archive:      'cannot be set on open items.'
       bad_link:         'New SIR Entry has bad reference.'
-
+      create_ok:        'SIR Item successfully created.'
+      update_ok:        'SIR Item successfully updated.'
+      delete_ok:        'SIR Item successfully deleted.'
 
   sir_entries:
+    title:              'SIR Entries'
+    show:
+      form_title:       'Show Single SIR Entry'
+      show_item:        'Show Item'
+    new:
+      form_title:       'Add New SIR Entry'
+    edit:
+      form_title:       'Edit Single SIR Entry'
     msg:
+      create_ok:        'SIR Entry successfully created.'
+      update_ok:        'SIR Entry successfully updated.'
+      delete_ok:        'SIR Entry successfully deleted.'  
       bad_parent_id:    'Related Log Entry not found.'
       bad_cross_ref:    'Related Log Entry must be for same Item.'
       bad_rr_combo:     'A Response must refer to a Request.'

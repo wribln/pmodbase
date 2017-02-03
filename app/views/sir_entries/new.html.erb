@@ -3,15 +3,21 @@
   <%= breadcrumbs %>
   <%= form_title %>
   <div class="form-horizontal" role="form">
-    <%= form_for @sir_entry do |f| %>
+    <%# form_for [ @sir_item, @sir_entry ] do |f| %>
+    <%= form_for @sir_entry, method: :post, url: sir_item_sir_entries_path( @sir_entry.sir_item ) do |f| %>
       <%= render partial: 'shared/errors', object: @sir_entry.errors %>
+      <%= render partial: 'sir_items/show_item', object: @sir_entry.sir_item %>
+      <!-- Divider Line -->
+      <div class="form-group">
+        <hr style="margin:4px"/>  
+      </div>
       <%= render partial: 'form', object: f %>
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-2">
           <%= f.submit class: 'btn btn-lg btn-block btn-primary' %>
         </div>
         <div class="col-sm-2">
-          <%= link_to t( 'button_label.cancel_to_index' ), sir_entries_path, class: 'btn btn-lg btn-block btn-default' %>
+          <%= link_to t( 'button_label.cancel_to_show' ), sir_item_path( @sir_entry.sir_item ), class: 'btn btn-lg btn-block btn-default' %>
         </div>
       <div>
     <% end %>

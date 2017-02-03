@@ -5,52 +5,41 @@
   <div class="form-horizontal" role="form">
     <%= form_for @sir_entry do |f| %>
       <%= render partial: 'shared/notice' %>
+      <%= render partial: 'sir_items/show_item', object: @sir_entry.sir_item %>
+      <!-- Divider Line -->
       <div class="form-group">
-        <%= f.label :id, class: 'col-sm-3 control-label' %>
+        <hr style="margin:4px"/>  
+      </div>
+      <div class="form-group">
+        <%= f.label :rec_type, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
-          <%= display_value f.object.to_id %>
+          <%= display_value f.object.rec_type_label %>
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :sir_item, class: 'col-sm-3 control-label' %>
+        <%= f.label :group_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= display_value f.object.sir_item %>
+          <%= display_value f.object.group.try( :code_and_label ) %>
         </div>
       </div>
-      <div class="form-group">
-        <%= f.label :type, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-4">
-          <%= display_value f.object.type %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :group, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-4">
-          <%= display_value f.object.group %>
-        </div>
-      </div>
+      <%- if f.object.rec_type == 0 %>
       <div class="form-group">
         <%= f.label :due_date, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-4">
-          <%= display_value f.object.due_date %>
+        <div class="col-sm-2">
+          <%= display_value db_formatted_dt( f.object.due_date )%>
+        </div>
+      </div>
+      <%- end %>
+      <div class="form-group">
+        <%= f.label :description, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-6">
+          <%= display_lines f.object.description %>
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :parent, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-4">
-          <%= display_value f.object.parent %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :no_sub_req, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-4">
-          <%= display_value f.object.no_sub_req %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :desc, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-4">
-          <%= display_value f.object.desc %>
+        <%= f.label :is_public, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-1">
+          <%= display_check_box f.object.is_public %>
         </div>
       </div>
       <div class="form-group">
@@ -58,7 +47,7 @@
           <%= link_to t( 'button_label.edit' ), edit_sir_entry_path( @sir_entry ), class: 'btn btn-lg btn-block btn-default' %>
         </div>
         <div class="col-sm-2">
-          <%= link_to t( 'button_label.go_to_index' ), sir_entries_path, class: 'btn btn-lg btn-block btn-default' %>
+          <%= link_to t( '.show_item' ), sir_item_path( @sir_entry.sir_item ), class: 'btn btn-lg btn-block btn-default' %>
         </div>
       </div>
     <% end %>

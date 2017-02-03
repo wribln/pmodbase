@@ -64,7 +64,8 @@ class ApplicationRoutesTest < ActionController::TestCase
     %w( CFR CfrRecords ),
     %w( CFU CfrLocationTypes ),
     %w( CFT CfrFileTypes ),
-    %w( ISR IsrInterfaces )
+    %w( ISR IsrInterfaces ),
+    %w( SIL SirLogs )
     ]
 
   @my_resources.each do |r|
@@ -231,6 +232,30 @@ class ApplicationRoutesTest < ActionController::TestCase
 
   test 'special routes: PCA PcpAllSubjects' do
     check_routing( 'get', 'pca/stats',  'pcp_all_subjects', 'stats' )
+  end
+
+  test 'special routes for SIR (shallow nested) - SIR Items' do
+    check_routing( 'get', 'sil/1/sii',     'sir_items', 'index',  sir_log_id: '1' )
+    check_routing( 'post','sil/1/sii',     'sir_items', 'create', sir_log_id: '1' )
+    check_routing( 'get', 'sil/1/sii/new', 'sir_items', 'new',    sir_log_id: '1' )
+    #
+    check_routing( 'get',   'sii/1/all',  'sir_items', 'show_all', id: '1' )
+    check_routing( 'get',   'sii/1/edit', 'sir_items', 'edit',     id: '1' )
+    check_routing( 'get',   'sii/1',      'sir_items', 'show',     id: '1' )
+    check_routing( 'patch', 'sii/1',      'sir_items', 'update',   id: '1' )
+    check_routing( 'put',   'sii/1',      'sir_items', 'update',   id: '1' )
+    check_routing( 'delete','sii/1',      'sir_items', 'destroy',  id: '1' )
+  end
+
+  test 'special routes for SIR (shallow nested) - SIR Entries' do
+    check_routing( 'post',  'sii/1/sie',     'sir_entries', 'create', sir_item_id: '1' )
+    check_routing( 'get',   'sii/1/sie/new', 'sir_entries', 'new',    sir_item_id: '1' )
+    #
+    check_routing( 'get',   'sie/1/edit', 'sir_entries', 'edit',    id: '1' )
+    check_routing( 'get',   'sie/1',      'sir_entries', 'show',    id: '1' )
+    check_routing( 'patch', 'sie/1',      'sir_entries', 'update',  id: '1' )
+    check_routing( 'put',   'sie/1',      'sir_entries', 'update',  id: '1' )
+    check_routing( 'delete','sie/1',      'sir_entries', 'destroy', id: '1' )
   end
 
   def check_routing( method, path, controller, action, ids = {})

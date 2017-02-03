@@ -21,9 +21,11 @@ class SirLogTest < ActiveSupport::TestCase
     sl = sir_logs( :sir_log_one )
     assert_equal 'SL1-1', sl.item_code( 1 )
     assert_equal 'SL1-11', sl.item_code( 11 )
+    assert_equal 'SL1-?', sl.item_code( nil )
     sl.code = nil 
-    assert_equal '-1-', sl.item_code( 1 )
-    assert_equal '-11-', sl.item_code( 11 )
+    assert_equal '-1', sl.item_code( 1 )
+    assert_equal '-11', sl.item_code( 11 )
+    assert_equal '-?', sl.item_code( nil )
   end
 
   test 'code shall not have leading/trailing blanks' do

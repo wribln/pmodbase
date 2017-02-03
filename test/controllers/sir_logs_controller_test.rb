@@ -5,7 +5,7 @@ class SirLogsControllerTest < ActionController::TestCase
   setup do
     @account = accounts( :one )
     session[ :current_user_id ] = accounts( :one ).id
-    @sir_log = sir_logs(:one)
+    @sir_log = sir_logs( :sir_log_one )
   end
 
   test 'check class_attributes'  do
@@ -25,7 +25,8 @@ class SirLogsControllerTest < ActionController::TestCase
 
   test 'should create sir_log' do
     assert_difference( 'SirLog.count' ) do
-      post :create, sir_log: { desc: @sir_log.desc, label: @sir_log.label }
+      post :create, sir_log: { label: @sir_log.label, code: 'XX', owner_account_id: @account.id }
+      puts assigns( :sir_log ).errors.messages
     end
     assert_redirected_to sir_log_path( assigns( :sir_log ))
   end
@@ -41,7 +42,7 @@ class SirLogsControllerTest < ActionController::TestCase
   end
 
   test 'should update sir_log' do
-    patch :update, id: @sir_log, sir_log: { desc: @sir_log.desc, label: @sir_log.label }
+    patch :update, id: @sir_log, sir_log: { label: @sir_log.label }
     assert_redirected_to sir_log_path( assigns( :sir_log ))
   end
 

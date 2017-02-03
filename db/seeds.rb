@@ -619,6 +619,28 @@ Feature.new do |f|
   f.feature_category_id = fc5.id
 end.save!
 
+Feature.new do |f|
+  f.id = FEATURE_ID_SIR_ITEMS
+  f.label = I18n.t( 'sir_items.title' )
+  f.code = 'SII'
+  f.seqno = 7
+  f.access_level = SirItemsController.feature_access_level
+  f.control_level = SirItemsController.feature_control_level
+  f.no_workflows = SirItemsController.no_workflows
+  f.feature_category_id = fc5.id
+end.save!
+
+Feature.new do |f|
+  f.id = FEATURE_ID_SIR_ENTRIES
+  f.label = I18n.t( 'sir_entries.title' )
+  f.code = 'SIE'
+  f.seqno = 8
+  f.access_level = SirEntriesController.feature_access_level
+  f.control_level = SirEntriesController.feature_control_level
+  f.no_workflows = SirEntriesController.no_workflows
+  f.feature_category_id = fc5.id
+end.save!
+
 # - - - - - - - - - - utilities
 
 Feature.new do |f|

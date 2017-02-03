@@ -28,6 +28,10 @@ class SirEntry < ActiveRecord::Base
 
   validate :parent_valid?
 
+  # scopes
+
+  scope :log_order, ->{ order( created_at: :asc )}
+
   # provide access to labels
 
   def rec_type_label
@@ -36,6 +40,12 @@ class SirEntry < ActiveRecord::Base
 
   def group_code
     ( group.try :code ) || some_id( group_id )
+  end
+
+  # check if this is a leaf node in the log and could be deleted
+
+  def is_leaf?
+    sir_item.sir_entries.where( parent_id: id ).count.zero?
   end
 
   private
@@ -79,11 +89,10 @@ class SirEntry < ActiveRecord::Base
 
     def set_depth
       if parent_id.nil?
-        self.depth = 0
+        self.depth = ( rec_type == 0 ) ? 1 : 0
       else
         self.depth = ( rec_type == 0 ) ? parent.depth + 1 : parent.depth
       end
     end
-
 
 end

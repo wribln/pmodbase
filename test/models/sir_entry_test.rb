@@ -6,9 +6,9 @@ class SirEntryTest < ActiveSupport::TestCase
     assert_equal 0, se.rec_type
     assert_equal se.group_id, groups( :group_two ).id
     assert_nil se.parent_id
-    assert_equal 0, se.no_sub_req
     assert_equal 0, se.depth
     refute_nil se.description
+    refute se.is_public
     assert se.valid?, se.errors.messages
   end
 
@@ -17,9 +17,9 @@ class SirEntryTest < ActiveSupport::TestCase
     assert_equal 2, se.rec_type
     assert_equal se.group_id, groups( :group_two ).id
     assert_equal se.parent_id, sir_entries( :one ).id
-    assert_equal 0, se.no_sub_req
     assert_equal 0, se.depth
     refute_nil se.description
+    refute se.is_public
     assert se.valid?, se.errors.messages
   end
 
@@ -88,6 +88,17 @@ class SirEntryTest < ActiveSupport::TestCase
     se  = si.sir_entries.build( rec_type: 0, group: groups( :group_one ))
     refute se.valid?
     assert_includes se.errors.messages, :group_id
+  end
+
+  test 'defined scopes' do
+    se = SirEntry.all.log_order
+    assert se[ 0 ].id = sir_entries( :one ).id
+    assert se[ 1 ].id = sir_entries( :two ).id
+  end
+
+  test 'is leaf' do
+    refute sir_entries( :one ).is_leaf?
+    assert sir_entries( :two ).is_leaf?
   end
 
 end

@@ -6,8 +6,8 @@ class CreateSirEntries < ActiveRecord::Migration
       t.belongs_to  :parent
       t.integer     :rec_type,   default: 0, null: false
       t.date        :due_date
-      t.integer     :no_sub_req, default: 0
       t.integer     :depth,      default: 0
+      t.boolean     :is_public,  default: false
       t.text        :description
 
       t.timestamps null: false

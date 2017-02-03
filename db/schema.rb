@@ -788,6 +788,7 @@ ActiveRecord::Schema.define(version: 20170127112428) do
     t.datetime "updated_at",                               null: false
   end
 
+  add_index "phase_codes", ["code"], name: "phase_codes_std_order"
   add_index "phase_codes", ["siemens_phase_id"], name: "index_phase_codes_on_siemens_phase_id"
 
   create_table "product_codes", force: :cascade do |t|
@@ -908,13 +909,13 @@ ActiveRecord::Schema.define(version: 20170127112428) do
     t.integer  "sir_item_id"
     t.integer  "group_id"
     t.integer  "parent_id"
-    t.integer  "rec_type",    default: 0, null: false
+    t.integer  "rec_type",    default: 0,     null: false
     t.date     "due_date"
-    t.integer  "no_sub_req",  default: 0
     t.integer  "depth",       default: 0
+    t.boolean  "is_public",   default: false
     t.text     "description"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   add_index "sir_entries", ["group_id"], name: "index_sir_entries_on_group_id"

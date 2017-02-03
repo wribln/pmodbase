@@ -1,9 +1,4 @@
-      <div class="form-group">
-        <%= form.label :id, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-2">
-          <%= display_value form.object.to_id %>
-        </div>
-      </div>
+      <%= form.hidden_field :sir_log_id, value: @sir_log.id %>
       <div class="form-group">
         <%= form.label :seqno, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
@@ -12,56 +7,51 @@
       </div>
       <div class="form-group">
         <%= form.label :reference, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-4">
+        <div class="col-sm-2">
           <%= form.text_field :reference, class: 'form-control' %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :group, class: 'col-sm-3 control-label' %>
+        <%= form.label :group_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= form.text_field :group, class: 'form-control' %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= form.label :cfr_record, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-4">
-          <%= form.text_field :cfr_record, class: 'form-control' %>
+          <%= form.select :group_id, @sir_groups, { prompt: true }, { class: 'form-control', required: true } %>
         </div>
       </div>
       <div class="form-group">
         <%= form.label :label, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-4">
+        <div class="col-sm-6">
           <%= form.text_field :label, class: 'form-control' %>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :status, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-4">
-          <%= form.text_field :status, class: 'form-control' %>
+        <%= form.label :description, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-6">
+          <%= form.text_area :description, class: 'form-control', cols: DEFAULT_COLS_TEXTAREA, rows: DEFAULT_ROWS_TEXTAREA %>
         </div>
       </div>
+      <%= render partial: 'shared/edit_cfr', locals: { fbo: form }%>
       <div class="form-group">
         <%= form.label :category, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-4">
-          <%= form.text_field :category, class: 'form-control' %>
+        <div class="col-sm-2">
+          <%= form.select :category, select_options( SirItem::SIR_ITEM_CATEGORY_LABELS ), {}, { class: 'form-control' }%>
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :phase, class: 'col-sm-3 control-label' %>
+        <%= form.label :status, class: 'col-sm-3 control-label' %>
+        <div class="col-sm-2">
+          <%= form.select :status, select_options( SirItem::SIR_ITEM_STATUS_LABELS ), {}, { class: 'form-control' }%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :phase_code_id, class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= form.text_field :phase, class: 'form-control' %>
+          <%= form.select :phase_code_id, @sir_phases, { prompt: true }, { class: 'form-control' } %>
         </div>
       </div>
       <div class="form-group">
         <%= form.label :archived, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-4">
-          <%= form.text_field :archived, class: 'form-control' %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= form.label :desc, class: 'col-sm-3 control-label' %>
-        <div class="col-sm-4">
-          <%= form.text_field :desc, class: 'form-control' %>
+        <div class="col-sm-2">
+          <%= form.check_box :archived %>
         </div>
       </div>
 
