@@ -7,7 +7,6 @@ class SirEntriesControllerTest < ActionController::TestCase
   end
 
   test 'should get new' do
-    puts @sir_entry.sir_item_id
     get :new, sir_item_id: @sir_entry.sir_item
     assert_response :success
   end

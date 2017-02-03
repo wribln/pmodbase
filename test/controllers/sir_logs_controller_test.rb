@@ -26,7 +26,6 @@ class SirLogsControllerTest < ActionController::TestCase
   test 'should create sir_log' do
     assert_difference( 'SirLog.count' ) do
       post :create, sir_log: { label: @sir_log.label, code: 'XX', owner_account_id: @account.id }
-      puts assigns( :sir_log ).errors.messages
     end
     assert_redirected_to sir_log_path( assigns( :sir_log ))
   end

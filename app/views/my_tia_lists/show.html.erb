@@ -33,15 +33,15 @@
       </div>
       <!-- tia members list -->
       <%= render partial: 'tia_member_header', locals: { action_type: :show } %>
-      <% if f.object.tia_members.empty? %>
+      <%- if f.object.tia_members.empty? %>
       <div class="form-group">
         <div class="col-sm-offset-1 col-sm-4"><%= t( 'tia_lists.no_members_info' )%></div>
       </div>
-      <% else %>
+      <%- else %>
         <%= f.fields_for :tia_members, f.object.tia_members do |m| %>
           <%= render partial: 'tia_member', locals: { tia_member: m, action_type: :show } %>
-        <% end %>
-      <% end %>
+        <%- end %>
+      <%- end %>
       <%= render partial: 'tia_member_footer' %>
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-2">

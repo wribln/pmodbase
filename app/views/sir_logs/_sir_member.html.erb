@@ -1,11 +1,11 @@
-<div class="form-group form-set" <% if( sir_member.object._destroy || sir_member.index == 'template' )%>style="display:none"<% end %>>
+<div class="form-group form-set" <%- if( sir_member.object._destroy || sir_member.index == 'template' )%>style="display:none"<% end %>>
   <%- if action_type == :show -%>
     <div class="col-sm-offset-1 col-sm-1">
       <%= sir_member.label :account_id, class: 'hidden-md hidden-lg control-label' %>
       <%= display_value sir_member.object.account_id %>
     </div>
     <div class="col-sm-2">
-      <p class="form-control-static"><%= link_to_contact_list sir_member.object.account %></p>
+      <p class="form-control-static"><%= link_to_contact_list( sir_member.object.account )%></p>
     </div>
     <div class="col-sm-2">
       <%= sir_member.label :to_access, class: 'hidden-md hidden-lg control-label' %>

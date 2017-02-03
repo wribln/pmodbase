@@ -3,7 +3,7 @@ require './lib/assets/hash_tree_helper.rb'
 class HashTreeHelperTest < ActionView::TestCase
 
   test 'create tree' do
-    t = Tree.new( 0 )
+    t = HashTree.new( 0 )
     t.add_node( 1, 0 )
     t.add_node( 2, 0 )
     assert_raise ArgumentError do

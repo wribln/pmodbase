@@ -2,7 +2,7 @@
 #
 # Author: Wilfried Römer
 
-class Tree < Hash
+class HashTree < Hash
 
   # initialize tree with root key
 

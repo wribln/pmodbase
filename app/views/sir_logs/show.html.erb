@@ -33,15 +33,15 @@
       </div>
       <!-- sir members list -->
       <%= render partial: 'sir_member_header', locals: { action_type: :show } %>
-      <% if f.object.sir_members.empty? %>
+      <%- if f.object.sir_members.empty? %>
       <div class="form-group">
         <div class="col-sm-offset-1 col-sm-4"><%= t( 'sir_logs.no_members_info' )%></div>
       </div>
-      <% else %>
-        <%= f.fields_for :tia_members, f.object.sir_members do |m| %>
+      <%- else %>
+        <%= f.fields_for :sir_member, f.object.sir_members do |m| %>
           <%= render partial: 'sir_member', locals: { sir_member: m, action_type: :show } %>
-        <% end %>
-      <% end %>
+        <%- end %>
+      <%- end %>
       <%= render partial: 'sir_member_footer' %>
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-2">
