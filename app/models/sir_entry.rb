@@ -106,7 +106,7 @@ class SirEntry < ActiveRecord::Base
       if parent_id.nil?
         self.depth = 0
       else
-        self.depth = ( rec_type != 0 ) ? parent.depth + 1 : parent.depth
+        self.depth = ( parent.rec_type == 0 ) ? parent.depth + 1 : parent.depth
       end
     end
 

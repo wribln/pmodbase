@@ -26,7 +26,7 @@ class SirEntriesController < ApplicationController
   # GET /sii/:id/edit
 
   def edit
-    @sir_groups = Group.all.active_only.collect{ |g| [ g.code_and_label, g.id ]}
+    set_sir_groups
   end
 
   # POST /sii/:sir_item_id

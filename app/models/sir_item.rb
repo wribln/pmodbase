@@ -108,12 +108,14 @@ class SirItem < ActiveRecord::Base
     logger.debug ">>> checking entries for SIR Item #{ id }"
     entries = sir_entries.where( parent_id: nil )
     raise RuntimeError, 'more than one root' if entries.count > 1
-    root = entries.first
-    raise RuntimeError, "root #{ root.id } must be oldest entry" unless root.id == sir_entries.log_order.first.id
+    if entries.count > 0
+      root = entries.first
+      raise RuntimeError, "root #{ root.id } must be oldest entry" unless root.id == sir_entries.log_order.first.id
+    end
     entries = sir_entries.where( parent_id: root, rec_type: 1 )
     entries.each do |se|
       raise RuntimeError, "root comment #{ se.id } must have same group_id" unless se.group_id == root.group_id
-      raise RuntimeError, "root comment #{ se.id } must have level 0" unless se.depth == 0
+      # raise RuntimeError, "root comment #{ se.id } must have level 0" unless se.depth == 0
     end
     entries = sir_entries.where( parent_id: root, rec_type: 2 )
     raise RuntimeError, "response #{ se.id } on root level not possible" unless entries.count == 0
