@@ -6,13 +6,15 @@
   <%- else %>
     <p class="col-sm-offset-6 col-sm-6 p-group">
   <%- end %>
-  <strong>[<%= db_formatted_d( show_entry.updated_at )%>]
+  <strong><%= show_entry.id %> [<%= db_formatted_d( show_entry.updated_at )%>]
   <%= t( "sir_items.show.rec_head_#{ show_entry.rec_type }", group: show_entry.group_code )%><%=
       t( 'sir_items.show.due_by', due_date: show_entry.due_date ) unless show_entry.due_date.nil? %>:</strong><br/>
   <%= show_entry.description %><br/><small>
-    <%= entry_action( :respond, show_entry.sir_item )%> |
-    <%= entry_action( :comment, show_entry.sir_item )%> |
-    <%= entry_action( :forward, show_entry.sir_item )%> |
+    <%- if show_entry.depth > 0 %>
+    <%= entry_action( :respond, show_entry.sir_item, show_entry )%> |
+    <%- end %>
+    <%= entry_action( :comment, show_entry.sir_item, show_entry )%> |
+    <%= entry_action( :forward, show_entry.sir_item, show_entry )%> |
     <%= entry_action( :show,    show_entry )%> |
     <%= entry_action( :edit,    show_entry )%> |
     <%= entry_action( :delete,  show_entry )%>

@@ -20,8 +20,8 @@
           <div class="col-sm-4"><%= t( '.no_entries' ) %></div>
         </div>
       <%- else -%>
-        <%- @sir_entries.each do |se| %>
-          <%= render partial: 'show_entry', object: se %>
+        <%- @out_order.each do |k| %>
+          <%= render partial: 'show_entry', object: @sir_entries[ k ]%>
         <%- end %>
       <%- end -%>
       <!-- Divider Line -->

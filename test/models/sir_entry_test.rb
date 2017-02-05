@@ -29,7 +29,7 @@ class SirEntryTest < ActiveSupport::TestCase
     se.group_id = groups( :group_two ).id
     se.parent_id = nil
     refute se.valid?
-    assert_includes se.errors, :parent_id
+    assert_includes se.errors, :base
   end
 
   test 'refer to non-existing parent' do
@@ -44,7 +44,7 @@ class SirEntryTest < ActiveSupport::TestCase
     se = sir_entries( :two )
     se.parent = se
     refute se.valid?
-    assert_includes se.errors, :parent_id
+    assert_includes se.errors, :base
   end
 
   test 'required attributes' do

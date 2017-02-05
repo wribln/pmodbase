@@ -6,7 +6,7 @@
 
 class SirEntriesController < ApplicationController
 
-  initialize_feature FEATURE_ID_SIR_ITEMS, FEATURE_ACCESS_VIEW, FEATURE_CONTROL_GRP
+  initialize_feature FEATURE_ID_SIR_ITEMS, FEATURE_ACCESS_USER + FEATURE_ACCESS_NBP, FEATURE_CONTROL_CUG
   before_action :set_sir_entry, only: [ :show, :edit, :update, :destroy ]
 
   # GET /sie/:id
@@ -19,7 +19,7 @@ class SirEntriesController < ApplicationController
   def new
     @sir_item = SirItem.find( params[ :sir_item_id ])
     @sir_entry = @sir_item.sir_entries.new( params.permit( :sir_item_id, :rec_type, :parent_id ))
-    logger.debug ">>> #{ @sir_entry.inspect }"
+    @sir_entry.update_parent
     set_sir_groups
   end
 
@@ -34,6 +34,7 @@ class SirEntriesController < ApplicationController
   def create
     @sir_item = SirItem.find( params[ :sir_item_id ])
     @sir_entry = @sir_item.sir_entries.new( sir_entry_params )
+    @sir_entry.update_parent
     respond_to do |format|
       if @sir_entry.save
         format.html { redirect_to @sir_entry, notice: I18n.t( 'sir_entries.msg.create_ok' )}

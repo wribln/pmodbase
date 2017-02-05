@@ -46,7 +46,7 @@ class SirLogsControllerTest < ActionController::TestCase
   end
 
   test 'should destroy sir_log' do
-    assert_difference('SirLog.count', -1) do
+    assert_difference( 'SirLog.count', -1 ) do
       delete :destroy, id: @sir_log
     end
     assert_redirected_to sir_logs_path

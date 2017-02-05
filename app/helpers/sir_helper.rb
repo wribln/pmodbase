@@ -31,7 +31,7 @@ module SirHelper
 
   def new_sir_entry_path( rt, item, parent )
     url_options = { action: :new, controller: :sir_entries, sir_item_id: item, rec_type: rt }
-    url_options[ parent_id ] = parent unless parent.nil?
+    url_options[ :parent_id ] = parent unless parent.nil?
     url_for( url_options )
   end
 

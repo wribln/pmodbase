@@ -3,11 +3,11 @@ class SirItem < ActiveRecord::Base
   include ActiveModelErrorsAdd
   include Filterable
 
-  belongs_to :sir_log,    -> { readonly }, inverse_of: :sir_items
-  belongs_to :group,      -> { readonly }
-  belongs_to :cfr_record, -> { readonly }
-  belongs_to :phase_code, -> { readonly }
-  has_many   :sir_entries,                 inverse_of: :sir_item, dependent: :destroy
+  belongs_to :sir_log,     -> { readonly }, inverse_of: :sir_items
+  belongs_to :group,       -> { readonly }
+  belongs_to :cfr_record,  -> { readonly }
+  belongs_to :phase_code,  -> { readonly }
+  has_many   :sir_entries, -> { log_order }, inverse_of: :sir_item, dependent: :destroy
 
   before_save :set_defaults
 
@@ -41,6 +41,7 @@ class SirItem < ActiveRecord::Base
     inclusion: { in: 0..( SIR_ITEM_CATEGORY_LABELS.size - 1 )}  
 
   validate :archive_closed_only
+  validate :entries_ok?
 
   set_trimmed :label, :reference
 
@@ -103,7 +104,53 @@ class SirItem < ActiveRecord::Base
   # this method is to be used to validate all entries belonging to
   # this item's log
 
+  def entries_ok?
+    logger.debug ">>> checking entries for SIR Item #{ id }"
+    entries = sir_entries.where( parent_id: nil )
+    raise RuntimeError, 'more than one root' if entries.count > 1
+    root = entries.first
+    raise RuntimeError, "root #{ root.id } must be oldest entry" unless root.id == sir_entries.log_order.first.id
+    entries = sir_entries.where( parent_id: root, rec_type: 1 )
+    entries.each do |se|
+      raise RuntimeError, "root comment #{ se.id } must have same group_id" unless se.group_id == root.group_id
+      raise RuntimeError, "root comment #{ se.id } must have level 0" unless se.depth == 0
+    end
+    entries = sir_entries.where( parent_id: root, rec_type: 2 )
+    raise RuntimeError, "response #{ se.id } on root level not possible" unless entries.count == 0
+    logger.debug ">>> checking completed w/o error"
+  end
 
+  # the following support the display of the item and its entries
+
+  # creates a hash representation of the tree structure of all entries
+
+  def self.hash_tree( entries )
+    htree = Hash.new
+    entries.each do | se |
+      if se.parent_id.nil?
+        htree[ se.id ] = Array.new
+      else
+        htree[ se.id ] = Array.new
+        htree[ se.parent_id ] << se.id
+      end
+    end
+    return htree
+  end
+
+  def self.key_map( entries )
+    kmap = Hash.new
+    entries.each_with_index { | e, i | kmap[ e.id ] = i }
+    return kmap
+  end
+
+  # prepare the sequence (array) in which to show the entries
+
+  def self.out_order( hash_tree, root )
+    oorder = Array.new
+    traverse = lambda{ |k| oorder << k; hash_tree[ k ].each{ |e| traverse.call( e )}}
+    traverse.call( root )
+    return oorder
+  end
 
   # this method is to be used to validate the new/modified entry and ensure
   # that it fits consistently into this item's log:
@@ -119,7 +166,7 @@ class SirItem < ActiveRecord::Base
         errors.add( :parent_id, I18n.t( 'sir_items.msg.bad_link' ))
         return
       end
-      raise RunTimeError, 'loop in SIR Log entries' if se_i.id == se_n.id
+      raise RuntimeError, 'loop in SIR Log entries' if se_i.id == se_n.id
     end
   end
 

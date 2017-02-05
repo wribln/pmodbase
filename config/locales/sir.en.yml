@@ -50,7 +50,7 @@ en:
       sir_entry:
         id:               :general.attributes.id
         rec_type:         'Type'
-        rec_types:        [ 'Forward to', 'Comment by', 'Response to' ]
+        rec_types:        [ 'Forward to', 'Comment by', 'Response by' ]
         sir_item_id:      'SIR Item'
         group_id:         'Group'
         parent_id:        'Related SIR Entry'

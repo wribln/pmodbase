@@ -1,3 +1,4 @@
+      <%= form.hidden_field :parent_id, value: form.object.parent_id %>
       <div class="form-group">
         <%= form.label :rec_type, class: 'col-sm-3 control-label' %>
         <div class="col-sm-2">
@@ -33,10 +34,10 @@
           <%= form.text_area :description, class: 'form-control', cols: DEFAULT_COLS_TEXTAREA, rows: DEFAULT_ROWS_TEXTAREA %>
         </div>
       </div>
-      <div class="form-group">
+      <!--div class="form-group">
         <%= form.label :is_public, class: 'col-sm-3 control-label' %>
         <div class="col-sm-1">
           <%= form.check_box :is_public %>
         </div>
-      </div>
+      </div-->
 

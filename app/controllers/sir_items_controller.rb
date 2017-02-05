@@ -1,6 +1,6 @@
 class SirItemsController < ApplicationController
 #  initialize_feature FEATURE_ID_SIR_ITEMS, FEATURE_ACCESS_INDEX, FEATURE_CONTROL_GRP
-  initialize_feature FEATURE_ID_SIR_ITEMS, FEATURE_ACCESS_VIEW, FEATURE_CONTROL_GRP
+  initialize_feature FEATURE_ID_SIR_ITEMS, FEATURE_ACCESS_USER + FEATURE_ACCESS_NBP, FEATURE_CONTROL_CUG
 
   before_action :set_sir_log,  only: [ :index, :new, :create ]
   before_action :set_sir_item, only: [ :show, :show_all, :edit, :update, :destroy ]
@@ -14,7 +14,12 @@ class SirItemsController < ApplicationController
   # GET /sii/1
  
   def show
-    @sir_entries = @sir_item.sir_entries
+    @sir_entries = @sir_item.sir_entries.includes( :group )
+    @sir_item.entries_ok?
+    @hash_tree = SirItem.hash_tree( @sir_entries )
+    @out_order = SirItem.out_order( @hash_tree, @sir_entries[ 0 ].id )
+    @key_map = SirItem.key_map( @sir_entries )
+    @out_order.map!{ |e| @key_map[ e ]}
   end
 
   # GET /sii/1/all

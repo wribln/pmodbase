@@ -4,9 +4,9 @@ class SirEntry < ActiveRecord::Base
   belongs_to :sir_item, ->{ readonly }, inverse_of: :sir_entries
   belongs_to :group,    ->{ readonly }
   belongs_to :parent,   ->{ readonly },          class_name: 'SirEntry'
-# has_one    :response, ->{ where rec_type: 2 }, class_name: 'SirEntry', foreign_key: 'parent_id'
 
   before_save :set_depth
+  before_save :set_defaults
 
   validates :sir_item,
     presence: true
@@ -48,6 +48,21 @@ class SirEntry < ActiveRecord::Base
     sir_item.sir_entries.where( parent_id: id ).count.zero?
   end
 
+  # this will try to determine the correct parent when creating a new entry:
+  # parent_id is currently set to some predecessor proxy (by controller logic)
+  # check and replace by most appropriate parent.
+
+  def update_parent
+    if parent.nil?
+      # leave it at nil
+    elsif parent.parent_id.nil?
+      # parent is already correctly set
+    else
+      parent_id = parent.parent_id
+    end
+  end
+  
+
   private
 
     # ensure that we have a valid parent here:
@@ -78,8 +93,8 @@ class SirEntry < ActiveRecord::Base
         errors.add( :group_id, I18n.t( 'sir_entries.msg.bad_rr_group' )) \
           unless ( parent_id && parent.group_id == group_id ) or ( parent_id.nil? && sir_item_id && sir_item.group_id == group_id )
       when 2 # response
-        errors.add( :parent_id, I18n.t( 'sir_entries.msg.bad_rr_combo' )) \
-          unless parent_id && parent.rec_type == 0
+        errors.add( :base, I18n.t( 'sir_entries.msg.bad_rr_combo' )) \
+          unless parent_id && parent.rec_type == 0 || depth == 0
       end
 
       sir_item.consistent?( self ) unless sir_item.nil?
@@ -89,10 +104,15 @@ class SirEntry < ActiveRecord::Base
 
     def set_depth
       if parent_id.nil?
-        self.depth = ( rec_type == 0 ) ? 1 : 0
+        self.depth = 0
       else
-        self.depth = ( rec_type == 0 ) ? parent.depth + 1 : parent.depth
+        self.depth = ( rec_type != 0 ) ? parent.depth + 1 : parent.depth
       end
     end
+
+    def set_defaults
+      set_nil_default( :is_public, false )
+    end
+
 
 end
