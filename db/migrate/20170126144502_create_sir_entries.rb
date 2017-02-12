@@ -10,14 +10,11 @@ class CreateSirEntries < ActiveRecord::Migration
 
       t.timestamps  null: false
     end
-#    add_index :sir_entries, [ :sir_item_id, :created_at ],
-#              order: { sir_item_id: :asc, created_at: :asc },
-#              name: 'sir_entries_default_order'
-#    add_index :sir_entries, [ :sir_item_id, :created_at ],
-#              order: { sir_item_id: :asc, create_at: :desc },
-#              name: 'sir_entries_reverse_order'
-    add_index :sir_entries, [ :sir_item_id, :id ],
-              order: { sir_item_id: :asc, id: :desc },
+    add_index :sir_entries, [ :sir_item_id, :created_at ],
+              order: { sir_item_id: :asc, created_at: :asc },
+              name: 'sir_entries_default_order'
+    add_index :sir_entries, [ :sir_item_id, :created_at ],
+              order: { sir_item_id: :asc, create_at: :desc },
               name: 'sir_entries_reverse_order'
   end
 end

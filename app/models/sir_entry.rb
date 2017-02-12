@@ -25,11 +25,8 @@ class SirEntry < ActiveRecord::Base
 
   # scopes
 
-  # scope :log_order, ->{ reorder( created_at: :asc  )}
-  # scope :rev_order, ->{ reorder( created_at: :desc )}
-
-  scope :log_order, ->{ reorder( id: :asc  )}
-  scope :rev_order, ->{ reorder( id: :desc )}
+  scope :log_order, ->{ reorder( created_at: :asc  )}
+  scope :rev_order, ->{ reorder( created_at: :desc )}
 
   # provide access to labels
 
