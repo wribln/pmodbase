@@ -1,50 +1,14 @@
 require 'test_helper'
 class SirEntryTest < ActiveSupport::TestCase
 
-  test 'fixture 1' do
+  test 'fixture' do
     se = sir_entries( :one )
+    assert_equal 0, se.sir_item.validate_entries
     assert_equal 0, se.rec_type
     assert_equal se.group_id, groups( :group_two ).id
-    assert_nil se.parent_id
-    assert_equal 0, se.depth
     refute_nil se.description
     refute se.is_public
     assert se.valid?, se.errors.messages
-  end
-
-  test 'fixture 2' do 
-    se = sir_entries( :two )
-    assert_equal 2, se.rec_type
-    assert_equal se.group_id, groups( :group_two ).id
-    assert_equal se.parent_id, sir_entries( :one ).id
-    assert_equal 0, se.depth
-    refute_nil se.description
-    refute se.is_public
-    assert se.valid?, se.errors.messages
-  end
-
-  test 'add response w/o request' do
-    se = sir_items( :one ).sir_entries.new
-    se.rec_type = 2
-    se.group_id = groups( :group_two ).id
-    se.parent_id = nil
-    refute se.valid?
-    assert_includes se.errors, :base
-  end
-
-  test 'refer to non-existing parent' do
-    sir_entries( :one ).destroy
-    se = sir_entries( :two )
-    refute se.valid?
-    assert_includes se.errors, :parent_id
-  end
-
-  test 'refer to parent outside of this item' do
-    si = sir_items( :two )
-    se = sir_entries( :two )
-    se.parent = se
-    refute se.valid?
-    assert_includes se.errors, :base
   end
 
   test 'required attributes' do
@@ -57,48 +21,34 @@ class SirEntryTest < ActiveSupport::TestCase
 
     assert_includes se.errors, :group_id
     se.group_id = groups( :group_two ).id
+    refute se.valid?
+
+    assert_includes se.errors, :rec_type
+    se.rec_type = 1
     assert se.valid?, se.errors.messages
-  end
-
-  test 'try to create bad reference - comment' do
-    si = sir_items( :one )
-
-    se  = si.sir_entries.build( rec_type: 1, group: groups( :group_two ))
-    refute se.valid?
-    assert_includes se.errors.messages, :group_id
-
-    se.group = groups( :group_one )
-    assert se.valid?
-
-    se.parent = sir_entries( :one )
-    refute se.valid?
-    assert_includes se.errors.messages, :group_id
-
-    se.parent = sir_entries( :two )    
-    refute se.valid?
-    assert_includes se.errors.messages, :group_id
-
-    se.group = groups( :group_two )
-    assert se.valid?, se.errors.messages
-  end
-
-  test 'try to create bad reference - request' do
-    si = sir_items( :one )
-
-    se  = si.sir_entries.build( rec_type: 0, group: groups( :group_one ))
-    refute se.valid?
-    assert_includes se.errors.messages, :group_id
   end
 
   test 'defined scopes' do
+    se2 = sir_items( :one ).sir_entries.create( id: 2, rec_type: 2, group_id: groups( :group_one ).id, description: 'response' )
+
     se = SirEntry.all.log_order
     assert se[ 0 ].id = sir_entries( :one ).id
-    assert se[ 1 ].id = sir_entries( :two ).id
+    assert se[ 1 ].id = se2.id
+
+    se = SirEntry.all.rev_order
+    assert se[ 0 ].id = se2.id
+    assert se[ 1 ].id = sir_entries( :one ).id
   end
 
-  test 'is leaf' do
-    refute sir_entries( :one ).is_leaf?
-    assert sir_entries( :two ).is_leaf?
+  test 'is last' do
+    assert sir_entries( :one ).is_last?
+
+    se2 = nil
+    assert_difference( 'SirEntry.count', 1 ) do
+      se2 = sir_items( :one ).sir_entries.create( id: 2, rec_type: 2, group_id: groups( :group_one ).id, description: 'response' )
+    end
+    assert se2.is_last?
+    refute sir_entries( :one ).is_last?
   end
 
 end

@@ -53,10 +53,7 @@ en:
         rec_types:        [ 'Forward to', 'Comment by', 'Response by' ]
         sir_item_id:      'SIR Item'
         group_id:         'Group'
-        parent_id:        'Related SIR Entry'
         due_date:         'Due Date'
-        no_sub_req:       'Number of Sub-Requests'
-        depth:            'Depth in Structure'
         description:      'Description'
 
   sir_logs:
@@ -112,10 +109,13 @@ en:
     msg:
       bad_seqno:        'must be unique within this SIR Log.'
       bad_archive:      'cannot be set on open items.'
-      bad_link:         'New SIR Entry has bad reference.'
       create_ok:        'SIR Item successfully created.'
       update_ok:        'SIR Item successfully updated.'
       delete_ok:        'SIR Item successfully deleted.'
+      bad_grp_seq:      'Forward request cannot be to group already in thread.'
+      bad_grp_com:      'Comments can only be made by currently active group.'
+      bad_grp_re1:      'Group owning this SIR Item may not create a Response entry.'
+      bad_grp_re2:      'Responding group does not match previous group in thread.'
 
   sir_entries:
     title:              'SIR Entries'
@@ -130,8 +130,3 @@ en:
       create_ok:        'SIR Entry successfully created.'
       update_ok:        'SIR Entry successfully updated.'
       delete_ok:        'SIR Entry successfully deleted.'  
-      bad_parent_id:    'Related Log Entry not found.'
-      bad_cross_ref:    'Related Log Entry must be for same Item.'
-      bad_rr_combo:     'A Response must refer to a Request.'
-      bad_rr_group:     'Related Log Entries must belong to same Group.'
-      bad_req_group:    'A Request must refer to Group other than own.'

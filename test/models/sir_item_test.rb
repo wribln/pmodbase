@@ -125,4 +125,71 @@ class SirItemTest < ActiveSupport::TestCase
     assert si.valid?
   end    
 
+  test 'sir entries validation' do
+    si = sir_logs( :sir_log_one ).sir_items.build( group_id: groups( :group_one ).id, label: 'test', seqno: 3 )
+    assert si.save, si.errors.messages
+    assert_equal 0, si.validate_entries
+
+    se = si.sir_entries.build( rec_type: 0, group_id: groups( :group_one ).id, description: 'test 1' )
+    assert_equal 0, si.validate_entries
+    refute se.valid?
+    assert_includes se.errors, :base # forward to itself
+
+    se.rec_type = 2
+    refute se.valid?
+    assert_includes se.errors, :base # respond to item owner
+
+
+    se.group_id = groups( :group_two ).id
+    refute se.valid?
+    assert_includes se.errors, :base # respond to other group
+
+    se.rec_type = 1
+    refute se.valid?
+    assert_includes se.errors, :base # comment to other group
+
+    se.rec_type = 0
+    assert se.save, se.errors.messages
+    si.reload
+    assert_equal 0, si.validate_entries
+
+    # next entry
+
+    se = si.sir_entries.build( rec_type: 0, group_id: groups( :group_one ).id, description: 'test 2')
+    assert_equal 0, si.validate_entries
+    refute se.valid?
+    assert_includes se.errors, :base # forward to item owner
+
+    se.group = groups( :group_two )
+    refute se.valid?
+    assert_includes se.errors, :base # forward to previous entry
+
+    gp = Group.new( code: 'XXX', group_category_id: group_categories( :group_category_one ).id, label: 'XXX-Group' )
+    assert gp.save, gp.errors.messages
+
+    se.group_id = gp.id
+    assert se.valid?
+
+    se.rec_type = 1
+    refute se.valid?
+    assert_includes se.errors, :base # comment to other group
+
+    se.group_id = groups( :group_two ).id
+    assert se.valid?
+
+    se.rec_type = 2
+    refute se.valid?
+    assert_includes se.errors, :base # respond to own group
+
+    se.group_id = gp.id
+    refute se.valid?
+    assert_includes se.errors, :base # respond to other group
+
+    se.group_id = groups( :group_one ).id
+    assert se.valid?
+
+  end
+
+
+
 end

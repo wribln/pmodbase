@@ -41,7 +41,6 @@ class SirItem < ActiveRecord::Base
     inclusion: { in: 0..( SIR_ITEM_CATEGORY_LABELS.size - 1 )}  
 
   validate :archive_closed_only
-  validate :entries_ok?
 
   set_trimmed :label, :reference
 
@@ -102,73 +101,65 @@ class SirItem < ActiveRecord::Base
   end
 
   # this method is to be used to validate all entries belonging to
-  # this item's log
+  # this item's log, method returns with error code or zero:
+  # (0) no error, all tests passed
+  # (1) forward to previous group
+  # (2) comment is not from current group
+  # (3) response by SIR Item Owner
+  # (4) response not to previous group
+  # (5) invalid rec_type
 
-  def entries_ok?
-    logger.debug ">>> checking entries for SIR Item #{ id }"
-    entries = sir_entries.where( parent_id: nil )
-    raise RuntimeError, 'more than one root' if entries.count > 1
-    if entries.count > 0
-      root = entries.first
-      raise RuntimeError, "root #{ root.id } must be oldest entry" unless root.id == sir_entries.log_order.first.id
-    end
-    entries = sir_entries.where( parent_id: root, rec_type: 1 )
-    entries.each do |se|
-      raise RuntimeError, "root comment #{ se.id } must have same group_id" unless se.group_id == root.group_id
-      # raise RuntimeError, "root comment #{ se.id } must have level 0" unless se.depth == 0
-    end
-    entries = sir_entries.where( parent_id: root, rec_type: 2 )
-    raise RuntimeError, "response #{ se.id } on root level not possible" unless entries.count == 0
-    logger.debug ">>> checking completed w/o error"
-  end
-
-  # the following support the display of the item and its entries
-
-  # creates a hash representation of the tree structure of all entries
-
-  def self.hash_tree( entries )
-    htree = Hash.new
-    entries.each do | se |
-      if se.parent_id.nil?
-        htree[ se.id ] = Array.new
+  def validate_entries
+    group_stack = [ group_id ]
+    sir_entries.each do |se|
+      next if se.id.nil? # ignore entries in association proxies
+      case se.rec_type
+      when 0
+        # forward must be to group other than previous groups
+        return 1 if group_stack.include?( se.group_id )
+        group_stack.push( se.group_id )
+      when 1
+        # comment must be from current group
+        return 2 unless group_stack.last == se.group_id
+      when 2
+        # response must be to previous group
+        group_stack.pop
+        return 3 if group_stack.empty?
+        return 4 unless group_stack.last == se.group_id
       else
-        htree[ se.id ] = Array.new
-        htree[ se.parent_id ] << se.id
+        return 5
+      end # case
+    end # do
+    return 0
+  end
+
+  # use this method to ensure that the new SIR Entry is
+  # consistent to the current, consistent list of SIR Entries
+
+  def validate_new_entry( new_entry )
+    group_stack = [ group_id ]
+    sir_entries.each do |se|
+      next if se.id.nil?
+      case se.rec_type
+      when 0
+        group_stack.push( se.group_id )
+      when 2
+        group_stack.pop
       end
     end
-    return htree
-  end
-
-  def self.key_map( entries )
-    kmap = Hash.new
-    entries.each_with_index { | e, i | kmap[ e.id ] = i }
-    return kmap
-  end
-
-  # prepare the sequence (array) in which to show the entries
-
-  def self.out_order( hash_tree, root )
-    oorder = Array.new
-    traverse = lambda{ |k| oorder << k; hash_tree[ k ].each{ |e| traverse.call( e )}}
-    traverse.call( root )
-    return oorder
-  end
-
-  # this method is to be used to validate the new/modified entry and ensure
-  # that it fits consistently into this item's log:
-  #
-  # (a) request to new entry's group must not refer to another entry's group
-  #     already on path (back to item)
-  
-  def consistent?( se_n )
-    se_i = se_n
-    until se_i.parent_id.nil? do
-      se_i = se_i.parent
-      if se_i.group_id == se_n.group_id
-        errors.add( :parent_id, I18n.t( 'sir_items.msg.bad_link' ))
-        return
+    case new_entry.rec_type
+    when 0
+      new_entry.errors.add( :base, I18n.t( 'sir_items.msg.bad_grp_seq' )) \
+        if group_stack.include?( new_entry.group_id )
+    when 1
+      new_entry.errors.add( :base, I18n.t( 'sir_items.msg.bad_grp_com' )) \
+        unless group_stack.last == new_entry.group_id
+    when 2
+      if group_stack.size < 2
+        new_entry.errors.add( :base, I18n.t( 'sir_items.msg.bad_grp_re1' ))
+      elsif group_stack[ -2 ] != new_entry.group_id
+        new_entry.errors.add( :base, I18n.t( 'sir_items.msg.bad_grp_re2' ))
       end
-      raise RuntimeError, 'loop in SIR Log entries' if se_i.id == se_n.id
     end
   end
 

@@ -1,17 +1,8 @@
 one:
+  id:        1
   sir_item:  one
   rec_type:  0
   group:     group_two
   due_date:  2017-01-26
-  parent: 
-  depth:      0
   description: 'Hey, dude, get this!'
 
-two:
-  sir_item:  one
-  rec_type:  2
-  group:     group_two
-  due_date:
-  parent:    one
-  depth:      0
-  description: 'This is the answer to the question!'

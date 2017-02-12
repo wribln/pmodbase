@@ -908,18 +908,16 @@ ActiveRecord::Schema.define(version: 20170127112428) do
   create_table "sir_entries", force: :cascade do |t|
     t.integer  "sir_item_id"
     t.integer  "group_id"
-    t.integer  "parent_id"
-    t.integer  "rec_type",    default: 0,     null: false
+    t.integer  "rec_type",                    null: false
     t.date     "due_date"
-    t.integer  "depth",       default: 0
-    t.boolean  "is_public",   default: false
+    t.boolean  "is_public",   default: false, null: false
     t.text     "description"
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
   end
 
   add_index "sir_entries", ["group_id"], name: "index_sir_entries_on_group_id"
-  add_index "sir_entries", ["sir_item_id", "created_at"], name: "sir_entries_default_order"
+  add_index "sir_entries", ["sir_item_id", "id"], name: "sir_entries_reverse_order"
   add_index "sir_entries", ["sir_item_id"], name: "index_sir_entries_on_sir_item_id"
 
   create_table "sir_items", force: :cascade do |t|
