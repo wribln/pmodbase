@@ -12,18 +12,24 @@
       </div>
       <!-- SIR Entries -->
       <%- if @sir_entries.empty? -%>
-        <div class="form-group">
-          <div class="col-sm-3"><small>
-            <%= entry_action( :comment, @sir_item )%> |
-            <%= entry_action( :forward, @sir_item )%>
-          </small></div>
-          <div class="col-sm-4"><%= t( '.no_entries' ) %></div>
-        </div>
+        <div class="col-sm-4"><%= t( '.no_entries' ) %></div>
       <%- else -%>
-        <%- @out_order.each do |k| %>
-          <%= render partial: 'show_entry', object: @sir_entries[ k ]%>
+        <%- group_stack = [ @sir_item.group_id ] -%>
+        <%- @sir_entries.each do |se| %>
+          <%= render partial: 'show_entry', object: se, locals: { depth: SirItem.depth( group_stack, se )} %>
         <%- end %>
       <%- end -%>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-2">
+          <%= link_to t( 'sir_items.show.respond' ), url_for( @sir_item.new_sir_entry( 2 )), class: 'btn btn-lg btn-block btn-default' %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to t( 'sir_items.show.comment' ), url_for( @sir_item.new_sir_entry( 1 )), class: 'btn btn-lg btn-block btn-default' %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to t( 'sir_items.show.forward' ), url_for( @sir_item.new_sir_entry( 0 )), class: 'btn btn-lg btn-block btn-default' %>
+        </div>          
+      </div>
       <!-- Divider Line -->
       <div class="form-group">
         <hr style="margin:4px"/>  

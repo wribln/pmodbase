@@ -15,13 +15,13 @@ class SirItemsController < ApplicationController
  
   def show
     @sir_entries = @sir_item.sir_entries.includes( :group )
-    if @sir_entries.count > 0
-      @sir_item.entries_ok?
-      @hash_tree = SirItem.hash_tree( @sir_entries )
-      @out_order = SirItem.out_order( @hash_tree, @sir_entries[ 0 ].id )
-      @key_map = SirItem.key_map( @sir_entries )
-      @out_order.map!{ |e| @key_map[ e ]}
-    end
+    #if @sir_entries.count > 0
+    #  @sir_item.entries_ok?
+    #  @hash_tree = SirItem.hash_tree( @sir_entries )
+    #  @out_order = SirItem.out_order( @hash_tree, @sir_entries[ 0 ].id )
+    #  @key_map = SirItem.key_map( @sir_entries )
+    #  @out_order.map!{ |e| @key_map[ e ]}
+    #end
   end
 
   # GET /sii/1/all

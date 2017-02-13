@@ -100,6 +100,23 @@ class SirItem < ActiveRecord::Base
     end
   end
 
+  # two helpers for the views...
+
+  # determine depth for display using group_stack
+
+  def self.depth( group_stack, this_entry )
+    if this_entry.rec_type == 0
+      group_stack.push( this_entry.group_id )
+    elsif this_entry.rec_type == 2
+      group_stack.pop
+    end
+    group_stack.length - 1
+  end
+
+  def new_sir_entry( rt )
+    url_options = { action: :new, controller: :sir_entries, sir_item_id: id, rec_type: rt }
+  end
+
   # this method is to be used to validate all entries belonging to
   # this item's log, method returns with error code or zero:
   # (0) no error, all tests passed
