@@ -18,14 +18,15 @@ class SirEntriesController < ApplicationController
 
   def new
     @sir_item = SirItem.find( params[ :sir_item_id ])
-    @sir_entry = @sir_item.sir_entries.new( params.permit( :sir_item_id, :rec_type, :parent_id ))
-    @sir_entry.update_parent
+    set_group_stack_and_last
+    @sir_entry = @sir_item.sir_entries.new( params.permit( :sir_item_id, :rec_type ))
     set_sir_groups
   end
 
   # GET /sii/:id/edit
 
   def edit
+    set_group_stack_and_last
     set_sir_groups
   end
 
@@ -34,7 +35,6 @@ class SirEntriesController < ApplicationController
   def create
     @sir_item = SirItem.find( params[ :sir_item_id ])
     @sir_entry = @sir_item.sir_entries.new( sir_entry_params )
-    @sir_entry.update_parent
     respond_to do |format|
       if @sir_entry.save
         format.html { redirect_to @sir_entry, notice: I18n.t( 'sir_entries.msg.create_ok' )}
@@ -85,16 +85,29 @@ class SirEntriesController < ApplicationController
       when 0 # forward
         @sir_entry.group_id = nil # do not preselect!
         @sir_groups = Group.all.active_only.collect{ |g| [ g.code_and_label, g.id ]}
-      when 1, 2 # comment, response
-        @sir_entry.group_id = @sir_entry.parent_id.nil? ? @sir_item.group_id : @sir_entry.parent.group_id
+      when 1 # comment - use current group
+        @sir_entry.group_id = @group_stack.last
+        @sir_groups = nil
+      when 2 # response - use group before current group
+        if @group_stack.size < 2
+          @sir_entry.errors.add( :base, I18n.t( 'sir_entries.msg.bad_request' ))
+        else
+          @sir_entry.group_id = @group_stack[ -2 ]
+        end
+        @sir_groups = nil
       end
+    end
+
+    def set_group_stack_and_last
+      @group_stack = @sir_item.group_stack
+      @last_entry = @sir_item.sir_entries.last
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
 
     def sir_entry_params
       params.require( :sir_entry ).permit( 
-        :sir_item_id, :rec_type, :group_id, :due_date, :parent_id, :description, :is_public )
+        :sir_item_id, :rec_type, :group_id, :due_date, :description, :is_public )
     end
 
 end

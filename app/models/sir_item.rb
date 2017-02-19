@@ -100,21 +100,32 @@ class SirItem < ActiveRecord::Base
     end
   end
 
-  # two helpers for the views...
+  # create stack of group_ids
 
-  # determine depth for display using group_stack
-
-  def self.depth( group_stack, this_entry )
-    if this_entry.rec_type == 0
-      group_stack.push( this_entry.group_id )
-    elsif this_entry.rec_type == 2
-      group_stack.pop
+  def group_stack
+    grp_stack = [ group_id ]
+    sir_entries.each do |se|
+      if se.rec_type == 0
+        grp_stack.push( se.group_id )
+      elsif se.rec_type == 2
+        grp_stack.pop
+      end
     end
-    group_stack.length - 1
+    grp_stack
   end
 
-  def new_sir_entry( rt )
-    url_options = { action: :new, controller: :sir_entries, sir_item_id: id, rec_type: rt }
+  # determine depth for display using group_stack
+  # update using new_entry before returning depth
+
+  def self.depth( grp_stack, new_entry = nil )
+    unless new_entry.nil?
+      if new_entry.rec_type == 0
+        grp_stack.push( new_entry.group_id )
+      elsif new_entry.rec_type == 2
+        grp_stack.pop
+      end
+    end
+    grp_stack.length - 1
   end
 
   # this method is to be used to validate all entries belonging to

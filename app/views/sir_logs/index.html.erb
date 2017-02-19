@@ -22,7 +22,7 @@
           <tr>
             <td><%= sl.to_id %></td>
             <td><%= sl.code %></td>
-            <td><%= link_to sl.label, sir_log_sir_items_path( sl.id ) unless sl.label.nil? %></td>
+            <td><%= link_to sl.label, sir_log_sir_items_path( sl.id )%></td>
             <td><%= link_to_contact_list( sl.owner_account  )%></td>
             <td><%= link_to_contact_list( sl.deputy_account )%></td>
             <td><%= render partial: 'shared/actions', object: sl %></td>

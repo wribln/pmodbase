@@ -46,12 +46,10 @@ class SirLogTest < ActiveSupport::TestCase
 
   test 'one owner should not use same code twice' do
     s1 = sir_logs( :sir_log_one )
-    s2 = SirLog.new
-    s2.code = s1.code
-    s2.owner_account_id = s1.owner_account_id
+    s2 = SirLog.new( code: s1.code, owner_account_id: s1.owner_account_id, label: s1.label )
     assert_not s2.valid?
     s2.code += '+'
-    assert s2.valid?
+    assert s2.valid?, s2.errors.messages
   end
 
   test 'given account must exist' do

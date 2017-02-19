@@ -38,10 +38,10 @@ class SirEntry < ActiveRecord::Base
     ( group.try :code ) || some_id( group_id )
   end
 
-  # check if this is the last node in the log and could be deleted
+  # can only destroy entry if it is a comment or the last entry in a thread
 
-  def is_last?
-    sir_item.sir_entries.rev_order.first.id == id
+  def destroyable?
+    rec_type == 1 || sir_item.sir_entries.rev_order.first.id == id
   end
 
   private

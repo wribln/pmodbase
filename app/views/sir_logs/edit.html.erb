@@ -4,7 +4,6 @@
   <%= form_title %>
   <div class="form-horizontal" role="form">
     <%= form_for @sir_log do |f| %>
-    <p><%= @sir_log.errors.inspect %></p>
       <%= render partial: 'shared/errors', object: @sir_log.errors %>
       <%= render partial: 'form', object: f %>
       <%= render partial: 'sir_member_header' %>

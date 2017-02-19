@@ -14,21 +14,16 @@
       <%- if @sir_entries.empty? -%>
         <div class="col-sm-4"><%= t( '.no_entries' ) %></div>
       <%- else -%>
-        <%- group_stack = [ @sir_item.group_id ] -%>
         <%- @sir_entries.each do |se| %>
-          <%= render partial: 'show_entry', object: se, locals: { depth: SirItem.depth( group_stack, se )} %>
+          <%= render partial: 'show_entry', object: se, locals: { depth: SirItem.depth( @group_stack, se )} %>
         <%- end %>
       <%- end -%>
-      <div class="form-group">
-        <div class="col-sm-offset-3 col-sm-2">
-          <%= link_to t( 'sir_items.show.respond' ), url_for( @sir_item.new_sir_entry( 2 )), class: 'btn btn-lg btn-block btn-default' %>
-        </div>
-        <div class="col-sm-2">
-          <%= link_to t( 'sir_items.show.comment' ), url_for( @sir_item.new_sir_entry( 1 )), class: 'btn btn-lg btn-block btn-default' %>
-        </div>
-        <div class="col-sm-2">
-          <%= link_to t( 'sir_items.show.forward' ), url_for( @sir_item.new_sir_entry( 0 )), class: 'btn btn-lg btn-block btn-default' %>
-        </div>          
+      <div class="col-sm-offset-<%= SirItem.depth( @group_stack )%>">
+        <%- if SirItem.depth( @group_stack ) > 0 -%>
+          <%= entry_action :respond, @sir_item %> |
+        <%- end %>
+        <%= entry_action :comment, @sir_item %> |
+        <%= entry_action :forward, @sir_item %>
       </div>
       <!-- Divider Line -->
       <div class="form-group">

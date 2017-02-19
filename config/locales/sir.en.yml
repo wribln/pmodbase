@@ -50,7 +50,7 @@ en:
       sir_entry:
         id:               :general.attributes.id
         rec_type:         'Type'
-        rec_types:        [ 'Forward to', 'Comment by', 'Response by' ]
+        rec_types:        [ 'Forward to', 'Comment by', 'Respond to' ]
         sir_item_id:      'SIR Item'
         group_id:         'Group'
         due_date:         'Due Date'
@@ -85,7 +85,8 @@ en:
   sir_items:
     title:              'SIR Items'
     index:
-      form_title:       'All Items in '
+      form_title:       'All Items in SIR Log '
+      current_status:   'Current Status / Group'
     new:
       form_title:       'Add SIR Item to '
     edit:
@@ -129,4 +130,5 @@ en:
     msg:
       create_ok:        'SIR Entry successfully created.'
       update_ok:        'SIR Entry successfully updated.'
-      delete_ok:        'SIR Entry successfully deleted.'  
+      delete_ok:        'SIR Entry successfully deleted.'
+      bad_request:      'Response not possible at this point.'

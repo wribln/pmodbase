@@ -16,6 +16,7 @@ class SirLog < ActiveRecord::Base
     uniqueness: { scope: :owner_account_id }
 
   validates :label,
+    presence: true,
     length: { maximum: MAX_LENGTH_OF_LABEL }
 
   validates :owner_account_id,

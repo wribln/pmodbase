@@ -40,15 +40,38 @@ class SirEntryTest < ActiveSupport::TestCase
     assert se[ 1 ].id = sir_entries( :one ).id
   end
 
-  test 'is last' do
-    assert sir_entries( :one ).is_last?
+  test 'is destroyable' do
+    se1 = sir_entries( :one )
+    assert se1.destroyable?
 
     se2 = nil
     assert_difference( 'SirEntry.count', 1 ) do
-      se2 = sir_items( :one ).sir_entries.create( id: 2, rec_type: 2, group_id: groups( :group_one ).id, description: 'response' )
+      se2 = sir_items( :one ).sir_entries.create( rec_type: 1, group_id: se1.group_id, description: 'commment 1' )
     end
-    assert se2.is_last?
-    refute sir_entries( :one ).is_last?
+    assert se2.destroyable?
+    refute se1.destroyable?
+
+    se3 = nil
+    assert_difference( 'SirEntry.count', 1 ) do
+      se3 = sir_items( :one ).sir_entries.create( rec_type: 2, group_id: groups( :group_one ).id, description: 'response' )
+    end
+    assert se3.destroyable?
+    assert se2.destroyable?
+    refute se1.destroyable?
+
+    se4 = nil
+    assert_difference( 'SirEntry.count', 1 ) do
+      se4 = sir_items( :one ).sir_entries.create( rec_type: 1, group_id: groups( :group_one ).id, description: 'comment 2' )
+    end
+    assert se4.destroyable?
+    refute se3.destroyable?
+    assert se2.destroyable?
+    refute se1.destroyable?
+
+    se4.destroy 
+    assert se3.destroyable?
+    assert se2.destroyable?
+    refute se1.destroyable?
   end
 
 end
