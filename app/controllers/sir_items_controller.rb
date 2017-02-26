@@ -1,5 +1,4 @@
 class SirItemsController < ApplicationController
-#  initialize_feature FEATURE_ID_SIR_ITEMS, FEATURE_ACCESS_INDEX, FEATURE_CONTROL_GRP
   initialize_feature FEATURE_ID_SIR_ITEMS, FEATURE_ACCESS_USER + FEATURE_ACCESS_NBP, FEATURE_CONTROL_CUG
 
   before_action :set_sir_log,  only: [ :index, :new, :create ]
@@ -8,7 +7,10 @@ class SirItemsController < ApplicationController
   # GET /sil/1/sii
  
   def index
-    @sir_items = @sir_log.sir_items.active
+    @filter_fields = filter_params
+    @sir_groups = Group.all.collect{ |g| [ g.code, g.id ]}
+    @sir_phases = PhaseCode.all.order( :code ).collect{ |p| [ p.code, p.id ]}
+    @sir_items = @sir_log.sir_items.active.includes( :group, :last_entry ).filter( @filter_fields ).paginate( page: params[ :page ])
   end
 
   # GET /sii/1
@@ -109,5 +111,9 @@ class SirItemsController < ApplicationController
       params.require( :sir_item ).permit( :sir_log_id,
         :group_id, :reference, :cfr_record_id, :label, :status,
         :category, :phase_code_id, :archived, :description )
+    end
+
+    def filter_params
+      params.slice( :ff_seqno, :ff_ref, :ff_desc, :ff_stts, :ff_cat, :ff_grp, :ff_cgrp ).clean_up
     end
 end

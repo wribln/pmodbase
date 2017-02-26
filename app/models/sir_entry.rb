@@ -1,10 +1,11 @@
 class SirEntry < ActiveRecord::Base
   include ApplicationModel
 
-  belongs_to :sir_item, ->{ readonly }, inverse_of: :sir_entries
+  belongs_to :sir_item, inverse_of: :sir_entries
   belongs_to :group,    ->{ readonly }
 
-  before_save :set_defaults
+  after_save    :update_item
+  after_destroy :release_item
 
   validates :sir_item,
     presence: true
@@ -41,7 +42,7 @@ class SirEntry < ActiveRecord::Base
   # can only destroy entry if it is a comment or the last entry in a thread
 
   def destroyable?
-    rec_type == 1 || sir_item.sir_entries.rev_order.first.id == id
+    rec_type == 1 || sir_item.sir_entries.last.id == id
   end
 
   private
@@ -49,10 +50,13 @@ class SirEntry < ActiveRecord::Base
     def validate_new_entry
       sir_item.validate_new_entry( self ) unless sir_item_id.nil?
     end
-  
-    def set_defaults
-      set_nil_default( :is_public, false )
+
+    def update_item
+      sir_item.status = 1
     end
 
-
+    def release_item
+      sir_item.status = nil
+    end
+ 
 end

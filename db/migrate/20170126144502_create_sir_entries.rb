@@ -5,7 +5,6 @@ class CreateSirEntries < ActiveRecord::Migration
       t.belongs_to  :group,      index: true, foreign_key: true
       t.integer     :rec_type,   null: false
       t.date        :due_date
-      t.boolean     :is_public,  default: false, null: false
       t.text        :description
 
       t.timestamps  null: false

@@ -24,10 +24,10 @@ en:
         sir_members:        'At least one member record'
 
       sir_member:
-        account_id:     'Account ID'
-        to_access:      'Can Access'
-        to_update:      'Can Update'
-        member_account: 'Participants (Account ID and Name)'
+        account_id:         'Account ID'
+        to_access:          'Can Access'
+        to_update:          'Can Update'
+        member_account:     'Participants (Account ID and Name)'
 
       sir_item:
         id:               :general.attributes.id
@@ -86,7 +86,7 @@ en:
     title:              'SIR Items'
     index:
       form_title:       'All Items in SIR Log '
-      current_status:   'Current Status / Group'
+      resp_group:       'Responsible Group'
     new:
       form_title:       'Add SIR Item to '
     edit:

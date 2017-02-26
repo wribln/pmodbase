@@ -8,6 +8,7 @@ class SirItem < ActiveRecord::Base
   belongs_to :cfr_record,  -> { readonly }
   belongs_to :phase_code,  -> { readonly }
   has_many   :sir_entries, -> { log_order }, inverse_of: :sir_item, dependent: :destroy
+  has_one    :last_entry,  -> { rev_order }, inverse_of: :sir_item, class_name: 'SirEntry'
 
   before_save :set_defaults
 
@@ -46,7 +47,7 @@ class SirItem < ActiveRecord::Base
 
   # normal scope: do not show archived items
 
-  scope :active, -> { where archived: false }
+  scope :active,   -> { where archived: false }
 
   # define scopes for filters
 
@@ -55,6 +56,9 @@ class SirItem < ActiveRecord::Base
   scope :ff_desc,     ->( t ){ where 'label LIKE :param OR description LIKE :param', param: "%#{ t }%" }
   scope :ff_stts,     ->( s ){ where status: s }
   scope :ff_cat,      ->( c ){ where category: c }
+  scope :ff_phs,      ->( p ){ where phase_code_id: p }
+  scope :ff_grp,      ->( g ){ where group_id: g }
+  scope :ff_cgrp,     ->( g ){ includes( :last_entry ).where( 'sir_entries.group_id = :param OR ( sir_entries.group_id IS NULL AND sir_items.group_id = :param )', param: g ).references( :sir_entries )}
 
   # provide access to labels
 
@@ -80,10 +84,28 @@ class SirItem < ActiveRecord::Base
     ( phase_code.try :code ) || some_id( phase_code_id )
   end
 
+  # prepare code for responsible party (for index)
+
+  def resp_group_code
+    g = ( last_entry.nil? ? group : last_entry.group )
+    ( g.try :code ) || some_id( g )
+  end
+
   # set seqno 
 
   def set_seqno
     self.seqno = sir_log.next_seqno_for_item
+  end
+
+  # update status: new is only allowed when there no SirEntries
+
+  def status=( new_status )
+    ns = new_status.to_i
+    if ns.nil? 
+      write_attribute( :status, sir_entries.count == 0 ? 0 : 1 )
+    else
+      write_attribute( :status, ns ) unless ( ns == 0 and sir_entries.count > 0 )
+    end
   end
 
   # is the item still open?

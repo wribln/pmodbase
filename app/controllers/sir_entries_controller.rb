@@ -73,6 +73,7 @@ class SirEntriesController < ApplicationController
 
     def set_sir_entry
       @sir_entry = SirEntry.find( params[ :id ])
+      @sir_item = @sir_entry.sir_item
     end
 
     # prepare list of groups to choose from - depends on type of entry
@@ -107,7 +108,7 @@ class SirEntriesController < ApplicationController
 
     def sir_entry_params
       params.require( :sir_entry ).permit( 
-        :sir_item_id, :rec_type, :group_id, :due_date, :description, :is_public )
+        :sir_item_id, :rec_type, :group_id, :due_date, :description )
     end
 
 end

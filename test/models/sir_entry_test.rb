@@ -7,7 +7,6 @@ class SirEntryTest < ActiveSupport::TestCase
     assert_equal 0, se.rec_type
     assert_equal se.group_id, groups( :group_two ).id
     refute_nil se.description
-    refute se.is_public
     assert se.valid?, se.errors.messages
   end
 
@@ -34,10 +33,6 @@ class SirEntryTest < ActiveSupport::TestCase
     se = SirEntry.all.log_order
     assert se[ 0 ].id = sir_entries( :one ).id
     assert se[ 1 ].id = se2.id
-
-    se = SirEntry.all.rev_order
-    assert se[ 0 ].id = se2.id
-    assert se[ 1 ].id = sir_entries( :one ).id
   end
 
   test 'is destroyable' do
@@ -68,7 +63,8 @@ class SirEntryTest < ActiveSupport::TestCase
     assert se2.destroyable?
     refute se1.destroyable?
 
-    se4.destroy 
+    se4.destroy
+    se3.reload
     assert se3.destroyable?
     assert se2.destroyable?
     refute se1.destroyable?

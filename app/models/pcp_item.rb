@@ -60,7 +60,6 @@ class PcpItem < ActiveRecord::Base
   # released items of given subject for public viewing
 
   default_scope{ order( id: :asc )}
-#  scope :released, ->( s ){ where( pcp_subject: s ).joins( :pcp_step ).merge( PcpStep.released )}
   scope :released, ->{ joins( :pcp_step ).merge( PcpStep.released )}
   scope :released_until, ->( n ){ joins( :pcp_step ).merge( PcpStep.released_until( n ))}
 

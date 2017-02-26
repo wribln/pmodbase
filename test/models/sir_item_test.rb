@@ -190,6 +190,66 @@ class SirItemTest < ActiveSupport::TestCase
 
   end
 
+  test 'scopes' do
+    si = SirItem.ff_seqno( 1 )
+    assert_equal si.count, 1
+
+    si = SirItem.ff_ref( 'other' )
+    assert_equal si.count, 1
+
+    si = SirItem.ff_desc( 'item no')
+    assert_equal si.count, 2
+
+    si = SirItem.ff_stts( 0 )
+    assert_equal si.count, 2
+
+    si = SirItem.ff_cat( 1 )
+    assert_equal si.count, 2
+
+    si = SirItem.ff_phs( 0 )
+    assert_equal si.count, 0
+    si = SirItem.ff_phs( phase_codes( :prl ))
+    assert_equal si.count, 1
+
+    si = SirItem.ff_cgrp( groups( :group_one ))
+    assert_equal si.count, 0, si.inspect
+
+    si = SirItem.ff_cgrp( groups( :group_two ))
+    assert_equal si.count, 2
+  end
+
+  test 'responsible group 1' do
+    si = SirItem.new
+    si.group = groups( :group_one )
+    assert si.resp_group_code, groups( :group_one ).code
+
+    si.group_id = 0
+    assert si.resp_group_code, si.some_id( 0 )
+  end
+
+  test 'responsible group 2' do
+    si = sir_items( :one )
+    assert si.group_code, groups( :group_one ).code
+    assert si.resp_group_code, groups( :group_two ).code
+  end
+
+  test 'update status' do
+    si = sir_items( :one )
+    assert_equal 0, si.status
+    assert_equal 1, si.sir_entries.count
+    si.status = 1
+    assert_equal 1, si.status
+    si.status = 0
+    assert_equal 1, si.status
+    si.status = nil
+    assert_equal 1, si.status
+    si.status = 2
+    assert_equal 2, si.status
+    si.status = 3
+    assert_equal 3, si.status
+    si.status = 0
+    assert_equal 3, si.status
+  end
 
 
 end
