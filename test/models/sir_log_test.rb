@@ -17,6 +17,23 @@ class SirLogTest < ActiveSupport::TestCase
     refute sl.archived
   end
 
+  test 'required attributes' do
+    sl = SirLog.new
+    refute sl.valid?
+    assert_includes sl.errors, :code
+    sl.code = 'ABC'
+
+    refute sl.valid?
+    assert_includes sl.errors, :label
+    sl.label = 'ABC-Test'
+
+    refute sl.valid?
+    assert_includes sl.errors, :owner_account_id
+    sl.owner_account = accounts( :one )
+
+    assert sl.valid?, sl.errors.messages
+  end
+
   test 'item code' do
     sl = sir_logs( :sir_log_one )
     assert_equal 'SL1-1', sl.item_code( 1 )

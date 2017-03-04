@@ -37,37 +37,53 @@ class SirEntryTest < ActiveSupport::TestCase
 
   test 'is destroyable' do
     se1 = sir_entries( :one )
-    assert se1.destroyable?
-
-    se2 = nil
-    assert_difference( 'SirEntry.count', 1 ) do
-      se2 = sir_items( :one ).sir_entries.create( rec_type: 1, group_id: se1.group_id, description: 'commment 1' )
+    si = se1.sir_item
+    se2, se3, se4 = nil
+    assert_difference( 'SirEntry.count', 3 ) do
+      se2 = si.sir_entries.create( rec_type: 1, group_id: se1.group_id, description: 'commment 1' )
+      se3 = si.sir_entries.create( rec_type: 2, group_id: groups( :group_one ).id, description: 'response' )
+      se4 = si.sir_entries.create( rec_type: 1, group_id: groups( :group_one ).id, description: 'comment 2' )
     end
-    assert se2.destroyable?
-    refute se1.destroyable?
 
-    se3 = nil
-    assert_difference( 'SirEntry.count', 1 ) do
-      se3 = sir_items( :one ).sir_entries.create( rec_type: 2, group_id: groups( :group_one ).id, description: 'response' )
+    assert_equal 4, se1.sir_item.sir_entries.count
+
+    assert_no_difference( 'SirEntry.count' ) do
+      assert_throws :abort do
+        se3.destroy
+      end
     end
-    assert se3.destroyable?
-    assert se2.destroyable?
-    refute se1.destroyable?
+    assert_includes se3.errors, :base
 
-    se4 = nil
-    assert_difference( 'SirEntry.count', 1 ) do
-      se4 = sir_items( :one ).sir_entries.create( rec_type: 1, group_id: groups( :group_one ).id, description: 'comment 2' )
+    assert_difference( 'SirEntry.count', -1 ) do
+      se2.destroy
     end
-    assert se4.destroyable?
-    refute se3.destroyable?
-    assert se2.destroyable?
-    refute se1.destroyable?
+    si.reload
 
-    se4.destroy
-    se3.reload
-    assert se3.destroyable?
-    assert se2.destroyable?
-    refute se1.destroyable?
+    assert_no_difference( 'SirEntry.count' ) do
+      assert_throws :abort do
+        se3.destroy
+      end
+    end
+    assert_includes se3.errors, :base
+
+    assert_difference( 'SirEntry.count', -2 ) do
+      se4.destroy
+      si.reload
+      se3.destroy
+    end
+
+  end
+
+  test 'visibility' do
+    se = sir_entries( :one )
+    assert se.visibility.nil?
+    refute se.is_visible?
+
+    se.visibility = 0
+    refute se.is_visible?
+
+    se.visibility = 1
+    assert se.is_visible?
   end
 
 end

@@ -12,6 +12,7 @@ class SirEntriesController < ApplicationController
   # GET /sie/:id
  
   def show
+    set_breadcrumb
   end
 
   # GET /sii/:sir_item_id/sie/new
@@ -109,6 +110,12 @@ class SirEntriesController < ApplicationController
     def sir_entry_params
       params.require( :sir_entry ).permit( 
         :sir_item_id, :rec_type, :group_id, :due_date, :description )
+    end
+
+    def set_breadcrumb
+      parent_breadcrumb( :sir_logs, sir_logs_path )
+      parent_breadcrumb( :sir_items, sir_log_sir_items_path( @sir_item.sir_log ))
+      set_breadcrumb_path( sir_item_path( @sir_item ))
     end
 
 end

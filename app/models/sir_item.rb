@@ -34,12 +34,15 @@ class SirItem < ActiveRecord::Base
   SIR_ITEM_STATUS_LABELS = SirItem.human_attribute_name( :states ).freeze
 
   validates :status,
+    presence: true,
     inclusion: { in: 0..( SIR_ITEM_STATUS_LABELS.size - 1 )}
 
   SIR_ITEM_CATEGORY_LABELS = SirItem.human_attribute_name( :categories ).freeze
 
   validates :category,
     inclusion: { in: 0..( SIR_ITEM_CATEGORY_LABELS.size - 1 )}  
+
+  validate :attr_modifications, on: :update
 
   validate :archive_closed_only
 
@@ -84,6 +87,23 @@ class SirItem < ActiveRecord::Base
     ( phase_code.try :code ) || some_id( phase_code_id )
   end
 
+  # remember previous value of group id for validation
+
+  def group_id=( g )
+    @prev_group_id ||= group_id
+    self[ :group_id ] = g
+  end
+
+  # allow modification of group_id only if no entries exist yet for this item;
+  # transition to status new is not permitted if there are entries
+
+  def attr_modifications
+    errors.add( :group_id, I18n.t( 'sir_items.msg.bad_grp_chg' )) \
+      unless sir_entries.empty? || ( @prev_group_id == group_id ) || @prev_group_id.nil?
+    errors.add( :status, I18n.t( 'sir_items.msg.bad_status' )) \
+      unless status != 0 || sir_entries.empty?
+  end
+
   # prepare code for responsible party (for index)
 
   def resp_group_code
@@ -95,17 +115,6 @@ class SirItem < ActiveRecord::Base
 
   def set_seqno
     self.seqno = sir_log.next_seqno_for_item
-  end
-
-  # update status: new is only allowed when there no SirEntries
-
-  def status=( new_status )
-    ns = new_status.to_i
-    if ns.nil? 
-      write_attribute( :status, sir_entries.count == 0 ? 0 : 1 )
-    else
-      write_attribute( :status, ns ) unless ( ns == 0 and sir_entries.count > 0 )
-    end
   end
 
   # is the item still open?
@@ -148,6 +157,42 @@ class SirItem < ActiveRecord::Base
       end
     end
     grp_stack.length - 1
+  end
+
+  # set visibility for all existing entries (new entries should alway
+  # be visible by default!);
+  # groups is an array of group_ids for which entries should be shown,
+  # blank if all groups have access, nil for no groups;
+  # an entry is permitted to be shown, if it belongs to a permitted
+  # group or if it is referring to an entry of a permitted group
+
+  def set_visibility( groups )
+    if groups.nil?
+      sir_entries.each{ |se| se.visibility = 0 }
+    elsif groups.empty?
+      sir_entries.each{ |se| se.visibility = 1 }
+    else
+      se_stack = Array.new
+      next_visible = groups.include?( group_id ) ? 2 : 0
+      sir_entries.each do |se|
+        case se.rec_type
+        when 0 # forward
+          se_stack.push( se )
+          if groups.include?( se.group_id )
+            se_stack.each{ |sse| sse.visibility = 1 }
+            next_visible = 2
+          else
+            se.visibility = next_visible
+            next_visible = 0
+          end
+        when 1 # comment
+          se.visibility = groups.include?( se.group_id ) ? 3 : 0
+        when 2 # backward
+          se.visibility = se_stack.pop.visibility
+          next_visible = groups.include?( se.group_id ) ? 1 : 0
+        end
+      end
+    end
   end
 
   # this method is to be used to validate all entries belonging to

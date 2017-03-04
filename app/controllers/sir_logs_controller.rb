@@ -2,6 +2,7 @@ class SirLogsController < ApplicationController
   initialize_feature FEATURE_ID_SIR_LOGS, FEATURE_ACCESS_INDEX
 
   before_action :set_sir_log, only: [ :show, :edit, :update, :destroy ]
+  before_action :check_access, only: [ :new, :create ]
 
   # GET /sil
 
@@ -67,6 +68,13 @@ class SirLogsController < ApplicationController
   
     def set_sir_log
       @sir_log = SirLog.find( params[ :id ])
+      check_access
+    end
+
+    # only owner or deputy may access this information
+
+    def check_access
+      render_no_permission unless @sir_log.user_is_owner_or_deputy?( current_user.id )
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -4,6 +4,8 @@ class SirEntry < ActiveRecord::Base
   belongs_to :sir_item, inverse_of: :sir_entries
   belongs_to :group,    ->{ readonly }
 
+  before_destroy :check_before_destroy
+  before_update :check_before_update
   after_save    :update_item
   after_destroy :release_item
 
@@ -24,6 +26,10 @@ class SirEntry < ActiveRecord::Base
 
   validate :validate_new_entry, on: :create
 
+  # the following attribute is used when creating views of all entries
+
+  attr_accessor :visibility
+
   # scopes
 
   scope :log_order, ->{ reorder( created_at: :asc  )}
@@ -41,8 +47,24 @@ class SirEntry < ActiveRecord::Base
 
   # can only destroy entry if it is a comment or the last entry in a thread
 
-  def destroyable?
-    rec_type == 1 || sir_item.sir_entries.last.id == id
+  def check_before_destroy
+    unless rec_type == 1 || sir_item.sir_entries.last.id == id
+      errors.add( :base, I18n.t( 'sir_items.msg.bad_del_req' ))
+      throw :abort
+    end
+  end
+
+  def check_before_update
+    unless sir_item.sir_entries.last.id == id
+      errors.add( :base, I18n.t( 'sir_items.msg.bad_upd_req' ))
+      throw :abort
+    end
+  end
+
+  # entry is defined as visible if it has a visibility flag of > 0
+
+  def is_visible?
+    visibility && ( visibility > 0 )
   end
 
   private

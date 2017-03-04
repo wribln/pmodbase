@@ -1,5 +1,5 @@
 require 'test_helper'
-class SirItemTest < ActiveSupport::TestCase
+class SirItem1Test < ActiveSupport::TestCase
 
   test 'fixture 1' do 
     si = sir_items( :one )
@@ -8,11 +8,12 @@ class SirItemTest < ActiveSupport::TestCase
     assert_equal 1, si.seqno
     refute_nil si.reference
     refute_nil si.cfr_record_id
-    assert_equal 0, si.status
+    assert_equal 1, si.status
     assert_equal 1, si.category
     refute_nil si.phase_code_id
     refute si.archived
     refute_nil si.description
+    assert si.valid?
   end
 
   test 'fixture 2' do 
@@ -27,6 +28,7 @@ class SirItemTest < ActiveSupport::TestCase
     assert_nil si.phase_code_id
     refute si.archived
     refute_nil si.description
+    assert si.valid?
   end
 
   test 'ensure status dimensions' do
@@ -201,7 +203,13 @@ class SirItemTest < ActiveSupport::TestCase
     assert_equal si.count, 2
 
     si = SirItem.ff_stts( 0 )
-    assert_equal si.count, 2
+    assert_equal si.count, 1
+
+    si = SirItem.ff_stts( 1 )
+    assert_equal si.count, 1
+
+    si = SirItem.ff_stts( 2 )
+    assert_equal si.count, 0
 
     si = SirItem.ff_cat( 1 )
     assert_equal si.count, 2
@@ -233,23 +241,70 @@ class SirItemTest < ActiveSupport::TestCase
     assert si.resp_group_code, groups( :group_two ).code
   end
 
-  test 'update status' do
+  test 'update status on :one' do
     si = sir_items( :one )
-    assert_equal 0, si.status
+    assert_equal 1, si.status
     assert_equal 1, si.sir_entries.count
+
+    si.status = 0
+    refute si.valid?
+    assert_includes si.errors, :status
+
     si.status = 1
-    assert_equal 1, si.status
-    si.status = 0
-    assert_equal 1, si.status
+    assert si.valid?
+
     si.status = nil
-    assert_equal 1, si.status
-    si.status = 2
-    assert_equal 2, si.status
-    si.status = 3
-    assert_equal 3, si.status
-    si.status = 0
-    assert_equal 3, si.status
+    refute si.valid?
+    assert_includes si.errors, :status
   end
 
+  test 'update status on :two' do
+    si = sir_items( :two )
+    assert_equal 0, si.status
+    assert_equal 0, si.sir_entries.count
+
+    si.status = 1
+    assert si.valid?
+
+    si.status = 0
+    assert si.valid?
+
+    si.status = 1
+    assert si.valid?
+
+    si.status = nil
+    refute si.valid?
+    assert_includes si.errors, :status
+
+  end
+
+  test 'attempt to modify group on :one' do
+    si = sir_items( :one )
+    g1 = si.group_id
+    g2 = groups( :group_two ).id
+    refute_equal g1, g2
+    assert si.valid?, si.errors.messages
+
+    si.group_id = g2
+    refute si.valid?
+    assert_includes si.errors, :group_id
+
+    si.group_id = g1
+    assert si.valid?
+  end
+
+  test 'attempt to modify group on :two' do
+    si = sir_items( :two )
+    g1 = si.group_id
+    g2 = groups( :group_one ).id
+    refute_equal g1, g2
+    assert si.valid?, si.errors.messages
+
+    si.group_id = g2
+    assert si.valid?
+
+    si.group_id = g1
+    assert si.valid?
+  end
 
 end

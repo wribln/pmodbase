@@ -12,13 +12,13 @@ en:
 
       sir_log:
         id:                 :general.attributes.id
-        code:               'Log Prefix'
+        code:               'Item Prefix'
         label:              'Description'
         owner_account_id:   'Owner Account ID'
         owner:              'Owner'
         deputy_account_id:  'Deputy Account ID'
         deputy:             'Deputy'
-        members:            'List Members'
+        members:            'Log Members'
         archived:           'Archived'
 # for error messages in subform
         sir_members:        'At least one member record'
@@ -27,7 +27,7 @@ en:
         account_id:         'Account ID'
         to_access:          'Can Access'
         to_update:          'Can Update'
-        member_account:     'Participants (Account ID and Name)'
+        member_account:     'Members (Account ID and Name)'
 
       sir_item:
         id:               :general.attributes.id
@@ -51,7 +51,7 @@ en:
         id:               :general.attributes.id
         rec_type:         'Type'
         rec_types:        [ 'Forward to', 'Comment by', 'Respond to' ]
-        sir_item_id:      'SIR Item'
+        sir_item_id:      'SIR Log Item'
         group_id:         'Group'
         due_date:         'Due Date'
         description:      'Description'
@@ -64,6 +64,8 @@ en:
     title:              'Structured Issue-Response (SIR) Logs'
     index:
       form_title:       'Index of All SIR Logs'
+      owner:            'Owner'
+      deputy:           'Deputy'
     new:
       form_title:       'Create New SIR Log'
     show:
@@ -83,14 +85,14 @@ en:
       own_account_id: 'is already Owner or Deputy for this log.'
 
   sir_items:
-    title:              'SIR Items'
+    title:              'SIR Log Items'
     index:
       form_title:       'All Items in SIR Log '
       resp_group:       'Responsible Group'
     new:
-      form_title:       'Add SIR Item to '
+      form_title:       'Add SIR Log Item to '
     edit:
-      form_title:       'Edit SIR Item Attributes'
+      form_title:       'Edit SIR Log Item Attributes'
     show:
       archived:         'archived'
       respond:          'Respond'
@@ -99,36 +101,40 @@ en:
       show:             'Q Show'
       edit:             '/ Edit'
       delete:           '- Delete'
-      form_title:       'Show SIR Item and Log Entries'
-      no_entries:       'No log entries for this item.'
+      form_title:       'Show SIR Log Item and Entries'
+      no_entries:       'No SIR Log Entries for this item.'
       rec_head_0:       'Forward to %{group}'
       rec_head_1:       'Comment by %{group}'
-      rec_head_2:       'Response by %{group}'
+      rec_head_2:       'Response to %{group}'
       due_by:           ', due by %{due_date}'
     show_all:
-      form_title:       'Show Details of SIR Item'
+      form_title:       'Show Details of SIR Log Item'
     msg:
       bad_seqno:        'must be unique within this SIR Log.'
       bad_archive:      'cannot be set on open items.'
-      create_ok:        'SIR Item successfully created.'
-      update_ok:        'SIR Item successfully updated.'
-      delete_ok:        'SIR Item successfully deleted.'
+      create_ok:        'SIR Log Item successfully created.'
+      update_ok:        'SIR Log Item successfully updated.'
+      delete_ok:        'SIR Log Item successfully deleted.'
       bad_grp_seq:      'Forward request cannot be to group already in thread.'
       bad_grp_com:      'Comments can only be made by currently active group.'
-      bad_grp_re1:      'Group owning this SIR Item may not create a Response entry.'
+      bad_grp_re1:      'Group owning this SIR Log Item may not create a Response entry.'
       bad_grp_re2:      'Responding group does not match previous group in thread.'
+      bad_grp_chg:      'cannot be changed for an item with entries.'
+      bad_status:       'cannot be set to new if there are entries for this item.'
+      bad_del_req:      'Only comments or the most recent entry can be deleted.'
+      bad_upd_req:      'Only the most recent entry can be updated.'
 
   sir_entries:
-    title:              'SIR Entries'
+    title:              'SIR Log Entries'
     show:
-      form_title:       'Show Single SIR Entry'
+      form_title:       'Show Single SIR Log Entry'
       show_item:        'Show Item'
     new:
-      form_title:       'Add New SIR Entry'
+      form_title:       'Add New SIR Log Entry'
     edit:
-      form_title:       'Edit Single SIR Entry'
+      form_title:       'Edit Single SIR Log Entry'
     msg:
-      create_ok:        'SIR Entry successfully created.'
-      update_ok:        'SIR Entry successfully updated.'
-      delete_ok:        'SIR Entry successfully deleted.'
+      create_ok:        'SIR Log Entry successfully created.'
+      update_ok:        'SIR Log Entry successfully updated.'
+      delete_ok:        'SIR Log Entry successfully deleted.'
       bad_request:      'Response not possible at this point.'

@@ -5,7 +5,7 @@ one:
   reference:  'other-id 1'
   cfr_record: one
   label:      'Item No 1'
-  status:     0
+  status:     1
   category:   1
   phase_code: prl 
   archived:   false

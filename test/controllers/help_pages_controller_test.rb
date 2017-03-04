@@ -6,19 +6,19 @@ class HelpPagesControllerTest < ActionController::TestCase
     session[ :current_user_id ] = accounts( :one ).id
   end
 
-  test "check class_attributes"  do
+  test 'check class_attributes'  do
     validate_feature_class_attributes FEATURE_ID_HELP_PAGES, 
       ApplicationController::FEATURE_ACCESS_ALL + 
       ApplicationController::FEATURE_ACCESS_NBP
   end
 
-  test "Get Default Help (Home)" do
+  test 'Get Default Help (Home)' do
     get :show_default
     assert_response :success
     assert_template :home
   end
 
-  test "Get Help Overview" do
+  test 'Get Help Overview' do
     get :show, title: :home
     assert_response :success
     assert_template :home
@@ -48,7 +48,7 @@ class HelpPagesControllerTest < ActionController::TestCase
       get :show, title: :help_pages
       assert_response :success
       help_files.each do |topic|
-        assert_select "a[href=?]","/help/#{ topic }" #">>> missing help topic: #{ topic }"
+        assert_select "a[href=?]","/help/#{ topic }" # >>> missing help topic: #{ topic }
       end
     end
 

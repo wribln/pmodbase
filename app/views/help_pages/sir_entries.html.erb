@@ -1,0 +1,13 @@
+<% help_title "Help on #{ SirEntry.model_name.human }" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">... lead text ...</p>
+    <h3>... subtitle ...</h3>
+    <p>... help text ...</p>
+    <ul>
+      <li><%= help_param SirEntry.human_attribute_name( :id ) -%></li>
+    </ul>
+    <p>Status transition to 'new' only permitted if there are no entries!</p>
+    <%= help_footer FEATURE_ID_SIR_ENTRIES %>
+  </div> <!-- /container -->

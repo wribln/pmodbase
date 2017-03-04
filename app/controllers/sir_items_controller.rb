@@ -3,6 +3,7 @@ class SirItemsController < ApplicationController
 
   before_action :set_sir_log,  only: [ :index, :new, :create ]
   before_action :set_sir_item, only: [ :show, :show_all, :edit, :update, :destroy ]
+  before_action :set_breadcrumb
   
   # GET /sil/1/sii
  
@@ -93,10 +94,13 @@ class SirItemsController < ApplicationController
 
     def set_sir_log
       @sir_log = SirLog.find( params[ :sir_log_id ])
+      set_breadcrumb_path( sir_log_sir_items_path( @sir_log ))
     end
 
     def set_sir_item
       @sir_item = SirItem.find( params[ :id ])
+      @sir_log = @sir_item.sir_log
+      set_breadcrumb_path( sir_log_sir_items_path( @sir_log ))
     end
 
     def set_selections( action )
@@ -116,4 +120,9 @@ class SirItemsController < ApplicationController
     def filter_params
       params.slice( :ff_seqno, :ff_ref, :ff_desc, :ff_stts, :ff_cat, :ff_grp, :ff_cgrp ).clean_up
     end
+
+    def set_breadcrumb
+      parent_breadcrumb( :sir_logs, sir_logs_path )
+    end
+
 end

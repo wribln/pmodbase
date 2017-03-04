@@ -2,15 +2,15 @@
 <div class="container">
   <%= breadcrumbs %>
   <%= form_title %>
-  <div class="table-responsive">
+  <div class="table-responsive col-sm-11">
     <table class="table table-striped table-bordered">
       <thead>
         <tr>
           <th class="col-sm-1"><%= SirLog.human_attribute_name( :id    )%></th>
-          <th class="col-sm-2"><%= SirLog.human_attribute_name( :code  )%></th>
+          <th class="col-sm-1"><%= SirLog.human_attribute_name( :code  )%></th>
           <th class="col-sm-4"><%= SirLog.human_attribute_name( :label )%></th>
-          <th class="col-sm-2"><%= SirLog.human_attribute_name( :owner_account_id  )%></th>
-          <th class="col-sm-2"><%= SirLog.human_attribute_name( :deputy_account_id )%></th>
+          <th class="col-sm-2"><%= t( '.owner' )%></th>
+          <th class="col-sm-2"><%= t( '.deputy' )%></th>
           <th class="col-sm-1 hidden-print"><%= t( 'action_title.header' )%></th>
         </tr>
       </thead>

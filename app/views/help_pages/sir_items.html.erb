@@ -2,11 +2,45 @@
   <div class="container">
     <%= helpcrumbs %>
     <%= help_header %>
-    <p class="lead">... lead text ...</p>
-    <h3>... subtitle ...</h3>
-    <p>... help text ...</p>
+    <p class="lead">Items in a SIR Log describe a specific topic or issue</p>
+    <h3>Attributes</h3>
     <ul>
-      <li><%= help_param SirItem.human_attribute_name( :id ) -%></li>
+      <li>Each item in a SIR Log has a unique <%= help_param SirItem.human_attribute_name( :seqno )-%>
+      consisting of the SIR Log <%= help_term SirLog.human_attribute_name( :code )-%> followed by a
+      a sequence number. This number is automatically generated when a new SIR Log Item is created.</li>
+      <li>The <%= help_param SirItem.human_attribute_name( :reference )-%> field can be used to note
+      a foreign reference to this item, possibly an ID, line number, or some code from another list.</li>
+      <li><%= help_param SirItem.human_attribute_name( :group_id )-%> is the group for which this item
+      was opened. Only a member of this SIR Log having permission for this group will be permitted to
+      modify this item later on, specifically to confirm a terminal status.</li>
+      <li><%= help_param SirItem.human_attribute_name( :label )-%> gives the SIR Log Item a heading.</li>
+      <li><%= help_param SirItem.human_attribute_name( :description )-%> is a text field which can
+      be used to provide more details on this issue.</li>
+      <li><%= help_param SirItem.human_attribute_name( :cfr_record_id )-%> can be used to link a CFR
+      record on a document or a set of documents to this SIR Log Item.</li>
+      </ul>
+      <p>The following attributes have no further purpose other than to serve documentation,
+      selection/filtering or statistics.</p>
+      <ul>
+      <li><%= help_param SirItem.human_attribute_name( :status )-%> can be one of the following:
+      <ul>
+        <li><%= help_term SirItem::SIR_ITEM_STATUS_LABELS[ 0 ]-%></li>
+        <li><%= help_term SirItem::SIR_ITEM_STATUS_LABELS[ 1 ]-%></li>
+        <li><%= help_term SirItem::SIR_ITEM_STATUS_LABELS[ 2 ]-%></li>
+        <li><%= help_term SirItem::SIR_ITEM_STATUS_LABELS[ 3 ]-%></li>
+      </ul>
+      <li><%= help_param SirItem.human_attribute_name( :category )-%> can be one of the following:
+      <ul>
+        <li><%= help_term SirItem::SIR_ITEM_CATEGORY_LABELS[ 0 ]-%></li>
+        <li><%= help_term SirItem::SIR_ITEM_CATEGORY_LABELS[ 1 ]-%></li>
+        <li><%= help_term SirItem::SIR_ITEM_CATEGORY_LABELS[ 2 ]-%></li>
+        <li><%= help_term SirItem::SIR_ITEM_CATEGORY_LABELS[ 3 ]-%></li>
+        <li><%= help_term SirItem::SIR_ITEM_CATEGORY_LABELS[ 4 ]-%></li>
+      </ul>
+      <li><%= help_param SirItem.human_attribute_name( :phase_code_id )-%> allows to define a phase
+      to which this SIR Item is related to. The available values come from the configured 
+      <%= link_to_help :phase_codes, 'project phases'-%>.</li>
+      <li><%= help_param SirItem.human_attribute_name( :archived )-%></li>
     </ul>
     <p>Status transition to 'new' only permitted if there are no entries!</p>
     <%= help_footer FEATURE_ID_SIR_ITEMS %>

@@ -2,11 +2,74 @@
   <div class="container">
     <%= helpcrumbs %>
     <%= help_header %>
-    <p class="lead">... lead text ...</p>
-    <h3>... subtitle ...</h3>
-    <p>... help text ...</p>
+    <p class="lead">Manage issue resolutions in a structured web-based log</p>
+    <h3>Short Introduction to SIR Logs - Structured Issue Response Logs</h3>
+    <p>A Structured Issue-Response Log (<%= help_term 'SIR Log'%>) supports chronological listings
+    of texts or posts - quite similar to a blog (forum, bulletin boards) on internet sites.
+    In a SIR Log, posts are organized in <%= help_term 'SIR Log Items' %>: The idea is, 
+    that a single issue would be documented in a SIR Log Item, and all posts (<%= help_term 'SIR Log Entries' %>)
+    regarding this issue would be collected within the SIR Log Item. Furthermore, a status is kept for each
+    SIR Log Item in order to prepare statists across all issues within a SIR Log.</p>
+    <p>You can define as many SIR Logs as you need. Each SIR Log would cover a topic under discussion
+    within a specific group of users, for example 'Safety Issues' could be a topic for a SIR Log, and
+    each individual safety issue would be followed up in a separate SIR Log Item.</p>
+    <p>The posting of comments (SIR Log Entries) to issues (SIR Log Items) is implemented as formal process: At
+    any time, only a single - the currently responsible - group of users is permitted to post comments
+    on the issue. These comments can be passed on to another group for further commenting or back to
+    the previous group as resolution statement.</p>
+    <h3>SIR Log Attributes</h3>
+    <p>The following attributes are managed on the SIR Log level:</p>
     <ul>
-      <li><%= help_param SirLog.human_attribute_name( :id ) -%></li>
+      <li><%= help_param SirLog.human_attribute_name( :id )%> is the internal number of this SIR Log.</li>
+      <li><%= help_param SirLog.human_attribute_name( :label )%> is the title or the topic of the SIR Log.
+      This parameter is required as it will be used a link text on related pages.</li>
+      <li><%= help_param SirLog.human_attribute_name( :code )%> is a short combination of characters which
+      will be used as prefix to the SIR Log Item numbers. If - for example - this code is 'SL', the first SIR Log Item
+      in this list would be identified by 'SL-1', the second 'SL-2', and so on. This parameter is
+      required.</li>
+      <li><%= help_param SirLog.human_attribute_name( :owner_account_id )%> is the account of the owner of
+      this SIR Log: This user will be able to create SIR Log Items for this SIR Log and is permitted to maintain
+      the group of users who will be allowed to access the SIR Log Items in this SIR Log (see below for details).</li>
+      <li><%= help_param SirLog.human_attribute_name( :deputy_account_id )%> is the account of the deputy
+      user. This user - when specified - will have the same rights on the SIR Log Items</li>
+      <li><%= help_param SirLog.human_attribute_name( :archived )%> is a flag which controls
+      whether this list is shown in the index view of all SIR Logs: set this flag when this SIR Log is
+      not actively maintained anymore.</li>
     </ul>
+    <h3>Participants</h3>
+    <p>The SIR Log administration includes the adminstration of other users and their access permissions
+    for the given SIR Log. Only users explicitly listed as Participant of this SIR Log may view - and
+    possibly edit - any SIR Log Entries. The following attributes are managed per participant:</p>
+    <ul>
+      <li><%= help_param SirMember.human_attribute_name( :account_id ) -%> needs to be
+        the account number of the project member to be added to the list of members for this SIR Log.
+        You can find this information under the link
+        <%= help_param I18n.t( 'base.menu.my_data' )-%> for your own account, or on 
+        the list of project member accounts accessible on the link
+        <%= help_term t( 'general.accounts_link' )%> next to this field above.
+        When viewing details of the members, the link next to the
+        <%= help_term SirMember.human_attribute_name( :account_id ) -%> 
+        leads to the contact information of the account's owner.</li>
+      <li><%= help_param SirMember.human_attribute_name( :to_access ) -%> is a flag which - when set - 
+        permits this project member to view SIR Log Items and related SIR Log Entries.</li>
+      <li><%= help_param SirMember.human_attribute_name( :to_update ) -%> permits - when set - the
+        project member to comment on a SIR Log Item in the SIR Log. However,
+        this flag is ignored when this person is not permitted to access this item (refer to 
+        <%= help_term SirMember.human_attribute_name( :to_access ) -%>)</li>
+    </ul>
+    <h3>Index</h3>
+    <p>All SIR Logs in the pmodbase application are listed in the order they were created. The link under the 
+    <%= help_term SirLog.human_attribute_name( :label )%> leads to the index page of the SIR Log Items belonging
+    to this SIR Log.</p>
+    <h3>Access Permissions</h3>
+    <p>Owner and Deputy of the SIR Log need access permissions for the feature
+    <%= help_term Feature.find_by_id( FEATURE_ID_SIR_LOGS ).label_with_id-%> in order to manage
+    attributes of the SIR Log and its participants.</p>
+    <p>Participants need read permission to access the SIR Log Items in a SIR Log (feature
+    <%= help_term Feature.find_by_id( FEATURE_ID_SIR_ITEMS ).label_with_id-%>). They also
+    need read -&nbsp;and possibly edit&nbsp;- permissions to the feature 
+    <%= help_term Feature.find_by_id( FEATURE_ID_SIR_ENTRIES ).label_with_id-%> in order
+    to access and update SIR Log Entries for the SIR Log Items in this SIR Log.</p>
+    <p>The access is restricted to the groups for which the project member has access permissions.</p>
     <%= help_footer FEATURE_ID_SIR_LOGS %>
   </div> <!-- /container -->
