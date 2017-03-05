@@ -12,19 +12,21 @@
       </div>
       <!-- SIR Entries -->
       <%- if @sir_entries.empty? -%>
-        <div class="col-sm-4"><%= t( '.no_entries' ) %></div>
+        <div class="form-group p-group"><p><%= t( '.no_entries' ) %></p></div>
       <%- else -%>
         <%- @sir_entries.each do |se| %>
           <%= render partial: 'show_entry', object: se, locals: { depth: SirItem.depth( @group_stack, se )} %>
         <%- end %>
       <%- end -%>
-      <div class="col-sm-offset-<%= SirItem.depth( @group_stack )%>">
-        <%- if SirItem.depth( @group_stack ) > 0 -%>
-          <%= entry_action :respond, @sir_item %> |
-        <%- end %>
+      <%- if SirItem.depth( @group_stack ) > 0 -%>
+        <div class="col-sm-offset-<%= SirItem.depth( @group_stack )%>">
+        <%= entry_action :respond, @sir_item %> |
+      <%- else %>
+        <div>
+      <%- end %>
         <%= entry_action :comment, @sir_item %> |
         <%= entry_action :forward, @sir_item %>
-      </div>
+        </div>
       <!-- Divider Line -->
       <div class="form-group">
         <hr style="margin:4px"/>  

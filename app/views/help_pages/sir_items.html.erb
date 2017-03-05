@@ -24,10 +24,15 @@
       <ul>
       <li><%= help_param SirItem.human_attribute_name( :status )-%> can be one of the following:
       <ul>
-        <li><%= help_term SirItem::SIR_ITEM_STATUS_LABELS[ 0 ]-%></li>
-        <li><%= help_term SirItem::SIR_ITEM_STATUS_LABELS[ 1 ]-%></li>
-        <li><%= help_term SirItem::SIR_ITEM_STATUS_LABELS[ 2 ]-%></li>
-        <li><%= help_term SirItem::SIR_ITEM_STATUS_LABELS[ 3 ]-%></li>
+        <li><%= help_term SirItem::SIR_ITEM_STATUS_LABELS[ 0 ]-%> is for newly created SIR Items
+        without any SIR Log Entries.</li>
+        <li><%= help_term SirItem::SIR_ITEM_STATUS_LABELS[ 1 ]-%> is automatically set once an 
+        SIR Log Entry was added to this item.</li>
+        <li><%= help_term SirItem::SIR_ITEM_STATUS_LABELS[ 2 ]-%> can be set to acknowledge that
+        a preliminary answer on an issue is acceptable but further actions still need to be
+        performed before this SIR Item can be closed.</li>
+        <li><%= help_term SirItem::SIR_ITEM_STATUS_LABELS[ 3 ]-%> is the terminal status for a
+        SIR Log Item: </li>
       </ul>
       <li><%= help_param SirItem.human_attribute_name( :category )-%> can be one of the following:
       <ul>
@@ -40,8 +45,9 @@
       <li><%= help_param SirItem.human_attribute_name( :phase_code_id )-%> allows to define a phase
       to which this SIR Item is related to. The available values come from the configured 
       <%= link_to_help :phase_codes, 'project phases'-%>.</li>
-      <li><%= help_param SirItem.human_attribute_name( :archived )-%></li>
+      <li><%= help_param SirItem.human_attribute_name( :archived )-%> is a flag which - when set -
+      causes this SIR Log Item to be omitted from any display; it will still be counted in any
+      statistics.</li>
     </ul>
-    <p>Status transition to 'new' only permitted if there are no entries!</p>
     <%= help_footer FEATURE_ID_SIR_ITEMS %>
   </div> <!-- /container -->

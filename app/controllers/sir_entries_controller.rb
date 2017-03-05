@@ -19,6 +19,7 @@ class SirEntriesController < ApplicationController
 
   def new
     @sir_item = SirItem.find( params[ :sir_item_id ])
+    set_breadcrumb
     set_group_stack_and_last
     @sir_entry = @sir_item.sir_entries.new( params.permit( :sir_item_id, :rec_type ))
     set_sir_groups
@@ -27,8 +28,12 @@ class SirEntriesController < ApplicationController
   # GET /sii/:id/edit
 
   def edit
-    set_group_stack_and_last
-    set_sir_groups
+    if @sir_entry.updatable?
+      set_group_stack_and_last
+      set_sir_groups
+    else
+      redirect_to @sir_entry, notice: I18n.t( 'sir_items.msg.bad_upd_req' )
+    end
   end
 
   # POST /sii/:sir_item_id
@@ -62,9 +67,12 @@ class SirEntriesController < ApplicationController
  
   def destroy
     @sir_item = @sir_entry.sir_item
-    @sir_entry.destroy
     respond_to do |format|
-      format.html { redirect_to sir_item_path( @sir_item ), notice: I18n.t( 'sir_entries.msg.delete_ok' )}
+      if @sir_entry.destroy
+        format.html { redirect_to sir_item_path( @sir_item ), notice: I18n.t( 'sir_entries.msg.delete_ok' )}
+      else
+        format.html { render :show }
+      end
     end
   end
 
@@ -77,26 +85,35 @@ class SirEntriesController < ApplicationController
       @sir_item = @sir_entry.sir_item
     end
 
-    # prepare list of groups to choose from - depends on type of entry
-    # removing all groups not permitted would be somewhat expensive (check all
-    # parents leading to SIR Item) - this is left for later implementation
-    # if needed (check is done upon save anyway)
+    # prepare list of groups to choose from - depends on type of entry and action
 
     def set_sir_groups
-      case @sir_entry.rec_type
-      when 0 # forward
-        @sir_entry.group_id = nil # do not preselect!
-        @sir_groups = Group.all.active_only.collect{ |g| [ g.code_and_label, g.id ]}
-      when 1 # comment - use current group
-        @sir_entry.group_id = @group_stack.last
-        @sir_groups = nil
-      when 2 # response - use group before current group
-        if @group_stack.size < 2
-          @sir_entry.errors.add( :base, I18n.t( 'sir_entries.msg.bad_request' ))
-        else
-          @sir_entry.group_id = @group_stack[ -2 ]
+      case action_name
+      when 'new'
+        case @sir_entry.rec_type
+        when 0 # forward
+          @sir_entry.group_id = nil
+          @sir_groups = Group.all.active_only.collect{ |g| [ g.code_and_label, g.id ] unless @group_stack.include?( g.id )}.compact!
+        when 1 # comment - use current group
+          @sir_entry.group_id = @group_stack.last
+          @sir_groups = nil
+        when 2 # response - use group before current group
+          if @group_stack.size < 2
+            @sir_entry.errors.add( :base, I18n.t( 'sir_entries.msg.bad_request' ))
+          else
+            @sir_entry.group_id = @group_stack[ -2 ]
+          end
+          @sir_groups = nil
         end
-        @sir_groups = nil
+      when 'edit'
+        case @sir_entry.rec_type
+        when 0 # forward
+          @sir_groups = Group.all.active_only.collect{ |g| [ g.code_and_label, g.id ]}
+        when 1 # comment - use current group
+          @sir_groups = nil
+        when 2 # response - use group before current group
+          @sir_groups = nil
+        end
       end
     end
 

@@ -101,18 +101,6 @@ class SirLogTest < ActiveSupport::TestCase
     assert t.user_is_owner_or_deputy?( a )
   end
 
-  test 'accounts_for_select 1' do
-    sl = sir_logs( :sir_log_one )
-    a = sl.accounts_for_select
-    assert_equal a, a | [ accounts( :three ).id, accounts( :one ).id, accounts( :wop ).id ]
-  end
-
-  test 'accounts_for_select 2' do
-    sl = sir_logs( :sir_log_two )
-    a = sl.accounts_for_select
-    assert_equal a, a | [ accounts( :one ).id, accounts( :two ).id, accounts( :wop ).id, ]
-  end
-
   test 'scopes' do
     sl = SirLog.active
     assert_equal 2, sl.count

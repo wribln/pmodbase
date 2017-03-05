@@ -50,14 +50,24 @@ class SirEntry < ActiveRecord::Base
   def check_before_destroy
     unless rec_type == 1 || sir_item.sir_entries.last.id == id
       errors.add( :base, I18n.t( 'sir_items.msg.bad_del_req' ))
-      throw :abort
+      return false # throw :abort in Rails 5
+    else
+      return true
     end
   end
 
+  # permit update only on last item
+
+  def updatable?
+    sir_item.sir_entries.last.id == id
+  end
+
   def check_before_update
-    unless sir_item.sir_entries.last.id == id
+    unless updatable?
       errors.add( :base, I18n.t( 'sir_items.msg.bad_upd_req' ))
-      throw :abort
+      return false # throw :abort in Rails 5
+    else
+      return true
     end
   end
 

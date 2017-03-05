@@ -65,12 +65,6 @@ class SirLog < ActiveRecord::Base
     user_is_owner_or_deputy?( id )||sir_members.exists?( account: id, to_access: true, to_update: true )
   end
 
-  # create a list of possible owners for use in drop-down lists
-
-  def accounts_for_select
-    sir_members.pluck( :account_id ) + [ owner_account_id, deputy_account_id ].compact
-  end
-
   private
 
     # ensure that archived is either true or false

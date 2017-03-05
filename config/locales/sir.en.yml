@@ -57,9 +57,9 @@ en:
         description:      'Description'
 
   sir_logs:
-    no_members_info:    'No participants assigned yet.'
-    members_heading:    'Participants in this list'
-    add_label:          'Add additional participants'
+    no_members_info:    'No members assigned yet.'
+    members_heading:    'Members in this list'
+    add_label:          'Add additional members'
     action:             'Action'
     title:              'Structured Issue-Response (SIR) Logs'
     index:

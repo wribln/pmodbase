@@ -4,6 +4,7 @@
   <%= form_title %>
   <div class="form-horizontal" role="form">
     <%= form_for @sir_entry do |f| %>
+      <%= render partial: 'shared/errors', object: @sir_entry.errors %>
       <%= render partial: 'shared/notice' %>
       <%= render partial: 'sir_items/show_item', object: @sir_entry.sir_item %>
       <!-- Divider Line -->
@@ -42,6 +43,9 @@
         </div>
         <div class="col-sm-2">
           <%= link_to t( '.show_item' ), sir_item_path( @sir_entry.sir_item ), class: 'btn btn-lg btn-block btn-default' %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to t( 'button_label.destroy' ), url_for( action: :destroy, id: @sir_entry.id, controller: :sir_entries ), method: :delete, data: { confirm: t( 'action_title.del_confirm' )}, class: 'btn btn-lg btn-block btn-default' %>
         </div>
       </div>
     <% end %>

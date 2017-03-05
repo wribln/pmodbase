@@ -2,12 +2,17 @@
   <div class="container">
     <%= helpcrumbs %>
     <%= help_header %>
-    <p class="lead">... lead text ...</p>
-    <h3>... subtitle ...</h3>
-    <p>... help text ...</p>
+    <p class="lead">SIR Log Entries are comments, notes, posts on a specific SIR Log Item</p>
+    <h3>Notes</h3>
+    <p>A SIR Log Entry is often shown as part of a SIR Log Item together with all other
+    SIR Log Entries belonging to that SIR Log Item. Only when requesting a detailed
+    view to modify this Entry, a form is shown with the individual attributes.</p>
+    <h3>Attributes</h3>
     <ul>
-      <li><%= help_param SirEntry.human_attribute_name( :id ) -%></li>
+      <li><%= help_param SirEntry.human_attribute_name( :type )%></li>
+      <li><%= help_param SirEntry.human_attribute_name( :group_id )%></li>
+      <li><%= help_param SirEntry.human_attribute_name( :due_date )%> ONLY forward rec_types</li>
+      <li><%= help_param SirEntry.human_attribute_name( :description )%></li>
     </ul>
-    <p>Status transition to 'new' only permitted if there are no entries!</p>
     <%= help_footer FEATURE_ID_SIR_ENTRIES %>
   </div> <!-- /container -->

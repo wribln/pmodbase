@@ -2,7 +2,6 @@ class SirLogsController < ApplicationController
   initialize_feature FEATURE_ID_SIR_LOGS, FEATURE_ACCESS_INDEX
 
   before_action :set_sir_log, only: [ :show, :edit, :update, :destroy ]
-  before_action :check_access, only: [ :new, :create ]
 
   # GET /sil
 
