@@ -16,7 +16,7 @@ class BaseItemList
 
     a_category = Struct.new( :item_count, :features, :seqno, :label, :column_no )
 
-    all_features = Feature.select( :id, :code, :label, :feature_category_id, :access_level ).order( :seqno ).all
+    all_features = Feature.includes([ :feature_category, :permission4_groups ]).select( :id, :code, :label, :feature_category_id, :access_level ).order( :seqno ).all
     all_categories = Hash.new
     all_features.each_with_index do |f, fi|
       if f.feature_category_id.nil? || f.feature_category_id <= 0 then

@@ -3,7 +3,7 @@ class Permission4Group < ActiveRecord::Base
   include Filterable
    
   belongs_to :account,  -> { readonly }
-  belongs_to :feature,  -> { readonly }
+  belongs_to :feature,  -> { readonly }, inverse_of: :permission4_groups
   belongs_to :group,    -> { readonly }
   
   validates :feature,

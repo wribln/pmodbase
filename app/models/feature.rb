@@ -4,8 +4,8 @@ class Feature < ActiveRecord::Base
   #include ActiveModelErrorsAdd
   
   belongs_to :feature_category, -> { readonly }, inverse_of: :features
-  has_many   :permission4_groups, -> { readonly }, inverse_of: :features
-  has_many   :permission4_flows, -> { readonly }, inverse_of: :features
+  has_many   :permission4_groups, -> { readonly }, inverse_of: :feature
+  has_many   :permission4_flows, -> { readonly }, inverse_of: :feature
 
   validates :code,
     length: { maximum: MAX_LENGTH_OF_CODE },
