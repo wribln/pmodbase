@@ -15,18 +15,20 @@
         <div class="form-group p-group"><p><%= t( '.no_entries' ) %></p></div>
       <%- else -%>
         <%- @sir_entries.each do |se| %>
-          <%= render partial: 'show_entry', object: se, locals: { depth: SirItem.depth( @group_stack, se )} %>
+          <%= render partial: 'show_entry', object: se, locals: { depth: SirItem.depth!( @group_stack, se )} %>
         <%- end %>
       <%- end -%>
-      <%- if SirItem.depth( @group_stack ) > 0 -%>
-        <div class="col-sm-offset-<%= SirItem.depth( @group_stack )%>">
-        <%= entry_action :respond, @sir_item %> |
-      <%- else %>
-        <div>
+      <%- if @sir_entries.last.is_visible? %>
+        <%- if SirItem.depth( @group_stack ) > 0 -%>
+          <div class="col-sm-offset-<%= SirItem.depth( @group_stack )%>">
+            <%= entry_action :respond, @sir_item %> |
+        <%- else %>
+          <div>
+        <%- end %>
+            <%= entry_action :comment, @sir_item %> |
+            <%= entry_action :forward, @sir_item %>
+          </div>
       <%- end %>
-        <%= entry_action :comment, @sir_item %> |
-        <%= entry_action :forward, @sir_item %>
-        </div>
       <!-- Divider Line -->
       <div class="form-group">
         <hr style="margin:4px"/>  

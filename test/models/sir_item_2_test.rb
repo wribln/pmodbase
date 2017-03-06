@@ -63,11 +63,17 @@ class SirItem2Test < ActiveSupport::TestCase
       assert si.valid?, si.errors.messages
     end
 
+    group_stack = [ si.group_id ]
+    assert_equal 0, SirItem.depth( group_stack )
+
     # no entries: 1
 
+    se = nil
     assert_difference( 'SirEntry.count', 1 ) do
       se = si.sir_entries.create( rec_type: 0, group: group_b )
     end
+    assert_equal 1, SirItem.depth!( group_stack, se )
+    assert_equal 1, SirItem.depth( group_stack )
 
     reset_visibility( si )
 
@@ -87,8 +93,11 @@ class SirItem2Test < ActiveSupport::TestCase
 
     assert_difference( 'SirEntry.count', 2 ) do
       se = si.sir_entries.create( rec_type: 0, group: group_c )
+      assert_equal 2, SirItem.depth!( group_stack, se )
       se = si.sir_entries.create( rec_type: 0, group: group_d )
+      assert_equal 3, SirItem.depth!( group_stack, se )
     end
+    assert_equal 3, SirItem.depth( group_stack )
 
     reset_visibility( si )
 
@@ -117,8 +126,11 @@ class SirItem2Test < ActiveSupport::TestCase
 
     assert_difference( 'SirEntry.count', 2 ) do
       se = si.sir_entries.create( rec_type: 1, group: group_d )
+      assert_equal 3, SirItem.depth!( group_stack, se )
       se = si.sir_entries.create( rec_type: 2, group: group_c )
+      assert_equal 2, SirItem.depth!( group_stack, se )
     end
+    assert_equal 2, SirItem.depth( group_stack )
 
     reset_visibility( si )
 
@@ -147,15 +159,25 @@ class SirItem2Test < ActiveSupport::TestCase
 
     assert_difference( 'SirEntry.count', 9 ) do
       se = si.sir_entries.create( rec_type: 2, group: group_b )
+      assert_equal 1, SirItem.depth!( group_stack, se )
       se = si.sir_entries.create( rec_type: 1, group: group_b )
+      assert_equal 1, SirItem.depth!( group_stack, se )
       se = si.sir_entries.create( rec_type: 0, group: group_d )
+      assert_equal 2, SirItem.depth!( group_stack, se )
       se = si.sir_entries.create( rec_type: 0, group: group_e )
+      assert_equal 3, SirItem.depth!( group_stack, se )
       se = si.sir_entries.create( rec_type: 0, group: group_f )
+      assert_equal 4, SirItem.depth!( group_stack, se )
       se = si.sir_entries.create( rec_type: 2, group: group_e )
+      assert_equal 3, SirItem.depth!( group_stack, se )
       se = si.sir_entries.create( rec_type: 2, group: group_d )
+      assert_equal 2, SirItem.depth!( group_stack, se )
       se = si.sir_entries.create( rec_type: 2, group: group_b )
+      assert_equal 1, SirItem.depth!( group_stack, se )
       se = si.sir_entries.create( rec_type: 2, group: group_a )
+      assert_equal 0, SirItem.depth!( group_stack, se )
     end      
+    assert_equal 0, SirItem.depth( group_stack )
 
     reset_visibility( si )
 

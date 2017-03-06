@@ -148,14 +148,16 @@ class SirItem < ActiveRecord::Base
   # determine depth for display using group_stack
   # update using new_entry before returning depth
 
-  def self.depth( grp_stack, new_entry = nil )
-    unless new_entry.nil?
-      if new_entry.rec_type == 0
-        grp_stack.push( new_entry.group_id )
-      elsif new_entry.rec_type == 2
-        grp_stack.pop
-      end
+  def self.depth!( grp_stack, new_entry )
+    if new_entry.rec_type == 0
+      grp_stack.push( new_entry.group_id )
+    elsif new_entry.rec_type == 2
+      grp_stack.pop
     end
+    grp_stack.length - 1
+  end
+
+  def self.depth( grp_stack )
     grp_stack.length - 1
   end
 
@@ -166,15 +168,15 @@ class SirItem < ActiveRecord::Base
   # an entry is permitted to be shown, if it belongs to a permitted
   # group or if it is referring to an entry of a permitted group
 
-  def set_visibility( groups )
+  def set_visibility( groups, entries = sir_entries )
     if groups.nil?
-      sir_entries.each{ |se| se.visibility = 0 }
+      entries.each{ |se| se.visibility = 0 }
     elsif groups.empty?
-      sir_entries.each{ |se| se.visibility = 1 }
+      entries.each{ |se| se.visibility = 1 }
     else
       se_stack = Array.new
       next_visible = groups.include?( group_id ) ? 2 : 0
-      sir_entries.each do |se|
+      entries.each do |se|
         case se.rec_type
         when 0 # forward
           se_stack.push( se )

@@ -12,6 +12,7 @@ class SirEntriesController < ApplicationController
   # GET /sie/:id
  
   def show
+    check_access( :to_read )
     set_breadcrumb
   end
 
@@ -21,6 +22,7 @@ class SirEntriesController < ApplicationController
     @sir_item = SirItem.find( params[ :sir_item_id ])
     set_breadcrumb
     set_group_stack_and_last
+    check_access( :to_create )
     @sir_entry = @sir_item.sir_entries.new( params.permit( :sir_item_id, :rec_type ))
     set_sir_groups
   end
@@ -30,6 +32,7 @@ class SirEntriesController < ApplicationController
   def edit
     if @sir_entry.updatable?
       set_group_stack_and_last
+      check_access( :to_update )
       set_sir_groups
     else
       redirect_to @sir_entry, notice: I18n.t( 'sir_items.msg.bad_upd_req' )
@@ -41,6 +44,7 @@ class SirEntriesController < ApplicationController
   def create
     @sir_item = SirItem.find( params[ :sir_item_id ])
     @sir_entry = @sir_item.sir_entries.new( sir_entry_params )
+    check_access( :to_create )
     respond_to do |format|
       if @sir_entry.save
         format.html { redirect_to @sir_entry, notice: I18n.t( 'sir_entries.msg.create_ok' )}
@@ -54,6 +58,7 @@ class SirEntriesController < ApplicationController
   # PATCH/PUT /sie/1
  
   def update
+    check_access( :to_update )
     respond_to do |format|
       if @sir_entry.update( sir_entry_params )
         format.html { redirect_to @sir_entry, notice: I18n.t( 'sir_entries.msg.update_ok' )}
@@ -66,6 +71,7 @@ class SirEntriesController < ApplicationController
   # DELETE /sie/1
  
   def destroy
+    check_access( :to_delete )
     @sir_item = @sir_entry.sir_item
     respond_to do |format|
       if @sir_entry.destroy
@@ -133,6 +139,15 @@ class SirEntriesController < ApplicationController
       parent_breadcrumb( :sir_logs, sir_logs_path )
       parent_breadcrumb( :sir_items, sir_log_sir_items_path( @sir_item.sir_log ))
       set_breadcrumb_path( sir_item_path( @sir_item ))
+    end
+
+    # only owner, deputy and members of this SIR log may access details
+    # only members with access to group may view/update item
+
+    def check_access( action )
+      render_no_access unless @sir_item.sir_log.permitted_to_access?( current_user.id )
+      g = @sir_entry.try( :group_id ) || @last_entry.group_id
+      render_no_permission unless current_user.permission_to_access( feature_identifier, action, g )
     end
 
 end

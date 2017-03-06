@@ -6,13 +6,29 @@
     <h3>Notes</h3>
     <p>A SIR Log Entry is often shown as part of a SIR Log Item together with all other
     SIR Log Entries belonging to that SIR Log Item. Only when requesting a detailed
-    view to modify this Entry, a form is shown with the individual attributes.</p>
+    view to modify this Entry, a form is shown with the attributes specific for this
+    individual SIR Log Entry.</p>
     <h3>Attributes</h3>
     <ul>
-      <li><%= help_param SirEntry.human_attribute_name( :type )%></li>
+      <li><%= help_param SirEntry.human_attribute_name( :type )%> determines what type of
+      SIR Log Entry this is:
+      <ul>
+        <li><%= help_term SirEntry::SIR_ENTRY_REC_TYPE_LABELS[ 0 ]%> is a SIR Log Entry
+        which designates a forwarding post, i.e. a comment or request for action is 
+        passed to another project group. From now on, the new group will be responsible
+        for this SIR Log Item.</li>
+        <li><%= help_term SirEntry::SIR_ENTRY_REC_TYPE_LABELS[ 1 ]%> is a comment or
+        internal note which is only visible of members belonging to the current group.</li>
+        <li><%= help_term SirEntry::SIR_ENTRY_REC_TYPE_LABELS[ 2 ]%> causes the issue
+        to be returned to the previous group as a response to the original forward request.</li>
+      </ul>    
+      </li>
       <li><%= help_param SirEntry.human_attribute_name( :group_id )%></li>
-      <li><%= help_param SirEntry.human_attribute_name( :due_date )%> ONLY forward rec_types</li>
-      <li><%= help_param SirEntry.human_attribute_name( :description )%></li>
+      <li><%= help_param SirEntry.human_attribute_name( :due_date )%> can be set on when
+      forwarding a comment or request for action to another group. It indicates to the 
+      newly responsible group that a reply is expected until the given date.</li>
+      <li><%= help_param SirEntry.human_attribute_name( :description )%> is a field to
+      contain the text of the comment, request or response.</li>
     </ul>
     <%= help_footer FEATURE_ID_SIR_ENTRIES %>
   </div> <!-- /container -->

@@ -48,9 +48,10 @@ class SirEntryTest < ActiveSupport::TestCase
     assert_equal 4, se1.sir_item.sir_entries.count
 
     assert_no_difference( 'SirEntry.count' ) do
-      assert_throws :abort do
-        se3.destroy
-      end
+      # assert_throws :abort do
+      #   se3.destroy
+      # end
+      refute se3.destroy
     end
     assert_includes se3.errors, :base
 
@@ -60,9 +61,10 @@ class SirEntryTest < ActiveSupport::TestCase
     si.reload
 
     assert_no_difference( 'SirEntry.count' ) do
-      assert_throws :abort do
-        se3.destroy
-      end
+      # assert_throws :abort do
+      #   se3.destroy
+      # end
+      refute se3.destroy
     end
     assert_includes se3.errors, :base
 

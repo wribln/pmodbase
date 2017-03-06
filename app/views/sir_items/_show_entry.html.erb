@@ -1,13 +1,15 @@
-<div class="form-group p-group">
-  <%- if depth == 0 %>
-    <p class="col-sm-6 p-group">
-  <%- elsif depth < 6 %>
-    <p class="col-sm-offset-<%= depth %> col-sm-6 p-group">
-  <%- else %>
-    <p class="col-sm-offset-6 col-sm-6 p-group">
-  <%- end %>
-  <strong><a href="<%= url_for show_entry %>">[<%= db_formatted_d( show_entry.updated_at )%>]
-  <%= t( "sir_items.show.rec_head_#{ show_entry.rec_type }", group: show_entry.group_code )%><%=
-      t( 'sir_items.show.due_by', due_date: show_entry.due_date ) unless show_entry.due_date.nil? %>:</a></strong><br/>
-  <%= display_lines_w_br show_entry.description %></p>
-</div>
+<%- if show_entry.is_visible? %>
+  <div class="form-group p-group">
+    <%- if depth == 0 %>
+      <p class="col-sm-6 p-group">
+    <%- elsif depth < 6 %>
+      <p class="col-sm-offset-<%= depth %> col-sm-6 p-group">
+    <%- else %>
+      <p class="col-sm-offset-6 col-sm-6 p-group">
+    <%- end %>
+    <strong><a href="<%= url_for show_entry %>">[<%= db_formatted_d( show_entry.updated_at )%>]
+    <%= t( "sir_items.show.rec_head_#{ show_entry.rec_type }", group: show_entry.group_code )%><%=
+        t( 'sir_items.show.due_by', due_date: show_entry.due_date ) unless show_entry.due_date.nil? %>:</a></strong><br/> 
+    <%= display_lines_w_br show_entry.description %></p>
+  </div>
+<%- end %>

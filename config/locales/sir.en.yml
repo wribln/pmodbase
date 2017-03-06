@@ -34,7 +34,7 @@ en:
         reference:        'Reference'
         sir_log_id:       'SIR Log'
         seqno:            'Item Id'
-        group_id:         'Originating Group'
+        group_id:         'Responsible Group'
         cfr_record_id:    'Reference Document'
         phase_code_id:    'Project Phase'
         label:            'Title'

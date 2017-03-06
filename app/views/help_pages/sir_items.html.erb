@@ -49,5 +49,10 @@
       causes this SIR Log Item to be omitted from any display; it will still be counted in any
       statistics.</li>
     </ul>
+    <h3>Access Permissions</h3>
+    <p>Generally, only members of this SIR Log have access to Items within this SIR Log.</p>
+    <p>In order to create or modify a SIR Log Item, this user must also have the appropriate
+    permissions for the feature 
+    <%= help_term Feature.find_by_id( FEATURE_ID_SIR_ITEMS ).label_with_id-%>.</p>
     <%= help_footer FEATURE_ID_SIR_ITEMS %>
   </div> <!-- /container -->
