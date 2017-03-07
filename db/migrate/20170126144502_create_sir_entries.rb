@@ -1,8 +1,9 @@
 class CreateSirEntries < ActiveRecord::Migration
   def change
     create_table :sir_entries do |t|
-      t.belongs_to  :sir_item,   index: true, foreign_key: true
-      t.belongs_to  :group,                   foreign_key: true
+      t.belongs_to  :sir_item,  index: true, foreign_key: true
+      t.belongs_to  :orig_group, null: false, foreign_key: true
+      t.belongs_to  :resp_group, null: false, foreign_key: true
       t.integer     :rec_type,   null: false
       t.date        :due_date
       t.text        :description

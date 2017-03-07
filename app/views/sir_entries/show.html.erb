@@ -18,9 +18,15 @@
         </div>
       </div>
       <div class="form-group">
-        <%= f.label :group_id, class: 'col-sm-3 control-label' %>
+        <%= f.label :orig_group_id, t( 'sir_entries.form.from_group' ), class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
-          <%= display_value f.object.group.try( :code_and_label ) %>
+          <%= display_value f.object.orig_group.try( :code_and_label ) %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :resp_group_id, t( 'sir_entries.form.to_group' ), class: 'col-sm-3 control-label' %>
+        <div class="col-sm-4">
+          <%= display_value f.object.resp_group.try( :code_and_label ) %>
         </div>
       </div>
       <%- if f.object.rec_type == 0 %>

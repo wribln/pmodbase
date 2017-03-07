@@ -132,7 +132,9 @@ class SirItem1Test < ActiveSupport::TestCase
     assert si.save, si.errors.messages
     assert_equal 0, si.validate_entries
 
-    se = si.sir_entries.build( rec_type: 0, group_id: groups( :group_one ).id, description: 'test 1' )
+    se = si.sir_entries.build( rec_type: 0, 
+      resp_group_id: groups( :group_one ).id, 
+      orig_group_id: si.group_id, description: 'test 1' )
     assert_equal 0, si.validate_entries
     refute se.valid?
     assert_includes se.errors, :base # forward to itself
@@ -142,13 +144,12 @@ class SirItem1Test < ActiveSupport::TestCase
     assert_includes se.errors, :base # respond to item owner
 
 
-    se.group_id = groups( :group_two ).id
+    se.resp_group_id = groups( :group_two ).id
     refute se.valid?
     assert_includes se.errors, :base # respond to other group
 
     se.rec_type = 1
-    refute se.valid?
-    assert_includes se.errors, :base # comment to other group
+    assert se.valid?
 
     se.rec_type = 0
     assert se.save, se.errors.messages
@@ -157,37 +158,38 @@ class SirItem1Test < ActiveSupport::TestCase
 
     # next entry
 
-    se = si.sir_entries.build( rec_type: 0, group_id: groups( :group_one ).id, description: 'test 2')
+    se = si.sir_entries.build( rec_type: 0, 
+      resp_group_id: groups( :group_one ).id, 
+      orig_group_id: groups( :group_two ).id, description: 'test 2')
     assert_equal 0, si.validate_entries
     refute se.valid?
     assert_includes se.errors, :base # forward to item owner
 
-    se.group = groups( :group_two )
+    se.resp_group = groups( :group_two )
     refute se.valid?
     assert_includes se.errors, :base # forward to previous entry
 
     gp = Group.new( code: 'XXX', group_category_id: group_categories( :group_category_one ).id, label: 'XXX-Group' )
     assert gp.save, gp.errors.messages
 
-    se.group_id = gp.id
+    se.resp_group_id = gp.id
     assert se.valid?
 
     se.rec_type = 1
-    refute se.valid?
-    assert_includes se.errors, :base # comment to other group
+    assert se.valid?
 
-    se.group_id = groups( :group_two ).id
+    se.resp_group_id = groups( :group_two ).id
     assert se.valid?
 
     se.rec_type = 2
     refute se.valid?
     assert_includes se.errors, :base # respond to own group
 
-    se.group_id = gp.id
+    se.resp_group_id = gp.id
     refute se.valid?
-    assert_includes se.errors, :base # respond to other group
+    assert_includes se.errors, :resp_group_id # respond to other group
 
-    se.group_id = groups( :group_one ).id
+    se.resp_group_id = groups( :group_one ).id
     assert se.valid?
 
   end

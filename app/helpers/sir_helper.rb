@@ -25,6 +25,21 @@ module SirHelper
     end
   end
 
+  def sir_entry_heading( entry )
+    h = "[#{ db_formatted_d( entry.updated_at )}] #{ entry.rec_type_label } "
+    case entry.rec_type
+    when 0
+      h += entry.orig_group_code + ' &#x25BA; ' + entry.resp_group_code
+    when 1
+      h += entry.resp_group_code
+      h += ' &#x25C4; ' + entry.orig_group_code unless entry.orig_group_id == entry.resp_group_id
+    when 2
+      h += entry.orig_group_code + '&#x25C4; ' + entry.resp_group_code
+    end
+    h += t( 'sir_items.show.due_by', due_date: entry.due_date ) unless entry.due_date.nil?
+    h.html_safe
+  end
+
   private
 
   # create url to create new SIR Entry with given type

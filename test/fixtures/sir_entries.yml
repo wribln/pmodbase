@@ -1,7 +1,8 @@
 one:
-  sir_item:  one
-  rec_type:  0
-  group:     group_two
-  due_date:  2017-01-26
-  description: 'Hey, dude, get this!'
+  sir_item:     one
+  rec_type:     0
+  resp_group:   group_two
+  orig_group:   group_one
+  due_date:     2017-01-26
+  description:  'Hey, dude, get this!'
 

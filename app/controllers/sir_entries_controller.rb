@@ -98,25 +98,26 @@ class SirEntriesController < ApplicationController
       when 'new'
         case @sir_entry.rec_type
         when 0 # forward
-          @sir_entry.group_id = nil
-          @sir_groups = Group.all.active_only.collect{ |g| [ g.code_and_label, g.id ] unless @group_stack.include?( g.id )}.compact!
+          @sir_entry.orig_group_id = @group_stack.last
+          @sir_entry.resp_group_id = nil
+          @sir_groups = Group.all.participants_only.collect{ |g| [ g.code_and_label, g.id ] unless @group_stack.include?( g.id )}.compact!
         when 1 # comment - use current group
-          @sir_entry.group_id = @group_stack.last
-          @sir_groups = nil
+          @sir_entry.orig_group_id = @group_stack.last
+          @sir_entry.resp_group_id = @group_stack.last
+          @sir_groups = Group.all.participants_only.collect{ |g| [ g.code_and_label, g.id ]}
         when 2 # response - use group before current group
           if @group_stack.size < 2
             @sir_entry.errors.add( :base, I18n.t( 'sir_entries.msg.bad_request' ))
           else
-            @sir_entry.group_id = @group_stack[ -2 ]
+            @sir_entry.orig_group_id = @group_stack.last
+            @sir_entry.resp_group_id = @group_stack[ -2 ]
           end
           @sir_groups = nil
         end
       when 'edit'
         case @sir_entry.rec_type
-        when 0 # forward
-          @sir_groups = Group.all.active_only.collect{ |g| [ g.code_and_label, g.id ]}
-        when 1 # comment - use current group
-          @sir_groups = nil
+        when 0, 1 # forward
+          @sir_groups = Group.all.participants_only.collect{ |g| [ g.code_and_label, g.id ]}
         when 2 # response - use group before current group
           @sir_groups = nil
         end
@@ -132,7 +133,7 @@ class SirEntriesController < ApplicationController
 
     def sir_entry_params
       params.require( :sir_entry ).permit( 
-        :sir_item_id, :rec_type, :group_id, :due_date, :description )
+        :sir_item_id, :rec_type, :resp_group_id, :orig_group_id, :due_date, :description )
     end
 
     def set_breadcrumb
@@ -146,8 +147,8 @@ class SirEntriesController < ApplicationController
 
     def check_access( action )
       render_no_access unless @sir_item.sir_log.permitted_to_access?( current_user.id )
-      g = @sir_entry.try( :group_id ) || @last_entry.group_id
-      render_no_permission unless current_user.permission_to_access( feature_identifier, action, g )
+      #g = @sir_entry.try( :resp_group_id ) || @last_entry.resp_group_id
+      #render_no_permission unless current_user.permission_to_access( feature_identifier, action, g )
     end
 
 end

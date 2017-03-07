@@ -2,18 +2,23 @@ class SirEntry < ActiveRecord::Base
   include ApplicationModel
 
   belongs_to :sir_item, inverse_of: :sir_entries
-  belongs_to :group,    ->{ readonly }
+  belongs_to :resp_group, ->{ readonly }, class_name: 'Group'
+  belongs_to :orig_group, ->{ readonly }, class_name: 'Group'
 
-  before_destroy :check_before_destroy
-  before_update :check_before_update
-  after_save    :update_item
-  after_destroy :release_item
+  before_destroy  :check_before_destroy
+  before_update   :check_before_update
+  before_save     :set_defaults
+  after_save      :update_item
+  after_destroy   :release_item
 
   validates :sir_item,
     presence: true
 
-  validates :group,
+  validates :orig_group,
     presence: true
+
+  validates :resp_group,
+    presence: true, if: Proc.new{ |me| me.rec_type != 1 || me.resp_group_id.present? }
 
   SIR_ENTRY_REC_TYPE_LABELS = SirEntry.human_attribute_name( :rec_types ).freeze
 
@@ -25,6 +30,7 @@ class SirEntry < ActiveRecord::Base
     date_field: { presence: false }
 
   validate :validate_new_entry, on: :create
+  validate :different_groups
 
   # the following attribute is used when creating views of all entries
 
@@ -41,8 +47,19 @@ class SirEntry < ActiveRecord::Base
     SIR_ENTRY_REC_TYPE_LABELS[ rec_type ] unless rec_type.nil?
   end
 
-  def group_code
-    ( group.try :code ) || some_id( group_id )
+  def resp_group_code
+    ( resp_group.try :code ) || some_id( resp_group_id )
+  end
+
+  def orig_group_code
+    ( orig_group.try :code ) || some_id( orig_group_id )
+  end
+
+  # make sure resp and orig groups are different unless it is a comment
+
+  def different_groups
+    errors.add( :base, I18n.t( 'sir_entries.msg.bad_grp_combo' )) \
+      unless self.resp_group_id != self.orig_group_id || self.rec_type == 1
   end
 
   # can only destroy entry if it is a comment or the last entry in a thread
@@ -80,6 +97,7 @@ class SirEntry < ActiveRecord::Base
   private
 
     def validate_new_entry
+      set_defaults
       sir_item.validate_new_entry( self ) unless sir_item_id.nil?
     end
 
@@ -90,5 +108,9 @@ class SirEntry < ActiveRecord::Base
     def release_item
       sir_item.status = nil
     end
- 
+
+    def set_defaults
+      set_nil_default( :resp_group_id, orig_group_id )
+    end
+
 end

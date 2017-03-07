@@ -61,7 +61,7 @@ class SirItem < ActiveRecord::Base
   scope :ff_cat,      ->( c ){ where category: c }
   scope :ff_phs,      ->( p ){ where phase_code_id: p }
   scope :ff_grp,      ->( g ){ where group_id: g }
-  scope :ff_cgrp,     ->( g ){ includes( :last_entry ).where( 'sir_entries.group_id = :param OR ( sir_entries.group_id IS NULL AND sir_items.group_id = :param )', param: g ).references( :sir_entries )}
+  scope :ff_cgrp,     ->( g ){ includes( :last_entry ).where( 'sir_entries.resp_group_id = :param OR ( sir_entries.resp_group_id IS NULL AND sir_items.group_id = :param )', param: g ).references( :sir_entries )}
 
   # provide access to labels
 
@@ -107,7 +107,7 @@ class SirItem < ActiveRecord::Base
   # prepare code for responsible party (for index)
 
   def resp_group_code
-    g = ( last_entry.nil? ? group : last_entry.group )
+    g = ( last_entry.nil? ? group : last_entry.resp_group )
     ( g.try :code ) || some_id( g )
   end
 
@@ -137,7 +137,7 @@ class SirItem < ActiveRecord::Base
     grp_stack = [ group_id ]
     sir_entries.each do |se|
       if se.rec_type == 0
-        grp_stack.push( se.group_id )
+        grp_stack.push( se.resp_group_id )
       elsif se.rec_type == 2
         grp_stack.pop
       end
@@ -150,7 +150,7 @@ class SirItem < ActiveRecord::Base
 
   def self.depth!( grp_stack, new_entry )
     if new_entry.rec_type == 0
-      grp_stack.push( new_entry.group_id )
+      grp_stack.push( new_entry.resp_group_id )
     elsif new_entry.rec_type == 2
       grp_stack.pop
     end
@@ -175,23 +175,27 @@ class SirItem < ActiveRecord::Base
       entries.each{ |se| se.visibility = 1 }
     else
       se_stack = Array.new
-      next_visible = groups.include?( group_id ) ? 2 : 0
       entries.each do |se|
         case se.rec_type
         when 0 # forward
           se_stack.push( se )
-          if groups.include?( se.group_id )
+          if groups.include?( se.resp_group_id )
             se_stack.each{ |sse| sse.visibility = 1 }
-            next_visible = 2
+          elsif groups.include?( se.orig_group_id )
+            se.visibility = 2
           else
-            se.visibility = next_visible
-            next_visible = 0
+            se.visibility = 0
           end
         when 1 # comment
-          se.visibility = groups.include?( se.group_id ) ? 3 : 0
+          if groups.include?( se.resp_group_id )
+            se.visibility = 3
+          elsif groups.include?( se.orig_group_id )
+            se.visibility = 4
+          else
+            se.visibility = 0
+          end
         when 2 # backward
-          se.visibility = se_stack.pop.visibility
-          next_visible = groups.include?( se.group_id ) ? 1 : 0
+          se.visibility = se_stack.pop.visibility || groups.any?{| g | g == se.resp_group_id || g == se.orig_group_id }
         end
       end
     end
@@ -213,16 +217,16 @@ class SirItem < ActiveRecord::Base
       case se.rec_type
       when 0
         # forward must be to group other than previous groups
-        return 1 if group_stack.include?( se.group_id )
-        group_stack.push( se.group_id )
+        return 1 if group_stack.include?( se.resp_group_id )
+        group_stack.push( se.resp_group_id )
       when 1
         # comment must be from current group
-        return 2 unless group_stack.last == se.group_id
+        return 2 unless group_stack.last == se.resp_group_id
       when 2
         # response must be to previous group
         group_stack.pop
         return 3 if group_stack.empty?
-        return 4 unless group_stack.last == se.group_id
+        return 4 unless group_stack.last == se.resp_group_id
       else
         return 5
       end # case
@@ -234,28 +238,33 @@ class SirItem < ActiveRecord::Base
   # consistent to the current, consistent list of SIR Entries
 
   def validate_new_entry( new_entry )
+    # exit early if there are already problems with the new entry
+    return unless new_entry.errors.empty?
+    # prepare current status of group stack
     group_stack = [ group_id ]
     sir_entries.each do |se|
       next if se.id.nil?
       case se.rec_type
       when 0
-        group_stack.push( se.group_id )
+        group_stack.push( se.resp_group_id )
       when 2
         group_stack.pop
       end
     end
+    # now check the new entry
+    if group_stack.last != new_entry.orig_group_id
+      new_entry.errors.add( :orig_group_id, I18n.t( 'sir_entries.msg.bad_orig_grp' ))
+      return
+    end
     case new_entry.rec_type
     when 0
       new_entry.errors.add( :base, I18n.t( 'sir_items.msg.bad_grp_seq' )) \
-        if group_stack.include?( new_entry.group_id )
-    when 1
-      new_entry.errors.add( :base, I18n.t( 'sir_items.msg.bad_grp_com' )) \
-        unless group_stack.last == new_entry.group_id
+        if group_stack.include?( new_entry.resp_group_id )
     when 2
       if group_stack.size < 2
         new_entry.errors.add( :base, I18n.t( 'sir_items.msg.bad_grp_re1' ))
-      elsif group_stack[ -2 ] != new_entry.group_id
-        new_entry.errors.add( :base, I18n.t( 'sir_items.msg.bad_grp_re2' ))
+      elsif group_stack[ -2 ] != new_entry.resp_group_id
+        new_entry.errors.add( :resp_group_id, I18n.t( 'sir_entries.msg.bad_grp_re2' ))
       end
     end
   end

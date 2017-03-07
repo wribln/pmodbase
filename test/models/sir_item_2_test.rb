@@ -70,7 +70,9 @@ class SirItem2Test < ActiveSupport::TestCase
 
     se = nil
     assert_difference( 'SirEntry.count', 1 ) do
-      se = si.sir_entries.create( rec_type: 0, group: group_b )
+      se = si.sir_entries.create( rec_type: 0,
+        orig_group: si.group, 
+        resp_group: group_b )
     end
     assert_equal 1, SirItem.depth!( group_stack, se )
     assert_equal 1, SirItem.depth( group_stack )
@@ -92,9 +94,9 @@ class SirItem2Test < ActiveSupport::TestCase
     # no entries: 3
 
     assert_difference( 'SirEntry.count', 2 ) do
-      se = si.sir_entries.create( rec_type: 0, group: group_c )
+      se = si.sir_entries.create( rec_type: 0, orig_group: group_b, resp_group: group_c )
       assert_equal 2, SirItem.depth!( group_stack, se )
-      se = si.sir_entries.create( rec_type: 0, group: group_d )
+      se = si.sir_entries.create( rec_type: 0, orig_group: group_c, resp_group: group_d )
       assert_equal 3, SirItem.depth!( group_stack, se )
     end
     assert_equal 3, SirItem.depth( group_stack )
@@ -125,9 +127,9 @@ class SirItem2Test < ActiveSupport::TestCase
     # no entries: 5
 
     assert_difference( 'SirEntry.count', 2 ) do
-      se = si.sir_entries.create( rec_type: 1, group: group_d )
+      se = si.sir_entries.create( rec_type: 1, orig_group: group_d )
       assert_equal 3, SirItem.depth!( group_stack, se )
-      se = si.sir_entries.create( rec_type: 2, group: group_c )
+      se = si.sir_entries.create( rec_type: 2, orig_group: group_d, resp_group: group_c )
       assert_equal 2, SirItem.depth!( group_stack, se )
     end
     assert_equal 2, SirItem.depth( group_stack )
@@ -158,23 +160,23 @@ class SirItem2Test < ActiveSupport::TestCase
     # make it complete
 
     assert_difference( 'SirEntry.count', 9 ) do
-      se = si.sir_entries.create( rec_type: 2, group: group_b )
+      se = si.sir_entries.create( rec_type: 2, orig_group: group_c, resp_group: group_b )
       assert_equal 1, SirItem.depth!( group_stack, se )
-      se = si.sir_entries.create( rec_type: 1, group: group_b )
+      se = si.sir_entries.create( rec_type: 1, orig_group: group_b, resp_group: group_b )
       assert_equal 1, SirItem.depth!( group_stack, se )
-      se = si.sir_entries.create( rec_type: 0, group: group_d )
+      se = si.sir_entries.create( rec_type: 0, orig_group: group_b, resp_group: group_d )
       assert_equal 2, SirItem.depth!( group_stack, se )
-      se = si.sir_entries.create( rec_type: 0, group: group_e )
+      se = si.sir_entries.create( rec_type: 0, orig_group: group_d, resp_group: group_e )
       assert_equal 3, SirItem.depth!( group_stack, se )
-      se = si.sir_entries.create( rec_type: 0, group: group_f )
+      se = si.sir_entries.create( rec_type: 0, orig_group: group_e, resp_group: group_f )
       assert_equal 4, SirItem.depth!( group_stack, se )
-      se = si.sir_entries.create( rec_type: 2, group: group_e )
+      se = si.sir_entries.create( rec_type: 2, orig_group: group_f, resp_group: group_e )
       assert_equal 3, SirItem.depth!( group_stack, se )
-      se = si.sir_entries.create( rec_type: 2, group: group_d )
+      se = si.sir_entries.create( rec_type: 2, orig_group: group_e, resp_group: group_d )
       assert_equal 2, SirItem.depth!( group_stack, se )
-      se = si.sir_entries.create( rec_type: 2, group: group_b )
+      se = si.sir_entries.create( rec_type: 2, orig_group: group_d, resp_group: group_b )
       assert_equal 1, SirItem.depth!( group_stack, se )
-      se = si.sir_entries.create( rec_type: 2, group: group_a )
+      se = si.sir_entries.create( rec_type: 2, orig_group: group_b, resp_group: group_a )
       assert_equal 0, SirItem.depth!( group_stack, se )
     end      
     assert_equal 0, SirItem.depth( group_stack )
@@ -194,7 +196,7 @@ class SirItem2Test < ActiveSupport::TestCase
     assert_equal [ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 ], visibility_to_a( si )
 
     si.set_visibility([ group_b.id ])
-    assert_equal [ 1, 2, 0, 0, 0, 2, 3, 1, 0, 0, 0, 0, 1, 1 ], visibility_to_a( si )
+    assert_equal [ 1, 2, 0, 0, 0, 2, 3, 2, 0, 0, 0, 0, 2, 1 ], visibility_to_a( si )
 
     si.set_visibility([ group_c.id ])
     assert_equal [ 1, 1, 2, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 1 ], visibility_to_a( si )

@@ -19,7 +19,7 @@ class SirItemsController < ApplicationController
  
   def show
     check_access( :to_read )
-    @sir_entries = @sir_item.sir_entries.includes( :group )
+    @sir_entries = @sir_item.sir_entries.includes([ :resp_group, :orig_group ])
     @sir_item.set_visibility( current_user.permitted_groups( feature_identifier ), @sir_entries )
     @group_stack = [ @sir_item.group_id ]
   end

@@ -49,10 +49,11 @@ en:
 
       sir_entry:
         id:               :general.attributes.id
-        rec_type:         'Type'
-        rec_types:        [ 'Forward to', 'Comment by', 'Respond to' ]
+        rec_type:         'Type of Entry'
+        rec_types:        [ 'Forward', 'Comment', 'Response' ]
         sir_item_id:      'SIR Log Item'
-        group_id:         'Group'
+        resp_group_id:    'Responsible Group'
+        orig_group_id:    'Originating Group'
         due_date:         'Due Date'
         description:      'Description'
 
@@ -103,9 +104,6 @@ en:
       delete:           '- Delete'
       form_title:       'Show SIR Log Item and Entries'
       no_entries:       'No SIR Log Entries for this item.'
-      rec_head_0:       'Forward to %{group}'
-      rec_head_1:       'Comment by %{group}'
-      rec_head_2:       'Response to %{group}'
       due_by:           ', due by %{due_date}'
     show_all:
       form_title:       'Show Details of SIR Log Item'
@@ -116,9 +114,7 @@ en:
       update_ok:        'SIR Log Item successfully updated.'
       delete_ok:        'SIR Log Item successfully deleted.'
       bad_grp_seq:      'Forward request cannot be to group already in thread.'
-      bad_grp_com:      'Comments can only be made by currently active group.'
-      bad_grp_re1:      'Group owning this SIR Log Item may not create a Response entry.'
-      bad_grp_re2:      'Responding group does not match previous group in thread.'
+      bad_grp_re1:      'Group responsible for this SIR Log Item may not create a Response entry.'
       bad_grp_chg:      'cannot be changed for an item with entries.'
       bad_status:       'cannot be set to new if there are entries for this item.'
       bad_del_req:      'Only comments or the most recent entry can be deleted.'
@@ -126,6 +122,9 @@ en:
 
   sir_entries:
     title:              'SIR Log Entries'
+    form:
+      from_group:       'From Group (Originator)'
+      to_group:         'To Group (Responsible)'
     show:
       form_title:       'Show Single SIR Log Entry'
       show_item:        'Show Item'
@@ -138,3 +137,6 @@ en:
       update_ok:        'SIR Log Entry successfully updated.'
       delete_ok:        'SIR Log Entry successfully deleted.'
       bad_request:      'Response not possible at this point.'
+      bad_orig_grp:     'is not the current Responsible Group.'
+      bad_grp_combo:    'Originating and Responsible Group cannot be the same for this type of entry.'
+      bad_grp_re2:      'does not match next Responsible Group in thread.'

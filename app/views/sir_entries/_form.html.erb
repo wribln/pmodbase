@@ -6,13 +6,20 @@
         </div>
       </div>
       <div class="form-group">
-        <%= form.label :group_id, class: 'col-sm-3 control-label' %>
+        <%= form.label :orig_group_id, t( '.from_group' ), class: 'col-sm-3 control-label' %>
+        <div class="col-sm-4">
+          <%= display_value form.object.orig_group.try( :code_and_label )%>
+          <%= form.hidden_field :orig_group_id, value: form.object.orig_group_id %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label :resp_group_id, t( '.to_group' ), class: 'col-sm-3 control-label' %>
         <div class="col-sm-4">
           <%- if @sir_groups.nil? -%>
-            <%= display_value form.object.group.try( :code_and_label )%>
-            <%= form.hidden_field :group_id, value: form.object.group_id %>
+            <%= display_value form.object.resp_group.try( :code_and_label )%>
+            <%= form.hidden_field :resp_group_id, value: form.object.resp_group_id %>
           <%- else -%>
-            <%= form.select :group_id, @sir_groups, { prompt: true },{ class: 'form-control', required: true }%>
+            <%= form.select :resp_group_id, @sir_groups, { prompt: true },{ class: 'form-control', required: true }%>
           <%- end -%>
         </div>
       </div>
