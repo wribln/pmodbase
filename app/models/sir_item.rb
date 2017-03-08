@@ -106,8 +106,12 @@ class SirItem < ActiveRecord::Base
 
   # prepare code for responsible party (for index)
 
+  def resp_group
+    last_entry.nil? ? group : last_entry.resp_group
+  end
+  
   def resp_group_code
-    g = ( last_entry.nil? ? group : last_entry.resp_group )
+    g = resp_group
     ( g.try :code ) || some_id( g )
   end
 
@@ -220,7 +224,7 @@ class SirItem < ActiveRecord::Base
         return 1 if group_stack.include?( se.resp_group_id )
         group_stack.push( se.resp_group_id )
       when 1
-        # comment must be from current group
+        # comment must be from currently responsible group
         return 2 unless group_stack.last == se.resp_group_id
       when 2
         # response must be to previous group
@@ -252,15 +256,26 @@ class SirItem < ActiveRecord::Base
       end
     end
     # now check the new entry
-    if group_stack.last != new_entry.orig_group_id
-      new_entry.errors.add( :orig_group_id, I18n.t( 'sir_entries.msg.bad_orig_grp' ))
-      return
-    end
     case new_entry.rec_type
     when 0
-      new_entry.errors.add( :base, I18n.t( 'sir_items.msg.bad_grp_seq' )) \
-        if group_stack.include?( new_entry.resp_group_id )
+      if group_stack.last != new_entry.orig_group_id
+        new_entry.errors.add( :orig_group_id, I18n.t( 'sir_entries.msg.bad_resp_grp' ))
+        return
+      end
+      if group_stack.include?( new_entry.resp_group_id )
+        new_entry.errors.add( :base, I18n.t( 'sir_items.msg.bad_grp_seq' ))
+        return
+      end
+    when 1 # roles are reversed for comments
+      if group_stack.last != new_entry.resp_group_id
+        new_entry.errors.add( :resp_group_id, I18n.t( 'sir_entries.msg.bad_resp_grp' ))
+        return
+      end
     when 2
+      if group_stack.last != new_entry.orig_group_id
+        new_entry.errors.add( :orig_group_id, I18n.t( 'sir_entries.msg.bad_resp_grp' ))
+        return
+      end
       if group_stack.size < 2
         new_entry.errors.add( :base, I18n.t( 'sir_items.msg.bad_grp_re1' ))
       elsif group_stack[ -2 ] != new_entry.resp_group_id

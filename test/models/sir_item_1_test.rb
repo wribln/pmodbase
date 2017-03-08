@@ -133,23 +133,25 @@ class SirItem1Test < ActiveSupport::TestCase
     assert_equal 0, si.validate_entries
 
     se = si.sir_entries.build( rec_type: 0, 
-      resp_group_id: groups( :group_one ).id, 
+      resp_group_id: si.group_id, 
       orig_group_id: si.group_id, description: 'test 1' )
     assert_equal 0, si.validate_entries
     refute se.valid?
-    assert_includes se.errors, :base # forward to itself
+    assert_includes se.errors, :base # forward to item owner
 
     se.rec_type = 2
     refute se.valid?
     assert_includes se.errors, :base # respond to item owner
 
-
     se.resp_group_id = groups( :group_two ).id
     refute se.valid?
-    assert_includes se.errors, :base # respond to other group
+    assert_includes se.errors, :base # item owner response to ?
+
+    # responsible must be set to current item group for comments
 
     se.rec_type = 1
-    assert se.valid?
+    refute se.valid?
+    assert_includes se.errors, :resp_group_id
 
     se.rec_type = 0
     assert se.save, se.errors.messages
@@ -176,7 +178,8 @@ class SirItem1Test < ActiveSupport::TestCase
     assert se.valid?
 
     se.rec_type = 1
-    assert se.valid?
+    refute se.valid?
+    assert_includes se.errors, :resp_group_id
 
     se.resp_group_id = groups( :group_two ).id
     assert se.valid?

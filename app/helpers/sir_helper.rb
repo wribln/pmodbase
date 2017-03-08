@@ -31,8 +31,8 @@ module SirHelper
     when 0
       h += entry.orig_group_code + ' &#x25BA; ' + entry.resp_group_code
     when 1
-      h += entry.resp_group_code
-      h += ' &#x25C4; ' + entry.orig_group_code unless entry.orig_group_id == entry.resp_group_id
+      h += entry.orig_group_code
+      h += ' &#x25C4; ' + entry.resp_group_code unless entry.orig_group_id == entry.resp_group_id
     when 2
       h += entry.orig_group_code + '&#x25C4; ' + entry.resp_group_code
     end

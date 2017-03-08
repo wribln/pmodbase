@@ -14,11 +14,26 @@ class SirEntry < ActiveRecord::Base
   validates :sir_item,
     presence: true
 
+  # IMPORTANT: Originating Group for (0) Forward and (2) Response entries
+  # is the group preparing the entry, the Responsible Group is the group
+  # to which the responsibility to prepare the next entry is passed to.
+  #
+  # For Comments, responsibility does not change, hence the Responsible
+  # Group must remain the same. If Responsible Group and Originating
+  # Group is identical, this causes no problem. However, if a comment is
+  # addressed to some other group, the addressed group must be stored in
+  # as Originator group, and the currently responsible group (writing the
+  # comment) must be stored as Responsible Group.
+  #
+  # The reason is that the Responsible Group for the SIR Item is retrieved
+  # from the last SIR Entry - and for simplicity of the retrieval - no
+  # difference is made for comments and other record types.
+
   validates :orig_group,
-    presence: true
+    presence: true, if: Proc.new{ |me| me.rec_type != 1 || me.orig_group_id.present? }
 
   validates :resp_group,
-    presence: true, if: Proc.new{ |me| me.rec_type != 1 || me.resp_group_id.present? }
+    presence: true
 
   SIR_ENTRY_REC_TYPE_LABELS = SirEntry.human_attribute_name( :rec_types ).freeze
 
@@ -29,8 +44,8 @@ class SirEntry < ActiveRecord::Base
   validates :due_date,
     date_field: { presence: false }
 
-  validate :validate_new_entry, on: :create
   validate :different_groups
+  validate :validate_new_entry, on: :create
 
   # the following attribute is used when creating views of all entries
 
@@ -40,6 +55,10 @@ class SirEntry < ActiveRecord::Base
 
   scope :log_order, ->{ reorder( created_at: :asc  )}
   scope :rev_order, ->{ reorder( created_at: :desc )}
+
+  def is_comment?
+    rec_type == 1
+  end
 
   # provide access to labels
 
@@ -58,14 +77,15 @@ class SirEntry < ActiveRecord::Base
   # make sure resp and orig groups are different unless it is a comment
 
   def different_groups
+    return if resp_group_id.nil? || orig_group_id.nil?
     errors.add( :base, I18n.t( 'sir_entries.msg.bad_grp_combo' )) \
-      unless self.resp_group_id != self.orig_group_id || self.rec_type == 1
+      unless resp_group_id != orig_group_id || is_comment?
   end
 
   # can only destroy entry if it is a comment or the last entry in a thread
 
   def check_before_destroy
-    unless rec_type == 1 || sir_item.sir_entries.last.id == id
+    unless is_comment? || sir_item.sir_entries.last.id == id
       errors.add( :base, I18n.t( 'sir_items.msg.bad_del_req' ))
       return false # throw :abort in Rails 5
     else
@@ -110,7 +130,7 @@ class SirEntry < ActiveRecord::Base
     end
 
     def set_defaults
-      set_nil_default( :resp_group_id, orig_group_id )
+      set_nil_default( :orig_group_id, resp_group_id )
     end
 
 end

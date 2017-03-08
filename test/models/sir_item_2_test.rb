@@ -127,7 +127,7 @@ class SirItem2Test < ActiveSupport::TestCase
     # no entries: 5
 
     assert_difference( 'SirEntry.count', 2 ) do
-      se = si.sir_entries.create( rec_type: 1, orig_group: group_d )
+      se = si.sir_entries.create( rec_type: 1, resp_group: group_d )
       assert_equal 3, SirItem.depth!( group_stack, se )
       se = si.sir_entries.create( rec_type: 2, orig_group: group_d, resp_group: group_c )
       assert_equal 2, SirItem.depth!( group_stack, se )

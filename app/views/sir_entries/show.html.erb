@@ -17,18 +17,33 @@
           <%= display_value f.object.rec_type_label %>
         </div>
       </div>
-      <div class="form-group">
-        <%= f.label :orig_group_id, t( 'sir_entries.form.from_group' ), class: 'col-sm-3 control-label' %>
-        <div class="col-sm-4">
-          <%= display_value f.object.orig_group.try( :code_and_label ) %>
+      <%- if f.object.is_comment? %>
+        <div class="form-group">
+          <%= f.label :resp_group_id, t( 'sir_entries.form.c_by_group' ), class: 'col-sm-3 control-label' %>
+          <div class="col-sm-4">
+            <%= display_value f.object.resp_group.try( :code_and_label ) %>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :resp_group_id, t( 'sir_entries.form.to_group' ), class: 'col-sm-3 control-label' %>
-        <div class="col-sm-4">
-          <%= display_value f.object.resp_group.try( :code_and_label ) %>
+        <div class="form-group">
+          <%= f.label :orig_group_id, t( 'sir_entries.form.c_to_group' ), class: 'col-sm-3 control-label' %>
+          <div class="col-sm-4">
+            <%= display_value f.object.orig_group.try( :code_and_label ) %>
+          </div>
         </div>
-      </div>
+      <%- else %>
+        <div class="form-group">
+          <%= f.label :orig_group_id, t( 'sir_entries.form.from_group' ), class: 'col-sm-3 control-label' %>
+          <div class="col-sm-4">
+            <%= display_value f.object.orig_group.try( :code_and_label ) %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= f.label :resp_group_id, t( 'sir_entries.form.to_group' ), class: 'col-sm-3 control-label' %>
+          <div class="col-sm-4">
+            <%= display_value f.object.resp_group.try( :code_and_label ) %>
+          </div>
+        </div>
+      <%- end %>
       <%- if f.object.rec_type == 0 %>
       <div class="form-group">
         <%= f.label :due_date, class: 'col-sm-3 control-label' %>

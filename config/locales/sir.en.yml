@@ -123,8 +123,12 @@ en:
   sir_entries:
     title:              'SIR Log Entries'
     form:
+      # for forward, response entries
       from_group:       'From Group (Originator)'
       to_group:         'To Group (Responsible)'
+      # for comments
+      c_by_group:       'By Group (Commenting)'
+      c_to_group:       'To Group (Receiving)'
     show:
       form_title:       'Show Single SIR Log Entry'
       show_item:        'Show Item'
@@ -137,6 +141,6 @@ en:
       update_ok:        'SIR Log Entry successfully updated.'
       delete_ok:        'SIR Log Entry successfully deleted.'
       bad_request:      'Response not possible at this point.'
-      bad_orig_grp:     'is not the current Responsible Group.'
+      bad_resp_grp:     'is not the current Responsible Group.'
       bad_grp_combo:    'Originating and Responsible Group cannot be the same for this type of entry.'
       bad_grp_re2:      'does not match next Responsible Group in thread.'
