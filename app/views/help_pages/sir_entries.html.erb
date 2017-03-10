@@ -15,16 +15,21 @@
       <ul>
         <li><%= help_term SirEntry::SIR_ENTRY_REC_TYPE_LABELS[ 0 ]%> is a SIR Log Entry
         which designates a forwarding post, i.e. a comment or request for action is 
-        passed to another project group. From now on, the new group will be responsible
-        for this SIR Log Item.</li>
-        <li><%= help_term SirEntry::SIR_ENTRY_REC_TYPE_LABELS[ 1 ]%> is a comment or
-        internal note which is only visible of members belonging to the current group.</li>
+        passed from the current, the <%= help_param t( 'sir_entries.form.from_group' )%> to another project group, the
+        <%= help_param t( 'sir_entries.form.to_group' )%>. rom now on, the new group will
+        be responsible for this SIR Log Entry.</li>
+        <li><%= help_term SirEntry::SIR_ENTRY_REC_TYPE_LABELS[ 1 ]%> is a comment from one group, the
+        <%= help_param t( 'sir_entries.form.c_by_group' )%>. If another group is specified as 
+        <%= help_param t( 'sir_entries.form.c_to_group' )%>, then the other group can also view this
+        comment; otherwise, the comment is only visible to the commenting group.</li>
         <li><%= help_term SirEntry::SIR_ENTRY_REC_TYPE_LABELS[ 2 ]%> causes the issue
-        to be returned to the previous group as a response to the original forward request.</li>
+        to be returned from the <%= help_param t( 'sir_entries.form.from_group' )%>
+        to the previous group (<%= help_param t( 'sir_entries.form.to_group' )%> 
+        as a response to the original forward request. The previous group is now
+        responsible for this SIR Log Item again.</li>
       </ul>    
       </li>
-      <li><%= help_param SirEntry.human_attribute_name( :group_id )%></li>
-      <li><%= help_param SirEntry.human_attribute_name( :due_date )%> can be set on when
+      <li><%= help_param SirEntry.human_attribute_name( :due_date )%> can be set when
       forwarding a comment or request for action to another group. It indicates to the 
       newly responsible group that a reply is expected until the given date.</li>
       <li><%= help_param SirEntry.human_attribute_name( :description )%> is a field to

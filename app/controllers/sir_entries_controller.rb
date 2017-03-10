@@ -147,8 +147,8 @@ class SirEntriesController < ApplicationController
 
     def check_access( action )
       render_no_access unless @sir_item.sir_log.permitted_to_access?( current_user.id )
-      #g = @sir_entry.try( :resp_group_id ) || @last_entry.resp_group_id
-      #render_no_permission unless current_user.permission_to_access( feature_identifier, action, g )
+      g = @sir_item.resp_group.id
+      render_no_permission unless current_user.permission_to_access( feature_identifier, action, g )
     end
 
 end

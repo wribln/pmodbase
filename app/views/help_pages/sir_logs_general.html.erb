@@ -1,0 +1,122 @@
+<% help_title "General Help on SIR Logs" %>
+  <div class="container">
+    <%= helpcrumbs %>
+    <%= help_header %>
+    <p class="lead">Manage issue resolutions in a group-structured, web-based log</p>
+    <h3>An Introduction to SIR Logs - Structured Issue-Response Logs</h3>
+    <div class="row">
+    <div class="col-sm-8">
+    <p>A <%= help_term 'SIR Log'%> can be used to trace the resolution of issues and tasks. Each issue is a
+    separate item in the SIR Log and is thus called <%= help_term 'SIR Log Item' %>.</p>
+    <p>Status reports and statistics are collected per SIR Log with counts based on these
+    SIR Log Items.</p>
+    <p>A SIR Log Item contains attributes about the issue, e.g. a title, a status,
+    a responsible project group, a classification, etc.</p>
+    <p>A SIR Log Item collects postings regarding this issue - just like in web forums or groups:</p>
+    <div class="row"><div class="col-sm-offset-1 col-sm-7">
+      <p>This is the first SIR Log Entry<br/>for this SIR Log Item</p>
+    </div></div>
+    <div class="row"><div class="col-sm-offset-2 col-sm-6">
+      <p>This is the second SIR Log Entry<br/>for this SIR Log Item</p>
+    </div></div>
+    <div class="row"><div class="col-sm-offset-3 col-sm-7">
+      <p>This is the third SIR Log Entry<br/>for this SIR Log Item</p>
+    </div></div>
+    <p>Such a posting is called <%= help_term 'SIR Log Entry' %>. Each entry contains not only the
+    text of the posting but also the date (and time) when it was entered into the system. Using
+    this information, all postings are listed in chronological order (the oldest being the first).
+    </div>
+    <div class="col-sm-4">
+      <%= image_tag 'sir_drawing_01.png', alt: 'SIR Log Structure', class: 'img-responsive' -%>
+    </div>
+    </div>
+    <div class="row"><div class="col-sm-4 col-xs-12">
+    <div class="row"><div class="col-sm-12">
+      <h4>An Example:</h4>
+    </div></div>
+    <div class="row"><div class="col-sm-offset-1 col-sm-11 col-xs-offset-1 col-xs-11">
+      <p><a>[2017-03-01] Forward GrpA &#x25BA; GrpB</a><br/>
+      Please report status.</p>
+    </div></div>
+    <div class="row"><div class="col-sm-offset-2 col-sm-10 col-xs-offset-2 col-xs-10">
+      <p><a>[2017-03-02] Response GrpB &#x25C4; GrpA</a><br/>
+      Status for what?.</p>
+    </div></div>
+    <div class="row"><div class="col-sm-offset-1 col-sm-11 col-xs-offset-1 col-xs-11">
+      <p><a>[2017-03-03] Forward GrpA &#x25BA; GrpB</a><br/>
+      Status of this issue.</p>
+    </div></div>
+    <div class="row"><div class="col-sm-offset-2 col-sm-10 col-xs-offset-2 col-xs-10">
+      <p><a>[2017-03-04] Comment GrpA &#x25C4; GrpB</a><br/>
+      Please wait.</p>
+    </div></div>
+    <div class="row"><div class="col-sm-offset-2 col-sm-10 col-xs-offset-2 col-xs-10">
+      <p><a>[2017-03-05] Comment GrpA</a><br/>
+      John: Send what they need asap.</p>
+    </div></div>
+    <div class="row"><div class="col-sm-offset-2 col-sm-10 col-xs-offset-2 col-xs-10">
+      <p><a>[2017-03-06] Response GrpB &#x25BA; GrpA</a><br/>
+      Status SNAFU. Please close issue.</p>
+    </div></div>
+    <div class="row"><div class="col-sm-offset-1 col-sm-11 col-xs-offset-1 col-xs-11">
+      <p><a>[2017-03-07] Comment GrpB &#x25C4; GrpA</a><br/>
+      Will do.</p>
+    </div></div>
+    </div>
+    <div class="col-sm-6">
+    <p>The main feature of a SIR Log here is that postings a strictly controlled on a group-level:
+    at any time, only a single project group is responsible to comment on the issue, to forward it
+    to another project party, or to respond to the previous group in the thread. In the following
+    example, the initial responsible party is the GrpA. It is the turn for GrpA to progress the
+    issue or task for which the SIR Log Item was created. Follow the conversion between GrpA
+    and GrpB (the list number below corresponds to the day of the date in the example):</p>
+    <ol>
+    <li>GrpA forwards a request for a status to GrpB on 2017-03-01.
+    Now GrpB is responsible for this SIR Log Item.</li>
+    <li>For some reason - in this example -, GrpB needs to clarify the original request and 'sends'
+    a 'Response' back to GrpA.</li>
+    <li>GrpA returns the information with a new 'Forward' request for GrpB, so it is GrpB's turn
+    again to provide progress on this issue.</li>
+    <li>GrpB needs time to provide the requested informaiton and informs GrpA using a comment.</li>
+    <li>GrpA makes an request to a member of the team using an internal comment.</li>
+    <li>Once the information is available, GrpB prepares the response for GrpA.</li>
+    <li>GrpA makes a final comment.</li>
+    </ol>
+    </div>
+    </div>
+    <p>The example demonstrates several of the special features and principles of a SIR log:</p>
+    <ul>
+    <li>Note the indentation of the entries: each forward request causes an increase of the indent,
+    a response decreases the indent: The indentation thus indicates the originating party of the
+    indent, all entries without indent were written by GrpA, the others by GrpB.</li>
+    <li>The header for each SIR Log Entry shows the date when the entry was made, followed by the
+    type of entry (Forward, Response, or Comment). The currently responsible project group is
+    <em>always</em> shown as the second group; Forward and Response type entries show the 
+    originating group as first group. The arrow symbols '&#x25BA;' and '&#x25C4;' indicate the
+    direction of the responsibility transfer.</li>
+    <li>Comments are handled slightly special: Such entries do not change the responsibility
+    so they appear within the same indentation level as the previous posting.</li>
+    <li>Comments can be internal comments, only visible to members of the own project group; or
+    they can address another project group: In the example above, two comments - the first and
+    the third - refer to the other group directly, the second comment is an internal comment.
+    The internal comment (5) can only be seen by members of GrpB; Comments (4) and (7) allow
+    each access to the comments by the members of the other group.</li>
+    <li>As the responsibility for Comments does not change, the currently responsible group
+    (the commenting party) is shown as second group (on the right), and the addressee is shown
+    as first group (on the left of the arrow).</li>
+    <li>For internal Comments, only the commenting group is shown.</li>
+    <li>The currently responsible party is also shown in the listing of all SIR Log Items (the index page of
+    a given SIR Log) and will be used for any statistics.</li>
+    <li>The visibility of entries to other project groups is controlled by the groups: In the example
+    above, both GrpA and GrpB would be permitted to view all entries - except for the internal
+    comment (item 5) which only members of GrpB are permitted to view.</li>
+    <li>In more more complex scenarios where the level of postings is deeper, any group would only
+    be able to view (a) all entries where the group is either the originator, or (b) the responsible
+    party; in addition, (c) all entries leading directly to the viewable entry are shown, and (d)
+    all Response entries leading back to the SIR Log Item owner are visible.</li>
+    <li>For example, if a SIR Log Item has entries three levels deep (e.g. with the three groups
+    GrpA, GrpB, and GrpC involved), GrpA - the SIR Log Item owner - would be able to view entries
+    on the first two levels but not the flow of information going between GrpB and GrpC.</li>  
+    </ul>
+    <%= help_footer FEATURE_ID_HELP_PAGES %>
+  </div> <!-- /container -->

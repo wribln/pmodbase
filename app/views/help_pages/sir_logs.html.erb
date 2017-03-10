@@ -2,22 +2,9 @@
   <div class="container">
     <%= helpcrumbs %>
     <%= help_header %>
-    <p class="lead">Manage issue resolutions in a structured web-based log</p>
-    <h3>Short Introduction to SIR Logs - Structured Issue Response Logs</h3>
-    <p>A Structured Issue-Response Log (<%= help_term 'SIR Log'%>) supports chronological listings
-    of texts or posts - quite similar to a blog (forum, bulletin boards) on internet sites.
-    In a SIR Log, posts are organized in <%= help_term 'SIR Log Items' %>: The idea is, 
-    that a single issue would be documented in a SIR Log Item, and all posts (<%= help_term 'SIR Log Entries' %>)
-    regarding this issue would be collected within the SIR Log Item. Furthermore, a status is kept for each
-    SIR Log Item in order to prepare statists across all issues within a SIR Log.</p>
-    <p>You can define as many SIR Logs as you need. Each SIR Log would cover a topic under discussion
-    within a specific group of users, for example 'Safety Issues' could be a topic for a SIR Log, and
-    each individual safety issue would be followed up in a separate SIR Log Item.</p>
-    <p>The posting of comments (SIR Log Entries) to issues (SIR Log Items) is implemented as formal process: At
-    any time, only a single - the currently responsible - group of users is permitted to post comments
-    on the issue. These comments can be passed on to another group for further commenting or back to
-    the previous group as resolution statement.</p>
-    <%# in long intro explain concept of thread because 'thread' is used in error messages for entries %>
+    <p class="lead">Structured Issue-Response Logs - SIR Logs</p>
+    <p>For a general introduction on this feature, see 
+    <%= link_to_help :sir_logs_general, 'here' %>.</p>
     <h3>SIR Log Attributes</h3>
     <p>The following attributes are managed on the SIR Log level:</p>
     <ul>

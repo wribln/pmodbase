@@ -3,7 +3,7 @@ en:
   activerecord:
 
     models:
-      sir_log:           'Structured Issue-Response (SIR) Logs'
+      sir_log:           'SIR Logs'
       sir_item:          'SIR Log Items'
       sir_entry:         'SIR Log Entries'
       sir_member:        'SIR Log Members'
