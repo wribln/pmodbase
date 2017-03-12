@@ -26,7 +26,10 @@ class BaseItemList
       next if f.no_direct_access?
       if f.access_to_index? || current_user.permission_to_index?( f.id ) then
         if all_categories[ f.feature_category_id ].nil? then # new group - initialize
-          all_categories[ f.feature_category_id ] = a_category.new( 1, [ fi ], 0, "", nil )
+          ac = a_category.new( 1, [ fi ], 0, "", nil )
+          ac.seqno = f.feature_category.seqno
+          ac.label = f.feature_category.label
+          all_categories[ f.feature_category_id ] = ac
         else # existing group - increment count, add new feature to list
           all_categories[ f.feature_category_id ].item_count += 1
           all_categories[ f.feature_category_id ].features << fi
@@ -41,17 +44,10 @@ class BaseItemList
     total_no_items = 0
     no_items_per_col = 0
 
-    all_categories.each do |tgi, tgv|
-      begin
-        tgd = FeatureCategory.find(tgi)
-        tgv.item_count += 1.5
-        tgv.seqno = tgd.seqno
-        tgv.label = tgd.label
-        total_no_items += tgv.item_count
-        no_items_per_col = tgv.item_count if tgv.item_count > no_items_per_col
-      rescue ActiveRecord.RecordNotFound
-        Rails.logger.debug( "BaseItemList: FeatureCategory #{ tgi } referenced in Feature(s) #{ tgv.features } not in database!" )
-      end
+    all_categories.each_value do |tgv|
+      tgv.item_count += 1.5
+      total_no_items += tgv.item_count
+      no_items_per_col = tgv.item_count if tgv.item_count > no_items_per_col
     end
 
     # if there is nothing to display, return nil

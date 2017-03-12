@@ -22,8 +22,8 @@ class SirEntriesController < ApplicationController
     @sir_item = SirItem.find( params[ :sir_item_id ])
     set_breadcrumb
     set_group_stack_and_last
-    check_access( :to_create )
     @sir_entry = @sir_item.sir_entries.new( params.permit( :sir_item_id, :rec_type ))
+    check_access( :to_create )
     set_sir_groups
   end
 
@@ -147,8 +147,8 @@ class SirEntriesController < ApplicationController
 
     def check_access( action )
       render_no_access unless @sir_item.sir_log.permitted_to_access?( current_user.id )
-      g = @sir_item.resp_group.id
-      render_no_permission unless current_user.permission_to_access( feature_identifier, action, g )
+      g = [ :new, :create ].include?( action ) ? @sir_item.resp_next_entry : @sir_entry.resp_this_entry
+      render_no_permission unless current_user.permission_to_access( feature_identifier, action, g.id )
     end
 
 end

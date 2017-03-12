@@ -9,7 +9,6 @@ class SirEntry < ActiveRecord::Base
   before_update   :check_before_update
   before_save     :set_defaults
   after_save      :update_item
-  after_destroy   :release_item
 
   validates :sir_item,
     presence: true
@@ -82,6 +81,25 @@ class SirEntry < ActiveRecord::Base
       unless resp_group_id != orig_group_id || is_comment?
   end
 
+  # defines who is responsible for this entry, i.e. which group would be
+  # permitted to update this entry? Per definition, this is the originating
+  # group unless this is a comment where the (next) responsible is also
+  # the originating group, and the addressee of the comment is stored as
+  # orig_group. If no rec_type is defined yet, let the responsible group
+  # be defined by the SIR Item.
+
+  def resp_this_entry
+    r = case rec_type
+    when 0, 2
+      orig_group
+    when 1
+      resp_group
+    else
+      nil
+    end
+    r ||= sir_item.try( :resp_group )
+  end
+
   # can only destroy entry if it is a comment or the last entry in a thread
 
   def check_before_destroy
@@ -122,11 +140,7 @@ class SirEntry < ActiveRecord::Base
     end
 
     def update_item
-      sir_item.status = 1
-    end
-
-    def release_item
-      sir_item.status = nil
+      sir_item.update_column( :status, 1 ) if sir_item.status.zero?
     end
 
     def set_defaults

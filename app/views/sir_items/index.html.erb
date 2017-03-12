@@ -14,8 +14,8 @@
           <th class="col-sm-1"><%= label_tag :ff_stts,  SirItem.human_attribute_name( :status    )%></th>
           <th class="col-sm-1"><%= label_tag :ff_cat,   SirItem.human_attribute_name( :category  )%></th>
           <th class="col-sm-1"><%= label_tag :ff_phs,   SirItem.human_attribute_name( :phase_code_id )%></th>
-          <th class="col-sm-1"><%= label_tag :ff_grp,   SirItem.human_attribute_name( :group_id  )%></th>
-          <th class="col-sm-1"><%= label_tag :ff_cgrp, t( '.resp_group' )%></th>
+          <th class="col-sm-1"><%= label_tag :ff_grp,  t( '.resp_group_item' )%></th>
+          <th class="col-sm-1"><%= label_tag :ff_cgrp, t( '.resp_group_curr' )%></th>
           <th class="col-sm-1 hidden-print"><%= filter_action_title_header %></th>
         </tr>
       </thead>

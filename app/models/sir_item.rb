@@ -7,7 +7,7 @@ class SirItem < ActiveRecord::Base
   belongs_to :group,       -> { readonly }
   belongs_to :cfr_record,  -> { readonly }
   belongs_to :phase_code,  -> { readonly }
-  has_many   :sir_entries, -> { log_order }, inverse_of: :sir_item, dependent: :destroy
+  has_many   :sir_entries, -> { log_order }, inverse_of: :sir_item
   has_one    :last_entry,  -> { rev_order }, inverse_of: :sir_item, class_name: 'SirEntry'
 
   before_save :set_defaults
@@ -104,12 +104,13 @@ class SirItem < ActiveRecord::Base
       unless status != 0 || sir_entries.empty?
   end
 
-  # prepare code for responsible party (for index)
+  # responsible group for this item - also for next / new entry
 
   def resp_group
     last_entry.nil? ? group : last_entry.resp_group
   end
-  
+  alias :resp_next_entry :resp_group
+
   def resp_group_code
     g = resp_group
     ( g.try :code ) || some_id( g )
@@ -282,6 +283,13 @@ class SirItem < ActiveRecord::Base
         new_entry.errors.add( :resp_group_id, I18n.t( 'sir_entries.msg.bad_grp_re2' ))
       end
     end
+  end
+
+  # override destroy to ensure that all related entries are removed
+
+  def destroy
+    sir_entries.rev_order.each{ |se| se.destroy }
+    super
   end
 
   private

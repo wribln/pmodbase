@@ -45,11 +45,23 @@ class SirLogsControllerTest < ActionController::TestCase
     assert_redirected_to sir_log_path( assigns( :sir_log ))
   end
 
-  test 'should destroy sir_log' do
+  test 'should destroy sir_log 1' do
     assert_difference( 'SirLog.count', -1 ) do
       delete :destroy, id: @sir_log
     end
     assert_redirected_to sir_logs_path
   end
+
+  test 'should destroy sir_log 2' do
+    # add more entries to item
+    si = sir_items( :one )
+    assert_difference( 'SirEntry.count', 1 ) do
+      si.sir_entries.create( rec_type: 1, orig_group_id:  groups( :group_one ).id, resp_group_id: groups( :group_two ).id )
+    end
+    assert_difference( 'SirLog.count', -1 ) do
+      delete :destroy, id: @sir_log
+    end
+    assert_redirected_to sir_logs_path
+  end    
 
 end

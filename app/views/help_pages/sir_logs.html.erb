@@ -49,6 +49,9 @@
     <p>All SIR Logs in the pmodbase application are listed in the order they were created. The link under the 
     <%= help_term SirLog.human_attribute_name( :label )%> leads to the index page of the SIR Log Items belonging
     to this SIR Log.</p>
+    <p>The group listed in the column <%= help_term t( 'sir_items.index.resp_group_curr' )%> is the group which
+    is currently responsible for the next SIR Log Entry. Initially - when no entry exists yet - this is identical
+    to the <%= help_term t( 'sir_items.index.resp_group_item' )%>.</p>
     <h3>Access Permissions</h3>
     <p>Owner and Deputy of the SIR Log need access permissions for the feature
     <%= help_term Feature.find_by_id( FEATURE_ID_SIR_LOGS ).label_with_id-%> in order to manage

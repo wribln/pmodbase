@@ -89,7 +89,8 @@ en:
     title:              'SIR Log Items'
     index:
       form_title:       'All Items in SIR Log '
-      resp_group:       'Responsible Group'
+      resp_group_curr:  'Currently Responsible'
+      resp_group_item:  'Responsible Group'
     new:
       form_title:       'Add SIR Log Item to '
     edit:

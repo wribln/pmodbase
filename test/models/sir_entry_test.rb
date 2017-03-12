@@ -25,6 +25,8 @@ class SirEntryTest < ActiveSupport::TestCase
     # now the responsible group is :group_two
 
     assert_equal se.sir_item.resp_group, groups( :group_two )
+    assert_equal si.resp_next_entry, groups( :group_two )
+    assert_equal se.resp_this_entry, groups( :group_two )
 
     # need responsible group
 
@@ -209,5 +211,37 @@ class SirEntryTest < ActiveSupport::TestCase
 
   end
 
+  test 'next responsible group' do
+    gn = group_categories( :group_category_one ).groups.create( code: 'HOHO', label: 'Santa Claus' )
+    g1 = groups( :group_one )
+    g2 = groups( :group_two )
+
+    si = sir_items( :two )
+    assert_equal si.resp_next_entry, g2
+
+    se = si.sir_entries.new
+    assert_equal si.resp_next_entry, g2
+    assert_equal se.resp_this_entry, g2
+
+    se.orig_group = g2
+    se.resp_group = gn
+    assert_equal si.resp_next_entry, g2
+    assert_equal se.resp_this_entry, g2
+
+    se.rec_type = 2
+    assert_equal se.resp_this_entry, g2
+
+    se.rec_type = 1
+    assert_equal se.resp_this_entry, gn
+
+    se.rec_type = 0
+    assert_equal se.resp_this_entry, g2
+    assert se.save, se.errors.messages
+
+    si.reload
+    assert_equal si.resp_next_entry, gn
+    assert_equal se.resp_this_entry, g2
+
+  end
 
 end

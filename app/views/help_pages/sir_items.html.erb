@@ -3,6 +3,8 @@
     <%= helpcrumbs %>
     <%= help_header %>
     <p class="lead">Items in a SIR Log describe a specific topic or issue</p>
+    <p>See also <%= link_to_help :sir_logs_general, 'Help on the SIR Log feature'%>, and
+    <%= link_to_help :sir_logs, 'Help on SIR Logs'%>.</p>
     <h3>Attributes</h3>
     <ul>
       <li>Each item in a SIR Log has a unique <%= help_param SirItem.human_attribute_name( :seqno )-%>
