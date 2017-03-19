@@ -1,0 +1,70 @@
+<%- page_title %>
+<div class="container">
+  <%= breadcrumbs %>
+  <%= form_title_w_link( @sir_log.label, sir_logs_path )%>
+  <div class="row">
+  <div class="table-responsive col-sm-5">
+    <table class="table table-striped table-bordered table-condensed">
+      <caption><%= t( '.stats_by_group' )%></caption>
+      <thead>
+        <tr>
+          <th rowspan="2" class="col-sm-1"><%= SirItem.human_attribute_name( :group  )%></th>
+          <th colspan="4" class="col-sm-4 th-center"><%= SirItem.human_attribute_name( :status )%></th>
+        </tr>
+        <tr>
+          <th class="col-sm-1 th-right"><%= SirItem::SIR_ITEM_STATUS_LABELS[ 0 ] %></th>
+          <th class="col-sm-1 th-right"><%= SirItem::SIR_ITEM_STATUS_LABELS[ 1 ] %></th>
+          <th class="col-sm-1 th-right"><%= SirItem::SIR_ITEM_STATUS_LABELS[ 2 ] %></th>
+          <th class="col-sm-1 th-right"><%= SirItem::SIR_ITEM_STATUS_LABELS[ 3 ] %></th>
+        </tr>
+      </thead>
+      <tbody>
+      <%- @stats_by_group.sort.each do | g |%>
+      <tr>
+        <td><%= g.first %></td>
+        <%- g.last.each do | v |%>
+        <td class="td-right"><%= v %></td>
+        <%- end %>
+      </tr>
+      <%- end %>
+      <tr class="tr-bold">
+        <td class="td-right"><%= t( 'statistics.total' ) %></td>
+        <%- @stats_total.each do | v |%>
+        <td class="td-right"><%= db_formatted_abs( v )%></td>
+        <%- end %>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  </div>
+  <div class="row">
+  <div class="table-responsive col-sm-3">
+    <table class="table table-striped table-bordered table-condensed">
+      <caption><%= t( '.stats_by_last' )%></caption>
+      <thead>
+        <tr>
+          <th class="col-sm-1"><%= SirItem.human_attribute_name( :group  )%></th>
+          <th class="col-sm-1 th-right"><%= t( 'statistics.count' )%></th>
+          <th class="col-sm-1 th-right"><%= t( 'statistics.rel' )%></th>
+        </tr>
+      </thead>
+      <tbody>
+      <%- @stats_by_last.sort.each do | g |%>
+      <tr>
+        <td><%= g.first %></td>
+        <td class="td-right"><%= db_formatted_abs( g.last )%></td>
+        <td class="td-right"><%= db_formatted_pct( percent_abs( g.last, @grand_total ))%>
+      </tr>
+      <%- end %>
+      <tr class="tr-bold">
+        <td class="td-right"><%= t( 'statistics.total' )%></td>
+        <td class="td-right"><%= db_formatted_abs( @grand_total )%></td>
+        <td class="td-right"><%= db_formatted_pct( 100 )%></td>
+      </tr>
+      </tbody>
+    </table>
+    <%= link_to t( 'button_label.go_to_index' ), sir_log_sir_items_path( @sir_log ) %>
+    <%= render partial: 'shared/footer', locals: { feature_identifier: FEATURE_ID_SIR_ITEMS, cr_details: 'statistics page' } %>
+  </div>
+  </div>
+</div>

@@ -16,8 +16,6 @@ en:
     upd_baseline:  'Update Baseline'
     accounts_link: 'Show Index of Accounts'
     cfr_link:      'Show Index of CFR'
-    total:         'Total'
-    subtotal:      'Subtotal'
     boolean:
       yesno:      [ 'yes', 'no']
       truefalse:  [ 'true', 'false']
@@ -1453,7 +1451,6 @@ en:
       stats_title:    'Statistics Based on Selected Lines'
       code:           'Tag'
       item:           'Item'
-      count:          'Count'
       line_title:     'Total Count of Selected Lines'
       station_title:  'Total Count of Selected Stations'
       stop_title:     'Total Count of Selected Stops'
@@ -1466,7 +1463,6 @@ en:
       form_title:     'Statistics on the Lines in the Network'
       code:           'Tag'
       item:           'Item'
-      count:          'Count'
       total:          'Total count of selected Lines in the Network'
 
     msg:
@@ -1842,7 +1838,6 @@ en:
     title:          'pmodbase Database Statistics'
     description:    'Description'
     category:       'Category'
-    count:          'Count'
 
     index:
       form_title:   'Global pmodbase Database Statistics'
@@ -1851,6 +1846,8 @@ en:
 
     abs:            'absolute'
     rel:            'relative'
+    count:          'Count'
+    total:          'Total'
     grand_total:    'Grand Total'
     sub_total:      'Sub Total'
     progress:       'Progress'

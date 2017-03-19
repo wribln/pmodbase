@@ -1,7 +1,7 @@
 class SirItemsController < ApplicationController
   initialize_feature FEATURE_ID_SIR_ITEMS, FEATURE_ACCESS_USER + FEATURE_ACCESS_NBP, FEATURE_CONTROL_CUGRP
 
-  before_action :set_sir_log,  only: [ :index, :new, :create ]
+  before_action :set_sir_log,  only: [ :index, :new, :create, :show_stats ]
   before_action :set_sir_item, only: [ :show, :show_all, :edit, :update, :destroy ]
   before_action :set_breadcrumb
   
@@ -12,7 +12,7 @@ class SirItemsController < ApplicationController
     @filter_fields = filter_params
     @sir_groups = Group.all.collect{ |g| [ g.code, g.id ]}
     @sir_phases = PhaseCode.all.order( :code ).collect{ |p| [ p.code, p.id ]}
-    @sir_items = @sir_log.sir_items.active.includes( :group, :last_entry ).filter( @filter_fields ).paginate( page: params[ :page ])
+    @sir_items = @sir_log.sir_items.active.includes([ :group, :last_entry ]).filter( @filter_fields ).paginate( page: params[ :page ])
   end
 
   # GET /sii/1
@@ -28,6 +28,20 @@ class SirItemsController < ApplicationController
 
   def show_all
     check_access( :to_read )
+  end
+
+  def show_stats
+    check_access( :to_index )
+    @sir_items = @sir_log.sir_items.includes([ :group, :last_entry ]).all
+    @stats_by_group = Hash.new{| h, k | h[ k ] = Array.new( SirItem::SIR_ITEM_STATUS_LABELS.size, 0 )}
+    @stats_by_last  = Hash.new( 0 )
+    @sir_items.each do |si|
+      @stats_by_group[ si.group.code ][ si.status ] += 1
+      @stats_by_last[ si.resp_group.code ] += 1
+    end
+    @stats_total = Array.new( SirItem::SIR_ITEM_STATUS_LABELS.size, 0 )
+    @stats_by_group.each_value{| v | v.each_with_index{| c, i | @stats_total[ i ] += c }}
+    @grand_total = @stats_total.sum
   end
 
   # GET /sil/1/sii/new
@@ -140,7 +154,7 @@ class SirItemsController < ApplicationController
 
     def check_access( action )
       render_no_permission unless @sir_log.permitted_to_access?( current_user.id )
-      return if [ 'index', 'new', 'create' ].include?( action_name )
+      return if [ 'index', 'new', 'create', 'show_stats' ].include?( action_name )
       render_no_permission unless current_user.permission_to_access( feature_identifier, action, @sir_item.group_id )
     end
 

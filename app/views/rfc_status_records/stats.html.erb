@@ -24,13 +24,13 @@
         </tr>
         <%- end -%>
         <tr class="tr-bold">
-          <%= content_tag :td, t( 'general.subtotal' ), { colspan: 2, class: 'td-right' } %>
+          <%= content_tag :td, t( 'statistics.sub_total' ), { colspan: 2, class: 'td-right' } %>
           <%= content_tag :td, wf_subtotal, { class: 'td-right' } %>
           <%- wf_total += wf_subtotal; wf_subtotal = 0 -%>
         </tr>  
       <%- end -%>
         <tr class="tr-bold">
-          <%= content_tag :td, t( 'general.total' ), { colspan: 2 } %>
+          <%= content_tag :td, t( 'statistics.total' ), { colspan: 2 } %>
           <%= content_tag :td, wf_total, { class: 'td-right' } %>
         </tr>
       </tbody>

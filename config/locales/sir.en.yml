@@ -108,6 +108,10 @@ en:
       due_by:           ', due by %{due_date}'
     show_all:
       form_title:       'Show Details of SIR Log Item'
+    show_stats:
+      form_title:       'Statistics for SIR Log '
+      stats_by_group:   'Statistics per Group Responsible for Item'
+      stats_by_last:    'Statistics per Currently Responsible Group'
     msg:
       bad_seqno:        'must be unique within this SIR Log.'
       bad_archive:      'cannot be set on open items.'

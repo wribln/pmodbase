@@ -235,17 +235,18 @@ class ApplicationRoutesTest < ActionController::TestCase
   end
 
   test 'special routes for SIR (shallow nested) - SIR Items' do
-    check_routing( 'get', 'sil/1/sii',     'sir_items', 'index',  sir_log_id: '1' )
-    check_routing( 'post','sil/1/sii',     'sir_items', 'create', sir_log_id: '1' )
-    check_routing( 'get', 'sil/1/sii/new', 'sir_items', 'new',    sir_log_id: '1' )
+    check_routing( 'get', 'sil/1/sii',       'sir_items', 'index',  sir_log_id: '1' )
+    check_routing( 'post','sil/1/sii',       'sir_items', 'create', sir_log_id: '1' )
+    check_routing( 'get', 'sil/1/sii/new',   'sir_items', 'new',    sir_log_id: '1' )
+    check_routing( 'get', 'sil/1/sii/stats', 'sir_items', 'show_stats', sir_log_id: '1' )
     #
-    check_routing( 'get',   'sii/1/all',  'sir_items', 'show_all', id: '1' )
-    check_routing( 'get',   'sii/1/edit', 'sir_items', 'edit',     id: '1' )
-    check_routing( 'get',   'sii/1',      'sir_items', 'show',     id: '1' )
-    check_routing( 'patch', 'sii/1',      'sir_items', 'update',   id: '1' )
-    check_routing( 'put',   'sii/1',      'sir_items', 'update',   id: '1' )
-    check_routing( 'delete','sii/1',      'sir_items', 'destroy',  id: '1' )
-  end
+    check_routing( 'get',   'sii/1/all',  'sir_items', 'show_all',   id: '1' )
+    check_routing( 'get',   'sii/1/edit', 'sir_items', 'edit',       id: '1' )
+    check_routing( 'get',   'sii/1',      'sir_items', 'show',       id: '1' )
+    check_routing( 'patch', 'sii/1',      'sir_items', 'update',     id: '1' )
+    check_routing( 'put',   'sii/1',      'sir_items', 'update',     id: '1' )
+    check_routing( 'delete','sii/1',      'sir_items', 'destroy',    id: '1' )
+  end  
 
   test 'special routes for SIR (shallow nested) - SIR Entries' do
     check_routing( 'post',  'sii/1/sie',     'sir_entries', 'create', sir_item_id: '1' )

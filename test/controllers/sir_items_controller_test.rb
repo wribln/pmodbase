@@ -12,6 +12,15 @@ class SirItemsControllerTest < ActionController::TestCase
     assert_not_nil assigns( :sir_items )
   end
 
+  test 'should get statistics' do
+    get :show_stats, sir_log_id: @sir_item.sir_log_id
+    assert_response :success
+    assert_not_nil assigns( :sir_log )
+    assert_not_nil assigns( :grand_total )
+    assert_not_nil assigns( :stats_by_group )
+    assert_not_nil assigns( :stats_by_last )
+  end
+
   test 'should get new' do
     get :new, sir_log_id: @sir_item.sir_log
     assert_response :success

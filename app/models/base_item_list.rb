@@ -26,10 +26,7 @@ class BaseItemList
       next if f.no_direct_access?
       if f.access_to_index? || current_user.permission_to_index?( f.id ) then
         if all_categories[ f.feature_category_id ].nil? then # new group - initialize
-          ac = a_category.new( 1, [ fi ], 0, "", nil )
-          ac.seqno = f.feature_category.seqno
-          ac.label = f.feature_category.label
-          all_categories[ f.feature_category_id ] = ac
+          all_categories[ f.feature_category_id ] = a_category.new( 1, [ fi ], f.feature_category.seqno, f.feature_category.label, nil )
         else # existing group - increment count, add new feature to list
           all_categories[ f.feature_category_id ].item_count += 1
           all_categories[ f.feature_category_id ].features << fi
@@ -67,20 +64,20 @@ class BaseItemList
     # adjust approximate number of items in each column:
     # [no_items_per_col, total_no_items.fdiv(NO_OF_COLUMNS_ON_BASE_PAGE).ceil].max
 
-    no_items_per_col = total_no_items.fdiv(NO_OF_COLUMNS_ON_BASE_PAGE).ceil unless
-      (no_items_per_col * NO_OF_COLUMNS_ON_BASE_PAGE ) > total_no_items
+    no_items_per_col = total_no_items.fdiv( NO_OF_COLUMNS_ON_BASE_PAGE ).ceil unless
+      ( no_items_per_col * NO_OF_COLUMNS_ON_BASE_PAGE ) > total_no_items
 
     # ready for first loop: distribute groups to columns
     # column_item_count holds total of items assigned to column,
     # total_no_items will be the number of items left to distribute
 
-    column_item_count = Array.new( NO_OF_COLUMNS_ON_BASE_PAGE, 0)
+    column_item_count = Array.new( NO_OF_COLUMNS_ON_BASE_PAGE, 0 )
     all_categories.each do |tgv|
       column_item_count.each_index do |ci|
-        if (column_item_count[ci] + tgv[1].item_count) <= no_items_per_col then
-          column_item_count[ci] += tgv[1].item_count
-          total_no_items -= tgv[1].item_count
-          tgv[1].column_no = ci
+        if( column_item_count[ ci ] + tgv[ 1 ].item_count ) <= no_items_per_col then
+          column_item_count[ ci ] += tgv[ 1 ].item_count
+          total_no_items -= tgv[ 1 ].item_count
+          tgv[ 1 ].column_no = ci
           break
         end # if
       end # column_item_count do
@@ -94,26 +91,26 @@ class BaseItemList
       g_max = 0
       i_max = nil
       all_categories.each_with_index do | tgv, tgi |
-        if tgv[1].column_no.nil? and tgv[1].item_count > g_max then
-          g_max = tgv[1].item_count
+        if tgv[ 1 ].column_no.nil? and tgv[ 1 ].item_count > g_max then
+          g_max = tgv[ 1 ].item_count
           i_max = tgi
         end
       end
-      column_item_count[ci] += all_categories[i_max][1].item_count
-      total_no_items -= all_categories[i_max][1].item_count
-      all_categories[i_max][1].column_no = ci
+      column_item_count[ ci ] += all_categories[ i_max ][ 1 ].item_count
+      total_no_items -= all_categories[ i_max ][ 1 ].item_count
+      all_categories[ i_max ][ 1 ].column_no = ci
 
     end
 
     # final stage: collect output into array for controller
 
-    result = Array.new(NO_OF_COLUMNS_ON_BASE_PAGE){Array.new}
+    result = Array.new( NO_OF_COLUMNS_ON_BASE_PAGE ){ Array.new }
     all_categories.each do |tgv|
-      result[tgv[1].column_no] << [0,tgv[1].label] # header
-      tgv[1].features.each do |t|
-        result[tgv[1].column_no] << [1,all_features[t].label,all_features[t].code] # detail
+      result[ tgv[ 1 ].column_no ] << [ 0, tgv[ 1 ].label ] # header
+      tgv[ 1 ].features.each do | t |
+        result[ tgv[ 1 ].column_no ] << [ 1, all_features[ t ].label, all_features[ t ].code ] # detail
       end
-      result[tgv[1].column_no] << [2] # end of group
+      result[ tgv[ 1 ].column_no ] << [ 2 ] # end of group
     end
 
     return result
