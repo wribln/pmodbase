@@ -1,5 +1,5 @@
 class SirItemsController < ApplicationController
-  initialize_feature FEATURE_ID_SIR_ITEMS, FEATURE_ACCESS_USER + FEATURE_ACCESS_NBP, FEATURE_CONTROL_CUGRP
+  initialize_feature FEATURE_ID_SIR_ITEMS, FEATURE_ACCESS_SOME + FEATURE_ACCESS_NBP, FEATURE_CONTROL_CUGRP
 
   before_action :set_sir_log,  only: [ :index, :new, :create, :show_stats ]
   before_action :set_sir_item, only: [ :show, :show_all, :edit, :update, :destroy ]
@@ -8,7 +8,7 @@ class SirItemsController < ApplicationController
   # GET /sil/1/sii
  
   def index
-    check_access( :to_index )
+    return unless has_access?( :to_index )
     @filter_fields = filter_params
     @sir_groups = Group.all.collect{ |g| [ g.code, g.id ]}
     @sir_phases = PhaseCode.all.order( :code ).collect{ |p| [ p.code, p.id ]}
@@ -18,7 +18,7 @@ class SirItemsController < ApplicationController
   # GET /sii/1
  
   def show
-    check_access( :to_read )
+    return unless has_access?( :to_read )
     @sir_entries = @sir_item.sir_entries.includes([ :resp_group, :orig_group ])
     @sir_item.set_visibility( current_user.permitted_groups( feature_identifier ), @sir_entries )
     @group_stack = [ @sir_item.group_id ]
@@ -27,11 +27,11 @@ class SirItemsController < ApplicationController
   # GET /sii/1/all
 
   def show_all
-    check_access( :to_read )
+    return unless has_access?( :to_read )
   end
 
   def show_stats
-    check_access( :to_index )
+    return unless has_access?( :to_index )
     @sir_items = @sir_log.sir_items.includes([ :group, :last_entry ]).all
     @stats_by_group = Hash.new{| h, k | h[ k ] = Array.new( SirItem::SIR_ITEM_STATUS_LABELS.size, 0 )}
     @stats_by_last  = Hash.new( 0 )
@@ -47,7 +47,7 @@ class SirItemsController < ApplicationController
   # GET /sil/1/sii/new
 
   def new
-    check_access( :to_create )
+    return unless has_access?( :to_create )
     @sir_item = SirItem.new
     @sir_item.sir_log = @sir_log
     set_selections( :to_create )
@@ -57,14 +57,14 @@ class SirItemsController < ApplicationController
 
   def edit
     @sir_log = @sir_item.sir_log
-    check_access( :to_update )
+    return unless has_access?( :to_update )
     set_selections( :to_update )
   end
 
   # POST /sii
  
   def create
-    check_access( :to_create )
+    return unless has_access?( :to_create )
     @sir_item = SirItem.new( sir_item_params )
     @sir_item.sir_log = @sir_log
     respond_to do |format|
@@ -88,7 +88,7 @@ class SirItemsController < ApplicationController
   # PATCH/PUT /sii/1
  
   def update
-    check_access( :to_update )
+    return unless has_access?( :to_update )
     respond_to do |format|
       if @sir_item.update( sir_item_params )
         format.html { redirect_to @sir_item, notice: I18n.t( 'sir_items.msg.update_ok' )}
@@ -103,7 +103,7 @@ class SirItemsController < ApplicationController
   # DELETE /sii/1
  
   def destroy
-    check_access( :to_delete )
+    return unless has_access?( :to_delete )
     @sir_log = @sir_item.sir_log
     @sir_item.destroy
     respond_to do |format|
@@ -152,10 +152,17 @@ class SirItemsController < ApplicationController
     # only owner, deputy and members of this SIR log may access details
     # only members with access to group may update item
 
-    def check_access( action )
-      render_no_permission unless @sir_log.permitted_to_access?( current_user.id )
-      return if [ 'index', 'new', 'create', 'show_stats' ].include?( action_name )
-      render_no_permission unless current_user.permission_to_access( feature_identifier, action, @sir_item.group_id )
+    def has_access?( action )
+      unless @sir_log.permitted_to_access?( current_user.id )
+        render_no_permission
+        return false
+      end
+      return true if [ 'index', 'new', 'create', 'show_stats' ].include?( action_name )
+      unless current_user.permission_to_access( feature_identifier, action, @sir_item.group_id )
+        render_no_permission 
+        return false 
+      end
+      return true
     end
 
 end

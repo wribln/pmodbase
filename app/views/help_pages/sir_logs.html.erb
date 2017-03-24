@@ -56,6 +56,9 @@
     <p>Owner and Deputy of the SIR Log need access permissions for the feature
     <%= help_term Feature.find_by_id( FEATURE_ID_SIR_LOGS ).label_with_id-%> in order to manage
     attributes of the SIR Log and its participants.</p>
+    <p>Only the Owner and the Deputy may view details of a SIR Log - all others may only view the list
+    of SIR Logs: As the details only contain the list of participants and not more information, this
+    should be sufficient.</p>
     <p>Participants need read permission to access the SIR Log Items in a SIR Log (feature
     <%= help_term Feature.find_by_id( FEATURE_ID_SIR_ITEMS ).label_with_id-%>). They also
     need read -&nbsp;and possibly edit&nbsp;- permissions to the feature 

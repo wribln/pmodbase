@@ -6,13 +6,13 @@
 
 class SirEntriesController < ApplicationController
 
-  initialize_feature FEATURE_ID_SIR_ITEMS, FEATURE_ACCESS_USER + FEATURE_ACCESS_NBP, FEATURE_CONTROL_CUG
+  initialize_feature FEATURE_ID_SIR_ITEMS, FEATURE_ACCESS_SOME + FEATURE_ACCESS_NBP, FEATURE_CONTROL_CUGRP
   before_action :set_sir_entry, only: [ :show, :edit, :update, :destroy ]
 
   # GET /sie/:id
  
   def show
-    check_access( :to_read )
+    return unless has_access?( :to_read )
     set_breadcrumb
   end
 
@@ -23,7 +23,7 @@ class SirEntriesController < ApplicationController
     set_breadcrumb
     set_group_stack_and_last
     @sir_entry = @sir_item.sir_entries.new( params.permit( :sir_item_id, :rec_type ))
-    check_access( :to_create )
+    return unless has_access?( :to_create )
     set_sir_groups
   end
 
@@ -32,7 +32,7 @@ class SirEntriesController < ApplicationController
   def edit
     if @sir_entry.updatable?
       set_group_stack_and_last
-      check_access( :to_update )
+      return unless has_access?( :to_update )
       set_sir_groups
     else
       redirect_to @sir_entry, notice: I18n.t( 'sir_items.msg.bad_upd_req' )
@@ -44,7 +44,7 @@ class SirEntriesController < ApplicationController
   def create
     @sir_item = SirItem.find( params[ :sir_item_id ])
     @sir_entry = @sir_item.sir_entries.new( sir_entry_params )
-    check_access( :to_create )
+    return unless has_access?( :to_create )
     respond_to do |format|
       if @sir_entry.save
         format.html { redirect_to @sir_entry, notice: I18n.t( 'sir_entries.msg.create_ok' )}
@@ -58,7 +58,7 @@ class SirEntriesController < ApplicationController
   # PATCH/PUT /sie/1
  
   def update
-    check_access( :to_update )
+    return unless has_access?( :to_update )
     respond_to do |format|
       if @sir_entry.update( sir_entry_params )
         format.html { redirect_to @sir_entry, notice: I18n.t( 'sir_entries.msg.update_ok' )}
@@ -71,7 +71,7 @@ class SirEntriesController < ApplicationController
   # DELETE /sie/1
  
   def destroy
-    check_access( :to_delete )
+    return unless has_access?( :to_delete )
     @sir_item = @sir_entry.sir_item
     respond_to do |format|
       if @sir_entry.destroy
@@ -145,10 +145,17 @@ class SirEntriesController < ApplicationController
     # only owner, deputy and members of this SIR log may access details
     # only members with access to group may view/update item
 
-    def check_access( action )
-      render_no_access unless @sir_item.sir_log.permitted_to_access?( current_user.id )
+    def has_access?( action )
+      unless @sir_item.sir_log.permitted_to_access?( current_user.id )
+        render_no_access 
+        return false
+      end
       g = [ :new, :create ].include?( action ) ? @sir_item.resp_next_entry : @sir_entry.resp_this_entry
-      render_no_permission unless current_user.permission_to_access( feature_identifier, action, g.id )
+      unless current_user.permission_to_access( feature_identifier, action, g.id )
+        render_no_permission 
+        return false
+      end
+      true
     end
 
 end

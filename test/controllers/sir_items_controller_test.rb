@@ -16,9 +16,13 @@ class SirItemsControllerTest < ActionController::TestCase
     get :show_stats, sir_log_id: @sir_item.sir_log_id
     assert_response :success
     assert_not_nil assigns( :sir_log )
-    assert_not_nil assigns( :grand_total )
-    assert_not_nil assigns( :stats_by_group )
-    assert_not_nil assigns( :stats_by_last )
+    assert_not_nil gt = assigns( :grand_total )
+    assert_not_nil sg = assigns( :stats_by_group )
+    assert_not_nil sl = assigns( :stats_by_last )
+    assert_equal 2, gt
+    assert_equal sg[ 'ONE' ], [0,1,0,0]
+    assert_equal sg[ 'TWO' ], [1,0,0,0]
+    assert_equal sl[ 'TWO' ], 2
   end
 
   test 'should get new' do
