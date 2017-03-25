@@ -6,7 +6,7 @@
 
 class SirEntriesController < ApplicationController
 
-  initialize_feature FEATURE_ID_SIR_ITEMS, FEATURE_ACCESS_SOME + FEATURE_ACCESS_NBP, FEATURE_CONTROL_CUGRP
+  initialize_feature FEATURE_ID_SIR_ENTRIES, FEATURE_ACCESS_SOME + FEATURE_ACCESS_NBP, FEATURE_CONTROL_CUGRP
   before_action :set_sir_entry, only: [ :show, :edit, :update, :destroy ]
 
   # GET /sie/:id
@@ -146,12 +146,10 @@ class SirEntriesController < ApplicationController
     # only members with access to group may view/update item
 
     def has_access?( action )
-      unless @sir_item.sir_log.permitted_to_access?( current_user.id )
+      unless( action_name == :show && @sir_item.sir_log.permitted_to_access?( current_user.id )) ||
+        @sir_item.sir_log.permitted_to_update?( current_user.id )
         render_no_access 
         return false
-      end
-      if [ :new, :edit, :save, :update, :destroy ].include?( action_name )
-        return false unless @sir_item.sir_log.permitted_to_update?( current_user.id )
       end
       g = [ :new, :create ].include?( action_name ) ? @sir_item.resp_next_entry : @sir_entry.resp_this_entry
       unless current_user.permission_to_access( feature_identifier, action, g.id )
