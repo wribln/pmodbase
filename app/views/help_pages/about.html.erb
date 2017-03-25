@@ -1,4 +1,4 @@
-<% help_title 'About pmodbase v0.2.3b' %>
+<% help_title 'About pmodbase v0.2.3c' %>
   <div class="container">
     <%= helpcrumbs %>
     <%= help_header %>
@@ -23,6 +23,9 @@
     </ul>
     <h3>v0.2.3 Modifications</h3>
     <ul>
+        <li>Show some dots for omitted SIR Log Entries to indicate that there is more information but not
+        available to the current user.</li>
+        <li>Correct arrow for SIR Log Entries of type Response: Now points correctly from originator to responsible.</li>
         <li>Corrected feature control and access levels for SIR controllers: needs to be FEATURE_CONTROL_CUGRP 
         to show group in Feature index; need FEATURE_ACCESS_SOME to prohibit any user to access a SIR log.</li>
         <li>check_access within SirItem- and SIREntryController is now has_access? to allow return from controller

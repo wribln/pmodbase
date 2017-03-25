@@ -34,7 +34,7 @@ module SirHelper
       h += entry.orig_group_code
       h += ' &#x25C4; ' + entry.resp_group_code unless entry.orig_group_id == entry.resp_group_id
     when 2
-      h += entry.orig_group_code + '&#x25C4; ' + entry.resp_group_code
+      h += entry.orig_group_code + '&#x25BA; ' + entry.resp_group_code
     end
     h += t( 'sir_items.show.due_by', due_date: entry.due_date ) unless entry.due_date.nil?
     h.html_safe

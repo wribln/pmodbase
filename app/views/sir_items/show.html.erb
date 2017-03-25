@@ -17,6 +17,7 @@
           <%= entry_action :forward, @sir_item %></p>
         </div>
       <%- else -%>
+        <%- @was_visible = true %>
         <%- @sir_entries.each do |se| %>
           <%= render partial: 'show_entry', object: se, locals: { depth: SirItem.depth!( @group_stack, se )} %>
         <%- end %>

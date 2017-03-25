@@ -105,7 +105,8 @@ class SirEntry < ActiveRecord::Base
   def check_before_destroy
     unless is_comment? || sir_item.sir_entries.last.id == id
       errors.add( :base, I18n.t( 'sir_items.msg.bad_del_req' ))
-      return false # throw :abort in Rails 5
+      raise ActiveRecord::Rollback
+      return false
     else
       return true
     end
@@ -120,7 +121,8 @@ class SirEntry < ActiveRecord::Base
   def check_before_update
     unless updatable?
       errors.add( :base, I18n.t( 'sir_items.msg.bad_upd_req' ))
-      return false # throw :abort in Rails 5
+      raise ActiveRecord::Rollback
+      return false
     else
       return true
     end
