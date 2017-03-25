@@ -82,7 +82,7 @@ class SirEntry < ActiveRecord::Base
   end
 
   # defines who is responsible for this entry, i.e. which group would be
-  # permitted to update this entry? Per definition, this is the originating
+  # permitted to update or delete this entry? Per definition, this is the originating
   # group unless this is a comment where the (next) responsible is also
   # the originating group, and the addressee of the comment is stored as
   # orig_group. If no rec_type is defined yet, let the responsible group

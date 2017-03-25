@@ -150,7 +150,10 @@ class SirEntriesController < ApplicationController
         render_no_access 
         return false
       end
-      g = [ :new, :create ].include?( action ) ? @sir_item.resp_next_entry : @sir_entry.resp_this_entry
+      if [ :new, :edit, :save, :update, :destroy ].include?( action_name )
+        return false unless @sir_item.sir_log.permitted_to_update?( current_user.id )
+      end
+      g = [ :new, :create ].include?( action_name ) ? @sir_item.resp_next_entry : @sir_entry.resp_this_entry
       unless current_user.permission_to_access( feature_identifier, action, g.id )
         render_no_permission 
         return false

@@ -154,7 +154,7 @@ class SirItemsController < ApplicationController
 
     def has_access?( action )
       unless @sir_log.permitted_to_access?( current_user.id )
-        render_no_permission
+        render_no_access
         return false
       end
       return true if [ 'index', 'new', 'create', 'show_stats' ].include?( action_name )
