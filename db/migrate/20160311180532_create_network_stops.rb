@@ -1,4 +1,4 @@
-class CreateNetworkStops < ActiveRecord::Migration
+class CreateNetworkStops < ActiveRecord::Migration[5.1]
   def change
     create_table :network_stops do |t|
       t.belongs_to  :network_station, foreign_key: true, null: false, index: true

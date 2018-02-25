@@ -1,12 +1,13 @@
 require 'test_helper'
-class GroupCategoriesControllerTest < ActionController::TestCase
+class GroupCategoriesControllerTest < ActionDispatch::IntegrationTest
 
   setup do
     @group_category = group_categories( :group_category_one )
-    session[ :current_user_id ] = accounts( :one ).id
+    signon_by_user accounts( :one )
   end
 
   test 'check class_attributes'  do
+    get group_categories_path
     validate_feature_class_attributes FEATURE_ID_GROUP_CATEGORIES, ApplicationController::FEATURE_ACCESS_SOME
   end
 
@@ -16,36 +17,35 @@ class GroupCategoriesControllerTest < ActionController::TestCase
   end
 
   test 'should get index' do
-    get :index
+    get group_categories_path
     assert_response :success
     assert_not_nil assigns( :group_categories )
   end
 
   test 'should get new' do
-    get :new
+    get new_group_category_path
     assert_response :success
   end
 
   test 'should create group_category' do
     assert_difference( 'GroupCategory.count' ) do
-      post :create, group_category: { label: @group_category.label, seqno: @group_category.seqno }
+      post group_categories_path( params:{ group_category: { label: @group_category.label, seqno: @group_category.seqno }})
     end
-
     assert_redirected_to group_category_path(assigns(:group_category))
   end
 
   test 'should show group_category' do
-    get :show, id: @group_category
+    get group_category_path( id: @group_category )
     assert_response :success
   end
 
   test 'should get edit' do
-    get :edit, id: @group_category
+    get edit_group_category_path( id: @group_category )
     assert_response :success
   end
 
   test 'should update group_category' do
-    patch :update, id: @group_category, group_category: { label: @group_category.label, seqno: @group_category.seqno }
+    patch group_category_path( id: @group_category, params:{ group_category: { label: @group_category.label, seqno: @group_category.seqno }})
     assert_redirected_to group_category_path(assigns(:group_category))
   end
 
@@ -54,9 +54,8 @@ class GroupCategoriesControllerTest < ActionController::TestCase
     g = GroupCategory.new( label: 'Test' )
     g.save
     assert_difference('GroupCategory.count', -1) do
-      delete :destroy, id: g
+      delete group_category_path( id: g )
     end
-
     assert_redirected_to group_categories_path
   end
 end

@@ -5,11 +5,10 @@ class ResponsibilityTest < ActiveSupport::TestCase
   test 'defaults for new records' do
     r = Responsibility.new
     assert_nil r.description
-    assert r.seqno.is_a?( Fixnum )
+    assert r.seqno.is_a?( Integer )
     assert_nil r.person_id
     assert_nil r.group_id
-    refute r.save, r.errors.messages
-    assert_equal 2, r.errors.size
+    refute r.valid?
     assert_includes r.errors, :description
     assert_includes r.errors, :group_id
   end
@@ -73,7 +72,7 @@ class ResponsibilityTest < ActiveSupport::TestCase
     end
     assert_difference( 'Group.count', -1 ) do
       @gid = @g.id
-      assert_kind_of Fixnum, @gid
+      assert_kind_of Integer, @gid
       assert @g.destroy
     end
     assert_difference( 'Responsibility.count', 0 ) do

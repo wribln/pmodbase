@@ -35,8 +35,8 @@ class ContactInfoTest < ActiveSupport::TestCase
     ci = contact_infos( :one )
     assert ci.valid?
 
-    ci.id = nil
-    assert_not ci.valid?
+    ci = ci.dup
+    refute ci.valid?
 
     ci.info_type = 'Other'
     assert ci.valid?

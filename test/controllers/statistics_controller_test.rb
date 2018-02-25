@@ -1,16 +1,17 @@
 require 'test_helper'
-class StatisticsControllerTest < ActionController::TestCase
+class StatisticsControllerTest < ActionDispatch::IntegrationTest
 
   setup do
-    session[ :current_user_id ] = accounts( :one ).id
+    signon_by_user accounts( :one )
   end
 
-  test "check class_attributes"  do
+  test 'check class_attributes'  do
+    get statistics_path
     validate_feature_class_attributes FEATURE_ID_DBSTATS, ApplicationController::FEATURE_ACCESS_SOME
   end
 
-  test "should get index" do
-    get :index
+  test 'should get index' do
+    get statistics_path
     assert_response :success
   end
 

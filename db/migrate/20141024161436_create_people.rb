@@ -1,4 +1,4 @@
-class CreatePeople < ActiveRecord::Migration
+class CreatePeople < ActiveRecord::Migration[5.1]
   def change
     create_table :people do |t|
       t.string      :formal_name,   limit: MAX_LENGTH_OF_PERSON_NAMES

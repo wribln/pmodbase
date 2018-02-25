@@ -1,15 +1,12 @@
 require 'test_helper'
-class PcpSubjectsController4Test < ActionController::TestCase
-  tests PcpSubjectsController
+class PcpSubjectsController4Test < ActionDispatch::IntegrationTest
 
   # make sure only the commenting party can change the assessment
 
   setup do 
     @pcp_subject = pcp_subjects( :two )
     @pcp_step = @pcp_subject.current_step
-    @account_p = accounts( :one )
-    @account_c = accounts( :two )
-    session[ :current_user_id ] = @account_p.id
+    signon_by_user accounts( :one )
     assert @pcp_subject.pcp_members.destroy_all
   end
 
@@ -20,14 +17,12 @@ class PcpSubjectsController4Test < ActionController::TestCase
 
   test 'try to change assessment' do
 
-    get :edit, id: @pcp_subject
+    get edit_pcp_subject_path( id: @pcp_subject )
     assert_response :success
 
     assert_nil @pcp_step.new_assmt
     assert_equal 'A', @pcp_step.report_version
-    get :update, id: @pcp_subject,
-      pcp_subject: {
-      pcp_steps_attributes: {  '0' => { id: @pcp_step.id, report_version: 'B', new_assmt: '2' }}}
+    patch pcp_subject_path( id: @pcp_subject, params: { pcp_subject: { pcp_steps_attributes: {  '0' => { id: @pcp_step.id, report_version: 'B', new_assmt: '2' }}}})
     @pcp_subject = assigns( :pcp_subject )
     refute_nil @pcp_subject
     assert_redirected_to @pcp_subject
@@ -40,16 +35,14 @@ class PcpSubjectsController4Test < ActionController::TestCase
     # note: pcp_step is still at step_no == 0
 
     assert_difference( 'PcpStep.count' )do
-      get :update_release, id: @pcp_subject
+      get pcp_subject_release_path( id: @pcp_subject )
     end
     assert_redirected_to pcp_release_doc_path( @pcp_subject, @pcp_step.step_no )
 
     assert_nil @pcp_step.new_assmt
     assert_equal 'B', @pcp_step.report_version
 
-    get :update, id: @pcp_subject,
-      pcp_subject: {
-      pcp_steps_attributes: {  '0' => { id: @pcp_step.id, report_version: 'C', new_assmt: '2' }}}
+    patch pcp_subject_path( id: @pcp_subject, params:{ pcp_subject: { pcp_steps_attributes: {  '0' => { id: @pcp_step.id, report_version: 'C', new_assmt: '2' }}}})
     assert_response :forbidden
 
     @pcp_subject = assigns( :pcp_subject )
@@ -66,9 +59,7 @@ class PcpSubjectsController4Test < ActionController::TestCase
     # try new step
 
     @pcp_step = assigns( :pcp_curr_step )
-    get :update, id: @pcp_subject,
-      pcp_subject: {
-        pcp_steps_attributes: { '0' => { id: @pcp_step.id, report_version: 'D', new_assmt: '2' }}}
+    patch pcp_subject_path( id: @pcp_subject, params:{ pcp_subject: { pcp_steps_attributes: { '0' => { id: @pcp_step.id, report_version: 'D', new_assmt: '2' }}}})
     assert_response :forbidden
 
     @pcp_subject = assigns( :pcp_subject )

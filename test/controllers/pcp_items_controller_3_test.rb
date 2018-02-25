@@ -1,6 +1,5 @@
 require 'test_helper'
-class PcpItemsController3Test < ActionController::TestCase
-  tests PcpItemsController
+class PcpItemsController3Test < ActionDispatch::IntegrationTest
 
   # test various scenarios for PCP Items and Comments
 
@@ -8,7 +7,7 @@ class PcpItemsController3Test < ActionController::TestCase
     @pcp_subject = pcp_subjects( :two )
     @account_p = accounts( :one )
     @account_c = accounts( :two )
-    session[ :current_user_id ] = @account_p.id
+    signon_by_user @account_p
     assert @pcp_subject.pcp_members.destroy_all
   end
 
@@ -21,11 +20,7 @@ class PcpItemsController3Test < ActionController::TestCase
   # make sure assessment changes can only be done by commenting party
 
   test 'assessment changes' do
-
-    
-
-
-
+    # TODO
   end
 
 end

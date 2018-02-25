@@ -1,4 +1,4 @@
-class CreateSirMembers < ActiveRecord::Migration
+class CreateSirMembers < ActiveRecord::Migration[5.1]
   def change
     create_table :sir_members do |t|
       t.belongs_to  :account,   null: false,              index: true, foreign_key: :true

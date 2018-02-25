@@ -1,4 +1,4 @@
-class CreateProductCodes < ActiveRecord::Migration
+class CreateProductCodes < ActiveRecord::Migration[5.1]
   def change
     create_table :product_codes do |t|
       t.string  :code,    limit: MAX_LENGTH_OF_CODE, null: false, index: true

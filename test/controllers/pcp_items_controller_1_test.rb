@@ -1,6 +1,5 @@
 require 'test_helper'
-class PcpItemsController1Test < ActionController::TestCase
-  tests PcpItemsController
+class PcpItemsController1Test < ActionDispatch::IntegrationTest
 
   # this performs tests starting with the presenting party
 
@@ -8,7 +7,7 @@ class PcpItemsController1Test < ActionController::TestCase
     @pcp_subject = pcp_subjects( :two )
     @account_p = accounts( :one )
     @account_c = accounts( :two )
-    session[ :current_user_id ] = @account_p.id
+    signon_by_user @account_p
     assert @pcp_subject.pcp_members.destroy_all
   end
 
@@ -32,20 +31,16 @@ class PcpItemsController1Test < ActionController::TestCase
     # presenting owner cannot create items
 
     assert_no_difference( 'PcpItem.count' ) do
-      post :create, pcp_item: {
+      post pcp_subject_pcp_items_path( pcp_subject_id: @pcp_subject, params:{ pcp_item: {
         author: 'presenting party',
-        description: 'Item 1 by Presenting Party' },
-        pcp_subject_id: @pcp_subject
+        description: 'Item 1 by Presenting Party' }})
     end
     assert_response :forbidden
 
     # must release current step in order to add PCP Items
 
     assert_difference( 'PcpStep.count', 1 )do
-      current_controller = @controller
-      @controller = PcpSubjectsController.new
-      get :update_release, id: @pcp_subject
-      @controller = current_controller 
+      get pcp_subject_release_path( id: @pcp_subject )
     end
     @pcp_subject.reload
     assert @pcp_subject.valid_subject?
@@ -54,23 +49,20 @@ class PcpItemsController1Test < ActionController::TestCase
     # the following shall fail because presenter may not add PCP Items
 
     assert_no_difference( 'PcpItem.count' )do
-      post :create, pcp_item: {
+      post pcp_subject_pcp_items_path( pcp_subject_id: @pcp_subject, params:{ pcp_item: {
         author: 'presenter',
-        description: 'Item 1 description' },
-        pcp_subject_id: @pcp_subject
+        description: 'Item 1 description' }})
     end
     assert_response :forbidden
 
     # let the commenter do his job:
 
-    @controller.reset_4_test
     switch_to_user( @account_c )
 
     assert_difference( 'PcpItem.count', 1 )do
-      post :create, pcp_item: {
+      post pcp_subject_pcp_items_path( pcp_subject_id: @pcp_subject, params:{ pcp_item: {
         author: 'commenter',
-        description: 'Item 1 description' },
-        pcp_subject_id: @pcp_subject
+        description: 'Item 1 description' }})
     end
     @pcp_subject = assigns( :pcp_subject )
     @pcp_item = assigns( :pcp_item )
@@ -86,10 +78,7 @@ class PcpItemsController1Test < ActionController::TestCase
 
     assert_no_difference( 'PcpStep.count' )do
       @pcp_step = @pcp_subject.current_step
-      current_controller = @controller
-      @controller = PcpSubjectsController.new
-      patch :update, id: @pcp_subject, 
-        pcp_subject: { pcp_steps_attributes: {  '0' => { id: @pcp_step.id, report_version: 'B', new_assmt: '2' }}}
+      patch pcp_subject_path( id: @pcp_subject, params:{ pcp_subject: { pcp_steps_attributes: {  '0' => { id: @pcp_step.id, report_version: 'B', new_assmt: '2' }}}})
       @pcp_subject = assigns( :pcp_subject )
       @pcp_step = assigns( :pcp_curr_step )
       @pcp_subject.reload
@@ -97,43 +86,37 @@ class PcpItemsController1Test < ActionController::TestCase
       assert_equal 1, @pcp_step.step_no
       assert_equal 2, @pcp_step.new_assmt
       assert_redirected_to pcp_subject_path( @pcp_subject )
-      @controller = current_controller
     end
     @pcp_subject.reload
     assert_equal 0, @pcp_subject.valid_subject?
     assert_equal 0, @pcp_subject.current_step.subject_status
 
     assert_difference( 'PcpStep.count' )do
-      current_controller = @controller
-      @controller = PcpSubjectsController.new
-      get :update_release, id: @pcp_subject
+      get pcp_subject_release_path( id: @pcp_subject )
       @pcp_subject = assigns( :pcp_subject )
       @pcp_step = assigns( :pcp_curr_step )
       @pcp_subject.reload
       @pcp_step.reload
       assert_equal 1, @pcp_subject.current_step.subject_status
       assert_redirected_to pcp_release_doc_path( @pcp_subject, @pcp_step.step_no )
-      @controller = current_controller
     end
     @pcp_subject.reload
     assert @pcp_subject.valid_subject?
     assert_equal 1, @pcp_subject.current_step.subject_status
 
-    @controller.reset_4_test
     switch_to_user( @account_p )
 
     # check if current user can view the item
 
-    get :show, id: @pcp_item
+    get pcp_item_path( id: @pcp_item )
     assert_response :success
 
     # back at the presenter: add response to item
 
     assert_difference( 'PcpComment.count' ) do
-      post :create_comment, pcp_comment: {
+      post create_pcp_comment_path( id: @pcp_item, params:{ pcp_comment: {
         author: 'presenting party',
-        description: 'Item 1 Response 1 by Presenting Party' },
-        id: @pcp_item
+        description: 'Item 1 Response 1 by Presenting Party' }})
       @pcp_comment = assigns( :pcp_comment )
       @pcp_item = assigns( :pcp_item )
     end
@@ -143,11 +126,10 @@ class PcpItemsController1Test < ActionController::TestCase
     # add one more comment, make it public
 
     assert_difference( 'PcpComment.count' ) do
-      post :create_comment, pcp_comment: {
+      post create_pcp_comment_path( id: @pcp_item, params:{ pcp_comment: {
         author: 'presenting party',
         description: 'Item 1 Response 2 by Presenting Party',
-        is_public: true },
-        id: @pcp_item
+        is_public: true }})
     end
 
     @pcp_item = assigns( :pcp_item )
@@ -157,11 +139,10 @@ class PcpItemsController1Test < ActionController::TestCase
     # add one last comment, not public!
 
     assert_difference( 'PcpComment.count', 1 ) do
-      post :create_comment, pcp_comment: {
+      post create_pcp_comment_path( id: @pcp_item, params:{ pcp_comment: {
         author: 'presenting party',
         description: 'Item 1 Response 2 by Presenting Party',
-        is_public: false },
-        id: @pcp_item
+        is_public: false }})
     end
     @pcp_item = assigns( :pcp_item )
     @pcp_step = assigns( :pcp_step )
@@ -180,10 +161,8 @@ class PcpItemsController1Test < ActionController::TestCase
 
     assert_no_difference( 'PcpStep.count' )do
       @pcp_step = @pcp_subject.current_step
-      current_controller = @controller
-      @controller = PcpSubjectsController.new
-      patch :update, id: @pcp_subject, 
-        pcp_subject: { pcp_steps_attributes: {  '0' => { id: @pcp_step.id, report_version: 'C', subject_version: 'B' }}}
+      patch pcp_subject_path( id: @pcp_subject, params:{ 
+        pcp_subject: { pcp_steps_attributes: {  '0' => { id: @pcp_step.id, report_version: 'C', subject_version: 'B' }}}})
       @pcp_subject = assigns( :pcp_subject )
       @pcp_step = assigns( :pcp_curr_step )
       @pcp_subject.reload
@@ -191,40 +170,34 @@ class PcpItemsController1Test < ActionController::TestCase
       assert_equal 2, @pcp_step.step_no
       assert_nil @pcp_step.new_assmt
       assert_redirected_to pcp_subject_path( @pcp_subject )
-      @controller = current_controller
     end
     @pcp_subject.reload
     assert_equal 0, @pcp_subject.valid_subject?
     assert_equal 1, @pcp_subject.current_step.subject_status
 
     assert_difference( 'PcpStep.count' )do
-      current_controller = @controller
-      @controller = PcpSubjectsController.new
-      get :update_release, id: @pcp_subject
+      get pcp_subject_release_path( id: @pcp_subject )
       @pcp_subject = assigns( :pcp_subject )
       @pcp_step = assigns( :pcp_curr_step )
       @pcp_subject.reload
       @pcp_step.reload
       assert_equal 1, @pcp_subject.current_step.subject_status
       assert_redirected_to pcp_release_doc_path( @pcp_subject, @pcp_step.step_no )
-      @controller = current_controller
     end
     @pcp_subject.reload
     assert @pcp_subject.valid_subject?
     assert_equal 1, @pcp_subject.current_step.subject_status
 
-    @controller.reset_4_test
     switch_to_user( @account_c )
 
     # let commenter close item and subject
 
     assert_difference( 'PcpComment.count' ) do
-      post :create_comment, pcp_comment: {
+      post create_pcp_comment_path( id: @pcp_item, params:{ pcp_comment: {
         author: 'commenting party',
         description: 'Item 1 Closing Comment by Commenting Party',
         new_assmt: 2,
-        is_public: true },
-        id: @pcp_item
+        is_public: true }})
     end
     @pcp_item = assigns( :pcp_item )
     refute_nil @pcp_item
@@ -233,10 +206,8 @@ class PcpItemsController1Test < ActionController::TestCase
 
     assert_no_difference( 'PcpStep.count' )do
       @pcp_step = @pcp_subject.current_step
-      current_controller = @controller
-      @controller = PcpSubjectsController.new
-      patch :update, id: @pcp_subject, 
-        pcp_subject: { pcp_steps_attributes: {  '0' => { id: @pcp_step.id, report_version: 'D', new_assmt: '1' }}}
+      patch pcp_subject_path( id: @pcp_subject, params:{
+        pcp_subject: { pcp_steps_attributes: {  '0' => { id: @pcp_step.id, report_version: 'D', new_assmt: '1' }}}})
       @pcp_subject = assigns( :pcp_subject )
       @pcp_step = assigns( :pcp_curr_step )
       @pcp_subject.reload
@@ -244,7 +215,6 @@ class PcpItemsController1Test < ActionController::TestCase
       assert_equal 3, @pcp_step.step_no
       assert_equal 1, @pcp_step.new_assmt
       assert_redirected_to pcp_subject_path( @pcp_subject )
-      @controller = current_controller
     end
     @pcp_subject.reload
     assert_equal 0, @pcp_subject.valid_subject?
@@ -255,9 +225,7 @@ class PcpItemsController1Test < ActionController::TestCase
     # no new step when closing subject!
 
     assert_no_difference( 'PcpStep.count' )do
-      current_controller = @controller
-      @controller = PcpSubjectsController.new
-      get :update_release, id: @pcp_subject
+      get pcp_subject_release_path( id: @pcp_subject )
       @pcp_subject = assigns( :pcp_subject )
       @pcp_step = assigns( :pcp_curr_step )
       refute_nil @pcp_subject
@@ -266,7 +234,6 @@ class PcpItemsController1Test < ActionController::TestCase
       @pcp_step.reload
       assert_equal 2, @pcp_subject.current_step.subject_status
       assert_redirected_to pcp_release_doc_path( @pcp_subject, @pcp_step.step_no )
-      @controller = current_controller
     end
     assert @pcp_subject.valid_subject?
     assert @pcp_step.status_closed?
@@ -274,11 +241,10 @@ class PcpItemsController1Test < ActionController::TestCase
     # try to add items, comments by presenting group
 
     assert_no_difference( 'PcpComment.count' ) do
-      post :create_comment, pcp_comment: {
+      post create_pcp_comment_path( id: @pcp_item, params:{ pcp_comment: {
         author: 'presenting party',
         description: 'should fail - subject closed',
-        is_public: true },
-        id: @pcp_item
+        is_public: true }})
     end
     assert_response :unprocessable_entity
     @pcp_item = assigns( :pcp_item )

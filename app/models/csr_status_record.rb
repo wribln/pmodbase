@@ -4,9 +4,9 @@ class CsrStatusRecord < ActiveRecord::Base
   include ActiveModelErrorsAdd
   include Filterable
 
-  belongs_to :sender_group,   -> { readonly }, foreign_key: 'sender_group_id',        class_name: 'Group'
-  belongs_to :receiver_group, -> { readonly }, foreign_key: 'receiver_group_id',      class_name: 'Group'
-  belongs_to :sent_item,      -> { readonly }, foreign_key: 'reply_status_record_id', class_name: 'CsrStatusRecord'
+  belongs_to :sender_group,   -> { readonly }, optional: true, foreign_key: :sender_group_id,        class_name: :Group
+  belongs_to :receiver_group, -> { readonly }, optional: true, foreign_key: :receiver_group_id,      class_name: :Group
+  belongs_to :sent_item,      -> { readonly }, optional: true, foreign_key: :reply_status_record_id, class_name: :CsrStatusRecord
 
   before_save :set_defaults
 

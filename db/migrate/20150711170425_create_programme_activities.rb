@@ -1,4 +1,4 @@
-class CreateProgrammeActivities < ActiveRecord::Migration
+class CreateProgrammeActivities < ActiveRecord::Migration[5.1]
   def change
     create_table :programme_activities do |t|
       t.string  :project_id,      length: MAX_LENGTH_OF_PROGRAMME_IDS

@@ -1,28 +1,27 @@
 require 'test_helper'
-class MyTiaListsControllerAccessTest < ActionController::TestCase
-  tests MyTiaListsController
+class MyTiaListsControllerAccessTest < ActionDispatch::IntegrationTest
 
   test 'check class attributes' do
+    signon_by_user accounts( :wop )
+    get my_tia_lists_path
     validate_feature_class_attributes FEATURE_ID_MY_TIA_LISTS, 
       ApplicationController::FEATURE_ACCESS_SOME,
       ApplicationController::FEATURE_CONTROL_CUG
   end
 
   test 'index is permitted when user has access to feature' do
-    @account = accounts( :wop )
-    session[ :current_user_id ] = accounts( :wop ).id
-    get :index
+    signon_by_user accounts( :wop )
+    get my_tia_lists_path
     check_for_cr
   end
 
   test 'look for two lists for user wop' do
-    @account = accounts( :wop )
-    session[ :current_user_id ] = accounts( :wop ).id
-    p = Permission4Group.new( account_id: accounts( :wop ).id, feature_id: FEATURE_ID_MY_TIA_LISTS, group_id: 0, to_index: 1 )
+    signon_by_user @account = accounts( :wop )
+    p = Permission4Group.new( account_id: @account.id, feature_id: FEATURE_ID_MY_TIA_LISTS, group_id: 0, to_index: 1 )
     assert_difference( 'Permission4Group.count' ) do
       p.save
     end
-    get :index
+    get my_tia_lists_path
     assert_response :success
     tl = assigns( :tia_lists )
     assert_equal 2, tl.length
@@ -32,8 +31,8 @@ class MyTiaListsControllerAccessTest < ActionController::TestCase
 
   test 'look for one list for user one' do
     @account = accounts( :one )
-    session[ :current_user_id ] = accounts( :one ).id
-    get :index
+    signon_by_user @account
+    get my_tia_lists_path
     assert_response :success
     tl = assigns( :tia_lists )
     assert_equal 1, tl.length
@@ -42,9 +41,7 @@ class MyTiaListsControllerAccessTest < ActionController::TestCase
   end
 
   test 'index is not authorized if no user' do
-    @account = nil
-    session[ :current_user_id ] = nil
-    get :index
+    get my_tia_lists_path
     assert_response :unauthorized
   end
  

@@ -1,6 +1,5 @@
 require 'test_helper'
-class DsrStatusRecordsControllerS2Test < ActionController::TestCase
-  tests DsrStatusRecordsController
+class DsrStatusRecordsControllerS2Test < ActionDispatch::IntegrationTest
 
   setup do
     @controller = TestController.new( :index ){ }

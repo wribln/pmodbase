@@ -1,4 +1,4 @@
-class CreateRfcStatusRecords < ActiveRecord::Migration
+class CreateRfcStatusRecords < ActiveRecord::Migration[5.1]
   def change
     create_table :rfc_status_records do |t|
       t.integer :rfc_type,                default: 0,                  null: false

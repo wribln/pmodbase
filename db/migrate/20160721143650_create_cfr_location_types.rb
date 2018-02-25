@@ -1,4 +1,4 @@
-class CreateCfrLocationTypes < ActiveRecord::Migration
+class CreateCfrLocationTypes < ActiveRecord::Migration[5.1]
   def change
     create_table :cfr_location_types do |t|
       t.string  :label,        limit: MAX_LENGTH_OF_LABEL, null: false

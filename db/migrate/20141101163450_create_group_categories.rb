@@ -1,4 +1,4 @@
-class CreateGroupCategories < ActiveRecord::Migration
+class CreateGroupCategories < ActiveRecord::Migration[5.1]
   def change
     create_table :group_categories do |t|
       t.string :label, length: MAX_LENGTH_OF_LABEL, null: false, default: ''

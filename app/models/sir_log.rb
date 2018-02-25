@@ -2,9 +2,8 @@ require './lib/assets/app_helper.rb'
 class SirLog < ActiveRecord::Base
   include ApplicationModel
 
-  belongs_to :account,        -> { readonly }, inverse_of: :sir_logs
-  belongs_to :owner_account,  -> { readonly }, foreign_key: 'owner_account_id',  class_name: 'Account'
-  belongs_to :deputy_account, -> { readonly }, foreign_key: 'deputy_account_id', class_name: 'Account'
+  belongs_to :owner_account,  -> { readonly },                 foreign_key: :owner_account_id,  class_name: :Account
+  belongs_to :deputy_account, -> { readonly }, optional: true, foreign_key: :deputy_account_id, class_name: :Account
   has_many   :sir_items,                       inverse_of: :sir_log, dependent: :destroy
   has_many   :sir_members,                     inverse_of: :sir_log, dependent: :destroy
   accepts_nested_attributes_for :sir_members, allow_destroy: true

@@ -1,4 +1,4 @@
-class CreateGlossaryItems < ActiveRecord::Migration
+class CreateGlossaryItems < ActiveRecord::Migration[5.1]
   def change
     create_table :glossary_items do |t|
       t.string      :term,     limit: MAX_LENGTH_OF_TERM,         null: false, index: true

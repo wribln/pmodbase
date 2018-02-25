@@ -18,7 +18,7 @@ class HomeController < ApplicationController
 
   def signon
     user = Account.find_by_name( params[ :acc_name ].strip )
-    if user && user.authenticate( params[ :password ].strip )
+    if !!( user && user.authenticate( params[ :password ].strip ))
       return_to = session[ :return_to ] || base_url
       reset_session
       session[ :current_user_id ] = user.id

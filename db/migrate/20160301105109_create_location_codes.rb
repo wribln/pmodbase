@@ -1,4 +1,4 @@
-class CreateLocationCodes < ActiveRecord::Migration
+class CreateLocationCodes < ActiveRecord::Migration[5.1]
   def change
     create_table :location_codes do |t|
       t.string  :code,          limit: MAX_LENGTH_OF_CODE, null: false, index: true

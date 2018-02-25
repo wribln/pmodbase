@@ -1,4 +1,4 @@
-class CreateHashtags < ActiveRecord::Migration
+class CreateHashtags < ActiveRecord::Migration[5.1]
   def change
     create_table :hashtags do |t|
       t.string      :code,      length: MAX_LENGTH_OF_CODE

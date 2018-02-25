@@ -4,8 +4,8 @@ class Responsibility < ActiveRecord::Base
   include ActiveModelErrorsAdd
   include Filterable
 
-  belongs_to :person, inverse_of: :responsibilities
-  belongs_to :group, inverse_of: :responsibilities
+  belongs_to :person, inverse_of: :responsibilities, optional: true
+  belongs_to :group,  inverse_of: :responsibilities
 
   validates :seqno,
     presence: true,

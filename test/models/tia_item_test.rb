@@ -91,13 +91,12 @@ class TiaItemTest < ActiveSupport::TestCase
 
     assert_includes tn.errors, :seqno
     tn.seqno = tx.seqno + 1
-    assert tn.valid?
+    assert tn.valid?, tn.errors.messages
   end
 
   test 'seqno must be unique within list' do
     tx = tia_items( :tia_item_two )
-    tn = tx
-    tn.id = nil
+    tn = tx.dup
     refute tn.valid?
     tn.seqno += 1
     assert tn.valid?

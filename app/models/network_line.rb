@@ -4,8 +4,8 @@ class NetworkLine < ActiveRecord::Base
   include ActiveModelErrorsAdd
   include Filterable
   
-  belongs_to :location_code, -> { readonly }, inverse_of: :network_lines
-  has_many   :network_stops, inverse_of: :network_line
+  belongs_to :location_code, -> { readonly }, optional: true, inverse_of: :network_lines
+  has_many   :network_stops,                                  inverse_of: :network_line
   has_many   :network_stations, through: :network_stops
 
   validates :code,

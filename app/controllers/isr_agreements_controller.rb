@@ -9,7 +9,6 @@ class IsrAgreementsController < ApplicationController
   include IsrWorkFlow
   include ControllerMethods
 
-
   initialize_feature FEATURE_ID_ISR_AGREEMENTS, FEATURE_ACCESS_SOME
 
   # GET /isa

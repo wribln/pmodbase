@@ -1,25 +1,24 @@
 require 'test_helper'
 
-class HelpPagesControllerTest < ActionController::TestCase
+class HelpPagesControllerTest < ActionDispatch::IntegrationTest
 
   setup do
-    session[ :current_user_id ] = accounts( :one ).id
+    signon_by_user accounts( :one )
   end
 
   test 'check class_attributes'  do
-    validate_feature_class_attributes FEATURE_ID_HELP_PAGES, 
-      ApplicationController::FEATURE_ACCESS_ALL + 
-      ApplicationController::FEATURE_ACCESS_NBP
+    get help_path
+    validate_feature_class_attributes FEATURE_ID_HELP_PAGES, ApplicationController::FEATURE_ACCESS_ALL +  ApplicationController::FEATURE_ACCESS_NBP
   end
 
   test 'Get Default Help (Home)' do
-    get :show_default
+    get help_path
     assert_response :success
     assert_template :home
   end
 
   test 'Get Help Overview' do
-    get :show, title: :home
+    get help_page_path( title: :home )
     assert_response :success
     assert_template :home
   end
@@ -37,15 +36,15 @@ class HelpPagesControllerTest < ActionController::TestCase
     help_files.each do |topic|
       #topic = fn.split( '.' ).first
       test "Test Help on #{ topic.capitalize }" do
-        assert_routing({ method: 'get', path: "/help/#{ topic }"}, { controller: 'help_pages', action: 'show', title: topic })
-        get :show, title: topic
+        assert_routing({ method: 'get', path: "/help/#{ topic }"}, { format: false, controller: 'help_pages', action: 'show', title: topic })
+        get help_page_path( title: topic )
         assert_response :success
         assert_template topic
       end
     end
 
     test 'all help files in help index' do
-      get :show, title: :help_pages
+      get help_page_path( title: :help_pages )
       assert_response :success
       help_files.each do |topic|
         assert_select "a[href=?]","/help/#{ topic }" # >>> missing help topic: #{ topic }

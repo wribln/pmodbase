@@ -67,13 +67,15 @@ class SirItemsController < ApplicationController
     return unless has_access?( :to_create )
     @sir_item = SirItem.new( sir_item_params )
     @sir_item.sir_log = @sir_log
+    @sir_item.seqno ||= @sir_item.set_seqno
     respond_to do |format|
       save_ok = false
       @sir_item.transaction do
         if @sir_item.valid?
-          @sir_item.set_seqno
           @sir_item.save
           save_ok = true
+        else
+          logger.debug ">>>>> sir_items_controller#create sir_item not valid"
         end
       end
       if save_ok

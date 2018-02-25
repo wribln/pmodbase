@@ -2,7 +2,7 @@ require './lib/assets/app_helper.rb'
 class Person < ActiveRecord::Base
   include ApplicationModel
   include ActiveModelErrorsAdd
-  
+
   has_many :accounts, dependent: :destroy
   has_many :contact_infos, dependent: :destroy
   has_many :responsibilities, dependent: :destroy
@@ -28,6 +28,12 @@ class Person < ActiveRecord::Base
     uniqueness: true
 
   set_trimmed :formal_name, :informal_name
+
+  # always enter email as lowercase
+
+  def email=( text )
+    write_attribute( :email, text.downcase )
+  end 
 
   # at least one of the two names must be given
 

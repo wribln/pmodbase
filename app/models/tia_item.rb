@@ -3,9 +3,9 @@ class TiaItem < ActiveRecord::Base
   include ActiveModelErrorsAdd
   include Filterable
    
-  belongs_to :tia_list,     -> { readonly }, inverse_of: :tia_items
-  belongs_to :account,      -> { readonly }, inverse_of: :tia_items
-  has_many   :tia_item_deltas,               inverse_of: :tia_item, dependent: :destroy
+  belongs_to :tia_list,     -> { readonly },                 inverse_of: :tia_items
+  belongs_to :account,      -> { readonly }, optional: true, inverse_of: :tia_items
+  has_many   :tia_item_deltas,                               inverse_of: :tia_item, dependent: :destroy
 
   before_save :set_defaults
 

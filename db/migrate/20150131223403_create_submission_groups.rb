@@ -1,4 +1,4 @@
-class CreateSubmissionGroups < ActiveRecord::Migration
+class CreateSubmissionGroups < ActiveRecord::Migration[5.1]
   def change
     create_table :submission_groups do |t|
       t.string :code,         limit: MAX_LENGTH_OF_CODE,          null: false, index: true

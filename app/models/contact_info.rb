@@ -4,7 +4,7 @@ class ContactInfo < ActiveRecord::Base
   include ActiveModelErrorsAdd
 
   belongs_to :person, inverse_of: :contact_infos
-  belongs_to :address
+  belongs_to :address, optional: true
   before_save :set_defaults
 
   validates :person,

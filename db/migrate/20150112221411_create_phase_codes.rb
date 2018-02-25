@@ -1,4 +1,4 @@
-class CreatePhaseCodes < ActiveRecord::Migration
+class CreatePhaseCodes < ActiveRecord::Migration[5.1]
   def change
     create_table :phase_codes do |t|
       t.string     :code,  limit: MAX_LENGTH_OF_CODE,  null: false

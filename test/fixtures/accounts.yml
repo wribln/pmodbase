@@ -2,20 +2,20 @@
 
 one:
   name:             'Master'
-  password_digest:  'of the Un1verse!'
+  password_digest:  <%= Account.digest('password') %>
   person:           person_one
 
 wop:
   name:             'Account without permissions'
-  password_digest:  'P00r sou|'
+  password_digest:  <%= Account.digest('password') %>
   person:           person_one
 
 two:        
   name:             'Account for testing'
-  password_digest:  'Just-aTe$t'
+  password_digest:  <%= Account.digest('password') %>
   person:           person_one
 
 three:
   name:             'Another Test Account'
-  password_digest:  'An0thr-Test'
+  password_digest:  <%= Account.digest('password') %>
   person:           person_one

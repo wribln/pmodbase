@@ -1,60 +1,58 @@
 require 'test_helper'
-class StandardsBodiesControllerTest < ActionController::TestCase
+class StandardsBodiesControllerTest < ActionDispatch::IntegrationTest
 
   setup do
+    signon_by_user accounts( :one )
     @standards_body = standards_bodies( :din )
-    @account = accounts( :one )
-    session[ :current_user_id ] = accounts( :one ).id
   end
 
-  test "check class_attributes"  do
+  test 'check class_attributes'  do
+    get standards_bodies_path
     validate_feature_class_attributes FEATURE_ID_STANDARDS_BODIES, ApplicationController::FEATURE_ACCESS_VIEW
   end
 
-  test "should get index" do
-    get :index
+  test 'should get index' do
+    get standards_bodies_path
     assert_response :success
     assert_not_nil assigns( :standards_bodies )
   end
 
-  test "should get new" do
-    get :new
+  test 'should get new' do
+    get new_standards_body_path
     assert_response :success
   end
 
-  test "should create standards_body" do
-    assert_difference('StandardsBody.count') do
-      post :create, standards_body: { code: @standards_body.code << 'a', description: @standards_body.description }
+  test 'should create standards_body' do
+    assert_difference( 'StandardsBody.count' ) do
+      post standards_bodies_path, params:{ standards_body: { code: @standards_body.code << 'a', description: @standards_body.description }}
     end
-
     assert_redirected_to standards_body_path( assigns( :standards_body ))
   end
 
-  test "should show standards_body" do
-    get :show, id: @standards_body
+  test 'should show standards_body' do
+    get standards_body_path( id: @standards_body )
     assert_response :success
   end
 
-  test "should get edit" do
-    get :edit, id: @standards_body
+  test 'should get edit' do
+    get edit_standards_body_path( id: @standards_body )
     assert_response :success
   end
 
-  test "should update standards_body" do
-    patch :update, id: @standards_body, standards_body: { code: @standards_body.code, description: @standards_body.description }
+  test 'should update standards_body' do
+    patch standards_body_path( id: @standards_body, params:{ standards_body: { code: @standards_body.code, description: @standards_body.description }})
     assert_redirected_to standards_body_path( assigns( :standards_body ))
   end
 
-  test "should destroy standards_body" do
+  test 'should destroy standards_body' do
     assert_difference('StandardsBody.count', -1) do
-      delete :destroy, id: @standards_body
+      delete standards_body_path( id: @standards_body )
     end
-
     assert_redirected_to standards_bodies_path
   end
 
-  test "CSV download" do
-    get :index, format: :xls
+  test 'CSV download' do
+    get standards_bodies_path( format: :xls )
     assert_equal <<END_OF_CSV, response.body
 code,description
 DIN,Deutsches Institut für Normung (German: German Institute for Standardization)

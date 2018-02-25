@@ -3,8 +3,8 @@ class Account < ActiveRecord::Base
   include Filterable
   
   belongs_to :person, -> { readonly }, inverse_of: :accounts
-  has_many :requesting_account, class_name: 'DbChangeRequest'
-  has_many :responsible_account, class_name: 'DbChangeRequest'
+  has_many :requesting_account, class_name: :DbChangeRequest
+  has_many :responsible_account, class_name: :DbChangeRequest
   has_many :permission4_groups, inverse_of: :account
   has_many :permission4_flows, inverse_of: :account
   has_many :rfc_documents, inverse_of: :account
@@ -178,7 +178,7 @@ class Account < ActiveRecord::Base
   # show user's name
 
   def user_name
-    person.try( :user_name )
+    person&.user_name
   end
 
   def self.user_name( id )
@@ -195,6 +195,13 @@ class Account < ActiveRecord::Base
 
   def self.get_stats
     super << [ 'inactive', Account.where( active: false ).count ]
+  end
+
+  # return the hash digest of the given string
+
+  def self.digest( string )
+    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
+    BCrypt::Password.create( string, cost: cost )
   end
 
 end

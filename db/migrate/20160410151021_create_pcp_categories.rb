@@ -1,4 +1,4 @@
-class CreatePcpCategories < ActiveRecord::Migration
+class CreatePcpCategories < ActiveRecord::Migration[5.1]
   def change
     create_table :pcp_categories do |t|
       t.belongs_to  :c_group, null: false,  index: true

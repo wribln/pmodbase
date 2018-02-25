@@ -1,4 +1,4 @@
-class CreateSDocumentLogs < ActiveRecord::Migration
+class CreateSDocumentLogs < ActiveRecord::Migration[5.1]
   def change
     create_table :s_document_logs do |t|
       t.belongs_to :group,        null: false, foreign_key: :true

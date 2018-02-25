@@ -1,4 +1,4 @@
-class CreateStandardsBodies < ActiveRecord::Migration
+class CreateStandardsBodies < ActiveRecord::Migration[5.1]
   def change
     create_table :standards_bodies do |t|
       t.string :code,        limit: MAX_LENGTH_OF_CODE,         null: false, index: true

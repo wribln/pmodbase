@@ -4,9 +4,9 @@ class CfrLocation < ActiveRecord::Base
   include ApplicationModel
   include ActiveModelErrorsAdd
 
-  belongs_to :cfr_record, inverse_of: :cfr_locations
-  belongs_to :cfr_record, inverse_of: :main_location
-  belongs_to :cfr_location_type, -> { readonly }
+  belongs_to :cfr_record, optional: true, inverse_of: :cfr_locations
+  belongs_to :cfr_record, optional: true, inverse_of: :main_location
+  belongs_to :cfr_location_type, -> { readonly }, optional: true
 
   validates :file_name,
     allow_nil: true,

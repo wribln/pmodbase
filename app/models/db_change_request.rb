@@ -3,9 +3,9 @@ class DbChangeRequest < ActiveRecord::Base
   include ApplicationModel
   include ActiveModelErrorsAdd
 
-  belongs_to :req_account,  -> { readonly }, foreign_key: 'requesting_account_id',  class_name: 'Account'
-  belongs_to :resp_account, -> { readonly }, foreign_key: 'responsible_account_id', class_name: 'Account'
-  belongs_to :feature,      -> { readonly }
+  belongs_to :req_account,  -> { readonly },                 foreign_key: :requesting_account_id,  class_name: :Account
+  belongs_to :resp_account, -> { readonly }, optional: true, foreign_key: :responsible_account_id, class_name: :Account
+  belongs_to :feature,      -> { readonly }, optional: true
 
   # required, with existing account
 

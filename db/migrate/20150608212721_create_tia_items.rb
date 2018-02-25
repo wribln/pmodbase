@@ -1,4 +1,4 @@
-class CreateTiaItems < ActiveRecord::Migration
+class CreateTiaItems < ActiveRecord::Migration[5.1]
   def change
     create_table :tia_items do |t|
       t.belongs_to  :tia_list,  null: false, foreign_key: true

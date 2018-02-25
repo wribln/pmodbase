@@ -1,4 +1,4 @@
-class CreateResponsibilities < ActiveRecord::Migration
+class CreateResponsibilities < ActiveRecord::Migration[5.1]
   def change
     create_table :responsibilities do |t|
       t.string      :description, limit: MAX_LENGTH_OF_DESCRIPTION, null: false

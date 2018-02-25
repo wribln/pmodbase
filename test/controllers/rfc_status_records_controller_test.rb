@@ -1,13 +1,13 @@
 require 'test_helper'
-class RfcStatusRecordsControllerTest < ActionController::TestCase
+class RfcStatusRecordsControllerTest < ActionDispatch::IntegrationTest
 
   setup do
-    @account = accounts( :one )
-    session[ :current_user_id ] = @account.id
+    signon_by_user (@account = accounts( :one ))
     @rfc_status_record = rfc_status_records( :rfc_one )
   end
 
   test 'check class_attributes'  do
+    get rfc_status_records_path
     validate_feature_class_attributes FEATURE_ID_RFC_STATUS_RECORDS,
       ApplicationController::FEATURE_ACCESS_INDEX,
       ApplicationController::FEATURE_CONTROL_GRPWF,
@@ -23,17 +23,17 @@ class RfcStatusRecordsControllerTest < ActionController::TestCase
   end
 
   test 'should get index' do
-    get :index
+    get rfc_status_records_path
     assert_response :success
   end
 
   test 'should get info' do
-    get :info_workflow
+    get rfc_workflow_info_path
     assert_response :success
   end
 
   test 'should get statistics' do
-    get :stats 
+    get rfc_statistics_path
     assert_response :success
     refute_nil assigns( :stats )
   end
@@ -41,7 +41,7 @@ class RfcStatusRecordsControllerTest < ActionController::TestCase
   test 'should get new' do
     assert @account.permission_for_task?( FEATURE_ID_RFC_STATUS_RECORDS, 0, 0 )
     assert_equal [0],@account.permitted_workflows( FEATURE_ID_RFC_STATUS_RECORDS )
-    get :new
+    get new_rfc_status_record_path
     assert_response :success
     refute_nil assigns( :rfc_status_record )
     refute_nil assigns( :allowed_workflows )
@@ -49,23 +49,23 @@ class RfcStatusRecordsControllerTest < ActionController::TestCase
 
   test 'should create rfc_status_record' do
     assert_difference('RfcStatusRecord.count') do
-      post :create, rfc_status_record: { rfc_type: @rfc_status_record.rfc_type }
+      post rfc_status_records_path, params:{ rfc_status_record: { rfc_type: @rfc_status_record.rfc_type }}
     end
     assert_redirected_to edit_rfc_status_record_path( assigns( :rfc_status_record ))
   end
 
   test 'should show rfc_status_record' do
-    get :show, id: @rfc_status_record
+    get rfc_status_record_path( id: @rfc_status_record )
     assert_response :success
   end
 
   test 'should get edit' do
-    get :edit, id: @rfc_status_record
+    get edit_rfc_status_record_path( id: @rfc_status_record )
     assert_response :success
   end
 
   test 'should update rfc_status_record' do
-    patch :update, id: @rfc_status_record, rfc_status_record: { 
+    patch rfc_status_record_path( id: @rfc_status_record, params:{ rfc_status_record: { 
       answering_group_id: @rfc_status_record.answering_group_id, 
       answering_group_doc_id: @rfc_status_record.answering_group_doc_id, 
       asking_group_id: @rfc_status_record.asking_group_id, 
@@ -74,7 +74,7 @@ class RfcStatusRecordsControllerTest < ActionController::TestCase
       current_task: @rfc_status_record.current_task, 
       project_doc_id: @rfc_status_record.project_doc_id, 
       rfc_type: @rfc_status_record.rfc_type },
-      next_status_task: 0
+      next_status_task: 0 })
     assert assigns( :rfc_document )
     assert_redirected_to rfc_status_record_path( assigns( :rfc_status_record ))
   end
@@ -82,9 +82,9 @@ class RfcStatusRecordsControllerTest < ActionController::TestCase
   test 'should update rfc_document' do
     assert_not rfc_documents( :one ).initial_version?
     assert_difference( 'RfcDocument.count', +1 ) do
-      patch :update, id: @rfc_status_record, rfc_status_record: {
+      patch rfc_status_record_path( id: @rfc_status_record, params:{ rfc_status_record: {
         rfc_document: { question: 'new question' }},
-        next_status_task: 0
+        next_status_task: 0 })
       assert assigns( :rfc_document )
     end
     assert_redirected_to rfc_status_record_path( assigns( :rfc_status_record ))
@@ -92,7 +92,7 @@ class RfcStatusRecordsControllerTest < ActionController::TestCase
 
   test 'should destroy rfc_status_record' do
     assert_difference('RfcStatusRecord.count', -1) do
-      delete :destroy, id: @rfc_status_record
+      delete rfc_status_record_path( id: @rfc_status_record )
     end
     assert_redirected_to rfc_status_records_path
   end

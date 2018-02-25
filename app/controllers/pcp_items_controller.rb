@@ -398,6 +398,7 @@ class PcpItemsController < ApplicationController
   def destroy_comment
     get_comment
     @pcp_item = @pcp_comment.pcp_item
+    @pcp_subject = @pcp_item.pcp_subject
     if @pcp_subject.user_is_owner_or_deputy?( current_user, @pcp_comment.pcp_step.acting_group_index )
       if @pcp_comment.published?
         notice = 'pcp_comments.msg.cannot_del'
@@ -531,15 +532,6 @@ class PcpItemsController < ApplicationController
 
     def filter_params
       params.slice( :ff_seqno, :ff_refs, :ff_desc, :ff_status ).clean_up
-    end
-
-    # for testing, I need to be able to reset internal variables
-
-  public
-
-    def reset_4_test
-      @pcp_group_map = nil
-      @pcp_permission = nil
     end
 
 end

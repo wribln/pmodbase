@@ -1,6 +1,5 @@
 require 'test_helper'
-class PcpSubjectsController3Test < ActionController::TestCase
-  tests PcpSubjectsController
+class PcpSubjectsController3Test < ActionDispatch::IntegrationTest
 
   # this test suite is about the creator of the PCP Subject:
   # initially, she must be able to create PCP Subjects, i.e.
@@ -16,7 +15,7 @@ class PcpSubjectsController3Test < ActionController::TestCase
   setup do 
     @pcp_category = pcp_categories( :one )
     @account = accounts( :wop )
-    session[ :current_user_id ] = @account.id
+    signon_by_user @account
   end
 
   # give user without permissions access to a group
@@ -35,9 +34,7 @@ class PcpSubjectsController3Test < ActionController::TestCase
     assert p.save, p.errors.inspect
     #
     assert_no_difference( 'PcpSubject.count' ) do
-      post :create, pcp_subject: {
-        pcp_category_id: @pcp_category.id,
-        title: 'more foobar' }
+      post pcp_subjects_path( params:{ pcp_subject: { pcp_category_id: @pcp_category.id, title: 'more foobar' }})
     end
     assert_response :forbidden
   end
@@ -51,9 +48,7 @@ class PcpSubjectsController3Test < ActionController::TestCase
     assert p.save, p.errors.inspect
     #
     assert_no_difference( 'PcpSubject.count' ) do
-      post :create, pcp_subject: {
-        pcp_category_id: @pcp_category.id,
-        title: 'more foobar' }
+      post pcp_subjects_path( params:{ pcp_subject: { pcp_category_id: @pcp_category.id,  title: 'more foobar' }})
     end
     assert_response :forbidden
   end
@@ -69,9 +64,7 @@ class PcpSubjectsController3Test < ActionController::TestCase
     p = PcpSubject.new( pcp_category_id: @pcp_category.id )
     assert p.permitted_to_create?( @account )
     assert_difference( 'PcpSubject.count', 1 ) do
-      post :create, pcp_subject: {
-        pcp_category_id: @pcp_category.id,
-        title: 'very foobar' }
+      post pcp_subjects_path( params:{ pcp_subject: { pcp_category_id: @pcp_category.id, title: 'very foobar' }})
     end
     @pcp_subject = assigns( :pcp_subject )
     assert_redirected_to pcp_subject_path( @pcp_subject )
@@ -85,10 +78,7 @@ class PcpSubjectsController3Test < ActionController::TestCase
     assert_equal @account.id, @pcp_subject.s_owner_id
 
     assert_no_difference( 'PcpSubject.count', 'PcpStep.count' ) do
-      patch :update, id: @pcp_subject, pcp_subject: {
-      title: 'new title', note: 'new note',
-      project_doc_id: 'new project doc id',
-      report_doc_id: 'new report doc id' }
+      patch pcp_subject_path( id: @pcp_subject, params:{ pcp_subject: { title: 'new title', note: 'new note', project_doc_id: 'new project doc id', report_doc_id: 'new report doc id' }})
     end
     @pcp_subject = assigns( :pcp_subject )
     assert_redirected_to pcp_subject_path( @pcp_subject )
@@ -100,7 +90,7 @@ class PcpSubjectsController3Test < ActionController::TestCase
     # attempt to release - should fail
 
     assert_no_difference( 'PcpSubject.count', 'PcpStep.count' )do
-      get :update_release, id: @pcp_subject
+      get pcp_subject_release_path( id: @pcp_subject )
       assert_response :unprocessable_entity
     end
     

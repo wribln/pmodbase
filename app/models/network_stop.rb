@@ -1,9 +1,9 @@
 class NetworkStop < ActiveRecord::Base
   include ApplicationModel
 
-  belongs_to :location_code, -> { readonly }, inverse_of: :network_stops
-  belongs_to :network_station, inverse_of: :network_stops
-  belongs_to :network_line, inverse_of: :network_stops
+  belongs_to :location_code, -> { readonly }, optional: true, inverse_of: :network_stops
+  belongs_to :network_station,                                inverse_of: :network_stops
+  belongs_to :network_line,                                   inverse_of: :network_stops
 
   validates :stop_no,
     presence: false,

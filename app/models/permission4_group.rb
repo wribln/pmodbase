@@ -4,7 +4,7 @@ class Permission4Group < ActiveRecord::Base
    
   belongs_to :account,  -> { readonly }
   belongs_to :feature,  -> { readonly }, inverse_of: :permission4_groups
-  belongs_to :group,    -> { readonly }
+  belongs_to :group,    -> { readonly }, optional: true
   
   validates :feature,
     presence: true

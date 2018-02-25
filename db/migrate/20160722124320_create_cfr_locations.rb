@@ -1,4 +1,4 @@
-class CreateCfrLocations < ActiveRecord::Migration
+class CreateCfrLocations < ActiveRecord::Migration[5.1]
   def change
     create_table :cfr_locations do |t|
       t.belongs_to  :cfr_record,        index: true, foreign_key: true

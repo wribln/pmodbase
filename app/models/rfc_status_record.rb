@@ -4,8 +4,8 @@ class RfcStatusRecord < ActiveRecord::Base
   include ActiveModelErrorsAdd
   include Filterable
 
-  belongs_to :asking_group,    -> { readonly }, foreign_key: 'asking_group_id',    class_name: 'Group'
-  belongs_to :answering_group, -> { readonly }, foreign_key: 'answering_group_id', class_name: 'Group'
+  belongs_to :asking_group,    -> { readonly }, optional: true, foreign_key: :asking_group_id,    class_name: :Group
+  belongs_to :answering_group, -> { readonly }, optional: true, foreign_key: :answering_group_id, class_name: :Group
   has_many   :rfc_documents, inverse_of: :rfc_status_record
 
   # cannot use accepts_nested_attributes_for :rfc_documents here

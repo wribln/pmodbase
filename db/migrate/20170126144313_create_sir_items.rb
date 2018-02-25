@@ -1,4 +1,4 @@
-class CreateSirItems < ActiveRecord::Migration
+class CreateSirItems < ActiveRecord::Migration[5.1]
   def change
     create_table :sir_items do |t|
       t.belongs_to  :sir_log,     index: true, foreign_key: true

@@ -1,7 +1,7 @@
 class CfrRelationship < ActiveRecord::Base
   include ApplicationModel
 
-  has_one :reverse_rs, class_name: 'CfrRelationship', foreign_key: :reverse_rs_id, autosave: true
+  has_one :reverse_rs, class_name: :CfrRelationship, foreign_key: :reverse_rs_id, autosave: true
   after_destroy :delete_reverse_rs
 
   validates :label,

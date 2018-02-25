@@ -1,19 +1,19 @@
 require 'test_helper'
-class SirItemsControllerTest < ActionController::TestCase
+class SirItemsControllerTest < ActionDispatch::IntegrationTest
 
   setup do
     @sir_item = sir_items( :one )
-    session[ :current_user_id ] = accounts( :one ).id
+    signon_by_user accounts( :one )
   end
 
   test 'should get index' do
-    get :index, sir_log_id: @sir_item.sir_log
+    get sir_log_sir_items_path( sir_log_id: @sir_item.sir_log )
     assert_response :success
     assert_not_nil assigns( :sir_items )
   end
 
   test 'should get statistics' do
-    get :show_stats, sir_log_id: @sir_item.sir_log_id
+    get sir_item_stats_path( sir_log_id: @sir_item.sir_log_id )
     assert_response :success
     assert_not_nil assigns( :sir_log )
     assert_not_nil gt = assigns( :grand_total )
@@ -26,41 +26,44 @@ class SirItemsControllerTest < ActionController::TestCase
   end
 
   test 'should get new' do
-    get :new, sir_log_id: @sir_item.sir_log
+    get new_sir_log_sir_item_path( sir_log_id: @sir_item.sir_log )
     assert_response :success
   end
 
   test 'should create sir_item' do
     assert_difference( 'SirItem.count' ) do
-      post :create, sir_log_id: @sir_item.sir_log, 
-        sir_item: { description: @sir_item.description,
-                    group_id: @sir_item.group_id,
-                    label: @sir_item.label,
-                    code: 'XX' }
+      post sir_log_sir_items_path( sir_log_id: @sir_item.sir_log, params:{ 
+        sir_item: {
+          description: @sir_item.description,
+          group_id: @sir_item.group_id,
+          label: @sir_item.label,
+          code: 'XX' }
+        })
     end
     assert_redirected_to sir_item_path( assigns( :sir_item ))
   end
 
   test 'should show sir_item' do
-    get :show, id: @sir_item
+    get sir_item_path( id: @sir_item )
     assert_response :success
   end
 
   test 'should get edit' do
-    get :edit, id: @sir_item
+    get edit_sir_item_path( id: @sir_item )
     assert_response :success
   end
 
   test 'should update sir_item' do
-    patch :update, id: @sir_item, sir_item: { category: @sir_item.category }
+    patch sir_item_path( id: @sir_item, params:{ sir_item: { category: @sir_item.category }})
     assert_redirected_to sir_item_path( assigns( :sir_item ))
   end
 
   test 'should destroy sir_item' do
     sir_log = @sir_item.sir_log
     assert_difference( 'SirItem.count', -1 ) do
-      delete :destroy, id: @sir_item
+      delete sir_item_path( id: @sir_item )
     end
     assert_redirected_to sir_log_sir_items_path( sir_log )
   end
+
 end

@@ -8,7 +8,7 @@
       <%= render partial: 'shared/errors', object: @isr_agreement.errors %>
       <%= render partial: 'shared/notice' %>
       <%= fields_for @isr_interface do |f| %>
-        <%- if @isr_interface.frozen? %>
+        <%- if @isr_interface.is_frozen? %>
           <%= render partial: 'show_if', object: f, locals:{ note: :edit }%>
         <%- else %>
           <%= render partial: 'form_if', object: f, locals:{ note: :edit } %>

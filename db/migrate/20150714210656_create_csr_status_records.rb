@@ -1,4 +1,4 @@
-class CreateCsrStatusRecords < ActiveRecord::Migration
+class CreateCsrStatusRecords < ActiveRecord::Migration[5.1]
   def change
     create_table :csr_status_records do |t|
       t.integer   :correspondence_type, null: false, index: true

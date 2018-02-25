@@ -359,10 +359,10 @@ class IsrInterfacesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
 
     def isr_interface_params
-      valid_params = [ :note ] # always possible
+      valid_params = [ :note ] # always permitted
       valid_params.push( :desc, :cfr_record_id, 
         :l_group_id, :p_group_id, :title, :desc, 
-        :safety_related, :if_status, :if_level ) unless @isr_interface.frozen?
+        :safety_related, :if_status, :if_level ) unless @isr_interface && @isr_interface.is_frozen?
       params.require( :isr_interface ).permit( valid_params )
     end
 

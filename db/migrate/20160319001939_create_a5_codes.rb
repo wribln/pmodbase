@@ -1,4 +1,4 @@
-class CreateA5Codes < ActiveRecord::Migration
+class CreateA5Codes < ActiveRecord::Migration[5.1]
   def change
     create_table :a5_codes do |t|
       t.string  :code,        length: MAX_LENGTH_OF_CODE,  null: false, index: true

@@ -18,6 +18,7 @@ class OurTiaItemsController < ApplicationController
     respond_to do |format|
       format.html do
         @tia_items = @tia_list.tia_items.active.filter( filter_params ).paginate( page: params[ :page ], per_page: 5 )
+        @tia_stats = nil
       end
       format.doc do
         @tia_items = @tia_list.tia_items.active.filter( filter_params )

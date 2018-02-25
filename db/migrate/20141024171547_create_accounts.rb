@@ -1,4 +1,4 @@
-class CreateAccounts < ActiveRecord::Migration
+class CreateAccounts < ActiveRecord::Migration[5.1]
   def change
     create_table :accounts do |t|
       t.string      :name, limit: MAX_LENGTH_OF_ACCOUNT_NAME

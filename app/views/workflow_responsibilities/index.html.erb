@@ -17,7 +17,7 @@
         </thead>
         <tbody>
           <tr>
-            <td><%= "[#{ @filter_fields[ :fr_feature ]}]" unless @filter_fields.length.zero? -%></td>
+            <td><%= "[#{ @filter_fields[ :fr_feature ]}]" unless @filter_fields.empty? -%></td>
           <td colspan="2"><%= filter_single_select @filter_fields, :fr_feature, @feature_list, :label_with_id -%></td>
           <td colspan="3"><%= filter_action_button -%></td>
         </tr>

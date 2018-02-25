@@ -4,9 +4,9 @@ class IsrInterface < ActiveRecord::Base
   include ActiveModelErrorsAdd
   include Filterable
 
-  belongs_to :l_group,    -> { readonly }, foreign_key: :l_group_id, class_name: :Group
-  belongs_to :p_group,    -> { readonly }, foreign_key: :p_group_id, class_name: :Group
-  belongs_to :cfr_record
+  belongs_to :l_group,    -> { readonly },                 foreign_key: :l_group_id, class_name: :Group
+  belongs_to :p_group,    -> { readonly }, optional: true, foreign_key: :p_group_id, class_name: :Group
+  belongs_to :cfr_record,                  optional: true
   has_many   :isr_agreements, inverse_of: :isr_interface
   has_many   :active_agreements, ->{ current }, class_name: :IsrAgreement, autosave: true
 
@@ -78,7 +78,7 @@ class IsrInterface < ActiveRecord::Base
   # an interface must not be modified (other than note) once it is frozen, i.e.
   # the status is not identified (0) or defined-open (1)
 
-  def frozen?
+  def is_frozen?
     self.if_status > 1
   end
 

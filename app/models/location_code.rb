@@ -8,8 +8,8 @@ class LocationCode < ActiveRecord::Base
 
   has_many :network_lines
   has_many :network_stops
-  has_many :parts_of_relations, class_name: 'LocationCode', foreign_key: 'part_of_id'
-  belongs_to :part_of, class_name: 'LocationCode'
+  has_many :parts_of_relations, class_name: :LocationCode, foreign_key: :part_of_id
+  belongs_to :part_of, optional: true, class_name: :LocationCode
 
   validates :code,
     presence: true,

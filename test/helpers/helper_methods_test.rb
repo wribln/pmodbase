@@ -1,4 +1,4 @@
-class ApplicationHelperTest < ActionView::TestCase
+class TheApplicationHelperTest < ActionView::TestCase
   include ApplicationHelper
 
   # override h method which is not available for tests otherwise

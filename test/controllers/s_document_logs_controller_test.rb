@@ -1,32 +1,37 @@
 require 'test_helper'
-class SDocumentLogsControllerTest < ActionController::TestCase
+class SDocumentLogsControllerTest < ActionDispatch::IntegrationTest
 
   setup do
+    signon_by_user accounts( :one )
     @s_document_log = s_document_logs( :one )
-    session[ :current_user_id ] = accounts( :one ).id
+  end
+
+  test 'check class_attributes'  do
+    get s_document_logs_path
+    validate_feature_class_attributes FEATURE_ID_S_DOCUMENT_LOG, ApplicationController::FEATURE_ACCESS_VIEW
   end
 
   test 'should get index' do
-    get :index
+    get s_document_logs_path
     assert_response :success
     assert_not_nil assigns( :s_document_logs )
   end
 
   test 'should get new' do
-    get :new
+    get new_s_document_log_path
     assert_response :success
   end
 
   test 'should create s_document_log' do
     assert_difference( 'SDocumentLog.count' ) do
-      post :create, s_document_log: { group_id: @s_document_log.group_id, author_date: @s_document_log.author_date, dcc_code: @s_document_log.dcc_code, function_code: @s_document_log.function_code, title: @s_document_log.title }
+      post s_document_logs_path, params:{ s_document_log: { group_id: @s_document_log.group_id, author_date: @s_document_log.author_date, dcc_code: @s_document_log.dcc_code, function_code: @s_document_log.function_code, title: @s_document_log.title }}
     end
     assert_redirected_to s_document_log_path( assigns( :s_document_log ))
   end
 
   test 'test partial input 0' do
     assert_difference( 'SDocumentLog.count', 0 ) do
-      post :create, s_document_log: { group_id: nil }
+      post s_document_logs_path, params:{ s_document_log: { group_id: nil }}
     end
     sdl = assigns( :s_document_log )
     assert_includes sdl.errors, :group_id
@@ -37,7 +42,7 @@ class SDocumentLogsControllerTest < ActionController::TestCase
 
   test 'test partial input 1' do
     assert_difference( 'SDocumentLog.count', 0 ) do
-      post :create, s_document_log: { group_id: @s_document_log.group_id, dcc_code: @s_document_log.dcc_code }
+      post s_document_logs_path, params:{ s_document_log: { group_id: @s_document_log.group_id, dcc_code: @s_document_log.dcc_code }}
     end
     sdl = assigns( :s_document_log )
     assert_includes sdl.errors, :base
@@ -46,50 +51,50 @@ class SDocumentLogsControllerTest < ActionController::TestCase
 
   test 'test partial input ok w/ function code' do
     assert_difference( 'SDocumentLog.count' ) do
-      post :create, s_document_log: { group_id: @s_document_log.group_id, dcc_code: @s_document_log.dcc_code, function_code: @s_document_log.function_code }
+      post s_document_logs_path, params:{ s_document_log: { group_id: @s_document_log.group_id, dcc_code: @s_document_log.dcc_code, function_code: @s_document_log.function_code }}
     end
     assert_redirected_to s_document_log_path( assigns( :s_document_log ))
   end
 
   test 'test partial input ok w/ product code' do
     assert_difference( 'SDocumentLog.count' ) do
-      post :create, s_document_log: { group_id: @s_document_log.group_id, dcc_code: @s_document_log.dcc_code, product_code: @s_document_log.product_code }
+      post s_document_logs_path, params:{ s_document_log: { group_id: @s_document_log.group_id, dcc_code: @s_document_log.dcc_code, product_code: @s_document_log.product_code }}
     end
     assert_redirected_to s_document_log_path( assigns( :s_document_log ))
   end
 
   test 'test partial input ok w/ service code' do
     assert_difference( 'SDocumentLog.count' ) do
-      post :create, s_document_log: { group_id: @s_document_log.group_id, dcc_code: @s_document_log.dcc_code, service_code: @s_document_log.service_code }
+      post s_document_logs_path, params:{ s_document_log: { group_id: @s_document_log.group_id, dcc_code: @s_document_log.dcc_code, service_code: @s_document_log.service_code }}
     end
     assert_redirected_to s_document_log_path( assigns( :s_document_log ))
   end
 
   test 'test partial input ok w/ phase code' do
     assert_difference( 'SDocumentLog.count' ) do
-      post :create, s_document_log: { group_id: @s_document_log.group_id, dcc_code: @s_document_log.dcc_code, phase_code: @s_document_log.phase_code }
+      post s_document_logs_path, params:{ s_document_log: { group_id: @s_document_log.group_id, dcc_code: @s_document_log.dcc_code, phase_code: @s_document_log.phase_code }}
     end
     assert_redirected_to s_document_log_path( assigns( :s_document_log ))
   end
 
   test 'should show s_document_log' do
-    get :show, id: @s_document_log
+    get s_document_log_path( id: @s_document_log )
     assert_response :success
   end
 
   test 'should get edit' do
-    get :edit, id: @s_document_log
+    get edit_s_document_log_path( id: @s_document_log )
     assert_response :success
   end
 
   test 'should update s_document_log' do
-    patch :update, id: @s_document_log, s_document_log: { author_date: @s_document_log.author_date, dcc_code: @s_document_log.dcc_code, function_code: @s_document_log.function_code, location_code: @s_document_log.location_code, phase_code: @s_document_log.phase_code, product_code: @s_document_log.product_code, receiver_group: @s_document_log.receiver_group, revision_code: @s_document_log.revision_code, service_code: @s_document_log.service_code, title: @s_document_log.title }
+    patch s_document_log_path( id: @s_document_log, params:{ s_document_log: { author_date: @s_document_log.author_date, dcc_code: @s_document_log.dcc_code, function_code: @s_document_log.function_code, location_code: @s_document_log.location_code, phase_code: @s_document_log.phase_code, product_code: @s_document_log.product_code, receiver_group: @s_document_log.receiver_group, revision_code: @s_document_log.revision_code, service_code: @s_document_log.service_code, title: @s_document_log.title }})
     assert_redirected_to s_document_log_path( assigns( :s_document_log ))
   end
 
   test 'should destroy s_document_log' do
     assert_difference('SDocumentLog.count', -1) do
-      delete :destroy, id: @s_document_log
+      delete s_document_log_path( id: @s_document_log )
     end
     assert_redirected_to s_document_logs_path
   end

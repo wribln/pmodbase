@@ -1,48 +1,48 @@
 require 'test_helper'
 
-class HashtagsControllerTest < ActionController::TestCase
+class HashtagsControllerTest < ActionDispatch::IntegrationTest
 
   setup do
     @hashtag = hashtags( :one )
-    session[ :current_user_id ] = accounts( :one ).id
+    signon_by_user accounts( :one )
   end
 
-  test "should get index" do
-    get :index
+  test 'should get index' do
+    get hashtags_path
     assert_response :success
     assert_not_nil assigns(:hashtags)
   end
 
-  test "should get new" do
-    get :new
+  test 'should get new' do
+    get new_hashtag_path
     assert_response :success
   end
 
-  test "should create hashtag" do
+  test 'should create hashtag' do
     assert_difference( 'Hashtag.count' ) do
-      post :create, hashtag: { code: @hashtag.code + 'X', feature_id: @hashtag.feature_id, label: @hashtag.label }
+      post hashtags_path( params:{ hashtag: { code: @hashtag.code + 'X', feature_id: @hashtag.feature_id, label: @hashtag.label }})
     end
     assert_redirected_to hashtag_path( assigns( :hashtag ))
   end
 
-  test "should show hashtag" do
-    get :show, id: @hashtag
+  test 'should show hashtag' do
+    get hashtag_path( id: @hashtag )
     assert_response :success
   end
 
-  test "should get edit" do
-    get :edit, id: @hashtag
+  test 'should get edit' do
+    get edit_hashtag_path( id: @hashtag )
     assert_response :success
   end
 
-  test "should update hashtag" do
-    patch :update, id: @hashtag, hashtag: { code: @hashtag.code, feature_id: @hashtag.feature_id, label: @hashtag.label }
+  test 'should update hashtag' do
+    patch hashtag_path( id: @hashtag, params:{ hashtag: { code: @hashtag.code, feature_id: @hashtag.feature_id, label: @hashtag.label }})
     assert_redirected_to hashtag_path( assigns( :hashtag ))
   end
 
-  test "should destroy hashtag" do
+  test 'should destroy hashtag' do
     assert_difference('Hashtag.count', -1) do
-      delete :destroy, id: @hashtag
+      delete hashtag_path( id: @hashtag )
     end
     assert_redirected_to hashtags_path
   end

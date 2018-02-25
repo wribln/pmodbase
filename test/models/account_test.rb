@@ -234,4 +234,29 @@ class AccountTest < ActiveSupport::TestCase
     assert_equal "One (Another Test Account [#{ as.id }])", as.account_info
   end
 
+  test 'password should be present (nonblank)' do
+    as = accounts( :one )
+    as.password = as.password_confirmation = " " * 8
+    refute as.valid?
+    assert_includes as.errors, :password
+  end
+
+  test 'password should have a minimum length' do
+    as = accounts( :one )
+    as.password = as.password_confirmation = 'Abc!123'
+    refute as.valid?
+    assert_includes as.errors, :password
+    as.password = as.password_confirmation = 'Abc!!123'
+    assert as.valid?
+  end
+
+  test 'password and password_confirmation must match' do
+    as = accounts( :one )
+    as.password = as.password_confirmation = 'Abc!!123'
+    assert as.valid?
+    as.password = 'Abc//123'
+    refute as.valid?
+    assert_includes as.errors, :password_confirmation
+  end
+
 end

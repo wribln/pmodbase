@@ -1,16 +1,15 @@
 require 'test_helper'
-class PcpItemsController0Test < ActionController::TestCase
-  tests PcpItemsController
+class PcpItemsController0Test < ActionDispatch::IntegrationTest
 
   setup do
     @pcp_item = pcp_items( :three )
     @pcp_subject = @pcp_item.pcp_subject
     @account = accounts( :one )
-    session[ :current_user_id ] = @account.id
+    signon_by_user @account
   end
 
   test 'should get index' do
-    get :index, pcp_subject_id: @pcp_subject
+    get pcp_subject_pcp_items_path( pcp_subject_id: @pcp_subject )
     assert_response :success
     assert_not_nil assigns( :pcp_items )
     assert_not_nil assigns( :pcp_subject )
@@ -18,7 +17,7 @@ class PcpItemsController0Test < ActionController::TestCase
   end
 
   test 'should get new' do
-    get :new, pcp_subject_id: @pcp_subject
+    get new_pcp_subject_pcp_item_path( pcp_subject_id: @pcp_subject )
     assert_response :success
     assert_not_nil assigns( :pcp_subject )
     assert_not_nil assigns( :pcp_item )
@@ -26,11 +25,10 @@ class PcpItemsController0Test < ActionController::TestCase
 
   test 'should create pcp item' do
     assert_difference( 'PcpItem.count' ) do
-      post :create, pcp_item: {
+      post pcp_subject_pcp_items_path( pcp_subject_id: @pcp_item.pcp_subject_id, params:{ pcp_item: {
         author: 'poor me',
         description: @pcp_item.description,
-        reference: @pcp_item.reference },
-        pcp_subject_id: @pcp_item.pcp_subject_id
+        reference: @pcp_item.reference }})
     end
     assert_redirected_to pcp_item_path( assigns( :pcp_item ))
     assert_not_nil assigns( :pcp_subject )
@@ -38,24 +36,23 @@ class PcpItemsController0Test < ActionController::TestCase
 
   test 'should create pcp comment' do
     assert_difference( 'PcpComment.count' )do
-      post :create_comment, pcp_comment:{
+      post create_pcp_comment_path( id: @pcp_item.id, params:{ pcp_comment:{
         author: 'me, again',
-        description: 'foobar' },
-        id: @pcp_item.id
+        description: 'foobar' }})
     end
     assert_redirected_to pcp_item_path( assigns( :pcp_item ))
   end
 
   test 'could not create pcp_item' do
     assert_difference( 'PcpItem.count', 0 ) do
-      post :create, pcp_subject_id: @pcp_item.pcp_subject_id, pcp_item: { description: nil }
+      post pcp_subject_pcp_items_path( pcp_subject_id: @pcp_item.pcp_subject_id, params:{ pcp_item: { description: nil }})
     end
     assert_template :new
     assert_response :success
   end
 
   test 'should show pcp_item' do
-    get :show, id: @pcp_item
+    get pcp_item_path( id: @pcp_item )
     assert_response :success
     assert_not_nil assigns( :pcp_subject )
     assert_not_nil assigns( :pcp_item )
@@ -66,19 +63,19 @@ class PcpItemsController0Test < ActionController::TestCase
     assert pcp_items( :two ).id < pcp_items( :three ).id, "This test requires #{ pcp_items( :two ).id } < #{ pcp_items( :three ).id}"
     assert_equal 1, pcp_items( :one ).seqno
 
-    get :show_next, id: pcp_items( :one )
+    get pcp_item_next_path( id: pcp_items( :one ))
     assert_response :success
     @pcp_item = assigns( :pcp_item )
     assert_equal 2, @pcp_item.seqno
 
-    get :show_next, id: @pcp_item
+    get pcp_item_next_path( id: @pcp_item )
     assert_response :success
     @pcp_item = assigns( :pcp_item )
     assert_equal 3, @pcp_item.seqno
 
     # last item:
 
-    get :show_next, id: @pcp_item
+    get pcp_item_next_path( id: @pcp_item )
     assert_response :success
     @pcp_item = assigns( :pcp_item )
     assert_equal 3, @pcp_item.seqno    
@@ -95,12 +92,12 @@ class PcpItemsController0Test < ActionController::TestCase
     assert pcp_item.save
     @pcp_subject.reload
     assert_equal 0, @pcp_subject.valid_subject?
-    get :edit, id: pcp_item
+    get edit_pcp_item_path( id: pcp_item )
     assert_response :success  
   end
 
   test 'should get edit' do
-    get :edit, id: @pcp_item
+    get edit_pcp_item_path( id: @pcp_item )
     assert_response :success
     assert_not_nil assigns( :pcp_subject )
   end
@@ -109,10 +106,10 @@ class PcpItemsController0Test < ActionController::TestCase
   end
 
   test 'should update pcp_item' do
-    patch :update, id: @pcp_item, pcp_item: {
+    patch pcp_item_path( id: @pcp_item, params:{ pcp_item: {
       author: 'poor me',
       description: @pcp_item.description,
-      reference: @pcp_item.reference }
+      reference: @pcp_item.reference }})
     assert_redirected_to pcp_item_path( assigns( :pcp_item ))
   end
 
@@ -126,7 +123,7 @@ class PcpItemsController0Test < ActionController::TestCase
     assert @pcp_item.save, @pcp_item.errors.inspect
     refute @pcp_item.released?
     assert_difference('PcpItem.count', -1) do
-      delete :destroy, id: @pcp_item
+      delete pcp_item_path( id: @pcp_item )
     end
     assert_redirected_to pcp_subject_pcp_items_path( @pcp_subject )
   end

@@ -3,7 +3,7 @@ ENV['RAILS_ENV'] ||= 'test'
 # set $DEBUG = true here to turn on the debug flag for all tests
 # set $DEBUG = true in a specific test is also possible
 # 
-#$DEBUG = true 
+# $DEBUG = true 
 #
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
@@ -18,7 +18,7 @@ class ActiveSupport::TestCase
     assert_not text.nil?
     assert_not id.nil?
     assert text.is_a? String
-    assert id.is_a? Fixnum
+    assert id.is_a? Integer
     "#{ text } [#{ id }]"
   end
 
@@ -42,8 +42,17 @@ class ActiveSupport::TestCase
   end
 
   def switch_to_user( user )
-    @controller.delete_user
-    session[ :current_user_id ] = user
-  end    
+    get signoff_url       # @controller.delete_user
+    signon_by_user( user ) # session[ :current_user_id ] = user
+  end
+
+  def signon_by_user( user )
+    post signon_url, params: { acc_name: user.name, password: 'password' }
+    follow_redirect!
+  end
+
+  def signoff_user
+    get signoff_url
+  end
 
 end

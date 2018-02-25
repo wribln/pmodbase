@@ -1,120 +1,100 @@
 require 'test_helper'
-class AccountsControllerAccessTest < ActionController::TestCase
-  tests AccountsController
+class AccountsControllerAccessTest < ActionDispatch::IntegrationTest
 
   test 'check class_attributes'  do
+    signon_by_user accounts( :one )
+    get accounts_path
     validate_feature_class_attributes FEATURE_ID_ACCOUNTS_AND_PERMISSIONS, ApplicationController::FEATURE_ACCESS_SOME
   end
 
   # index
 
   test 'index is not permitted but results in cr form' do
-    @account = accounts( :wop )
-    session[ :current_user_id ] = accounts( :wop ).id
-    get :index
+    signon_by_user accounts( :wop )
+    get accounts_path
     check_for_cr
   end
 
   test 'should not get index' do
-    @account = nil
-    session[ :current_user_id ] = nil
-    get :index
+    get accounts_path
     assert_response :unauthorized
   end
 
   # show
 
   test 'show is not permitted but results in cr form' do
-    @account = accounts( :wop )
-    session[ :current_user_id ] = accounts( :wop ).id
-    get :show, id: accounts( :three )
+    signon_by_user accounts( :wop )
+    get account_path( id: accounts( :three ))
     check_for_cr
   end
 
   test 'should not get show' do
-    @account = nil
-    session[ :current_user_id ] = nil
-    get :edit, id: accounts( :three )
+    get edit_account_path( id: accounts( :three ))
     assert_response :unauthorized
   end
 
   # edit
 
   test 'edit is not permitted but results in cr form' do
-    @account = accounts( :wop )
-    session[ :current_user_id ] = accounts( :wop ).id
-    get :edit, id: accounts( :three )
+    signon_by_user accounts( :wop )
+    get edit_account_path( id: accounts( :three ))
     check_for_cr
   end
 
   test 'should not get edit' do
-    @account = nil
-    session[ :current_user_id ] = nil
-    get :edit, id: accounts( :three )
+    get edit_account_path( id: accounts( :three ))
     assert_response :unauthorized
   end
 
   # new
 
   test 'new is not permitted but results in cr form' do
-    @account = accounts( :wop )
-    session[ :current_user_id ] = accounts( :wop ).id
-    assert_difference( 'Account.count', 0 ) { get :new }
+    signon_by_user accounts( :wop )
+    assert_difference( 'Account.count', 0 ) { get new_account_path }
     check_for_cr
   end
 
   test 'should not get new' do
-    @account = nil
-    session[ :current_user_id ] = nil
-    assert_difference( 'Account.count', 0 ) { get :new }
+    assert_difference( 'Account.count', 0 ) { get new_account_path }
     assert_response :unauthorized
   end
 
   # update
 
   test 'update is not permitted but results in cr form' do
-    @account = accounts( :wop )
-    session[ :current_user_id ] = accounts( :wop ).id
-    patch :update, id: accounts( :three )
+    signon_by_user accounts( :wop )
+    patch account_path( id: accounts( :three ))
     check_for_cr
   end
 
   test 'update is  not permitted' do
-    @account = nil
-    session[ :current_user_id ] = nil
-    patch :update, id: accounts( :three )
+    patch account_path( id: accounts( :three ))
     assert_response :unauthorized
   end
 
   # create
 
   test 'create is not permitted but results in cr form' do
-    @account = accounts( :wop )
-    session[ :current_user_id ] = accounts( :wop ).id
-    assert_difference( 'Account.count', 0 ) { post :create }
+    signon_by_user accounts( :wop )
+    assert_difference( 'Account.count', 0 ) { post accounts_path }
     check_for_cr
   end
 
   test 'create is not permitted' do
-    @account = nil
-    session[ :current_user_id ] = nil
-    assert_difference( 'Account.count', 0 ) { post :create }
+    assert_difference( 'Account.count', 0 ) { post accounts_path }
     assert_response :unauthorized
   end
 
   # delete
 
   test 'delete is not permitted but results in cr form' do
-    @account = accounts( :wop )
-    session[ :current_user_id ] = accounts( :wop ).id
-    assert_difference( 'Abbreviation.count', 0 ) { delete :destroy, id: accounts( :three )}
+    signon_by_user accounts( :wop )
+    assert_difference( 'Abbreviation.count', 0 ) { delete account_path( id: accounts( :three )) }
     check_for_cr
   end
 
   test 'delete is not permitted' do
-    @account = nil
-    session[ :current_user_id ] = nil
-    assert_difference( 'Abbreviation.count', 0 ) { delete :destroy, id: accounts( :three )}
+    assert_difference( 'Abbreviation.count', 0 ) { delete account_path( id: accounts( :three )) }
     assert_response :unauthorized
   end
 

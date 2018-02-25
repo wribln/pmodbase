@@ -1,4 +1,4 @@
-class CreatePermission4Groups < ActiveRecord::Migration
+class CreatePermission4Groups < ActiveRecord::Migration[5.1]
   def change
     create_table :permission4_groups do |t|
       t.belongs_to :account,    null: false

@@ -78,13 +78,19 @@ class SirItem1Test < ActiveSupport::TestCase
 
     assert_includes si.errors, :label
     si.label = 'something'
+    refute si.valid?
+    refute_includes si.errors, :label
+
+    # seqno
+
+    assert_includes si.errors, :seqno
+    si.seqno = 3
     assert si.valid?, si.errors.messages
+
   end
 
-  test 'seqno must be unique within this log' do
-    si = sir_items( :one )
-    sn = si 
-    sn.id = nil 
+  test 'seqno should be unique within this log' do
+    sn = sir_items( :one ).dup
     refute sn.valid?
     assert_includes sn.errors, :seqno
     sn.seqno = 2

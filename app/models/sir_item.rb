@@ -5,10 +5,10 @@ class SirItem < ActiveRecord::Base
 
   belongs_to :sir_log,     -> { readonly }, inverse_of: :sir_items
   belongs_to :group,       -> { readonly }
-  belongs_to :cfr_record,  -> { readonly }
-  belongs_to :phase_code,  -> { readonly }
+  belongs_to :cfr_record,  -> { readonly }, optional: true
+  belongs_to :phase_code,  -> { readonly }, optional: true
   has_many   :sir_entries, -> { log_order }, inverse_of: :sir_item
-  has_one    :last_entry,  -> { rev_order }, inverse_of: :sir_item, class_name: 'SirEntry'
+  has_one    :last_entry,  -> { rev_order }, inverse_of: :sir_item, class_name: :SirEntry
 
   before_save :set_defaults
 
@@ -19,10 +19,8 @@ class SirItem < ActiveRecord::Base
     presence: true
 
   validates :seqno,
-    presence: true,
-    numericality: { only_integer: true, greater_than: 0 },
-    uniqueness: { scope: :sir_log_id, message: I18n.t( 'sir_items.msg.bad_seqno' )},
-    on: :update
+    numericality: { only_integer: true, greater_than: 0 }, 
+    uniqueness: { scope: :sir_log_id, message: I18n.t( 'sir_items.msg.bad_seqno' )}
 
   validates :label,
     presence: true,

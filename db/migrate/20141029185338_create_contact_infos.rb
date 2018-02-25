@@ -1,4 +1,4 @@
-class CreateContactInfos < ActiveRecord::Migration
+class CreateContactInfos < ActiveRecord::Migration[5.1]
   def change
     create_table :contact_infos do |t|
       t.string      :info_type,       limit: MAX_LENGTH_OF_INFORMATION_TYPE,  null: false

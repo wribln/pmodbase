@@ -1,15 +1,14 @@
 require 'test_helper'
-class CfrRecordsController1Test < ActionController::TestCase
-  tests CfrRecordsController
+class CfrRecordsController1Test < ActionDispatch::IntegrationTest
 
   setup do
     @cfr_record = cfr_records( :one )
     @account = accounts( :wop )
-    session[ :current_user_id ] = accounts( :wop ).id
+    signon_by_user @account
   end
 
   test 'should get index' do
-    get :index
+    get cfr_records_path
     assert_response :success
     r = assigns( :cfr_records )
     assert_not_nil r 
@@ -20,37 +19,37 @@ class CfrRecordsController1Test < ActionController::TestCase
   end
 
   test 'should get new' do
-    get :new
+    get new_cfr_record_path
     assert_response :unauthorized
   end
 
   test 'should set defaults: doc_owner' do
     assert_no_difference( 'CfrRecord.count' ) do
-      post :create, commit: I18n.t( 'button_label.defaults' ), cfr_record: { doc_owner: '' }
+      post cfr_records_path, params:{ commit: I18n.t( 'button_label.defaults' ), cfr_record: { doc_owner: '' }}
     end
     assert_response :unauthorized
   end
 
   test 'should set defaults: extension' do
     assert_no_difference( 'CfrRecord.count' ) do
-      post :create, commit: I18n.t( 'button_label.defaults' ), cfr_record: {
+      post cfr_records_path, params:{ commit: I18n.t( 'button_label.defaults' ), cfr_record: {
         extension: '',
-        cfr_locations_attributes: [ file_name: 'test.pdf', is_main_location: true ]}
+        cfr_locations_attributes: [ file_name: 'test.pdf', is_main_location: true ]}}
     end
     assert_response :unauthorized
   end
 
   test 'should set defaults' do
     assert_no_difference( 'CfrRecord.count' ) do
-      post :create, commit: I18n.t( 'button_label.defaults' ), cfr_record: {
-        cfr_locations_attributes: [ '0',  uri: 'X:\somewhere\over\the\rainbow\test.pdf', is_main_location: true ]}
+      post cfr_records_path, params:{ commit: I18n.t( 'button_label.defaults' ), cfr_record: {
+        cfr_locations_attributes: [ '0',  uri: 'X:\somewhere\over\the\rainbow\test.pdf', is_main_location: true ]}}
     end
     assert_response :unauthorized
   end
 
   test 'should create cfr_record' do
     assert_no_difference( 'CfrRecord.count' ) do
-      post :create, cfr_record: { doc_date: @cfr_record.doc_date, doc_version: @cfr_record.doc_version, group_id: @cfr_record.group_id, main_location_id: @cfr_record.main_location_id, note: @cfr_record.note, title: @cfr_record.title }
+      post cfr_records_path, params:{ cfr_record: { doc_date: @cfr_record.doc_date, doc_version: @cfr_record.doc_version, group_id: @cfr_record.group_id, main_location_id: @cfr_record.main_location_id, note: @cfr_record.note, title: @cfr_record.title }}
     end
     assert_response :unauthorized
   end
@@ -58,41 +57,41 @@ class CfrRecordsController1Test < ActionController::TestCase
   test 'should show cfr_record' do
     assert_nil @cfr_record.group_id
     assert @cfr_record.conf_level == 0
-    get :show, id: @cfr_record
+    get cfr_record_path( id: @cfr_record )
     assert_response :success
   end
 
   test 'should show details of cfr_record' do
     assert_nil @cfr_record.group_id
     assert @cfr_record.conf_level == 0
-    get :show_all, id: @cfr_record
+    get cfr_record_details_path( id: @cfr_record )
     assert_response :success
   end
 
   test 'should get edit' do
-    get :edit, id: @cfr_record
+    get edit_cfr_record_path( id: @cfr_record )
     assert_response :unauthorized
   end
 
   test 'should update cfr_record' do
-    patch :update, id: @cfr_record, cfr_record: { 
+    patch cfr_record_path( id: @cfr_record, params:{ cfr_record: { 
       doc_date: @cfr_record.doc_date,
       doc_version: @cfr_record.doc_version,
       group_id: @cfr_record.group_id,
       main_location_id: @cfr_record.main_location_id,
       note: @cfr_record.note, 
-      title: @cfr_record.title }
+      title: @cfr_record.title }})
     assert_response :unauthorized
   end
 
   test 'should update defaults' do
-    patch :update, id: @cfr_record, commit: I18n.t( 'button_label.defaults' ), cfr_record: { doc_owner: '', extension: 'pdf' }
+    patch cfr_record_path( id: @cfr_record, params:{ commit: I18n.t( 'button_label.defaults' ), cfr_record: { doc_owner: '', extension: 'pdf' }})
     assert_response :unauthorized
   end
 
   test 'should destroy cfr_record' do
     assert_no_difference( 'CfrRecord.count' ) do
-      delete :destroy, id: @cfr_record
+      delete cfr_record_path( id: @cfr_record )
     end
     assert_response :unauthorized
   end

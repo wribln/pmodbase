@@ -8,7 +8,7 @@ class Holiday < ActiveRecord::Base
   include Filterable
 
   belongs_to :country_name, -> { readonly }, inverse_of: :holidays
-  belongs_to :region_name,  -> { readonly }, inverse_of: :holidays
+  belongs_to :region_name,  -> { readonly }, optional: true, inverse_of: :holidays
 
   validates :date_from,
     date_field: { presence: true }

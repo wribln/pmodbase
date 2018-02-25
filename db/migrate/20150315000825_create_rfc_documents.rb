@@ -1,4 +1,4 @@
-class CreateRfcDocuments < ActiveRecord::Migration
+class CreateRfcDocuments < ActiveRecord::Migration[5.1]
   def change
     create_table :rfc_documents do |t|
       t.belongs_to  :rfc_status_record, null: false, foreign_key: :true, index: :true

@@ -1,18 +1,18 @@
 require 'test_helper'
 class AddressTest < ActiveSupport::TestCase
 
-  test "label_with_id" do
+  test 'label_with_id' do
      a = addresses(:address_one)
      assert_equal text_with_id( a.label, a.id ), a.label_with_id
      a = addresses(:address_two)
      assert_equal text_with_id( a.label, a.id ), a.label_with_id
   end
 
-  test "remove leading, trailing, and duplicate blanks" do
+  test 'remove leading, trailing, and duplicate blanks' do
 
     a = Address.new
-    ts1 = "test 1"
-    ts2 = "test 2"
+    ts1 = 'test 1'
+    ts2 = 'test 2'
 
     a.label = " #{ts1}"
     assert_equal a.label, ts1
@@ -31,15 +31,15 @@ class AddressTest < ActiveSupport::TestCase
 
   end
 
-  test "address label must be unique" do
+  test 'address label must be unique' do
 
     a = addresses( :address_one )
     assert a.valid?
 
-    a.id = nil
-    assert_not a.valid?
+    a = a.dup
+    refute a.valid?
 
-    a.label = "other"
+    a.label = 'other'
     assert a.valid?
 
   end

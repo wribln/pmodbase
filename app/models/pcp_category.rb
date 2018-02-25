@@ -2,12 +2,12 @@ class PcpCategory < ActiveRecord::Base
   include ApplicationModel
   include AccountAccess
 
-  belongs_to :c_group,  -> { readonly }, foreign_key: :c_group_id, class_name: Group
-  belongs_to :p_group,  -> { readonly }, foreign_key: :p_group_id, class_name: Group
-  belongs_to :c_owner,  -> { readonly }, foreign_key: :c_owner_id, class_name: Account
-  belongs_to :p_owner,  -> { readonly }, foreign_key: :p_owner_id, class_name: Account
-  belongs_to :c_deputy, -> { readonly }, foreign_key: :c_deputy_id, class_name: Account
-  belongs_to :p_deputy, -> { readonly }, foreign_key: :p_deputy_id, class_name: Account
+  belongs_to :c_group,  -> { readonly },                 foreign_key: :c_group_id, class_name: :Group
+  belongs_to :p_group,  -> { readonly },                 foreign_key: :p_group_id, class_name: :Group
+  belongs_to :c_owner,  -> { readonly },                 foreign_key: :c_owner_id, class_name: :Account
+  belongs_to :p_owner,  -> { readonly },                 foreign_key: :p_owner_id, class_name: :Account
+  belongs_to :c_deputy, -> { readonly }, optional: true, foreign_key: :c_deputy_id, class_name: :Account
+  belongs_to :p_deputy, -> { readonly }, optional: true, foreign_key: :p_deputy_id, class_name: :Account
   has_many   :pcp_subjects, dependent: :destroy, validate: false, inverse_of: :pcp_category
 
   validates :label,

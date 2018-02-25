@@ -1,4 +1,4 @@
-class CreateSiemensPhases < ActiveRecord::Migration
+class CreateSiemensPhases < ActiveRecord::Migration[5.1]
   def change
     create_table :siemens_phases do |t|
       t.string :code,     limit: MAX_LENGTH_OF_CODE,  null: false

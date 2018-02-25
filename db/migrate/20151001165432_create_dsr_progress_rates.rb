@@ -1,4 +1,4 @@
-class CreateDsrProgressRates < ActiveRecord::Migration
+class CreateDsrProgressRates < ActiveRecord::Migration[5.1]
   def change
     create_table :dsr_progress_rates, id: false do |t|
       t.integer :document_status, null: false

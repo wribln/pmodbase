@@ -16,18 +16,18 @@ class PcpSubject < ActiveRecord::Base
   include Filterable
 
   belongs_to :pcp_category, -> { readonly }, inverse_of: :pcp_subjects
-  belongs_to :c_group,  -> { readonly }, foreign_key: :c_group_id, class_name: 'Group'
-  belongs_to :p_group,  -> { readonly }, foreign_key: :p_group_id, class_name: 'Group'
-  belongs_to :c_owner,  -> { readonly }, foreign_key: :c_owner_id, class_name: 'Account'
-  belongs_to :p_owner,  -> { readonly }, foreign_key: :p_owner_id, class_name: 'Account'
-  belongs_to :c_deputy, -> { readonly }, foreign_key: :c_deputy_id, class_name: 'Account'
-  belongs_to :p_deputy, -> { readonly }, foreign_key: :p_deputy_id, class_name: 'Account'
-  belongs_to :s_owner,  -> { readonly }, foreign_key: :s_owner_id, class_name: 'Account'
-  belongs_to :cfr_record, ->{ readonly }, inverse_of: :pcp_subjects
+  belongs_to :c_group,      -> { readonly }, foreign_key: :c_group_id, class_name: :Group
+  belongs_to :p_group,      -> { readonly }, foreign_key: :p_group_id, class_name: :Group
+  belongs_to :c_owner,      -> { readonly }, optional: true, foreign_key: :c_owner_id, class_name: :Account
+  belongs_to :p_owner,      -> { readonly }, foreign_key: :p_owner_id, class_name: :Account
+  belongs_to :c_deputy,     -> { readonly }, optional: true, foreign_key: :c_deputy_id, class_name: :Account
+  belongs_to :p_deputy,     -> { readonly }, optional: true, foreign_key: :p_deputy_id, class_name: :Account
+  belongs_to :s_owner,      -> { readonly }, optional: true, foreign_key: :s_owner_id, class_name: :Account
+  belongs_to :cfr_record,   -> { readonly }, optional: true, inverse_of: :pcp_subjects
   has_many   :pcp_steps,    -> { most_recent }, dependent: :destroy, autosave: true,  inverse_of: :pcp_subject
   has_many   :pcp_items,                        dependent: :destroy, validate: false, inverse_of: :pcp_subject
   has_many   :pcp_members,                      dependent: :destroy, validate: false, inverse_of: :pcp_subject
-  has_many   :pcp_a_members, -> { where to_access: true }, class_name: 'PcpMember'
+  has_many   :pcp_a_members, -> { where to_access: true }, class_name: :PcpMember
 
   accepts_nested_attributes_for :pcp_steps
 

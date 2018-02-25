@@ -1,5 +1,60 @@
 require 'test_helper'
-class BreadcrumbListTest < ActionController::TestCase
+class BreadcrumbListTest < ActionDispatch::IntegrationTest
+
+  setup do
+    signon_by_user accounts( :one )
+    session[ :keep_base_open ] = false
+  end    
+
+  test 'index' do
+    get abbreviations_path
+    validate_breadcrumb_list
+    assert_equal 'abbreviations', @controller.breadcrumbs_to_here[ 1 ][ 0 ]
+    assert_equal '/aaa', @controller.breadcrumbs_to_here[ 1 ][ 1 ]
+    assert_equal 'index', @controller.breadcrumbs_to_here.last[ 1 ]
+  end
+
+  test 'show' do
+    get abbreviation_path( id: abbreviations( :sag ))
+    validate_breadcrumb_list
+    assert_equal 'abbreviations', @controller.breadcrumbs_to_here[ 1 ][ 0 ]
+    assert_equal '/aaa', @controller.breadcrumbs_to_here[ 1 ][ 1 ]
+    assert_equal 'show', @controller.breadcrumbs_to_here.last[ 1 ]
+  end
+
+  test 'parent_breadcrumb' do
+    get abbreviation_path( id: abbreviations( :sag ))
+    @controller.parent_breadcrumb( 'test', '/testpath' )
+    validate_breadcrumb_list
+    assert_equal 'test', @controller.breadcrumbs_to_here[ 1 ][ 0 ]
+    assert_equal '/testpath', @controller.breadcrumbs_to_here[ 1 ][ 1 ]
+    assert_equal 'abbreviations', @controller.breadcrumbs_to_here[ 2 ][ 0 ]
+    assert_equal '/aaa', @controller.breadcrumbs_to_here[ 2 ][ 1 ]
+    assert_equal 'show', @controller.breadcrumbs_to_here.last[ 1 ]
+
+    @controller.set_breadcrumb_title( 'xxxx' )
+    validate_breadcrumb_list
+    assert_equal 'test', @controller.breadcrumbs_to_here[ 1 ][ 0 ]
+    assert_equal '/testpath', @controller.breadcrumbs_to_here[ 1 ][ 1 ]
+    assert_equal 'xxxx', @controller.breadcrumbs_to_here[ 2 ][ 0 ]
+    assert_equal '/aaa', @controller.breadcrumbs_to_here[ 2 ][ 1 ]
+    assert_equal 'show', @controller.breadcrumbs_to_here.last[ 1 ]
+
+    @controller.set_breadcrumb_path( '/xxxx_path' )
+    validate_breadcrumb_list
+    assert_equal 'test', @controller.breadcrumbs_to_here[ 1 ][ 0 ]
+    assert_equal '/testpath', @controller.breadcrumbs_to_here[ 1 ][ 1 ]
+    assert_equal 'xxxx', @controller.breadcrumbs_to_here[ 2 ][ 0 ]
+    assert_equal '/xxxx_path', @controller.breadcrumbs_to_here[ 2 ][ 1 ]
+    assert_equal 'show', @controller.breadcrumbs_to_here.last[ 1 ]
+
+    @controller.set_final_breadcrumb( nil )
+    validate_breadcrumb_list
+    assert_equal 'test', @controller.breadcrumbs_to_here[ 1 ][ 0 ]
+    assert_equal '/testpath', @controller.breadcrumbs_to_here[ 1 ][ 1 ]
+    assert_equal 'xxxx', @controller.breadcrumbs_to_here[ 2 ][ 0 ]
+    assert_nil @controller.breadcrumbs_to_here[ 2 ][ 1 ]
+  end
 
   def validate_breadcrumb_list
     # there must be a list to validate
@@ -18,82 +73,6 @@ class BreadcrumbListTest < ActionController::TestCase
         assert ( bc[ 1 ].nil? || bc[ 1 ].kind_of?( String )), 'if second element of breadcrumb tupel is not nil, it must be a string (path)'
       end
     end
-  end
-
-  test 'all methods' do
-    @controller = BreadcrumbTestsController.new( :index ){ }
-    session[ :keep_base_open ]
-    with_routing do |set|
-      set.draw do
-        resources :breadcrumb_tests
-        get  'base/index', as: 'base', format: false
-      end
-
-    begin # 'breadcrumb on index' do
-      get :index
-      validate_breadcrumb_list
-      assert_equal 'breadcrumb_tests', @controller.breadcrumbs_to_here[ 1 ][ 0 ]
-      assert_equal '/breadcrumb_tests', @controller.breadcrumbs_to_here[ 1 ][ 1 ]
-      assert_equal 'index', @controller.breadcrumbs_to_here.last[ 1 ]
-    end
-
-    begin # 'set_final_breadcrumb' do
-      @controller.set_final_breadcrumb( :show )
-      validate_breadcrumb_list
-      assert_equal 'breadcrumb_tests', @controller.breadcrumbs_to_here[ 1 ][ 0 ]
-      assert_equal '/breadcrumb_tests', @controller.breadcrumbs_to_here[ 1 ][ 1 ]
-      assert_equal :show, @controller.breadcrumbs_to_here.last[ 1 ]
-    end
-
-    begin # 'parent_breadcrumb' do
-      @controller.parent_breadcrumb( 'test', '/testpath' )
-      validate_breadcrumb_list
-      assert_equal 'test', @controller.breadcrumbs_to_here[ 1 ][ 0 ]
-      assert_equal '/testpath', @controller.breadcrumbs_to_here[ 1 ][ 1 ]
-      assert_equal 'breadcrumb_tests', @controller.breadcrumbs_to_here[ 2 ][ 0 ]
-      assert_equal '/breadcrumb_tests', @controller.breadcrumbs_to_here[ 2 ][ 1 ]
-      assert_equal :show, @controller.breadcrumbs_to_here.last[ 1 ]
-    end
-
-    begin # 'set_breadcrumb_title' do
-      @controller.set_breadcrumb_title( 'xxxx' )
-      validate_breadcrumb_list
-      assert_equal 'test', @controller.breadcrumbs_to_here[ 1 ][ 0 ]
-      assert_equal '/testpath', @controller.breadcrumbs_to_here[ 1 ][ 1 ]
-      assert_equal 'xxxx', @controller.breadcrumbs_to_here[ 2 ][ 0 ]
-      assert_equal '/breadcrumb_tests', @controller.breadcrumbs_to_here[ 2 ][ 1 ]
-      assert_equal :show, @controller.breadcrumbs_to_here.last[ 1 ]
-    end
-
-    begin # 'set_breadcrumb_path' do
-      @controller.set_breadcrumb_path( '/xxxx_path' )
-      validate_breadcrumb_list
-      assert_equal 'test', @controller.breadcrumbs_to_here[ 1 ][ 0 ]
-      assert_equal '/testpath', @controller.breadcrumbs_to_here[ 1 ][ 1 ]
-      assert_equal 'xxxx', @controller.breadcrumbs_to_here[ 2 ][ 0 ]
-      assert_equal '/xxxx_path', @controller.breadcrumbs_to_here[ 2 ][ 1 ]
-      assert_equal :show, @controller.breadcrumbs_to_here.last[ 1 ]
-    end
-
-    begin # 'set_final_breadcrumb with nil' do
-      @controller.set_final_breadcrumb( nil )
-      validate_breadcrumb_list
-      assert_equal 'test', @controller.breadcrumbs_to_here[ 1 ][ 0 ]
-      assert_equal '/testpath', @controller.breadcrumbs_to_here[ 1 ][ 1 ]
-      assert_equal 'xxxx', @controller.breadcrumbs_to_here[ 2 ][ 0 ]
-      assert_nil @controller.breadcrumbs_to_here[ 2 ][ 1 ]
-    end
-
-    end
-  end
-
-end
-
-class BreadcrumbTestsController < ApplicationController
-	include BreadcrumbList
-
-  def initialize( method_name, &method_body )
-    self.class.send( :define_method, method_name, method_body )
   end
 
 end

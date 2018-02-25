@@ -1,4 +1,4 @@
-class CreateDbChangeRequests < ActiveRecord::Migration
+class CreateDbChangeRequests < ActiveRecord::Migration[5.1]
   def change
     create_table :db_change_requests do |t|
       t.belongs_to :requesting_account,  index: :true

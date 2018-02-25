@@ -1,4 +1,4 @@
-class CreatePcpItems < ActiveRecord::Migration
+class CreatePcpItems < ActiveRecord::Migration[5.1]
   def change
     create_table :pcp_items do |t|
       t.belongs_to  :pcp_subject, index: true, foreign_key: true

@@ -1,4 +1,4 @@
-class CreateDsrDocGroups < ActiveRecord::Migration
+class CreateDsrDocGroups < ActiveRecord::Migration[5.1]
   def change
     create_table :dsr_doc_groups do |t|
       t.string      :code,  limit: MAX_LENGTH_OF_CODE

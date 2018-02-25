@@ -1,4 +1,4 @@
-class CreateDsrSubmissions < ActiveRecord::Migration
+class CreateDsrSubmissions < ActiveRecord::Migration[5.1]
   def change
     create_table :dsr_submissions do |t|
       t.belongs_to  :dsr_status_record,         null: false

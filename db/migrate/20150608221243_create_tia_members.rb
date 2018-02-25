@@ -1,4 +1,4 @@
-class CreateTiaMembers < ActiveRecord::Migration
+class CreateTiaMembers < ActiveRecord::Migration[5.1]
   def change
     create_table :tia_members do |t|
       t.belongs_to  :account,   null: false,              index: true, foreign_key: :true

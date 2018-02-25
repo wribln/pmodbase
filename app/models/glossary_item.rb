@@ -4,7 +4,7 @@ class GlossaryItem < ActiveRecord::Base
   include ActiveModelErrorsAdd
   include Filterable
 
-  belongs_to :cfr_record, -> { readonly }, inverse_of: :glossary_items
+  belongs_to :cfr_record, -> { readonly }, optional: true, inverse_of: :glossary_items
 
   validates :term,
     length: { maximum: MAX_LENGTH_OF_TERM },

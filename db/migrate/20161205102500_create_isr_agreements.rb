@@ -1,4 +1,4 @@
-class CreateIsrAgreements < ActiveRecord::Migration
+class CreateIsrAgreements < ActiveRecord::Migration[5.1]
   def change
     create_table :isr_agreements do |t|
       t.belongs_to  :isr_interface,   null: false, index: true

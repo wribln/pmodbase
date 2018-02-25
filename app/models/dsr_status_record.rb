@@ -4,18 +4,18 @@ class DsrStatusRecord < ActiveRecord::Base
   include ActiveModelErrorsAdd
   include Filterable
 
-  belongs_to :dsr_progress_rate,  -> { readonly }, foreign_key: :document_status,   primary_key: :document_status, class_name: :DsrProgressRate
-  belongs_to :dsr_progress_rate_b,-> { readonly }, foreign_key: :document_status_b, primary_key: :document_status, class_name: :DsrProgressRate  
-  belongs_to :sender_group,       -> { readonly }, foreign_key: :sender_group_id,   class_name: :Group
-  belongs_to :sender_group_b,     -> { readonly }, foreign_key: :sender_group_b_id, class_name: :Group
-  belongs_to :receiver_group,     -> { readonly }, foreign_key: :receiver_group_id, class_name: :Group
-  belongs_to :submission_group,   -> { readonly }
-  belongs_to :submission_group_b, -> { readonly }, foreign_key: :submission_group_b_id, class_name: :SubmissionGroup
-  belongs_to :prep_activity,      -> { readonly }, foreign_key: :prep_activity_id,      class_name: :ProgrammeActivity
-  belongs_to :subm_activity,      -> { readonly }, foreign_key: :subm_activity_id,      class_name: :ProgrammeActivity
-  belongs_to :dsr_doc_group,      -> { readonly }
+  belongs_to :dsr_progress_rate,  -> { readonly }, optional: true, foreign_key: :document_status,   primary_key: :document_status, class_name: :DsrProgressRate
+  belongs_to :dsr_progress_rate_b,-> { readonly }, optional: true, foreign_key: :document_status_b, primary_key: :document_status, class_name: :DsrProgressRate  
+  belongs_to :sender_group,       -> { readonly },                 foreign_key: :sender_group_id,   class_name: :Group
+  belongs_to :sender_group_b,     -> { readonly }, optional: true, foreign_key: :sender_group_b_id, class_name: :Group
+  belongs_to :receiver_group,     -> { readonly }, optional: true, foreign_key: :receiver_group_id, class_name: :Group
+  belongs_to :submission_group,   -> { readonly }, optional: true
+  belongs_to :submission_group_b, -> { readonly }, optional: true, foreign_key: :submission_group_b_id, class_name: :SubmissionGroup
+  belongs_to :prep_activity,      -> { readonly }, optional: true, foreign_key: :prep_activity_id,      class_name: :ProgrammeActivity
+  belongs_to :subm_activity,      -> { readonly }, optional: true, foreign_key: :subm_activity_id,      class_name: :ProgrammeActivity
+  belongs_to :dsr_doc_group,      -> { readonly }, optional: true
   has_many   :dsr_submissions, dependent: :delete_all
-  belongs_to :dsr_current_submission,              foreign_key: :dsr_current_submission_id, class_name: :DsrSubmission
+  belongs_to :dsr_current_submission,              optional: true, foreign_key: :dsr_current_submission_id, class_name: :DsrSubmission
 
   before_validation :set_defaults
   before_validation :update_plan_dates

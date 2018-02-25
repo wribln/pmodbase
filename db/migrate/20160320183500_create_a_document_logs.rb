@@ -1,4 +1,4 @@
-class CreateADocumentLogs < ActiveRecord::Migration
+class CreateADocumentLogs < ActiveRecord::Migration[5.1]
   def change
     create_table :a_document_logs do |t|
       t.string :a1_code, limit: MAX_LENGTH_OF_CODE, null: false

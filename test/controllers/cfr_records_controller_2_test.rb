@@ -1,15 +1,14 @@
 require 'test_helper'
-class CfrRecordsController2Test < ActionController::TestCase
-  tests CfrRecordsController
+class CfrRecordsController2Test < ActionDispatch::IntegrationTest
 
   setup do
     @account = accounts( :one )
-    session[ :current_user_id ] = accounts( :one ).id
+    signon_by_user @account
   end
 
   test 'should set defaults: doc_owner' do
     assert_no_difference( 'CfrRecord.count' ) do
-      post :create, commit: I18n.t( 'button_label.defaults' ), cfr_record: { doc_owner: '' }
+      post cfr_records_path, params:{ commit: I18n.t( 'button_label.defaults' ), cfr_record: { doc_owner: '' }}
     end
     assert_response :success
     r = assigns( :cfr_record )
@@ -18,9 +17,9 @@ class CfrRecordsController2Test < ActionController::TestCase
 
   test 'should set defaults: extension' do
     assert_no_difference( 'CfrRecord.count' ) do
-      post :create, commit: I18n.t( 'button_label.defaults' ), cfr_record: {
+      post cfr_records_path, params:{ commit: I18n.t( 'button_label.defaults' ), cfr_record: {
         extension: '',
-        cfr_locations_attributes: [ file_name: 'test.pdf', is_main_location: true ]}
+        cfr_locations_attributes: [ file_name: 'test.pdf', is_main_location: true ]}}
     end
     assert_response :success
     r = assigns( :cfr_record )
@@ -29,9 +28,9 @@ class CfrRecordsController2Test < ActionController::TestCase
 
   test 'should set defaults: main location' do
     assert_no_difference( 'CfrRecord.count' ) do
-      post :create, commit: I18n.t( 'button_label.defaults' ), cfr_record: {
+      post cfr_records_path, params:{ commit: I18n.t( 'button_label.defaults' ), cfr_record: {
         extension: '',
-        cfr_locations_attributes: [ uri: 'X:\blne058a\TS_TK_Proj\DNK_ODN\test%20with%20blanks.pdf' ]}
+        cfr_locations_attributes: [ uri: 'X:\blne058a\TS_TK_Proj\DNK_ODN\test%20with%20blanks.pdf' ]}}
     end
     assert_response :success
     r = assigns( :cfr_record )
@@ -44,8 +43,8 @@ class CfrRecordsController2Test < ActionController::TestCase
 
   test 'should set defaults' do
     assert_no_difference( 'CfrRecord.count' ) do
-      post :create, commit: I18n.t( 'button_label.defaults' ), cfr_record: {
-        cfr_locations_attributes: [ '0',  uri: 'X:\blne058a\TS_TK_Proj\DNK_ODN\test.pdf', is_main_location: true ]}
+      post cfr_records_path, params:{ commit: I18n.t( 'button_label.defaults' ), cfr_record: {
+        cfr_locations_attributes: [ '0',  uri: 'X:\blne058a\TS_TK_Proj\DNK_ODN\test.pdf', is_main_location: true ]}}
     end
     assert_response :success
     r = assigns( :cfr_record )
@@ -58,10 +57,10 @@ class CfrRecordsController2Test < ActionController::TestCase
 
   test 'should not set main location' do
     assert_no_difference( 'CfrRecord.count' ) do
-      post :create, commit: I18n.t( 'button_label.defaults' ), cfr_record: {
+      post cfr_records_path, params:{ commit: I18n.t( 'button_label.defaults' ), cfr_record: {
         cfr_locations_attributes: {
           '0' => { uri: 'X:\blne058a\TS_TK_Proj\DNK_ODN\a%20file%20with%20blanks' },
-          '1' => { uri: 'https://www.xxx.com/inside/test.pdf' }}}
+          '1' => { uri: 'https://www.xxx.com/inside/test.pdf' }}}}
     end
     assert_response :success
     r = assigns( :cfr_record )

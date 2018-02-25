@@ -61,6 +61,23 @@ class PersonTest < ActiveSupport::TestCase
     assert p.valid?
   end
 
+  test 'email is handled lowercase only' do
+    p = Person.new
+    p.informal_name = 'test'
+    p.email = 'mr.tester@pmodbase.com'
+    assert p.valid?
+    p.save
+    p = p.dup
+    refute p.valid?
+    assert_includes p.errors, :email
+    p.email = 'Mr.Tester@PMODBase.com'
+    refute p.valid?
+    assert_includes p.errors, :email
+    p.email = 'Mrs.Tester@PMODBase.com'
+    assert p.valid?
+    assert_equal p.email, 'mrs.tester@pmodbase.com'
+  end
+
   test 'name and user_name' do
     p = Person.new    
     p.informal_name = 'informal'

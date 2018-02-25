@@ -1,22 +1,23 @@
 require 'test_helper'
-class AbbrSearchControllerAccessTest < ActionController::TestCase
-  tests AbbrSearchController
+class AbbrSearchControllerAccessTest < ActionDispatch::IntegrationTest
 
-  test "check class_attributes"  do
+  setup do
+    signon_by_user accounts( :wop )
+  end
+
+  test 'check class_attributes'  do
+    get sfa_path
     validate_feature_class_attributes FEATURE_ID_ABBR_SEARCH, ApplicationController::FEATURE_ACCESS_INDEX
   end
 
-  test "should get index" do
-    @account = accounts( :wop )
-    session[ :current_user_id ] = accounts( :wop ).id
-    get :index
+  test 'should get index' do
+    get sfa_path
     assert_response :success
   end
 
-  test "should not get index" do
-    @account = nil
-    session[ :current_user_id ] = nil
-    get :index
+  test 'should not get index' do
+    signoff_user
+    get sfa_path
     assert_response :unauthorized
   end
 

@@ -1,4 +1,4 @@
-class CreateCfrRecords < ActiveRecord::Migration
+class CreateCfrRecords < ActiveRecord::Migration[5.1]
   def change
     create_table :cfr_records do |t|
       t.string      :title,       limit: MAX_LENGTH_OF_TITLE

@@ -1,25 +1,25 @@
 require 'test_helper'
-class IsrAgreementsControllerTest < ActionController::TestCase
+class IsrAgreementsControllerTest < ActionDispatch::IntegrationTest
 
   setup do
-    @account = accounts( :one )
-    session[ :current_user_id ] = @account.id
+    signon_by_user accounts( :one )
   end
 
   test 'check class attributes' do
+    get isr_agreements_path
     validate_feature_class_attributes FEATURE_ID_ISR_AGREEMENTS, 
       ApplicationController::FEATURE_ACCESS_SOME,
       ApplicationController::FEATURE_CONTROL_NONE, 0
   end
 
   test 'should get index' do
-    get :index
+    get isr_agreements_path
     assert_response :success
     assert_not_nil assigns( :isr_agreements )
   end
 
   test 'should get stats' do
-    get :show_stats
+    get isr_statistics_path
     assert_response :success
     ifs = assigns( :if_stats )
     ias = assigns( :ia_stats )
@@ -28,7 +28,7 @@ class IsrAgreementsControllerTest < ActionController::TestCase
   end
 
   test 'CSV download 2' do
-    get :show_stats, format: :xls
+    get isr_statistics_path( format: :xls )
     p = Regexp.new <<'END_OF_CSV'
 table_id;line_id;label;count;as at: \d{4}-\d{2}-\d{2} \d{2}:\d{2} UTC
 1;1;identified;1

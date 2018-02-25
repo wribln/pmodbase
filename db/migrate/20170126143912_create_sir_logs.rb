@@ -1,4 +1,4 @@
-class CreateSirLogs < ActiveRecord::Migration
+class CreateSirLogs < ActiveRecord::Migration[5.1]
   def change
     create_table :sir_logs do |t|
       t.integer :owner_account_id,  index: true,  null: false 

@@ -1,4 +1,4 @@
-class CreatePcpComments < ActiveRecord::Migration
+class CreatePcpComments < ActiveRecord::Migration[5.1]
   def change
     create_table :pcp_comments do |t|
       t.belongs_to  :pcp_item, index: true, foreign_key: true

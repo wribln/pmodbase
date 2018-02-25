@@ -1,6 +1,5 @@
 require 'test_helper'
-class IsrInterfacesController6Test < ActionController::TestCase
-  tests IsrInterfacesController
+class IsrInterfacesController6Test < ActionDispatch::IntegrationTest
 
   # need four test accounts:
   # IFM, IFP, IFL and one other
@@ -24,45 +23,45 @@ class IsrInterfacesController6Test < ActionController::TestCase
     assert pg.save, pg.errors.messages
 
     @a_wop = accounts( :wop )
-    session[ :current_user_id ] = @a_wop.id
+    signon_by_user @a_wop
   end
 
   test 'new if - only ifm' do
     [ @a_ifl, @a_ifp, @a_ifm ].each do |aa|
-      get :new
+      get new_isr_interface_path
       check_for_cr
       switch_to_user( aa )
     end
-    get :new
+    get new_isr_interface_path
     assert_response :success
   end
 
   test 'new_ia - only ifm' do
     [ @a_ifl, @a_ifp, @a_ifm ].each do |aa|
-      get :new_ia, id: @isr_interface
+      get new_isr_agreement_path( id: @isr_interface )
       check_for_cr
       switch_to_user( aa )
     end
-    get :new_ia, id: @isr_interface
+    get new_isr_agreement_path( id: @isr_interface )
     assert_response :success
   end
 
   test 'create if - only ifm' do
     [ @a_ifl, @a_ifp, @a_ifm ].each do |aa|
       assert_no_difference( 'IsrInterface.count' ) do
-        post :create, isr_interface: {
+        post isr_interfaces_path( params:{ isr_interface: {
           l_group_id: @isr_interface.l_group_id,
           p_group_id: @isr_interface.p_group_id, 
-          title: 'new interface' }
+          title: 'new interface' }})
       end
       check_for_cr
       switch_to_user( aa )
     end
     assert_difference( 'IsrInterface.count' ) do
-      post :create, isr_interface: {
+      post isr_interfaces_path( params:{ isr_interface: {
         l_group_id: @isr_interface.l_group_id,
         p_group_id: @isr_interface.p_group_id, 
-        title: 'new interface' }
+        title: 'new interface by ifm' }})
     end
     assert_redirected_to isr_interface_details_path( assigns( :isr_interface ))
   end
@@ -70,38 +69,38 @@ class IsrInterfacesController6Test < ActionController::TestCase
   test 'create ia - only ifm' do
     [ @a_ifl, @a_ifp, @a_ifm ].each do |aa|
       assert_no_difference( 'IsrAgreement.count' ) do
-        post :create_ia, id: @isr_interface, isr_interface: { note: '' },
+        post isr_agreement_path( id: @isr_interface, params:{ isr_interface: { note: '' },
           isr_agreement: { ia_type: '0',
           l_group_id: @isr_interface.l_group_id,
           p_group_id: @isr_interface.p_group_id,
-          def_text: 'test definition' }
+          def_text: 'test definition' }})
       end
       check_for_cr
       switch_to_user( aa )
     end
     assert_difference( 'IsrAgreement.count' ) do
-      post :create_ia, id: @isr_interface, isr_interface: { note: '' },
+      post isr_agreement_path( id: @isr_interface, params:{ isr_interface: { note: '' },
         isr_agreement: { ia_type: '0',
         l_group_id: @isr_interface.l_group_id,
         p_group_id: @isr_interface.p_group_id,
-        def_text: 'test definition' }
+        def_text: 'test definition' }})
     end
     assert_redirected_to isr_agreement_details_path( assigns( :isr_agreement ))
   end
 
   test 'update if - only ifm' do
     # wop
-    patch :update, id: @isr_interface, isr_interface: { desc: 'test description', safety_related: true }
+    patch isr_interface_path( id: @isr_interface, params:{ isr_interface: { desc: 'test description', safety_related: true }})
     check_for_cr
     # ifl, ifp
     [ @a_ifl, @a_ifp ].each do |aa|
       switch_to_user( aa )
-      patch :update, id: @isr_interface, isr_interface: { desc: 'test description', safety_related: true }
+      patch isr_interface_path( id: @isr_interface, params:{ isr_interface: { desc: 'test description', safety_related: true }})
       assert_response :forbidden
     end
     # ifm
     switch_to_user( @a_ifm )
-    patch :update, id: @isr_interface, isr_interface: { desc: 'test description', safety_related: true }
+    patch isr_interface_path( id: @isr_interface, params:{ isr_interface: { desc: 'test description', safety_related: true }})
     assert_redirected_to isr_interface_details_path( @isr_interface )
   end
 
@@ -116,23 +115,23 @@ class IsrInterfacesController6Test < ActionController::TestCase
       assert_equal ct, @isr_agreement.current_task
   
       # wop
-      patch :update_ia, id: @isr_agreement,
+      patch isr_agreement_path( id: @isr_agreement, params:{
         isr_interface: { note: '' },
-        isr_agreement: { def_text: 'next task: prepare', l_owner_id: @a_ifl.id }, next_status_task: 1
+        isr_agreement: { def_text: 'next task: prepare', l_owner_id: @a_ifl.id }, next_status_task: 1 })
       check_for_cr
       # ifl, ifp
       [ @a_ifl, @a_ifp ].each do |aa|
         switch_to_user( aa )
-        patch :update_ia, id: @isr_agreement,
+        patch isr_agreement_path( id: @isr_agreement, params:{
           isr_interface: { note: '' },
-          isr_agreement: { def_text: 'next task: prepare', l_owner_id: @a_ifl.id }, next_status_task: 1
+          isr_agreement: { def_text: 'next task: prepare', l_owner_id: @a_ifl.id }, next_status_task: 1 })
         assert_response :forbidden
       end
       # ifm
       switch_to_user( @a_ifm )
-      patch :update_ia, id: @isr_agreement,
+      patch isr_agreement_path( id: @isr_agreement, params:{
         isr_interface: { note: '' },
-        isr_agreement: { def_text: 'next task: prepare', l_owner_id: @a_ifl.id }, next_status_task: 1
+        isr_agreement: { def_text: 'next task: prepare', l_owner_id: @a_ifl.id }, next_status_task: 1 })
       assert_redirected_to isr_agreement_details_path( @isr_agreement )
       @isr_agreement.reload
       switch_to_user( @a_wop )
@@ -144,23 +143,23 @@ class IsrInterfacesController6Test < ActionController::TestCase
     assert_equal 2, @isr_agreement.current_task
 
     # wop
-    patch :update_ia, id: @isr_agreement,
+    patch isr_agreement_path( id: @isr_agreement, params:{
       isr_interface: { note: '' },
-      isr_agreement: { def_text: 'next task: confirm', p_owner_id: @a_ifp.id }, next_status_task: 3
+      isr_agreement: { def_text: 'next task: confirm', p_owner_id: @a_ifp.id }, next_status_task: 3 })
     check_for_cr
 
     [ @a_ifp, @a_ifm ].each do |aa|
       switch_to_user( aa )
-      patch :update_ia, id: @isr_agreement,
+      patch isr_agreement_path( id: @isr_agreement, params:{
         isr_interface: { note: '' },
-        isr_agreement: { def_text: 'next task: confirm', p_owner_id: @a_ifp.id }, next_status_task: 3
+        isr_agreement: { def_text: 'next task: confirm', p_owner_id: @a_ifp.id }, next_status_task: 3 })
       assert_response :forbidden
     end
 
     switch_to_user( @a_ifl )
-    patch :update_ia, id: @isr_agreement,
+    patch isr_agreement_path( id: @isr_agreement, params:{
       isr_interface: { note: '' },
-      isr_agreement: { def_text: 'next task: confirm', p_owner_id: @a_ifp.id }, next_status_task: 3
+      isr_agreement: { def_text: 'next task: confirm', p_owner_id: @a_ifp.id }, next_status_task: 3 })
     assert_redirected_to isr_agreement_details_path( @isr_agreement )
     @isr_agreement.reload
 
@@ -171,23 +170,23 @@ class IsrInterfacesController6Test < ActionController::TestCase
 
     # wop
     switch_to_user( @a_wop )
-    patch :update_ia, id: @isr_agreement,
+    patch isr_agreement_path( id: @isr_agreement, params:{
       isr_interface: { note: '' },
-      isr_agreement: { def_text: 'modified' }, next_status_task: 1
+      isr_agreement: { def_text: 'modified' }, next_status_task: 1 })
     check_for_cr
     
     [ @a_ifl, @a_ifp ].each do |aa|
       switch_to_user( aa )
-      patch :update_ia, id: @isr_agreement,
+      patch isr_agreement_path( id: @isr_agreement, params:{
         isr_interface: { note: '' },
-        isr_agreement: { def_text: 'modified' }, next_status_task: 1
+        isr_agreement: { def_text: 'modified' }, next_status_task: 1 })
       assert_response :forbidden
     end
 
     switch_to_user( @a_ifm )
-    patch :update_ia, id: @isr_agreement,
+    patch isr_agreement_path( id: @isr_agreement, params:{
       isr_interface: { note: '' },
-      isr_agreement: { def_text: 'modified' }, next_status_task: 1
+      isr_agreement: { def_text: 'modified' }, next_status_task: 1 })
     assert_redirected_to isr_agreement_details_path( @isr_agreement )
     @isr_agreement.reload
 
@@ -197,9 +196,9 @@ class IsrInterfacesController6Test < ActionController::TestCase
     assert_equal 7, @isr_agreement.current_status
 
     switch_to_user( @a_ifl )
-    patch :update_ia, id: @isr_agreement,
+    patch isr_agreement_path( id: @isr_agreement, params:{
       isr_interface: { note: '' },
-      isr_agreement: { def_text: 'next task: confirm', p_owner_id: @a_ifp.id }, next_status_task: 2
+      isr_agreement: { def_text: 'next task: confirm', p_owner_id: @a_ifp.id }, next_status_task: 2 })
     assert_redirected_to isr_agreement_details_path( @isr_agreement )
     @isr_agreement.reload
 
@@ -209,23 +208,17 @@ class IsrInterfacesController6Test < ActionController::TestCase
     assert_equal 3, @isr_agreement.current_status
 
     switch_to_user( @a_wop )
-    patch :update_ia, id: @isr_agreement,
-      commit: I18n.t( 'isr_interfaces.edit.confirm' ),
-      isr_interface: { note: '' }
+    patch isr_agreement_path( id: @isr_agreement, params:{ commit: I18n.t( 'isr_interfaces.edit.confirm' ), isr_interface: { note: '' }})
     check_for_cr
 
     [ @a_ifl, @a_ifm ].each do |aa|
       switch_to_user( aa )
-      patch :update_ia, id: @isr_agreement,
-        commit: I18n.t( 'isr_interfaces.edit.confirm' ),
-        isr_interface: { note: '' }
+      patch isr_agreement_path( id: @isr_agreement, params:{ commit: I18n.t( 'isr_interfaces.edit.confirm' ), isr_interface: { note: '' }})
       assert_response :forbidden
     end
 
     switch_to_user( @a_ifp )
-    patch :update_ia, id: @isr_agreement,
-      commit: I18n.t( 'isr_interfaces.edit.confirm' ),
-      isr_interface: { note: '' }
+    patch isr_agreement_path( id: @isr_agreement, params:{ commit: I18n.t( 'isr_interfaces.edit.confirm' ), isr_interface: { note: '' }})
     assert_redirected_to isr_agreement_path( @isr_agreement )
     @isr_agreement.reload
 
@@ -235,23 +228,17 @@ class IsrInterfacesController6Test < ActionController::TestCase
     assert_equal 5, @isr_agreement.current_status
 
     switch_to_user( @a_wop )
-    patch :update_ia, id: @isr_agreement,
-      isr_interface: { note: '' },
-      next_status_task: 1
+    patch isr_agreement_path( id: @isr_agreement, params:{ isr_interface: { note: '' }, next_status_task: 1 })
     check_for_cr
 
     [ @a_ifl, @a_ifp ].each do |aa|
       switch_to_user( @a_ifl )
-      patch :update_ia, id: @isr_agreement,
-        isr_interface: { note: '' },
-        next_status_task: 1
+      patch isr_agreement_path( id: @isr_agreement, params:{ isr_interface: { note: '' }, next_status_task: 1 })
       assert_response :forbidden
     end
 
     switch_to_user( @a_ifm )
-    patch :update_ia, id: @isr_agreement,
-      isr_interface: { note: '' },
-      next_status_task: 1
+    patch isr_agreement_path( id: @isr_agreement, params:{ isr_interface: { note: '' }, next_status_task: 1 })
     assert_redirected_to isr_agreement_details_path( @isr_agreement )
     @isr_agreement.reload
 
@@ -261,17 +248,13 @@ class IsrInterfacesController6Test < ActionController::TestCase
     assert_equal 8, @isr_agreement.current_status
 
     switch_to_user( @a_wop )
-    patch :update_ia, id: @isr_agreement,
-      isr_interface: { note: '' },
-      next_status_task: 1
+    patch isr_agreement_path( id: @isr_agreement, params:{ isr_interface: { note: '' }, next_status_task: 1 })
     check_for_cr
 
     [ @a_ifm, @a_ifl, @a_ifp ].each do |aa|
 
       switch_to_user( aa )
-      patch :update_ia, id: @isr_agreement,
-        isr_interface: { note: '' },
-        next_status_task: 1
+      patch isr_agreement_path( id: @isr_agreement, params:{ isr_interface: { note: '' }, next_status_task: 1 })
       assert_response :forbidden
     end
 

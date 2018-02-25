@@ -16,5 +16,8 @@
 # end
 
 ActiveSupport::Inflector.inflections(:en) do |inflect|
-  inflect.irregular 'delta','deltas'
+  inflect.plural /^(delta)$/i, '\1\2s'
+  inflect.singular /^(delta)s/i, '\1'
+  inflect.plural /(_delta)$/i, '\1\2s'
+  inflect.singular /(_delta)s/i, '\1'
 end

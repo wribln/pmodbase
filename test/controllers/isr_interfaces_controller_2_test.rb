@@ -1,6 +1,5 @@
 require 'test_helper'
-class IsrInterfacesController2Test < ActionController::TestCase
-  tests IsrInterfacesController
+class IsrInterfacesController2Test < ActionDispatch::IntegrationTest
 
   # try steps in workflow 0 - non-standard path: create to withdraw
 
@@ -13,7 +12,7 @@ class IsrInterfacesController2Test < ActionController::TestCase
     pg[ 0 ].to_update = 2
     pg[ 0 ].to_create = 2
     assert pg[ 0 ].save, pg[ 0 ].errors.messages
-    session[ :current_user_id ] = @account.id
+    signon_by_user @account
   end
 
   test 'test workflow 0' do
@@ -21,10 +20,10 @@ class IsrInterfacesController2Test < ActionController::TestCase
     # create interface
 
     assert_difference( 'IsrInterface.count' ) do
-      post :create, isr_interface: {
+      post isr_interfaces_path( params:{ isr_interface: {
         l_group_id: @isr_interface.l_group_id,
         p_group_id: @isr_interface.p_group_id, 
-        title: 'new interface' }
+        title: 'new interface' }})
     end
     isf = assigns( :isr_interface )
     refute_nil isf
@@ -34,11 +33,11 @@ class IsrInterfacesController2Test < ActionController::TestCase
     # create associated agreement
 
     assert_difference( 'IsrAgreement.count', 1 )do
-      post :create_ia, id: isf, isr_interface: { note: '' },
+      post isr_agreement_path( id: isf, params:{ isr_interface: { note: '' },
         isr_agreement: { ia_type: '0',
         l_group_id: @isr_interface.l_group_id,
         p_group_id: @isr_interface.p_group_id,
-        def_text: 'test definition' }
+        def_text: 'test definition' }})
     end
     isf = assigns( :isr_interface )
     refute_nil isf
@@ -56,9 +55,7 @@ class IsrInterfacesController2Test < ActionController::TestCase
 
     # next: Task 1 Prepare
 
-    patch :update_ia, id: isa,
-      isr_interface: { note: '' },
-      isr_agreement: { def_text: 'next task: prepare', l_owner_id: @account.id }, next_status_task: 1
+    patch isr_agreement_path( id: isa, params:{ isr_interface: { note: '' }, isr_agreement: { def_text: 'next task: prepare', l_owner_id: @account.id }, next_status_task: 1 })
     assert_redirected_to isr_agreement_details_path( isa )
 
     isa.reload
@@ -72,9 +69,7 @@ class IsrInterfacesController2Test < ActionController::TestCase
 
     # next: Task 5 Modify
 
-    patch :update_ia, id: isa,
-      isr_interface: { note: '' },
-      isr_agreement: { def_text: 'update definition' }, next_status_task: 3
+    patch isr_agreement_path( id: isa, params:{ isr_interface: { note: '' }, isr_agreement: { def_text: 'update definition' }, next_status_task: 3 })
 
     isa.reload
     isf.reload
@@ -87,9 +82,7 @@ class IsrInterfacesController2Test < ActionController::TestCase
 
     # next: back to Prepare
 
-    patch :update_ia, id: isa,
-      isr_interface: { note: '' },
-      isr_agreement: { def_text: 'update definition' }, next_status_task: 1
+    patch isr_agreement_path( id: isa, params:{ isr_interface: { note: '' }, isr_agreement: { def_text: 'update definition' }, next_status_task: 1 })
 
     isa.reload
     isf.reload
@@ -102,9 +95,7 @@ class IsrInterfacesController2Test < ActionController::TestCase
 
     # next: Task 5 Modify - to withdraw
 
-    patch :update_ia, id: isa,
-      isr_interface: { note: '' },
-      isr_agreement: { def_text: 'update definition' }, next_status_task: 3
+    patch isr_agreement_path( id: isa, params:{ isr_interface: { note: '' }, isr_agreement: { def_text: 'update definition' }, next_status_task: 3 })
 
     isa.reload
     isf.reload
@@ -117,9 +108,7 @@ class IsrInterfacesController2Test < ActionController::TestCase
 
     # next: close withdrawn
 
-    patch :update_ia, id: isa,
-      isr_interface: { note: '' },
-      isr_agreement: { def_text: 'please withdraw' }, next_status_task: 2
+    patch isr_agreement_path( id: isa, params:{ isr_interface: { note: '' }, isr_agreement: { def_text: 'please withdraw' }, next_status_task: 2 })
     
     isa.reload
     isf.reload

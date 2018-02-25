@@ -1,4 +1,4 @@
-class CreateTiaLists < ActiveRecord::Migration
+class CreateTiaLists < ActiveRecord::Migration[5.1]
   def change
     create_table :tia_lists do |t|
       t.integer :owner_account_id,  index: true,  null: false 

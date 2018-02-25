@@ -2,7 +2,7 @@
 # using accounts_controller as arbitrary controller
 
 require 'test_helper'
-class ApplicationHelperTest < ActionView::TestCase
+class ApplicationHelperTest < ActionDispatch::IntegrationTest
 
   test 'breadcrumbs' do
     # problem: controller is 'test' and 'test' has no path ...:-(

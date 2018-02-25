@@ -1,4 +1,4 @@
-class CreateAddresses < ActiveRecord::Migration
+class CreateAddresses < ActiveRecord::Migration[5.1]
   def change
     create_table :addresses do |t|
       t.string :label,          limit: MAX_LENGTH_OF_LABEL, null: false, index: true, unique: true

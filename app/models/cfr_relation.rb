@@ -1,8 +1,8 @@
 class CfrRelation < ActiveRecord::Base
   include ActiveModelErrorsAdd
 
-  belongs_to :src_record, class_name: 'CfrRecord', inverse_of: :src_relations
-  belongs_to :dst_record, class_name: 'CfrRecord', inverse_of: :dst_relations
+  belongs_to :src_record, class_name: :CfrRecord, inverse_of: :src_relations
+  belongs_to :dst_record, class_name: :CfrRecord, inverse_of: :dst_relations
   belongs_to :cfr_relationship, -> { readonly }
 
   validates :src_record, :dst_record, :cfr_relationship,

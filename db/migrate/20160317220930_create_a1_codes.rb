@@ -1,4 +1,4 @@
-class CreateA1Codes < ActiveRecord::Migration
+class CreateA1Codes < ActiveRecord::Migration[5.1]
   def change
     create_table :a1_codes do |t|
       t.string  :code,     length: MAX_LENGTH_OF_CODE,  null: false, index: true

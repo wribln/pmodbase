@@ -11,9 +11,10 @@ class ContactListsTest < ActionDispatch::IntegrationTest
     get home_path
     assert_response :success
 
-    post_via_redirect signon_path, {
+    post signon_path, params:{
       acc_name: accounts( :one ).name,
       password: accounts( :one ).password_digest }
+    follow_redirect!
     assert_equal base_path, path
 
     get contact_lists_path

@@ -2,9 +2,8 @@ require './lib/assets/app_helper.rb'
 class TiaList < ActiveRecord::Base
   include ApplicationModel
 
-  belongs_to :account,        -> { readonly }, inverse_of: :tia_lists
-  belongs_to :owner_account,  -> { readonly }, foreign_key: 'owner_account_id',  class_name: 'Account'
-  belongs_to :deputy_account, -> { readonly }, foreign_key: 'deputy_account_id', class_name: 'Account'
+  belongs_to :owner_account,  -> { readonly }, optional: true, foreign_key: :owner_account_id,  class_name: :Account
+  belongs_to :deputy_account, -> { readonly }, optional: true, foreign_key: :deputy_account_id, class_name: :Account
   has_many   :tia_items,                       inverse_of: :tia_list, dependent: :destroy
   has_many   :tia_members,                     inverse_of: :tia_list, dependent: :destroy
   accepts_nested_attributes_for :tia_members, allow_destroy: true

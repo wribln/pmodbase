@@ -1,4 +1,4 @@
-class CreateRegionNames < ActiveRecord::Migration
+class CreateRegionNames < ActiveRecord::Migration[5.1]
   def change
     create_table :region_names do |t|
       t.belongs_to  :country_name, null: false

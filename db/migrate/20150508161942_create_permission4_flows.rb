@@ -1,4 +1,4 @@
-class CreatePermission4Flows < ActiveRecord::Migration
+class CreatePermission4Flows < ActiveRecord::Migration[5.1]
   def change
     create_table :permission4_flows do |t|
       t.belongs_to  :account,     null: false, foreign_key: :true, index: :true

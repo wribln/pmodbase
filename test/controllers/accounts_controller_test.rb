@@ -1,46 +1,46 @@
 require 'test_helper'
-class AccountsControllerTest < ActionController::TestCase
+class AccountsControllerTest < ActionDispatch::IntegrationTest
   
   setup do
-    @account = accounts( :one )
-    session[ :current_user_id ] = accounts( :one ).id
+    signon_by_user accounts( :one )
   end
 
   test 'check class_attributes'  do
-    validate_feature_class_attributes FEATURE_ID_ACCOUNTS_AND_PERMISSIONS,
-      ApplicationController::FEATURE_ACCESS_SOME
+    signon_by_user accounts( :one )
+    get accounts_path
+    validate_feature_class_attributes FEATURE_ID_ACCOUNTS_AND_PERMISSIONS, ApplicationController::FEATURE_ACCESS_SOME
   end
 
   test 'should get index' do
-    get :index
+    get accounts_path
     assert_response :success
     assert_not_nil assigns( :accounts )
   end
 
   test 'should get new' do
-    get :new
+    get new_account_path
     assert_response :success
-    assert_select '#account_password[required]',true
-    assert_select '#account_password_confirmation[required]',true
+    assert_select '#account_password[required]', true
+    assert_select '#account_password_confirmation[required]', true
   end
 
   test 'should create account' do
     assert_difference( 'Account.count' ) do
-      post :create, account: { name: 'Test', password: 'Test1Test!', person_id: @account.person_id }
+      post accounts_path, params:{ account: { name: 'Test', password: 'Test1Test!', person_id: accounts( :one ).person_id }}
     end
     assert_response :success
   end
 
   test 'should show account' do
-    get :show, id: @account
+    get account_path( id: accounts( :one ))
     assert_response :success
   end
 
   test 'should get edit' do
-    get :edit, id: @account
+    get edit_account_path( id: accounts( :one ))
     assert_response :success
-    assert_select '#account_password[required]',false
-    assert_select '#account_password_confirmation[required]',false
+    assert_select '#account_password[required]', false
+    assert_select '#account_password_confirmation[required]', false
   end
 
   test 'should update account' do
@@ -54,7 +54,7 @@ class AccountsControllerTest < ActionController::TestCase
 
   test 'should destroy account' do
     assert_difference('Account.count', -1) do
-      delete :destroy, id: @account
+      delete account_path( id: accounts( :one ))
     end
 
     assert_redirected_to accounts_path

@@ -1,4 +1,4 @@
-class CreateCfrRelationships < ActiveRecord::Migration
+class CreateCfrRelationships < ActiveRecord::Migration[5.1]
   def change
     create_table :cfr_relationships do |t|
       t.integer     :rs_group, default: 2

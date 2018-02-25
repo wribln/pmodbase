@@ -2,6 +2,6 @@
 <div class="btn-group btn-group-xs hidden-print">
 <%= link_to 'Q', isr_agreement_path( actions ), class: 'btn btn-default btn-xs', title: t( 'action_title.show' )-%>
 <%= link_to '/', edit_isr_agreement_path( actions ), class: 'btn btn-default btn-xs', title: t( 'action_title.edit' )-%>
-<%= link_to '-', destroy_isr_agreement_path( actions ), method: :delete, data: { confirm: t('action_title.del_confirm' )}, class: 'btn btn-default btn-xs', title: t( 'action_title.delete' )-%>
+<%= link_to '-', isr_agreement_path( actions ), method: :delete, data: { confirm: t('action_title.del_confirm' )}, class: 'btn btn-default btn-xs', title: t( 'action_title.delete' )-%>
 <%= link_to '+', new_isr_workflow_path( actions ), class: 'btn btn-default btn-xs', title: t( 'action_title.add' )-%>
 </div>

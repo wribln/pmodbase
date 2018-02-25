@@ -1,4 +1,4 @@
-class CreateWebLinks < ActiveRecord::Migration
+class CreateWebLinks < ActiveRecord::Migration[5.1]
   def change
     create_table :web_links do |t|
       t.string 	:label, length: MAX_LENGTH_OF_LABEL, null: false, default: ''

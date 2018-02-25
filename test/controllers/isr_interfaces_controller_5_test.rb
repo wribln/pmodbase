@@ -1,6 +1,5 @@
 require 'test_helper'
-class IsrInterfacesController5Test < ActionController::TestCase
-  tests IsrInterfacesController
+class IsrInterfacesController5Test < ActionDispatch::IntegrationTest
 
   # test withdrawal of IF and related interfaces
 
@@ -13,7 +12,7 @@ class IsrInterfacesController5Test < ActionController::TestCase
     pg[ 0 ].to_update = 2
     pg[ 0 ].to_create = 2
     assert pg[ 0 ].save, pg[ 0 ].errors.messages
-    session[ :current_user_id ] = @account.id
+    signon_by_user @account
   end
 
   test 'withdrawal feature' do
@@ -21,10 +20,10 @@ class IsrInterfacesController5Test < ActionController::TestCase
     # create interface
 
     assert_difference( 'IsrInterface.count' ) do
-      post :create, isr_interface: {
+      post isr_interfaces_path( params:{ isr_interface: {
         l_group_id: @isr_interface.l_group_id,
         p_group_id: @isr_interface.p_group_id, 
-        title: 'new interface' }
+        title: 'new interface' }})
     end
     isf = assigns( :isr_interface )
     refute_nil isf
@@ -34,13 +33,13 @@ class IsrInterfacesController5Test < ActionController::TestCase
     # create associated agreements - on per possible status
 
     assert_difference( 'IsrAgreement.count', 1 )do
-      post :create_ia, id: isf, isr_interface: { note: '' },
+      post isr_agreement_path( id: isf, params:{ isr_interface: { note: '' },
         isr_agreement: { ia_type: 0,
         l_group_id: @isr_interface.l_group_id,
         l_owner_id: @account.id,
         p_group_id: @isr_interface.p_group_id,
         p_owner_id: @account.id,
-        def_text: 'test definition' }
+        def_text: 'test definition' }})
     end
     isf = assigns( :isr_interface )
     refute_nil isf
@@ -105,7 +104,7 @@ class IsrInterfacesController5Test < ActionController::TestCase
     # preparation complete - now the action
 
     assert_no_difference([ 'IsrInterface.count', 'IsrAgreement.count' ]) do
-      patch :update, id: isf, commit: I18n.t( 'button_label.wdr' ), isr_interface: { note: 'withdrawal' }
+      patch isr_interface_path( id: isf, commit: I18n.t( 'button_label.wdr' ), params:{ isr_interface: { note: 'withdrawal' }})
     end
     assert_redirected_to isr_interface_path( isf )
     isf.reload

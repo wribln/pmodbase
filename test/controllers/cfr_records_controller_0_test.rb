@@ -1,15 +1,14 @@
 require 'test_helper'
-class CfrRecordsController0Test < ActionController::TestCase
-  tests CfrRecordsController
+class CfrRecordsController0Test < ActionDispatch::IntegrationTest
 
   setup do
     @cfr_record = cfr_records( :one )
     @account = accounts( :one )
-    session[ :current_user_id ] = accounts( :one ).id
+    signon_by_user @account
   end
 
   test 'should get index' do
-    get :index
+    get cfr_records_path
     assert_response :success
     assert_not_nil assigns( :cfr_records )
     assert_not_nil assigns( :filter_fields )
@@ -18,13 +17,13 @@ class CfrRecordsController0Test < ActionController::TestCase
   end
 
   test 'should get new' do
-    get :new
+    get new_cfr_record_path
     assert_response :success
   end
 
   test 'should set defaults: doc_owner' do
     assert_no_difference( 'CfrRecord.count' ) do
-      post :create, commit: I18n.t( 'button_label.defaults' ), cfr_record: { doc_owner: '' }
+      post cfr_records_path, params:{ commit: I18n.t( 'button_label.defaults' ), cfr_record: { doc_owner: '' }}
     end
     assert_response :success
     r = assigns( :cfr_record )
@@ -34,9 +33,9 @@ class CfrRecordsController0Test < ActionController::TestCase
 
   test 'should set defaults: extension' do
     assert_no_difference( 'CfrRecord.count' ) do
-      post :create, commit: I18n.t( 'button_label.defaults' ), cfr_record: {
+      post cfr_records_path, params:{ commit: I18n.t( 'button_label.defaults' ), cfr_record: {
         extension: '',
-        cfr_locations_attributes: [ file_name: 'test.pdf', is_main_location: true ]}
+        cfr_locations_attributes: [ file_name: 'test.pdf', is_main_location: true ]}}
     end
     assert_response :success
     r = assigns( :cfr_record )
@@ -46,8 +45,8 @@ class CfrRecordsController0Test < ActionController::TestCase
 
   test 'should set defaults' do
     assert_no_difference( 'CfrRecord.count' ) do
-      post :create, commit: I18n.t( 'button_label.defaults' ), cfr_record: {
-        cfr_locations_attributes: [ '0',  uri: 'X:\blne058a\TS_TK_Proj\DNK_ODN\test.pdf', is_main_location: true ]}
+      post cfr_records_path, params:{ commit: I18n.t( 'button_label.defaults' ), cfr_record: {
+        cfr_locations_attributes: [ '0',  uri: 'X:\blne058a\TS_TK_Proj\DNK_ODN\test.pdf', is_main_location: true ]}}
     end
     assert_response :success
     r = assigns( :cfr_record )
@@ -61,7 +60,7 @@ class CfrRecordsController0Test < ActionController::TestCase
 
   test 'should create cfr_record' do
     assert_difference('CfrRecord.count') do
-      post :create, cfr_record: { doc_date: @cfr_record.doc_date, doc_version: @cfr_record.doc_version, group_id: @cfr_record.group_id, main_location_id: @cfr_record.main_location_id, note: @cfr_record.note, title: @cfr_record.title }
+      post cfr_records_path, params:{ cfr_record: { doc_date: @cfr_record.doc_date, doc_version: @cfr_record.doc_version, group_id: @cfr_record.group_id, main_location_id: @cfr_record.main_location_id, note: @cfr_record.note, title: @cfr_record.title }}
     end
     r = assigns( :cfr_record )
     assert_redirected_to cfr_record_path( r )
@@ -69,39 +68,39 @@ class CfrRecordsController0Test < ActionController::TestCase
   end
 
   test 'should show cfr_record' do
-    get :show, id: @cfr_record
+    get cfr_record_path( id: @cfr_record )
     assert_response :success
     r = assigns( :cfr_record )
     assert_empty r.errors
   end
 
   test 'should show details of cfr_record' do
-    get :show_all, id: @cfr_record
+    get cfr_record_path( id: @cfr_record )
     assert_response :success
     r = assigns( :cfr_record )
     assert_empty r.errors
   end
 
   test 'should get edit' do
-    get :edit, id: @cfr_record
+    get edit_cfr_record_path( id: @cfr_record )
     assert_response :success
   end
 
   test 'should update cfr_record' do
-    patch :update, id: @cfr_record, cfr_record: { 
+    patch cfr_record_path( id: @cfr_record, params:{ cfr_record: { 
       doc_date: @cfr_record.doc_date,
       doc_version: @cfr_record.doc_version,
       group_id: @cfr_record.group_id,
       main_location_id: @cfr_record.main_location_id,
       note: @cfr_record.note, 
-      title: @cfr_record.title }
+      title: @cfr_record.title }})
     r = assigns( :cfr_record )
     assert_redirected_to cfr_record_path( r )
     assert_empty r.errors
   end
 
   test 'should update defaults' do
-    patch :update, id: @cfr_record, commit: I18n.t( 'button_label.defaults' ), cfr_record: { doc_owner: '', extension: 'pdf' }
+    patch cfr_record_path( id: @cfr_record, params:{ commit: I18n.t( 'button_label.defaults' ), cfr_record: { doc_owner: '', extension: 'pdf' }})
     assert_response :success
     r = assigns( :cfr_record )
     assert_equal r.doc_owner, @account.account_info
@@ -111,7 +110,7 @@ class CfrRecordsController0Test < ActionController::TestCase
 
   test 'should destroy cfr_record' do
     assert_difference('CfrRecord.count', -1) do
-      delete :destroy, id: @cfr_record
+      delete cfr_record_path( id: @cfr_record )
     end
     assert_redirected_to cfr_records_path
   end

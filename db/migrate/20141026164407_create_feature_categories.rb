@@ -1,4 +1,4 @@
-class CreateFeatureCategories < ActiveRecord::Migration
+class CreateFeatureCategories < ActiveRecord::Migration[5.1]
   def change
     create_table :feature_categories do |t|
       t.string  :label, length: MAX_LENGTH_OF_LABEL, null: false, default: ''

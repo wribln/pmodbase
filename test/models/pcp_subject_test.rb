@@ -44,9 +44,9 @@ class PcpSubjectTest < ActiveSupport::TestCase
     refute ps.valid?
     assert_includes ps.errors, :pcp_category_id
     refute_includes ps.errors, :c_owner_id
-    refute_includes ps.errors, :p_owner_id
-    refute_includes ps.errors, :c_group_id
-    refute_includes ps.errors, :p_group_id
+    assert_includes ps.errors, :p_owner_id
+    assert_includes ps.errors, :c_group_id
+    assert_includes ps.errors, :p_group_id
     refute_includes ps.errors, :c_deputy_id
     refute_includes ps.errors, :p_deputy_id
     refute_includes ps.errors, :title

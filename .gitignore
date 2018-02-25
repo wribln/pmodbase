@@ -46,3 +46,10 @@ config/secrets.yml
 
 /doc
 /public/assets/
+
+## git code
+/git
+
+## ruby version - better leave it alone
+.ruby-version
+

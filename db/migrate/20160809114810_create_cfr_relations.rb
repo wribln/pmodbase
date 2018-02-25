@@ -1,4 +1,4 @@
-class CreateCfrRelations < ActiveRecord::Migration
+class CreateCfrRelations < ActiveRecord::Migration[5.1]
   def change
     create_table :cfr_relations do |t|
       t.belongs_to :src_record,       index: true

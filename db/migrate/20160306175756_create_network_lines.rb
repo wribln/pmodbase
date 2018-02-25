@@ -1,4 +1,4 @@
-class CreateNetworkLines < ActiveRecord::Migration
+class CreateNetworkLines < ActiveRecord::Migration[5.1]
   def change
     create_table :network_lines do |t|
       t.string      :code,  length: MAX_LENGTH_OF_CODE,   null: false

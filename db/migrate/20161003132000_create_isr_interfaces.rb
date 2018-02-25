@@ -1,4 +1,4 @@
-class CreateIsrInterfaces < ActiveRecord::Migration
+class CreateIsrInterfaces < ActiveRecord::Migration[5.1]
   def change
     create_table :isr_interfaces do |t|
       t.belongs_to  :l_group,         null: false, index: true

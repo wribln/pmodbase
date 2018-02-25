@@ -77,9 +77,8 @@ class FeatureTest < ActiveSupport::TestCase
   end
 
   test 'uniqueness of code' do
-    f = features( :feature_one )
-    f.id = nil
-    assert_not f.valid?
+    f = features( :feature_one ).dup
+    refute f.valid?
     assert_includes f.errors, :code
   end
 

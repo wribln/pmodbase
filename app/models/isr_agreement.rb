@@ -4,17 +4,17 @@ class IsrAgreement < ActiveRecord::Base
   include ActiveModelErrorsAdd
   include Filterable  
 
-  belongs_to :l_group,    -> { readonly },  foreign_key: :l_group_id,   class_name: :Group
-  belongs_to :p_group,    -> { readonly },  foreign_key: :p_group_id,   class_name: :Group
-  belongs_to :l_owner,    -> { readonly },  foreign_key: :l_owner_id,   class_name: :Account
-  belongs_to :l_deputy,   -> { readonly },  foreign_key: :l_deputy_id,  class_name: :Account
-  belongs_to :p_owner,    -> { readonly },  foreign_key: :p_owner_id,   class_name: :Account
-  belongs_to :p_deputy,   -> { readonly },  foreign_key: :p_deputy_id,  class_name: :Account
-  belongs_to :res_steps,                    foreign_key: :res_steps_id, class_name: :TiaList, autosave: true 
-  belongs_to :val_steps,                    foreign_key: :val_steps_id, class_name: :TiaList, autosave: true
-  belongs_to :based_on,                     foreign_key: :based_on_id,  class_name: :IsrAgreement, autosave: true
+  belongs_to :l_group,    -> { readonly },                  foreign_key: :l_group_id,   class_name: :Group
+  belongs_to :p_group,    -> { readonly },  optional: true, foreign_key: :p_group_id,   class_name: :Group
+  belongs_to :l_owner,    -> { readonly },  optional: true, foreign_key: :l_owner_id,   class_name: :Account
+  belongs_to :l_deputy,   -> { readonly },  optional: true, foreign_key: :l_deputy_id,  class_name: :Account
+  belongs_to :p_owner,    -> { readonly },  optional: true, foreign_key: :p_owner_id,   class_name: :Account
+  belongs_to :p_deputy,   -> { readonly },  optional: true, foreign_key: :p_deputy_id,  class_name: :Account
+  belongs_to :res_steps,                    optional: true, foreign_key: :res_steps_id, class_name: :TiaList, autosave: true 
+  belongs_to :val_steps,                    optional: true, foreign_key: :val_steps_id, class_name: :TiaList, autosave: true
+  belongs_to :based_on,                     optional: true, foreign_key: :based_on_id,  class_name: :IsrAgreement, autosave: true
   belongs_to :isr_interface, inverse_of: :isr_agreements
-  belongs_to :cfr_record
+  belongs_to :cfr_record,                   optional: true
 
   before_validation :update_tia_lists
 
@@ -270,7 +270,7 @@ class IsrAgreement < ActiveRecord::Base
 
   # not possible to modify record when
 
-  def frozen?
+  def is_frozen?
     self.ia_status != 0
   end
 

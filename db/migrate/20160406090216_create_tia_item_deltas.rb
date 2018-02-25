@@ -1,4 +1,4 @@
-class CreateTiaItemDeltas < ActiveRecord::Migration
+class CreateTiaItemDeltas < ActiveRecord::Migration[5.1]
   def change
     create_table :tia_item_deltas do |t|
       t.belongs_to  :tia_item, null: false, index: true, foreign_key: :true

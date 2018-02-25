@@ -66,9 +66,8 @@ class CountryNameTest < ActiveSupport::TestCase
   end
 
   test 'uniqueness of code' do
-    cn = country_names( :ger )
-    cn.id = nil
-    assert_not cn.valid?
+    cn = country_names( :ger ).dup
+    refute cn.valid?
     assert_includes cn.errors, :code
   end
 

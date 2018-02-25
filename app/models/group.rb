@@ -11,7 +11,7 @@ class Group < ActiveRecord::Base
   has_many    :pcp_subjects
   has_many    :cfr_records
   has_many    :sub_groups,   class_name: 'Group', foreign_key: 'sub_group_of_id'
-  belongs_to  :sub_group_of, class_name: 'Group'
+  belongs_to  :sub_group_of, class_name: 'Group', optional: true
 
   before_destroy :check_destroyable
 
@@ -105,16 +105,14 @@ class Group < ActiveRecord::Base
   # for my own sanity...
 
   def check_destroyable
-    if self.responsibilities.empty? &&
+    unless self.responsibilities.empty? &&
        self.permission4_groups.empty? &&
        self.sub_groups.empty? &&
        IsrInterface.for_group( id ).empty? &&
        IsrAgreement.for_group( id ).empty? &&
        self.cfr_records.empty? then
-      true
-    else
       errors.add( :base, I18n.t( 'groups.msg.in_use' ))
-      false
+      throw( :abort )
     end
   end
 
