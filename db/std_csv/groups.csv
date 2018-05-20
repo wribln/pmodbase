@@ -40,6 +40,6 @@ code;label;notes;seqno;group_category_id;sub_group_of;participating;s_sender_cod
 "SWL";"Siemens WLL Qatar";"";3;4;;false;true;true;true;true
 "LVD";"Low Voltage Distribution";"";13;3;"REL";true;true;true;true;true
 "NVS";"Non-Visible Contact Line";"";16;3;"REL";true;true;true;true;true
-"OCS";"Overhead Contact System";"";17;3;"REL";true;true;true;true;true
+"OCS";"Overhead Contact System";"L";17;3;"REL";true;true;true;true;true
 "TPS";"Traction Power Supply";"";25;3;"REL";true;true;true;true;true
 "TRS";"Third Rail System";"";26;3;"REL";true;true;true;true;true

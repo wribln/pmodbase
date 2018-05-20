@@ -44,7 +44,7 @@ class AllTiaListsController < ApplicationController
 
   def update
     respond_to do |format|
-      params[ :tia_list ][ :tia_members_attributes ].try( :delete, 'template' )
+      params[ :tia_list ][ :tia_members_attributes ]&.delete( 'template' )
       @tia_list.assign_attributes( tia_list_params ) unless tia_list_params.empty?
       #if @tia_list.update( tia_list_params )
       if @tia_list.save

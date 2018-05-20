@@ -46,7 +46,7 @@ task recreate: :environment do
   Rake::Task['db:seed:isr_interfaces'].invoke
   puts '>>> db:seed:isr_interfaces completed'
 
-  abort '>>> premature termination for developement' if Rails.env.development?
+  #abort '>>> premature termination for developement' if Rails.env.development?
 
   Rake::Task['import'].reenable
   Rake::Task['import'].invoke('db/std_csv/pmdb_abbreviations.csv','Abbreviation')

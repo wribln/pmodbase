@@ -48,7 +48,7 @@ class CfrRecordsController < ApplicationController
   # POST /cfr
 
   def create
-    params[ :cfr_record ][ :src_relations_attributes ].try( :delete, 'template' )
+    params[ :cfr_record ][ :src_relations_attributes ]&.delete( 'template' )
     @cfr_record = CfrRecord.new( cfr_record_params )
     if has_access?( :to_create )
       respond_to do |format|
@@ -73,8 +73,8 @@ class CfrRecordsController < ApplicationController
   def update
     if has_access?( :to_update )
       respond_to do |format|
-        params[ :cfr_record ][ :cfr_locations_attributes ].try( :delete, 'template' )
-        params[ :cfr_record ][ :src_relations_attributes ].try( :delete, 'template' )
+        params[ :cfr_record ][ :cfr_locations_attributes ]&.delete( 'template' )
+        params[ :cfr_record ][ :src_relations_attributes ]&.delete( 'template' )
         cfr_params = cfr_record_params
         @cfr_record.assign_attributes( cfr_params ) unless cfr_params.empty?
         if @cfr_record.rec_was_frozen then
@@ -126,9 +126,9 @@ class CfrRecordsController < ApplicationController
         @cfr_record.main_location = ml
       end
       @cfr_record.cfr_locations.each { | l | l.set_defaults }
-      fn = ml.try( :file_name ) # cannot assume that ml is set / valid
+      fn = ml&.file_name # cannot assume that ml is set / valid
       @cfr_record.set_blank_default( :extension, CfrLocationType.get_extension( fn ))
-      @cfr_record.set_blank_default( :cfr_file_type_id, CfrFileType.get_file_type( @cfr_record.extension ).try( :id ))
+      @cfr_record.set_blank_default( :cfr_file_type_id, CfrFileType.get_file_type( @cfr_record.extension )&.id )
       @cfr_record.set_blank_default( :title, CfrLocationType.get_file_name( fn, @cfr_record.extension ))
       flash.notice = I18n.t( 'cfr_records.msg.defaults_set' )
       flash.discard

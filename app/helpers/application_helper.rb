@@ -9,11 +9,13 @@ module ApplicationHelper
   # This method is the standard format for dates and times
 
   def db_formatted_d( d )
-    d.try( :to_formatted_s, :db_date )
+#   d.try( :to_formatted_s, :db_date )
+    d&.to_formatted_s( :db_date )
   end
 
   def db_formatted_dt( t )
-    t.try( :to_formatted_s, :db_time )
+#   t.try( :to_formatted_s, :db_time )
+    t&.to_formatted_s( :db_time )
   end
 
   def db_formatted_number( d )
@@ -73,7 +75,7 @@ module ApplicationHelper
 
   def display_nil
     '<input class="form-control" value="" readonly />'.html_safe
-  end
+ end
 
   # display a check box
 
