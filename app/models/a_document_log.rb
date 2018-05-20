@@ -26,7 +26,7 @@ class ADocumentLog < ActiveRecord::Base
 
   validate :all_codes_valid
 
-  scope :reverse, -> { order( id: :desc )}
+  scope :revorder, -> { order( id: :desc )}
   scope :inorder, -> { order( id: :asc  )}
   scope :ff_srec, -> ( id   ){ where id: id }
   scope :ff_adic, -> ( adic ){ where( 'doc_id LIKE ?', "%#{ adic }%" )}

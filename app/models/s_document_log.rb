@@ -36,7 +36,7 @@ class SDocumentLog < ActiveRecord::Base
   validate :at_least_one_given
   validate :all_codes_valid
 
-  scope :reverse, -> { order( id: :desc )}
+  scope :revorder, -> { order( id: :desc )}
   scope :inorder, -> { order( id: :asc  )}
   scope :ff_srec, -> ( i ){ where id: i }
   scope :ff_sdic, -> ( s ){ where( 'doc_id LIKE ? ESCAPE \'\\\'', "%#{ sanitize_sql_like( s, '\\' )}%" )}

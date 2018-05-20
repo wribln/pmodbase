@@ -10,7 +10,7 @@ class SDocumentLogsController < ApplicationController
     @filter_fields = filter_params
     respond_to do |format|
       format.html do
-        @s_document_logs = SDocumentLog.reverse.filter( @filter_fields ).paginate( page: params[ :page ])
+        @s_document_logs = SDocumentLog.revorder.filter( @filter_fields ).paginate( page: params[ :page ])
       end
       format.xls do
         @s_document_logs = SDocumentLog.inorder.filter( @filter_fields )
