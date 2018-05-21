@@ -26,8 +26,8 @@ module SCodeModel
     set_trimmed :code, :label
 
     default_scope { order( code: :asc, master: :desc )}
-    scope :active_only, -> { where active: true }
-    scope :master_only, -> { where master: true }
+    scope :active_only, -> { where( active: true )}
+    scope :master_only, -> { where( master: true )}
     scope :as_code, -> ( c ){ where( 'code  LIKE ?',  has_code_prefix( c ) ? "#{ c }%" : "#{ code_prefix }#{ c }%" )}
     scope :as_desc, -> ( l ){ where( 'label LIKE ?', "%#{ l }%" )}
 

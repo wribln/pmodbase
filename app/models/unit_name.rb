@@ -13,7 +13,7 @@ class UnitName < ActiveRecord::Base
 
   set_trimmed :code, :label
 
-  default_scope { order( 'LOWER(code) ASC' )}
+  default_scope { order( UnitName.arel_table[ :code ].lower.asc )}
   scope :as_abbr,    -> ( a ){ where( 'code  LIKE ?',  "#{ a }%" )}
   scope :as_desc,    -> ( d ){ where( 'label LIKE ?', "%#{ d }%" )}
 

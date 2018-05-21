@@ -61,7 +61,7 @@ class CfrRelationTest < ActiveSupport::TestCase
     assert_includes r.errors, :base
     refute_includes r.errors, :cfr_relationship_id
 
-    r.create_src_record( title: 'test' )
+    r.src_record = CfrRecord.new( title: 'test' )
     assert r.valid?
   end
 

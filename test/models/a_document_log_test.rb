@@ -212,7 +212,7 @@ class ADocumentLogTest < ActiveSupport::TestCase
   end
 
   test 'all scopes' do
-    as = ADocumentLog.reverse
+    as = ADocumentLog.revorder
     assert_equal 1, as.length
 
     as = ADocumentLog.inorder
