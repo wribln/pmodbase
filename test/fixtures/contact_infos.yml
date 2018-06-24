@@ -17,3 +17,8 @@ two:
   detail_location: ''
   address: address_two
   person: person_one
+
+three:
+  info_type: 'Elsewhere'
+  person: person_two
+  

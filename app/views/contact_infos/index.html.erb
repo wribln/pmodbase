@@ -30,7 +30,7 @@
             <td><%= ci.phone_no_mobile %></td>
             <td><%= ci.department %></td>
             <td><%= ci.detail_location %></td>
-            <td><%= link_to_unless ci.address_id.nil?, ci.address.label_with_id, address_path( ci.address ) %></td>
+            <td><%= link_to ci.address.label_with_id, address_path( ci.address ) unless ci.address.nil? %></td>
             <td><%= render partial: 'shared/actions', object: ci %></td>
           </tr>
         <% end %>
