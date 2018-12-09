@@ -32,7 +32,10 @@ server 'test.pmodbase.com', user: 'pmdbmaster', roles: %w{app db web}
 # http://capistranorb.com/documentation/getting-started/configuration/
 # Feel free to add new variables to customise your setup.
 
+# I want to restart using `passenger-config restart-app`
+# (new feature since passenger v4.0.33)
 
+set :passenger_restart_with_touch, false
 
 # Custom SSH Options
 # ==================

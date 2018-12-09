@@ -19,7 +19,7 @@ module StatsHelper
   # format percents (based on integer values, blank for 0)
 
   def db_formatted_pct( i )
-    sprintf( '%.0f%', i ) unless i.nil?
+    sprintf( '%.0f%%', i ) unless i.nil?
   end
 
   # given two values, compute and output the variance in percent
